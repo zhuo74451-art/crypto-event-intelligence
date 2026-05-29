@@ -1,0 +1,13 @@
+{
+  "raw_id": ["raw_id", "id", "event_id", "unlock_id"],
+  "asset_symbol": ["asset_symbol", "symbol", "token", "token_symbol", "coin", "asset"],
+  "unlock_time": ["unlock_time", "unlock_time_utc", "unlock_date", "date", "time", "event_time", "timestamp"],
+  "unlock_name": ["unlock_name", "event_name", "name", "title", "description"],
+  "unlock_amount_usd": ["unlock_amount_usd", "amount_usd", "value_usd", "unlock_value_usd", "usd_value", "value"],
+  "unlock_pct_circulating": ["unlock_pct_circulating", "pct_circulating", "percent_circulating", "unlock_percent", "percentage", "pct"],
+  "source": ["source", "provider", "data_source"],
+  "url": ["url", "link", "source_url"],
+  "timezone": ["timezone", "tz", "time_zone"],
+  "enabled": ["enabled", "active", "is_enabled"],
+  "notes": ["notes", "note", "remark"]
+}

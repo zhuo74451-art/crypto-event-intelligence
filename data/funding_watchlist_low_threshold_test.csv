@@ -1,0 +1,4 @@
+﻿asset_symbol,binance_futures_symbol,enabled,alert_abs_rate_threshold,alert_change_threshold,lookback_limit,notes
+BTC,BTCUSDT,true,0.00001,0.00001,24,test
+ETH,ETHUSDT,true,0.00001,0.00001,24,test
+SOL,SOLUSDT,true,0.00001,0.00001,24,test

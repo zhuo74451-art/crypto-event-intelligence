@@ -1,0 +1,18 @@
+# v14 publishable event criteria
+# A Telegram item must be useful as market intelligence, not merely a crypto news item.
+version: v14
+required:
+  - first_party_or_onchain_or_official_source
+  - explicit_event_time_anchor
+  - observable_market_or_chain_impact
+  - not_already_price_in
+blocked_examples:
+  - sdk_or_tooling_pr
+  - validator_deadline_without_activation
+  - etf_macro_news_or_executive_commentary
+  - soft_security_warning_without_loss_or_tx
+  - unclear_flow_direction
+notes:
+  - Daily zero publishable events is acceptable.
+  - Background content belongs in morning/evening digests only after source and event-time checks.
+  - Historical reference may be shown only when sample_count >= 3.

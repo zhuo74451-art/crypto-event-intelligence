@@ -1,0 +1,6 @@
+event_id,event_time,title,content,source,asset_symbol,binance_spot_symbol,binance_futures_symbol,event_type,direction_hint,importance
+evt_001,2024-01-10T21:00:00Z,US spot Bitcoin ETFs approved,SEC approved multiple spot Bitcoin ETF applications; sample historical event for BTC reaction research.,sample,BTC,BTCUSDT,BTCUSDT,institutional_flow,positive,5
+evt_002,2024-03-13T14:00:00Z,Ethereum Dencun upgrade activated,Ethereum Dencun upgrade activated on mainnet; sample event for ETH market reaction research.,sample,ETH,ETHUSDT,ETHUSDT,market_structure,positive,4
+evt_003,2024-06-27T12:00:00Z,Solana ETF filing reported,A US issuer filed for a Solana ETF product; sample event for SOL reaction research.,sample,SOL,SOLUSDT,SOLUSDT,institutional_flow,observe,4
+evt_004,2024-07-01T08:00:00Z,Large XRP token unlock observed,Large scheduled XRP token unlock observed; sample event for unlock pressure research.,sample,XRP,XRPUSDT,XRPUSDT,token_unlock,risk,3
+evt_005,2024-08-15T10:00:00Z,HYPE ecosystem news without Binance market,Sample event with no Binance symbol to verify skipped handling.,sample,HYPE,,,other,observe,2

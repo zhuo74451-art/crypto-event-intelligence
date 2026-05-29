@@ -1,0 +1,10 @@
+﻿position_key,entity,asset_symbol,side,snapshot_count,first_updated_china,last_updated_china,latest_position_value_usd,min_position_value_usd,max_position_value_usd,max_step_change_usd,large_change_steps,side_change_steps,near_liquidation_snapshots,history_status
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:HYPE,loraclexyz,HYPE,short,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,102825385.9,102825385.9,102825385.9,0.0,0,0,0,needs_more_history
+0x6c8512516ce5669d35113a11ca8b8de322fd84f6:ETH,Matrixport Related,ETH,long,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,79076000.0,79076000.0,79076000.0,0.0,0,0,0,needs_more_history
+0x082e843a431aef031264dc232693dd710aedca88:HYPE,Unknown HYPE Whale,HYPE,long,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,78492686.37,78492686.37,78492686.37,0.0,0,0,0,needs_more_history
+0xebe837cd345469cbc5d6e1fd3d15ee5079ac885f:BTC,Unknown Hyperliquid Whale,BTC,long,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,34750293.94,34750293.94,34750293.94,0.0,0,0,0,needs_more_history
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:BTC,loraclexyz,BTC,short,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,34169057.12,34169057.12,34169057.12,0.0,0,0,0,needs_more_history
+0x50b309f78e774a756a2230e1769729094cac9f20:BTC,Unknown Hyperliquid Whale,BTC,short,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,8409080.57,8409080.57,8409080.57,0.0,0,0,0,needs_more_history
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:VVV,loraclexyz,VVV,short,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,707903.03,707903.03,707903.03,0.0,0,0,0,needs_more_history
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:LIT,loraclexyz,LIT,short,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,697326.13,697326.13,697326.13,0.0,0,0,0,needs_more_history
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:TON,loraclexyz,TON,short,1,2026-05-28 14:09:10 UTC+8,2026-05-28 14:09:10 UTC+8,6682.0,6682.0,6682.0,0.0,0,0,0,needs_more_history

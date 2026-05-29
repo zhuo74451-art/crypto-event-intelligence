@@ -1,0 +1,20 @@
+version: v14
+
+intraday_alert:
+  hyperliquid_min_delta_usd: 5000000
+  hyperliquid_min_delta_pct: 10
+  stablecoin_min_flow_usd: 50000000
+  cex_netflow_min_usd: 50000000
+  exploit_min_loss_usd: 10000000
+
+daily_digest:
+  token_unlock_min_usd: 10000000
+  token_unlock_min_pct: 5
+  listing_exchanges: Binance,Coinbase,OKX,Bybit
+
+priority:
+  exchange_halt: 1
+  exploit: 2
+  cex_listing: 10
+  token_unlock: 20
+  hyperliquid_snapshot: 50

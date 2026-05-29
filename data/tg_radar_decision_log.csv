@@ -1,0 +1,85 @@
+﻿decided_at_china,board_id,board_label,decision,decision_reason,item_key,source_type,asset,repeat_group,section,final_priority,policy_action,policy_reason_cn,dynamic_boost_reason,text
+2026-05-28 17:38:11 UTC+8,tg_board_20260528_173811,盘中雷达,suppressed_cooldown,,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,79.4372,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,"loraclexyz持有HYPE空头$103.3M
+  浮亏$21.3M，静态大仓位"
+2026-05-28 17:38:11 UTC+8,tg_board_20260528_173811,盘中雷达,filtered_digest_only,盘中静态背景转早晚报,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,context,66.3443,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,"HOME明日08:00解锁$18.8M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 17:38:11 UTC+8,tg_board_20260528_173811,盘中雷达,suppressed_cooldown,,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,124.6500,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍
+  动态提权：拥挤变化"
+2026-05-28 17:45:37 UTC+8,tg_board_20260528_174537,盘中雷达,suppressed_cooldown,冷却期未到：1.75h < 4.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,79.5324,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,"loraclexyz持有HYPE空头$103.6M
+  浮亏$21.6M，静态大仓位"
+2026-05-28 17:45:37 UTC+8,tg_board_20260528_174537,盘中雷达,filtered_digest_only,盘中静态背景转早晚报,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,context,66.3424,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,"HOME明日08:00解锁$18.8M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 17:45:37 UTC+8,tg_board_20260528_174537,盘中雷达,suppressed_cooldown,冷却期未到：1.75h < 2.00h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,124.6500,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍
+  动态提权：拥挤变化"
+2026-05-28 17:48:26 UTC+8,tg_board_20260528_174826,盘中雷达,suppressed_cooldown,冷却期未到：1.80h < 4.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,79.5324,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,"loraclexyz持有HYPE空头$103.6M
+  浮亏$21.6M，静态大仓位"
+2026-05-28 17:48:26 UTC+8,tg_board_20260528_174826,盘中雷达,filtered_digest_only,盘中静态背景转早晚报,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,context,66.3424,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,"HOME明日08:00解锁$18.8M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 17:48:26 UTC+8,tg_board_20260528_174826,盘中雷达,suppressed_cooldown,冷却期未到：1.80h < 2.00h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,124.6500,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍
+  动态提权：拥挤变化"
+2026-05-28 17:49:37 UTC+8,tg_board_20260528_174937,盘中雷达,suppressed_cooldown,冷却期未到：1.82h < 4.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,79.5511,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,"loraclexyz持有HYPE空头$103.7M
+  浮亏$21.6M，静态大仓位"
+2026-05-28 17:49:37 UTC+8,tg_board_20260528_174937,盘中雷达,filtered_digest_only,盘中静态背景转早晚报,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,context,66.3424,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,"HOME明日08:00解锁$18.8M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 17:49:37 UTC+8,tg_board_20260528_174937,盘中雷达,suppressed_cooldown,冷却期未到：1.82h < 2.00h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,124.6500,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍
+  动态提权：拥挤变化"
+2026-05-28 18:35:19 UTC+8,tg_board_20260528_183519,晚间雷达,suppressed_cooldown,冷却期未到：2.58h < 4.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,79.3251,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,"loraclexyz持有HYPE空头$103.0M
+  浮亏$21.0M，静态大仓位"
+2026-05-28 18:35:19 UTC+8,tg_board_20260528_183519,晚间雷达,selected,进入本轮雷达板,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,context,66.4719,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,"HOME明日08:00解锁$19.0M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 18:35:19 UTC+8,tg_board_20260528_183519,晚间雷达,selected,进入本轮雷达板,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,130.1900,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动买入偏强
+  动态提权：拥挤变化"
+2026-05-28 18:48:30 UTC+8,tg_board_20260528_184830,晚间雷达,suppressed_cooldown,冷却期未到：2.80h < 6.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,95.2824,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,,"loraclexyz持有HYPE空头$102.8M
+  浮亏$20.8M，静态大仓位
+  样本状态：继续收集，不做强结论"
+2026-05-28 18:48:30 UTC+8,tg_board_20260528_184830,晚间雷达,suppressed_cooldown,冷却期未到：0.22h < 12.00h,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,priority,97.7360,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,,"HOME明日08:00解锁$19.2M
+  占流通7.5%，主要释放给团队/贡献者
+  样本状态：继续收集，不做强结论"
+2026-05-28 18:48:30 UTC+8,tg_board_20260528_184830,晚间雷达,suppressed_cooldown,冷却期未到：0.22h < 3.00h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,126.1900,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动买入偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-05-28 18:54:29 UTC+8,tg_board_20260528_185429,晚间雷达,suppressed_cooldown,冷却期未到：2.90h < 6.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,95.2113,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,,"loraclexyz持有HYPE空头$102.6M
+  浮亏$20.6M，静态大仓位
+  样本状态：继续收集，不做强结论"
+2026-05-28 18:54:29 UTC+8,tg_board_20260528_185429,晚间雷达,suppressed_cooldown,冷却期未到：0.32h < 12.00h,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,priority,97.8805,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,,"HOME明日08:00解锁$19.4M
+  占流通7.5%，主要释放给团队/贡献者
+  样本状态：继续收集，不做强结论"
+2026-05-28 18:54:29 UTC+8,tg_board_20260528_185429,晚间雷达,suppressed_cooldown,冷却期未到：0.32h < 3.00h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,126.1900,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动买入偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-05-28 19:07:22 UTC+8,tg_board_20260528_190722,晚间雷达,suppressed_cooldown,冷却期未到：3.12h < 6.00h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,95.2607,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,,"loraclexyz持有HYPE空头$102.8M
+  浮亏$20.8M，静态大仓位
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:07:22 UTC+8,tg_board_20260528_190722,晚间雷达,suppressed_cooldown,冷却期未到：0.53h < 12.00h,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,priority,98.0670,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,,"HOME明日08:00解锁$19.6M
+  占流通7.5%，主要释放给团队/贡献者
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:07:22 UTC+8,tg_board_20260528_190722,晚间雷达,suppressed_cooldown,冷却期未到：0.53h < 3.00h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-05-28 19:19:45 UTC+8,tg_board_20260528_191945,晚间雷达,suppressed_cooldown,冷却期未到：3.32h < 4.80h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,95.2335,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,,"loraclexyz持有HYPE空头$102.7M
+  浮亏$20.7M，静态大仓位
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:19:45 UTC+8,tg_board_20260528_191945,晚间雷达,suppressed_cooldown,冷却期未到：0.74h < 9.60h,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,priority,98.1173,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,,"HOME明日08:00解锁$19.6M
+  占流通7.5%，主要释放给团队/贡献者
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:19:45 UTC+8,tg_board_20260528_191945,晚间雷达,suppressed_cooldown,冷却期未到：0.74h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-05-28 19:22:22 UTC+8,tg_board_20260528_192222,晚间雷达,suppressed_cooldown,冷却期未到：3.37h < 4.80h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,95.2149,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,,"loraclexyz持有HYPE空头$102.6M
+  浮亏$20.6M，静态大仓位
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:22:22 UTC+8,tg_board_20260528_192222,晚间雷达,suppressed_cooldown,冷却期未到：0.78h < 9.60h,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,priority,98.1173,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,,"HOME明日08:00解锁$19.6M
+  占流通7.5%，主要释放给团队/贡献者
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:22:22 UTC+8,tg_board_20260528_192222,晚间雷达,suppressed_cooldown,冷却期未到：0.78h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-05-28 19:23:51 UTC+8,tg_board_20260528_192351,晚间雷达,suppressed_cooldown,冷却期未到：3.39h < 4.80h,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,95.2203,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,,"loraclexyz持有HYPE空头$102.7M
+  浮亏$20.6M，静态大仓位
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:23:51 UTC+8,tg_board_20260528_192351,晚间雷达,suppressed_cooldown,冷却期未到：0.81h < 9.60h,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,priority,98.1173,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,,"HOME明日08:00解锁$19.6M
+  占流通7.5%，主要释放给团队/贡献者
+  样本状态：继续收集，不做强结论"
+2026-05-28 19:23:51 UTC+8,tg_board_20260528_192351,晚间雷达,suppressed_cooldown,冷却期未到：0.81h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"

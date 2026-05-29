@@ -1,0 +1,14 @@
+﻿event_type,event_subtype,sample_count,computed_24h_count,avg_abnormal_primary_24h,win_rate_primary_24h,unique_assets,hype_ratio,max_single_asset_ratio,tg_action,reason_cn
+whale_position,whale_wallet_position,59,59,0.07914,0.898303,6,0.8136,0.8136,collect_more,表现强但未通过污染/多样性检查：资产覆盖不足、HYPE 占比过高、单资产集中度过高、鲸鱼仓位污染检查未通过
+hack_security,exploit_or_theft,36,36,0.00939,0.638878,7,0.0278,0.3611,digest_only,历史表现更像背景信息，降低盘中曝光。
+institutional_flow,etf_or_fund_flow,21,21,0.013622,0.904762,7,0.1905,0.2857,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+other,needs_taxonomy_review,20,20,0.042162,0.900005,5,0.45,0.45,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+staking_governance,staking_or_governance,10,10,0.050737,0.80001,4,0.5,0.5,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+network_upgrade,upgrade_or_fork,9,9,0.010917,1.0,5,0.1111,0.3333,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+stablecoin_flow,stablecoin_supply_or_flow,7,7,0.026638,0.857143,6,0.1429,0.2857,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+halving,halving,4,4,0.007439,1.0,1,0.0,1.0,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+exchange_listing,listing_delisting,4,4,0.009346,1.0,3,0.0,0.5,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+project_business,rwa_tokenization,1,1,0.027797,1.0,1,1.0,1.0,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+market_structure,long_short_crowding_extreme,1,0,0.0,0.0,0,0,0,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+token_unlock,token_unlock_team_large,1,0,0.0,0.0,0,0,0,collect_more,样本或稳定性不足，继续收集，不做强路由结论。
+whale_position,whale_position_static_large,1,0,0.0,0.0,0,0,0,collect_more,样本或稳定性不足，继续收集，不做强路由结论。

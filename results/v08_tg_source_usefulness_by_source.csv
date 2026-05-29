@@ -1,0 +1,5 @@
+﻿source,sent_count,followup_4h_rows,move_4h_hit_count,move_4h_hit_rate,followup_24h_rows,move_24h_hit_count,move_24h_hit_rate,quality_pass_count,quality_warning_count,quality_fail_count,critical_count,high_count,medium_count,unknown_asset_count,usefulness_status
+stablecoin_flow,4,4,0,0.0,0,0,0.0,0,0,0,0,0,0,0,insufficient_data
+cex_netflow,2,2,0,0.0,0,0,0.0,0,0,0,1,0,0,0,insufficient_data
+exchange_listing,1,0,0,0.0,0,0,0.0,0,0,0,0,0,0,0,insufficient_data
+liquidation,1,1,0,0.0,0,0,0.0,0,0,0,0,0,0,0,insufficient_data

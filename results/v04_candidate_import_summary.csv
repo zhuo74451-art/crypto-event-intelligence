@@ -1,0 +1,2 @@
+total_candidates,needs_review_count,include_count,exclude_count,fix_count,missing_review_decision_count,missing_asset_count,multi_asset_count,market_wide_count,unknown_event_type_count,time_parse_failed_count,asset_confidence_low_count,asset_confidence_medium_count,asset_confidence_high_count
+200,197,0,0,0,200,83,29,77,72,0,112,44,44

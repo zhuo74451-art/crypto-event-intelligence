@@ -1,0 +1,29 @@
+# Asset tiers for Telegram market-state focus selection.
+# Keep this file simple so it can be parsed without extra dependencies.
+
+tier_1:
+  - BTC
+  - ETH
+
+tier_2:
+  - BNB
+  - SOL
+  - XRP
+  - DOGE
+  - ADA
+  - AVAX
+  - LINK
+
+tier_3:
+  - HYPE
+  - WLD
+  - ONDO
+  - HOME
+
+focus_rules:
+  tier_1: always
+  tier_2_min_abs_price_change_pct: 5
+  tier_2_min_abs_oi_change_pct: 10
+  tier_3_min_abs_price_change_pct: 15
+  tier_3_min_abs_oi_change_pct: 20
+  max_focus_assets: 4

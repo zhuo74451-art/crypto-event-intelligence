@@ -1,0 +1,4 @@
+﻿source_type,event_type,event_subtype,sample_count,positive_followthrough_count,flat_no_reaction_count,adverse_reaction_count,priced_in_risk_count,pending_no_outcome_count,unusable_quality_count,avg_latest_abnormal_primary,false_positive_like_count,false_positive_like_rate,suppressed_or_digest_decision_count,recommendation,example_alert_id,example_asset,example_reason
+token_unlock,token_unlock,token_unlock_team_large,1,0,1,0,0,0,0,-0.00473393,1,1.0000,0,collect_more,tg_513e9703a6ec7b25,HOME,仅短周期 abnormal -0.47%
+long_short,market_structure,long_short_crowding_extreme,1,0,1,0,0,0,0,-0.00033578,1,1.0000,0,collect_more,tg_f6594c6fa4ff8127,DOGE,仅短周期 abnormal -0.03%
+hyperliquid,whale_position,whale_position_static_large,1,0,0,1,0,0,0,-0.01753546,1,1.0000,0,collect_more,tg_46cfd0ce9b540ae7,HYPE,仅短周期 abnormal -1.75%

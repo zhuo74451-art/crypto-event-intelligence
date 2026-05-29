@@ -1,0 +1,2 @@
+total_rows,suggest_ready_rows,avg_auto_label_confidence,auto_prefilled_rows_in_run,auto_provisional_rows_in_run,manual_labeled_rows_after_run,manual_unlabeled_rows_after_run,manual_review_required_rows_after_run,suggest_decision_approve_publish,suggest_decision_keep_review,suggest_decision_fix_taxonomy,suggest_decision_discard
+201,73,0.8299,0,0,192,9,50,45,24,0,132

@@ -1,0 +1,2 @@
+﻿generated_at_china,digest_label,window_start_china,window_end_china,sent_rows_in_window,ledger_rows_in_window,long_short_rows,digest_only_rows,evidence_rows,etf_context_loaded,hyperliquid_context_loaded,cex_baseline_loaded,hyperliquid_readiness_loaded,market_state_loaded,market_state_rows,market_first_screen_loaded,percentile_watchlist_count,send_mode,status,message
+2026-05-28 23:09:30 UTC+8,evening,2026-05-28 12:00:00 UTC+8,2026-05-28 20:00:00 UTC+8,3,3,7,4,3,true,true,true,true,true,7,true,2,dry_run,pass,ok

@@ -1,0 +1,2 @@
+﻿observed_at_utc,observed_at_china,watchlist_rows,ok_rows,skipped_rows,total_open_interest_usd,total_quote_volume_usd_24h,btc_price_change_pct_24h,eth_price_change_pct_24h,top_price_move_asset,top_price_move_pct_24h,top_oi_change_asset,top_oi_change_pct_24h,funding_extreme_count,funding_extreme_assets,crowding_extreme_count,crowding_extreme_assets,status
+2026-05-29T04:32:38Z,2026-05-29 12:32:38 UTC+8,7,7,0,14578250556.06,21604605648.75,0.4400,1.1440,HYPE,7.5370,BTC,3.1240,0,,4,SOL;BNB;XRP;DOGE,pass

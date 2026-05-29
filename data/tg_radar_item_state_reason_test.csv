@@ -1,0 +1,5 @@
+﻿included_at_china,board_id,item_key,source_type,asset,repeat_group,final_priority,policy_action,policy_reason_cn,dynamic_boost_reason,last_included_china,text
+2026-05-28 17:29:44 UTC+8,tg_board_20260528_172944,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,124.6500,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,2026-05-28 17:29:44 UTC+8,"DOGE多头拥挤，大户持仓约为散户2.1倍
+  DOGE $0.0986，24h -3.1%；动态提权：拥挤变化"
+2026-05-28 17:29:44 UTC+8,tg_board_20260528_172944,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,79.2914,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,2026-05-28 17:29:44 UTC+8,"loraclexyz持有HYPE空头$102.9M
+  HYPE $57.09，24h -8.7%；浮亏$20.9M，静态大仓位"

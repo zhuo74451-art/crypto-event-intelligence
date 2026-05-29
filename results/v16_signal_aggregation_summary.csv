@@ -1,0 +1,14 @@
+﻿metric,value,note
+raw_signal_count,64,输入原始信号总数
+aggregated_event_count,41,聚合后事件数
+asset_count,14,覆盖资产数
+first_hand_signal_count,20,含一手信号的事件数
+news_signal_count,7,纯快讯上下文事件数
+monitored_liquidation_risk_count,6,监控地址清算风险事件数
+market_state_signal_count,21,市场状态变化事件数
+onchain_flow_signal_count,0,链上资金流事件数
+duplicate_or_merged_signal_count,23,因聚合而合并的信号数（去重合并估算）
+events_ready_for_card_count,10,可输出为资产卡的事件数
+events_review_only_count,31,仅审阅不输出卡的事件数
+missing_source_count,0,本轮未接入coinglass/glassnode等外部源，按要求不使用
+warnings_count,1,监控地址清算风险仅代表watchlist地址，不代表全市场清算密集区

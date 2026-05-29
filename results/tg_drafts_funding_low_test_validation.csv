@@ -1,0 +1,4 @@
+﻿draft_id,candidate_id,asset_symbol,event_type,draft_status,validation_status,validation_flags
+tg_watcher_0001,watcher_fh_6f3e56768004eac9,BTC,funding_rate,pending_review,pass,
+tg_watcher_0002,watcher_fh_7de60de387df5384,ETH,funding_rate,pending_review,pass,
+tg_watcher_0003,watcher_fh_ba39cff8b34167a2,SOL,funding_rate,pending_review,pass,

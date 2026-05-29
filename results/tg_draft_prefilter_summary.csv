@@ -1,0 +1,2 @@
+﻿input_rows,pass_rows,reject_rows,reject_rate,top_reject_reason,top_reject_count,status
+22,9,13,0.5909,low_impact_or_too_generic_news,6,pass

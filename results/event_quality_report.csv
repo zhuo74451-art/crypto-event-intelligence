@@ -1,0 +1,6 @@
+event_id,event_time,title,asset_symbol,event_type,status,quality_status,quality_flags,skip_reason
+evt_001,2024-01-10T21:00:00Z,US spot Bitcoin ETFs approved,BTC,institutional_flow,ok,pass,,
+evt_002,2024-03-13T14:00:00Z,Ethereum Dencun upgrade activated,ETH,market_structure,ok,pass,,
+evt_003,2024-06-27T12:00:00Z,Solana ETF filing reported,SOL,institutional_flow,ok,pass,,
+evt_004,2024-07-01T08:00:00Z,Large XRP token unlock observed,XRP,token_unlock,ok,pass,,
+evt_005,2024-08-15T10:00:00Z,HYPE ecosystem news without Binance market,HYPE,other,skipped,fail,"status_skipped,missing_symbol,missing_asset_price_t0,missing_asset_price_1h,missing_asset_price_4h,missing_asset_price_24h,missing_asset_price_72h,missing_btc_price_t0,missing_btc_price_24h,missing_eth_price_t0,missing_eth_price_24h,missing_abnormal_vs_btc_1h,missing_abnormal_vs_btc_4h,missing_abnormal_vs_btc_24h,missing_abnormal_vs_btc_72h",unsupported_symbol

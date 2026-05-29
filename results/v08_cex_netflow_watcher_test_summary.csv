@@ -1,0 +1,2 @@
+﻿watcher,mode,window_hours,cex_watch_addresses,raw_transfer_rows,bucket_count,alert_rows,request_failed,min_net_usd,min_gross_usd,status
+cex_netflows,live,4.0,6,128,9,1,0,20000000,50000000,pass

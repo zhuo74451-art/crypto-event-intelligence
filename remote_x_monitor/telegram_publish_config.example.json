@@ -1,0 +1,23 @@
+{
+  "chat_ids": [
+    "-1001234567890"
+  ],
+  "poll_seconds": 10,
+  "max_batch": 5,
+  "lookback_minutes": 240,
+  "start_from_now": true,
+  "default_category": "快讯",
+  "max_title_chars": 120,
+  "max_body_chars": 700,
+  "include_body": true,
+  "include_time": false,
+  "include_source": false,
+  "allowed_categories": [],
+  "blocked_categories": [],
+  "blocked_sources": [],
+  "source_weights": {
+    "news:jin10": 90,
+    "tg:HyperInsight": 80,
+    "tg:OneMillion_AI": 80
+  }
+}

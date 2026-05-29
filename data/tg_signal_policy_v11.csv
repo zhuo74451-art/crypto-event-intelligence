@@ -1,0 +1,63 @@
+﻿policy_scope,name,sample_count,valid_24h_count,avg_abnormal_primary_24h,win_rate_primary_24h,false_positive_like_rate,matrix_status,tg_action,priority_delta,cooldown_multiplier,reason_cn
+event_subtype,exploit_or_theft,12,12,-0.001314,0.3333,,weak_or_context_only,digest_only,-25.00,2.00,历史回测显示同类事件更像背景信息，优先进入早午晚报，不适合盘中反复刷。
+event_subtype,macro,58,58,0.0,0.0,,weak_or_context_only,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,hack_security,7,7,-0.004822,0.1429,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,halving,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,institutional_flow,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,network_upgrade,2,2,0.002001,0.5,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,other,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,staking_governance,2,2,-0.007946,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_subtype,needs_taxonomy_review,9,9,0.008006,0.8889,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,etf_or_fund_flow,5,5,0.004692,0.8,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,staking_or_governance,5,5,0.101413,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,upgrade_or_fork,3,3,0.012761,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,stablecoin_supply_or_flow,2,2,0.006579,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,listing_delisting,1,1,0.003872,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,long_short_crowding_extreme,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,rwa_tokenization,1,1,0.027797,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,token_unlock_team_large,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,whale_position_static_large,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,token_unlock,1,1,-0.021927,0.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_subtype,whale_wallet_position,34,34,0.087296,0.9412,,promising_needs_validation,boost,10.00,0.80,历史同类事件 24h 后续表现较好，允许提高观察优先级，但仍不代表方向建议。
+source_type,news:cointelegraph,12,12,-0.001314,0.3333,,weak_or_context_only,digest_only,-25.00,2.00,历史回测显示同类事件更像背景信息，优先进入早午晚报，不适合盘中反复刷。
+source_type,news:jin10,58,58,0.0,0.0,,weak_or_context_only,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,webhook,40,40,-0.000357,0.0,,weak_or_context_only,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,tg:HyperInsight,16,16,-0.000339,0.0,,weak_or_context_only,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:cryptonews,10,10,0.0,0.0,,weak_or_context_only,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:coinpaper,7,7,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:odaily_exchange_gap,3,3,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:utoday,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,tg:OneMillion_AI,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:bitcoinmagazine,1,1,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:coinpedia,1,1,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+source_type,news:decrypt,4,4,0.004209,0.5,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:watcherguru,4,4,0.007439,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:kucoin_ann,1,1,0.018767,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:99bitcoins,1,1,-0.004979,0.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:coinjournal,1,1,0.013079,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,long_short,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:coindesk,1,1,-0.001673,0.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:cryptonewsflash,1,1,0.01159,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,token_unlock,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,hyperliquid,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,news:bitcoinist,6,6,-0.005659,0.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+source_type,address_transfer,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+source_type,cex_netflow,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+source_type,exchange_listing,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+source_type,funding_rate,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+source_type,lending_liquidation,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+source_type,news,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+source_type,stablecoin_flow,0,0,0.0,0.0,0.0,shadow_or_no_live_data,collect_more,-8.00,1.80,该来源缺少 live outcome 或仍在影子模式，先收集证据，不进入高频盘中曝光。
+event_type,hack_security,12,12,-0.001314,0.3333,,weak_or_context_only,digest_only,-25.00,2.00,历史回测显示同类事件更像背景信息，优先进入早午晚报，不适合盘中反复刷。
+event_type,macro,58,58,0.0,0.0,,weak_or_context_only,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_type,halving,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_type,institutional_flow,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_type,network_upgrade,2,2,0.002001,0.5,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_type,other,2,2,0.0,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_type,staking_governance,2,2,-0.007946,0.0,,insufficient_sample,review_benchmark,-8.00,1.50,历史样本以 BTC/ETH 基准资产为主，异常收益容易被压扁；先降低盘中权重，等待非基准资产样本。
+event_type,stablecoin_flow,2,2,0.006579,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_type,exchange_listing,1,1,0.003872,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_type,market_structure,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_type,project_business,1,1,0.027797,1.0,,insufficient_sample,collect_more,-4.00,1.20,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_type,token_unlock,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。
+event_type,whale_position,1,0,0.0,0.0,1.0000,insufficient_sample,collect_more,-4.00,1.50,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。

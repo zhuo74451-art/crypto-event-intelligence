@@ -1,0 +1,37 @@
+﻿event_id,asset_symbol,source,title,hack_subtype,matched_reason,abnormal_vs_btc_24h,status
+cand_01718,LINK,webhook,Bitwise研究院：资金从LayerZero迁移至Chainlink CCIP,hack_unclear,,0.008241319544891823,ok
+cand_01716,LINK,webhook,吴说获悉，Bitwise 加密研究院 Ishmael Asad 发文表示，在 rsETH 攻击事件后，资金在从 LayerZero 向 Chainlink CCIP 迁移，其中 LayerZero 日活跃地址数已跌至近三年来的最低点，ZRO,hack_unclear,,0.008852800458032162,ok
+cand_01388,XRP,news:coinpedia,Why Is Elizabeth Warren Attacking Ripple? The Answer Reveals Who Really Fears the CLARITY Act,hack_unclear,generic_attack_language,0.0009841676124067167,ok
+cand_01092,XRP,news:utoday,Ripple CLO Alderoty Breaks Down What Clarity Act Really Means for US Market - U.Today,hack_unclear,,-0.006961840539358222,ok
+cand_01026,SOL,news:cryptonews,"Drift says insurance fund untouched after attack, withdrawals to resume",fund_recovery,\brecovery\b,-0.0010878860130969503,ok
+cand_01777,ADA,news:cointelegraph,Bankr Disables Transactions After Hacker Accessed 14 Crypto Wallets,active_exploit,"\bexploited\b,\bexploit\b,\bhacked\b,\bdrained\b,\bstolen\b",-0.0026278530326107052,ok
+cand_01686,BNB,news:bitcoinist,Japan To Expand Foreign Stablecoins Rules Starting June 1,hack_unclear,,0.007945576574748925,ok
+cand_01648,ADA,news:cointelegraph,GitHub Internal Repositories Breached via VS Code Extension,active_exploit,"\bexploited\b,\bexploit\b",-0.010297988649175527,ok
+cand_01571,HYPE,news:coinpaper,SEC Chair Paul Atkins Signals a New Era for Crypto — XRP Leads the Conversation,hack_unclear,,0.20342654552123562,ok
+cand_01539,ADA,news:cointelegraph,OpenAI Opens First Overseas AI Lab in Singapore With $234M Commitment,hack_unclear,,-0.005881069422642327,ok
+cand_01480,BNB,news:bitcoinist,Chainlink's Nazarov Reveals 3 Trends He’s Watching Closely,active_exploit,\bexploit\b,0.01118126241016082,ok
+cand_01439,ADA,news:cointelegraph,South Carolina Governor Signs Bill Protecting Bitcoin Miners and Banning CBDC Payments,hack_unclear,,-0.006110444363758405,ok
+cand_01422,ADA,news:cointelegraph,Bitcoin Momentum Weakens as BTC Price Support at $75K Becomes Key,hack_unclear,,-0.0072945867436861045,ok
+cand_01408,BNB,news:bitcoinist,Crypto AI Platform Bankr Locks Down System After Hacker Breaches 14 Crypto Wallets,active_exploit,"\bexploited\b,\bexploit\b,\bdrained\b",0.009475100374912171,ok
+cand_01376,AAVE,news:decrypt,Morning Minute: Markets Flip Green Overnight Ahead of NVDA Earnings - Decrypt,fund_recovery,\brecovery\b,0.009333280921163256,ok
+cand_01335,ADA,news:cointelegraph,Singapore Revokes Bsquared’s Crypto Licence Over Regulatory Breaches,active_exploit,\bexploit\b,-0.00356007322125218,ok
+cand_01265,ADA,news:cointelegraph,Fireblocks Unveils Infrastructure For AI Agents,hack_unclear,,-0.004153801479649499,ok
+cand_01234,ADA,news:cointelegraph,EU Reviews Stablecoin Interest Ban in Potential MiCA Overhaul,hack_unclear,,-0.005912994270448557,ok
+cand_01222,AAVE,news:decrypt,"AI Watchdog Warns of 'Rogue Deployment' Risk at Top Labs, With Capabilities Growing Fast - Decrypt",active_exploit,\bexploit\b,0.010293189705313899,ok
+cand_01071,BNB,news:bitcoinist,Top Crypto Exchange Expands Into UK With New Local Platform,hack_unclear,,0.008319070219045654,ok
+cand_01056,BNB,news:bitcoinist,Arthur Hayes' Bombshell CLARITY Act Warning Just Resurfaced — And The Timing Couldn't Be Worse | Bitcoinist.com,hack_unclear,,0.006150721078618693,ok
+cand_01034,AAVE,news:decrypt,"GitHub Confirms 3,800 Internal Repos Stolen Through Poisoned VS Code Extension - Decrypt",active_exploit,\bstolen\b,-0.0021040901891342667,ok
+cand_00971,ADA,news:cointelegraph,Fairshake PAC’s $20M Investment Pays off in Three US State Primaries,hack_unclear,,0.003970322066231935,ok
+cand_00890,BNB,news:bitcoinist,Washington Targets Iran’s $7 Billion Crypto Network To Cut Off Financial Channels—FOX | Bitcoinist.com,regulatory_enforcement,\bsanction,0.01052066299382115,ok
+cand_00821,BNB,news:watcherguru,Binance Says it Prevented Over $10T in Fraud Using AI Models,hack_unclear,,0.010485839095747185,ok
+cand_00785,BNB,news:bitcoinist,Tether Expands South Korea Trademark Filings As Stablecoin Rules Take Shape,hack_unclear,,0.009755616770525277,ok
+cand_00681,ADA,news:cointelegraph,Missouri AG Sues Crypto ATM Operator CoinFlip ‘For Enabling Scams’,hack_unclear,,0.007513431040008234,ok
+cand_00644,BNB,news:bitcoinist,US Treasury Cracks Down Drug Lord’s Crypto Money-Laundering Ring Linked To Sinaloa Cartel | Bitcoinist.com,regulatory_enforcement,\bsanction,0.010201940489166228,ok
+cand_00615,AAVE,news:decrypt,Shai-Hulud: What to Know About the Malware Spreading Through Software Pipelines - Decrypt,security_disclosure,\bdisclosed\b,-0.0006847533690956809,ok
+cand_00323,ADA,news:cointelegraph,Map Protocol Loses 96% After Quadrillion Token Exploit,fund_recovery,\brecovery\b,0.005971701353070458,ok
+cand_00299,BNB,news:bitcoinist,Singapore Shuts Down Bsquared's Crypto Payment Operations - Details,hack_unclear,,0.011252229054945495,ok
+cand_00226,BNB,news:cryptonews,"MAPO crashes to record lows, bridge attack overwhelms circulating supply",fund_recovery,\brecovery\b,0.009736161077890881,ok
+cand_00218,BNB,news:bitcoinist,Bitcoin Quantum Exposure: Glassnode Says 30% of Supply Is Highly Vulnerable | Bitcoinist.com,fund_recovery,\bbitfinex\b,0.009926730406179196,ok
+cand_00197,ADA,news:cointelegraph,Syndicate Labs Shuts Down After Ethereum Rollup Market Shift,active_exploit,"\bexploited\b,\bprivate key\b",0.01261265971962422,ok
+cand_00188,AAVE,news:cointelegraph,Digital Assets Like Ordinals Used in Tax Evasion Schemes: Chainalysis,active_exploit,\bexploit\b,-0.008003955854002376,ok
+cand_00162,BNB,news:bitcoinist,By The Numbers: How Much Bitcoin Is Exposed To Quantum?,hack_unclear,,0.016574100432215966,ok

@@ -1,0 +1,11 @@
+﻿generated_at_china,event_group,sample_count,computed_1h_count,avg_abnormal_vs_btc_1h,win_rate_vs_btc_1h,computed_4h_count,avg_abnormal_vs_btc_4h,win_rate_vs_btc_4h,computed_24h_count,avg_abnormal_vs_btc_24h,win_rate_vs_btc_24h,computed_72h_count,avg_abnormal_vs_btc_72h,win_rate_vs_btc_72h,post_archive_route_status
+2026-05-28 19:55:16 UTC+8,exploit_or_theft,36,36,0.000328,0.5,36,0.00172,0.5,36,0.00939,0.6389,36,0.010309,0.5,digest_only
+2026-05-28 19:55:16 UTC+8,etf_or_fund_flow,21,21,-0.000365,0.619,21,0.005895,0.5714,21,0.013622,0.9048,21,0.018438,0.5714,digest_only
+2026-05-28 19:55:16 UTC+8,needs_taxonomy_review,20,20,0.004339,0.7,20,0.00584,0.65,20,0.042162,0.9,20,0.054477,0.85,collect_more
+2026-05-28 19:55:16 UTC+8,whale_wallet_position,11,11,0.000737,0.4545,11,-0.001088,0.2727,11,0.00701,0.7273,11,0.006252,0.9091,collect_more
+2026-05-28 19:55:16 UTC+8,staking_or_governance,10,10,0.002988,0.8,10,0.007277,0.6,10,0.050738,0.8,10,0.065841,0.8,collect_more
+2026-05-28 19:55:16 UTC+8,upgrade_or_fork,9,9,0.003017,0.8889,9,0.003475,0.6667,9,0.010917,1.0,9,0.020469,0.5556,insufficient_sample
+2026-05-28 19:55:16 UTC+8,stablecoin_supply_or_flow,7,7,0.005666,0.7143,7,0.008705,0.7143,7,0.026638,0.8571,7,0.024705,0.5714,insufficient_sample
+2026-05-28 19:55:16 UTC+8,halving,4,4,-3.2e-05,0.5,4,-0.000595,0.25,4,0.007439,1.0,4,0.022817,1.0,insufficient_sample
+2026-05-28 19:55:16 UTC+8,listing_delisting,4,4,0.002363,0.75,4,-0.001284,0.5,4,0.009346,1.0,4,-0.000249,0.5,insufficient_sample
+2026-05-28 19:55:16 UTC+8,rwa_tokenization,1,1,-0.004711,0.0,1,0.025535,1.0,1,0.027797,1.0,1,0.098568,1.0,insufficient_sample

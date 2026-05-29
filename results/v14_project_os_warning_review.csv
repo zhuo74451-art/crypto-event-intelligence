@@ -1,0 +1,3 @@
+﻿area,check,actual,expected,status,evidence,risk_level,blocking,owner_action,reason
+project_os,review_dashboard_items,12,"tracked, may be >0",review,C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv,low,false,保留为项目看板待办；不阻断 ETF/Hyperliquid 早晚报候选试运行。,这是积压工作数量，不是安全、密钥或发布链路错误。
+claude,pending_decision_items,302,review before implementation,review,C:\Users\PC\Desktop\Projects\事件情报系统\data\claude_decision_review_queue.csv,medium,false,继续按最新 Claude 复审结果执行；历史建议队列不作为当前上线阻断项。,存在 302 条历史建议，数量大但由当前复审闭环接管。

@@ -1,0 +1,9 @@
+candidate_event_type,candidate_count,needs_review_count,include_count
+halving,1,0,1
+institutional_flow,3,0,3
+macro,1,1,1
+network_upgrade,1,0,1
+other,1,1,0
+staking_governance,1,0,1
+token_unlock,1,0,1
+whale_position,1,0,1

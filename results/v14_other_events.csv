@@ -1,0 +1,3 @@
+﻿priority_rank,priority_bucket,priority_score,asset_symbol,event_type,source_type,sent_at_china,amount_usd,confidence,title,priority_reason
+2,other_dynamic,5.00,HYPE,whale_position,hyperliquid,2026-05-28 16:00:21 UTC+8,,medium,loraclexyz持有HYPE空头$104.8M HYPE $58.06，24h -6.6%；浮亏$22.8M，静态大仓位,事件类型+7;结构化来源+1;静态信息-3
+3,other_dynamic,4.00,HOME,token_unlock,token_unlock,2026-05-28 16:00:21 UTC+8,,medium,HOME明日08:00解锁$18.6M 占流通7.5%，主要释放给团队/贡献者,事件类型+4

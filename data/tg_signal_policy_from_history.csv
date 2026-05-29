@@ -1,0 +1,17 @@
+﻿policy_scope,name,sample_count,valid_24h_count,avg_abnormal_vs_btc_24h,abs_move_24h_hit_rate,benchmark_asset_share,historical_usefulness_status,tg_action,reason_cn
+source,tg:HyperInsight,20,20,0.009271,0.1,0.6,promising_for_expansion,boost,历史样本显示有一定后续波动，优先扩样本，但仍需分资产和分市场状态验证。
+source,webhook,48,48,-0.000469,0.0625,0.7708,benchmark_polluted,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+source,news:jin10,28,28,0.0,0.0,1.0,benchmark_polluted,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+source,news:cryptonews,13,13,-0.001263,0.0,0.7692,benchmark_polluted,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+source,news:coinpaper,5,5,-0.002733,0.0,0.8,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+source,news:coinpedia,2,2,0.001749,0.0,1.0,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+source,news:odaily_exchange_gap,2,2,-0.028497,0.5,0.0,insufficient_data,collect_more,样本太少，不能下结论；保留但不提高权重。
+source,news:bitcoinmagazine,1,1,0.0,0.0,1.0,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+source,news:utoday,1,1,0.0,0.0,1.0,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+event_type,macro,94,94,0.000865,0.0319,0.7979,benchmark_polluted,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+event_type,hack_security,10,10,-0.003375,0.0,1.0,benchmark_polluted,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+event_type,institutional_flow,6,6,0.019451,0.3333,0.5,insufficient_data,collect_more,样本太少，不能下结论；保留但不提高权重。
+event_type,halving,3,3,0.0,0.0,1.0,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+event_type,staking_governance,3,3,-0.012606,0.0,0.6667,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+event_type,network_upgrade,2,2,0.002001,0.0,1.0,insufficient_data,review_benchmark,BTC/ETH 占比过高，当前异常收益结论会被 benchmark 污染，不能直接用于雷达加权。
+event_type,whale_position,2,2,-0.025591,0.5,0.0,insufficient_data,collect_more,样本太少，不能下结论；保留但不提高权重。

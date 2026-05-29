@@ -1,0 +1,3 @@
+unlock_id,asset_symbol,unlock_time_utc,unlock_name,unlock_amount_usd,unlock_pct_circulating,source,url,enabled,notes
+sample_xrp_unlock,XRP,2026-05-30T00:00:00Z,Sample XRP scheduled escrow unlock,50000000,2.5,manual_calendar,,true,Sample row; replace or extend with verified unlock calendar data
+sample_avax_unlock,AVAX,2026-06-15T00:00:00Z,Sample AVAX token unlock,25000000,1.8,manual_calendar,,true,Sample row below default 2% threshold unless threshold is relaxed

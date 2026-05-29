@@ -1,0 +1,6 @@
+window_label,start_hour,end_hour,window_priority,max_send_per_cycle,min_severity,notes
+overnight_quiet,0,7,quiet,1,critical,China time night window; only truly critical first-hand alerts should pass.
+morning_check,7,10,active,3,watch,China time morning check window; users catch up before/around market work.
+daytime_active,10,15,active,3,watch,China time daytime window; keep normal useful alerts flowing.
+afternoon_trade,15,18,active,4,watch,China time late afternoon window; higher user attention and pre-evening trading.
+evening_trade,18,24,active,4,watch,China time evening window; highest TG and trading attention.

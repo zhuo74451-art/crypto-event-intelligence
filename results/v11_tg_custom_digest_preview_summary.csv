@@ -1,0 +1,2 @@
+﻿generated_at_china,digest_label,window_start_china,window_end_china,sent_rows_in_window,ledger_rows_in_window,long_short_rows,digest_only_rows,evidence_rows,send_mode,status,message
+2026-05-28 18:27:33 UTC+8,custom,2026-05-28 09:00:00 UTC+8,2026-05-28 17:00:00 UTC+8,3,3,7,0,3,dry_run,pass,ok

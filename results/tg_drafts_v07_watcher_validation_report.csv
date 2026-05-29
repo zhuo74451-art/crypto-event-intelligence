@@ -1,0 +1,10 @@
+﻿draft_id,candidate_id,asset_symbol,event_type,draft_status,validation_status,validation_flags
+tg_watcher_0001,watcher_fh_dbb232d98231d333,BTC,whale_position,ready,pass,
+tg_watcher_0002,watcher_fh_5c0ab6b52311e31a,ETH,whale_position,ready,pass,
+tg_watcher_0003,watcher_fh_f03efc9e86591489,BTC,whale_position,ready,pass,
+tg_watcher_0004,watcher_fh_dfd0158b68a27d1a,HYPE,whale_position,ready,pass,
+tg_watcher_0005,watcher_fh_aa864d8c8c70ed6c,HYPE,whale_position,ready,pass,
+tg_watcher_0006,watcher_fh_c882497a6ccec22f,CTR,exchange_listing,ready,pass,
+tg_watcher_0007,watcher_fh_e3179cf77941da9e,HAEDAL,token_unlock,ready,pass,
+tg_watcher_0008,watcher_fh_d52226e92055465c,HOME,token_unlock,ready,pass,
+tg_watcher_0009,watcher_fh_adbf5f85f5f6391f,TBOT,token_unlock,ready,pass,

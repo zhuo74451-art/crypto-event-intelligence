@@ -1,0 +1,2 @@
+﻿history_rows,position_count,ready_positions,needs_more_history_positions,max_snapshots,min_snapshots,large_change_steps,side_change_steps,near_liquidation_snapshots,status
+9,9,0,9,1,12,0,0,0,needs_more_history

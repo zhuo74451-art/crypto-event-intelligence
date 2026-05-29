@@ -1,0 +1,6 @@
+﻿asset_symbol,side,trigger_direction,position_count,position_value_usd,nearest_distance_pct,nearest_liquidation_px,nearest_entity,route
+BTC,long,价格下跌触发多头清算,1,34887498.12,15.14,62143.04117159,Unknown Hyperliquid Whale,hidden
+HYPE,long,价格下跌触发多头清算,1,84299905.89,19.64,49.08677962,Unknown HYPE Whale,hidden
+BTC,short,价格上涨触发空头清算,2,46194024.2,29.37,94737.71221106,Unknown Hyperliquid Whale,hidden
+ETH,long,价格下跌触发多头清算,1,80016000.0,32.2,1356.23238988,Matrixport Related,hidden
+HYPE,short,价格上涨触发空头清算,1,106131020.89,49.82,91.51780537,loraclexyz,hidden

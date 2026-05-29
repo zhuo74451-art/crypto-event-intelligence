@@ -1,0 +1,4 @@
+event_id,event_time,title,asset_symbol,event_type,status,parsed_event_time_utc,parsed_event_time_china,time_quality_status,quality_status,quality_flags,skip_reason
+watcher_fh_f4f46c87bac3c5ef,2026-05-23 17:47:31 UTC+8,Binance watched address moved $9.50M ETH,ETH,onchain_transfer,ok,2026-05-23T09:47:31Z,2026-05-23 17:47:31 UTC+8,pass,pass,,
+watcher_fh_7a47f9facb481c08,2026-05-23 17:47:31 UTC+8,Aave treasury transferred out $2.40M AAVE,AAVE,onchain_transfer,ok,2026-05-23T09:47:31Z,2026-05-23 17:47:31 UTC+8,pass,pass,,
+watcher_fh_9c9632462884c0c3,2026-05-23 17:47:31 UTC+8,Tether observed $100.00M USDT mint on Ethereum,BTC,stablecoin_flow,ok,2026-05-23T09:47:31Z,2026-05-23 17:47:31 UTC+8,pass,pass,,

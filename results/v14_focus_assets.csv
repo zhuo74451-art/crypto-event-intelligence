@@ -1,0 +1,8 @@
+﻿asset_symbol,tier,selected,selection_reason,price_change_pct_24h,open_interest_change_pct_24h,funding_rate,market_state_reason
+BTC,tier_1,true,tier_1_always,0.4400,3.1240,0.00010000,24小时成交额较高
+ETH,tier_1,true,tier_1_always,1.1440,-1.7366,0.00009112,24小时成交额较高
+SOL,tier_2,false,tier_2_below_threshold,1.5170,-0.7271,0.00004545,多头账户/仓位拥挤；24小时成交额较高
+BNB,tier_2,false,tier_2_below_threshold,0.0000,-0.9895,0.00006060,多头账户/仓位拥挤
+XRP,tier_2,false,tier_2_below_threshold,2.4860,-1.9339,0.00009779,多头账户/仓位拥挤
+DOGE,tier_2,false,tier_2_below_threshold,1.2380,-1.1805,0.00010000,多头账户/仓位拥挤
+HYPE,tier_3,false,tier_3_below_extreme_threshold,7.5370,2.3370,0.00005000,24小时价格波动较大；24小时成交额较高

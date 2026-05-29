@@ -1,0 +1,2 @@
+﻿address_rows,enabled_address_rows,stablecoin_rows,enabled_stablecoin_rows,hyperliquid_rows,enabled_hyperliquid_rows,check_rows,fail_count,status
+16,16,2,2,5,5,23,0,pass

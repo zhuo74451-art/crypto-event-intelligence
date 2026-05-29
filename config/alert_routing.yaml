@@ -1,0 +1,57 @@
+# Telegram alert routing rules.
+# Purpose: keep intraday radar scarce and urgent; move context/background to morning/noon/evening digests.
+
+intraday_radar:
+  description: 需要用户尽快知道的结构变化，目标延迟小于 5 分钟。
+  allow:
+    funding_rate_extreme:
+      condition: abs(funding_rate) >= 0.0005
+      explanation: 资金费率达到约 0.05%，说明一侧持仓成本明显偏高。
+    btc_eth_5m_price_move:
+      assets:
+        - BTC
+        - ETH
+      condition: abs(price_change_5m_pct) >= 2
+      explanation: 核心资产 5 分钟快速波动，可能影响全市场风险偏好。
+    cex_netflow_extreme:
+      condition: btc_abs_netflow >= 5000 or eth_abs_netflow >= 50000
+      explanation: 交易所净流入/流出达到大额阈值，需结合历史基线判断异常。
+    liquidation_large:
+      condition: single_liquidation_usd >= 5000000
+      explanation: 单笔大额清算，属于即时市场结构冲击。
+    exchange_deposit_large:
+      condition: btc_to_exchange >= 1000 or eth_to_exchange >= 10000
+      explanation: 大额转入交易所，进入盘中观察。
+  block_or_digest:
+    static_large_position:
+      route: digest
+      explanation: 静态大仓位没有状态变化，不刷盘中雷达。
+    token_unlock_calendar:
+      route: daily_digest
+      explanation: 解锁是静态日历事实，除非金额/临近时间异常，否则只进早晚报。
+    generic_news:
+      route: digest_or_archive
+      explanation: 普通新闻没有结构化金额、来源和资产归因时不进盘中。
+
+scheduled_digest:
+  description: 适合早报、午报、晚报的背景和结构总结。
+  include:
+    - market_state_first_screen
+    - btc_eth_24h_price_and_oi
+    - funding_rate_context
+    - long_short_crowding_context
+    - btc_eth_etf_daily_flow
+    - etf_concentration_interpretation
+    - token_unlock_calendar
+    - hyperliquid_position_baseline
+    - cex_netflow_baseline
+    - today_focus_events
+    - other_dynamic_events
+
+forbidden:
+  - buy_signal
+  - sell_signal
+  - long_signal
+  - short_signal
+  - auto_order
+  - pnl_promise

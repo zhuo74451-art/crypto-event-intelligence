@@ -1,0 +1,374 @@
+event_id,event_time,title,asset_symbol,event_type,status,parsed_event_time_utc,parsed_event_time_china,time_quality_status,quality_status,quality_flags,skip_reason
+cand_04833,2026-05-17 04:25:42 UTC+8,VanEck和Grayscale向SEC提交BNB ETF修正文件,BNB,institutional_flow,ok,2026-05-16T20:25:42Z,2026-05-17 04:25:42 UTC+8,pass,pass,,
+cand_04490,2026-05-17 23:37:02 UTC+8,Is Q-Day crypto’s next threat as blockchains rush quantum fixes?,SOL,hack_security,ok,2026-05-17T15:37:02Z,2026-05-17 23:37:02 UTC+8,pass,pass,,
+cand_04117,2026-05-18 13:57:05 UTC+8,"🚀@GoPlusSecurity is now live on the @wallet Plugin Store.
+
+Users can now access GoPlus security protection directly thro",SOL,hack_security,ok,2026-05-18T05:57:05Z,2026-05-18 13:57:05 UTC+8,pass,pass,,
+cand_04079,2026-05-18 15:06:21 UTC+8,Aave restores Ether borrowing limits after $230 million exploit,AAVE,hack_security,ok,2026-05-18T07:06:21Z,2026-05-18 15:06:21 UTC+8,pass,pass,,
+cand_04015,2026-05-18 16:52:34 UTC+8,Lookonchain：与a16z关联的钱包0xb5e4今日买入37.2万枚HYPE,HYPE,institutional_flow,ok,2026-05-18T08:52:34Z,2026-05-18 16:52:34 UTC+8,pass,pass,,
+cand_03933,2026-05-18 18:23:00 UTC+8,Crypto Users Warn of Official-Looking Phishing Emails: Exchange and DeFi Users Targeted - U.Today,LINK,hack_security,ok,2026-05-18T10:23:00Z,2026-05-18 18:23:00 UTC+8,pass,pass,,
+cand_03916,2026-05-18 18:45:00 UTC+8,AAVE恢复WETH抵押限额，正常运营,AAVE,hack_security,ok,2026-05-18T10:45:00Z,2026-05-18 18:45:00 UTC+8,pass,pass,,
+cand_03794,2026-05-18 20:37:00 UTC+8,"Goldman Sachs Liquidates $154 Million XRP Position via ETF, Pivots to Hyperliquid Treasury - U.Today",XRP,institutional_flow,ok,2026-05-18T12:37:00Z,2026-05-18 20:37:00 UTC+8,pass,pass,,
+cand_03657,2026-05-18 22:34:09 UTC+8,AEON raises $8m to wire AI agents into 50m real-world merchants,BNB,institutional_flow,ok,2026-05-18T14:34:09Z,2026-05-18 22:34:09 UTC+8,pass,pass,,
+cand_03481,2026-05-19 00:53:58 UTC+8,Bitwise to add HYPE to balance sheet using fees from Hyperliquid ETF,HYPE,institutional_flow,ok,2026-05-18T16:53:58Z,2026-05-19 00:53:58 UTC+8,pass,pass,,
+cand_03399,2026-05-19 02:01:27 UTC+8,Crude Oil Prices: Brent and WTI Rise as Markets Respond to Trump-Xi Trade Talks,XRP,hack_security,ok,2026-05-18T18:01:27Z,2026-05-19 02:01:27 UTC+8,pass,pass,,
+cand_03364,2026-05-19 02:45:00 UTC+8,Bitwise将用10%管理费购买$HYPE,HYPE,institutional_flow,ok,2026-05-18T18:45:00Z,2026-05-19 02:45:00 UTC+8,pass,pass,,
+cand_03198,2026-05-19 06:00:00 UTC+8,Bitwise HYPE ETF pledges 10% fees to buybacks,HYPE,institutional_flow,ok,2026-05-18T22:00:00Z,2026-05-19 06:00:00 UTC+8,pass,pass,,
+cand_03063,2026-05-19 09:00:20 UTC+8,"🔥 BULLISH: Bitwise announces it will hold $HYPE on its balance sheet, allocating 10% of its Hyperliquid ETF (BHYP) manag",HYPE,institutional_flow,ok,2026-05-19T01:00:20Z,2026-05-19 09:00:20 UTC+8,pass,pass,,
+cand_02824,2026-05-19 16:05:00 UTC+8,BNB Reveals Biggest Challenge of Post-Quantum Network Migrations - U.Today,BNB,hack_security,ok,2026-05-19T08:05:00Z,2026-05-19 16:05:00 UTC+8,pass,pass,,
+cand_02338,2026-05-20 01:01:00 UTC+8,参议员：OCC不应向Ripple和Coinbase等加密企业授予国家信托牌照,XRP,institutional_flow,ok,2026-05-19T17:01:00Z,2026-05-20 01:01:00 UTC+8,pass,pass,,
+cand_02076,2026-05-20 06:15:00 UTC+8,"Hyperliquid ETF pulls $5M in days, 21Shares says",HYPE,institutional_flow,ok,2026-05-19T22:15:00Z,2026-05-20 06:15:00 UTC+8,pass,pass,,
+cand_01769,2026-05-20 13:03:08 UTC+8,Bitwise研究院：资金从LayerZero迁移至Chainlink CCIP,LINK,hack_security,ok,2026-05-20T05:03:08Z,2026-05-20 13:03:08 UTC+8,pass,pass,,
+cand_01767,2026-05-20 13:07:25 UTC+8,吴说获悉，Bitwise 加密研究院 Ishmael Asad 发文表示，在 rsETH 攻击事件后，资金在从 LayerZero 向 Chainlink CCIP 迁移，其中 LayerZero 日活跃地址数已跌至近三年来的最低点，ZRO,LINK,hack_security,ok,2026-05-20T05:07:25Z,2026-05-20 13:07:25 UTC+8,pass,pass,,
+cand_01593,2026-05-20 17:13:26 UTC+8,"XRP selling pressure fades, but $1.50 still blocks bulls",XRP,institutional_flow,ok,2026-05-20T09:13:26Z,2026-05-20 17:13:26 UTC+8,pass,pass,,
+cand_01570,2026-05-20 17:40:43 UTC+8,"XRP ETF rises as bulls target $2, while SHRMiner cloud mining's daily passive income of $5,700 attracts attention",XRP,institutional_flow,ok,2026-05-20T09:40:43Z,2026-05-20 17:40:43 UTC+8,pass,pass,,
+cand_01439,2026-05-20 20:12:37 UTC+8,Why Is Elizabeth Warren Attacking Ripple? The Answer Reveals Who Really Fears the CLARITY Act,XRP,hack_security,ok,2026-05-20T12:12:37Z,2026-05-20 20:12:37 UTC+8,pass,pass,,
+cand_01434,2026-05-20 20:17:00 UTC+8,"XRP Records 100% Uptick in U.S. ETFs, but 105-Day Sideways Drift Blocks Price Breakout - U.Today",XRP,institutional_flow,ok,2026-05-20T12:17:00Z,2026-05-20 20:17:00 UTC+8,pass,pass,,
+cand_01288,2026-05-20 22:14:39 UTC+8,Token Terminal：代币化ETF持有地址增至4.44万个,SOL,institutional_flow,ok,2026-05-20T14:14:39Z,2026-05-20 22:14:39 UTC+8,pass,pass,,
+cand_01202,2026-05-20 23:10:17 UTC+8,🔥 NEW: Morgan Stanley filed an amended Solana ETF application with $MSOL as the proposed ticker. https://t.co/Qw1LVgdMnE,SOL,institutional_flow,ok,2026-05-20T15:10:17Z,2026-05-20 23:10:17 UTC+8,pass,pass,,
+cand_01143,2026-05-20 23:58:00 UTC+8,Ripple CLO Alderoty Breaks Down What Clarity Act Really Means for US Market - U.Today,XRP,hack_security,ok,2026-05-20T15:58:00Z,2026-05-20 23:58:00 UTC+8,pass,pass,,
+cand_00886,2026-05-21 04:15:00 UTC+8,"🚨HYPERLIQUID ETFs SEE $22M INFLOWS IN FIRST WEEK
+
+The first U.S. spot $HYPE ETFs have pulled in $22.3M in net inflows si",HYPE,institutional_flow,ok,2026-05-20T20:15:00Z,2026-05-21 04:15:00 UTC+8,pass,pass,,
+cand_00649,2026-05-21 07:27:00 UTC+8,吴说获悉，据彭博 ETF 分析师 James Seyffart，Morgan Stanley 今晨提交了 Solana ETF 修订版申请文件，拟使用代码“MSOL”，目前尚未披露管理费率。https://t.co/7BbQCjRkqs,SOL,institutional_flow,ok,2026-05-20T23:27:00Z,2026-05-21 07:27:00 UTC+8,pass,pass,,
+cand_00523,2026-05-21 09:26:23 UTC+8,Grayscale：已提交$HYPE ETF注册申请，过去一周购入51万枚,HYPE,institutional_flow,ok,2026-05-21T01:26:23Z,2026-05-21 09:26:23 UTC+8,pass,pass,,
+cand_00481,2026-05-21 10:20:41 UTC+8,"SpaceX IPO Playbook: 7 Supply Chain Stocks Riding the IPO Wave
+
+The Space Economy is entering its most explosive phase y",LINK,institutional_flow,ok,2026-05-21T02:20:41Z,2026-05-21 10:20:41 UTC+8,pass,pass,,
+cand_00413,2026-05-21 11:45:03 UTC+8,链上监测：鲸鱼和机构大量购买$HYPE,HYPE,institutional_flow,ok,2026-05-21T03:45:03Z,2026-05-21 11:45:03 UTC+8,pass,pass,,
+cand_00412,2026-05-21 11:46:34 UTC+8,多个巨鲸及机构近期持续增持HYPE,HYPE,institutional_flow,ok,2026-05-21T03:46:34Z,2026-05-21 11:46:34 UTC+8,pass,pass,,
+cand_00258,2026-05-21 15:15:43 UTC+8,"Crypto traders are front-running the SpaceX IPO big time 🚀
+
+While Wall Street targets a $1.75T valuation, SpaceX trackin",LINK,institutional_flow,ok,2026-05-21T07:15:43Z,2026-05-21 15:15:43 UTC+8,pass,pass,,
+cand_00048,2026-05-21 18:57:41 UTC+8,"BITWISE IS BUYING $HYPE
+
+Bitwise have announced their ETF addresses. They have bought a total of $19.78M HYPE so far and",HYPE,institutional_flow,ok,2026-05-21T10:57:41Z,2026-05-21 18:57:41 UTC+8,pass,pass,,
+cand_04766,2026-05-17 08:46:41 UTC+8,Jump Crypto上线Firedancer验证器客户端，已处理数千万笔交易,SOL,exchange_listing,ok,2026-05-17T00:46:41Z,2026-05-17 08:46:41 UTC+8,pass,pass,,
+cand_04652,2026-05-17 16:00:41 UTC+8,"🐋 INTERESTING: Cardano whales now control nearly 67% of the entire ADA supply, the highest concentration since 2020. htt",ADA,whale_position,ok,2026-05-17T08:00:41Z,2026-05-17 16:00:41 UTC+8,pass,pass,,
+cand_04610,2026-05-17 18:34:27 UTC+8,"Firedancer quietly hits Solana mainnet, but validators must wait",SOL,network_upgrade,ok,2026-05-17T10:34:27Z,2026-05-17 18:34:27 UTC+8,pass,pass,,
+cand_04537,2026-05-17 21:58:33 UTC+8,XRP Upgrade Nears Rollout With Critical Fixes Across Several Features - U.Today,XRP,network_upgrade,ok,2026-05-17T13:58:33Z,2026-05-17 21:58:33 UTC+8,pass,pass,,
+cand_04273,2026-05-18 09:00:24 UTC+8,Cointelegraph：Vaneck和Grayscale提交BNB ETF提案修正案,BNB,staking_governance,ok,2026-05-18T01:00:24Z,2026-05-18 09:00:24 UTC+8,pass,pass,,
+cand_03950,2026-05-18 18:02:49 UTC+8,"⚡️ INSIGHT: Solana Foundation President Lily Liu says, “Memecoins don’t define Solana.” https://t.co/UlqW33QEtM",SOL,project_business,ok,2026-05-18T10:02:49Z,2026-05-18 18:02:49 UTC+8,pass,pass,,
+cand_03936,2026-05-18 18:18:44 UTC+8,吴说获悉，Hyperliquid 宣布，约一个月后其活跃验证者集合将从 24 个增至 27 个，网络仍将保持当前的无需许可（permissionless）验证机制。官方提醒验证者在主网上线前充分熟悉测试网与相关技术细节，并表示验证者需自质押,HYPE,network_upgrade,ok,2026-05-18T10:18:44Z,2026-05-18 18:18:44 UTC+8,pass,pass,,
+cand_03902,2026-05-18 18:58:01 UTC+8,XRPL Validators Face Upgrade Deadline Ahead of Amendment Activation - U.Today,XRP,network_upgrade,ok,2026-05-18T10:58:01Z,2026-05-18 18:58:01 UTC+8,pass,pass,,
+cand_03867,2026-05-18 19:27:36 UTC+8,XRPL validators face May 27 deadline as upgrade nears activation,XRP,network_upgrade,ok,2026-05-18T11:27:36Z,2026-05-18 19:27:36 UTC+8,pass,pass,,
+cand_03704,2026-05-18 21:57:30 UTC+8,"在 Pump 把 100% 收入回购调整为 50% 收入回购后，他们开始重新恢复把 SOL 转进交易所：
+过去半小时里把 8.27 万枚 SOL ($702 万) 转进了 Kraken。
+
+他们以前经常把手续费收入的 SOL 转进 Krak",SOL,whale_position,ok,2026-05-18T13:57:30Z,2026-05-18 21:57:30 UTC+8,pass,pass,,
+cand_03677,2026-05-18 22:16:32 UTC+8,BNBAgent SDK已上线BSC主网，为AI代理在链上的规模化落地提供核心基础设施,BNB,network_upgrade,ok,2026-05-18T14:16:32Z,2026-05-18 22:16:32 UTC+8,pass,pass,,
+cand_03668,2026-05-18 22:25:33 UTC+8,"Lookonchain：某地址在9个月后再次出售82,700枚SOL",SOL,whale_position,ok,2026-05-18T14:25:33Z,2026-05-18 22:25:33 UTC+8,pass,pass,,
+cand_03666,2026-05-18 22:27:15 UTC+8,吴说获悉，Solana 核心开发团队 Anza 表示，Agave 4.0 已正式向主网验证者推荐升级。该版本重点提升网络传输效率与区块处理能力，包括引入 XDP 技术后将 Turbine 重传延迟从约 600ms 降至约 0.8ms，并全面,SOL,network_upgrade,ok,2026-05-18T14:27:15Z,2026-05-18 22:27:15 UTC+8,pass,pass,,
+cand_03562,2026-05-18 23:49:14 UTC+8,BNB Chain推出BNBAgent SDK，支持AI代理链上身份验证,BNB,network_upgrade,ok,2026-05-18T15:49:14Z,2026-05-18 23:49:14 UTC+8,pass,pass,,
+cand_03477,2026-05-19 00:55:05 UTC+8,"Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:",AVAX,stablecoin_flow,ok,2026-05-18T16:55:05Z,2026-05-19 00:55:05 UTC+8,pass,pass,,
+cand_03456,2026-05-19 01:10:18 UTC+8,"🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi",SOL,project_business,ok,2026-05-18T17:10:18Z,2026-05-19 01:10:18 UTC+8,pass,pass,,
+cand_03391,2026-05-19 02:10:16 UTC+8,"🔥 BULLISH: Tokenized stocks on Ondo Finance crossed $1.5B in TVL, with Ondo’s top five assets making up 25% of the secto",ONDO,project_business,ok,2026-05-18T18:10:16Z,2026-05-19 02:10:16 UTC+8,pass,pass,,
+cand_03341,2026-05-19 03:13:48 UTC+8,$1.80 or $1.00? Analyst Maps Out XRP's Next Big Move - U.Today,XRP,market_structure,ok,2026-05-18T19:13:48Z,2026-05-19 03:13:48 UTC+8,pass,pass,,
+cand_03274,2026-05-19 04:30:00 UTC+8,XRP price slips 2% on profit taking,XRP,staking_governance,ok,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,pass,pass,,
+cand_03241,2026-05-19 05:10:17 UTC+8,⚡️ NEW: Revolut unveiled a physical crypto card with Dogecoin branding and LED tap-to-pay functionality for users in the,DOGE,project_business,ok,2026-05-18T21:10:17Z,2026-05-19 05:10:17 UTC+8,pass,pass,,
+cand_03226,2026-05-19 05:20:51 UTC+8,Revolut推出首张实体加密卡，主打Dogecoin主题,DOGE,project_business,ok,2026-05-18T21:20:51Z,2026-05-19 05:20:51 UTC+8,pass,pass,,
+cand_03115,2026-05-19 07:51:19 UTC+8,吴说获悉，Revolut 宣布推出首张实体加密卡，采用 Dogecoin 主题设计，并配备支付时可点亮的 LED 显示。该卡可在支持 Visa 与 Mastercard 的商户使用，首批面向英国及欧洲经济区（不含匈牙利、瑞士和葡萄牙）用户开,DOGE,project_business,ok,2026-05-18T23:51:19Z,2026-05-19 07:51:19 UTC+8,pass,pass,,
+cand_03079,2026-05-19 08:33:49 UTC+8,"仅在过去 2 个月时间里，Ondo 项目方的多签钱包就向 Coinbase 等交易所累计转移了超过 3.28 亿枚 $ONDO ($9842 万)。
+
+地址：
+https://t.co/eqO2dMOrZL
+https://t.co/3c8",ONDO,whale_position,ok,2026-05-19T00:33:49Z,2026-05-19 08:33:49 UTC+8,pass,pass,,
+cand_03078,2026-05-19 08:34:50 UTC+8,Ondo项目方多签钱包过去2个月向Coinbase等交易所累计转移超3.28亿枚ONDO,ONDO,whale_position,ok,2026-05-19T00:34:50Z,2026-05-19 08:34:50 UTC+8,pass,pass,,
+cand_03069,2026-05-19 08:46:14 UTC+8,余烬监测：ondo项目方多签钱包向Coinbase转入超3.28亿枚ondo,ONDO,whale_position,ok,2026-05-19T00:46:14Z,2026-05-19 08:46:14 UTC+8,pass,pass,,
+cand_03028,2026-05-19 09:49:23 UTC+8,Defillama：Hyperliquid仍维持链上永续合约市场领先地位,SOL,onchain_data,ok,2026-05-19T01:49:23Z,2026-05-19 09:49:23 UTC+8,pass,pass,,
+cand_02900,2026-05-19 13:46:52 UTC+8,Ripple CTO Explains XRPL Hard Forks - U.Today,XRP,network_upgrade,ok,2026-05-19T05:46:52Z,2026-05-19 13:46:52 UTC+8,pass,pass,,
+cand_02846,2026-05-19 15:30:15 UTC+8,BNB Chain发布后量子密码学迁移报告，测试显示数据膨胀挑战,BNB,staking_governance,ok,2026-05-19T07:30:15Z,2026-05-19 15:30:15 UTC+8,pass,pass,,
+cand_02802,2026-05-19 16:40:00 UTC+8,Solana Chain GDP Hits $342M as RWA Market Cap Tops $2B,SOL,network_upgrade,ok,2026-05-19T08:40:00Z,2026-05-19 16:40:00 UTC+8,pass,pass,,
+cand_02714,2026-05-19 18:30:33 UTC+8,"BNB Chain Passes Post-Quantum Security Test, Network Speed Falls 40%",BNB,network_upgrade,ok,2026-05-19T10:30:33Z,2026-05-19 18:30:33 UTC+8,pass,pass,,
+cand_02664,2026-05-19 19:30:00 UTC+8,Ripple CTO explains XRPL hard forks before 3.1.3 deadline,XRP,network_upgrade,ok,2026-05-19T11:30:00Z,2026-05-19 19:30:00 UTC+8,pass,pass,,
+cand_02258,2026-05-20 02:20:00 UTC+8,⚡️ NEW: Figure CEO Brett Adcock said the company’s humanoid robot has more possible body positions than atoms in the uni,UNI,project_business,ok,2026-05-19T18:20:00Z,2026-05-20 02:20:00 UTC+8,pass,pass,,
+cand_02246,2026-05-20 02:40:15 UTC+8,"🚨 INSIGHT: @mert said Solana should focus on spot listings, onchain binary markets, capital formation, privacy, and vaul",SOL,exchange_listing,ok,2026-05-19T18:40:15Z,2026-05-20 02:40:15 UTC+8,pass,pass,,
+cand_02206,2026-05-20 03:15:00 UTC+8,"🇺🇸SEN. WARREN QUESTIONS OCC OVER CRYPTO BANK CHARTERS
+
+Senator Elizabeth Warren is questioning OCC approvals for crypto",XRP,project_business,ok,2026-05-19T19:15:00Z,2026-05-20 03:15:00 UTC+8,pass,pass,,
+cand_01972,2026-05-20 08:15:36 UTC+8,"链上监测：鲸鱼在过去10小时内购买206,325枚HYPE并质押",HYPE,staking_governance,ok,2026-05-20T00:15:36Z,2026-05-20 08:15:36 UTC+8,pass,pass,,
+cand_01875,2026-05-20 10:12:02 UTC+8,TRX 固定促銷，享年化收益 8%！,TRX,staking_governance,ok,2026-05-20T02:12:02Z,2026-05-20 10:12:02 UTC+8,pass,pass,,
+cand_01727,2026-05-20 14:19:08 UTC+8,Galaxy lifts CLARITY Act odds to 75%,SOL,network_upgrade,ok,2026-05-20T06:19:08Z,2026-05-20 14:19:08 UTC+8,pass,pass,,
+cand_01440,2026-05-20 20:11:45 UTC+8,"Anchorage (@Anchorage) linked wallet further withdrew 44,510 $HYPE worth $2.16M from #Gate.
+
+They have bought 2.385M $HY",HYPE,staking_governance,ok,2026-05-20T12:11:45Z,2026-05-20 20:11:45 UTC+8,pass,pass,,
+cand_01433,2026-05-20 20:17:05 UTC+8,Ripple's RLUSD Hits New All-Time High in Market Cap - U.Today,XRP,stablecoin_flow,ok,2026-05-20T12:17:05Z,2026-05-20 20:17:05 UTC+8,pass,pass,,
+cand_01390,2026-05-20 21:00:33 UTC+8,Fetch.ai Launches Agent Launch for AI Agent Tokens on BNB Chain,BNB,stablecoin_flow,ok,2026-05-20T13:00:33Z,2026-05-20 21:00:33 UTC+8,pass,pass,,
+cand_01333,2026-05-20 21:50:01 UTC+8,"Shibarium Transactions Surge 44%, but SHIB Isn't Moving - U.Today",SHIB,network_upgrade,ok,2026-05-20T13:50:01Z,2026-05-20 21:50:01 UTC+8,pass,pass,,
+cand_01282,2026-05-20 22:17:57 UTC+8,"Make your own custom stablecoins with Coinbase!
+
+See link in follow on post https://t.co/kUGOkgIVoo",LINK,stablecoin_flow,ok,2026-05-20T14:17:57Z,2026-05-20 22:17:57 UTC+8,pass,pass,,
+cand_01146,2026-05-20 23:54:23 UTC+8,Solana链上定制稳定币USDF已上线,SOL,exchange_listing,ok,2026-05-20T15:54:23Z,2026-05-20 23:54:23 UTC+8,pass,pass,,
+cand_00748,2026-05-21 05:55:00 UTC+8,Clarity Act could unlock $2T says Ripple CLO,XRP,staking_governance,ok,2026-05-20T21:55:00Z,2026-05-21 05:55:00 UTC+8,pass,pass,,
+cand_00585,2026-05-21 08:30:00 UTC+8,Clarity Act floor vote could come by August says Lummis,XRP,staking_governance,ok,2026-05-21T00:30:00Z,2026-05-21 08:30:00 UTC+8,pass,pass,,
+cand_00581,2026-05-21 08:31:47 UTC+8,"Anchorage (@Anchorage) linked wallet further withdrew 142,308 $HYPE worth $7.38M from #Gate and #OKX.
+
+They have bought",HYPE,staking_governance,ok,2026-05-21T00:31:47Z,2026-05-21 08:31:47 UTC+8,pass,pass,,
+cand_00426,2026-05-21 11:27:41 UTC+8,GSX settles $350m on-chain as $125m liquidity waits,XRP,staking_governance,ok,2026-05-21T03:27:41Z,2026-05-21 11:27:41 UTC+8,pass,pass,,
+cand_00301,2026-05-21 14:20:46 UTC+8,"This address 0x85C just withdrew $5.72M HYPE from Bitget and staked it.
+
+They have now staked $15.33M of HYPE.
+
+0x85C is",HYPE,staking_governance,ok,2026-05-21T06:20:46Z,2026-05-21 14:20:46 UTC+8,pass,pass,,
+cand_00259,2026-05-21 15:14:46 UTC+8,Pi Price Rally Soon? Pi Network Breaks Into US Market Through OKX Integration,HYPE,network_upgrade,ok,2026-05-21T07:14:46Z,2026-05-21 15:14:46 UTC+8,pass,pass,,
+cand_00245,2026-05-21 15:32:41 UTC+8,【Abraxas Capital主地址】SOL 空单 新开仓!,SOL,whale_position,ok,2026-05-21T07:32:41Z,2026-05-21 15:32:41 UTC+8,pass,pass,,
+cand_00242,2026-05-21 15:32:57 UTC+8,【重仓布局三大市场】LINK 空单 平仓止盈!,LINK,whale_position,ok,2026-05-21T07:32:57Z,2026-05-21 15:32:57 UTC+8,pass,pass,,
+cand_00240,2026-05-21 15:33:02 UTC+8,【重仓布局三大市场】XRP 空单 平仓止盈!,XRP,whale_position,ok,2026-05-21T07:33:02Z,2026-05-21 15:33:02 UTC+8,pass,pass,,
+cand_00199,2026-05-21 16:08:41 UTC+8,【Abraxas Capital主地址】SOL 空单 摊平 啦!,SOL,whale_position,ok,2026-05-21T08:08:41Z,2026-05-21 16:08:41 UTC+8,pass,pass,,
+cand_00191,2026-05-21 16:17:56 UTC+8,Charles Hoskinson: ‘Cardano Is My Life's Work and I Want ADA to Succeed No Matter What’,ADA,network_upgrade,ok,2026-05-21T08:17:56Z,2026-05-21 16:17:56 UTC+8,pass,pass,,
+cand_00184,2026-05-21 16:28:42 UTC+8,【Abraxas Capital主地址】SOL 空单 摊平 啦!,SOL,whale_position,ok,2026-05-21T08:28:42Z,2026-05-21 16:28:42 UTC+8,pass,pass,,
+cand_00151,2026-05-21 17:08:43 UTC+8,【Abraxas Capital主地址】SOL 空单 摊平 啦!,SOL,whale_position,ok,2026-05-21T09:08:43Z,2026-05-21 17:08:43 UTC+8,pass,pass,,
+cand_00127,2026-05-21 17:34:44 UTC+8,【Abraxas Capital主地址】SOL 空单 摊平 啦!,SOL,whale_position,ok,2026-05-21T09:34:44Z,2026-05-21 17:34:44 UTC+8,pass,pass,,
+cand_00125,2026-05-21 17:34:48 UTC+8,"A crypto whale has made a $224,000 bet that XRP's price stays perfectly flat through June",XRP,whale_position,ok,2026-05-21T09:34:48Z,2026-05-21 17:34:48 UTC+8,pass,pass,,
+cand_00094,2026-05-21 18:11:24 UTC+8,"Top 5 Projects on RootData🔥 
+https://t.co/69bunclw2J
+
+1. @NexusLabs - Massively-parallelized proof mining network; 
+📅 $N",HYPE,project_business,ok,2026-05-21T10:11:24Z,2026-05-21 18:11:24 UTC+8,pass,pass,,
+cand_04990,2026-05-16 21:01:02 UTC+8,What Is AI Jailbreaking? A Beginner's Guide to the Cat-and-Mouse Game Behind Every Chatbot - Decrypt,AAVE,hack_security,ok,2026-05-16T13:01:02Z,2026-05-16 21:01:02 UTC+8,pass,pass,,
+cand_04953,2026-05-16 22:12:55 UTC+8,OpenAI and Malta Partner to Give All Citizens Free ChatGPT Plus Access,ADA,hack_security,ok,2026-05-16T14:12:55Z,2026-05-16 22:12:55 UTC+8,pass,pass,,
+cand_04889,2026-05-17 01:00:56 UTC+8,Tether Urged To Transfer $344M In Frozen USDT To Terror Victims | Bitcoinist.com,BNB,hack_security,ok,2026-05-16T17:00:56Z,2026-05-17 01:00:56 UTC+8,pass,pass,,
+cand_04846,2026-05-17 03:09:20 UTC+8,PrimeXBT: How Crypto Funding Changes Access to Global Markets | Bitcoinist.com,BNB,institutional_flow,ok,2026-05-16T19:09:20Z,2026-05-17 03:09:20 UTC+8,pass,pass,,
+cand_04822,2026-05-17 05:00:09 UTC+8,KelpDAO: rsETH Records $936k Net Outflows One Month Post-Hack - Details | Bitcoinist.com,AAVE,hack_security,ok,2026-05-16T21:00:09Z,2026-05-17 05:00:09 UTC+8,pass,pass,,
+cand_04711,2026-05-17 11:00:01 UTC+8,$10M Gone: Thorchain Exploit Triggers Security Fears Across DeFi,BNB,hack_security,ok,2026-05-17T03:00:01Z,2026-05-17 11:00:01 UTC+8,pass,pass,,
+cand_04629,2026-05-17 17:39:14 UTC+8,BNB ETF race tightens as VanEck and Grayscale update SEC filings,BNB,institutional_flow,ok,2026-05-17T09:39:14Z,2026-05-17 17:39:14 UTC+8,pass,pass,,
+cand_04600,2026-05-17 19:00:15 UTC+8,Crypto Report Card: How Institutional Investors Allocated Capital In Q1 2026 | Bitcoinist.com,BNB,hack_security,ok,2026-05-17T11:00:15Z,2026-05-17 19:00:15 UTC+8,pass,pass,,
+cand_04560,2026-05-17 21:00:57 UTC+8,Crypto Confidence Surges As Italy's Largest Bank Doubles Holdings In Q1,BNB,hack_security,ok,2026-05-17T13:00:57Z,2026-05-17 21:00:57 UTC+8,pass,pass,,
+cand_04539,2026-05-17 21:53:45 UTC+8,Dogecoin Teases 27% Breakout out of Bollinger Bands as ETF Inflows Hit 3-Week Streak - U.Today,DOGE,institutional_flow,ok,2026-05-17T13:53:45Z,2026-05-17 21:53:45 UTC+8,pass,pass,,
+cand_04482,2026-05-18 00:01:10 UTC+8,XRP ETF inflows surge as network activity hits March highs,BNB,institutional_flow,ok,2026-05-17T16:01:10Z,2026-05-18 00:01:10 UTC+8,pass,pass,,
+cand_04468,2026-05-18 01:00:23 UTC+8,"CLARITY Act Could Unlock Wider Tech Growth In America, Says a16z",BNB,hack_security,ok,2026-05-17T17:00:23Z,2026-05-18 01:00:23 UTC+8,pass,pass,,
+cand_04407,2026-05-18 03:15:00 UTC+8,"🔥BITWISE’S BHYP LEADS 2026 ALTCOIN ETF DEBUTS
+
+Bitwise’s $HYPE ETF ""BHYP"" saw $4.31M in debut trading volume on May 15,",AVAX,institutional_flow,ok,2026-05-17T19:15:00Z,2026-05-18 03:15:00 UTC+8,pass,pass,,
+cand_04389,2026-05-18 04:32:07 UTC+8,What Is Arc? The Stablecoin Blockchain From USDC Issuer Circle - Decrypt,AAVE,institutional_flow,ok,2026-05-17T20:32:07Z,2026-05-18 04:32:07 UTC+8,pass,pass,,
+cand_04379,2026-05-18 05:00:05 UTC+8,"Crypto Systems Could Be Outpaced By Quantum Tech By 2033, Says Hoskinson",BNB,hack_security,ok,2026-05-17T21:00:05Z,2026-05-18 05:00:05 UTC+8,pass,pass,,
+cand_04376,2026-05-18 05:14:00 UTC+8,Bernstein Sees Figure Q1 Proves Uniqueness of Blockchain Marketplaces,ADA,hack_security,ok,2026-05-17T21:14:00Z,2026-05-18 05:14:00 UTC+8,pass,pass,,
+cand_04354,2026-05-18 07:00:17 UTC+8,"Grayscale, VanEck File Amendments For BNB ETF - Next Altcoin Launch? | Bitcoinist.com",ADA,institutional_flow,ok,2026-05-17T23:00:17Z,2026-05-18 07:00:17 UTC+8,pass,pass,,
+cand_04272,2026-05-18 09:00:43 UTC+8,"Bitcoin's Social Euphoria Hits Annual Peak Due To CLARITY Act, But History Says Caution Is Warranted",BNB,hack_security,ok,2026-05-18T01:00:43Z,2026-05-18 09:00:43 UTC+8,pass,pass,,
+cand_04206,2026-05-18 10:40:22 UTC+8,"Grayscale, VanEck Amend BNB ETF Applications",ADA,institutional_flow,ok,2026-05-18T02:40:22Z,2026-05-18 10:40:22 UTC+8,pass,pass,,
+cand_04139,2026-05-18 13:02:08 UTC+8,Aave Restores Wrapped Ether Borrowing Following Kelp DAO Hack,AAVE,hack_security,ok,2026-05-18T05:02:08Z,2026-05-18 13:02:08 UTC+8,pass,pass,,
+cand_04119,2026-05-18 13:53:00 UTC+8,Aave restores WETH borrowing as Kelp DAO recovery moves ahead,AAVE,hack_security,ok,2026-05-18T05:53:00Z,2026-05-18 13:53:00 UTC+8,pass,pass,,
+cand_04074,2026-05-18 15:11:30 UTC+8,Verus Ethereum Bridge Reportedly Exploited for $11.58 Million,ADA,hack_security,ok,2026-05-18T07:11:30Z,2026-05-18 15:11:30 UTC+8,pass,pass,,
+cand_04055,2026-05-18 15:51:01 UTC+8,"还是有巨鲸在抄底的：手持 13.2 万枚 ETH 的巨鲸，今天在 3 小时前以 $2,110 的价格加仓抄底了 5,000 枚 ETH：
+他从 Spark 和 Aave 借款 1060 万 USDT，然后买成了 5,001 枚 ETH，买入",AAVE,institutional_flow,ok,2026-05-18T07:51:01Z,2026-05-18 15:51:01 UTC+8,pass,pass,,
+cand_03976,2026-05-18 17:36:09 UTC+8,Crypto ATM Operator Bitcoin Depot Files for Chapter 11 Bankruptcy - Decrypt,AAVE,hack_security,ok,2026-05-18T09:36:09Z,2026-05-18 17:36:09 UTC+8,pass,pass,,
+cand_03967,2026-05-18 17:45:52 UTC+8,Hacker Drains $11.58 Million From Verus-Ethereum Bridge | Bitcoinist.com,BNB,hack_security,ok,2026-05-18T09:45:52Z,2026-05-18 17:45:52 UTC+8,pass,pass,,
+cand_03913,2026-05-18 18:47:03 UTC+8,"Goldman Sachs Cuts Crypto ETF Exposure, Rebalances Holdings",ADA,institutional_flow,ok,2026-05-18T10:47:03Z,2026-05-18 18:47:03 UTC+8,pass,pass,,
+cand_03911,2026-05-18 18:47:53 UTC+8,⚡️ UPDATE: Goldman Sachs exited its XRP and Solana ETF positions in Q1 2026. https://t.co/Jp2vuwZMVj,SOL,institutional_flow,ok,2026-05-18T10:47:53Z,2026-05-18 18:47:53 UTC+8,pass,pass,,
+cand_03899,2026-05-18 19:00:45 UTC+8,"BREAKING - Bitcoin Depot, Operator Of 9,000+ ATMs, Files For Bankruptcy Protection",BNB,hack_security,ok,2026-05-18T11:00:45Z,2026-05-18 19:00:45 UTC+8,pass,pass,,
+cand_03853,2026-05-18 19:44:14 UTC+8,David Schwartz rejects XRP meme coin investment hype after FUZZY rumors,HYPE,institutional_flow,ok,2026-05-18T11:44:14Z,2026-05-18 19:44:14 UTC+8,pass,pass,,
+cand_03830,2026-05-18 20:05:32 UTC+8,"Morning Minute: Bitcoin Slides Back to $77K on Rising Bond Yields, Oil Spike - Decrypt",AAVE,hack_security,ok,2026-05-18T12:05:32Z,2026-05-18 20:05:32 UTC+8,pass,pass,,
+cand_03802,2026-05-18 20:30:27 UTC+8,Ex-Ripple CTO Schwartz Sends XRP To John Deaton Senate Campaign,BNB,hack_security,ok,2026-05-18T12:30:27Z,2026-05-18 20:30:27 UTC+8,pass,pass,,
+cand_03698,2026-05-18 22:00:45 UTC+8,Did The Cardano Founder Help To Derail XRP’s Growth? Ripple Community Draws Out Hoskinson | Bitcoinist.com,ADA,hack_security,ok,2026-05-18T14:00:45Z,2026-05-18 22:00:45 UTC+8,pass,pass,,
+cand_03688,2026-05-18 22:08:14 UTC+8,CoinEx’s crypto savings push in the age of falling DeFi yields,AAVE,hack_security,ok,2026-05-18T14:08:14Z,2026-05-18 22:08:14 UTC+8,pass,pass,,
+cand_03595,2026-05-18 23:30:35 UTC+8,"This US Mega Bank Is Going Big On XRP, Here’s How Large A Share They Own Of XRP ETFs | Bitcoinist.com",BNB,institutional_flow,ok,2026-05-18T15:30:35Z,2026-05-18 23:30:35 UTC+8,pass,pass,,
+cand_03583,2026-05-18 23:36:04 UTC+8,Ether Bears Take Control With Drop to $2K: What Will Stop ETH Price Crash?,ADA,hack_security,ok,2026-05-18T15:36:04Z,2026-05-18 23:36:04 UTC+8,pass,pass,,
+cand_03543,2026-05-19 00:00:29 UTC+8,"Bitcoin, Ethereum ETFs Bleed as Crypto Funds Shed $1.07 Billion, Ending 6-Week Win Streak - Decrypt",AAVE,institutional_flow,ok,2026-05-18T16:00:29Z,2026-05-19 00:00:29 UTC+8,pass,pass,,
+cand_03490,2026-05-19 00:45:00 UTC+8,"Bank of England, FCA Set Out ‘Shared Vision’ for Tokenization - Decrypt",AAVE,institutional_flow,ok,2026-05-18T16:45:00Z,2026-05-19 00:45:00 UTC+8,pass,pass,,
+cand_03470,2026-05-19 01:01:07 UTC+8,"Crypto Funds Post $1B in Outflows as Iran Tensions Weigh on Bitcoin, Ether",ADA,institutional_flow,ok,2026-05-18T17:01:07Z,2026-05-19 01:01:07 UTC+8,pass,pass,,
+cand_03426,2026-05-19 01:34:57 UTC+8,Ethereum Founder Vitalik Buterin Says AI Verification Could Help Secure Crypto Networks - Decrypt,AAVE,hack_security,ok,2026-05-18T17:34:57Z,2026-05-19 01:34:57 UTC+8,pass,pass,,
+cand_03374,2026-05-19 02:30:00 UTC+8,Standard Chartered: $4T tokenized by 2028,AAVE,hack_security,ok,2026-05-18T18:30:00Z,2026-05-19 02:30:00 UTC+8,pass,pass,,
+cand_03370,2026-05-19 02:30:45 UTC+8,"Analyst Predicts Bitcoin And Ethereum Price For The Rest Of 2026, What To Expect | Bitcoinist.com",BNB,hack_security,ok,2026-05-18T18:30:45Z,2026-05-19 02:30:45 UTC+8,pass,pass,,
+cand_03357,2026-05-19 02:55:17 UTC+8,Polymarket Users Spur Insider Trading Suspicions With $2.4 Million in Iran Prediction Wins - Decrypt,AAVE,hack_security,ok,2026-05-18T18:55:17Z,2026-05-19 02:55:17 UTC+8,pass,pass,,
+cand_03296,2026-05-19 04:00:52 UTC+8,Patrick Witt Teases ‘Breakthrough’ On US Bitcoin Reserve,BNB,hack_security,ok,2026-05-18T20:00:52Z,2026-05-19 04:00:52 UTC+8,pass,pass,,
+cand_03256,2026-05-19 04:55:33 UTC+8,"Bitcoin Faces Greater Quantum Computing Risk Than Ethereum, Citi Warns - Decrypt",AAVE,hack_security,ok,2026-05-18T20:55:33Z,2026-05-19 04:55:33 UTC+8,pass,pass,,
+cand_03227,2026-05-19 05:20:00 UTC+8,Georgia Primary to Test Crypto PAC’s Support for Democratic Candidate,ADA,hack_security,ok,2026-05-18T21:20:00Z,2026-05-19 05:20:00 UTC+8,pass,pass,,
+cand_03206,2026-05-19 05:47:48 UTC+8,3 Factors May Send Bitcoin Price Back To $80K,ADA,hack_security,ok,2026-05-18T21:47:48Z,2026-05-19 05:47:48 UTC+8,pass,pass,,
+cand_03163,2026-05-19 06:31:27 UTC+8,HYPE Jumps On Bitwise’s Hyperliquid ETF Move—Galaxy Secures BitLicense In NY | Bitcoinist.com,BNB,institutional_flow,ok,2026-05-18T22:31:27Z,2026-05-19 06:31:27 UTC+8,pass,pass,,
+cand_03120,2026-05-19 07:40:51 UTC+8,"Binance Retail Investor Bitcoin Inflows Drop By 73%, What's Next for BTC?",ADA,institutional_flow,ok,2026-05-18T23:40:51Z,2026-05-19 07:40:51 UTC+8,pass,pass,,
+cand_03082,2026-05-19 08:30:12 UTC+8,Binance Inflow Data Explains The Mechanics Behind Ethereum Weakness – Details | Bitcoinist.com,ADA,institutional_flow,ok,2026-05-19T00:30:12Z,2026-05-19 08:30:12 UTC+8,pass,pass,,
+cand_03019,2026-05-19 10:00:40 UTC+8,The XRP Asian Breakout: Japan And South Korea Lead The Charge | Bitcoinist.com,BNB,hack_security,ok,2026-05-19T02:00:40Z,2026-05-19 10:00:40 UTC+8,pass,pass,,
+cand_02949,2026-05-19 12:00:30 UTC+8,Bitcoin Retail Activity Hits Record Low As Inflows Plunge,BNB,institutional_flow,ok,2026-05-19T04:00:30Z,2026-05-19 12:00:30 UTC+8,pass,pass,,
+cand_02940,2026-05-19 12:21:57 UTC+8,Tom Lee says Ether Pullback was Chance for Bitmine to Buy 71K ETH,ADA,hack_security,ok,2026-05-19T04:21:57Z,2026-05-19 12:21:57 UTC+8,pass,pass,,
+cand_02923,2026-05-19 12:52:25 UTC+8,Echo Protocol Hacked for $76.7M in Admin Key Exploit,ADA,hack_security,ok,2026-05-19T04:52:25Z,2026-05-19 12:52:25 UTC+8,pass,pass,,
+cand_02865,2026-05-19 15:00:22 UTC+8,South Korea's KB Completes Stablecoin Pilot Ahead Of Rules,BNB,hack_security,ok,2026-05-19T07:00:22Z,2026-05-19 15:00:22 UTC+8,pass,pass,,
+cand_02860,2026-05-19 15:04:27 UTC+8,Ethereum Foundation Sees 2 More High-Profile Departures,ADA,hack_security,ok,2026-05-19T07:04:27Z,2026-05-19 15:04:27 UTC+8,pass,pass,,
+cand_02763,2026-05-19 17:30:27 UTC+8,Crypto Hack Hits Echo As Monad’s eBTC Market Faces Fallout,BNB,hack_security,ok,2026-05-19T09:30:27Z,2026-05-19 17:30:27 UTC+8,pass,pass,,
+cand_02758,2026-05-19 17:37:49 UTC+8,Swan Bitcoin Faces Nearly $1B Lawsuit Over Prime Trust Transfers,ADA,hack_security,ok,2026-05-19T09:37:49Z,2026-05-19 17:37:49 UTC+8,pass,pass,,
+cand_02679,2026-05-19 19:13:11 UTC+8,Bitcoin DeFi Platform Echo Protocol Hit By $76M Monad Exploit - Decrypt,AAVE,hack_security,ok,2026-05-19T11:13:11Z,2026-05-19 19:13:11 UTC+8,pass,pass,,
+cand_02667,2026-05-19 19:26:32 UTC+8,"Morning Minute: SEC Reverses Course on Tokenized Stocks, HYPE Soars - Decrypt",AAVE,hack_security,ok,2026-05-19T11:26:32Z,2026-05-19 19:26:32 UTC+8,pass,pass,,
+cand_02642,2026-05-19 19:55:54 UTC+8,Bitcoin ETFs Shed $649M in a Day as Long-Term BTC Holders ‘Limit Downside Potential’ - Decrypt,AAVE,institutional_flow,ok,2026-05-19T11:55:54Z,2026-05-19 19:55:54 UTC+8,pass,pass,,
+cand_02630,2026-05-19 20:12:30 UTC+8,"XRP-Linked Ripple Never Had Gag Order, Clarifies SEC Veteran; Binance Drops Major Uniswap and Bitcoin Pairs; Crypto Faces Shai-Hulud Malware Again - Morning Crypto Report - U.Today",AVAX,hack_security,ok,2026-05-19T12:12:30Z,2026-05-19 20:12:30 UTC+8,pass,pass,,
+cand_02571,2026-05-19 21:23:52 UTC+8,South Korean Funeral Company Faces $33M Unrealized Loss on Leveraged Ether ETFs,ADA,institutional_flow,ok,2026-05-19T13:23:52Z,2026-05-19 21:23:52 UTC+8,pass,pass,,
+cand_02555,2026-05-19 21:39:22 UTC+8,Estonia Suspends Zondacrypto Operator License,ADA,hack_security,ok,2026-05-19T13:39:22Z,2026-05-19 21:39:22 UTC+8,pass,pass,,
+cand_02538,2026-05-19 21:57:58 UTC+8,AI Slop Floods Bug Bounty Programs as Companies Struggle with Fake Reports - Decrypt,AAVE,hack_security,ok,2026-05-19T13:57:58Z,2026-05-19 21:57:58 UTC+8,pass,pass,,
+cand_02535,2026-05-19 22:00:14 UTC+8,"XRP Exchange Netflow Data Says Accumulation Is Ongoing, But Who’s Buying? | Bitcoinist.com",BNB,institutional_flow,ok,2026-05-19T14:00:14Z,2026-05-19 22:00:14 UTC+8,pass,pass,,
+cand_02389,2026-05-20 00:14:47 UTC+8,Dexsport Review: Web3 Sportsbook and Casino for Crypto-First Players,ADA,hack_security,ok,2026-05-19T16:14:47Z,2026-05-20 00:14:47 UTC+8,pass,pass,,
+cand_02381,2026-05-20 00:20:35 UTC+8,XRP Risks 50% Dip to $0.65 Despite Persistent ETF Inflows,ADA,institutional_flow,ok,2026-05-19T16:20:35Z,2026-05-20 00:20:35 UTC+8,pass,pass,,
+cand_02363,2026-05-20 00:40:32 UTC+8,"People Are More Willing to Lie to AI Than Humans, Study Finds - Decrypt",AAVE,hack_security,ok,2026-05-19T16:40:32Z,2026-05-20 00:40:32 UTC+8,pass,pass,,
+cand_02270,2026-05-20 02:07:09 UTC+8,National Trust Charters For Crypto Under Fire—Senator Warren Says It Goes Beyond The Law | Bitcoinist.com,BNB,hack_security,ok,2026-05-19T18:07:09Z,2026-05-20 02:07:09 UTC+8,pass,pass,,
+cand_02253,2026-05-20 02:30:14 UTC+8,Is Citadel’s XRP ETF A Game-Changer Or Is It Another Empty Whistle? | Bitcoinist.com,BNB,institutional_flow,ok,2026-05-19T18:30:14Z,2026-05-20 02:30:14 UTC+8,pass,pass,,
+cand_02170,2026-05-20 04:00:15 UTC+8,Donald Trump Abandons Meme Coins In Favor Of These Indirect Bitcoin Exposure Vehicles | Bitcoinist.com,BNB,hack_security,ok,2026-05-19T20:00:15Z,2026-05-20 04:00:15 UTC+8,pass,pass,,
+cand_02105,2026-05-20 05:24:40 UTC+8,XRP Ledger Announces Quantum-Era Partnership: Project Eleven Teams With Ripple | Bitcoinist.com,BNB,hack_security,ok,2026-05-19T21:24:40Z,2026-05-20 05:24:40 UTC+8,pass,pass,,
+cand_01849,2026-05-20 10:42:44 UTC+8,Truth Social’s ETF Issuer Withdraws Crypto ETFs,ADA,institutional_flow,ok,2026-05-20T02:42:44Z,2026-05-20 10:42:44 UTC+8,pass,pass,,
+cand_01828,2026-05-20 11:14:22 UTC+8,Bankr Disables Transactions After Hacker Accessed 14 Crypto Wallets,ADA,hack_security,ok,2026-05-20T03:14:22Z,2026-05-20 11:14:22 UTC+8,pass,pass,,
+cand_01737,2026-05-20 14:00:29 UTC+8,Japan To Expand Foreign Stablecoins Rules Starting June 1,BNB,hack_security,ok,2026-05-20T06:00:29Z,2026-05-20 14:00:29 UTC+8,pass,pass,,
+cand_01699,2026-05-20 15:01:57 UTC+8,GitHub Internal Repositories Breached via VS Code Extension,ADA,hack_security,ok,2026-05-20T07:01:57Z,2026-05-20 15:01:57 UTC+8,pass,pass,,
+cand_01677,2026-05-20 15:30:16 UTC+8,Trump Media’s Truth Social Withdraws Bitcoin ETF Filing,BNB,institutional_flow,ok,2026-05-20T07:30:16Z,2026-05-20 15:30:16 UTC+8,pass,pass,,
+cand_01622,2026-05-20 16:44:53 UTC+8,SEC Chair Paul Atkins Signals a New Era for Crypto — XRP Leads the Conversation,HYPE,hack_security,ok,2026-05-20T08:44:53Z,2026-05-20 16:44:53 UTC+8,pass,pass,,
+cand_01590,2026-05-20 17:16:08 UTC+8,OpenAI Opens First Overseas AI Lab in Singapore With $234M Commitment,ADA,hack_security,ok,2026-05-20T09:16:08Z,2026-05-20 17:16:08 UTC+8,pass,pass,,
+cand_01578,2026-05-20 17:32:07 UTC+8,"Crypto News Today (May 20): Bitcoin Struggling Below $80K, SOL & XRP ETFs Green as ETH and BTC ETFs Bleed - 99Bitcoins",ADA,institutional_flow,ok,2026-05-20T09:32:07Z,2026-05-20 17:32:07 UTC+8,pass,pass,,
+cand_01558,2026-05-20 18:04:26 UTC+8,Trump's Truth Social Pulls Bitcoin ETF Application From SEC Review - Decrypt,AAVE,institutional_flow,ok,2026-05-20T10:04:26Z,2026-05-20 18:04:26 UTC+8,pass,pass,,
+cand_01531,2026-05-20 18:30:46 UTC+8,Chainlink's Nazarov Reveals 3 Trends He’s Watching Closely,BNB,hack_security,ok,2026-05-20T10:30:46Z,2026-05-20 18:30:46 UTC+8,pass,pass,,
+cand_01490,2026-05-20 19:21:32 UTC+8,South Carolina Governor Signs Bill Protecting Bitcoin Miners and Banning CBDC Payments,ADA,hack_security,ok,2026-05-20T11:21:32Z,2026-05-20 19:21:32 UTC+8,pass,pass,,
+cand_01473,2026-05-20 19:40:51 UTC+8,Bitcoin Momentum Weakens as BTC Price Support at $75K Becomes Key,ADA,hack_security,ok,2026-05-20T11:40:51Z,2026-05-20 19:40:51 UTC+8,pass,pass,,
+cand_01459,2026-05-20 20:00:00 UTC+8,Crypto AI Platform Bankr Locks Down System After Hacker Breaches 14 Crypto Wallets,BNB,hack_security,ok,2026-05-20T12:00:00Z,2026-05-20 20:00:00 UTC+8,pass,pass,,
+cand_01427,2026-05-20 20:20:36 UTC+8,Morning Minute: Markets Flip Green Overnight Ahead of NVDA Earnings - Decrypt,AAVE,hack_security,ok,2026-05-20T12:20:36Z,2026-05-20 20:20:36 UTC+8,pass,pass,,
+cand_01386,2026-05-20 21:03:05 UTC+8,Singapore Revokes Bsquared’s Crypto Licence Over Regulatory Breaches,ADA,hack_security,ok,2026-05-20T13:03:05Z,2026-05-20 21:03:05 UTC+8,pass,pass,,
+cand_01383,2026-05-20 21:08:01 UTC+8,Bitcoin Model Projects BTC to Reach $255K ‘Conservative’ Target in 2026,ADA,institutional_flow,ok,2026-05-20T13:08:01Z,2026-05-20 21:08:01 UTC+8,pass,pass,,
+cand_01316,2026-05-20 22:00:00 UTC+8,Fireblocks Unveils Infrastructure For AI Agents,ADA,hack_security,ok,2026-05-20T14:00:00Z,2026-05-20 22:00:00 UTC+8,pass,pass,,
+cand_01273,2026-05-20 22:26:20 UTC+8,"AI Watchdog Warns of 'Rogue Deployment' Risk at Top Labs, With Capabilities Growing Fast - Decrypt",AAVE,hack_security,ok,2026-05-20T14:26:20Z,2026-05-20 22:26:20 UTC+8,pass,pass,,
+cand_01122,2026-05-21 00:18:47 UTC+8,Top Crypto Exchange Expands Into UK With New Local Platform,BNB,hack_security,ok,2026-05-20T16:18:47Z,2026-05-21 00:18:47 UTC+8,pass,pass,,
+cand_01107,2026-05-21 00:30:59 UTC+8,Arthur Hayes' Bombshell CLARITY Act Warning Just Resurfaced — And The Timing Couldn't Be Worse | Bitcoinist.com,BNB,hack_security,ok,2026-05-20T16:30:59Z,2026-05-21 00:30:59 UTC+8,pass,pass,,
+cand_01085,2026-05-21 00:54:07 UTC+8,"GitHub Confirms 3,800 Internal Repos Stolen Through Poisoned VS Code Extension - Decrypt",AAVE,hack_security,ok,2026-05-20T16:54:07Z,2026-05-21 00:54:07 UTC+8,pass,pass,,
+cand_01022,2026-05-21 02:00:00 UTC+8,Fairshake PAC’s $20M Investment Pays off in Three US State Primaries,ADA,hack_security,ok,2026-05-20T18:00:00Z,2026-05-21 02:00:00 UTC+8,pass,pass,,
+cand_00941,2026-05-21 03:30:11 UTC+8,Washington Targets Iran’s $7 Billion Crypto Network To Cut Off Financial Channels—FOX | Bitcoinist.com,BNB,hack_security,ok,2026-05-20T19:30:11Z,2026-05-21 03:30:11 UTC+8,pass,pass,,
+cand_00931,2026-05-21 03:36:38 UTC+8,Bitcoin Reclaims $77.5K As Altcoins Finally Show Strength,ADA,institutional_flow,ok,2026-05-20T19:36:38Z,2026-05-21 03:36:38 UTC+8,pass,pass,,
+cand_00872,2026-05-21 04:28:04 UTC+8,Binance Says it Prevented Over $10T in Fraud Using AI Models,BNB,hack_security,ok,2026-05-20T20:28:04Z,2026-05-21 04:28:04 UTC+8,pass,pass,,
+cand_00732,2026-05-21 06:03:44 UTC+8,Missouri AG Sues Crypto ATM Operator CoinFlip ‘For Enabling Scams’,ADA,hack_security,ok,2026-05-20T22:03:44Z,2026-05-21 06:03:44 UTC+8,pass,pass,,
+cand_00695,2026-05-21 06:37:54 UTC+8,US Treasury Cracks Down Drug Lord’s Crypto Money-Laundering Ring Linked To Sinaloa Cartel | Bitcoinist.com,BNB,hack_security,ok,2026-05-20T22:37:54Z,2026-05-21 06:37:54 UTC+8,pass,pass,,
+cand_00666,2026-05-21 07:00:04 UTC+8,Shai-Hulud: What to Know About the Malware Spreading Through Software Pipelines - Decrypt,AAVE,hack_security,ok,2026-05-20T23:00:04Z,2026-05-21 07:00:04 UTC+8,pass,pass,,
+cand_00374,2026-05-21 12:35:52 UTC+8,Map Protocol Loses 96% After Quadrillion Token Exploit,ADA,hack_security,ok,2026-05-21T04:35:52Z,2026-05-21 12:35:52 UTC+8,pass,pass,,
+cand_00373,2026-05-21 12:36:42 UTC+8,Hyperliquid ETF Volumes Rise 50% Due to Well-Timed Launches,ADA,institutional_flow,ok,2026-05-21T04:36:42Z,2026-05-21 12:36:42 UTC+8,pass,pass,,
+cand_00326,2026-05-21 13:44:37 UTC+8,SEC Seeks Feedback on Prediction Markets ETFs,ADA,institutional_flow,ok,2026-05-21T05:44:37Z,2026-05-21 13:44:37 UTC+8,pass,pass,,
+cand_00277,2026-05-21 14:54:21 UTC+8,"MAPO crashes to record lows, bridge attack overwhelms circulating supply",BNB,hack_security,ok,2026-05-21T06:54:21Z,2026-05-21 14:54:21 UTC+8,pass,pass,,
+cand_00269,2026-05-21 15:00:13 UTC+8,Bitcoin Quantum Exposure: Glassnode Says 30% of Supply Is Highly Vulnerable | Bitcoinist.com,BNB,hack_security,ok,2026-05-21T07:00:13Z,2026-05-21 15:00:13 UTC+8,pass,pass,,
+cand_00248,2026-05-21 15:30:06 UTC+8,Syndicate Labs Shuts Down After Ethereum Rollup Market Shift,ADA,hack_security,ok,2026-05-21T07:30:06Z,2026-05-21 15:30:06 UTC+8,pass,pass,,
+cand_00239,2026-05-21 15:34:52 UTC+8,Digital Assets Like Ordinals Used in Tax Evasion Schemes: Chainalysis,AAVE,hack_security,ok,2026-05-21T07:34:52Z,2026-05-21 15:34:52 UTC+8,pass,pass,,
+cand_00213,2026-05-21 16:00:14 UTC+8,By The Numbers: How Much Bitcoin Is Exposed To Quantum?,BNB,hack_security,ok,2026-05-21T08:00:14Z,2026-05-21 16:00:14 UTC+8,pass,pass,,
+cand_00019,2026-05-21 19:27:44 UTC+8,HYPE Jumps Double Digits as Hyperliquid ETFs Add $25.5M - Decrypt,AAVE,institutional_flow,ok,2026-05-21T11:27:44Z,2026-05-21 19:27:44 UTC+8,pass,pass,,
+cand_04918,2026-05-16 23:29:07 UTC+8,"This is now the LARGEST PATRIOTIC wave in decades.
+
+Tens of thousands of protesters have flooded central London for ""Uni",UNI,other,ok,2026-05-16T15:29:07Z,2026-05-16 23:29:07 UTC+8,pass,pass,,
+cand_04915,2026-05-16 23:35:38 UTC+8,"These are the altcoins that I think will do provide me the largest return in the coming months.
+
+- NEAR Protocol: Clearl",HYPE,other,ok,2026-05-16T15:35:38Z,2026-05-16 23:35:38 UTC+8,pass,pass,,
+cand_04894,2026-05-17 00:55:14 UTC+8,"I spoke with @jvisserlabs to break down why all-time highs in the stock market are flashing warning signs, how the Iran",DOGE,other,ok,2026-05-16T16:55:14Z,2026-05-17 00:55:14 UTC+8,pass,pass,,
+cand_04845,2026-05-17 03:09:33 UTC+8,Hyperliquid团队与美国政策制定者会面讨论链上衍生品市场,HYPE,other,ok,2026-05-16T19:09:33Z,2026-05-17 03:09:33 UTC+8,pass,pass,,
+cand_04834,2026-05-17 04:22:00 UTC+8,"I don't think we'll ever see altseason back. 
+
+Most of the altcoins will die and have literally no purpose in this ecosy",HYPE,other,ok,2026-05-16T20:22:00Z,2026-05-17 04:22:00 UTC+8,pass,pass,,
+cand_04783,2026-05-17 08:04:57 UTC+8,I haven’t gotten a reaction like this since asking polygon users to try solana,SOL,other,ok,2026-05-17T00:04:57Z,2026-05-17 08:04:57 UTC+8,pass,pass,,
+cand_04358,2026-05-18 06:47:11 UTC+8,Bonus points for mentioning that the Pentad were promised 0.83 cent Ada provisions and got less than 0.50 cents but stil,ADA,other,ok,2026-05-17T22:47:11Z,2026-05-18 06:47:11 UTC+8,pass,pass,,
+cand_04289,2026-05-18 08:40:16 UTC+8,🚨 UPDATE: Aave confirms WETH LTVs have been restored to pre-incident levels across all affected V3 deployments following,AAVE,other,ok,2026-05-18T00:40:16Z,2026-05-18 08:40:16 UTC+8,pass,pass,,
+cand_04233,2026-05-18 10:05:53 UTC+8,吴说获悉，Solana Labs 联合创始人 Anatoly Yakovenko（toly）在回应有关 Hyperliquid 去中心化程度的讨论时表示，他对所有 L2 也提出过同样批评：判断一个系统是否 permissionless，关键,SOL,other,ok,2026-05-18T02:05:53Z,2026-05-18 10:05:53 UTC+8,pass,pass,,
+cand_04205,2026-05-18 10:42:06 UTC+8,"Hey, solana defi projects, maybe formally verify your code pls before the mythopocolypse is upon us",SOL,other,ok,2026-05-18T02:42:06Z,2026-05-18 10:42:06 UTC+8,pass,pass,,
+cand_04075,2026-05-18 15:09:21 UTC+8,"A massive $HYPE buy!
+
+Wallet 0xb5E4, linked to #a16z, bought another 372,000 $HYPE($16.91M) over the past 3 hours.
+
+Sinc",HYPE,other,ok,2026-05-18T07:09:21Z,2026-05-18 15:09:21 UTC+8,pass,pass,,
+cand_04044,2026-05-18 16:08:12 UTC+8,https://t.co/nMjQcILxG5 is on @solana,SOL,other,ok,2026-05-18T08:08:12Z,2026-05-18 16:08:12 UTC+8,pass,pass,,
+cand_03925,2026-05-18 18:28:02 UTC+8,"A wallet linked to Anchorage (@Anchorage) bought 397,000 $HYPE ($18M) from #Bybit and #OKX.
+
+Over the past month, the wa",HYPE,other,ok,2026-05-18T10:28:02Z,2026-05-18 18:28:02 UTC+8,pass,pass,,
+cand_03823,2026-05-18 20:11:16 UTC+8,"ARKHAM @ PFL SAN DIEGO: TICKETS STILL AVAILABLE
+
+We’re hosting Arkham community members & VIPs at PFL San Diego on June",LINK,other,ok,2026-05-18T12:11:16Z,2026-05-18 20:11:16 UTC+8,pass,pass,,
+cand_03713,2026-05-18 21:48:52 UTC+8,"PumpFun deposited 82,702 $SOL worth $7M into #Kraken.
+
+https://t.co/P1YMeOjwt4 https://t.co/YjOd7jjv1V",SOL,other,ok,2026-05-18T13:48:52Z,2026-05-18 21:48:52 UTC+8,pass,pass,,
+cand_03709,2026-05-18 21:51:00 UTC+8,"PumpFun deposited 82,703 $SOL worth $7M into #Kraken.
+
+https://t.co/P1YMeOjwt4 https://t.co/rS1AbVimNY",SOL,other,ok,2026-05-18T13:51:00Z,2026-05-18 21:51:00 UTC+8,pass,pass,,
+cand_03647,2026-05-18 22:41:15 UTC+8,"JUST IN: Solana now projected to plunge below $80 by the end of the month.
+
+65% chance. https://t.co/vJKgV0QxNE",SOL,other,ok,2026-05-18T14:41:15Z,2026-05-18 22:41:15 UTC+8,pass,pass,,
+cand_03181,2026-05-19 06:15:05 UTC+8,"🚨 🚨  20,000 $WETH (42,749,158 USD) transferred from unknown wallet to #Aave
+
+https://t.co/FOjHHUI5nI",AAVE,other,ok,2026-05-18T22:15:05Z,2026-05-19 06:15:05 UTC+8,pass,pass,,
+cand_03098,2026-05-19 08:10:25 UTC+8,"WorldCoin team deposited 13.18M $WLD worth $3.09M into #Coinbase.
+
+Address: 0xE79718Fe76c718fE98a9a3D106FCa773a40861a3 h",WLD,other,ok,2026-05-19T00:10:25Z,2026-05-19 08:10:25 UTC+8,pass,pass,,
+cand_02789,2026-05-19 17:00:48 UTC+8,"Persistence pays off!
+
+More than 6 months ago, trader 0x082e opened a 5x long on 1.38M $HYPE ($66.3M), becoming the larg",HYPE,other,ok,2026-05-19T09:00:48Z,2026-05-19 17:00:48 UTC+8,pass,pass,,
+cand_02653,2026-05-19 19:40:16 UTC+8,"🇺🇸 NEW: Sen. Elizabeth Warren questioned OCC approvals for crypto trust charters tied to Coinbase, Ripple and Paxos, per",XRP,other,ok,2026-05-19T11:40:16Z,2026-05-19 19:40:16 UTC+8,pass,pass,,
+cand_02373,2026-05-20 00:26:20 UTC+8,I think it’s gonna be a slog to get meaningful progress.  I also think that solana is best at slogging,SOL,other,ok,2026-05-19T16:26:20Z,2026-05-20 00:26:20 UTC+8,pass,pass,,
+cand_02262,2026-05-20 02:17:25 UTC+8,Basically everyone at solana had an immune response to competitive narratives coming from previous cycles.  Sidechains/L,SOL,other,ok,2026-05-19T18:17:25Z,2026-05-20 02:17:25 UTC+8,pass,pass,,
+cand_02165,2026-05-20 04:03:01 UTC+8,"There are still so many opportunities in the altcoin markets.
+
+People are just to stubborn and lazy to chase them as peo",HYPE,other,ok,2026-05-19T20:03:01Z,2026-05-20 04:03:01 UTC+8,pass,pass,,
+cand_01764,2026-05-20 13:11:09 UTC+8,吴说获悉，L2Beat 表示已从源代码重新生成了 Lighter 永续合约 DEX L2 所使用的所有 ZK 电路（包括 Lighter verifier 和 Lighter Desert verifier），从而实现了真正无需信任 Lig,SOL,other,ok,2026-05-20T05:11:09Z,2026-05-20 13:11:09 UTC+8,pass,pass,,
+cand_01745,2026-05-20 13:47:35 UTC+8,"8Qef2u, the largest $ASTEROID holder on Solana, bought 10.04M $VIRL ($17.7K).
+
+This wallet already holds 25.03M $ASTEROI",SOL,other,ok,2026-05-20T05:47:35Z,2026-05-20 13:47:35 UTC+8,pass,pass,,
+cand_01739,2026-05-20 13:58:42 UTC+8,"Evaded (@ICanPlug) made $2.1M in just 2 days!
+
+Yesterday, he opened 10x longs on 36,875 $ZEC($21.59M) and 287,618 $HYPE(",HYPE,other,ok,2026-05-20T05:58:42Z,2026-05-20 13:58:42 UTC+8,pass,pass,,
+cand_01738,2026-05-20 13:59:26 UTC+8,"Evaded (@ICanPlug) made $2.1M in just 2 days!
+
+Yesterday, he opened 10x longs on 36,875 $ZEC($21.59M) and 287,618 $HYPE(",HYPE,other,ok,2026-05-20T05:59:26Z,2026-05-20 13:59:26 UTC+8,pass,pass,,
+cand_01638,2026-05-20 16:20:16 UTC+8,🔥 NEW: Ripple ranked No. 16 on CNBC’s 2026 Disruptor 50 list. https://t.co/ze9O5hWs7W,XRP,other,ok,2026-05-20T08:20:16Z,2026-05-20 16:20:16 UTC+8,pass,pass,,
+cand_01391,2026-05-20 21:00:02 UTC+8,"🔥 BITWISE SAYS HYPE IS UNDERVALUED
+
+Bitwise CIO Matt Hougan says the market is wrongly valuing Hyperliquid as only a per",HYPE,other,ok,2026-05-20T13:00:02Z,2026-05-20 21:00:02 UTC+8,pass,pass,,
+cand_01373,2026-05-20 21:15:50 UTC+8,"CoinDesk 20 performance update: Uniswap (UNI), up 3.7%, leads index higher",UNI,other,ok,2026-05-20T13:15:50Z,2026-05-20 21:15:50 UTC+8,pass,pass,,
+cand_00985,2026-05-21 02:34:49 UTC+8,"Phenomenal post by @SergeyNazarov on the current state of Chainlink and the markets.
+
+It makes me even more excited and",LINK,other,ok,2026-05-20T18:34:49Z,2026-05-21 02:34:49 UTC+8,pass,pass,,
+cand_00539,2026-05-21 09:07:48 UTC+8,Congrats hype hodlers.  Well deserved.  It’s a no bullshit awesome product.  🎂🎂🎂,HYPE,other,ok,2026-05-21T01:07:48Z,2026-05-21 09:07:48 UTC+8,pass,pass,,
+cand_00500,2026-05-21 10:02:46 UTC+8,JUST IN: Hyperliquid flips Solana in fully diluted valuation.,SOL,other,ok,2026-05-21T02:02:46Z,2026-05-21 10:02:46 UTC+8,pass,pass,,
+cand_00497,2026-05-21 10:04:48 UTC+8,JUST IN: Hyperliquid flips Solana in fully diluted valuation.,SOL,other,ok,2026-05-21T02:04:48Z,2026-05-21 10:04:48 UTC+8,pass,pass,,
+cand_00444,2026-05-21 10:58:49 UTC+8,"loracle.hl(@loraclexyz) is now down nearly $20M on his $HYPE short, but he is still adding to it.
+
+He currently holds a",HYPE,other,ok,2026-05-21T02:58:49Z,2026-05-21 10:58:49 UTC+8,pass,pass,,
+cand_00375,2026-05-21 12:32:41 UTC+8,Hyperliquid has flipped Solana by FDV. https://t.co/rDF5FRg4TK,SOL,other,ok,2026-05-21T04:32:41Z,2026-05-21 12:32:41 UTC+8,pass,pass,,
+cand_00344,2026-05-21 13:10:25 UTC+8,SOL生态代币普涨，FIDA涨超34%,SOL,other,ok,2026-05-21T05:10:25Z,2026-05-21 13:10:25 UTC+8,pass,pass,,
+cand_00294,2026-05-21 14:29:07 UTC+8,"All time $HYPE is almost here. $150 is much closer than it was. 
+
+Yachtzee 😘😘😘😘 https://t.co/N6t3u2OcfR",HYPE,other,ok,2026-05-21T06:29:07Z,2026-05-21 14:29:07 UTC+8,pass,pass,,
+cand_00267,2026-05-21 15:00:30 UTC+8,🔥 NEW: Ripple Prime has partnered with EDX Markets to give institutional clients unified access to digital asset spot an,XRP,other,ok,2026-05-21T07:00:30Z,2026-05-21 15:00:30 UTC+8,pass,pass,,
+cand_00225,2026-05-21 15:46:29 UTC+8,"loracle.hl(@loraclexyz)'s $HYPE short has now grown to over $100M!
+
+He is currently down over $23M, with a liquidation p",HYPE,other,ok,2026-05-21T07:46:29Z,2026-05-21 15:46:29 UTC+8,pass,pass,,
+cand_00176,2026-05-21 16:39:20 UTC+8,"🚨HYPERLIQUID NEARS ITS ALL-TIME HIGH AT 59$
+
+$HYPE is now trading near its ATH around $59.30, putting bulls back in cont",HYPE,other,ok,2026-05-21T08:39:20Z,2026-05-21 16:39:20 UTC+8,pass,pass,,
+cand_04775,2026-05-17 08:16:55 UTC+8,"🚨 🚨 🚨 🚨 🚨 🚨  138,220,412 $USDC (138,215,989 USD) transferred from Unknown Whale 1 to #Aave
+
+https://t.co/EKOUxSLk2c",AAVE,whale_position,ok,2026-05-17T00:16:55Z,2026-05-17 08:16:55 UTC+8,pass,pass,,
+cand_04571,2026-05-17 20:38:38 UTC+8,BREAKING: Bitcoin steadies near $78K as Iran responds to U.S. peace terms,BNB,staking_governance,ok,2026-05-17T12:38:38Z,2026-05-17 20:38:38 UTC+8,pass,pass,,
+cand_04443,2026-05-18 02:01:00 UTC+8,Michael Saylor Signals Weekly BTC Buy While Pushing STRC Proxy Vote,ADA,staking_governance,ok,2026-05-17T18:01:00Z,2026-05-18 02:01:00 UTC+8,pass,pass,,
+cand_04286,2026-05-18 08:43:30 UTC+8,"🚨 🚨 🚨 🚨 🚨 🚨  138,260,885 $USDC (138,276,338 USD) transferred from Unknown Whale 1 to #Aave
+
+https://t.co/4eO0RP4XwB",AAVE,whale_position,ok,2026-05-18T00:43:30Z,2026-05-18 08:43:30 UTC+8,pass,pass,,
+cand_04249,2026-05-18 09:41:19 UTC+8,"没想到，现在市场交易热情已经比上轮熊市底部 (2022 年 12 月份) 都要低的多了。这还是在几大主流币价格其实都还远超当时价格的情况下。
+
+◎BTC：上次周期底部 Binance 上 BTC/USDT 平均每天交易量在 $20 亿附近，",BNB,stablecoin_flow,ok,2026-05-18T01:41:19Z,2026-05-18 09:41:19 UTC+8,pass,pass,,
+cand_03926,2026-05-18 18:27:01 UTC+8,KuCoin Alpha 新上線代幣 — BABYTROLL & SPCX,SOL,exchange_listing,ok,2026-05-18T10:27:01Z,2026-05-18 18:27:01 UTC+8,pass,pass,,
+cand_03906,2026-05-18 18:54:04 UTC+8,South Korea FSC Reportedly Reviews Hana Bank Dunamu Stake,ADA,staking_governance,ok,2026-05-18T10:54:04Z,2026-05-18 18:54:04 UTC+8,pass,pass,,
+cand_03475,2026-05-19 00:55:56 UTC+8,Cardano Price Analysis: ADA Bears Eye $0.20 Support,ADA,network_upgrade,ok,2026-05-18T16:55:56Z,2026-05-19 00:55:56 UTC+8,pass,pass,,
+cand_03415,2026-05-19 01:47:34 UTC+8,Elon Musk Loses $150 Billion AI Lawsuit Against OpenAI and Sam Altman - Decrypt,AAVE,stablecoin_flow,ok,2026-05-18T17:47:34Z,2026-05-19 01:47:34 UTC+8,pass,pass,,
+cand_03222,2026-05-19 05:28:02 UTC+8,Soluna Q1 Revenue Rises 58% as Data Center Hosting Surpasses Crypto Mining,ADA,halving,ok,2026-05-18T21:28:02Z,2026-05-19 05:28:02 UTC+8,pass,pass,,
+cand_02811,2026-05-19 16:27:53 UTC+8,Hyperliquid price nears ATH as HYPE rallies 24% in 6 days,HYPE,staking_governance,ok,2026-05-19T08:27:53Z,2026-05-19 16:27:53 UTC+8,pass,pass,,
+cand_02785,2026-05-19 17:08:18 UTC+8,BNB Chain post-quantum test cuts BSC TPS by 40%,BNB,network_upgrade,ok,2026-05-19T09:08:18Z,2026-05-19 17:08:18 UTC+8,pass,pass,,
+cand_02706,2026-05-19 18:47:34 UTC+8,"AI agents could outspend humans, Coinbase CEO says",SOL,stablecoin_flow,ok,2026-05-19T10:47:34Z,2026-05-19 18:47:34 UTC+8,pass,pass,,
+cand_02623,2026-05-19 20:25:15 UTC+8,Pump.fun Drives Over a Third of Solana's Q1 Revenue Despite Memecoin Slowdown,ADA,network_upgrade,ok,2026-05-19T12:25:15Z,2026-05-19 20:25:15 UTC+8,pass,pass,,
+cand_02616,2026-05-19 20:30:18 UTC+8,XRP Ledger Hard Fork In 8 Days? Upgrade Sparks Split Debate,BNB,network_upgrade,ok,2026-05-19T12:30:18Z,2026-05-19 20:30:18 UTC+8,pass,pass,,
+cand_02570,2026-05-19 21:24:42 UTC+8,Is Zcash 'Running Its Own Bull Market?' This 88% ZEC Price Rally Setup Shows,ADA,market_structure,ok,2026-05-19T13:24:42Z,2026-05-19 21:24:42 UTC+8,pass,pass,,
+cand_02469,2026-05-19 23:04:25 UTC+8,MetaMask Just Added Tokenized US Stocks - NOT for US Users,ADA,network_upgrade,ok,2026-05-19T15:04:25Z,2026-05-19 23:04:25 UTC+8,pass,pass,,
+cand_02454,2026-05-19 23:23:25 UTC+8,Mark Zuckerberg New META AI Predicts PI Coin Price by End of 2026 - 99Bitcoins,ADA,network_upgrade,ok,2026-05-19T15:23:25Z,2026-05-19 23:23:25 UTC+8,pass,pass,,
+cand_02448,2026-05-19 23:30:15 UTC+8,Market Expert Updates XRP Roadmap To $300 With New Data | Bitcoinist.com,BNB,network_upgrade,ok,2026-05-19T15:30:15Z,2026-05-19 23:30:15 UTC+8,pass,pass,,
+cand_02340,2026-05-20 01:00:13 UTC+8,Here’s Why Ethereum Is Becoming The Biggest Winner Of The Clarity Act | Bitcoinist.com,ADA,network_upgrade,ok,2026-05-19T17:00:13Z,2026-05-20 01:00:13 UTC+8,pass,pass,,
+cand_02304,2026-05-20 01:29:20 UTC+8,Why the XRP Ledger Could Become a Major Backbone of SEC-Approved Tokenized Stocks,HYPE,network_upgrade,ok,2026-05-19T17:29:20Z,2026-05-20 01:29:20 UTC+8,pass,pass,,
+cand_02241,2026-05-20 02:44:47 UTC+8,Dogecoin price prediction: Can DOGE hold $0.10 or is a deeper reset coming?,DOGE,network_upgrade,ok,2026-05-19T18:44:47Z,2026-05-20 02:44:47 UTC+8,pass,pass,,
+cand_02143,2026-05-20 04:34:45 UTC+8,Bitcoin Traders Target $68K As Key Support Zone: Here's Why,ADA,stablecoin_flow,ok,2026-05-19T20:34:45Z,2026-05-20 04:34:45 UTC+8,pass,pass,,
+cand_01957,2026-05-20 08:30:15 UTC+8,Ripple Just Moved This $2 Billion Industry Onto The XRP Ledger | Bitcoinist.com,BNB,network_upgrade,ok,2026-05-20T00:30:15Z,2026-05-20 08:30:15 UTC+8,pass,pass,,
+cand_01644,2026-05-20 16:11:00 UTC+8,'China's Buffett' Buys Into Circle in Surprise Portfolio Addition - U.Today,LINK,staking_governance,ok,2026-05-20T08:11:00Z,2026-05-20 16:11:00 UTC+8,pass,pass,,
+cand_01546,2026-05-20 18:15:02 UTC+8,KuCoin Alpha 新上線代幣 — VIRL & DEGEN,SOL,exchange_listing,ok,2026-05-20T10:15:02Z,2026-05-20 18:15:02 UTC+8,pass,pass,,
+cand_01495,2026-05-20 19:13:54 UTC+8,$140k in less than 24 hours: Meme Punch's battle arena is drawing a crowd before launch,BNB,network_upgrade,ok,2026-05-20T11:13:54Z,2026-05-20 19:13:54 UTC+8,pass,pass,,
+cand_01405,2026-05-20 20:47:16 UTC+8,HYPE突破50 USDT，24H涨幅5.25%,HYPE,stablecoin_flow,ok,2026-05-20T12:47:16Z,2026-05-20 20:47:16 UTC+8,pass,pass,,
+cand_01389,2026-05-20 21:00:40 UTC+8,Crypto Wealth Firm Nexo Sponsors $3 Million Golf Tournament at Trump International Scotland - Decrypt,AAVE,stablecoin_flow,ok,2026-05-20T13:00:40Z,2026-05-20 21:00:40 UTC+8,pass,pass,,
+cand_01352,2026-05-20 21:30:46 UTC+8,"XRP Is Not The Real Leader Of RWA Despite Its Popularity, Here’s Where The Real Volume Is | Bitcoinist.com",BNB,network_upgrade,ok,2026-05-20T13:30:46Z,2026-05-20 21:30:46 UTC+8,pass,pass,,
+cand_01326,2026-05-20 21:55:13 UTC+8,"Someone paid a 536.88 $BNB($343K) bribe fee to snipe $ZEST at launch, and ended up making ~$277K.
+
+The sniper paid an ex",BNB,stablecoin_flow,ok,2026-05-20T13:55:13Z,2026-05-20 21:55:13 UTC+8,pass,pass,,
+cand_01137,2026-05-21 00:02:00 UTC+8,Binance BNB Down To $640 Support: Will Regulatory Clarity Help?,BNB,halving,ok,2026-05-20T16:02:00Z,2026-05-21 00:02:00 UTC+8,pass,pass,,
+cand_01124,2026-05-21 00:15:44 UTC+8,"Bitcoin Price Fails to Retake $78,000 as Markets Eye Nvidia Earnings",ADA,stablecoin_flow,ok,2026-05-20T16:15:44Z,2026-05-21 00:15:44 UTC+8,pass,pass,,
+cand_01110,2026-05-21 00:27:33 UTC+8,"Trump Stocks: Should You Buy NFLX, DIS, JPM Like He Did?",BNB,halving,ok,2026-05-20T16:27:33Z,2026-05-21 00:27:33 UTC+8,pass,pass,,
+cand_01073,2026-05-21 01:02:00 UTC+8,"Is Micron Stock Too Expensive? Wall Street Eyes Massive $1,200 Rally",BNB,halving,ok,2026-05-20T17:02:00Z,2026-05-21 01:02:00 UTC+8,pass,pass,,
+cand_01019,2026-05-21 02:00:46 UTC+8,"XRP Whales Have Just Set An 8-Year Record, Is This The Start Of The Next Bull Run? | Bitcoinist.com",BNB,whale_position,ok,2026-05-20T18:00:46Z,2026-05-21 02:00:46 UTC+8,pass,pass,,
+cand_00071,2026-05-21 18:37:20 UTC+8,Solana's Q1 Report Is Out: What Network Data Means for Retail,ADA,network_upgrade,ok,2026-05-21T10:37:20Z,2026-05-21 18:37:20 UTC+8,pass,pass,,

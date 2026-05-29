@@ -1,0 +1,2 @@
+﻿calendar_rows,enabled_rows,real_rows,sample_rows,future_rows,upcoming_30d_rows,large_unlock_rows,missing_symbol_rows,unsupported_symbol_rows,invalid_time_rows,missing_amount_rows,missing_source_rows,min_real_rows,status
+2,2,0,2,2,2,1,0,0,0,0,0,20,needs_data

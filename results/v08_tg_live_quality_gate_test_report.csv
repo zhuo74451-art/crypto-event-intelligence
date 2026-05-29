@@ -1,0 +1,9 @@
+﻿checked_at_china,draft_id,candidate_id,event_type,asset_symbol,amount_usd,confidence_label,strength_stars,quality_status,quality_score,quality_flags
+2026-05-28 10:02:47,tg_watcher_0001,watcher_fh_bb67488a9e2cf443,stablecoin_flow,USDT,51789849.16,中,★★★★☆,warning,56,
+2026-05-28 10:02:47,tg_watcher_0002,watcher_fh_85abc075fa944556,stablecoin_flow,USDT,97000000.00,中,★★★★☆,warning,65,
+2026-05-28 10:02:47,tg_watcher_0003,watcher_fh_6e3eb40815c6949e,whale_position,BTC,35375811.61,中,★★★★☆,fail,53,low_quality_score
+2026-05-28 10:02:47,tg_watcher_0004,watcher_fh_3999c6261240bbe7,whale_position,ETH,80668000.00,中,★★★★☆,warning,62,
+2026-05-28 10:02:47,tg_watcher_0005,watcher_fh_1ba14212a87373b7,whale_position,BTC,34784112.33,中,★★★★☆,fail,52,low_quality_score
+2026-05-28 10:02:47,tg_watcher_0006,watcher_fh_967a47a3345f8b4c,whale_position,HYPE,104837528.85,中,★★★★★,pass,78,
+2026-05-28 10:02:47,tg_watcher_0007,watcher_fh_b55f1110424580c9,whale_position,HYPE,80028673.85,中,★★★★☆,pass,70,
+2026-05-28 10:02:47,tg_watcher_0008,watcher_fh_45562140d8c5f0ee,cex_netflow,USDT,504421454.50,中,★★★★★,pass,83,

@@ -1,0 +1,2 @@
+event_id,event_time,title,asset_symbol,event_type,status,parsed_event_time_utc,parsed_event_time_china,time_quality_status,quality_status,quality_flags,skip_reason
+cand_00275,2026-05-19 04:30:00 UTC+8,XRP price slips 2% on profit taking,XRP,token_unlock,ok,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,pass,pass,,

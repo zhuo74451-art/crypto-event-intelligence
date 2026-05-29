@@ -1,0 +1,2 @@
+﻿watcher,mode,watchlist_rows,queried_markets,alert_rows,skipped_rows,skip_reasons,status
+binance_funding_rates,live,3,3,3,0,{},pass

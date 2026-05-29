@@ -1,0 +1,12 @@
+event_type,selected_count,eligible_count,type_cap,limit
+TOTAL,62,856,,200
+exchange_listing,2,2,8,200
+hack_security,8,28,8,200
+halving,2,2,5,200
+institutional_flow,10,22,10,200
+macro,10,674,10,200
+network_upgrade,8,22,8,200
+other,5,82,5,200
+staking_governance,5,10,5,200
+token_unlock,2,2,8,200
+whale_position,10,12,10,200

@@ -1,0 +1,130 @@
+{
+  "generated_at_china": "2026-05-29 12:32:46 UTC+8",
+  "frontpage_alerts": [
+    {
+      "bucket": "frontpage_alerts",
+      "asset_symbol": "BTC",
+      "alert_type": "funding_rate_percentile",
+      "percentile": 98.9,
+      "price_change_pct_1h": 0.067,
+      "price_change_pct_24h": 0.44,
+      "quote_volume_usd_1h": 127316676.62,
+      "quote_volume_change_pct_1h": -23.6261,
+      "funding_rate": 0.0001,
+      "oi_change_pct_24h": 3.124,
+      "oi_level_percentile_90d": 22.8,
+      "interpretation": "核心资产资金费率达到异常分位",
+      "reason": "core_asset_funding_extreme"
+    }
+  ],
+  "watchlist_alerts": [
+    {
+      "bucket": "watchlist_alerts",
+      "asset_symbol": "BTC",
+      "alert_type": "funding_price_confirmation",
+      "percentile": 98.9,
+      "price_change_pct_1h": 0.067,
+      "price_change_pct_24h": 0.44,
+      "quote_volume_usd_1h": 127316676.62,
+      "quote_volume_change_pct_1h": -23.6261,
+      "funding_rate": 0.0001,
+      "oi_change_pct_24h": 3.124,
+      "oi_level_percentile_90d": 22.8,
+      "interpretation": "多头持仓成本偏高，需结合价格变化确认",
+      "reason": "positive_funding_ge_90"
+    },
+    {
+      "bucket": "watchlist_alerts",
+      "asset_symbol": "BNB",
+      "alert_type": "funding_price_confirmation",
+      "percentile": 90.7,
+      "price_change_pct_1h": 0.0771,
+      "price_change_pct_24h": 0.0,
+      "quote_volume_usd_1h": 3357376.63,
+      "quote_volume_change_pct_1h": -33.6083,
+      "funding_rate": 7.032e-05,
+      "oi_change_pct_24h": -0.9895,
+      "oi_level_percentile_90d": 33.9,
+      "interpretation": "多头持仓成本偏高，需结合价格变化确认",
+      "reason": "positive_funding_ge_90"
+    },
+    {
+      "bucket": "watchlist_alerts",
+      "asset_symbol": "DOGE",
+      "alert_type": "funding_price_confirmation",
+      "percentile": 92.6,
+      "price_change_pct_1h": -0.1212,
+      "price_change_pct_24h": 1.238,
+      "quote_volume_usd_1h": 6007559.64,
+      "quote_volume_change_pct_1h": -16.4346,
+      "funding_rate": 0.0001,
+      "oi_change_pct_24h": -1.1805,
+      "oi_level_percentile_90d": 0.0,
+      "interpretation": "多头持仓成本偏高，需结合价格变化确认",
+      "reason": "positive_funding_ge_90"
+    }
+  ],
+  "radar_triggers": [],
+  "digest_context": [
+    {
+      "bucket": "digest_context",
+      "asset_symbol": "BTC",
+      "alert_type": "percentile_context",
+      "percentile": 98.9,
+      "price_change_pct_1h": 0.067,
+      "price_change_pct_24h": 0.44,
+      "quote_volume_usd_1h": 127316676.62,
+      "quote_volume_change_pct_1h": -23.6261,
+      "funding_rate": 0.0001,
+      "oi_change_pct_24h": 3.124,
+      "oi_level_percentile_90d": 22.8,
+      "interpretation": "分位偏离，进入早晚报观察",
+      "reason": "digest_percentile_context"
+    },
+    {
+      "bucket": "digest_context",
+      "asset_symbol": "SOL",
+      "alert_type": "percentile_context",
+      "percentile": 35.6,
+      "price_change_pct_1h": 0.0613,
+      "price_change_pct_24h": 1.517,
+      "quote_volume_usd_1h": 16956198.28,
+      "quote_volume_change_pct_1h": -51.6442,
+      "funding_rate": 4.219e-05,
+      "oi_change_pct_24h": -0.7271,
+      "oi_level_percentile_90d": 1.1,
+      "interpretation": "快速下降，市场降温",
+      "reason": "digest_percentile_context"
+    },
+    {
+      "bucket": "digest_context",
+      "asset_symbol": "BNB",
+      "alert_type": "percentile_context",
+      "percentile": 90.7,
+      "price_change_pct_1h": 0.0771,
+      "price_change_pct_24h": 0.0,
+      "quote_volume_usd_1h": 3357376.63,
+      "quote_volume_change_pct_1h": -33.6083,
+      "funding_rate": 7.032e-05,
+      "oi_change_pct_24h": -0.9895,
+      "oi_level_percentile_90d": 33.9,
+      "interpretation": "分位偏离，进入早晚报观察",
+      "reason": "digest_percentile_context"
+    },
+    {
+      "bucket": "digest_context",
+      "asset_symbol": "DOGE",
+      "alert_type": "percentile_context",
+      "percentile": 92.6,
+      "price_change_pct_1h": -0.1212,
+      "price_change_pct_24h": 1.238,
+      "quote_volume_usd_1h": 6007559.64,
+      "quote_volume_change_pct_1h": -16.4346,
+      "funding_rate": 0.0001,
+      "oi_change_pct_24h": -1.1805,
+      "oi_level_percentile_90d": 0.0,
+      "interpretation": "快速下降，市场降温",
+      "reason": "digest_percentile_context"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+﻿decided_at_china,board_id,board_label,decision,decision_reason,item_key,source_type,asset,repeat_group,section,final_priority,policy_action,policy_reason_cn,dynamic_boost_reason,text
+2026-05-28 17:37:25 UTC+8,tg_board_20260528_173725,盘中雷达,selected,进入本轮雷达板,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,context,79.3715,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。,,"loraclexyz持有HYPE空头$103.1M
+  浮亏$21.1M，静态大仓位"
+2026-05-28 17:37:25 UTC+8,tg_board_20260528_173725,盘中雷达,filtered_digest_only,盘中静态背景转早晚报,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,context,66.2072,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,"HOME明日08:00解锁$18.7M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 17:37:25 UTC+8,tg_board_20260528_173725,盘中雷达,selected,进入本轮雷达板,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,124.6500,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍
+  动态提权：拥挤变化"

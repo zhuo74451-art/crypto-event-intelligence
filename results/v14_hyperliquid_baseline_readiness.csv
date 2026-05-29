@@ -1,0 +1,2 @@
+﻿generated_at_china,baseline_status,baseline_age_hours,min_baseline_hours,readiness_status,digest_label,next_action,status
+2026-05-28 22:24:32 UTC+8,partial_baseline_less_than_24h,5.24,24.0,beta_partial,Beta：基线不足24小时,继续积累快照，满24小时后重新验证,review

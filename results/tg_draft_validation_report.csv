@@ -1,0 +1,10 @@
+﻿draft_id,candidate_id,asset_symbol,event_type,draft_status,validation_status,validation_flags
+tg_0001,cand_00077,HYPE,whale_position,approved,pass,
+tg_0002,cand_00419,BTC,regulation_macro,approved,pass,
+tg_0003,cand_00074,BTC,onchain_data,approved,pass,
+tg_0004,cand_00484,ETH,hack_security,approved,pass,
+tg_0005,cand_00339,BTC,regulation_macro,approved,pass,
+tg_0006,cand_00016,ETH,institutional_flow,approved,pass,
+tg_0007,cand_00064,HYPE,institutional_flow,approved,pass,
+tg_0008,cand_00457,SOL,project_business,approved,pass,
+tg_0009,cand_00392,ONDO,onchain_data,approved,pass,

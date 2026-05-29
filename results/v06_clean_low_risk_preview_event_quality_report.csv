@@ -1,0 +1,31 @@
+event_id,event_time,title,asset_symbol,event_type,status,parsed_event_time_utc,parsed_event_time_china,time_quality_status,quality_status,quality_flags,skip_reason
+cand_00077,2026-05-19 08:36:06 UTC+8,"Whale Loracle.hl (@loraclexyz) has further increased his $HYPE (5x) short position to 1.44M $HYPE, valued at $69.3M with",HYPE,whale_position,ok,2026-05-19T00:36:06Z,2026-05-19 08:36:06 UTC+8,pass,pass,,
+cand_00419,2026-05-19 01:41:53 UTC+8,White House: Bitcoin Reserve Announcement Is Imminent,BTC,hack_security,ok,2026-05-18T17:41:53Z,2026-05-19 01:41:53 UTC+8,pass,pass,,
+cand_00074,2026-05-19 08:40:15 UTC+8,Santiment：持有至少100 BTC的钱包数量增至20229,BTC,institutional_flow,ok,2026-05-19T00:40:15Z,2026-05-19 08:40:15 UTC+8,pass,pass,,
+cand_00484,2026-05-19 00:50:18 UTC+8,Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金,ETH,hack_security,ok,2026-05-18T16:50:18Z,2026-05-19 00:50:18 UTC+8,pass,pass,,
+cand_00304,2026-05-19 04:00:00 UTC+8,Kraken revenue hits $507m in Q1 despite slump,BTC,macro,ok,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,pass,pass,,
+cand_00112,2026-05-19 08:00:00 UTC+8,Galaxy Digital wins New York BitLicense,BTC,macro,ok,2026-05-19T00:00:00Z,2026-05-19 08:00:00 UTC+8,pass,pass,,
+cand_00339,2026-05-19 03:17:10 UTC+8,JUST IN: Pro-Bitcoin Kevin Warsh to be sworn in as Federal Reserve Chair this Friday 👀🇺🇸 https://t.co/61p7sCHfHu,BTC,macro,ok,2026-05-18T19:17:10Z,2026-05-19 03:17:10 UTC+8,pass,pass,,
+cand_00016,2026-05-19 10:12:50 UTC+8,"5/18 Ethereum ETF Net Flow: $-84.14m
+$ETHA (BlackRock): –$55.40m
+$FETH (Fidelity): –$14.70m
+$ETHW (Bitwise): $0.00m
+$TET",ETH,staking_governance,ok,2026-05-19T02:12:50Z,2026-05-19 10:12:50 UTC+8,pass,pass,,
+cand_00064,2026-05-19 09:00:20 UTC+8,"🔥 BULLISH: Bitwise announces it will hold $HYPE on its balance sheet, allocating 10% of its Hyperliquid ETF (BHYP) manag",HYPE,institutional_flow,ok,2026-05-19T01:00:20Z,2026-05-19 09:00:20 UTC+8,pass,pass,,
+cand_00160,2026-05-19 06:42:26 UTC+8,以太坊质押比例上升至31%，长期持有者信心依旧,ETH,staking_governance,ok,2026-05-18T22:42:26Z,2026-05-19 06:42:26 UTC+8,pass,pass,,
+cand_00365,2026-05-19 02:45:00 UTC+8,Bitwise将用10%管理费购买$HYPE,HYPE,institutional_flow,ok,2026-05-18T18:45:00Z,2026-05-19 02:45:00 UTC+8,pass,pass,,
+cand_00478,2026-05-19 00:55:05 UTC+8,"Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:",AVAX,other,ok,2026-05-18T16:55:05Z,2026-05-19 00:55:05 UTC+8,pass,pass,,
+cand_00482,2026-05-19 00:53:58 UTC+8,Bitwise to add HYPE to balance sheet using fees from Hyperliquid ETF,HYPE,institutional_flow,ok,2026-05-18T16:53:58Z,2026-05-19 00:53:58 UTC+8,pass,pass,,
+cand_00449,2026-05-19 01:19:22 UTC+8,Ethereum Foundation 研究员 Carl Beek 与 Julian Ma 于周一宣布离职。其中，Carl Beek 在以太坊工作约 7 年，曾参与 Beacon Chain 及以太坊 PoS 升级；Julian Ma 在以,ETH,network_upgrade,ok,2026-05-18T17:19:22Z,2026-05-19 01:19:22 UTC+8,pass,pass,,
+cand_00227,2026-05-19 05:20:51 UTC+8,Revolut推出首张实体加密卡，主打Dogecoin主题,DOGE,other,ok,2026-05-18T21:20:51Z,2026-05-19 05:20:51 UTC+8,pass,pass,,
+cand_00456,2026-05-19 01:11:22 UTC+8,Ethereum's Vitalik Buterin Explains How AI Could Make Smart Contracts Truly Secure,ETH,macro,ok,2026-05-18T17:11:22Z,2026-05-19 01:11:22 UTC+8,pass,pass,,
+cand_00134,2026-05-19 07:20:00 UTC+8,Revolut launches first physical crypto card,DOGE,macro,ok,2026-05-18T23:20:00Z,2026-05-19 07:20:00 UTC+8,pass,pass,,
+cand_00423,2026-05-19 01:39:01 UTC+8,"🚨MORE ETHEREUM FOUNDATION RESEARCHERS RESIGN
+
+Ethereum Foundation researchers Carl Beek and Julian Ma have resigned, add",ETH,other,ok,2026-05-18T17:39:01Z,2026-05-19 01:39:01 UTC+8,pass,pass,,
+cand_00457,2026-05-19 01:10:18 UTC+8,"🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi",SOL,other,ok,2026-05-18T17:10:18Z,2026-05-19 01:10:18 UTC+8,pass,pass,,
+cand_00392,2026-05-19 02:10:16 UTC+8,"🔥 BULLISH: Tokenized stocks on Ondo Finance crossed $1.5B in TVL, with Ondo’s top five assets making up 25% of the secto",ONDO,other,ok,2026-05-18T18:10:16Z,2026-05-19 02:10:16 UTC+8,pass,pass,,
+cand_00402,2026-05-19 02:00:00 UTC+8,NYDIG warns US crypto market-structure bill could 'fail' if August window is missed,BTC,macro,ok,2026-05-18T18:00:00Z,2026-05-19 02:00:00 UTC+8,pass,pass,,
+cand_00414,2026-05-19 01:50:17 UTC+8,代币化国债总额创历史新高达137亿美元,BTC,macro,ok,2026-05-18T17:50:17Z,2026-05-19 01:50:17 UTC+8,pass,pass,,

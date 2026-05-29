@@ -1,0 +1,2 @@
+﻿status,created_at_china,board_id,telegram_message_id,send_status,ledger_rows_added,ledger_output,error
+pass,2026-05-28 16:41:32 UTC+8,tg_board_20260528_160021,local_test,sent,3,C:\Users\PC\Desktop\Projects\事件情报系统\data\tg_alert_ledger.csv,

@@ -1,0 +1,2 @@
+﻿backfill,input_rows,event_type_rows,source_rows,promising_event_type_count,promising_source_count,benchmark_polluted_event_type_count,status
+C:\Users\PC\Desktop\Projects\事件情报系统\results\v08_historical_replay_conservative_120_price_backfill.csv,120,7,9,0,1,2,pass

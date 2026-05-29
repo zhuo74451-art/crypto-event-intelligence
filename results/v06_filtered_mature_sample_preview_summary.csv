@@ -1,0 +1,16 @@
+event_type,selected_count,eligible_count,type_cap,limit
+TOTAL,50,60,,50
+exchange_listing,0,0,8,50
+hack_security,7,7,8,50
+halving,0,1,5,50
+institutional_flow,10,11,10,50
+legal_enforcement,1,1,5,50
+market_structure,0,0,3,50
+network_upgrade,1,1,8,50
+onchain_data,5,5,8,50
+project_business,5,7,5,50
+regulation_macro,10,14,10,50
+stablecoin_flow,3,3,5,50
+staking_governance,0,0,5,50
+token_supply,0,0,8,50
+whale_position,8,10,10,50

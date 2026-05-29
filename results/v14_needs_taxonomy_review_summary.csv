@@ -1,0 +1,14 @@
+﻿generated_at_china,v14_taxonomy_event_subtype,sample_count,avg_abnormal_vs_btc_24h,win_rate_vs_btc_24h
+2026-05-28 20:30:40 UTC+8,social_sentiment_commentary,9,0.057556,1.0
+2026-05-28 20:30:40 UTC+8,influencer_or_wallet_position,7,0.065767,1.0
+2026-05-28 20:30:40 UTC+8,needs_taxonomy_review,5,0.006646,1.0
+2026-05-28 20:30:40 UTC+8,ecosystem_commentary,4,0.004822,0.75
+2026-05-28 20:30:40 UTC+8,large_transfer_or_deposit,4,-0.006478,0.5
+2026-05-28 20:30:40 UTC+8,market_comparison,3,0.008647,1.0
+2026-05-28 20:30:40 UTC+8,regulatory_or_policy_context,2,0.041839,0.5
+2026-05-28 20:30:40 UTC+8,developer_security_commentary,2,0.008093,1.0
+2026-05-28 20:30:40 UTC+8,market_index_update,2,0.002168,0.5
+2026-05-28 20:30:40 UTC+8,protocol_parameter_update,1,0.009248,1.0
+2026-05-28 20:30:40 UTC+8,event_promotion,1,0.00718,1.0
+2026-05-28 20:30:40 UTC+8,negative_market_commentary,1,0.003179,1.0
+2026-05-28 20:30:40 UTC+8,institutional_partnership,1,-0.004667,0.0

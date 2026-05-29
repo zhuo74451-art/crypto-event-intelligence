@@ -1,0 +1,10 @@
+candidate_event_type,candidate_count,needs_review_count,include_count
+exchange_listing,3,3,0
+hack_security,24,21,0
+halving,4,2,0
+institutional_flow,15,9,0
+macro,175,175,0
+network_upgrade,12,10,0
+other,256,256,0
+staking_governance,9,6,0
+whale_position,2,0,0

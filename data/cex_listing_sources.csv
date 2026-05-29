@@ -1,0 +1,2 @@
+source_name,exchange,endpoint,catalog_id,enabled,notes
+binance_new_listing,Binance,https://www.binance.com/bapi/composite/v1/public/cms/article/catalog/list/query,48,true,Binance public CMS catalog for new cryptocurrency listings

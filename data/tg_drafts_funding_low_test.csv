@@ -1,0 +1,46 @@
+﻿draft_id,candidate_id,published_at_china,asset_symbol,event_type,event_type_label,event_scope,channel_route,confidence_label,strength_stars,amount_usd,raw_signal_type,risk_category,needs_model_review,model_review_reason,source,title,url,draft_text,draft_status,reviewer_decision,reviewer_usefulness,reviewer_issue_type,reviewer_notes,approved_text,draft_mode,auto_send_enabled
+tg_watcher_0001,watcher_fh_6f3e56768004eac9,2026-05-28 08:00:00,BTC,funding_rate,资金费率,single_asset,first_hand_review,高,★★☆☆☆,10000.00,funding_rate_high_positive,market_structure,false,,first_hand:binance_usdm_funding_rate,BTC 永续合约资金费率处于异常正值，最新费率 0.00010000,,"<b>⚡【资金费率】BTC 衍生品拥挤信号</b>
+━━━━━━━━━━━━━━
+📌 事件：BTC 永续合约资金费率处于异常正值，最新费率 0.00010000
+🕒 北京时间：2026-05-28 08:00:00
+🏷️ 实体：Binance USD-M
+🔎 类型：资金费率高位为正
+💰 金额：1.00 万美元
+🔥 强度：★★☆☆☆
+✅ 置信：高
+
+🧠 解读：资金费率显著为正，说明多头为持仓支付更高成本，属于衍生品拥挤度信号；需要结合价格趋势、持仓量和清算分布复核。
+
+🧾 复核：暂不需要
+
+⚠️ 仅作链上情报与研究观察，不构成任何交易建议。",pending_review,,,,,,v07_watcher_private_pilot,false
+tg_watcher_0002,watcher_fh_7de60de387df5384,2026-05-28 08:00:00,ETH,funding_rate,资金费率,single_asset,first_hand_review,高,★★☆☆☆,2421.00,funding_rate_high_positive,market_structure,false,,first_hand:binance_usdm_funding_rate,ETH 永续合约资金费率处于异常正值，最新费率 0.00002421,,"<b>⚡【资金费率】ETH 衍生品拥挤信号</b>
+━━━━━━━━━━━━━━
+📌 事件：ETH 永续合约资金费率处于异常正值，最新费率 0.00002421
+🕒 北京时间：2026-05-28 08:00:00
+🏷️ 实体：Binance USD-M
+🔎 类型：资金费率高位为正
+💰 金额：2,421.00 美元
+🔥 强度：★★☆☆☆
+✅ 置信：高
+
+🧠 解读：资金费率显著为正，说明多头为持仓支付更高成本，属于衍生品拥挤度信号；需要结合价格趋势、持仓量和清算分布复核。
+
+🧾 复核：暂不需要
+
+⚠️ 仅作链上情报与研究观察，不构成任何交易建议。",pending_review,,,,,,v07_watcher_private_pilot,false
+tg_watcher_0003,watcher_fh_ba39cff8b34167a2,2026-05-28 08:00:00,SOL,funding_rate,资金费率,single_asset,first_hand_review,高,★★☆☆☆,5061.00,funding_rate_high_negative,market_structure,false,,first_hand:binance_usdm_funding_rate,SOL 永续合约资金费率处于异常负值，最新费率 -0.00005061,,"<b>⚡【资金费率】SOL 衍生品拥挤信号</b>
+━━━━━━━━━━━━━━
+📌 事件：SOL 永续合约资金费率处于异常负值，最新费率 -0.00005061
+🕒 北京时间：2026-05-28 08:00:00
+🏷️ 实体：Binance USD-M
+🔎 类型：资金费率高位为负
+💰 金额：5,061.00 美元
+🔥 强度：★★☆☆☆
+✅ 置信：高
+
+🧠 解读：资金费率显著为负，说明空头为持仓支付更高成本，属于衍生品拥挤度信号；需要结合价格趋势、持仓量和清算分布复核。
+
+🧾 复核：暂不需要
+
+⚠️ 仅作链上情报与研究观察，不构成任何交易建议。",pending_review,,,,,,v07_watcher_private_pilot,false

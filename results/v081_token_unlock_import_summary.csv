@@ -1,0 +1,2 @@
+﻿input,output,raw_rows,output_rows,real_rows,sample_rows,skipped_rows,duplicate_rows,invalid_time_rows,missing_symbol_rows,unsupported_symbol_rows,missing_amount_rows,missing_pct_rows,status
+C:\Users\PC\Desktop\Projects\事件情报系统\data\raw_token_unlocks_template.csv,C:\Users\PC\Desktop\Projects\事件情报系统\data\token_unlock_calendar_imported.csv,3,3,0,3,0,0,0,0,0,0,0,pass

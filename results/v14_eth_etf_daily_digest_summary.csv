@@ -1,0 +1,2 @@
+﻿generated_at_china,source,rows,latest_date,latest_date_sort,latest_days_lag,date_validation_status,latest_total_net_flow_usd,flow_7d_avg,flow_30d_avg,flow_30d_std,flow_zscore,is_anomaly,anomaly_reason,top_3_etf_by_flow,publishable_daily_digest,status,error
+2026-05-28 22:52:39 UTC+8,Farside Investors,0,,,,missing,0.0,0.0,0.0,0.0,0.0,false,within_normal_range,,false,warning,no_rows_parsed

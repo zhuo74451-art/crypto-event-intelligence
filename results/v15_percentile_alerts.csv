@@ -1,0 +1,9 @@
+﻿bucket,asset_symbol,alert_type,percentile,price_change_pct_1h,price_change_pct_24h,quote_volume_usd_1h,quote_volume_change_pct_1h,funding_rate,oi_change_pct_24h,oi_level_percentile_90d,interpretation,reason
+frontpage_alerts,BTC,funding_rate_percentile,98.9,0.067,0.44,127316676.62,-23.6261,0.0001,3.124,22.8,核心资产资金费率达到异常分位,core_asset_funding_extreme
+watchlist_alerts,BTC,funding_price_confirmation,98.9,0.067,0.44,127316676.62,-23.6261,0.0001,3.124,22.8,多头持仓成本偏高，需结合价格变化确认,positive_funding_ge_90
+watchlist_alerts,BNB,funding_price_confirmation,90.7,0.0771,0.0,3357376.63,-33.6083,7.032e-05,-0.9895,33.9,多头持仓成本偏高，需结合价格变化确认,positive_funding_ge_90
+watchlist_alerts,DOGE,funding_price_confirmation,92.6,-0.1212,1.238,6007559.64,-16.4346,0.0001,-1.1805,0.0,多头持仓成本偏高，需结合价格变化确认,positive_funding_ge_90
+digest_context,BTC,percentile_context,98.9,0.067,0.44,127316676.62,-23.6261,0.0001,3.124,22.8,分位偏离，进入早晚报观察,digest_percentile_context
+digest_context,SOL,percentile_context,35.6,0.0613,1.517,16956198.28,-51.6442,4.219e-05,-0.7271,1.1,快速下降，市场降温,digest_percentile_context
+digest_context,BNB,percentile_context,90.7,0.0771,0.0,3357376.63,-33.6083,7.032e-05,-0.9895,33.9,分位偏离，进入早晚报观察,digest_percentile_context
+digest_context,DOGE,percentile_context,92.6,-0.1212,1.238,6007559.64,-16.4346,0.0001,-1.1805,0.0,快速下降，市场降温,digest_percentile_context

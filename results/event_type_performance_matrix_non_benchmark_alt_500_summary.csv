@@ -1,0 +1,2 @@
+﻿status,generated_at_china,live_input_rows,historical_input_rows,input_rows,matrix_rows,insufficient_sample_count,short_horizon_only_count,promising_needs_validation_count,output,markdown_output
+pass,2026-05-28 20:05:55 UTC+8,3,281,284,78,72,0,1,C:\Users\PC\Desktop\Projects\事件情报系统\results\event_type_performance_matrix_non_benchmark_alt_500.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\event_type_performance_matrix_non_benchmark_alt_500.md

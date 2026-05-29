@@ -1,0 +1,7 @@
+﻿generated_at_china,hack_subtype,sample_count,computed_24h_count,avg_abnormal_vs_btc_24h,win_rate_vs_btc_24h,routing_hint
+2026-05-28 20:06:04 UTC+8,hack_unclear,31,31,0.008676,0.6774,digest_or_collect_more
+2026-05-28 20:06:04 UTC+8,active_exploit,28,28,-0.002678,0.3571,digest_or_collect_more
+2026-05-28 20:06:04 UTC+8,fund_recovery,18,18,0.001995,0.6667,digest_or_collect_more
+2026-05-28 20:06:04 UTC+8,security_disclosure,5,5,-0.0001,0.4,digest_or_collect_more
+2026-05-28 20:06:04 UTC+8,regulatory_enforcement,3,3,0.002352,0.6667,digest_or_collect_more
+2026-05-28 20:06:04 UTC+8,protocol_pause,1,1,-0.013591,0.0,digest_or_collect_more

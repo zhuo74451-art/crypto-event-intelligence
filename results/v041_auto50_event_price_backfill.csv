@@ -1,0 +1,1023 @@
+event_id,event_time,title,content,source,asset_symbol,binance_spot_symbol,binance_futures_symbol,event_type,direction_hint,importance,data_provider,market_type,symbol_used,raw_backtest_mode,asset_price_t0,asset_price_1h,asset_price_4h,asset_price_24h,asset_price_72h,btc_price_t0,btc_price_1h,btc_price_4h,btc_price_24h,btc_price_72h,eth_price_t0,eth_price_1h,eth_price_4h,eth_price_24h,eth_price_72h,asset_return_1h,asset_return_4h,asset_return_24h,asset_return_72h,btc_return_1h,btc_return_4h,btc_return_24h,btc_return_72h,eth_return_1h,eth_return_4h,eth_return_24h,eth_return_72h,abnormal_vs_btc_1h,abnormal_vs_btc_4h,abnormal_vs_btc_24h,abnormal_vs_btc_72h,abnormal_vs_eth_1h,abnormal_vs_eth_4h,abnormal_vs_eth_24h,abnormal_vs_eth_72h,status,skip_reason
+cand_00027,2026-05-25T09:30:49Z,"Bitcoin Price Rally Over $77,300 Amid Easing U.S.-Iran Conflict","Rizwan is an experienced Crypto journalist with almost half a decade of experience covering everything related to the growing crypto industry — from price analysis to blockchain disruption. During this period, he’s authored more than 3,000 news articles for Coinpedia News.
+
+Rizwan is an experienced Crypto journalist with almost half a decade of experience covering everything related to the growing crypto industry — from price analysis to blockchain disruption. During this period, he’s authored more than 3,000 news articles for Coinpedia News.
+
+Rizwan is an experienced Crypto journalist with almost half a decade of experience covering everything related to the growing crypto industry — from price analysis to blockchain disruption. During this period, he’s authored more than 3,000 news articles for Coinpedia News.
+
+Bitcoin rebounded above $77,300 after briefly falling near $74,000 during last week’s market panic.
+
+U.S. President Donald Trump said a U.S.-Iran peace deal was “largely negotiated,” easing market fears.
+
+Analysts say Bitcoin could rally toward $84,500 if it breaks above the $78,258 resistance level.
+
+Monday started on a positive note for Bitcoin as the world’s largest cryptocurrency climbed back above $77,300 after briefly falling near $74,000 last week. The recovery came as fears of a possible U.S.-Iran conflict began to ease.
+
+The rebound follows several days of heavy selling pressure that wiped billions from the crypto market and triggered panic among traders.
+
+The biggest reason behind Bitcoin’s recent price recovery was improving geopolitical sentiment after U.S. President Donald Trump said a peace agreement involving Iran had been “largely negotiated” and was now awaiting final approval.
+
+In a Social Truth post , Trump claimed that the final details of the agreement were still being discussed among the United States, Iran, Saudi Arabia, the UAE, Qatar, Turkey, Egypt, Jordan, Bahrain, and Pakistan.
+
+This is subject to finalization between the United States of America, the Islamic Republic of Iran, and the various other Countries.”
+
+The announcement eased market fears and boosted confidence in risk assets like crypto, helping Bitcoin rebound strongly after its earlier decline.
+
+Another major reason behind Bitcoin’s rise is that investors are moving money out of altcoins and back into Bitcoin.
+
+Even though U.S. Bitcoin ETFs saw more than $1.26 billion in outflows this week, on-chain data shows large investors are still quietly buying BTC during the dip.
+
+At the same time, Bitcoin futures trading activity jumped sharply. Open interest in Bitcoin perpetual futures rose more than 10% in the last 24 hours, showing traders are expecting a bigger move ahead.
+
+Crypto analyst Ali Martinez said Bitcoin is currently trading between strong support near $75,700 and resistance around $78,250. He also noted that whales moved more than 18,000 BTC during this consolidation phase.
+
+Ali Martinez further noted that Bitcoin’s next move depends on whether it can stay above the $78,258 resistance level. If buyers manage to turn this level into support, it could signal more strength in the market.
+
+If Bitcoin breaks higher and holds its momentum, the price could rise toward $84,500 in the coming weeks.
+
+2/5 First and foremost, Bitcoin $BTC is in a consolidation phase. Throughout this structural reset, the price has been moving within channels, allowing the market to build up liquidity before its next definitive move. https://t.co/Vxuvr3SmJP
+
+On the other hand, if Bitcoin falls below the $75,700 support level, selling pressure could increase.
+
+In that case, BTC may drop toward the $66,900 area.",news:coinpedia,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,binance,spot,BTCUSDT,published_after_event,77550.6,77528.8,,,,77550.6,77528.8,,,,2120.56,2117.0,,,,-0.0002811067870526207,,,,-0.0002811067870526207,,,,-0.0016788018259327186,,,,0.0,,,,0.001397695038880098,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00032,2026-05-25T09:26:40Z,"TrapDoor attack targets crypto wallets, AWS keys and GitHub tokens - CoinJournal","A coordinated malware campaign known as TrapDoor has hit software ecosystems widely used by crypto and blockchain developers.
+
+Security researchers identified dozens of malicious packages spread across major open-source repositories , all designed to steal sensitive developer data such as wallet keys, cloud credentials, and source code access tokens.
+
+Instead of a single malicious upload, attackers deployed multiple packages in waves using different accounts.
+
+This approach made the activity harder to detect at the early stages and allowed the malware to blend into routine dependency updates.
+
+The TrapDoor operation affected at least three major package ecosystems: npm, PyPI, and Crates.io.
+
+Together, researchers identified more than 30 malicious packages and over 300 affected versions distributed within a short window.
+
+The activity reportedly began around May 22, 2026, although GitHub reported unauthorized access to internal repositories on May 20. It then escalated quickly over the following days.
+
+The packages were not isolated incidents. Instead, they appeared to be part of a coordinated release strategy involving multiple developer accounts.
+
+This structure suggests planning rather than opportunistic abuse. Each package carried similar behavior patterns and pointed to a shared malicious framework used by the attackers.
+
+Once installed, TrapDoor packages execute automatically through standard build and installation processes used in modern development environments.
+
+In JavaScript packages, malicious code is triggered through post-install scripts, which run immediately after a dependency is added.
+
+In Python packages, the malware can activate during import, allowing it to execute without any explicit function call.
+
+Rust packages use build scripts to achieve the same result during compilation.
+
+After execution, the malware scans local systems for valuable data. This includes SSH keys, API tokens, and configuration files commonly used in cloud and blockchain development workflows.
+
+It also targets browser-stored credentials and environment variables, which often contain sensitive authentication data.
+
+Stolen information is then sent to external servers controlled by the attackers.
+
+In some cases, the malware attempts to maintain persistence by modifying startup processes or inserting malicious hooks into development tools.
+
+What makes this campaign particularly concerning is its focus on crypto-related development environments.
+
+The malware specifically searches for crypto wallet-related files and credentials linked to platforms such as Coinbase , MetaMask, Binance , and Solana-based tools.
+
+It also targets cloud infrastructure credentials from providers like AWS and GitHub access tokens.
+
+These are especially valuable because they can provide attackers with direct access to private repositories, deployment pipelines, and backend systems.
+
+In addition, the malware attempts to collect SSH keys that could allow remote access to developer machines or production servers.
+
+This combination of targets gives attackers a wide range of entry points into both personal and enterprise systems.
+
+One of the more unusual elements of the TrapDoor campaign is its interaction with AI-assisted development environments.
+
+Some malicious packages include configuration files designed to influence coding assistants and automated development tools.
+
+Files such as .cursorrules and CLAUDE.md were reportedly used to manipulate AI coding assistants into performing actions that could expose sensitive information.
+
+Instead of directly hacking systems, the attackers attempted to exploit how AI tools interpret project instructions.
+
+This approach reflects a shift in attack methods.
+
+Rather than targeting only code execution, the campaign also attempts to influence developer workflows that rely on AI-generated suggestions and automated analysis.
+
+Keep updated with our round the clock and in-depth cryptocurrency news",news:coinjournal,SOL,SOLUSDT,SOLUSDT,hack_security,risk,4,binance,spot,SOLUSDT,published_after_event,86.02,85.97,,,,77539.59,77528.0,,,,2119.63,2116.14,,,,-0.0005812601720529553,,,,-0.00014947203099724415,,,,-0.0016465137783482353,,,,-0.00043178814105571117,,,,0.00106525360629528,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00086,2026-05-25T06:57:07Z,TrapDoor malware campaign steals crypto wallet data through fake developer tools,"TrapDoor malware has emerged as a new threat to crypto and AI developers after researchers uncovered a supply chain attack designed to steal wallet data, API keys, cloud credentials, and SSH access through poisoned developer packages.
+
+According to a report published Sunday by developer security platform Socket, the campaign, dubbed “TrapDoor,” was first identified on Friday and has already spread through at least 34 malicious packages and 384 connected versions across multiple software ecosystems.
+
+Socket said the attackers have focused on developers working in cryptocurrency, decentralized finance, artificial intelligence, and security infrastructure, where exposed credentials can provide access to wallets, repositories, cloud environments, and internal systems.
+
+Among the targeted services are wallets and platforms linked to Coinbase, Binance, MetaMask, Brave, along with blockchain ecosystems tied to Solana, Sui, and Aptos.
+
+Ahmad Nassri, chief technology officer at Socket, said the malware also attempts to manipulate AI coding assistants such as Claude and Cursor by injecting hidden prompts into development workflows. Socket’s report stated that the attackers appear to be pushing AI tools into running fake “security scans” that expose secrets and transmit them back to the operators.
+
+A coordinated crypto stealer hitting 36 packages across @npmjs , @pypi , and @cratesiostatus simultaneously. Steals wallets ( @SuiNetwork , @solana , @Aptos , @coinbase , @binance , @brave , @MetaMask , and more), SSH keys, AWS creds, GitHub tokens, and browser data. Injects hidden… https://t.co/EGn9mwOISw
+
+Inside the campaign, malicious packages were disguised as common development utilities, including project setup tools, model-routing software, Solidity frameworks, prompt-engineering packages, and build helpers for Sui and Move-based applications, according to Socket.
+
+The infected packages were discovered across npm, PyPI, and Rust’s Crates ecosystem, giving attackers access to JavaScript, Python, AI, automation, and blockchain development communities at the same time.
+
+Socket said the package names were intentionally designed to resemble legitimate software developers might install during normal workflows without noticing suspicious behavior.
+
+At the same time, the company said GitHub repositories linked to the operation showed signs of AI-assisted development activity, including rapidly generated lure repositories, partially completed malware components, and prompt-injection documentation built around security themes.
+
+Separately, GitHub disclosed on May 20 that unauthorized actors had accessed internal repositories after compromising an employee’s device.
+
+The latest campaign follows a growing pattern of attacks targeting crypto developers through trusted workplace tools and professional communication channels.
+
+Last month, researchers at Elastic Security Labs detailed a separate operation that used the Obsidian note-taking app to infect cryptocurrency and finance professionals with malware known as PHANTOMPULSE.
+
+According to Elastic, the attackers approached victims through LinkedIn and Telegram conversations before directing them to shared Obsidian vaults containing trojanized plugins.
+
+Elastic said the malware established a decentralized command-and-control structure using blockchain transaction data spread across three networks, allowing operators to maintain access without relying on centralized servers.
+
+Earlier in April, blockchain security firm CertiK warned that North Korea-linked Lazarus Group operators had used fake Zoom meetings, compromised Telegram accounts, and ClickFix-style social engineering tactics to deliver “Mach-O Man” malware to crypto executives and fintech employees on macOS devices.
+
+CertiK researcher Natalie Newson connected that activity to recent DeFi exploits tied to Drift and KelpDAO , where attackers allegedly stole hundreds of millions of dollars through social engineering and cross-chain infrastructure abuse.
+
+Security researchers have increasingly warned that software supply chains, collaboration apps, AI development tools, and open-source repositories are becoming common entry points for crypto-focused intrusions because developers routinely install third-party packages and plugins with elevated system permissions.",news:cryptonews,SOL,SOLUSDT,SOLUSDT,hack_security,risk,4,binance,spot,SOLUSDT,published_after_event,85.95,85.91,,,,77400.34,77386.82,,,,2108.23,2115.03,,,,-0.00046538685282149217,,,,-0.00017467623527223086,,,,0.0032254545282062175,,,,-0.0002907106175492613,,,,-0.0036908413810277096,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00054,2026-05-25T08:41:14Z,Pi Network for the curious: A beginner's guide,"Someone told you about Pi Network. Maybe a friend, a relative, a coworker. They said you can mine cryptocurrency on your phone by tapping a button once a day. You looked it up and ended up more confused than when you started. There are 60 million users, a price chart, a 24-word recovery phrase, something called KYC, and a long list of words you do not recognize. This guide explains, in plain English, what Pi Network actually is, how it works, what you do with the app, what happens when you actually own PI, and what the honest tradeoffs look like before you decide whether to bother.
+
+Pi Network is a cryptocurrency project built around a mobile app. You install the app, open it once a day, and tap a button. The app says you are “mining” PI ( PI ) tokens. After enough days of doing this, and after you complete identity verification, those tokens become real and can be moved off the app to a wallet or sold on certain exchanges. The project has been running since 2019, claims around 60 million users, and as of mid-2026, one PI trades at about $0.15. It is one of the most-downloaded crypto apps in the world and also one of the most debated. This guide will explain why both of those things are true.
+
+Most cryptocurrencies are hard to use for ordinary people. To mine Bitcoin, you need specialized hardware and access to cheap electricity. To buy Bitcoin, you need a bank account, an exchange, and some idea of what you are doing. For most of the world’s population, both routes are out of reach.
+
+Pi Network’s founders, a group of Stanford-affiliated researchers led by Nicolas Kokkalis and Chengdiao Fan, started with a simple question. What if ordinary people could get their first taste of cryptocurrency through nothing more than the phone they already own? No hardware to buy. No exchange account to open. No bank required.
+
+That was the original pitch in 2019, and it is still the pitch today. Pi is designed to be the easiest possible on-ramp into crypto. The tradeoffs that come with that design choice are what most of the debate around Pi is actually about.
+
+This is the part that confuses people most, so it is worth being precise.
+
+When you mine Bitcoin, your computer is doing real cryptographic work. That work secures the network and is rewarded with new Bitcoin. Mining costs electricity, requires hardware, and produces a real economic output.
+
+When you “mine” PI by tapping a button on your phone, your phone is not doing cryptographic work. It is not contributing computing power. The button is essentially a check-in. By tapping it, you are telling Pi’s system you are still an active human user, and the system credits you with PI tokens at a rate that decreases as the total network grows.
+
+Pi calls this approach “social mining.” Rather than computing power, the resource Pi is using to allocate tokens is verified, active humans. The Security Circle feature, where you add five trusted people who can vouch for you, is part of the same idea. The network is trying to build a trust graph of real, distinct people, and the daily tap is the signal that you are still part of it.
+
+The actual security of the Pi blockchain comes from validator nodes, which run on desktop computers operated by a subset of users. The mobile app is the user-facing layer. The two should not be confused: tapping the lightning button on the app is not what secures the network, even though Pi uses the word “mining” for both.
+
+Here, the process gets more complicated, and it is the part where many users get stuck.
+
+The PI you earn by tapping the button is not immediately usable. It sits in your Pi app account as a balance. To turn that balance into real PI you can send, hold, or sell, you have to clear three more steps.
+
+First, you complete KYC. KYC stands for Know Your Customer, the same identity verification process banks use. Pi asks you to submit a photo of a government-issued ID (passport, driver’s license, or national ID) and a selfie or live video. The system, partially automated and partially handled by community validators, checks that the ID is real and matches you. The wait time varies. Some users are verified in days.
+
+Some are stuck in “tentative” status for months or longer, particularly if their ID format is unusual or the system flags their submission for manual review.
+
+Second, you create a Pi Wallet. This happens inside the Pi Browser, a separate app from the main mining app. The wallet generates a 24-word recovery phrase, which is the master key to your PI. Lose that phrase, and your PI is gone forever. Pi cannot recover it for you. Anyone who gets it can take your PI. Write it on paper, store it somewhere safe, and never type it into a website or share it with anyone.
+
+Third, you migrate to Mainnet. This moves your mined PI from the app’s internal ledger to the actual Pi blockchain. After migration, your PI sits in your Pi Wallet, identified by an address that starts with a “G” (Pi uses Stellar-style addresses). At that point, the PI is yours in the same sense that Bitcoin in a Bitcoin wallet is yours. You can send it to someone else. You can move it to certain exchanges. You can sell it.
+
+As of mid-2026, of Pi’s claimed 60 million users, about 19 million have completed KYC, and about 16 million have completed mainnet migration. The other roughly 44 million are at various points in the funnel, often stuck on KYC. This gap is one of the most-discussed features of the Pi experience.
+
+JUST IN: Pi Network has completed 526 million human KYC validation tasks by over 1 million verified people, positioning itself as a globally distributed, identity-verified human workforce for AI systems pic.twitter.com/TX4uuWxwlr
+
+Once you have PI in a Mainnet wallet, your options fall into three categories.
+
+You can spend it inside the Pi ecosystem. Pi has been building a network of merchants and apps that accept PI as payment. The annual PiFest event encourages real-world merchants to take PI, and Pi has reported over 100,000 merchants signing up for at least one PiFest period. Some users have bought small electronics, food, clothing, and other items in PI. The reach is uneven and concentrated in particular regions and communities, but it exists. The Pi App Studio, a platform inside the Pi ecosystem, lets developers build apps that accept Mainnet PI payments.
+
+You can trade it on exchanges. PI is listed on a range of cryptocurrency exchanges, including OKX, Bitget, MEXC, Gate, Bitfinex, and HTX. You can send your PI to one of these exchanges (subject to the exchange’s deposit requirements and Pi’s transfer rules) and sell it for stablecoins like USDT or for fiat currency via the exchange’s withdrawal options. The two largest exchanges in the world, Binance and Coinbase, have not listed PI as of mid-2026. Kraken put PI on its 2026 roadmap, but the listing has not yet been completed.
+
+You can hold it. Some users keep PI in their Pi Wallet and keep mining, betting on the project’s long-term growth. Pi offers lockup configurations where you commit your PI to be held for a fixed period in exchange for a higher mining rate. Whether this is a sensible thing to do depends entirely on your view of where PI’s price will go, which is the part nobody can answer for you.
+
+In May 2026, PI trades at about $0.15. The all-time high was $2.99, reached shortly after Pi opened external trading in February 2025. The all-time low, briefly touched on the same day Pi opened to external trading, was about $0.049. The price has been in a long decline from the early-2025 peak, with some periods of recovery and some of further selling. The current market capitalization is around $1.6 billion, which places PI around the 55th-largest cryptocurrency by market value.
+
+A few things are worth knowing about that price, because they explain why it has moved the way it has.
+
+PI’s circulating supply is growing. About 10.4 billion of the maximum 100 billion PI are currently in circulation. As more users complete KYC and migrate to Mainnet, more PI enters the market. This adds supply against a finite demand pool, which is a structural reason for downward price pressure even when other things go well for the project.
+
+Trading volume is modest. PI’s daily trading volume sits roughly in the $1.5 million to $25 million range, depending on the source and the day, which is small for a token of its market cap rank. Smaller volume means larger price moves on relatively small buys or sells, and it means the price you see can change quickly.
+
+Listings drive demand. When a new exchange lists PI, the price usually moves up on anticipation, then often retraces as the new supply available to that exchange’s users gets absorbed. The biggest pending listings (Binance, Coinbase, completion of the Kraken listing) are watched closely by the community and will, if they come, be meaningful price events.
+
+Mining PI is free in the direct sense. The app is free. There is no fee to tap the button. There is no fee to complete KYC.
+
+There are indirect costs worth being honest about.
+
+The time cost is real. Pi requires you to open the app and tap the lightning button every 24 hours to maintain your mining rate. Miss a day, and you do not mine that day. Miss enough days, and your rate decreases. Over years of mining, the time investment adds up.
+
+The attention cost is real. The app shows ads, and the ad revenue is part of how Pi funds its operations. If you mine Pi consistently, you are exchanging some amount of your attention for some amount of PI tokens. Whether that exchange is worth it depends on what those tokens end up being worth.
+
+The data cost is real. KYC requires submitting government ID and biometric data to Pi’s systems. Pi has its own policies around how that data is handled and stored. As with any KYC process at any company, you are trusting the operator to handle your data responsibly. Pi is far from unique in collecting this data, but it is worth knowing you are submitting it.
+
+The opportunity cost is real, but harder to measure. The years spent mining Pi could have been spent on other crypto strategies, or on nothing at all. If PI ultimately reaches a price that makes the time worthwhile, the opportunity cost is zero. If it does not, it was real. Nobody can tell you in advance which one will be true.
+
+Pi Network itself is a real project. The team is identifiable, the app is in official app stores, the blockchain is live, the founders appeared at Consensus 2026 (one of the largest events in the crypto industry), and the project has been running for over six years. In the basic sense of “is this a real company with real people building a real thing,” the answer is yes.
+
+JUST IN: Pi Network Founder Chengdiao Fan at Consensus 2026: Tokens should support real user acquisition and product utility. Pi Launchpad designed to solve distribution gap in AI-driven Web3 pic.twitter.com/QAnlXQLVUO
+
+Pi Network has also become a magnet for third-party scams. Because the community is large, because the KYC process is slow, and because many users do not understand the difference between the official Pi system and external services, scammers have built an entire ecosystem of fake “KYC acceleration” services, fake Pi websites, fake exchanges, and fake support accounts on Telegram, Twitter, and Discord.
+
+Only use the official Pi Network app, downloaded from the Apple App Store or Google Play. The official app is published by the Pi Core Team. There are no priority KYC services. There is no way to speed up your verification by paying someone.
+
+Never share your 24-word recovery phrase with anyone, ever. Nobody legitimate will ask for it. If anyone asks for it, including someone claiming to be Pi support, they are trying to steal your PI.
+
+Be skeptical of every “exchange” or “service” that promises to trade your PI before you have migrated to Mainnet. Some smaller platforms trade IOU tokens that are not the same as native PI. An IOU is a promise to deliver PI under certain conditions. The price of an IOU can drift from the real PI price, and not every IOU operator is reliable.
+
+Do not click links in messages from people claiming to be Pi Network officials. The Core Team communicates through the official app, the official website (minepi.com), and verified social media accounts. Anyone reaching out to you directly with offers, fixes, or special access is almost certainly trying to scam you.",news:cryptonews,BTC,BTCUSDT,BTCUSDT,network_upgrade,observe,3,binance,spot,BTCUSDT,published_after_event,77345.99,77580.01,,,,77345.99,77580.01,,,,2115.02,2118.43,,,,0.0030256255043084046,,,,0.0030256255043084046,,,,0.0016122778980813823,,,,0.0,,,,0.0014133476062270223,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00093,2026-05-25T06:33:04Z,Brian Armstrong says finance must move on-chain or fall behind,"Coinbase CEO Brian Armstrong said the financial system still needs eight key upgrades before crypto-based finance can reach wider use.
+
+His list covered RWA tokenization, 24/7 global trading, stablecoin payments, AI tools, self-custody wallets, easier capital formation, sound money, and better regulation.
+
+Armstrong said the future system will become more global, more automated, and more on-chain. He wrote that the work is not complete until these systems serve more users, adding, “Jobs not done until we get these working for all.”
+
+Armstrong placed tokenization of real-world assets at the top of his list. He said real estate, stocks, bonds, and funds can move on-chain to support faster settlement, wider distribution, and fractional ownership.
+
+Major areas where the financial system still needs an update: 1. Tokenization of real-world assets – Real estate, stocks, bonds, funds, etc. onchain for instant settlement, fractional ownership & massive distribution. 2. 24/7 Global trading – Pooled global liquidity, every…
+
+The comment comes as tokenization remains a leading crypto theme in 2026. Related reports said the tokenized RWA market grew 263% year over year in 2025 and about 30% in the first quarter of 2026.
+
+Coinbase has also tied its public strategy to this shift. In its Q1 2026 earnings call , the company said stablecoins had passed $300 billion in market value, while tokenized real-world assets were expected to reach $16 trillion by 2030.
+
+Armstrong also named next-generation payments as a needed upgrade. He pointed to near-instant, low-cost global transfers using stablecoins, including payments made by AI agents.
+
+That view matches Coinbase’s recent work around machine payments. Related coverage said Coinbase’s x402 protocol became native to Amazon Bedrock AgentCore, letting AI agents pay for services in USDC without human input. The report said transactions settle on Base in about 200 milliseconds.
+
+Separate coverage said Coinbase launched Agentic.market, a marketplace where AI agents can find and buy services using USDC through x402. At launch, the system had settled about 165 million transactions across more than 480,000 agents.
+
+Armstrong also called for innovation-friendly regulation. He said rules should move away from one-size-fits-all systems and toward risk-based models that support competition.
+
+The point follows Coinbase’s support for the CLARITY Act. Related reports said Armstrong backed the bill before a Senate markup, after lawmakers adjusted language on stablecoin yield, DeFi, tokenized stocks, and the CFTC’s role in crypto markets.
+
+The Senate Banking Committee later advanced the CLARITY Act in a 15 to 9 vote. Related reports said Coinbase stock rose 8% after the vote, while the bill still needed a full Senate vote and reconciliation with the House version.
+
+Meanwhile, Coinbase stock was trading at $184.99, down 4.43% over the past 24 hours, with the session range between $184.60 and $195.59, according to TradingView market data.
+
+Armstrong also named expanded access as part of the financial upgrade. He pointed to open protocols, fewer middlemen, and self-custody wallets for users with smartphones.
+
+Coinbase has moved in that direction through new stablecoin tools. Related coverage said Coinbase and Flipcash launched USDF, a Solana-based custom stablecoin fully backed by USDC. Coinbase said the product helps businesses issue branded stablecoins without building the full reserve and settlement system.
+
+The broader message from Armstrong is clear: Coinbase sees future finance as faster, more open, and more automated. His post links tokenization, stablecoins, AI, and regulation into one roadmap for on-chain finance.",news:cryptonews,SOL,SOLUSDT,SOLUSDT,network_upgrade,observe,3,binance,spot,SOLUSDT,published_after_event,86.0,85.78,,,,77360.59,77294.74,,,,2105.76,2110.31,,,,-0.0025581395348837077,,,,-0.0008512086063457991,,,,0.002160740065344502,,,,-0.0017069309285379086,,,,-0.00471887960022821,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00101,2026-05-25T06:05:38Z,Vitalik Buterin says Ethereum Foundation will sell less ETH under leaner plan,"Ethereum co-founder Vitalik Buterin said the Ethereum Foundation will use its remaining resources with more focus on long-term survival, not wider expansion.
+
+He said this means the foundation will sell less ETH going forward. Buterin made the comments in a long post on X, where he described the foundation as one part of Ethereum, not the center of the network. He said his own power inside the organization will keep falling as the board expands.
+
+Buterin said the Ethereum Foundation has limited funds, staff, and organizational capacity. He said the foundation holds about 0.16% of all ETH, which is far smaller than the central foundations behind many other blockchains.
+
+He wrote that the foundation is choosing “longevity over breadth” and added that this means it will sell less ETH. His post described a narrower mission around censorship resistance, openness, privacy, and security.
+
+Some of my perspective on where the @ethereumfndn is going. First of all, this is only my own view. The board is not just me, and I have no extra special powers on the board that the other board members do not. @aerugoettinea is the one executing much of this transition. My…
+
+The statement builds on the foundation’s treasury policy from June 2025. That policy said ETH sales depend on operating needs and reserve targets, while the foundation also planned to reduce annual operating costs over five years.
+
+Buterin said the Ethereum Foundation should act as one node in the wider Ethereum system. He said it should not behave as Ethereum’s parent, main company, or permanent steward.
+
+He also said the transition is still underway and should settle over the next few months. According to him, the foundation will become smaller and more opinionated in its work.
+
+Buterin said Ethereum must be “impressive” in areas tied to security, privacy, openness, and censorship resistance. He named goals such as bug-free Ethereum, stronger consensus, and fewer intermediaries in transaction inclusion.
+
+Related reports show the comment comes after several Ethereum Foundation treasury moves. On May 12, the foundation withdrew 21,270 ETH from Lido staking after earlier unstaking activity and OTC sales linked to operating funding.
+
+The same report said the foundation sold 10,000 ETH to BitMine on May 1 at an average price of $2,292 per ETH. That followed two earlier OTC sales to BitMine in March and April, bringing recent sales to 25,000 ETH.
+
+Earlier reports also noted that the foundation began staking 70,000 ETH from its treasury in February. The move was framed as a way to help secure Ethereum while funding core operations, grants, and protocol research without relying only on ETH sales.
+
+Buterin’s new comments match recent Ethereum roadmap work. Related coverage said he outlined a three-step privacy plan covering account abstraction, FOCIL, keyed nonces, and access-layer privacy tools.
+
+The Ethereum Foundation has also kept funding core research. Its Q1 2026 allocation report said it awarded $9.86 million across areas such as cryptography, zero-knowledge proofs, security, protocol research, wallets, clients, and user experience.
+
+Roadmap work has also continued through Ethereum’s Strawmap and later upgrade planning. Related coverage said the Strawmap targets faster slots, stronger finality, privacy, post-quantum security, and formal verification through future forks.
+
+Buterin’s post places those efforts inside a tighter foundation strategy. The foundation plans to keep backing work that may not attract enough outside capital but remains central to Ethereum’s long-term technical goals.",news:cryptonews,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,binance,spot,ETHUSDT,published_after_event,2106.47,2114.14,2117.38,,,77394.01,77444.45,77592.36,,,2106.47,2114.14,2117.38,,,0.0036411627034802496,0.005179280977180012,,,0.0006517300240678203,0.0025628598388944823,,,0.0036411627034802496,0.005179280977180012,,,0.0029894326794124293,0.0026164211382855296,,,0.0,0.0,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00102,2026-05-25T05:58:42Z,以太坊月交易笔数超7000万笔，创历史新高；中位数交易费降至0.00554美元，创历史新低,"OKX Ventures 于 X 平台援引 Token Terminal 数据表示，以太坊月交易笔数已超过 7000 万笔，创历史新高。同时，该网络中位数交易费已降至约 0.00554 美元，同步创下历史新低。这表明以太坊正逐渐实现“高效率、低成本”的网络状态特征。有鉴于此，OKX Ventures 认为，Layer 2 解决方案与模块化架构正持续降低链上交互成本，历史性的高 Gas 费问题正得到显著改善。随着交易成本降至足够低的水平，稳定币、区块链游戏、社交平台、AI Agent 以及 RWA（真实世界资产）等应用将更易吸引真实用户。公链竞争正进入""体验时代""，未来竞争将不再仅基于 TPS，而是取决于网络能否提供更好的安全性、流动性与用户体验，以太坊在开发者与生态实力方面仍保持强劲优势。随着成本下降，链上支付、资产发行与跨境结算等活动预计将持续增长，区块链基础设施正逐步走向主流数字经济的一部分。OKX Ventures 将继续关注基础设施升级与以太坊生态内的长期应用价值，真正重要的信号不仅是市场价格波动，而是真实链上使用量的持续增长。",news:odaily_exchange_gap,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,binance,spot,ETHUSDT,published_after_event,2108.22,2108.99,2117.02,,,77407.0,77419.87,77604.56,,,2108.22,2108.99,2117.02,,,0.00036523702459900775,0.004174137423988089,,,0.00016626403296848835,0.0025522239590733964,,,0.00036523702459900775,0.004174137423988089,,,0.0001989729916305194,0.0016219134649146927,,,0.0,0.0,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00146,2026-05-25T02:15:02Z,全球首發：Citrea（CTR）現已在 KuCoin 上線！,"KuCoin is proud to announce yet another great project coming to our Spot Trading platform. Citrea (CTR) will be available on KuCoin! Important Information Deposits : Effective Immediately (Supported Network: Citrea Mainnet) Call Auction : From 12:00 to 13:00 on May 26, 2026 (UTC) Trading: 13:00 on May 26, 2026 (UTC) Withdrawals: 10:00 on May 27, 2026 (UTC) Trading Pair: CTR/USDT Trading Bots: When spot trading begins, CTR/USDT will be available for Trading Bot s. The available services include: Spot Grid, Infinity Grid, DCA, Smart Rebalance, Spot Martingale, Spot Grid AI Plus and AI Spot Trend. What is Citrea? CTR is the coordination token of the Citrea Network, Bitcoin’s application layer enabling institutions and users to access Bitcoin capital markets. Powered by zero-knowledge technology, Citrea supports a diverse Bitcoin economy secured by the Bitcoin Network. CTR holders govern this economy by voting on ecosystem and protocol proposals. Website | X (Twitter) | Whitepaper Learn more about the Call Auction and find additional details in: Help Center . Risk Warning: Investing in cryptocurrency is akin to being a venture capital investor. The cryptocurrency market is available worldwide 24 x 7 for trading with no market close or open times. Please do your own risk assessment when deciding how to invest in cryptocurrency and blockchain technology. KuCoin attempts to screen all tokens before they come to market, however, even with the best due diligence, there are still risks when investing. KuCoin is not liable for investment gains or losses. Sign Up on KuCoin Now Download the KuCoin App Follow Us on X (Twitter) Join Us on Telegram Dive Into KuCoin's Global Communities",news:kucoin_ann,BTC,BTCUSDT,BTCUSDT,network_upgrade,observe,3,binance,spot,BTCUSDT,published_after_event,77282.16,77099.0,77281.26,,,77282.16,77099.0,77281.26,,,2104.32,2096.14,2101.7,,,-0.002370016573035816,-1.1645637233881345e-05,,,-0.002370016573035816,-1.1645637233881345e-05,,,-0.0038872414841850667,-0.0012450577858882372,,,0.0,0.0,,,0.0015172249111492508,0.0012334121486543559,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00003,2026-05-25T10:19:02Z,VALR Gets Provisional Cayman VASP License for Global Expansion,"VALR has secured provisional approval from the Cayman Islands Monetary Authority to operate as a Virtual Asset Service Provider, giving the Johannesburg-based company another regulatory foothold outside its home market.
+
+The approval allows VALR to offer virtual asset trading, exchange, custody and transfer services under provisional authority while it works through the remaining conditions for full licensing. For a company trying to move beyond its African base without losing its regional identity, this is a useful step. Not a final licence yet, but more than a simple expression of intent.
+
+For VALR, the Cayman Islands approval is not just a badge on a regulatory page. It gives the company a clearer route into global digital asset markets, particularly institutional flows that often require recognised offshore structures, stronger compliance processes and credible supervision.
+
+The Cayman Islands has become an important jurisdiction for crypto funds, exchanges and digital asset service providers. That matters because many institutional clients do not only look at product depth or trading fees. They look at where an entity is licensed, who supervises it, how client assets are handled and whether the legal structure can stand up to scrutiny.
+
+For a company with African roots, the licence helps bridge two worlds that do not always meet easily: local and regional crypto demand on one side, global institutional capital on the other. Africa has strong use cases for digital assets, especially around payments, dollar access, remittances and trading. Global capital, however, usually wants a regulatory wrapper it can understand before it moves at scale.
+
+VALR said the provisional authorisation covers fiat-to-crypto and crypto-to-crypto exchange services, secure digital asset custody and cross-border transfer services. Those areas are now core infrastructure in the sector, especially as stablecoins become more widely used for settlement, treasury management and international payments.
+
+The custody angle is particularly important. After several failures in the crypto sector, institutional clients have become more demanding about segregation of assets, operational controls and counterparty risk. Trading access alone is no longer enough. Exchanges increasingly have to look like infrastructure providers, not just marketplaces with an order book.
+
+The company already serves more than 1.8 million users and over 2,000 corporate and institutional clients worldwide. That gives the Cayman approval a practical edge. It is not a licence attached to a concept. It is being added to an operating business with existing volume, clients and product lines.
+
+VALR’s compliance base is also becoming more layered. The firm already holds Category I and II licences from South Africa’s Financial Sector Conduct Authority, along with ODP and TPPP licences. It is also registered with South Africa’s National Credit Regulator as a credit provider.
+
+That mix is relevant because VALR is no longer operating in a narrow exchange category. Its product set touches trading, payments, lending, borrowing, custody and derivatives-style exposure. Each of those areas carries a different regulatory expectation, and the line between crypto exchange, payments company and financial infrastructure provider is becoming less clean than it once was.
+
+Crypto firms are increasingly judged less by their marketing and more by their ability to operate across multiple regulatory regimes. Trading, payments, lending, custody and derivatives all sit in different legal boxes, and regulators are watching those boundaries more closely. A company that wants to serve both retail users and institutions has to build for that reality early, otherwise expansion becomes slow and expensive later.
+
+VALR CEO Farzam Ehsani described the Cayman approval as a step toward offering the company’s digital asset infrastructure to a broader global client base. He also pointed to VALR’s role in stablecoin markets, where faster and cheaper movement of value has become one of crypto’s more practical use cases.
+
+That stablecoin link is important. Much of crypto’s institutional growth is no longer just about speculative trading. It is about moving money across borders, settling balances between platforms, giving companies access to digital dollars and building payment products that work outside traditional banking hours. For an African platform with global ambitions, this is a natural area to push into.
+
+Founded in 2018 and backed by investors including Pantera Capital, Coinbase Ventures and F-Prime Capital, VALR offers spot trading, margin, perpetual futures , staking, lending, borrowing, OTC services, crypto bundles and payments. Full Cayman licensure would give that product set a stronger international regulatory platform and could make it easier for the company to compete for larger clients that require more than a strong technology stack.",news:cryptonewsflash,LINK,LINKUSDT,LINKUSDT,macro,observe,4,binance,spot,LINKUSDT,published_after_event,9.557,,,,,77578.01,,,,,2117.94,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00005,2026-05-25T10:15:05Z,Binance OMS Toolkit: The First Institutional Exchange Solution for Trading Technology Providers,"This is a general announcement. Products and services referred to here may not be available in your region.Fellow Binancians,Binance is proud to announce the launch of Binance OMS Toolkit, the first institutional exchange solution built for Order Management System (OMS), Order and Execution Management System (OEMS), and trading technology providers serving institutional and professional trading clients.As institutional participation in digital assets continues to grow, OMS and trading technology providers have become critical infrastructure for how institutions access and interact with markets. Yet until now, exchanges have offered little beyond basic connectivity. Binance OMS Toolkit was built to change that, giving technology providers the exchange-level tools, insights, and service they need to better serve their clients and grow their business.What it IncludesDeep Analytics: Full visibility into end-client trading activity and order flow across the Binance platform, helping providers optimize client support and product access.Self-Service Integration: Custom user tagging allows providers to segment and manage client accounts directly within the platform, without relying on Binance support for routine adjustments.Expanded Product Access: OMS clients can offer access to Binance Spot and Futures markets through their system.Dedicated Institutional Support: White-glove onboarding and support from Binance's VIP and Institutional team, ensuring a smooth integration and ongoing operational confidence.Binance OMS Toolkit is the next evolution of Binance Link and Trade, enhancing the existing partner toolkit with deep analytics and expanded integration capabilities.Getting Started with Binance OMS ToolkitBinance OMS Toolkit is available today for crypto-native and traditional market OMS and trading technology providers. Eligible providers can contact their Binance Institutional representative or visit the OMS Toolkit page to apply.Note: There may be discrepancies between this original content in English and any translated versions. Please refer to the original English version for the most accurate information, in case any discrepancies arise.Thanks for your support!Binance Team2026-05-25Trade on-the-go with Binance’s crypto trading app (iOS/Android)Find us on TelegramXLinkedInFacebookInstagramBinance reserves the right in its sole discretion to amend or cancel this announcement at any time and for any reasons without prior notice.Disclaimer: OMS Toolkit is provided to eligible technology solution providers that support order management and execution. Binance does not provide investment advice, guarantee order execution outcomes, or assume any responsibility or liability for trading decisions, trade outcomes, or additional fees charged by third-party platforms integrated with OMS Toolkit. Digital asset prices are subject to high market risk and price volatility. The value of your investment may go down or up, and you may not get back the amount invested. You are solely responsible for your investment decisions and Binance is not liable for any losses you may incur. You should only invest in products you are familiar with and where you understand the risks. By using OMS Toolkit, you accept that Binance is not liable for any losses or damages arising from its use. This material should not be construed as financial advice. For more information, see our Terms of Use and Risk Warning.",news:binance_ann,LINK,LINKUSDT,LINKUSDT,macro,observe,4,binance,spot,LINKUSDT,published_after_event,9.563,,,,,77666.0,,,,,2120.33,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00006,2026-05-25T10:13:00Z,Zcash (ZEC) Isn't So Private? Arkham Reveals Ability to Track Transactions - U.Today,"Disclaimer: The opinions expressed by our writers are their own and do not represent the views of U.Today. The financial and market information provided on U.Today is intended for informational purposes only. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. Conduct your own research by contacting financial experts before making any investment decisions. We believe that all content is accurate as of the date of publication, but certain offers mentioned may no longer be available.
+
+The foundation of Zcash's identity is privacy . Zcash introduced shielded transactions, which completely hide the sender, recipient, and transaction amount, in contrast to Bitcoin, where every wallet movement is permanently visible on-chain .
+
+However, new information from Arkham indicates that the situation is more nuanced than most users realize. More than half of all Zcash activity can already be identified and linked to recognized organizations, people, and entities, according to Arkham's findings.
+
+Despite Zcash being promoted as one of the most sophisticated privacy-focused cryptocurrencies available, the platform says it has attributed about $420 billion worth of ZEC transaction volume .
+
+The explanation is found in the way Zcash operates . The architecture of Zcash is still largely similar to that of Bitcoin. It relies on Proof-of-Work mining, has a 21 million supply cap, and employs the same UTXO transaction model.
+
+The primary distinction stems from zk-SNARK technology, a zero-knowledge proof system that enables transaction verification without disclosing the underlying data to the public. But that privacy is not required.
+
+Two address types are supported by Zcash: shielded z-addresses and transparent addresses, also referred to as t-addresses. Similar to Bitcoin, transactions between transparent addresses are still fully visible on-chain. Full cryptographic privacy is only attained by z-to-z transfers, in which the sender, recipient, and transaction amounts are hidden from the public.
+
+In reality, the shielded pool is never reached by the majority of Zcash activity. For regulatory and compliance reasons, transparent addresses are strongly preferred by exchanges, custodians, and institutional players. This makes entry and exit points visible throughout the network, which is exactly the data that blockchain intelligence companies take advantage of.
+
+According to Arkham, shielded addresses are still opaque and only show up as SHIELDED, but the surrounding flows frequently reveal enough metadata to track user behavior in any case.
+
+The report even focuses on U.S. governance. Zcash allegedly found in one tracked wallet was taken from Alexandre Cazes, 26 year-old Canadian who's believed to be the person behind dark web marketplace AlphaWeb, following his 2017 arrest. Additionally, Arkham identified a specific trader who allegedly transferred money to Gemini weeks later, turning a $4.49 million ZEC purchase into a $6.6 million profit.
+
+This does not imply that Zcash privacy is compromised. Pure shielded transactions continue to be cryptographically concealed. However, Arkham's analysis reminds us of a simple rule: privacy is more dependent on how users actually use the protocol than it is on the protocol itself.
+
+Disclaimer: The opinions expressed here are not investment advice; they are provided for informational purposes only. The opinions expressed by our writers are their own and do not represent the views of U.Today. Every investment and all trading involves risk, so you should always perform your own research prior to making decisions. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. We do not recommend investing money you cannot afford to lose.
+
+Read more on U.Today "" + document.location.href + """,news:utoday,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77631.58,,,,,77631.58,,,,,2118.85,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00010,2026-05-25T10:04:35Z,Dogecoin Price Prediction: DOGE Near a Defining Cycle Moment,"Dogecoin price chart shows DOGE testing long term support as analysts watch base formation and possible breakout confirmation.
+
+Dogecoin is back near a long term support area that has marked major cycle bottoms before. Two analysts now point to the same idea: DOGE may be building a base, but it still needs a clear breakout to confirm a stronger move.
+
+Dogecoin’s monthly setup is drawing attention after Trader Tardigrade said DOGE has formed a solid base again.
+
+The post does not give exact price levels, but the main idea is clear. The analyst is pointing to a long term base structure, which usually means price has spent time moving sideways after a wider pullback.
+
+Dogecoin Monthly Base Chart. Source: Trader Tardigrade on X
+
+A base can matter because it shows where sellers may be losing control. If DOGE continues to hold that area, buyers could use it as a foundation for the next larger move.
+
+Trader Tardigrade also said “something big is happening” and claimed a “massive surge” is coming. That is a bullish view, but the setup still needs confirmation from price action.
+
+The stronger signal would be a monthly breakout above the range. Without that breakout, the chart remains in a base building phase rather than a confirmed rally.
+
+For now, the key point is simple. Dogecoin may be building a long term base on the monthly chart, but the next move depends on whether DOGE can break above the range and hold momentum.
+
+Dogecoin is testing a long term rising support line that has marked earlier cycle bottoms on the chart shared by Bitcoinsensus.
+
+The chart shows DOGE reacting near the same macro trendline that supported price in past cycles. Earlier touches appeared around the 2017 and 2020 bottom areas, before Dogecoin moved into stronger rallies.
+
+Dogecoin Long Term Support Chart. Source: Bitcoinsensus on X
+
+The latest touch is marked as a possible bottom near the right side of the chart. DOGE is trading close to the rising yellow trendline, which makes this area important for the next long term move.
+
+The chart also marks previous cycle peaks in red. Those peaks came after DOGE held the long term trendline and moved higher from base areas.
+
+Bitcoinsensus said DOGE is “testing long-term support,” with the trendline aligning with prior cycle bottoms. That means the current zone may matter if buyers continue to defend it.
+
+However, the chart does not confirm a new rally yet. DOGE would need to hold above the rising support line and break higher from the current range before the bullish setup becomes stronger.
+
+For now, the main point is clear. Dogecoin is sitting near a long term support line that has mattered in previous cycles, and losing that line would weaken the macro setup.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+Analyst, covering cryptocurrency markets, policy, and regulation. With over seven years of experience in business and marketing development, she has spent the past two years specializing in digital assets.
+
+https://coinpaper.com/17254/dogecoin-price-prediction-doge-near-a-defining-cycle-moment",news:coinpaper,DOGE,DOGEUSDT,DOGEUSDT,macro,observe,4,binance,spot,DOGEUSDT,published_after_event,0.10276,,,,,77573.9,,,,,2116.29,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00013,2026-05-25T09:59:45Z,"Dormant Bitcoin whale transfers 2,650 BTC to major crypto trading firms","A Satoshi-era Bitcoin whale has transferred more than $200 million worth of BTC to crypto trading firms FalconX and Cumberland as exchange inflows and ETF outflows continue drawing attention across the market.
+
+According to blockchain analytics provider Onchain Lens, citing Arkham data, the dormant whale moved 2,650 BTC, valued at roughly $203 million, to FalconX and Cumberland through three separate transactions on Sunday.
+
+Data shared by the analytics firm showed the address still holds nearly 6,000 BTC, currently worth around $462 million.
+
+Whale transfers to FalconX and Cumberland. Source: Arkham Intelligence .
+
+Although the transfers do not confirm an immediate sale, large wallet activations tied to early Bitcoin holders often attract market attention because traders watch for signs of additional supply entering the market.
+
+Transfers to firms such as FalconX and Cumberland can sometimes be linked to over-the-counter transactions designed to avoid disrupting spot prices on public exchanges.
+
+However, retail traders frequently interpret dormant whale activity as a bearish signal regardless of whether the coins are sold directly into the market. As such, concerns surrounding a possible liquidity event could increase precautionary selling and expose Bitcoin to another test of the recent $74,600 support level.
+
+The latest whale transaction has appeared during a period of growing concern over rising Bitcoin inflows to exchanges and trading desks.
+
+Earlier this month, another dormant Bitcoin address moved 500 BTC worth about $40.6 million after remaining inactive for more than 12 years. Separately, a different whale transferred nearly $20 million in BTC to Binance last month.
+
+As previously reported by crypto.news CryptoQuant analyst Darkfost said Binance recorded almost 10 consecutive days of elevated Bitcoin inflows.
+
+Binance’s weekly average BTC inflows climbed from 378 BTC on May 16 to 1,190 BTC in less than 10 days.
+
+Darkfost also reported that Binance registered a daily inflow exceeding 3,600 BTC on May 18, while exchange reserves increased from 616,000 BTC on April 24 to 632,000 BTC within one month.
+
+According to the analyst, investors typically move Bitcoin onto exchanges when preparing to sell, reduce exposure, or secure profits during periods of uncertainty. Darkfost linked the inflow trend to market weakness tied to geopolitical tensions and softer appetite for risk assets.
+
+Spot Bitcoin ETFs have also recorded sustained withdrawals during the same period. Crypto.news previously reported that U.S.-listed spot Bitcoin ETFs logged net outflows for six straight trading sessions between May 15 and May 22, with total redemptions reaching $1.26 billion across 11 funds.
+
+While analytics platform Santiment said past ETF outflow streaks have occasionally appeared before long-term accumulation phases, the firm added that weaker ETF demand combined with rising exchange inflows can reduce visible buyer support in the short term.
+
+Bitcoin ( BTC ) traded around $77,220 at the time of reporting, according to crypto.news price data. After briefly falling to nearly $74,600 on Saturday, the asset recovered modestly but remained well below its October 2025 all-time high near $124,900.",news:cryptonews,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77612.32,,,,,77612.32,,,,,2117.26,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00015,2026-05-25T09:53:48Z,Solana Price Prediction: SOL Reclaims Key Bullish Structure,"Solana price chart shows SOL breakout as analysts track $500, $675, and $1,000 long term targets after renewed strength.
+
+Solana is showing a fresh breakout setup as two analysts point to higher long term targets. CryptoCurb sees SOL moving toward $1,000+, while ChiefraT’s chart shows a possible path to $500 to $675 if buyers hold the structure.
+
+Solana’s 5 day chart shows SOL breaking above a descending resistance line after months of lower highs.
+
+The chart shared by CryptoCurb compares the current setup with an earlier breakout in 2023. In that previous move, SOL broke above a similar downward trendline and then entered a strong rally.
+
+Solana Breakout Target Chart. Source: CryptoCurb on X
+
+The latest setup shows SOL pushing above another descending trendline near the right side of the chart. CryptoCurb labels this area as a breakout, with the projected path pointing toward much higher levels.
+
+The chart marks a long term upside zone between roughly $900 and $1,900, with $1,000+ written as the main target. That means the analyst expects SOL to move far above its current range if the breakout continues.
+
+However, the setup still needs follow through. SOL would need to hold above the broken trendline and keep forming higher lows for the breakout to stay valid.
+
+A failed retest would weaken the structure and could send price back into the previous range.
+
+For now, the key point is clear. SOL has broken above a long term descending resistance line, and CryptoCurb sees that breakout as the start of a possible move toward $1,000+.
+
+Solana’s two week chart shows SOL moving inside a large long term structure, with the analyst projecting a future rally toward the $500 to $675 area.
+
+The chart shared by ChiefraT shows SOL trading near the lower side of a broad channel after a long pullback from its previous highs. The white projected path shows a possible rebound from this lower area.
+
+Solana Long Term Rally Chart. Source: ChiefraT on X
+
+The main idea is that SOL may be building a base before another larger move. The chart points to a gradual recovery first, then a stronger rally toward the upper part of the structure.
+
+ChiefraT said counting SOL out long term “could be a big mistake.” The analyst also said the next rally may be the biggest one, with the projected path aiming at $500 to $675.
+
+However, the setup still needs confirmation. SOL would need to hold the lower channel area and start forming higher lows. A clean move above the current range would make the bullish path stronger.
+
+If SOL loses the lower channel support, the projected move would weaken. In that case, price could stay in the range longer before another breakout attempt.
+
+For now, the chart points to one key setup. SOL is near a lower long term support area, while the projected path shows a possible climb toward $500 to $675 if buyers regain control.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+Analyst, covering cryptocurrency markets, policy, and regulation. With over seven years of experience in business and marketing development, she has spent the past two years specializing in digital assets.
+
+https://coinpaper.com/17253/solana-price-prediction-sol-reclaims-key-bullish-structure",news:coinpaper,SOL,SOLUSDT,SOLUSDT,macro,observe,4,binance,spot,SOLUSDT,published_after_event,85.97,,,,,77643.04,,,,,2118.46,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00019,2026-05-25T09:46:11Z,Ethereum Price Prediction: ETH Near Important Cycle Turning Point,"Ethereum price chart shows ETH testing key support as analysts watch $1,400, $2,000, and next higher cycle targets.
+
+Ethereum is sitting near a key long-term support area, while two charts point to the same major question: can ETH hold the range before another cycle move starts? Crypto Patel highlights an accumulation zone between $1,600 and $2,000, while Investor Jordan says ETH could still retest the lower logarithmic trend line near $1,400.
+
+Ethereum is trading near the lower part of a long term rising channel on the two week chart shared by Crypto Patel.
+
+The chart shows ETH near $2,093, after dropping around 11.69% in the latest two week candle. The price also touched a low near $2,006, placing Ethereum close to the marked accumulation area.
+
+Ethereum Accumulation Zone Chart. Source: Crypto Patel on X
+
+The main green zone on the chart sits around the $1,600 to $2,000 area. Crypto Patel labels this range as the accumulation zone, where buyers may look for long term entries if ETH continues to hold the structure.
+
+A lower green band marks strong support near the $850 to $1,000 range. That area sits below the current accumulation zone and works as the deeper support level on the chart.
+
+The broader setup still follows a rising blue channel that began after Ethereum’s early market cycles. ETH is now trading near the lower side of that channel, which makes this area important for the next major move.
+
+The chart also shows a projected recovery path from the accumulation zone. The first major upside level sits near $10,000. Above that, the chart marks higher targets at $25,000 and $50,000.
+
+However, these targets depend on ETH holding the lower channel support and building momentum from the current range. A clean move above previous resistance areas would be needed before the higher targets become stronger on the chart.
+
+For now, the key levels are clear. Ethereum has an accumulation zone near $1,600 to $2,000, strong support near $850 to $1,000, and long term upside targets at $10,000, $25,000, and $50,000 if the rising channel remains intact.
+
+Ethereum’s weekly chart shows price moving near a long term logarithmic regression band that has acted as support across several market cycles.
+
+The chart shared by Investor Jordan marks several past touches of the lower green regression area. Each marked zone shows ETH reacting from the band before larger moves followed.
+
+Ethereum Logarithmic Regression Chart. Source: Investor Jordan on X
+
+The latest setup points to the lower side of that same structure. Investor Jordan said ETH is likely heading toward the lower logarithmic regression trend line around $1,400.
+
+The chart also shows a horizontal level near that area, which makes the zone more important. If ETH moves lower, the $1,400 region becomes the next major support level to watch on this setup.
+
+Jordan also said he agrees ETH could see the $1,000 to $1,500 range this year. However, he noted that many retail traders may expect to buy the exact bottom at the same time.
+
+The main point of the chart is not a confirmed bottom. It shows a possible retest of a long term support band that has mattered in previous ETH cycles.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+Analyst, covering cryptocurrency markets, policy, and regulation. With over seven years of experience in business and marketing development, she has spent the past two years specializing in digital assets.
+
+https://coinpaper.com/17252/ethereum-price-prediction-eth-near-important-cycle-turning-point",news:coinpaper,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2117.88,,,,,77584.0,,,,,2117.88,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00020,2026-05-25T09:44:51Z,ETH反弹逼空某巨鲸1.01亿美元空单，距爆仓不足30美元,"ETH反弹逼空某巨鲸1.01亿美元空单，距爆仓不足30美元
+截至目前，ETH已自周六低点反弹约5.67%，逼近Hyperliquid上ETH最大空头巨鲸的清算线。该地址今晨以23倍杠杆做空47,603.6枚ETH，持仓价值约1.01亿美元，目前浮亏已达109万美元（-24.6%）。
+按当前价格测算，ETH若再上涨约30美元至2049美元关口，该笔1.01亿美元规模的空单将触发清算。清算线距现价仅约1.32%。
+📌 地址：0x50b309f78e774a756a2230e1769729094cac9f20
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2118.16,,,,,77576.47,,,,,2118.16,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00022,2026-05-25T09:41:22Z,Bitcoin Price Prediction: BTC Tests Crucial Weekly Support,"Bitcoin price chart shows BTC testing weekly support as analysts watch the 200 weighted MA and bull market band.
+
+Bitcoin is testing a key weekly support area as two charts point to the same major level near the current trend zone. Surf’s chart shows BTC pressing against downtrend resistance near the 200 weighted MA, while Daan Crypto Trades highlights the bull market support band around $75,000 to $78,500.
+
+Bitcoin’s weekly chart shows BTC sitting near an important technical area, where the descending trendline meets the 200 weighted moving average.
+
+The chart shared by Surf compares the current setup with earlier Bitcoin cycle phases. In 2018 and 2022, BTC broke below a descending trendline, moved near the 200 weighted MA, and later recovered after the downtrend weakened.
+
+Bitcoin Weekly Surf Indicator Chart. Source: Surf on X
+
+The same pattern now appears on the right side of the chart. BTC has pulled back from its recent high and is testing a short descending trendline. The 200 weighted MA sits close to the same area, making this zone important for the next weekly move.
+
+The blue vertical bands from the Surf Indicator also mark past areas where Bitcoin entered major transition zones. Earlier bands appeared near cycle bottoms or recovery phases. The latest band now appears around the current price structure.
+
+A clean break above the descending trendline would show that selling pressure is slowing. It would also place BTC back above a key weekly trend area.
+
+However, if Bitcoin fails to hold near the 200 weighted MA, the chart could point to more sideways movement or another support test.
+
+For now, the setup is simple. Bitcoin is testing a familiar weekly structure: downtrend resistance, the 200 weighted MA, and a Surf Indicator zone that has marked major cycle areas before.
+
+Bitcoin is retesting the bull market support band on the weekly chart shared by Daan Crypto Trades.
+
+The chart shows BTC moving around the same area as the band, which sits near the $75,000 to $78,500 range. This zone is important because bulls need to hold it to keep short and mid term momentum in their favor.
+
+Bitcoin Bull Market Support Band Chart. Source: Daan Crypto Trades on X
+
+The support band acted as a trend area during previous moves. Now, Bitcoin is testing it again after recovering from its latest pullback.
+
+The chart also shows the weekly 200 EMA near $68,871. That level sits below the current support band and could become the next major area if BTC loses the retest zone.
+
+The weekly 200 MA sits lower, near $61,373. This makes it a deeper support level, not the first level in focus.
+
+Daan Crypto Trades said BTC is “holding on” to the bull market support band retest. That means the setup has not broken down yet, but buyers still need to defend this range.
+
+For now, the main level is clear. Bitcoin needs to hold the $75,000 to $78,500 support band to keep momentum on the bulls’ side.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+Analyst, covering cryptocurrency markets, policy, and regulation. With over seven years of experience in business and marketing development, she has spent the past two years specializing in digital assets.
+
+https://coinpaper.com/17251/bitcoin-price-prediction-btc-tests-crucial-weekly-support",news:coinpaper,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77580.01,,,,,77580.01,,,,,2118.43,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00033,2026-05-25T09:20:32Z,Can XRP price hold $1.35 as Binance liquidity falls to 2020 lows?,"XRP market depth on Binance has dropped to its weakest level since January 2020, according to CryptoQuant analyst Arab Chain.
+
+The analyst said XRP’s 30-day liquidity index on Binance fell to about 0.043 while the token traded near $1.34.
+
+The reading points to a sharp fall in available liquidity compared with earlier market phases. Arab Chain said the index had previously reached readings above 3 and 4 points between 2022 and 2024, when XRP saw stronger trading activity and higher volatility.
+
+Low liquidity does not give a direct bullish or bearish signal on its own. However, thinner market depth can make XRP more sensitive to large orders because fewer bids and asks sit near the current price.
+
+That means sudden buying or selling can move price faster than usual. For traders, the current setup creates a market where volatility can rise even if daily volume remains modest.
+
+The drop also signals weaker speculative activity on Binance. Arab Chain said the decline may show reduced new liquidity inflows and a more cautious market structure.
+
+The update comes as XRP remains stuck near the same range it has traded around for months. The $1.35–$1.40 area now carries added focus because it connects thin liquidity with repeated whale activity.
+
+CryptoQuant analyst Amr Taha reported that XRP whales withdrew $49.2 million from Binance on May 22 while the token traded below $1.35. In exchange-flow terms, negative whale netflow means large holders moved more XRP away from Binance than they sent in.
+
+That move matters because it happened during price weakness, not after a strong rally. Whale withdrawals during weakness can show that some large holders are reducing available exchange supply instead of preparing to sell.
+
+The May 22 reading also followed similar whale behavior earlier this year. Taha cited negative Binance whale netflows of $60.7 million on Feb. 27, $35.5 million on March 6, and $37 million on March 26.
+
+All four signals appeared near the $1.35–$1.40 range. That makes the zone one of the clearest recent areas of repeated Binance whale withdrawals.
+
+Still, whale withdrawals do not confirm an immediate rebound. They can reduce potential sell-side supply, but price still needs stronger demand and a clean technical breakout.
+
+XRP traded at $1.36 on May 25, 2026, according to crypto.news price data. The token was up 0.23% over 24 hours, while its 24-hour trading volume stood at about $1.35 billion.
+
+The same data showed XRP trading between $1.34 and $1.37 over the past 24 hours. XRP ranked fifth by market cap, with a market value of about $84.23 billion.
+
+The short-term chart remains weak. XRP traded near $1.3584, below the 9-day moving average at $1.3663 and the 21-day moving average at $1.4051.
+
+That structure keeps pressure on buyers unless XRP reclaims the $1.36–$1.40 area. The shorter moving average also remains below the longer one, which keeps the near-term trend neutral-to-bearish.
+
+Immediate support sits near $1.3435, close to the daily low. Resistance stands near $1.3663, followed by the larger $1.4051–$1.4060 zone.
+
+Volume near 29.06 million XRP remains low compared with earlier selloff spikes. That shows the latest bounce has not yet drawn strong market participation.
+
+The MACD also remains below the zero line. The MACD reading near -0.0150, signal line near -0.0066, and negative histogram near -0.0084 show weak bearish momentum.
+
+Related crypto.news coverage said XRP recently traded near $1.37 as exchange-flow data showed cooling deposit pressure. The same report said Binance and Coinbase had shifted toward withdrawal-led transactions, which may show easing exchange selling pressure. XRP stayed within a range, with support near $1.29–$1.35 and resistance near $1.50.
+
+Separate crypto.news coverage showed a large XRP options trader collected $224,500 in premiums by betting XRP would stay near $1.40 through June 26. The trader sold 1.5 million contracts each of the $1.40 call and put options on Deribit.
+
+That options trade fits the wider range-bound setup. Crypto.news noted that XRP had traded between $1.30 and $1.50 for roughly 60% of 2026, making the $1.40 area a key short-term price zone.
+
+Crypto Patel also cautioned against aggressive upside targets without enough liquidity, structure, or a clear catalyst map. The analyst said $10 remains a long-run target, while the best accumulation area sits between $1 and $0.70.
+
+Some Moon Boy On Crypto Twitter: $XRP Will Hit $50 Soon 🚀 Me: Bro, Show Me The Chart First. 🤡 Let Me Give You The Real Map of #XRP 👇 ❌ $50 = 36x From Current Price ❌ No Liquidity. No Structure. No Catalyst Map. ✅ $10 Long Run Target Is Realistic And Still 7x From Here ✅… pic.twitter.com/Hu1SROFqu6
+
+CRYPTOWZRD said XRP closed indecisively and continued to hold a range. The analyst said a move above $1.40 could open upside, while a rejection near that level could set up a move back toward $1.32.
+
+Disclosure: This article does not represent investment advice. The content and materials featured on this page are for educational purposes only.",news:cryptonews,XRP,XRPUSDT,XRPUSDT,macro,observe,4,binance,spot,XRPUSDT,published_after_event,1.357,1.3595,,,,77425.17,77540.01,,,,2117.61,2116.56,,,,0.0018422991893882745,,,,0.0014832385902412426,,,,-0.0004958420105686256,,,,0.0003590605991470319,,,,0.0023381411999569,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00034,2026-05-25T09:19:50Z,「今日BTC最大建仓」由3690万多单领衔，该巨鲸止损价设于7.38万美元,"「今日BTC最大建仓」由3690万多单领衔，该巨鲸止损价设于7.38万美元
+今日内Hyperliquid上最大一笔BTC建仓，为0xebe开头巨鲸。其今晨以5倍杠杆做多476.4枚BTC，持仓价值约3690万美元，建仓均价约76,687美元，当前浮盈已达36.7万美元（+4.7%）。
+该巨鲸已同步设定止损价位于73,800美元，据测算，若BTC跌至该价位，仓位将以约137万美元亏损被动平仓，对应本金亏损率约18.8%。
+地址：0xebe837cd345469cbc5d6e1fd3d15ee5079ac885f",tg:HyperInsight,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77444.45,77578.01,,,,77444.45,77578.01,,,,2118.45,2117.94,,,,0.0017245909810192916,,,,0.0017245909810192916,,,,-0.00024074205197188725,,,,0.0,,,,0.001965333032991179,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00036,2026-05-25T09:16:57Z,"Bitcoin price prediction: BTC faces critical resistance at $78,000 as ETF outflows mount - CoinJournal","Bitcoin (BTC) continued to trade near the $77,000 level on Monday amid growing institutional outflows against improving macro sentiment and rising demand from spot buyers.
+
+The world’s largest cryptocurrency was up 0.5% over the past 24 hours, trading at $77,182 at press time, slightly outperforming the broader crypto market.
+
+The slight rebound pushed BTC’s price closer to a major resistance zone near $78,000, a level that traders are watching closely after weeks of volatile price action and heavy selling pressure from spot exchange-traded funds.
+
+The market is reacting to easing geopolitical tensions after US President Donald Trump said a potential agreement with Iran was “largely negotiated,” reducing fears of a wider Middle East conflict.
+
+Institutional demand for Bitcoin ETFs weakened sharply over the past week, with spot Bitcoin ETFs recording roughly $1.256 billion in net outflows between May 18 and May 22, according to CoinGlass data .
+
+Several of the largest withdrawals came from products linked to BlackRock and Fidelity, two firms that played a major role in driving institutional adoption after spot Bitcoin ETFs launched in the United States in early 2024.
+
+The outflows added to concerns that institutional appetite for BTC exposure may be cooling as investors rotate capital toward other sectors, particularly artificial intelligence and semiconductor-focused investments.
+
+At the same time, Strategy, formerly known as MicroStrategy, has paused its aggressive Bitcoin buying campaign this week.
+
+Nevertheless, the company still holds 843,738 BTC, making it the largest corporate Bitcoin holder globally, but it chose to buy bonds instead of adding more Bitcoin to its treasury.
+
+The move attracted attention across the crypto market because Strategy and executive chairman Michael Saylor have been among Bitcoin’s strongest corporate supporters over the past several years.
+
+Meanwhile, BlackRock CEO Larry Fink adopted a more measured tone while discussing Bitcoin’s role in institutional portfolios.
+
+Although Fink highlighted the success of Bitcoin ETFs, his recent comments reflected a more cautious stance compared to earlier bullish statements.
+
+Still, not all institutional activity turned negative. El Salvador added another eight Bitcoin to its national reserves, extending the country’s long-running accumulation strategy under President Nayib Bukele.
+
+Even with ETF outflows accelerating, Bitcoin managed to hold above key support levels as capital continued rotating away from smaller cryptocurrencies and into BTC.
+
+Market data shows Bitcoin outperforming much of the altcoin market during the latest recovery.
+
+At the same time, derivatives activity has increased sharply, with open interest in perpetual futures contracts jumping 11.44% within 24 hours, signalling rising leveraged positioning among short-term traders.
+
+That increase in leverage amplified Bitcoin’s move higher but also raised the risk of sharper volatility if macroeconomic data or market sentiment shifts suddenly.
+
+Technical indicators currently present a mixed picture for Bitcoin’s short-term outlook.
+
+Data from 23 technical indicators shows four buy signals and nine sell signals, leaving the broader short-term trend tilted bearish despite the latest rebound.
+
+The most important resistance level sits at $78,152. Bitcoin needs a decisive close above that level to sustain upward momentum and target the next resistance near $79,331.
+
+On the downside, immediate support stands at $76,773. A breakdown below that level could expose Bitcoin to deeper losses, especially if traders begin unwinding leveraged positions.
+
+The 14-day Relative Strength Index currently stands at 47.70, suggesting neutral conditions rather than an overheated market.
+
+Moving averages also continue signalling caution.
+
+The Bitcoin price currently trades above only two of the five major exponential moving averages, while remaining below the long-term 200-day EMA, a level many traders use to assess broader market direction.
+
+Analysts are also watching the 61.8% Fibonacci retracement level near $76,590, which has emerged as another important support area during the latest consolidation phase.
+
+Keep updated with our round the clock and in-depth cryptocurrency news",news:coinjournal,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77456.99,77681.37,,,,77456.99,77681.37,,,,2118.5,2120.94,,,,0.0028968334555730113,,,,0.0028968334555730113,,,,0.00115175831956571,,,,0.0,,,,0.0017450751360073014,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00044,2026-05-25T09:05:15Z,Satoshi-Era Bitcoin Whale Exits 30% of Holdings for $203 Million as 'Bull Trap' Risks Arise - U.Today,"Disclaimer: The opinions expressed by our writers are their own and do not represent the views of U.Today. The financial and market information provided on U.Today is intended for informational purposes only. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. Conduct your own research by contacting financial experts before making any investment decisions. We believe that all content is accurate as of the date of publication, but certain offers mentioned may no longer be available.
+
+A Satoshi-era miner locked in $203 million in profit, sending 30% of their Bitcoin holdings to market makers Cumberland and FalconX amid falling structural demand and false geopolitical expectations.
+
+Instead of selling directly on exchanges, the investor split 2,650 BTC into three tranches, two of 1,000 BTC each and one of 650 BTC, sending them to professional intermediaries - which may be an attempt to realize a massive crypto position discreetly, without creating panic in exchange order books.
+
+However, the early miner is not leaving completely, as another 6,000 BTC, equivalent to $462 million, remains in their wallets.
+
+This large capital movement coincided with a powerful emotional pump across global markets. Financial media and algorithmic trading systems are now actively pricing in expectations of a soon-to-be-signed agreement in the Middle East, with the possible reopening of the strategically important Strait of Hormuz to restore oil supplies.
+
+Risk assets are rising on a wave of optimism, although there is still no objective confirmation that the blockade has been lifted.
+
+Possibly understanding that the market has already fully priced a positive outcome into current valuations, major players are using this impulse to lock in real liquidity at local highs, turning the rally into a potential bull trap. Such haste by institutions and early miners becomes fully justified when looking under the hood of the crypto market itself.
+
+According to updated on-chain metrics from CryptoQuant , Bitcoin's Apparent Demand has fallen to its most bearish level since the start of 2026, approaching -147,000 BTC. A similar deficit in buying activity was last recorded in December 2025.
+
+This means structural accumulation is now too weak to absorb incoming market supply, while the current rise is being carried almost entirely by derivatives and the futures market.
+
+Bitcoin Demand has Fallen to Its Most Bearish Level of the Year “Even if this situation appears relatively bearish in the short term, these types of environments have historically also created interesting opportunities for long-term investors” – By @Darkfost_Coc pic.twitter.com/q5pesCl70H
+
+Interestingly, the same CryptoQuant reports that major players have now moved into controlled distribution in the $77,000 to $81,000 price corridor after a wave of accumulation near $78,000. Against this backdrop, exchange reserves have reached monthly highs, increasing seller pressure.
+
+Should geopolitical optimism fade, the main psychological defense line for buyers will be the $76,000 support zone.
+
+Disclaimer: The opinions expressed here are not investment advice; they are provided for informational purposes only. The opinions expressed by our writers are their own and do not represent the views of U.Today. Every investment and all trading involves risk, so you should always perform your own research prior to making decisions. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. We do not recommend investing money you cannot afford to lose.
+
+Read more on U.Today "" + document.location.href + """,news:utoday,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77441.86,77592.36,,,,77441.86,77592.36,,,,2116.7,2117.38,,,,0.0019433934050654411,,,,0.0019433934050654411,,,,0.0003212547833892909,,,,0.0,,,,0.0016221386216761502,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00050,2026-05-25T08:52:40Z,【Matrixport关联地址（子地址 1）】ETH 多单 浮亏收窄！,"⚡️ Hyperliquid 鲸鱼盈亏速报 | 市场波动监控 📈
+📅 时间: 2026/5/25 16:52:39
+🐳【Matrixport关联地址（子地址 1）】ETH 多单 浮亏收窄！
+▫️ 盈亏: -7,997,764.97美元 (-193.60%) → -5,973,764.97美元 (-141.15%)
+▫️ 均价: 2,265.44美元
+▫️ 当前币价: 2,116.10美元
+▫️ 清算价: 1,354.89美元
+▫️ 持仓规模: 84,644,000.00美元
+📌 地址: 0x6c8512516ce5669d35113a11ca8b8de322fd84f6
+🔥 注: 该地址曾多次接收来自Matrixport（现更名为BIT）资金转入，现为链上ETH最大多头，另有两关联地址协同建仓。 🔥
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2116.91,2118.32,,,,77425.99,77628.0,,,,2116.91,2118.32,,,,0.0006660651610130852,,,,0.0026090722249725307,,,,0.0006660651610130852,,,,-0.0019430070639594454,,,,0.0,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00056,2026-05-25T08:33:12Z,Tether targets Georgia with lari-backed stablecoin launch,"Tether and the Government of Georgia plan to launch GEL₮, a stablecoin representing the Georgian lari.
+
+In a Monday announcement , Tether said the project would place Georgia’s national currency on digital asset rails under a purpose-built stablecoin framework.
+
+The company said GEL₮ is designed for lower transaction costs, near-instant settlement, programmable payments, and digital value transfers. Further details on the token’s structure, rollout, and regulatory setup will be announced later.
+
+GEL₮ is expected to support digital payments, cross-border commerce, fintech products, and value transfers across Georgia and the wider region. Tether said the token will work as a digital version of the Georgian lari, not a dollar-backed asset.
+
+Tether and the Government of Georgia to Launch GEL₮, the Official Stablecoin of Georgia https://t.co/ueSLlJzot1
+
+The move comes as stablecoins keep growing as payment and settlement tools. Tether said USD₮ has a market capitalization approaching $190 billion, while crypto.news market data recently placed USDT’s market cap near $189.5 billion.
+
+Georgia has already supported digital asset payments in some public finance use cases. Tether said the country allows tax payments through instant conversion of digital assets into local currency.
+
+The GEL₮ plan follows years of Tether activity in Georgia. In 2023, Tether signed an MoU with the Georgian government to support Bitcoin, web3, and peer-to-peer infrastructure development in the country.
+
+That earlier agreement included support for local web3 startups through grants and investments. Crypto.news reported at the time that the effort was aimed at building Georgia’s blockchain startup base and drawing more international collaboration.
+
+Tether has also invested in Georgia’s payments market through CityPay.io. The company said in 2023 that CityPay.io was active in more than 600 locations across Georgia, including shops, hotels, and restaurants.
+
+In 2024, Tether added another investment into CityPay.io to support expansion across Eastern Europe. The company said CityPay.io planned e-wallet and card products and targeted over 500,000 crypto payment points in the region.
+
+Georgia’s stablecoin framework covers reserve management, redemption rights, issuer oversight, and anti-money-laundering compliance, according to Tether. The company said the framework was also designed for substantive compatibility with emerging U.S. rules, including the GENIUS Act.
+
+That regulatory angle matters because stablecoin rules are changing across major markets. Crypto.news reported that U.S. banking groups recently asked regulators to pause three GENIUS Act rulemaking comment periods until the OCC finishes its main stablecoin framework.
+
+Meanwhile, the GENIUS Act is scheduled to take effect no later than Jan. 18, 2027. It also noted that proposed rules cover issuer standards, state oversight, and anti-money-laundering requirements.
+
+Georgia’s Prime Minister Irakli Kobakhidze said the partnership aims to build a “more connected, transparent, and digitally empowered financial world.” Tether CEO Paolo Ardoino said stablecoins “are becoming part of the infrastructure layer for global finance.”
+
+National Bank of Georgia President Natia Turnava also welcomed the collaboration as part of a wider strategy for secure and modern digital finance. Vakhtang Turnava, a member of Georgia’s parliament, said the partnership could help Georgia connect traditional finance with the digital economy.
+
+The announcement also fits a wider stablecoin payments trend. Recent crypto.news coverage said stablecoins are moving further into real-world payments, business transfers, payroll, and cross-border settlement.",news:cryptonews,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77320.0,77627.18,,,,77320.0,77627.18,,,,2113.97,2121.42,,,,0.003972840144852441,,,,0.003972840144852441,,,,0.003524174893683618,,,,0.0,,,,0.0004486652511688227,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00063,2026-05-25T08:09:38Z,Strategy buys bonds instead of Bitcoin this week,"Strategy has paused its Bitcoin purchases this week as the company moved to repurchase convertible debt, while Michael Saylor has continued signaling that future Bitcoin sales remain possible as part of the firm’s capital management strategy.
+
+According to a post published by Strategy executive chairman Michael Saylor on X, the company bought bonds instead of Bitcoin this week, with Saylor stating that the “BitVac is charging.”
+
+This week we bought bonds, not bitcoin. The ₿itVac is charging. pic.twitter.com/yUpVNiNTPT
+
+The comment came as investors watched for signs of another Bitcoin acquisition following recent weakness in both Bitcoin and MSTR stock.
+
+Earlier disclosures from Strategy showed the company plans to repurchase nearly $1.5 billion in face value of its 0% convertible senior notes due 2029 for about $1.38 billion in cash. Company filings said the repurchase could be funded through existing cash reserves, proceeds from at-the-market stock sales, and potential Bitcoin sales.
+
+Just days before the latest announcement, Saylor said during an interview that it was “not unlikely” that Strategy could sell some Bitcoin before the end of 2026. During the interview, Saylor said models relying only on equity, credit, or Bitcoin underperformed compared with a more flexible capital allocation approach.
+
+Strategy has continued adding to its Bitcoin holdings in recent months. The company previously disclosed that it purchased 24,869 BTC for about $2.01 billion using proceeds raised through sales of STRC perpetual preferred shares and MSTR stock.
+
+Company data showed Strategy currently holds 843,738 BTC valued at about $65.25 billion. Those holdings were acquired for roughly $63.88 billion, leaving the company with unrealized gains based on current Bitcoin prices.
+
+Meanwhile, Saylor has framed the temporary pause in Bitcoin buying as part of a larger financing strategy rather than a retreat from accumulation. In the Coin Stories interview, he described Strategy’s treasury model as programmatic and data-driven, with liabilities managed across cash, equity, credit, and Bitcoin.
+
+While discussing possible Bitcoin sales, Saylor has reiterated that any disposal would likely remain small compared with Bitcoin’s estimated daily liquidity of $20 billion to $50 billion. He also argued that the company could still acquire roughly 20 Bitcoin for every one sold if dividend obligations were fully funded through BTC sales.
+
+In the long term, Saylor said Strategy’s target remains increasing Bitcoin per share through 2033, describing any future Bitcoin sale as a capital allocation decision rather than a change in the company’s conviction around the asset.
+
+Additional comments from Saylor also pointed to the company’s long-term funding structure. He said Strategy does not plan to retire products such as STRF, STRD, and STRK preferred shares, while convertible bonds remain liabilities the company intends to reduce over time.
+
+The debt repurchase has also drawn attention from equity investors because retiring convertible notes at a discount could reduce future stock dilution risks for MSTR shareholders. Strategy stated that the move improves its balance sheet while preserving flexibility to raise capital later through debt, equity offerings, or preferred share issuances.
+
+Recent market pressure has nevertheless weighed on the stock. MSTR closed down 3.01% at $159.89 on Friday after falling more than 5% over the week.
+
+Strategy share price. Source: Google Finance .",news:cryptonews,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77359.11,77493.98,,,,77359.11,77493.98,,,,2113.93,2120.78,,,,0.0017434275032377489,,,,0.0017434275032377489,,,,0.0032404100419598514,,,,0.0,,,,-0.0014969825387221025,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00065,2026-05-25T08:07:48Z,Bitcoin sell signal? Binance inflows jump 3x in just 10 days,"Bitcoin is facing renewed pressure after Binance recorded nearly 10 straight days of stronger BTC inflows, while spot Bitcoin ETFs saw heavy redemptions.
+
+Analyst Darkfost said Binance’s weekly average inflows rose from 378 BTC on May 16 to 1,190 BTC, marking a more than threefold increase in less than 10 days.
+
+The same update said Binance recorded one daily inflow of more than 3,600 BTC on May 18. Darkfost added that Binance reserves rose from 616,000 BTC on April 24 to 632,000 BTC, an increase of 16,000 BTC in one month.
+
+Exchange inflows often draw attention because holders usually move coins to trading venues when they want to sell, take profit, or reduce exposure.
+
+Darkfost said Bitcoin inflows into Binance have not stopped for nearly 10 days. The analyst linked the move to a wider market correction driven by tense geopolitical conditions and weaker appetite for risk assets.
+
+🔴 Bitcoin inflows on Binance haven't stopped in 10 Days The market remains in a correction driven by tense geopolitical conditions affecting economies worldwide, making it particularly difficult for risk assets to navigate in this environment. 💥 In this context, for nearly 10… pic.twitter.com/VztQF96fMQ
+
+He said dominant exchange inflows are often read as a possible sell signal. The analyst added that holders usually send BTC to exchanges when they plan to sell, reduce exposure, or take a more defensive position.
+
+This does not confirm that all incoming BTC will be sold. However, it shows that more supply has reached one of the world’s largest crypto exchanges during a weak market phase.
+
+The timing also matters because Bitcoin printed a performance as low as minus 6.2% during the same period. That makes Binance reserve growth a key on-chain signal to watch.
+
+Spot Bitcoin ETFs added another weak signal. Crypto.news reported that U.S.-listed spot Bitcoin ETFs recorded net outflows in six straight sessions from May 15 through May 22, totaling $1.26 billion across 11 funds.
+
+The report also cited Santiment, which noted that weak ETF flows do not always signal deeper market stress. The analytics firm said past outflow streaks have sometimes appeared near periods when long-term buyers started rebuilding positions instead of exiting the market.
+
+Still, ETF redemptions reduce visible spot demand at a time when Binance inflows are rising. The combined picture shows weaker buyer support from ETF channels while more BTC is moving back to exchanges.
+
+Bitcoin ( BTC ) was trading around $77,185 at the time of reporting, up 0.54% in 24 hours, according to crypto.news price data. The same page showed 24-hour volume near $24.98 billion, a market cap of about $1.54 trillion, and a 24-hour range between $76,053 and $77,407.
+
+The price remains below the 20-day Bollinger Band midline near $78,877. That shows Bitcoin has not yet reclaimed short-term average resistance.
+
+The lower Bollinger Band near $75,004 remains the key support area. The upper band near $82,751 is the next resistance zone if buyers regain control.
+
+The RSI sits near 48.00, slightly below its moving average at 49.13. That keeps momentum in neutral territory, with a mild bearish bias because RSI remains below 50.
+
+Volume is also low at about 2.58K BTC on the chart. That suggests the latest rebound lacks strong participation. A close above $78,800 would improve the short-term setup, while a break below $75,000 would renew downside pressure.
+
+CryptoQuant analyst CryptoOnchain reported that Binance BTC netflows surged 425%, while older coins have moved back onto exchanges. XWIN Japan said the Coinbase Premium has turned deeply negative, a reading often used to track U.S. institutional spot demand.
+
+The same market update said funding rates returned to positive territory as retail traders stayed aggressively long. That setup can become risky when leveraged positions rise without strong spot demand behind them.
+
+However, Titan of Crypto said Bitcoin’s monthly logarithmic MACD histogram remains worth watching. He wrote that past Bitcoin bottoms formed after two consecutive lighter red bars on the monthly MACD histogram.
+
+#Bitcoin Pattern worth watching 👀 Historically, #BTC ’s bottom formed after 2 consecutive lighter red bars on the monthly logarithmic MACD histogram. May hasn’t closed yet. If history rhymes, the worst of the downside may already be behind us. pic.twitter.com/iHaTn6VRQa
+
+He added that May has not closed yet. In his view, “If history rhymes, the worst of the downside may already be behind us.” The signal remains unconfirmed until the monthly candle closes.
+
+Macro events may keep Bitcoin volatile this week. Crypto.news reported that traders are watching U.S.-Iran agreement details, April PCE inflation data, first-quarter U.S. GDP, and consumer confidence data.
+
+For now, Bitcoin remains between two signals. Rising Binance inflows and ETF outflows point to weaker demand and possible sell pressure. But the monthly MACD setup gives bulls one technical reason to watch for a potential bottom confirmation.
+
+Disclosure: This article does not represent investment advice. The content and materials featured on this page are for educational purposes only.",news:cryptonews,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77357.51,77461.37,,,,77357.51,77461.37,,,,2113.53,2117.77,,,,0.0013425975060470385,,,,0.0013425975060470385,,,,0.0020061224586354065,,,,0.0,,,,-0.000663524952588368,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00070,2026-05-25T08:00:00Z,NYT Report Alleges CFTC Helped Trump-Connected Crypto Firms,"A New York Times investigation alleged that senior officials at the CFTC helped clear regulatory hurdles for crypto and prediction market firms linked to the Trump family, including Polymarket, Crypto.com, and Gemini Titan.
+
+The report also mentioned alleged interventions by former acting CFTC Chair Caroline Pham and senior counsel Brigitte Weyls in approval processes, as well as later industry roles taken by both officials. The White House and the companies involved denied wrongdoing.
+
+A new investigation that was published by The New York Times raised serious concerns about the relationship between the Commodity Futures Trading Commission ( CFTC ), the cryptocurrency industry, and businesses connected to the Trump family.
+
+According to the report, senior officials at the CFTC allegedly worked over the course of a year to help clear regulatory obstacles for several crypto and prediction market firms with ties to Donald Trump and his family, while sidelining or removing career staff members who questioned the process. The investigation focused on three major companies: Polymarket, Crypto.com, and Gemini through its affiliate Gemini Titan. Each company reportedly required approval or oversight from the CFTC to expand prediction market operations.
+
+The report mentioned that Polymarket received investment backing from 1789 Capital, which is partly owned by Donald Trump Jr.. Crypto.com also has a partnership with Trump Media & Technology Group to launch prediction market products on Truth Social. Meanwhile, Gemini’s founders, Cameron Winklevoss and Tyler Winklevoss, reportedly support American Bitcoin, a crypto mining venture linked to Eric Trump.
+
+According to current and former staff members, career officials inside the CFTC raised concerns about whether these companies met regulatory standards. Some employees reportedly believed Crypto.com was not adequately protecting retail users, while others questioned Polymarket’s fraud prevention systems and whether Gemini Titan completed the proper approval process.
+
+The investigation alleges that then-acting CFTC Chair Caroline Pham and senior counsel Brigitte Weyls intervened directly in favor of the companies. In one example that was pointed out by the report, Weyls allegedly sent staff a draft memo recommending approval for Gemini Titan before internal reviews were even finalized, reversing the normal regulatory process where career staff prepare recommendations for commissioners.
+
+Several employees who raised concerns were reportedly placed on leave, removed from the office, or subjected to internal investigations without being clearly informed of the reasons. Former and current employees told the paper that the atmosphere inside the agency created pressure not to challenge crypto-related firms or prediction market businesses.
+
+The report also pointed to what critics described as a revolving door between regulators and the crypto industry. After leaving the CFTC, Pham joined MoonPay , which has its own partnership with Polymarket, while Weyls later became general counsel for Gemini Titan.
+
+The findings triggered strong reactions online and from lawmakers. Richard Blumenthal accused the CFTC of becoming overly aligned with crypto and prediction market interests. Amanda Fischer of Better Markets argued that the allegations should influence debate surrounding the CLARITY Act , which is the proposed legislation that would expand the CFTC’s authority over digital asset markets.
+
+The White House denied any wrongdoing, and officials insisted that President Trump acts in the public interest and that no conflicts of interest exist. The companies named in the report also defended their operations, with Polymarket and Crypto.com stating that they comply with regulations and maintain strong safeguards.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+Danielle du Toit, a criminology honors graduate, has channeled her curiosity and analytical mindset into exploring the fascinating and ever-evolving world of cryptocurrency. Drawn to the dynamic nature of blockchain technology and its impact on global markets, Danielle thrives on uncovering insights in this complex industry. As a crypto journalist, Danielle is passionate about learning and sharing her knowledge with fellow enthusiasts. Her work combines a keen investigative eye with a love for storytelling, making even the most intricate aspects of crypto accessible and engaging. Through her writing, Danielle aims to inspire readers to delve deeper into the weird and wonderful realm of digital finance.
+
+https://coinpaper.com/17247/nyt-report-alleges-cftc-helped-trump-connected-crypto-firms",news:coinpaper,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77365.86,77479.02,,,,77365.86,77479.02,,,,2114.39,2117.9,,,,0.0014626606619509985,,,,0.0014626606619509985,,,,0.0016600532541302115,,,,0.0,,,,-0.000197392592179213,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00077,2026-05-25T07:18:45Z,【麻吉黄立成】ETH 多单 滚仓 啦!,"🚀 Hyperliquid 持仓异动 | 主力巨鲸大单提醒 🚀
+📅 时间: 2026/5/25 15:18:44
+🐳 【麻吉黄立成】ETH 多单 滚仓 啦!
+💰 ETH多单增持 921.47 枚, 约合2,089,330.98美元
+▫️ 持仓规模: 13,555,730.98美元
+▫️ 均价: 2,095.33美元 → 2,097.23美元
+▫️ 当前盈亏: +88,385.60美元 (+16.30%)
+▫️ 当前币价: 2,110.99美元
+▫️ 清算价: 2,068.80美元
+📌 地址: 0x020cA66C30beC2c4Fe3861a94E4DB4A498A35872
+🔥 注: 该交易员曾因蓝筹NFT获利，今年活跃后自10月起连遭巨额回撤，资金从过亿缩水至数十万美元。 🔥
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2108.41,2112.62,,,,77250.01,77326.01,,,,2108.41,2112.62,,,,0.0019967653350154713,,,,0.000983818642871448,,,,0.0019967653350154713,,,,0.0010129466921440233,,,,0.0,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00091,2026-05-25T06:38:42Z,【Abraxas Capital主地址】BTC 多单 摊平 啦!,"🚀 Hyperliquid 持仓异动 | 主力巨鲸大单提醒 🚀
+📅 时间: 2026/5/25 14:38:42
+🐳 【Abraxas Capital主地址】BTC 多单 摊平 啦!
+💰 BTC多单增持 32.96 枚, 约合2,539,739.38美元
+▫️ 持仓规模: 15,672,909.78美元
+▫️ 均价: 77,656.30美元 → 77,593.10美元
+▫️ 当前盈亏: -44,192.33美元 (-2.82%)
+▫️ 当前币价: 77,374.93美元
+▫️ 清算价: 36,870.06美元
+📌 地址: 0x5b5d51203a0f9079f8aeb098a6523a13F298C060
+🔥 注: Abraxas Capital大额空单于5月起建仓，此前为Hyperliquid最大合约资金规模的巨鲸。11月起，该地址持续止盈，持仓规模此前达9.2亿美元。 🔥
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77401.98,77300.84,,,,77401.98,77300.84,,,,2106.9,2109.67,,,,-0.001306684919429757,,,,-0.001306684919429757,,,,0.0013147277991361062,,,,0.0,,,,-0.002621412718565863,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00098,2026-05-25T06:18:45Z,【Abraxas Capital主地址】ETH 空单 止盈 啦!,"🚀 Hyperliquid 持仓异动 | 主力巨鲸大单提醒 🚀
+📅 时间: 2026/5/25 14:18:45
+🐳 【Abraxas Capital主地址】ETH 空单 止盈 啦!
+💰 ETH空单减持 1,616.74 枚, 约合3,693,476.01美元
+▫️ 持仓规模: 17,806,706.99美元
+▫️ 均价: 2,250.88美元 → 2,250.32美元
+▫️ 当前盈亏: +1,265,607.64美元 (+71.07%)
+▫️ 当前币价: 2,100.99美元
+▫️ 清算价: 3,044.16美元
+📌 地址: 0x5b5d51203a0f9079f8aeb098a6523a13F298C060
+🔥 注: Abraxas Capital大额空单于5月起建仓，此前为Hyperliquid最大合约资金规模的巨鲸。11月起，该地址持续止盈，持仓规模此前达9.2亿美元。 🔥
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2102.63,2108.41,2119.68,,,77297.38,77250.01,77632.11,,,2102.63,2108.41,2119.68,,,0.002748938234496734,0.00810889219691524,,,-0.0006128280156456611,0.004330418443678097,,,0.002748938234496734,0.00810889219691524,,,0.003361766250142395,0.0037784737532371437,,,0.0,0.0,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00103,2026-05-25T05:56:43Z,Bitcoin options are coming to Nadaq. Here's what it means for you.,"Nasdaq has moved closer to offering cash-settled bitcoin BTC $ 77,361.99 index options, a move set to democratize crypto risk management and eliminate legacy operational barriers.
+
+Last week, the U.S. Securities and Exchange Commission granted Nasdaq PHLX conditional approval to list European-style options under the ticker QBTC. These will be cash-settled, European-style options tracking the CME CF Bitcoin Real Time Index (BRTT).
+
+Cash-settled means the options are settled in U.S. dollars. At expiration, the exchange credits or debits the cash difference between the strike price and the final index value and no actual bitcoin is delivered or received.
+
+For the average market participant, the new product, still pending approval from the Commodity Futures Trading Commission (CFTC), removes operational friction. QBTC options will trade on the same Nasdaq platform as popular technology stocks, allowing participants to execute hedging strategies and bitcoin volatility bets directly through their existing brokerage accounts without needing a separate futures or derivatives account.
+
+By contrast, CME's bitcoin options, which have been available since 2020, are also cash-settled but track Bitcoin futures rather than the spot index. They also require a dedicated derivatives account, adding operational complexity.
+
+Each Nasdaq QBTC option contract delivers exposure equivalent to exactly 1 BTC, using a 1/100th index scaling factor with a standard $100 multiplier. By comparison, the CME’s standard Bitcoin option is sized at 5 BTC, often representing hundreds of thousands of dollars in notional exposure.
+
+This much smaller contract size opens the door for precise hedging by smaller institutional managers and more affordable volatility trading for retail participants.
+
+Options are derivative contracts that give the purchaser the right to buy or sell the underlying asset at a predetermined price on a later date. A call option gives the right to buy and represents a bullish bet, while a put offers protection against price slides.
+
+Think of it like paying a small non-refundable deposit to lock in the right to buy/sell a house at today’s price anytime over the next few months. If property prices rise/fall, you can still purchase/sell at the pre-agreed price and benefit from the gain. If you change your mind, you simply walk away, losing only the initial deposit.
+
+Crypto options, led by bitcoin contracts, have seen explosive growth in recent years, as institutionalization of the market triggered demand for sophisticated risk management and yield-enhancing strategies.
+
+""An Agreement has been largely negotiated, subject to finalization between the United States of America, the Islamic Republic of Iran, and the various other Countries,"" wrote President Trump late Saturday afternoon.
+
+Disclosure & Polices : CoinDesk is an award-winning media outlet that covers the cryptocurrency industry. Its journalists abide by a strict set of editorial policies . CoinDesk has adopted a set of principles aimed at ensuring the integrity, editorial independence and freedom from bias of its publications. CoinDesk is part of Bullish (NYSE:BLSH), an institutionally focused global digital asset platform that provides market infrastructure and information services. Bullish owns and invests in digital asset businesses and digital assets and CoinDesk employees, including journalists, may receive Bullish equity-based compensation.",news:coindesk,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77401.38,77410.03,77620.01,,,77401.38,77410.03,77620.01,,,2108.46,2108.38,2117.22,,,0.00011175511340999478,0.0028246266410236753,,,0.00011175511340999478,0.0028246266410236753,,,-3.794238448906473e-05,0.004154691101562191,,,0.0,0.0,,,0.0001496974978990595,-0.001330064460538516,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00110,2026-05-25T05:25:55Z,Kalshi backs prediction markets lobby group with former Trump official,"Kalshi has backed a new advocacy group, Americans for Fair Markets, as the prediction market industry faces rising pressure from casinos, sportsbooks, state regulators, and Congress.
+
+The group launched with Taylor Budowich, a former deputy White House chief of staff, as strategic advisor.
+
+Americans for Fair Markets plans to shape federal policy for prediction markets and federally regulated exchanges. Kalshi said the group will support paid and earned campaigns against what it called “false narratives about prediction markets” from sportsbook and casino interests.
+
+The group also said it will support consumer rules for regulated platforms. Its stated priorities include know-your-customer checks, bans on insider trading, full CFTC funding, and limits on contracts tied to war, death, terrorism, and assassination.
+
+JUST IN: Prediction market platform Kalshi launched a new advocacy group aimed at pushing back against growing anti-prediction market lobbying efforts in Washington. pic.twitter.com/1bkAjCDqfB
+
+Taylor Budowich’s role gives the group a direct link to Republican political circles. Budowich most recently served as deputy White House chief of staff under Susie Wiles, according to Kalshi’s announcement .
+
+John Bivona, Kalshi’s head of government relations and an AFM board member, framed the launch as a response to powerful gaming interests.
+
+“We’re not going to be outspent or out-organized by entrenched interests protecting their monopolies,” he said.
+
+Additionally, the launch came as the U.S. House Committee on Oversight and Government Reform opened an investigation into Kalshi and Polymarket. The committee asked both firms for records on user checks, geographic limits, and suspicious trading controls.
+
+The probe follows concerns that users with non-public government information could profit from event contracts. Related reports also cited suspicious trades tied to geopolitical events and a case involving a U.S. Army master sergeant accused of using classified information to earn more than $409,000.
+
+Kalshi wants federally regulated prediction markets to remain under the Commodity Futures Trading Commission. State regulators argue that some event contracts, especially sports-linked markets, fall under local gambling laws.
+
+As reported by crypto.news, that conflict widened after Kalshi and Polymarket lost emergency bids in Nevada and Washington. A Ninth Circuit panel ruled that a federal derivatives defense does not automatically move state gambling cases into federal court.
+
+Related reports show Kalshi has also been moving toward larger financial use cases. Bernstein pointed to Kalshi’s first bespoke block trade as a step toward institutional event-risk trading, while Clear Street added a regulated access route for larger clients.
+
+Kalshi has also appeared in reports about crypto perpetual futures and media data deals. Earlier coverage noted that Fox would stream Kalshi’s real-time probabilities across Fox News, Fox Business, Fox Weather, and Fox One after similar integrations with CNN and CNBC.",news:cryptonews,LINK,LINKUSDT,LINKUSDT,macro,observe,4,binance,spot,LINKUSDT,published_after_event,9.5,9.487,9.53,,,77413.52,77249.07,77513.67,,,2109.02,2100.98,2118.8,,,-0.0013684210526315743,0.0031578947368420263,,,-0.00212430593519064,0.00129370166864895,,,-0.0038121971342139904,0.004637224872215517,,,0.0007558848825590658,0.0018641930681930763,,,0.002443776081582416,-0.0014793301353734911,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00112,2026-05-25T05:07:57Z,某巨鲸计划于ETH反弹高位布空，预开立头寸1205万美元,"某巨鲸计划于ETH反弹高位布空，预开立头寸1205万美元
+ETH于周末自2000美元附近低点反弹后，Hyperliquid上某巨鲸于6小时前挂出两笔大额卖单，计划在2,115—2,149美元区间分批做空5,614.9枚ETH，预计建仓规模约1205万美元。
+若挂单全数成交，经资金量加权计算，最终建仓均价将落于2,147.58美元附近。
+📌 地址：0xf517639a8872e756ac98d3c65507d2ebc25cc032
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2110.12,2107.82,2117.77,,,77434.13,77499.0,77461.37,,,2110.12,2107.82,2117.77,,,-0.0010899854036735546,0.003625386233958361,,,0.0008377442866600582,0.0003517828637060738,,,-0.0010899854036735546,0.003625386233958361,,,-0.0019277296903336127,0.003273603370252287,,,0.0,0.0,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00142,2026-05-25T02:41:17Z,链上最大ETH多头2.52亿美元仓位仍承压，浮亏1929万美元,"链上最大ETH多头2.52亿美元仓位仍承压，浮亏1929万美元
+链上ETH最大多头「BIT关联巨鲸」的2.52亿美元持仓仍维持大幅亏损状态。周末期间，ETH价格一度回撤至2000美元附近，致使该巨鲸浮亏高点扩大至2720万美元。截至发稿，受行情小幅反弹，浮亏已收窄至1929万美元。
+目前该巨鲸通过四个地址在Hyperliquid上分散布局，合计做多12万枚ETH，整体加权杠杆约18倍。以各地址资金占比加权计算，综合入场均价约2270美元。
+据悉，该地址系数字金融服务集团 BIT （原Matrixport）所属，曾多次接收来自其名下的资金转入，此前以数亿规模做多 ETH，盈超 5000 万美元。
+📌 地址：0xa5b0edf6b55128e0ddae8e51ac538c3188401d41
+📌 地址：0x6c8512516ce5669d35113a11ca8b8de322fd84f6
+📌 地址：0xa875890465dA20062bCF3b024Bf7d54E69C725a8
+📌 地址：0xfd423284f6a9c73a2a3d53cab8921d6533533d97
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,ETH,ETHUSDT,ETHUSDT,macro,observe,4,binance,spot,ETHUSDT,published_after_event,2098.97,2096.95,2107.32,,,77146.95,77078.67,77416.44,,,2098.97,2096.95,2107.32,,,-0.0009623767848039311,0.003978141659957135,,,-0.0008850641535407267,0.003493203555033686,,,-0.0009623767848039311,0.003978141659957135,,,-7.731263126320442e-05,0.00048493810492344913,,,0.0,0.0,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00155,2026-05-25T01:30:00Z,Iran Deal Nears Final Stage as Bitcoin Price Holds Near $77K,"The Iran deal moved closer to final approval after President Donald Trump said the framework was “largely negotiated.” The claim came as Bitcoin traded near $77,118 , after the price moved between $74,589 and $77,215 intraday.
+
+The market reaction remains cautious because traders still need a confirmed BTC price breakout. The diplomatic path also remains fragile, as Tehran has not confirmed every point.
+
+Still, the agreement could reopen the Strait of Hormuz and reduce a major energy shock.
+
+The Iran deal has become a central market event because it links war risk, oil flows, Bitcoin, and crypto sentiment . On Truth Social, Trump said a memorandum of understanding had been largely negotiated. He said final details were still under discussion.
+
+Pakistan also moved into the diplomatic center. Prime Minister Shehbaz Sharif said Pakistan hoped to host the next Iran-US talks very soon. Islamabad praised the regional call and pointed to recent meetings in Tehran.
+
+Secretary of State Marco Rubio sounded more careful. He said progress had been made, but not final progress. He also said any agreement would need full Iranian acceptance and compliance.
+
+The Strait of Hormuz remains the most important economic detail inside the Iran deal. The passage carries large energy flows, so reopening it could cool oil prices.
+
+It could also reduce inflation pressure tied to shipping and fuel, which in turn could impact the Bitcoin (BTC) price movements.
+
+Iranian state-linked reports pointed to possible relief on oil sanctions and port restrictions. Some reports also mentioned a 60-day window for nuclear talks. However, Iran has not publicly accepted every US claim.
+
+That gap keeps the diplomatic story open and sensitive for markets. It also explains why traders remain careful despite Trump’s stronger language. A final announcement would still need clear terms and visible compliance steps.
+
+The Iran deal may help sentiment if it reduces oil and war risk. However, Bitcoin price still needs confirmation of the market structure. Notably, BTC price bounced from the $74,249 support area.
+
+Yet the move still sits near a falling short-term trendline. A clean break would give buyers a stronger technical signal. Without that move, the bounce may remain corrective rather than impulsive.
+
+The wider chart also leaves downside risk open. The daily setup shows a lower high after rejection near the premium zone. A daily close above $83,000 could improve the short-term outlook for Bitcoin price.
+
+A reclaim near $85,000 would also weaken the bearish case for BTC. Until then, traders may keep watching the $60,000 sweep risk.
+
+The Bitcoin price reaction, therefore, remains cautious, even as diplomatic relations improve. For now, the Bitcoin ( BTC ) price remains tied to two triggers.
+
+One is diplomatic confirmation from Washington, Tehran, and regional mediators. The other is a technical breakout above the trendline and higher resistance. Both signals must align before traders can call a stronger shift.
+
+The contents of this page are intended for general informational purposes and do not constitute financial, investment, or any other form of advice. Investing in or trading crypto assets carries the risk of financial loss. The forecasted data (also called “price prediction”) on this page are subject to change without notice and are not guaranteed to be accurate.
+
+Subscribe to our newsletter to get the latest news and promotions.",news:thecoinrepublic,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77119.8,77120.01,77431.0,,,77119.8,77120.01,77431.0,,,2104.18,2099.32,2109.39,,,2.723036107266097e-06,0.004035280174481848,,,2.723036107266097e-06,0.004035280174481848,,,-0.0023096883346480634,0.0024760239143040152,,,0.0,0.0,,,0.0023124113707553295,0.0015592562601778326,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"
+cand_00004,2026-05-25T10:15:50Z,分析师：美联储鹰派转向压缩沃什降息空间,美国财经网站investinglive分析师Eamonn Sheridan指出，美联储4月会议纪要显示，美联储立场已经发生明显变化。此前强调根据经济数据“灵活、迅速”作出反应的表述已被新的措辞所取代：持续高企的通胀，加之伊朗冲突持续时间对经济影响的不确定性，可能意味着政策需要比此前预期维持暂停更长时间。新任主席沃什面临的通胀形势并非单纯的能源问题。官员们指出，高企的燃料成本正逐步传导至航运费率、机票价格以及化肥成本，使通胀压力扩散至更广泛领域。这种传导效应使通胀更难被视为暂时性因素，也让鹰派官员在主张维持高利率甚至加息时拥有更具持续性的依据。市场目前预期，如果通胀未能回落，美联储可能在2026年底或2027年初重新加息。沃什本人倾向于降息，但这一立场与一个明显趋于强硬的委员会之间形成潜在冲突；随着沃什领导风格逐渐显现，这种动态可能会加剧FOMC内部沟通的波动。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77666.0,,,,,77666.0,,,,,2120.33,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00009,2026-05-25T10:05:41Z,印度零售商5月第四次上调燃料价格,印度国有燃料零售商周一上调柴油和汽油价格。经销商表示，柴油每升上涨2.71卢比，汽油每升上涨2.61卢比。这是印度5月以来第四次上调燃料价格，旨在弥补因伊朗战争推高原油成本所造成的部分损失。控制印度约90%燃料市场份额的国有燃料零售商在部分关键邦选举结束后，于5月15日开始上调零售油价。此后，印度石油公司、巴拉特石油公司和印度斯坦石油公司已累计将柴油价格上调约8.6%，汽油价格上调约7.8%。目前，新德里的汽油价格为每升102.12卢比，柴油价格为每升95.20卢比。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77592.36,,,,,77592.36,,,,,2117.38,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00014,2026-05-25T09:58:33Z,Raoul Pal Says Stock Prices Keep Rising Because of Currency Debasement While AI Earnings Go “Vertical”,"Fun-loving and cheerful, a passionate blockchain and crypto writer who knows no boundary…connect if you share the same passion. With 10+ years of writing experience, I am a Crypto Journalist by chance, exploring, and learning all the dynamics of the sci-fi action-filled crypto world. Currently, focusing on cryptocurrency news and price data. With a passion for research and challenging my capabilities, I am slowly getting into the crypto arena to bring new insights every day.
+
+Fun-loving and cheerful, a passionate blockchain and crypto writer who knows no boundary…connect if you share the same passion. With 10+ years of writing experience, I am a Crypto Journalist by chance, exploring, and learning all the dynamics of the sci-fi action-filled crypto world. Currently, focusing on cryptocurrency news and price data. With a passion for research and challenging my capabilities, I am slowly getting into the crypto arena to bring new insights every day.
+
+Fun-loving and cheerful, a passionate blockchain and crypto writer who knows no boundary…connect if you share the same passion. With 10+ years of writing experience, I am a Crypto Journalist by chance, exploring, and learning all the dynamics of the sci-fi action-filled crypto world. Currently, focusing on cryptocurrency news and price data. With a passion for research and challenging my capabilities, I am slowly getting into the crypto arena to bring new insights every day.
+
+While most investors are still debating whether markets are overvalued, macro investor Raoul Pal says they may be completely missing the real story driving the next phase of the economy: artificial intelligence.
+
+According to Pal , traditional recession models and old business-cycle frameworks are struggling to explain what is happening because the economy is now splitting into two completely different worlds. One side remains tied to slower industrial production and traditional economic activity, while the other side, the AI and intelligence economy, is accelerating at a historic pace.
+
+Pal argued that many analysts are still using outdated frameworks to predict recessions based on weakening industrial indicators like the ISM. But he says those indicators no longer reflect the full economy.
+
+One part of the economy is slowing modestly, while AI-driven businesses are expanding at extraordinary speed. That divergence is creating what he described as a “bifurcation” in markets and economic data.
+
+According to Pal, this is exactly why some major recession calls over the last three years have failed to materialize despite weaker manufacturing data.
+
+The biggest example Pal pointed to was Anthropic.
+
+He described the company’s revenue growth as “the fastest scaling of any company in history,” claiming Anthropic went from essentially zero revenue to nearly $100 billion within roughly three years. Most of that growth reportedly came in the last year alone, jumping from around $10 billion to $100 billion.
+
+Pal said nothing in modern corporate history has come close to that kind of acceleration.
+
+That explosive growth, he argues, is changing how investors should think about stock valuations, earnings growth, and macroeconomic cycles.
+
+Pal also addressed growing concerns around high equity valuations.
+
+He explained that monetary debasement naturally pushes asset prices higher over time, especially stocks. Normally, earnings growth tends to follow GDP growth at a slower pace. But AI companies are now breaking that pattern entirely because their earnings growth is moving “vertical.”
+
+That combination of currency debasement and rapidly expanding AI earnings is creating a market environment unlike previous cycles.",news:coinpedia,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77604.56,,,,,77604.56,,,,,2117.02,,,,,,,,,,,,,,,,,,,,,,,,,skipped,asset has no computable return
+cand_00037,2026-05-25T09:16:33Z,1. 特朗普：美伊协议“尚未完全谈妥”,1. 特朗普：美伊协议“尚未完全谈妥”。2. 美伊协议前景缓和通胀担忧，金价反弹超1%。3. 分析师：美伊和谈“曙光已现”，短期油价暂获缓解。4. 我国城市地下管网规模全球第一，城市血脉5万亿元大机遇。5. 韩国市场将迎来个股杠杆ETF，散户热情或加剧指数波动。6. 国投白银LOF发布A类基金份额二级市场交易价格溢价风险提示。7. 景顺长城全球芯片LOF提示二级市场高溢价风险并实施停牌。8. 富国标普油气ETF提示高溢价风险，或采取临时停牌措施。9. 中韩半导体ETF提示高溢价风险，5月25日开市起停牌至10:30。10. 纳指科技ETF景顺提示高溢价风险，5月25日开市起停牌至10:30。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77456.99,77681.37,,,,77456.99,77681.37,,,,2118.5,2120.94,,,,0.0028968334555730113,,,,0.0028968334555730113,,,,0.00115175831956571,,,,0.0,,,,0.0017450751360073014,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00039,2026-05-25T09:15:21Z,2026年5月25日银行间外汇市场人民币汇率中间价,美元/人民币报6.8318，下调（人民币升值）55点； 欧元/人民币报7.9297，上调104点；港元/人民币报0.87208，下调5.3点； 英镑/人民币报9.1828，上调257点；澳元/人民币报4.8750，上调15点； 加元/人民币报4.9322，下调146点；100日元/人民币报4.2905，下调28点； 人民币/俄罗斯卢布报10.5114，上调649点；新西兰元/人民币报4.0006，下调51点； 人民币/林吉特报0.57994，下调0.4点；瑞士法郎/人民币报8.7125，上调416点； 新加坡元/人民币报5.3348，下调7点。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77456.99,77666.0,,,,77456.99,77666.0,,,,2118.49,2120.33,,,,0.0026984007511781094,,,,0.0026984007511781094,,,,0.0008685431604587013,,,,0.0,,,,0.0018298575907194081,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00046,2026-05-25T09:00:48Z,华侨银行：美伊缓和提振风险资产，但核细节不明外汇或追涨乏力,华侨银行在一份报告中表示，市场可能不愿过于激进地削减地缘政治溢价，尤其是在假期流动性较低的情况下。该行表示，受美伊局势缓和希望提振，风险指标本周开局应会走强。但由于伊朗核计划和铀浓缩方面的细节仍不明朗，外汇市场可能不愿追涨。澳元、韩元等高贝塔货币可能上涨，而印度卢比、印尼盾和菲律宾比索可能落后。然而，油价仍是关键变数，因为一旦协议确认和油价走弱，可能会给收益率和美元带来压力。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77433.36,77607.64,,,,77433.36,77607.64,,,,2116.4,2117.24,,,,0.0022507095133157407,,,,0.0022507095133157407,,,,0.0003969003969002127,,,,0.0,,,,0.001853809116415528,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00052,2026-05-25T08:46:53Z,自主攻克技术难题 胜利济阳页岩油产量突破200万吨,今天从中国石化获悉，我国首个陆相断陷盆地页岩油国家级示范区——胜利济阳页岩油国家级示范区累计产量突破200万吨。与常规石油不同，页岩油储藏于致密岩石缝隙之中，无法自然流动，普遍埋藏更深、油层零散，是全球油气勘探开发领域公认的世界级难题。科研团队通过自主创新，攻克40余项关键技术，创新形成适配陆相断陷盆地的页岩油勘探开发理论，首创“储–缝–压”开发技术体系，成功将区域内九成原本难以动用的页岩油资源转化为可有效开采的优质储量，陆续探明三个亿吨级油田。截至目前，胜利济阳页岩油国家级示范区，累计上报探明储量3.27亿吨，估算资源量达105亿吨，相当于在胜利油田原有产能基础上，发现一个全新大型油田，为我国东部地区原油稳产增产、能源战略接替稳固筑牢了坚实资源根基。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77326.07,77584.0,,,,77326.07,77584.0,,,,2114.06,2117.88,,,,0.003335615013151383,,,,0.003335615013151383,,,,0.001806949660842161,,,,0.0,,,,0.001528665352309222,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00058,2026-05-25T08:32:29Z,链上Pre-IPO抢跑传统市场：若上线即做多SpaceX、OpenAI、Anthropic或可盈近300%,"链上Pre-IPO抢跑传统市场：若上线即做多SpaceX、OpenAI、Anthropic或可盈近300%
+去年11月仅一个月内，Hyperliquid上Ventuals平台同步上线了三大科技独角兽的Pre-IPO相关标的：SpaceX、OpenAI与Anthropic，目前在该三个标的上整体持仓量约1470万美元。
+自合约开放首日起，截至目前三大标的均录得可观涨幅：
+SpaceX：上线价约450美元（对应隐含市值4500亿美元），现已录得412%涨幅；
+OpenAI：上线价约550美元（对应隐含市值5500亿美元），现已录得138%涨幅；
+Anthropic：上线价约326美元（对应隐含市值3260亿美元），现已录得340%涨幅。
+-若按三大标的上线首日，在Hyperliquid上以1倍杠杆等权做多测算，组合整体回报率或可达约297%。
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77319.99,77618.35,,,,77319.99,77618.35,,,,2113.95,2122.59,,,,0.003858769252298222,,,,0.003858769252298222,,,,0.004087135457319313,,,,0.0,,,,-0.00022836620502109106,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00060,2026-05-25T08:23:01Z,Gate上线Canton Network上的USDCx充提服务，同步推出15万美元CC激励计划,加密资产交易平台 Gate 大门宣布，已正式支持 Canton Network 上的 USDCx 充值与提现服务，用户现可在平台的交易和资产管理等场景中使用 USDCx。配合该功能上线，Gate 同步推出 CandyDrop、USDCx 充值挑战赛及余币宝理财等多项活动，总奖励规模达 15 万美元等值的 Canton 生态代币 CC。公开资料显示，USDCx 为在 Canton Network 上原生发行的稳定币，由 USDC 1:1 支撑，其储备存放于 Circle xReserve 智能合约中，并遵循 CIP-56 标准，在不同应用与资产场景间具备互操作性与完全可组合能力，同时兼顾隐私需求。Gate 此次上线 USDCx 并配套多维激励，有助于增强 Canton 生态流动性与用户覆盖，也反映出平台持续整合新兴公链生态、拓展可互操作的数字资产基础设施，并支持机构级链上金融演进的长期承诺。未来，Gate 将继续拓展优质链上资产与生态合作，推动更多创新资产与应用场景向全球用户开放。,news:odaily_exchange_gap,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77316.86,77499.99,,,,77316.86,77499.99,,,,2112.06,2119.14,,,,0.002368564889986491,,,,0.002368564889986491,,,,0.00335217749495742,,,,0.0,,,,-0.0009836126049709293,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00066,2026-05-25T08:06:02Z,新加坡贸工部：连续表态（共 3 条）,"新加坡贸工部：近期连续发表以下观点：
+一、新加坡贸工部：尽管伊朗战争带来的下行风险持续上升，维持2026年经济增长2%至4%的预测。
+二、新加坡贸工部：经济增长是由批发贸易、制造业以及金融保险业的强劲表现推动的。
+三、新加坡贸工部：强劲的人工智能相关需求推动了批发贸易领域的机械、设备及用品板块以及制造业内的电子和精密工程集群的增长。",news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77360.99,77451.5,,,,77360.99,77451.5,,,,2113.21,2117.38,,,,0.0011699695156435208,,,,0.0011699695156435208,,,,0.0019733012809897144,,,,0.0,,,,-0.0008033317653461935,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00071,2026-05-25T07:51:37Z,策略师：美伊协议希望压低油价，通胀预期降温或提振风险资产,受美伊和平协议希望影响，布伦特原油期货跌破每桶100美元。Pepperstone策略师克里斯·韦斯顿表示，如果布伦特原油价格向90美元逼近，随着短期通胀预期温和缓解以及2027年隐含加息押注小幅减少，风险资产可能重获生机。韦斯顿表示，本周将公布美国核心个人消费支出数据，通胀预期将面临考验，预计该数据同比将有所上升。整体PCE通胀预计为3.8%——几乎是美联储目标的两倍。油价下跌可能限制美元对即将公布的数据的反应。“美元头寸已变得相当紧张，而能源价格下跌导致的通胀预期下降可能促使部分美元多头头寸平仓，”韦斯顿称。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77323.99,77394.53,,,,77323.99,77394.53,,,,2111.73,2115.96,,,,0.0009122653913746781,,,,0.0009122653913746781,,,,0.0020030969868307658,,,,0.0,,,,-0.0010908315954560877,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00073,2026-05-25T07:38:48Z,FTX legal adviser Fenwick settles customer lawsuit for $54m,"Fenwick & West has agreed to pay $54 million to settle a class action lawsuit filed by former FTX customers who accused the law firm of helping facilitate fraud at the collapsed cryptocurrency exchange.
+
+According to court filings tied to the proposed settlement, the Silicon Valley law firm reached the agreement after initially trying to dismiss the case brought by former FTX users in 2023. The settlement still requires approval from a U.S. judge before it can take effect.
+
+Former customers of the exchange alleged that Fenwick played a central role in legal and corporate arrangements that allowed FTX and its affiliated trading firm, Alameda Research, to move and commingle customer funds without proper safeguards. Plaintiffs claimed the firm helped create structures and entities designed to obscure how customer assets were handled inside the FTX group.
+
+Court records from the original complaint alleged that Fenwick also advised FTX on legal strategies intended to avoid money transmitter licensing requirements in some jurisdictions.
+
+Earlier filings from August 2025 added further accusations against the law firm after plaintiffs sought permission to amend their complaint using evidence from Sam Bankman-Fried’s criminal trial and the FTX bankruptcy process. In that proposed amended filing, former FTX customers argued that testimony from senior insiders and findings from an independent bankruptcy examiner showed Fenwick had become “deeply intertwined” with the exchange’s operations.
+
+At the time, plaintiffs cited testimony from former FTX executives Nishad Singh, Gary Wang, and Caroline Ellison, who allegedly described internal practices involving improper loans, false statements, and misuse of customer funds. According to the filing, Singh told the court that Fenwick had been informed about some of those activities and advised on legal structures connected to them.
+
+Other allegations in the amended filing accused the law firm of helping establish shell companies linked to Alameda Research and North Dimension, an entity used to route customer deposits. Plaintiffs also pointed to the use of encrypted and auto-deleting Signal chats by FTX executives, which they said Fenwick knew about during its legal representation of the exchange.
+
+At the same time, the filing introduced securities law claims under Florida and California statutes tied to the sale of FTT tokens and other FTX-related investment products. Plaintiffs argued that Fenwick attorneys participated in designing and facilitating those offerings for investors.
+
+Elsewhere in the FTX fallout, former FTX head of engineering Nishad Singh agreed in April 2026 to pay a $3.7 million disgorgement to settle charges brought by the U.S. Commodity Futures Trading Commission.
+
+According to the CFTC, Singh also accepted a five-year trading ban and an eight-year registration ban as part of the supplemental consent order tied to the misuse of customer funds at FTX. CFTC enforcement director David Miller said the resolution accounted for Singh’s cooperation with investigators.
+
+Separately, the FTX Recovery Trust has continued distributing recovered assets to former customers and creditors. In March, the Trust distributed $2.2 billion to claimants, while another reimbursement round has been scheduled for May 29.",news:cryptonews,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77300.84,77341.04,,,,77300.84,77341.04,,,,2109.67,2114.26,,,,0.0005200460952299313,,,,0.0005200460952299313,,,,0.0021756957249239317,,,,0.0,,,,-0.0016556496296940004,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00076,2026-05-25T07:21:27Z,美、布两油短线小幅走高0.6美元,Gate 数据显示，美、布两油短线小幅走高 0.6 美元，现分别报 95.3 美元/桶和 96.5 美元/桶。,news:odaily_exchange_gap,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77249.46,77336.01,,,,77249.46,77336.01,,,,2108.56,2112.17,,,,0.0011203961814101326,,,,0.0011203961814101326,,,,0.001712068900102448,,,,0.0,,,,-0.0005916727186923154,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00087,2026-05-25T06:56:59Z,分析师：美伊和谈“曙光已现”，短期油价暂获缓解,周一亚洲早盘时段，美、布两油均跌至两周低点，因市场乐观预期美国和伊朗正接近达成和平协议，尽管双方在包括霍尔木兹海峡封锁在内的关键问题上仍存在分歧。美国总统特朗普周六表示，华盛顿和伊朗已“基本谈妥”一份和平协议的谅解备忘录，该协议将重新开放霍尔木兹海峡。然而，双方在几个棘手问题上仍存在分歧，特朗普周日表示，他已告知其代表不要急于与伊朗达成任何协议。MST Marquee驻悉尼能源分析师Saul Kavonic表示：“尽管和平协议和霍尔木兹海峡仍存在诸多不确定性和风险，但曙光已现，这将为短期油价带来一些缓解。”然而，分析师预计，通过该海峡的石油运输恢复正常以及受损的石油和天然气设施得到修复将需要数月时间。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77410.03,77381.7,,,,77410.03,77381.7,,,,2108.38,2114.63,,,,-0.0003659732466193555,,,,-0.0003659732466193555,,,,0.002964361263149806,,,,0.0,,,,-0.0033303345097691617,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00088,2026-05-25T06:56:25Z,金十整理：本周重要事件与数据预告——美国4月核心PCE数据将公布；小米、理想、拼多多等财报来袭,1. 周一：①数据：中国4月本年迄今全国发电装机容量、中国4月本年迄今全国发电装机容量年率（待定）。②事件：今日有5000亿元1年期中期借贷便利（MLF）和10亿元7天期逆回购到期。③假期：纽交所美股休市一日；首尔证券交易所休市一日；芝商所（CME）旗下贵金属、美油期货合约交易于北京时间26日02:30暂停，美股、美债期货合约交易于北京时间26日01:00暂停；洲际交易所（ICE）旗下布伦特原油期货合约交易提前于北京时间26日01:30结束；伦敦证券交易所休市一日；香港交易所港股休市一日，南、北向交易关闭。2. 周二：①数据：英国5月CBI零售销售差值；美国3月FHFA房价指数月率、美国3月S&P/CS20座大城市未季调房价指数年率、美国5月谘商会消费者信心指数、美国5月达拉斯联储商业活动指数。②事件：小米集团财报电话会。3. 周三：①数据：澳大利亚4月未季调CPI年率；新西兰至5月27日联储利率决定；瑞士5月ZEW投资者信心指数；美国至5月9日当周ADP就业人数周度变动、美国5月里奇蒙德联储制造业指数。②事件：日本央行行长植田和男在日本央行主办的货币政策会议上发表讲话；新西兰联储公布利率决议和货币政策声明、新西兰联储主席布雷曼召开货币政策新闻发布会；拼多多财报电话会。4. 周四：①数据：美国至5月22日当周API原油库存；欧元区5月工业景气指数、欧元区5月经济景气指数；加拿大第一季度经常帐；美国至5月23日当周初请失业金人数、美国4月核心PCE物价指数年率、美国4月个人支出月率、美国第一季度实际GDP年化季率修正值、美国4月核心PCE物价指数月率、美国4月耐用品订单月率、美国4月新屋销售总数年化、美国至5月22日当周EIA天然气库存。②事件：欧洲央行公布4月货币政策会议纪要；FOMC永久票委、纽约联储主席威廉姆斯在冰岛央行参与组织的一场会议上发表主旨演讲；2028年FOMC票委、圣路易联储主席穆萨莱姆发表讲话。③假期：印度国家证券交易所休市一日。④财报：理想汽车、小鹏汽车、微博。5. 周五：①数据：美国至5月22日当周EIA原油库存数据；日本4月失业率；法国5月CPI月率初值、法国第一季度GDP年率终值；瑞士5月KOF经济领先指标；德国5月季调后失业人数、德国5月季调后失业率、德国5月CPI月率初值；加拿大3月GDP月率；美国5月芝加哥PMI。②事件：英国央行行长贝利发表讲话；2028年FOMC票委、堪萨斯联储主席施密德发表讲话；美联储理事鲍曼发表讲话。6. 周六：①数据：美国至5月29日当周石油钻井总数。7. 周日：①数据：中国5月官方制造业PMI。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77410.03,77381.7,,,,77410.03,77381.7,,,,2108.38,2114.63,,,,-0.0003659732466193555,,,,-0.0003659732466193555,,,,0.002964361263149806,,,,0.0,,,,-0.0033303345097691617,,,,partial,"missing prices: asset_price_4h, asset_price_24h, asset_price_72h, btc_price_4h, btc_price_24h, btc_price_72h, eth_price_4h, eth_price_24h, eth_price_72h"
+cand_00090,2026-05-25T06:39:14Z,经济学家：即使美伊达成协议，今年油价也难回冲突前水平,澳大利亚财富管理公司AMP首席经济学家谢恩·奥利弗表示，即使美国和伊朗达成协议，今年全球油价基准也不太可能恢复到冲突前水平。他指出，船只再次通过霍尔木兹海峡还需要一段时间，而且市场可能会计入更高的风险溢价，以应对未来潜在的供应中断。冲突前，WTI原油的交易价格约为每桶67美元。奥利弗估计，考虑到额外的风险溢价，WTI原油年底可能在每桶80美元左右，而布伦特原油届时可能在每桶85美元左右。“如果核问题得不到解决，油价还会更高，”他表示。,news:jin10,BTC,BTCUSDT,BTCUSDT,macro,observe,4,binance,spot,BTCUSDT,published_after_event,77427.99,77286.12,77526.1,,,77427.99,77286.12,77526.1,,,2107.69,2109.1,2116.35,,,-0.001832283131720347,0.001267112836068618,,,-0.001832283131720347,0.001267112836068618,,,0.0006689788346483372,0.004108763622733935,,,0.0,0.0,,,-0.002501261966368684,-0.0028416507866653173,,,partial,"missing prices: asset_price_24h, asset_price_72h, btc_price_24h, btc_price_72h, eth_price_24h, eth_price_72h"

@@ -1,0 +1,11 @@
+source_pattern,default_timezone,notes
+tg:,Asia/Shanghai,Telegram/backend publish times are reviewed as China time when timezone is missing
+webhook,Asia/Shanghai,Internal webhook publish times are reviewed as China time when timezone is missing
+news:jin10,Asia/Shanghai,Jin10 Chinese news timestamps are usually China time when timezone is missing
+news:aicoin,Asia/Shanghai,AICoin Chinese crypto feed timestamps are usually China time when timezone is missing
+news:cointelegraph,UTC,Cointelegraph exported timestamps are usually UTC; explicit Z still wins
+news:cryptonews,UTC,Cryptonews exported timestamps are usually UTC; explicit Z still wins
+reuters,UTC,Use UTC unless a source timestamp explicitly includes another timezone
+bloomberg,America/New_York,US market/news local time if exported without timezone
+sec,America/New_York,US regulator local time if exported without timezone
+federal reserve,America/New_York,US macro source local time if exported without timezone

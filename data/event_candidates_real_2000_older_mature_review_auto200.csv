@@ -1,0 +1,621 @@
+candidate_id,raw_id,raw_published_at,published_at,published_at_utc,published_at_china,raw_source_published_at,source_published_at_utc,source_published_at_china,source_timezone,source_timezone_assumption,source_lag_minutes,backtest_time,backtest_time_utc,backtest_time_china,backtest_time_basis,time_timezone_assumption,time_parse_status,time_parse_flags,title,content,source,url,candidate_asset_symbol,candidate_binance_spot_symbol,candidate_binance_futures_symbol,candidate_event_type,candidate_direction_hint,candidate_importance,event_scope,asset_confidence,time_confidence,needs_review,review_decision,review_notes,quality_flags,auto_quality_score,suggested_reason,suggested_review_decision,review_priority,parsed_backtest_time_utc,event_age_hours,horizon_status,is_mature_72h
+cand_01916,2056892904904474930,2026-05-20T00:20:58Z,2026-05-20 08:20:58 UTC+8,2026-05-20T00:20:58Z,2026-05-20 08:20:58 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 08:20:58 UTC+8,2026-05-20T00:20:58Z,2026-05-20 08:20:58 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Whale 0xde42 sold 50K $HYPE ($2.41M) over the past 10 hours while also opening a 10x short on 223,404 $HYPE($10.55M).
+
+h","Whale 0xde42 sold 50K $HYPE ($2.41M) over the past 10 hours while also opening a 10x short on 223,404 $HYPE($10.55M).
+
+https://t.co/M6A6tlQVz0 https://t.co/tZIpluc6jI",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T00:20:58Z,202.6125,mature_72h,true
+cand_01946,2056884346032898078,2026-05-19T23:46:57Z,2026-05-20 07:46:57 UTC+8,2026-05-19T23:46:57Z,2026-05-20 07:46:57 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 07:46:57 UTC+8,2026-05-19T23:46:57Z,2026-05-20 07:46:57 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,吴说获悉，彭博 ETF 分析师 James Seyffart 表示，Truth Social 已撤回其比特币 ETF 申请。他认为，此举可能与现货比特币 ETF 市场竞争加剧有关，尤其是在 Morgan Stanley 推出费率仅 14 个,吴说获悉，彭博 ETF 分析师 James Seyffart 表示，Truth Social 已撤回其比特币 ETF 申请。他认为，此举可能与现货比特币 ETF 市场竞争加剧有关，尤其是在 Morgan Stanley 推出费率仅 14 个基点的 MSBT 后。Seyffart 同时表示，相比继续推出新的现货比特币 ETF，Truth Social 后续可能更倾向于推出基于《1940 年投资公司法》框架、策略更灵活的加密 ETF 产品。https://t.co/auVKD2VX40,webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T23:46:57Z,203.1794,mature_72h,true
+cand_01269,news:1023:e7fa3f14bf85566b,2026-05-20T13:57:32Z,2026-05-20 21:57:32 UTC+8,2026-05-20T13:57:32Z,2026-05-20 21:57:32 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 21:57:32 UTC+8,2026-05-20T13:57:32Z,2026-05-20 21:57:32 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Algorand price approaches golden cross amid Robinhood listing, will it reclaim $0.20?","Algorand price has started regaining momentum this month as traders rotate back into select layer-1 tokens supported by improving technical structures, rising on-chain activity, and fresh exchange accessibility catalysts.
+
+According to data from crypto.news, Algorand ( ALGO ) price traded around $0.114 at press time on May 20 after climbing more than 39% from its March lows near $0.082. The token has also stabilized above the key psychological $0.10 zone for several consecutive weeks, suggesting buyers are beginning to defend higher support levels after months of sustained downside pressure.
+
+One of the biggest catalysts supporting Algorand’s recent recovery is its official launch on Robinhood Crypto for users across the United States. The rollout significantly expands retail access to ALGO and potentially introduces a fresh source of liquidity from millions of American users who can now directly trade the token through one of the most widely used brokerage applications in the country.
+
+The listing also follows Robinhood Europe’s earlier support for Algorand, meaning the token is now available to both U.S. and European users through the platform. Historically, major exchange accessibility expansions have often improved visibility and trading activity for mid-cap crypto assets seeking to recover from prolonged bearish cycles.
+
+At the same time, Algorand has continued benefiting from improving regulatory sentiment in Asia. Earlier this year, the token was officially green-listed by Japan’s Virtual and Crypto Assets Exchange Association, or JVCEA, allowing licensed exchanges in the country to offer the asset more freely to local investors. The development triggered a strong rally at the time and helped reinforce investor confidence surrounding the project’s long-term regulatory positioning.
+
+Additional support has also emerged from growing optimism surrounding the Real-World Asset tokenization sector. Algorand has increasingly positioned itself as an institutional-grade blockchain due to its sub-penny transaction costs, instant finality, and long track record of network uptime.
+
+The network has recently seen notable increases in transaction activity, developer engagement, and wallet participation despite ALGO still trading far below its historical highs. Such divergence between network fundamentals and token price often attracts speculative buyers looking for undervalued ecosystems with improving utility metrics.
+
+Staci Warden, CEO of the Algorand Foundation, previously emphasized the network’s focus on institutional-scale infrastructure and tokenization use cases.
+
+“The future of finance will be built on blockchain infrastructure that institutions can actually trust and scale,” Warden said during a recent industry panel discussing tokenized assets and blockchain adoption.
+
+That institutional narrative has become increasingly important as capital continues rotating toward blockchain networks viewed as suitable for tokenized treasuries, payment infrastructure, and enterprise settlement systems.
+
+On the daily chart, Algorand price is now approaching one of its most important technical milestones in months: a potential golden cross formation between the 50-day and 200-day simple moving averages.
+
+Currently, the 50-day SMA sits near $0.1137 while the 200-day SMA is positioned around $0.1163. The gap between both indicators has narrowed substantially over the past several weeks as ALGO maintained a sequence of higher lows following its March bottom near $0.08.
+
+A golden cross occurs when the shorter-term moving average crosses above the longer-term average, signaling that medium-term momentum is beginning to overpower the broader bearish trend. Traders often interpret such crossovers as the early stages of a larger macro trend reversal.
+
+The current structure also appears constructive because Algorand has already reclaimed its 50-day SMA and continues consolidating directly beneath the 200-day SMA resistance zone. This suggests buyers are attempting to build enough momentum for a decisive breakout rather than immediately rejecting from overhead resistance.
+
+Meanwhile, the Aroon indicator is flashing increasingly bullish signals. Aroon Up currently sits around 85.7, while Aroon Down has dropped close to 14.2, indicating that bullish momentum is dominating recent price action and that recent highs are occurring more frequently than recent lows.
+
+The broader chart structure also suggests Algorand may have already formed a major macro bottom between the $0.08 and $0.09 range after spending months in a prolonged accumulation phase.
+
+Technical analysts are closely watching whether ALGO can successfully reclaim the 200-week SMA positioned near the $0.19 to $0.20 region. Historically, reclaiming the 200-week moving average has often marked the beginning of stronger recovery phases across major crypto assets emerging from deep bear markets.
+
+If the current golden cross confirms alongside a broader altcoin market recovery, that confluence could significantly strengthen bullish momentum toward the $0.20 resistance threshold.
+
+Despite the improving setup, Algorand still faces several major hurdles before confirming a full long-term trend reversal.
+
+First, the $0.12 to $0.14 region remains a heavy supply zone where sellers repeatedly rejected previous recovery attempts earlier this year. A decisive breakout above this range would likely be required before traders seriously begin targeting the $0.20 psychological level.
+
+In addition, Algorand continues trading substantially below its major 2024 highs, meaning many long-term holders may still look to exit positions during relief rallies after enduring prolonged drawdowns throughout the broader market downturn.
+
+Macro conditions also remain an important risk factor. Crypto markets continue reacting sharply to U.S. monetary policy expectations, Treasury yield volatility, and broader risk appetite conditions. If Bitcoin loses momentum or macroeconomic uncertainty intensifies again, altcoins like Algorand could struggle to sustain recovery rallies regardless of improving fundamentals.
+
+Still, one factor working in Algorand’s favor is its relatively stable tokenomics structure compared to many competing layer-1 networks. Approximately 89% of ALGO’s 10 billion maximum supply is already circulating in the market, meaning the ecosystem faces far less structural dilution pressure from future token unlocks.
+
+That matters because many altcoins experiencing strong rallies often face immediate sell pressure from large insider or treasury unlock schedules. Algorand’s comparatively mature circulating supply profile reduces that risk and allows spot demand to have a more direct impact on price action.
+
+The improving technical structure, Robinhood expansion, institutional tokenization narrative, and strengthening on-chain activity together suggest Algorand may finally be entering the early stages of a broader recovery cycle after spending years under sustained bearish pressure.
+
+For now, the most important level to watch remains the 200-day SMA near $0.116. A clean breakout above that resistance, followed by confirmation of the golden cross, could significantly improve the probability of a move toward the long-term $0.20 target over the coming months.
+
+However, failure to hold above the 50-day SMA near $0.113 would weaken the current bullish setup and potentially expose the token to another retest of lower support zones near $0.10 and $0.08.
+
+Disclosure: This article does not represent investment advice. The content and materials featured on this page are for educational purposes only.",news:cryptonews,https://crypto.news/algorand-price-approaches-golden-cross-amid-robinhood-listing-will-it-reclaim-0-20/,BTC,BTCUSDT,BTCUSDT,token_unlock,risk,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T13:57:32Z,189.0031,mature_72h,true
+cand_01956,2056880443480576489,2026-05-19T23:31:27Z,2026-05-20 07:31:27 UTC+8,2026-05-19T23:31:27Z,2026-05-20 07:31:27 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 07:31:27 UTC+8,2026-05-19T23:31:27Z,2026-05-20 07:31:27 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Verus与以太坊跨链桥遭攻击，损失超1100万美元,币界网消息，据区块链安全公司Blockaid报道，Verus与以太坊之间的跨链桥遭到攻击，损失超过1100万美元，成为2026年以来第八起跨链桥安全事件，全年相关损失累计接近3.29亿美元。Blockaid表示，此次漏洞与2022年Wormhole与Nomad跨链桥攻击存在相似之处，问题在于桥接验证流程未正确检查源链交易参数与以太坊侧支付数据是否一致，而修复漏洞仅需约10行代码。攻击发生后，Verus网络部分出块节点主动下线，链上出块一度暂停。,webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T23:31:27Z,203.4378,mature_72h,true
+cand_01530,news:2012:e8e758c57e57ddce,2026-05-20T09:28:07Z,2026-05-20 17:28:07 UTC+8,2026-05-20T09:28:07Z,2026-05-20 17:28:07 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 17:28:07 UTC+8,2026-05-20T09:28:07Z,2026-05-20 17:28:07 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,UP即将上线Bitget PoolX，锁仓ETH解锁125万枚UP,"Bitget PoolX 即将上线项目 UP，锁仓 ETH 解锁 1,250,000 枚 UP，个人锁仓上限 1,500 枚 ETH。锁仓通道开放时间为 5 月 20 日 19:00 至 5 月 27 日 19:00（UTC+8）。此外，活动期间净充值为正的用户，可在活动结束后获得 5% ETH 理财加息券；首次参与 PoolX 且满足净充值条件的用户，可获得 15% ETH 加息券。净充值统计时间为 5 月 20 日 17:00 至 5 月 26 日 17:00（UTC+8）。更多详情可参阅 Bitget 官方平台。",news:odaily_exchange_gap,https://www.odaily.news/zh-CN/newsflash/482770,ETH,ETHUSDT,ETHUSDT,exchange_listing,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T09:28:07Z,193.4933,mature_72h,true
+cand_01721,news:2001:2afe0615deade7b3,2026-05-20T05:00:00Z,2026-05-20 13:00:00 UTC+8,2026-05-20T05:00:00Z,2026-05-20 13:00:00 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 13:00:00 UTC+8,2026-05-20T05:00:00Z,2026-05-20 13:00:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Wallet Maintenance for Ethereum Network (ETH) - 2026-05-21,"This is a general announcement. Products and services referred to here may not be available in your region.Fellow Binancians,Binance will perform wallet maintenance for Ethereum Network (ETH) at 2026-05-21 06:00 (UTC). To support the wallet maintenance, deposits and withdrawals on Ethereum Network (ETH) will be suspended starting from 2026-05-21 05:55 (UTC), and be resumed when the maintenance is complete. The maintenance will take about one hour.Please note:The trading of token(s) on the aforementioned network will not be impacted.Binance will handle all technical requirements involved for all users.Deposits and withdrawals for token(s) on the aforementioned network will be reopened once the upgraded network is deemed to be stable. No further announcement will be posted.There may be discrepancies between this original content in English and any translated versions. Please refer to the original English version for the most accurate information, in case any discrepancies arise. Thank you for your support!Binance Team2026-05-20",news:binance_ann,https://www.binance.com/en/support/announcement/7f482e14d18a4f928e8efc204ba3a02d,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T05:00:00Z,197.9619,mature_72h,true
+cand_01579,2057017686224175591,2026-05-20T08:36:48Z,2026-05-20 16:36:48 UTC+8,2026-05-20T08:36:48Z,2026-05-20 16:36:48 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 16:36:48 UTC+8,2026-05-20T08:36:48Z,2026-05-20 16:36:48 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Crypto research workflow in 2026.
+
+Before: Dashboard hopping → CSV exports → Python scripts → spreadsheet archaeology →","Crypto research workflow in 2026.
+
+Before: Dashboard hopping → CSV exports → Python scripts → spreadsheet archaeology → manual annotations
+
+Now, one prompt with CryptoQuant MCP:
+
+“Pull BTC historical data, compare post-halving cycles, mark bottoms, extend 2024.”
+
+Effortless.",webhook,,BTC,BTCUSDT,BTCUSDT,halving,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T08:36:48Z,194.3486,mature_72h,true
+cand_01935,2056888746717728852,2026-05-20T00:04:27Z,2026-05-20 08:04:27 UTC+8,2026-05-20T00:04:27Z,2026-05-20 08:04:27 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 08:04:27 UTC+8,2026-05-20T00:04:27Z,2026-05-20 08:04:27 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Anchorage (@Anchorage) linked wallet further withdrew 121,099 $HYPE worth $5.87M from #Bybit.
+
+They have bought 2.34M $H","Anchorage (@Anchorage) linked wallet further withdrew 121,099 $HYPE worth $5.87M from #Bybit.
+
+They have bought 2.34M $HYPE worth $112.36M over the past month, which they sent for staking.
+
+https://t.co/EhSkgoR6r7 https://t.co/4mIwFFjIfw",webhook,,HYPE,,HYPEUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T00:04:27Z,202.8878,mature_72h,true
+cand_01875,2056904238253355240,2026-05-20T01:06:00Z,2026-05-20 09:06:00 UTC+8,2026-05-20T01:06:00Z,2026-05-20 09:06:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 09:06:00 UTC+8,2026-05-20T01:06:00Z,2026-05-20 09:06:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"ICYMI: https://t.co/RY38xpkgqt has acquired the New York Bitcoin Treasuries Unconference.
+
+Tickets, sponsorships, and sp","ICYMI: https://t.co/RY38xpkgqt has acquired the New York Bitcoin Treasuries Unconference.
+
+Tickets, sponsorships, and speaker apps are open now. 🎟️ 
+
+MORE AT: https://t.co/8YEoSqXJLV https://t.co/3ZQ5tP5QYe",webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-20T01:06:00Z,201.8619,mature_72h,true
+cand_01924,2056891123784896816,2026-05-20T00:13:53Z,2026-05-20 08:13:53 UTC+8,2026-05-20T00:13:53Z,2026-05-20 08:13:53 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 08:13:53 UTC+8,2026-05-20T00:13:53Z,2026-05-20 08:13:53 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Threshold Network：恶意铸造尝试未成功，暂停铸币,币界网消息，Threshold Network发文称，5月18日18:04，恶意行为者试图在未存入底层BTC的情况下铸造TBTC，但攻击尝试未成功，未发行任何无效TBTC，用户资金未面临风险。出于预防考虑，鉴于近期加密生态恶意活动频率上升，Threshold已临时暂停optimistic minting。当前TBTC铸币将通过sweeping机制处理，典型铸币时间将从约1.5小时延长至约6至7小时。,webhook,,BTC,BTCUSDT,BTCUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T00:13:53Z,202.7306,mature_72h,true
+cand_01820,2056921371125436670,2026-05-20T02:14:05Z,2026-05-20 10:14:05 UTC+8,2026-05-20T02:14:05Z,2026-05-20 10:14:05 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 10:14:05 UTC+8,2026-05-20T02:14:05Z,2026-05-20 10:14:05 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Trump's Truth Social withdraws Bitcoin ETF application from SEC,Trump's Truth Social withdraws Bitcoin ETF application from SEC,webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T02:14:05Z,200.7272,mature_72h,true
+cand_01718,2056963915523981475,2026-05-20T05:03:08Z,2026-05-20 13:03:08 UTC+8,2026-05-20T05:03:08Z,2026-05-20 13:03:08 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 13:03:08 UTC+8,2026-05-20T05:03:08Z,2026-05-20 13:03:08 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Bitwise研究院：资金从LayerZero迁移至Chainlink CCIP,"币界网消息，吴说获悉，Bitwise加密研究院的Ishmael Asad发文表示，在Rseth攻击事件后，资金正在从LayerZero向Chainlink CCIP迁移。LayerZero的日活跃地址数已跌至近三年来的最低点，ZRO代币在安全事件后遭遇大幅抛售与此同时，Chainlink的CCIP日活跃地址数创历史新高，上周CCIP的日活跃地址数达到了创纪录的80,428个，这或是资本迁移的实际影响。",webhook,,LINK,LINKUSDT,LINKUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T05:03:08Z,197.9097,mature_72h,true
+cand_01716,2056964992331890887,2026-05-20T05:07:25Z,2026-05-20 13:07:25 UTC+8,2026-05-20T05:07:25Z,2026-05-20 13:07:25 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 13:07:25 UTC+8,2026-05-20T05:07:25Z,2026-05-20 13:07:25 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,吴说获悉，Bitwise 加密研究院 Ishmael Asad 发文表示，在 rsETH 攻击事件后，资金在从 LayerZero 向 Chainlink CCIP 迁移，其中 LayerZero 日活跃地址数已跌至近三年来的最低点，ZRO,"吴说获悉，Bitwise 加密研究院 Ishmael Asad 发文表示，在 rsETH 攻击事件后，资金在从 LayerZero 向 Chainlink CCIP 迁移，其中 LayerZero 日活跃地址数已跌至近三年来的最低点，ZRO 代币在安全事件后遭遇大幅抛售；与此同时，Chainlink 的 CCIP 日活跃地址数创历史新高，在上周 CCIP 的日活跃地址数达到了创纪录的 80,428 个，这或是资本迁移的实际影响。https://t.co/XZseYirv5p",webhook,,LINK,LINKUSDT,LINKUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T05:07:25Z,197.8383,mature_72h,true
+cand_01672,news:1023:28ef7b198d1df025,2026-05-20T06:26:16Z,2026-05-20 14:26:16 UTC+8,2026-05-20T06:26:16Z,2026-05-20 14:26:16 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 14:26:16 UTC+8,2026-05-20T06:26:16Z,2026-05-20 14:26:16 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Bankr hack drains wallets as users warned not to sign,"Bankr has temporarily disabled transactions after an attacker gained access to 14 wallets, raising new concerns about the security of AI-powered crypto trading agents.
+
+Bankr said on X that it had disabled swaps, transfers, and token deployments while investigating reports of compromised wallets. The AI crypto trading assistant said the pause was done “out of caution” as it reviewed the incident.
+
+The team later said it had identified an attacker who accessed 14 Bankr wallets. Bankr wrote, “we’ve temporarily locked things down while we work through the details,” adding that it would reimburse all lost funds.
+
+Bankr advised users not to sign transactions until further notice. It also told affected users to stop using compromised wallets, create new wallets, generate new seed phrases on clean devices, and move any remaining tokens or NFTs.
+
+The team also warned users to revoke approvals if assets could not be moved. Bankr said attackers often use existing permissions to drain funds, and asked users to scan computers and phones for malware or suspicious browser extensions.
+
+SlowMist founder Yu Xian said the exploit appeared to be a social engineering attack targeting the trust layer between automated agents. He pointed to a possible interaction involving Grok and Bankrbot that allowed unauthorized signing.
+
+Yu added that the case looked like a mix of social engineering and prompt injection. He also said a previous Bankrbot-linked wallet assigned to Grok had been drained through a similar method.
+
+Bankr’s design makes the case more closely watched. A 0x case study describes Bankr as a natural language AI trading companion that lets users swap, trade, transfer, and deploy tokens through simple commands inside social feeds or a private terminal.
+
+Moreover, some users reported large wallet losses after the incident. Tech entrepreneur Austen Allred said a Bankr wallet linked to his Kelly Claude AI assistant project was among those compromised.
+
+Allred said there was no evidence that anyone else had logged into the Bankr account. He added that the attacker must have accessed the keys another way.
+
+The Bankr incident comes during another active period for crypto attackers. Related reports said Verus Protocol’s Ethereum bridge lost more than $11.5 million after attackers used a forged cross-chain transfer message.
+
+Echo Protocol also paused cross-chain activity after an attacker minted roughly $76.7 million in unauthorized eBTC on Monad. Aethir earlier said it contained a bridge attack while keeping user losses below $90,000.
+
+Other DeFi attacks this year have also involved Drift Protocol and Kelp DAO , adding to concerns over bridge security, wallet approvals, and automated transaction systems.",news:cryptonews,https://crypto.news/bankr-hack-drains-wallets-as-users-warned-not-to-sign/,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T06:26:16Z,196.5242,mature_72h,true
+cand_01635,2056998818009465248,2026-05-20T07:21:50Z,2026-05-20 15:21:50 UTC+8,2026-05-20T07:21:50Z,2026-05-20 15:21:50 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 15:21:50 UTC+8,2026-05-20T07:21:50Z,2026-05-20 15:21:50 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,BitGo Holdings Q1增持776枚BTC，总持有量达2449枚,币界网消息，数字资产保管机构BitGo Holdings在2026年第一季度增持776枚比特币，目前总持有量达到2449枚比特币。根据Bitcoin 100排名，BitGo Holdings位列第31。,webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T07:21:50Z,195.5981,mature_72h,true
+cand_01542,news:1023:7b26f670b2a0e182,2026-05-20T09:13:26Z,2026-05-20 17:13:26 UTC+8,2026-05-20T09:13:26Z,2026-05-20 17:13:26 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 17:13:26 UTC+8,2026-05-20T09:13:26Z,2026-05-20 17:13:26 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"XRP selling pressure fades, but $1.50 still blocks bulls","XRP is trading near $1.37 as exchange-flow data shows cooling deposit pressure, while ETF inflows remain positive and traders wait for a breakout.
+
+Ripple’s native token traded near $1.37 on May 20, down about 1.37% over 24 hours, according to crypto.news price data. The token moved between $1.35 and $1.39 during the same period, with 24-hour trading volume above $1.8 billion. XRP held the fifth spot by market cap, valued near $84.6 billion.
+
+Longer-term performance remains weak. XRP was down about 5.88% over seven days and stayed below recent resistance after several failed moves higher. The price action keeps traders focused on the same narrow zone: support near $1.29 to $1.35 and resistance near $1.50.
+
+That range matters because XRP has not yet shown a confirmed trend change. Buyers continue to defend the lower area, but sellers have limited each move toward the upper band. A clean break may now decide whether XRP extends toward $1.80 or returns toward the $1.00 zone.
+
+Recent coverage also showed XRP spot ETFs had drawn strong flows in April, with $17.11 million in net inflows on April 15 and four straight days of positive flows. Combined XRP ETF assets had moved above $1.25 billion at that time, while XRP traded near $1.42.
+
+According to CryptoQuant analyst Amr Taha, XRP exchange-flow behavior has changed after weeks of strong deposit activity on Bybit. The XRP Multi-Exchange Daily Depositing/Withdrawing Transactions Delta showed Bybit’s transaction delta moving close to zero around May 16.
+
+That marked a clear change from the strong positive readings seen between mid-April and mid-May. In exchange-flow terms, deposit-heavy activity can point to potential selling pressure because tokens moved to exchanges can be sold or traded more easily.
+
+The latest data suggests that Bybit’s earlier deposit imbalance has faded on a transaction-count basis. It does not show the exact XRP volume moving in or out. Still, the change in direction shows that the previous deposit wave has slowed.
+
+Binance and Coinbase have also moved back into negative territory, according to the same CryptoQuant update. That means withdrawal transactions are now higher than deposit transactions on those exchanges. This creates a different setup from the earlier phase, when Bybit-led deposits shaped the market signal.
+
+SoSoValue data shows that XRP spot ETFs recorded another positive daily inflow on May 19. Daily total net inflow stood at $1.48 million, while cumulative net inflow remained near $1.39 billion.
+
+Moreover, XRP spot ETFs recorded $750,440 in inflows on May 18, $10.87 million on May 15, and $18.52 million on May 14. That means daily ETF flows stayed positive across the listed sessions, even as total net assets fell from $1.25 billion on May 14 to $1.12 billion on May 19.
+
+Notably, fresh money continued to enter XRP spot funds, but the total asset base still declined. That can happen when the token price weakens or when market value drops faster than new inflows can offset it.
+
+For XRP traders, the ETF data matters because it shows that institutional demand has not fully disappeared. However, positive ETF inflows alone have not pushed the token above resistance. Price still needs stronger spot demand or a technical breakout to shift the short-term structure.
+
+Analyst Ali Martinez said XRP is showing the tightest Bollinger Band squeeze on its 3-day chart in more than a year. He described the current range between $1.50 and $1.29 as a “no-trade zone.”
+
+“I’m waiting for a clean 3-day candlestick close outside of this range ($1.50-$1.29) to confirm the next major trend direction,” said Martinez.
+
+He added that a close above $1.50 could target $1.80, while a close below $1.29 could open a move toward $1.00.
+
+EGRAG CRYPTO also warned traders to watch candle behavior inside a key macro zone. He asked whether the current candles show accumulation or hidden distribution, placing focus on structure rather than price alone.
+
+Arab Chain’s CryptoQuant update adds caution. The analyst said XRP institutional accumulation on Binance declined in May, with the indicator moving to about -0.0059 as price fell near $1.38. The reading remains close to neutral, meaning the data does not show heavy distribution.
+
+For now, XRP remains in a tight setup. Exchange deposit pressure has cooled, ETF inflows remain positive, and volatility has compressed. A close above $1.50 would strengthen the bullish case, while a close below $1.29 would weaken the current range.
+
+Disclosure: This article does not represent investment advice. The content and materials featured on this page are for educational purposes only.",news:cryptonews,https://crypto.news/xrp-selling-pressure-fades-but-1-50-still-blocks-bulls/,XRP,XRPUSDT,XRPUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T09:13:26Z,193.7381,mature_72h,true
+cand_01506,news:1029:cd379e7b51db3ddb,2026-05-20T10:04:34Z,2026-05-20 18:04:34 UTC+8,2026-05-20T10:04:34Z,2026-05-20 18:04:34 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 18:04:34 UTC+8,2026-05-20T10:04:34Z,2026-05-20 18:04:34 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Prime Trust Estate Sues Strike Over $29.5M and Bitcoin Withdrawals Before Collapse,"Rizwan is an experienced Crypto journalist with almost half a decade of experience covering everything related to the growing crypto industry — from price analysis to blockchain disruption. During this period, he’s authored more than 3,000 news articles for Coinpedia News.
+
+Rizwan is an experienced Crypto journalist with almost half a decade of experience covering everything related to the growing crypto industry — from price analysis to blockchain disruption. During this period, he’s authored more than 3,000 news articles for Coinpedia News.
+
+Rizwan is an experienced Crypto journalist with almost half a decade of experience covering everything related to the growing crypto industry — from price analysis to blockchain disruption. During this period, he’s authored more than 3,000 news articles for Coinpedia News.
+
+Prime Trust’s estate has sued Strike, claiming the Bitcoin payments company withdrew nearly $29.5 million and 1,939 Bitcoin just weeks before Prime Trust went bankrupt. The lawsuit is now raising questions about whether some crypto firms saw the collapse coming early and quickly moved funds to protect themselves
+
+According to the newly filed complaint, Strike allegedly withdrew nearly $29.5 million and 1,939 Bitcoin from Prime Trust during the company’s final weeks before bankruptcy.
+
+The filing specifically highlights a large 1,350 BTC transfer that reportedly took place on June 2, 2023, shortly before regulators moved against Prime Trust.
+
+Prime Trust’s estate claims Strike executives recognized signs of serious financial and operational problems inside the custodian before the broader market became aware.
+
+The lawsuit argues Strike received preferential treatment by rapidly moving customer funds away from Prime Trust while other users remained exposed to the platform’s collapse.
+
+Court documents also referenced Strike’s own bankruptcy claim filing, where the company reportedly admitted taking actions “to protect its own and its customers’ interests” by transferring funds into external accounts.
+
+Prime Trust was once considered one of crypto’s major custody and infrastructure providers, servicing exchanges, fintech platforms, and digital asset companies.
+
+However, the firm collapsed in 2023 after Nevada regulators accused it of severe financial mismanagement, missing customer funds, and operational failures.
+
+The company later entered receivership before filing for bankruptcy protection.
+
+The collapse triggered widespread concerns across the crypto industry because many companies relied heavily on Prime Trust for custody, fiat settlement, and payment infrastructure.
+
+Prime Trust’s estate is now seeking to claw back at least $13.9 million alongside roughly 1,758 BTC through the lawsuit.
+
+The case centers around U.S. bankruptcy rules that prohibit companies nearing insolvency from favoring certain creditors or counterparties over others before collapse.
+
+If the court sides with Prime Trust’s estate, the lawsuit could become another major precedent for how crypto bankruptcies handle large institutional withdrawals made shortly before insolvency events.
+
+The legal battle also highlights growing risks around centralized crypto custodians, where operational transparency and liquidity management remain critical concerns for both institutional and retail users.",news:coinpedia,https://coinpedia.org/news/prime-trust-estate-sues-strike-over-29-5m-and-bitcoin-withdrawals-before-collapse/,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T10:04:34Z,192.8858,mature_72h,true
+cand_01438,news:1023:fd6f3df8fb1c7b9b,2026-05-20T11:21:54Z,2026-05-20 19:21:54 UTC+8,2026-05-20T11:21:54Z,2026-05-20 19:21:54 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 19:21:54 UTC+8,2026-05-20T11:21:54Z,2026-05-20 19:21:54 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Bitcoin seizure reaches 1,000 BTC in Irish drug case","Ireland’s Criminal Assets Bureau and Europol have secured another 500 BTC tied to Clifton Collins, bringing recovered funds from the dormant wallet cluster to 1,000 BTC.
+
+Ireland’s Criminal Assets Bureau said it secured another cryptocurrency wallet linked to an earlier criminal case, with support from Europol’s European Cybercrime Centre. The wallet held 500 Bitcoin, worth about $38.7 million at the time of the reported move.
+
+The bureau said Europol hosted operational meetings in The Hague and supplied “highly complex technical expertise and decryption resources” that helped investigators access the wallet. Earlier related coverage reported that CAB had already seized 500 Bitcoin from a Collins-linked wallet in March.
+
+The case traces back to Clifton Collins, an Irish drug dealer who bought 6,000 Bitcoin in late 2011 and early 2012 using proceeds from cannabis sales. The Guardian reported that Bitcoin traded near $5 when Collins acquired the coins.
+
+Collins printed the private keys on paper and hid them inside the aluminum cap of a fishing rod case at a rented home in County Galway. After his 2017 arrest, the property was cleared, and the fishing gear was believed to have been taken to a dump.
+
+Arkham said a wallet linked to Collins moved another 500 BTC, worth about $38 million. The blockchain analytics firm said the move followed an earlier 500 BTC transfer to Coinbase Custody in March, bringing total funds moved from the entity to 1,000 BTC.
+
+The latest 500 BTC did not follow the same route. Arkham said the new transfer went to a Wintermute-linked Binance deposit address, while the March transfer went to Coinbase Custody.
+
+Arkham’s public Clifton Collins page tracks wallets, holdings, inflows, outflows and counterparties tied to the entity. The page confirms the blockchain analytics label, though full transaction tables require login.
+
+Arkham said Collins bought 6,000 BTC in 2011 and 2012, and that the private keys were long assumed lost after the fishing rod case was discarded. The firm added that another 500 BTC leaving the wallets shows the once-dormant stash is active again.
+
+Moreover, the latest movement also comes as on-chain watchers track other government-linked crypto wallets. Arkham maintains a U.S. Government entity page that tracks holdings, wallets, inflows, outflows and counterparties.
+
+For Ireland, the Collins case now stands as a rare example of authorities gaining access to Bitcoin once widely viewed as unreachable. Around 5,000 BTC still appear tied to the broader lost-keys cache, leaving the case open for further wallet activity.",news:cryptonews,https://crypto.news/bitcoin-seizure-reaches-1000-btc-in-irish-drug-case/,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T11:21:54Z,191.5969,mature_72h,true
+cand_01351,2057081473526640903,2026-05-20T12:50:16Z,2026-05-20 20:50:16 UTC+8,2026-05-20T12:50:16Z,2026-05-20 20:50:16 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 20:50:16 UTC+8,2026-05-20T12:50:16Z,2026-05-20 20:50:16 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"🚨 UPDATE: Strike faces a Prime Trust clawback lawsuit over $29.5M cash and 1,939 BTC in withdrawals.
+
+Prime Trust allege","🚨 UPDATE: Strike faces a Prime Trust clawback lawsuit over $29.5M cash and 1,939 BTC in withdrawals.
+
+Prime Trust alleges Strike insiders knew and withdrew funds ahead of its collapse before the public did. https://t.co/DA8901N8DH",webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T12:50:16Z,190.1242,mature_72h,true
+cand_01345,2057083615360454851,2026-05-20T12:58:47Z,2026-05-20 20:58:47 UTC+8,2026-05-20T12:58:47Z,2026-05-20 20:58:47 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 20:58:47 UTC+8,2026-05-20T12:58:47Z,2026-05-20 20:58:47 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,I had Tillman Holloway and Andrew Parish of @tryarchpublic come discuss why the US will keep printing money to fund AI i,"I had Tillman Holloway and Andrew Parish of @tryarchpublic come discuss why the US will keep printing money to fund AI infrastructure, how tokenization is about to reshape global markets and banking, why crypto becomes the default exchange layer in a 24/7 world, and how automation tools are now a necessity for every investor.
+
+YouTube: https://t.co/17Q6HYLD2x
+Spotify: https://t.co/dNkS9iwov5
+iTunes: https://t.co/GPMptmVfHJ
+
+TIMESTAMPS:
+0:00 - Intro
+1:05 - AI infrastructure, dollar printing & national security
+5:37 - Crypto's role: stablecoins, bitcoin, or tokenization?
+7:57 - Why volatility is only going to get worse
+13:26 - AI agents & crypto as the default exchange layer
+15:40 - Tokenization race & the banking revenue opportunity
+21:55 - Fractional assets & borrowing against tokenized holdings
+26:41 - Hyperliquid, private company tokenization & M&A outlook
+29:50 - Pros/cons of open markets & financial education
+32:40 - Prediction markets, tokenized ETFs & the war for capital
+34:23 - Arch Public: what it does & where to find it",webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T12:58:47Z,189.9822,mature_72h,true
+cand_01237,2057102708285505593,2026-05-20T14:14:39Z,2026-05-20 22:14:39 UTC+8,2026-05-20T14:14:39Z,2026-05-20 22:14:39 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 22:14:39 UTC+8,2026-05-20T14:14:39Z,2026-05-20 22:14:39 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Token Terminal：代币化ETF持有地址增至4.44万个,币界网消息，据Token Terminal数据，目前已有4.44万个地址持有代币化ETF，而在一年前仅为373个。其中持有者数量最大的标的是Xstock的SPYX和QQQX，这二者均部署在Solana网络上。,webhook,,SOL,SOLUSDT,SOLUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T14:14:39Z,188.7178,mature_72h,true
+cand_01219,2057106571247919507,2026-05-20T14:30:00Z,2026-05-20 22:30:00 UTC+8,2026-05-20T14:30:00Z,2026-05-20 22:30:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 22:30:00 UTC+8,2026-05-20T14:30:00Z,2026-05-20 22:30:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"🇰🇷SOUTH KOREAN FUNERAL FIRM LOSES $33M ON ETH-LINKED BET
+
+Bumo Sarang, a major South Korean funeral service company, rep","🇰🇷SOUTH KOREAN FUNERAL FIRM LOSES $33M ON ETH-LINKED BET
+
+Bumo Sarang, a major South Korean funeral service company, reportedly invested about $40M in a leveraged ETF tied to BitMine's $ETH -linked stock.
+
+After the value dropped, the firm was left with an unrealised loss of roughly $33 MILLION.",webhook,,ETH,ETHUSDT,ETHUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T14:30:00Z,188.4619,mature_72h,true
+cand_01157,news:1020:717de7a12d3a82ef,2026-05-20T15:07:00Z,2026-05-20 23:07:00 UTC+8,2026-05-20T15:07:00Z,2026-05-20 23:07:00 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 23:07:00 UTC+8,2026-05-20T15:07:00Z,2026-05-20 23:07:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,500 Dormant Bitcoin Move After 12 Years as Early Investors React to Post-Quantum Risks - U.Today,"Disclaimer: The opinions expressed by our writers are their own and do not represent the views of U.Today. The financial and market information provided on U.Today is intended for informational purposes only. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. Conduct your own research by contacting financial experts before making any investment decisions. We believe that all content is accurate as of the date of publication, but certain offers mentioned may no longer be available.
+
+Analyst CryptoQuant Maartunn detected a major on-chain transaction in which 500 BTC, which had remained completely dormant for more than 10 years, were moved to a new address for the first time. On the Spent Output Age Bands chart for 10-year-old Bitcoin , this activity appeared as an isolated green spike.
+
+The transfer of such an old wallet coincided with the release of major research and news in the quantum technology sector, namely Glassnode's report on Bitcoin's quantum security. According to analysts, 30.2% (6.04 million BTC) of the total market supply is already potentially vulnerable to future quantum attacks .
+
+500 BTC that hadn't moved in 10 years just moved. 👀 pic.twitter.com/A3tF3YIiK3
+
+The vulnerability is tied to exposed public keys on addresses from the Satoshi Nakamoto era and poor wallet hygiene, including address reuse and custodial storage practices. A quantum computer could hypothetically derive a private key only where the public key has already been exposed on-chain.
+
+Exchanges account for around 1.66 million BTC within this risk category. Approximately 5% of Coinbase-held BTC is considered vulnerable, compared to around 85% for Binance and nearly 100% for Bitfinex.
+
+At the same time, the computing industry is demonstrating clear progress and moving beyond the purely laboratory stage. By the end of May 2026, Saudi Aramco, together with Pasqal, had launched cloud access in Saudi Arabia to the country's first quantum computer featuring 200 programmable qubits through the QCaaS platform.
+
+Against this backdrop, IBM declared the beginning of the era of ""quantum utility"", with plans to achieve quantum advantage by the end of 2026 and build the fault-tolerant Quantum Starling system by 2029.
+
+Statements from specialists such as Scott Aaronson, who warned that cryptographic systems could face realistic hacking threats by 2029, no longer appear like distant speculation to early Bitcoin investors.
+
+As Blockstream creator Adam Back notes, Bitcoin must prepare for the quantum threat in advance through the implementation of optional upgrades, but large long-term holders appear to have decided to play it safe and have already started moving their BTC.
+
+Disclaimer: The opinions expressed here are not investment advice; they are provided for informational purposes only. The opinions expressed by our writers are their own and do not represent the views of U.Today. Every investment and all trading involves risk, so you should always perform your own research prior to making decisions. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. We do not recommend investing money you cannot afford to lose.
+
+Read more on U.Today "" + document.location.href + """,news:utoday,https://u.today/500-dormant-bitcoin-move-after-12-years-as-early-investors-react-to-post-quantum-risks,BTC,BTCUSDT,BTCUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T15:07:00Z,187.8453,mature_72h,true
+cand_01026,news:1023:57f437fb1a8505c2,2026-05-20T17:00:00Z,2026-05-21 01:00:00 UTC+8,2026-05-20T17:00:00Z,2026-05-21 01:00:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-21 01:00:00 UTC+8,2026-05-20T17:00:00Z,2026-05-21 01:00:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Drift says insurance fund untouched after attack, withdrawals to resume","Drift Protocol said its insurance fund was not affected by the recent attack and that users who staked into the fund will be able to withdraw their shares normally once the protocol is brought back online.
+
+Drift said in an official post on X that users who staked into the Insurance Fund will be able to withdraw their corresponding shares once the protocol is restored. The protocol added that the fund itself was not affected by the attack because Drift was paused before any losses could be completed through “normal liquidation or bankruptcy processes.”
+
+That distinction matters because Drift’s own documentation defines the Insurance Fund as the first backstop for maintaining exchange solvency in the event of bankruptcies. More detailed staking documentation says users can unstake from the fund, although withdrawals are subject to a cooldown period of 13 days.
+
+The update follows one of the biggest Solana DeFi breaches of the year. In April, crypto.news reported that the Drift hack drained about $285 million through a compromised administrator key in what security researchers described as a social engineering attack rather than a smart contract flaw.
+
+Drift’s explanation is straightforward: the insurance mechanism exists to absorb insolvency created by liquidations and bankruptcies, not to retroactively cover an external exploit that was halted before those internal loss pathways finished playing out. In its latest statement, the team said that because the protocol was paused early enough, the Insurance Fund never became part of the loss cascade tied to the vulnerability.
+
+That aligns with outside reporting on the incident. Elliptic estimated the exploit at $286 million and said Drift suspended deposits and withdrawals during the attack, while Chainalysis described the breach as a privileged-access compromise that led to roughly $285 million in losses over a matter of minutes.
+
+The protocol had already signaled that the fund was being secured as a precaution. Reporting from Binance cited Drift as saying the insurance fund assets were unaffected and were being withdrawn to enhance protection after the exploit.
+
+Drift now says assets from the protocol’s own Insurance Fund will be used to support the system restart and broader user recovery, and that it plans to publish the relevant on-chain addresses so the community can track how the funds are used. That is a notable shift from simply ring-fencing the fund toward actively deploying part of it in the recovery process.
+
+The insurance fund is only one part of Drift’s broader rebuilding effort. In April, multiple outlets reported that the protocol had lined up as much as $147.5 million in support for affected users, including up to $127.5 million from Tether and another $20 million from partners, while later recovery plans pointed to recovery tokens tied to verified losses, as covered by CoinMarketCap and RootData .
+
+For users, the immediate takeaway is narrower and more important: insurance fund stakes were not wiped out in the exploit, and normal withdrawals are expected to resume after Drift’s recovery process is complete.",news:cryptonews,https://crypto.news/drift-says-insurance-fund-untouched-after-attack-withdrawals-to-resume/,SOL,SOLUSDT,SOLUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T17:00:00Z,185.9619,mature_72h,true
+cand_00489,2057266994760884409,2026-05-21T01:07:28Z,2026-05-21 09:07:28 UTC+8,2026-05-21T01:07:28Z,2026-05-21 09:07:28 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 09:07:28 UTC+8,2026-05-21T01:07:28Z,2026-05-21 09:07:28 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,又一起桥攻击：攻击者通过漏洞获利约52 ETH,币界网消息，链上分析师evilcos报道，又一起桥攻击事件发生，主要原因是butter bridge的retrymessagein abi.encodepacked的经典问题，攻击者利用该漏洞构造“合法”数据，成功铸造了一批mapo。此次攻击主要损失发生在map protocol的以太坊主网上，攻击者获利约52 ETH，相关地址为0x31e56b4737649e0acdb0ebb4eca44d16aeca25f60c022cbde85f092bde27664a。,webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-21T01:07:28Z,177.8375,mature_72h,true
+cand_01877,2056903897848148059,2026-05-20T01:04:39Z,2026-05-20 09:04:39 UTC+8,2026-05-20T01:04:39Z,2026-05-20 09:04:39 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 09:04:39 UTC+8,2026-05-20T01:04:39Z,2026-05-20 09:04:39 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Whale Loracle.hl (@loraclexyz) has started opening a $LIT (3x) long position, currently valued at ~$1M and it’s still in","Whale Loracle.hl (@loraclexyz) has started opening a $LIT (3x) long position, currently valued at ~$1M and it’s still increasing.
+
+He’s also still holding his $HYPE (5x) short position, with a floating loss of over $7M.
+
+https://t.co/Z3vQB9Mk8z https://t.co/BfC4krHqaJ",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T01:04:39Z,201.8844,mature_72h,true
+cand_01824,news:2005:2f6cc51a4aa5230c,2026-05-20T02:12:02Z,2026-05-20 10:12:02 UTC+8,2026-05-20T02:12:02Z,2026-05-20 10:12:02 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 10:12:02 UTC+8,2026-05-20T02:12:02Z,2026-05-20 10:12:02 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,TRX 固定促銷，享年化收益 8%！,"KuCoin Earn will be launching the Tron (TRX) Fixed Promotion at 12:00:00 on May 19, 2026 (UTC). Campaign Period: From 12:00 on May 19, 2026 to 15:59 on June 19, 2026 (UTC) The details can be found in the table below: Product Locking Period User Eligibility Expected APR Hard Cap of Single User TRX 7 days New Users Only 8% 3,000,000 TRX 90 days All Users 4% 3,000,000 TRX 60 days All Users 3.5% 3,000,000 TRX 30 days All Users 3% 3,000,000 How to Participate: During the promotion period, all KuCoin users can go to the KuCoin Earn website and choose their desired product to stake. Notes: Users must be registered on KuCoin to join this promotion. Once the hard cap has been reached, the event will end. The user hereby confirms that participating in the KuCoin Earn activity is voluntary, and the KuCoin Group has not forced, interfered with, or influenced the user's decision in any way. If the users choose to redeem their subscribed Fixed Promotion product in advance (If applicable), the actual redemption amount will be returned to their Main Account. The actual redemption amount is the total asset to be redeemed, deducting all distributed rewards obtained for the subscribed assets during the promotion period. Actual Redemption Amount = Subscription Amount - Distributed Rewards Amount. The APR, Soft/Hard Cap of Single User, and Hard Cap of the Whole Platform might be adjusted according to market conditions and risk levels. Risk Warning: KuCoin Earn is a risk investment channel. Investors should be sensible in their participation and be aware of investment risks. The KuCoin Group is not liable for users’ investment gains or losses. The information we provide is for users to conduct their own research. It is not investment advice. The KuCoin Group reserves the right to the final interpretation of the activity. KuCoin is not responsible for any loss of assets caused by the user's own investment decisions or related behaviors, and the user should assume full responsibility. Sign Up on KuCoin Now Download the KuCoin App Follow Us on X (Twitter) Join Us on Telegram Dive Into KuCoin's Global Communities",news:kucoin_ann,https://www.kucoin.com/announcement/hk-trx-fixed-promotion-enjoy-an-apr-of-8?lang=zh_HK,TRX,TRXUSDT,TRXUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T02:12:02Z,200.7614,mature_72h,true
+cand_01676,news:1023:f06246aa538f7afa,2026-05-20T06:19:08Z,2026-05-20 14:19:08 UTC+8,2026-05-20T06:19:08Z,2026-05-20 14:19:08 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 14:19:08 UTC+8,2026-05-20T06:19:08Z,2026-05-20 14:19:08 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Galaxy lifts CLARITY Act odds to 75%,"Galaxy Research raised its CLARITY Act passage odds to 75% after the May 14 Senate Banking vote.
+
+Galaxy Digital’s head of firmwide research Alex Thorn raised his estimate of the CLARITY Act becoming law in 2026 to 75%, citing the Senate Banking Committee’s 15 to 9 bipartisan vote on May 14 as the breakthrough the bill needed.
+
+Thorn posted the timeline in Galaxy Research’s weekly brief on May 16: Senate Banking and Agriculture reconciliation in early June, Senate floor consideration by mid-June, final Senate passage before the end of June, House reconciliation through July, and a potential Trump signature the week of Aug. 3.
+
+The upgrade marks a sharp reversal from Galaxy’s prior position. As crypto.news reported in April, Thorn had put the odds at roughly 50/50 and warned that a markup slipping past mid-May would drop chances sharply.
+
+Two Democrats, Ruben Gallego of Arizona and Angela Alsobrooks of Maryland, joined all 13 committee Republicans to advance the bill. That bipartisan signal, plus the Tillis-Alsobrooks stablecoin yield compromise, removed the structural risk Thorn had flagged.
+
+Thorn described the markup as the closest thing to “fireworks” a Senate committee vote can produce. Congress has roughly nine weeks of Senate floor time before the Aug. 10 recess, after which substantive legislation rarely advances during a midterm cycle.
+
+Solana Policy Institute President Kristin Smith offered a more cautious read, putting passage probability at 60%. “In theory, we have everything we need,” Smith said in a Friday interview. “A lot can go wrong.”
+
+Polymarket traders priced 2026 passage at 68% as of May 18, up from 46% at the start of the month but still below Thorn’s estimate.
+
+The crypto.news coverage of the committee vote noted Senator Elizabeth Warren’s continued opposition on anti-money-laundering and ethics grounds, issues still unresolved on the Senate floor.
+
+If Galaxy’s timeline holds, US retail will be operating inside a defined federal framework before year-end, a shift that goes beyond exchange compliance and reshapes what tools traders can legally access onshore.
+
+Ivan Patriki, fintech marketing strategist & co-founder of QuantMap, said the timeline matters less than what fills the legal venue once it opens.
+
+“Clarity on jurisdiction is necessary, but it’s not sufficient. The bill draws a cleaner line between the SEC and CFTC, but doesn’t address the asymmetry between retail and institutional access to data and tooling,” Patriki said.
+
+According to him, “ If a retail trader still can’t backtest a strategy across a meaningful sample of market history, or still can’t see what a desk sees, then ‘clarity’ Is just marketing fluff. It’s a professional venue for the same old information gap.”
+
+Andreessen Horowitz, in analysis that crypto.news documented , compared the bill’s potential impact to the Securities Act of 1933. Thorn drew the same comparison, calling CLARITY and the GENIUS Act the type of framework that “laid the foundation for 100 years of US capital markets dominance.”
+
+The bill still needs 60 Senate floor votes, House reconciliation, and a presidential signature. The White House continues to push for July 4 as the target.",news:cryptonews,https://crypto.news/galaxys-alex-thorn-lifts-clarity-act-odds-to-75/,SOL,SOLUSDT,SOLUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T06:19:08Z,196.6431,mature_72h,true
+cand_01529,2057031098941792637,2026-05-20T09:30:06Z,2026-05-20 17:30:06 UTC+8,2026-05-20T09:30:06Z,2026-05-20 17:30:06 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 17:30:06 UTC+8,2026-05-20T09:30:06Z,2026-05-20 17:30:06 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"随着 $HYPE 来到 $49，去年 11 月份以 $38.6 的价格追高开多 138 万枚 $HYPE ($6740 万) 的鲸鱼，目前浮盈 $1400 万了。
+
+好奇这老哥是准备要到啥价位才会平仓，他这个 HYPE 多单已经开了 7 个","随着 $HYPE 来到 $49，去年 11 月份以 $38.6 的价格追高开多 138 万枚 $HYPE ($6740 万) 的鲸鱼，目前浮盈 $1400 万了。
+
+好奇这老哥是准备要到啥价位才会平仓，他这个 HYPE 多单已经开了 7 个月之久，资金费都交了 $238 万了😰
+从开多后一路下跌到浮亏 $2600 万接近爆仓，再到扛回本并到现在浮盈 $1400 万。这期间的仓位价值大起大落波动超过 $4000 万，没有大心脏的人是受不了的。
+
+地址：https://t.co/wqnznUBMo0
+
+--------------------------------------------------------------------------
+#Bitget 来了就是VIP！Crypto、美股、CFD，全球先机一站布局",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T09:30:06Z,193.4603,mature_72h,true
+cand_01521,news:1023:1e8017ddb1192565,2026-05-20T09:40:00Z,2026-05-20 17:40:00 UTC+8,2026-05-20T09:40:00Z,2026-05-20 17:40:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 17:40:00 UTC+8,2026-05-20T09:40:00Z,2026-05-20 17:40:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Vitalik Buterin maps 3-step Ethereum privacy upgrade,"Ethereum co-founder Vitalik Buterin has outlined short-term work aimed at making native privacy stronger on the network.
+
+Buterin posted that Ethereum is working on short-term changes to move the network toward native privacy. His post said privacy can help give an asset true “moneyness” qualities, while layer-1 privacy could also support more mainnet activity.
+
+The plan centers on three areas: account abstraction with FOCIL, keyed nonces, and access-layer work. These changes aim to give privacy transactions better treatment, reduce metadata leaks, and protect users when they interact with wallets or apps.
+
+The first step combines account abstraction, known as AA, with FOCIL. Account abstraction can make Ethereum wallets more flexible by letting accounts define how transactions are approved and paid for. EIP-8141 describes frame transactions as a way for validity and gas payment to be defined more freely, instead of relying only on one ECDSA signature.
+
+FOCIL is meant to help valid transactions get included in blocks. In simple terms, this could make privacy-protocol transactions harder for large block builders to ignore or block. Reports on Buterin’s post said AA + FOCIL would give privacy transactions stronger packaging guarantees.
+
+Additionally, the second step is keyed nonces. Ethereum transactions normally follow a numbered order from each account. That can create problems when several private transactions need to happen in parallel.
+
+EIP-8250 says keyed nonces let each spend use its own nonce domain, including one derived from a privacy nullifier. This makes transactions on different keys replay-independent and removes a nonce bottleneck for future privacy-aware systems.
+
+For users, the goal is simple. Private transfers should not fail or get stuck only because several actions came from the same account or pool. The proposal does not make Ethereum fully private on its own, but it gives developers a cleaner base for private transfers.
+
+The third step covers access-layer work, including Kohaku and private reads. This area focuses on what users reveal when wallets or apps ask for balances, contract data, or account activity.
+
+Kohaku is part of Ethereum’s privacy wallet work. Earlier reports described it as a privacy-and-security toolkit for wallets, with reusable parts for private sending, safer key management, recovery, and transaction controls.
+
+Private reads would help users check blockchain data without exposing every query to infrastructure providers. That matters because access patterns can reveal user behavior even when transaction contents are partly protected.
+
+The new privacy post fits with Ethereum’s wider roadmap. Related coverage of the Ethereum Foundation’s “strawmap” said native privacy is one of its long-term “north stars,” alongside faster layer-1 performance, higher throughput, layer-2 scaling, and post-quantum security.
+
+Separate coverage also reported that Ethereum’s DeFi focus has shifted toward permissionless, secure, and privacy-first protocols. Buterin said finance remains an important part of Ethereum’s value, while the network should reduce reliance on trusted third parties.",news:cryptonews,https://crypto.news/vitalik-buterin-maps-3-step-ethereum-privacy-upgrade/,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T09:40:00Z,193.2953,mature_72h,true
+cand_01516,2057034847743558067,2026-05-20T09:45:00Z,2026-05-20 17:45:00 UTC+8,2026-05-20T09:45:00Z,2026-05-20 17:45:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 17:45:00 UTC+8,2026-05-20T09:45:00Z,2026-05-20 17:45:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,南卡罗来纳州签署法案保护比特币和加密支付,币界网消息，南卡罗来纳州刚刚签署了一项法案，保护比特币和加密支付，免征税款，并允许自我保管钱包。该法律还保护矿工、质押者和节点操作员，同时禁止州政府机构接受或测试CBDC。,webhook,,BTC,BTCUSDT,BTCUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T09:45:00Z,193.2119,mature_72h,true
+cand_01425,2057063348752236997,2026-05-20T11:38:15Z,2026-05-20 19:38:15 UTC+8,2026-05-20T11:38:15Z,2026-05-20 19:38:15 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 19:38:15 UTC+8,2026-05-20T11:38:15Z,2026-05-20 19:38:15 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"As $HYPE trades around ~$50
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit of","As $HYPE trades around ~$50
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit of over $15M
+
+Meanwhile, Loracle.hl's (@loraclexyz) $HYPE (5x) short position is now having a floating loss of over $10M
+
+https://t.co/OR4PZglLZJ
+
+https://t.co/Gjdlc1jmK8",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T11:38:15Z,191.3244,mature_72h,true
+cand_01411,news:2005:8ba6b104ae1c267b,2026-05-20T11:57:02Z,2026-05-20 19:57:02 UTC+8,2026-05-20T11:57:02Z,2026-05-20 19:57:02 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 19:57:02 UTC+8,2026-05-20T11:57:02Z,2026-05-20 19:57:02 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,KuCoin 已完成 Humanity (H) 的主網整合,"KuCoin has completed the Mainnet integration of Humanity (H). Deposits and withdrawals of Humanity (H) on Humanity Mainnet are now enabled. Users can check the service by going to Assets > Main Account > Deposit page and select Humanity (H) for transactions. For the most accurate and up-to-date information, please refer to the original English version in case of any discrepancies in the translation. Thank you for your support! Note: KuCoin now supports the Humanity Mainnet and Ethereum Mainnet (ERC-20) deposit services for Humanity (H) . Please make sure to select the intended network when trying to deposit. Sign Up on KuCoin Now Download the KuCoin App Follow Us on X (Twitter) Join Us on Telegram Dive Into KuCoin's Global Communities",news:kucoin_ann,https://www.kucoin.com/announcement/hk-kucoin-has-completed-the-mainnet-integration-of-humanity-h?lang=zh_HK,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T11:57:02Z,191.0114,mature_72h,true
+cand_01389,2057071780972610005,2026-05-20T12:11:45Z,2026-05-20 20:11:45 UTC+8,2026-05-20T12:11:45Z,2026-05-20 20:11:45 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 20:11:45 UTC+8,2026-05-20T12:11:45Z,2026-05-20 20:11:45 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Anchorage (@Anchorage) linked wallet further withdrew 44,510 $HYPE worth $2.16M from #Gate.
+
+They have bought 2.385M $HY","Anchorage (@Anchorage) linked wallet further withdrew 44,510 $HYPE worth $2.16M from #Gate.
+
+They have bought 2.385M $HYPE worth $119.26M over the past month, which they sent for staking.
+
+https://t.co/EhSkgoR6r7 https://t.co/iO93OsIN5J",webhook,,HYPE,,HYPEUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T12:11:45Z,190.7661,mature_72h,true
+cand_01310,2057090101432504525,2026-05-20T13:24:33Z,2026-05-20 21:24:33 UTC+8,2026-05-20T13:24:33Z,2026-05-20 21:24:33 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 21:24:33 UTC+8,2026-05-20T13:24:33Z,2026-05-20 21:24:33 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"JUST IN: David Bailey's #Bitcoin treasury company Nakamoto $NAKA just announced a 1-for-40 reverse stock split, effectiv","JUST IN: David Bailey's #Bitcoin treasury company Nakamoto $NAKA just announced a 1-for-40 reverse stock split, effective May 22, to meet Nasdaq's minimum bid price requirement for continued listing. https://t.co/QrDmcmSxpJ",webhook,,BTC,BTCUSDT,BTCUSDT,exchange_listing,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T13:24:33Z,189.5528,mature_72h,true
+cand_01282,news:1020:6d4752ef8098d871,2026-05-20T13:50:01Z,2026-05-20 21:50:01 UTC+8,2026-05-20T13:50:01Z,2026-05-20 21:50:01 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 21:50:01 UTC+8,2026-05-20T13:50:01Z,2026-05-20 21:50:01 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Shibarium Transactions Surge 44%, but SHIB Isn't Moving - U.Today","Disclaimer: The opinions expressed by our writers are their own and do not represent the views of U.Today. The financial and market information provided on U.Today is intended for informational purposes only. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. Conduct your own research by contacting financial experts before making any investment decisions. We believe that all content is accurate as of the date of publication, but certain offers mentioned may no longer be available.
+
+Shiba Inu layer 2, Shibarium , saw a 44% increase in daily transactions, which rose from 842 on May 18 to 1,260 on May 19.
+
+The recent increase, though, might signal the advent of something bigger, but it isn't yet enough as the broader Shibarium network activity remains locked in a flat trend.
+
+Since April 19, when Shibarium transactions surpassed 7,400, the layer 2 blockchain has failed to return to this level. Shibarium transaction count has stayed largely between 700 and 3,000 since then, with no visible sign of momentum.
+
+BONE fees have remained minimal on the network, with recent transactions being contract calls attracting a fee of 0.00001 BONE.
+
+In the last few months, the Shibarium chain saw a reindexing with explorer statistics falling beneath the actual count. In this light, it is uncertain if the stall in network activity is due to the Shibarium network still adjusting to its prior upgrades, with metrics on the Shibarium explorer yet to return to previous counts, or an actual slowdown in the network activity.
+
+Crypto futures activity cooled across the market, with 24-hour volume falling 26.59% to $156 billion. Open interest (OI) held steady around $127 billion, and liquidations declined for a second day to $156 million, down 40%.
+
+A number of crypto assets including SHIB returned to the green, but futures open interest dropped as well as a mixed altcoin performance, indicating that traders might be reducing risk rather than chasing the rebound.
+
+At the time of writing, SHIB was barely moving, just up 0.10% in the last 24 hours to $0.000005744, albeit reversing the prior day's drop.
+
+Minutes from the April 27-28 Federal Open Market Committee meeting will be released later on Wednesday. The Fed kept the federal funds rate steady at between 3.5% and 3.75%, but the decision drew the biggest dissension within the FOMC in more than 30 years, with the rate-setting committee split 8-4.
+
+Disclaimer: The opinions expressed here are not investment advice; they are provided for informational purposes only. The opinions expressed by our writers are their own and do not represent the views of U.Today. Every investment and all trading involves risk, so you should always perform your own research prior to making decisions. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. We do not recommend investing money you cannot afford to lose.
+
+Read more on U.Today "" + document.location.href + """,news:utoday,https://u.today/shibarium-transactions-surge-44-but-shib-isnt-moving,SHIB,SHIBUSDT,,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T13:50:01Z,189.1283,mature_72h,true
+cand_01130,news:1020:8dbb6996c8d5f5c8,2026-05-20T15:28:55Z,2026-05-20 23:28:55 UTC+8,2026-05-20T15:28:55Z,2026-05-20 23:28:55 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 23:28:55 UTC+8,2026-05-20T15:28:55Z,2026-05-20 23:28:55 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,RippleNet-Powered SBI Remit Collaborates with Major Japanese Bank - U.Today,"Japanese regional lender Tohoku Bank has teamed up with SBI Remit to overhaul its international money transfer services.
+
+The collaboration, which officially launched on Wednesday, comes as many traditional domestic financial institutions in Japan scale back or entirely shut down their foreign exchange remittance services.
+
+Domestic banks are currently in the process of retreating from international transfers due to the increasing administrative burden and resource constraints.
+
+This is mainly driven by compliance costs and system upgrades.
+
+Tohoku Bank has signed an agreement to funnel its remittance demand to SBI Remit to make sure that its customers still have access to global payment rails.
+
+Notably, SBI Remit has been using Ripple’s distributed ledger technology (RippleNet) to facilitate cross-border payments for almost a decade.
+
+The firm was also a trailblazer when it came to the XRP token for international remittance solutions in Japan. It rolled out its first XRP-powered corridor in July 2021.
+
+Japan's Iwate Prefecture, where Tohoku Bank is headquartered, is currently dealing with rather severe domestic labor shortages. The region has grown increasingly reliant on foreign talent to support local industries.
+
+Over the past decade, the foreign resident population has doubled across many local municipalities.
+
+Notably, it has surged by 3.6 times in the corporate hub of Kitakami City alone.
+
+The ability to reliably send wages back to home countries has become a critical regional issue.
+
+The tie-up makes it possible for regional customers to bypass the delays of traditional correspondent banking. Users can initiate transfer requests 24/7 via a smartphone app. The service supports multiple settlement methods across 200 countries, including direct bank deposits, physical cash pickup, and so on.
+
+Disclaimer: The opinions expressed here are not investment advice; they are provided for informational purposes only. The opinions expressed by our writers are their own and do not represent the views of U.Today. Every investment and all trading involves risk, so you should always perform your own research prior to making decisions. U.Today is not liable for any financial losses incurred while trading cryptocurrencies. We do not recommend investing money you cannot afford to lose.
+
+Read more on U.Today "" + document.location.href + """,news:utoday,https://u.today/ripplenet-powered-sbi-remit-collaborates-with-major-japanese-bank,XRP,XRPUSDT,XRPUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T15:28:55Z,187.48,mature_72h,true
+cand_00891,news:1023:1b40c1b4f64c3a61,2026-05-20T19:30:00Z,2026-05-21 03:30:00 UTC+8,2026-05-20T19:30:00Z,2026-05-21 03:30:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-21 03:30:00 UTC+8,2026-05-20T19:30:00Z,2026-05-21 03:30:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Bitcoin longs hit 2.5-year high amid 5-day slide,"Bitcoin longs on Bitfinex surged to 80,636 BTC on May 20, the highest level since December 2023.
+
+Leveraged traders on Bitfinex continued buying into Bitcoin’s sell-off, with margin long positions rising to 80,636 BTC on May 20 according to TradingView data.
+
+The figure marks the highest level since December 2023 and represents a roughly 10% increase since the start of 2026. Bitcoin has fallen 13% year to date even as these long positions climbed.
+
+The latest pullback saw Bitcoin slide from above $80,000 to approximately $76,000 over five consecutive losing sessions between May 15 and May 19.
+
+It marks the second longest losing streak of the year, with the asset attempting its first daily green candle in six days at the time of writing. Bitcoin is now trading approximately 35% below its October 2025 all-time high of $126,000.
+
+Historically, the so-called Bitfinex whale has acted as a contrarian indicator. Large leveraged long positions on the exchange have frequently expanded during market weakness and been reduced closer to local tops and trend reversals. The pattern does not guarantee a price floor, but it has attracted attention from analysts who track whale positioning as a leading signal.
+
+Bitcoin is currently approaching a key technical zone. The asset is testing both the True Market Mean and the short-term holder cost basis near $78,000, with the 200-day moving average sitting above $81,000. Reclaiming that level would be seen by many traders as a first step toward structural recovery.
+
+Rising margin longs during a sustained price decline can also signal that a clear price floor has not yet occurred. When leveraged long positions accumulate, the market becomes vulnerable to a cascade of liquidations if prices continue falling, amplifying downside pressure rather than absorbing it.
+
+Crypto.news has tracked analyst commentary throughout 2026 that consistently pointed to $78,000 to $81,000 as the key zone for Bitcoin to reclaim before a sustained recovery becomes probable.
+
+The divergence between rising margin exposure and falling prices reflects an ongoing standoff between dip buyers and sellers. The Bitcoin price page tracks real-time movements as that standoff plays out.",news:cryptonews,https://crypto.news/bitcoin-longs-hit-2-5-year-high-amid-5-day-slide/,BTC,BTCUSDT,BTCUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T19:30:00Z,183.4619,mature_72h,true
+cand_00790,2057204717441241284,2026-05-20T21:00:00Z,2026-05-21 05:00:00 UTC+8,2026-05-20T21:00:00Z,2026-05-21 05:00:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 05:00:00 UTC+8,2026-05-20T21:00:00Z,2026-05-21 05:00:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"🚨 SOFTBANK SELLS TWENTY ONE CAPITAL STAKE TO TETHER
+
+SoftBank has sold its stake in Jack Mallers-led Twenty One Capital","🚨 SOFTBANK SELLS TWENTY ONE CAPITAL STAKE TO TETHER
+
+SoftBank has sold its stake in Jack Mallers-led Twenty One Capital to Tether.
+
+Twenty One Capital, also known as XXI, is a Bitcoin treasury firm backed by Tether and taken public through a Cantor Fitzgerald-linked SPAC. https://t.co/mlFYXFugJJ",webhook,,BTC,BTCUSDT,BTCUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T21:00:00Z,181.9619,mature_72h,true
+cand_00698,news:1032:366b2fcca3431d16,2026-05-20T21:54:56Z,2026-05-21 05:54:56 UTC+8,2026-05-20T21:54:56Z,2026-05-21 05:54:56 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-21 05:54:56 UTC+8,2026-05-20T21:54:56Z,2026-05-21 05:54:56 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"When is the Next Bitcoin Halving? Only 100,000 Blocks Are Remaining","The next Bitcoin halving is expected around April or May 2028, with fewer than 100,000 blocks left before rewards fall to 1.5625 BTC.
+
+Bitcoin has moved below the 100,000-block countdown to its next halving, putting the network on course for its fifth programmed reward reduction around April or May 2028. The event is scheduled to take place at block 1,050,000, when the miner block subsidy will fall from 3.125 BTC to 1.5625 BTC.
+
+The network is now past the 950,000-block area, leaving roughly 100,000 blocks before the next reward cut. Based on current block production rates, trackers such as CoinGecko and IG estimate that the event is about 700 days away. Prediction market data from Kalshi shows strong odds for the halving to happen before June 2028, with lower odds for dates before April or May.
+
+The 2028 Bitcoin halving will be the fifth in the network’s history. Bitcoin’s reward schedule was designed to reduce new issuance over time until the total supply reaches 21 million coins. Each halving lowers the amount of new BTC paid to miners for validating blocks and securing the network.
+
+Bitcoin’s current block reward is 3.125 BTC, following the fourth halving in April 2024. At block 1,050,000, that reward will be reduced to 1.5625 BTC. The change will further slow the pace of new Bitcoin entering circulation.
+
+The cut is expected to reduce Bitcoin’s annualized inflation rate from about 0.85% to around 0.4%, based on current supply estimates. That lower issuance rate is central to Bitcoin’s monetary design and is closely watched by miners, traders, and long-term holders.
+
+Bitcoin has already gone through four halvings. The first took place on November 28, 2012, reducing rewards from 50 BTC to 25 BTC. The second occurred on July 9, 2016, cutting rewards to 12.5 BTC. The third happened on May 11, 2020, lowering rewards to 6.25 BTC. The fourth occurred in April 2024, reducing rewards to 3.125 BTC.
+
+The next Bitcoin halving will be the first full cycle in which spot Bitcoin exchange-traded funds play a central role. Since their approval, spot ETFs have become an important channel for institutional and retail exposure to Bitcoin.
+
+Analysts cited in the source material said ETF demand may matter more than the halving itself during this cycle. In earlier cycles, halving events reduced miner selling pressure and were followed by strong market rallies. In the current market, ETF inflows and outflows can add or remove demand at a scale that may exceed daily new issuance.
+
+At press time, Bitcoin was trading near $77,316. Michaël van de Poppe has said the $75,000 to $76,000 area remains a key support zone. He said a move above the CME gap near $79,100 could open a path toward $86,000 to $90,000, while broader market direction may depend on oil prices, bond yields, and liquidity.
+
+The halving countdown comes as U.S. crypto regulation remains a central market topic. Kevin O’Leary has linked a possible Bitcoin move toward $200,000 to the passage of the CLARITY Act, a proposed market structure bill for digital assets.
+
+South Carolina has also approved legislation allowing businesses to use Bitcoin and other cryptocurrencies for transactions while blocking the state government from using a central bank digital currency. These policy moves show how state and federal officials are continuing to address digital asset use.
+
+Past Bitcoin cycles have seen price gains in the 12 to 18 months after halving events. Analysts are now watching whether lower issuance, ETF flows, regulation, liquidity conditions, and miner behavior combine to shape the Bitcoin 2028 cycle.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+One who believes that technology plus decentralization are to change the world for the better.
+
+https://coinpaper.com/17179/when-is-the-next-bitcoin-halving-only-100-000-blocks-are-remaining",news:coinpaper,https://coinpaper.com/17179/when-is-the-next-bitcoin-halving-only-100-000-blocks-are-remaining,BTC,BTCUSDT,BTCUSDT,halving,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T21:54:56Z,181.0464,mature_72h,true
+cand_00591,2057244180754432145,2026-05-20T23:36:49Z,2026-05-21 07:36:49 UTC+8,2026-05-20T23:36:49Z,2026-05-21 07:36:49 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 07:36:49 UTC+8,2026-05-20T23:36:49Z,2026-05-21 07:36:49 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"As $HYPE trades around ~$50,
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit o","As $HYPE trades around ~$50,
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit of over $21.4M.
+
+Meanwhile, Loracle.hl's (@loraclexyz) increased its $HYPE (5x) short position and is now having a floating loss of over $17M.
+
+https://t.co/OR4PZglLZJ
+
+https://t.co/Gjdlc1jmK8",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T23:36:49Z,179.3483,mature_72h,true
+cand_00587,2057244993895690362,2026-05-20T23:40:02Z,2026-05-21 07:40:02 UTC+8,2026-05-20T23:40:02Z,2026-05-21 07:40:02 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 07:40:02 UTC+8,2026-05-20T23:40:02Z,2026-05-21 07:40:02 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"As $HYPE trades around ~$54,
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit o","As $HYPE trades around ~$54,
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit of over $21.4M.
+
+Meanwhile, Loracle.hl's (@loraclexyz) increased its $HYPE (5x) short position and is now having a floating loss of over $17M.
+
+https://t.co/OR4PZglLZJ
+
+https://t.co/Gjdlc1jmK8",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T23:40:02Z,179.2947,mature_72h,true
+cand_00575,2057249278658318686,2026-05-20T23:57:04Z,2026-05-21 07:57:04 UTC+8,2026-05-20T23:57:04Z,2026-05-21 07:57:04 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 07:57:04 UTC+8,2026-05-20T23:57:04Z,2026-05-21 07:57:04 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"HYPE 已经 $54 了，看来是有望突破去年 9 月份创造的前高 $59，毕竟只差 8 个点了。
+
+◎最大 HYPE 多头的 138 万枚 $HYPE 目前已经浮盈高达 $2160 万。
+https://t.co/wqnznUBMo0","HYPE 已经 $54 了，看来是有望突破去年 9 月份创造的前高 $59，毕竟只差 8 个点了。
+
+◎最大 HYPE 多头的 138 万枚 $HYPE 目前已经浮盈高达 $2160 万。
+https://t.co/wqnznUBMo0
+
+◎当然，跟他形成鲜明对比的则是目前的最大空头 @loraclexyz 。他以 $43.5 的价格开设的 160 万枚 $HYPE 空单目前浮亏高达 $1766 万。清算价在 $71。
+https://t.co/oZvQXzEnxy
+
+#OKX",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-20T23:57:04Z,179.0108,mature_72h,true
+cand_00558,2057253514796318995,2026-05-21T00:13:54Z,2026-05-21 08:13:54 UTC+8,2026-05-21T00:13:54Z,2026-05-21 08:13:54 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 08:13:54 UTC+8,2026-05-21T00:13:54Z,2026-05-21 08:13:54 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"As $ZEC is pumping
+
+Whale “0xd63” closed most of the position, taking a loss of over $3.27M, and is still holding the re","As $ZEC is pumping
+
+Whale “0xd63” closed most of the position, taking a loss of over $3.27M, and is still holding the remaining position with a floating loss of over $745K.
+
+On the other side, Evaded (@ICanPlug) is now sitting on a floating profit of over $7.3M across $ZEC and $HYPE.
+
+https://t.co/UlYQKWJHdb
+
+https://t.co/8ovAy9WO2d",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-21T00:13:54Z,178.7303,mature_72h,true
+cand_00412,2057290349492465745,2026-05-21T02:40:16Z,2026-05-21 10:40:16 UTC+8,2026-05-21T02:40:16Z,2026-05-21 10:40:16 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 10:40:16 UTC+8,2026-05-21T02:40:16Z,2026-05-21 10:40:16 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,特朗普预计签署关于AI和网络安全的行政命令,币界网消息，据Cointelegraph报道，特朗普总统预计将在周四签署一项关于人工智能和网络安全的行政命令。SEC主席保罗·阿特金斯正在寻求公众对拟议的预测市场ETF的意见。埃隆·马斯克表示，SpaceX计划以“极高的规模”提供AI计算，并与Anthropic扩大合作。OpenAI正在准备在未来几天或几周内提交IPO申请。Anthropic已同意在三年内向SpaceX支付近450亿美元，以支持其Claude AI软件的计算资源。美联储发布请求意见，拟议“瘦主账户”可能允许金融科技和加密公司访问其支付系统。SUI在主网上推出无燃气费用的稳定币转账，允许用户发送支持的稳定币。RWA市场总额达到380亿美元，欧盟启动关于MiCA的公众咨询，寻求对加密发行人和稳定币的反馈。Vitalik分享了改善以太坊隐私的短期计划。,webhook,,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-21T02:40:16Z,176.2908,mature_72h,true
+cand_00208,news:1029:30aedd3da7cdb65d,2026-05-21T07:14:46Z,2026-05-21 15:14:46 UTC+8,2026-05-21T07:14:46Z,2026-05-21 15:14:46 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-21 15:14:46 UTC+8,2026-05-21T07:14:46Z,2026-05-21 15:14:46 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Pi Price Rally Soon? Pi Network Breaks Into US Market Through OKX Integration,"Fun-loving and cheerful, a passionate blockchain and crypto writer who knows no boundary…connect if you share the same passion. With 10+ years of writing experience, I am a Crypto Journalist by chance, exploring, and learning all the dynamics of the sci-fi action-filled crypto world. Currently, focusing on cryptocurrency news and price data. With a passion for research and challenging my capabilities, I am slowly getting into the crypto arena to bring new insights every day.
+
+Fun-loving and cheerful, a passionate blockchain and crypto writer who knows no boundary…connect if you share the same passion. With 10+ years of writing experience, I am a Crypto Journalist by chance, exploring, and learning all the dynamics of the sci-fi action-filled crypto world. Currently, focusing on cryptocurrency news and price data. With a passion for research and challenging my capabilities, I am slowly getting into the crypto arena to bring new insights every day.
+
+Fun-loving and cheerful, a passionate blockchain and crypto writer who knows no boundary…connect if you share the same passion. With 10+ years of writing experience, I am a Crypto Journalist by chance, exploring, and learning all the dynamics of the sci-fi action-filled crypto world. Currently, focusing on cryptocurrency news and price data. With a passion for research and challenging my capabilities, I am slowly getting into the crypto arena to bring new insights every day.
+
+Pi Core Team confirmed today that OKX is now providing Pi access to millions of users across the United States. The update marks a key moment for the project as it continues expanding beyond its early mobile-mining phase into a more active blockchain ecosystem.
+
+The announcement comes during a busy period for Pi Network, following recent infrastructure upgrades and growing public attention after the project’s appearance at Consensus 2026.
+
+In its latest statement , the Pi Core Team said the OKX integration creates another important gateway into the Pi ecosystem for U.S.-based users. The team emphasized that the network remains focused on increasing participation, utility, and real-world adoption globally.
+
+“More users. More usage. Stronger network,” the team stated.
+
+For many community members, the move is seen as an important milestone because U.S. market access remains one of the biggest challenges for blockchain projects operating under stricter compliance rules. Social media reactions were largely optimistic, with supporters viewing the OKX rollout as a sign that Pi Network is continuing to strengthen partnerships with established crypto infrastructure platforms.
+
+The expansion also follows appearances by Dr. Nicolas Kokkalis and Dr. Chengdiao Fan at Consensus 2026. During the event, the founders discussed topics including AI-era digital trust systems, verified online identity, and blockchain-powered utility models.
+
+Their presentations reflected Pi Network’s long-standing focus on human verification and accessible blockchain participation through mobile devices rather than speculative hype alone.
+
+Moreover, Pi Network has also completed several important backend upgrades in recent weeks, including:
+
+Looking at the scenario, some market watchers now think Pi may be entering a recovery phase. Community analyst Tob-crypto noted that Pi holding near $0.15 while some forecasts discuss possible moves toward the $2–$5 range by late 2026 highlights continued long-term optimism around the project.
+
+Meanwhile, crypto user Crypto Wave said Pi’s technical setup remains mixed, though recent mainnet upgrades and improving momentum indicators could support rebound chances if buying pressure continues.",news:coinpedia,https://coinpedia.org/news/pi-price-rally-soon-pi-network-breaks-into-us-market-through-okx-integration/,HYPE,,HYPEUSDT,network_upgrade,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-21T07:14:46Z,171.7158,mature_72h,true
+cand_00178,2057366151982911585,2026-05-21T07:41:29Z,2026-05-21 15:41:29 UTC+8,2026-05-21T07:41:29Z,2026-05-21 15:41:29 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-21 15:41:29 UTC+8,2026-05-21T07:41:29Z,2026-05-21 15:41:29 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"As $HYPE continues to rise, a whale (0x842) increased its 5x short position to 353,832 $HYPE valued at $20M, with a floa","As $HYPE continues to rise, a whale (0x842) increased its 5x short position to 353,832 $HYPE valued at $20M, with a floating loss of over $1.88M.
+
+It also sold another 61,044 $HYPE, bringing total sales to 125,444 $HYPE for $6.5M at an average price of $52.
+
+https://t.co/KOTKKHozKy",webhook,,HYPE,,HYPEUSDT,whale_position,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-21T07:41:29Z,171.2706,mature_72h,true
+cand_01984,2056872617206837281,2026-05-19T23:00:21Z,2026-05-20 07:00:21 UTC+8,2026-05-19T23:00:21Z,2026-05-20 07:00:21 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 07:00:21 UTC+8,2026-05-19T23:00:21Z,2026-05-20 07:00:21 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,CryptoQuant：美国投资者积极抛售比特币,币界网消息，据Cointelegraph报道，CryptoQuant指出，美国投资者正在积极抛售比特币，Coinbase的溢价差距已降至-77美元，这表明卖压增加，买入活动减弱。,webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T23:00:21Z,203.9561,mature_72h,true
+cand_01953,2056881606154183125,2026-05-19T23:36:04Z,2026-05-20 07:36:04 UTC+8,2026-05-19T23:36:04Z,2026-05-20 07:36:04 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 07:36:04 UTC+8,2026-05-19T23:36:04Z,2026-05-20 07:36:04 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Prometheum完成首批以太坊交易，曾获SEC批准,币界网消息，据Decrypt报道，加密交易平台Prometheum在成立近十年并累计融资约1亿美元后，已正式完成首批加密资产交易，目前仅支持以太坊交易。Prometheum曾因支持Gary Gensler时期U.S. SEC对加密行业的合规路径与监管立场而受到行业争议，并于2023年成为首家获得U.S. SEC与FINRA特殊目的经纪交易商（SPBD）牌照的公司，可在联邦监管框架下托管数字资产证券。不过，随着Gary Gensler离任、U.S. SEC撤销对Coinbase等公司的诉讼，以及监管框架转向更宽松模式，Prometheum长期构建的合规与托管牌照优势正在被削弱。,webhook,,ETH,ETHUSDT,ETHUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T23:36:04Z,203.3608,mature_72h,true
+cand_01941,2056886032772333795,2026-05-19T23:53:39Z,2026-05-20 07:53:39 UTC+8,2026-05-19T23:53:39Z,2026-05-20 07:53:39 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 07:53:39 UTC+8,2026-05-19T23:53:39Z,2026-05-20 07:53:39 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Arkham谈比特币,Arkham 表示，曾因贩毒被判刑的爱尔兰人 Clifton Collins 于 2011 至 2012 年间购入约 3 万美元比特币，目前价值已升至约 4 亿美元，但其曾声称已丢失私钥。相关比特币此前一直被认为无法找回，直到一个月前约 500 枚 BTC 在沉寂 10 年后首次发生转移。最新数据显示，另有约 500 枚 BTC（约合 3800 万美元）再次发生转移。https://t.co/slcjMOrN60,webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T23:53:39Z,203.0678,mature_72h,true
+cand_01930,news:2012:85f68c3f9351c0da,2026-05-20T00:09:16Z,2026-05-20 08:09:16 UTC+8,2026-05-20T00:09:16Z,2026-05-20 08:09:16 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 08:09:16 UTC+8,2026-05-20T00:09:16Z,2026-05-20 08:09:16 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Anchorage关联钱包再提取587万美元HYPE，过去一月累计质押1.12亿美元HYPE,"据 Onchain Lens 监测，Anchorage (@Anchorage) 关联钱包 (0x4c6...f828) 进一步从 Bybit 提取 121,099 枚 HYPE，价值 587 万美元。该钱包过去一个月内累计购入 234 万枚 HYPE，价值 1.12 亿美元，并已将其用于质押。",news:odaily_exchange_gap,https://www.odaily.news/zh-CN/newsflash/482588,HYPE,,HYPEUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T00:09:16Z,202.8075,mature_72h,true
+cand_01923,news:2012:108234b5e44c4c9c,2026-05-20T00:14:11Z,2026-05-20 08:14:11 UTC+8,2026-05-20T00:14:11Z,2026-05-20 08:14:11 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-20 08:14:11 UTC+8,2026-05-20T00:14:11Z,2026-05-20 08:14:11 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,代币化股票单日交易量创35.7亿美元历史新高,周一代币化股票交易量创下历史新高，总交易量达 35.7 亿美元。自今年年初以来，链上股票交易量持续增长。大部分真实世界资产（RWA）交易量集中在币安和 Hyperliquid 两个平台，Kraken 的 xStocks、Ondo、Bitget 等平台也推动了累计链上股票交易量增长。此外，彭博社报道称美国证券交易委员会正在制定针对新兴链上股票生态系统的指南和创新豁免，该机构的创新豁免将允许传统机构在无需完成完整注册程序的情况下试验区块链技术。美国证券存托清算公司（DTCC）和纽约证券交易所（NYSE）已在开发支持链上股票的基础设施。尽管代币化股票今年增长显著，但代币化商品交易的接受度极低，主要活动集中在黄金、白银和石油。(theblock),news:odaily_exchange_gap,https://www.odaily.news/zh-CN/newsflash/482591,ONDO,ONDOUSDT,ONDOUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T00:14:11Z,202.7256,mature_72h,true
+cand_01921,2056891553868919196,2026-05-20T00:15:36Z,2026-05-20 08:15:36 UTC+8,2026-05-20T00:15:36Z,2026-05-20 08:15:36 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 08:15:36 UTC+8,2026-05-20T00:15:36Z,2026-05-20 08:15:36 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"链上监测：鲸鱼在过去10小时内购买206,325枚HYPE并质押","币界网消息，据Lookonchain监测，一只链上鲸鱼在过去10小时内创建了一个新钱包，并购买了206,325枚HYPE，价值约995万美元，随后进行了质押。自4月14日以来，该鲸鱼总共购买了234万枚HYPE，价值约1.02亿美元。",webhook,,HYPE,,HYPEUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T00:15:36Z,202.7019,mature_72h,true
+cand_01883,news:3001:f93cd61579eb4384,2026-05-20T00:58:40Z,2026-05-20 08:58:40 UTC+8,2026-05-20T00:58:40Z,2026-05-20 08:58:40 UTC+8,,,,Asia/Shanghai,source_rule:tg:,,2026-05-20 08:58:40 UTC+8,2026-05-20T00:58:40Z,2026-05-20 08:58:40 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,【知名交易员Loracle「 HYPE 空仓 TOP 1」】LIT 多单 新开仓!,"🚀 Hyperliquid 持仓异动 | 巨鲸新开仓提醒 🚀
+📅 时间: 2026/5/20 08:58:39
+🐳 【知名交易员Loracle「 HYPE 空仓 TOP 1」】LIT 多单 新开仓!
+💰 LIT多单建仓 874,155.00 枚
+▫️ 开仓价: 1.11美元
+▫️ 当前币价: 1.15美元
+▫️ 清算价: 0美元
+▫️ 持仓规模: 1,009,386.78美元
+📌 地址: 0x8def9f50456c6c4e37fa5d3d57f108ed23992dae
+🔥 注: Loracle （X：loraclexyz）原名 Laurent Zeimes。其在 Hyperliquid 生态里活跃，被视为早期贡献者之一，系Hypurrfun创始人，月盈1600万美元。 🔥
+Hyperliquid 官网查看:https://app.hyperliquid.xyz/",tg:HyperInsight,https://t.me/HyperInsight/88780,HYPE,,HYPEUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T00:58:40Z,201.9842,mature_72h,true
+cand_01864,2056906563311304877,2026-05-20T01:15:14Z,2026-05-20 09:15:14 UTC+8,2026-05-20T01:15:14Z,2026-05-20 09:15:14 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 09:15:14 UTC+8,2026-05-20T01:15:14Z,2026-05-20 09:15:14 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,未知钱包向Coinbase Institutional转移747枚BTC，价值约5746.92万美元,"币界网消息，据Whale Alert监测，747枚BTC（约57,469,237美元）刚刚从一个未知钱包转移至Coinbase Institutional。",webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T01:15:14Z,201.7081,mature_72h,true
+cand_01861,2056907828485402708,2026-05-20T01:20:16Z,2026-05-20 09:20:16 UTC+8,2026-05-20T01:20:16Z,2026-05-20 09:20:16 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 09:20:16 UTC+8,2026-05-20T01:20:16Z,2026-05-20 09:20:16 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,特朗普的Truth Social撤回比特币ETF申请,币界网消息，据Cointelegraph报道，特朗普的Truth Social已撤回其向美国证券交易委员会（SEC）提交的比特币ETF申请。,webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T01:20:16Z,201.6242,mature_72h,true
+cand_01851,2056911965092798926,2026-05-20T01:36:42Z,2026-05-20 09:36:42 UTC+8,2026-05-20T01:36:42Z,2026-05-20 09:36:42 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 09:36:42 UTC+8,2026-05-20T01:36:42Z,2026-05-20 09:36:42 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,a16z成为HYPE第六大持仓实体，浮盈7929万美元,币界网消息，链上分析师AI姨表示，a16z目前已成为HYPE的第六大持仓实体，单币浮盈约7929万美元。过去11小时内，a16z囤积了20.6万枚HYPE，价值约995万美元自4月16日以来，累计囤积235万枚HYPE，价值约1.02亿美元2026年以来，囤积492万枚HYPE，价值约1.83亿美元。自2025年8月开启大额囤积模式以来，累计建仓918万枚HYPE，价值约3.56亿美元，目前仍剩余884.4万枚HYPE分散在几十个地址中，总持仓规模达到前六名，在前五名均为HYPE自家生态的情况下，a16z或已成为外部第一大持仓实体。,webhook,,HYPE,,HYPEUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-20T01:36:42Z,201.3503,mature_72h,true
+cand_01465,news:1023:672750187278e285,2026-05-20T10:47:02Z,2026-05-20 18:47:02 UTC+8,2026-05-20T10:47:02Z,2026-05-20 18:47:02 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-20 18:47:02 UTC+8,2026-05-20T10:47:02Z,2026-05-20 18:47:02 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Pi Network v23 waits as PI loses 12% weekly,"Pi Network price is holding near $0.15 as the v23 upgrade nears completion, while token unlocks and weak chart signals keep pressure on PI.
+
+Pi Network traded at $0.150667 on May 20, with 24-hour volume at $13.96 million, according to crypto.news market data . The token moved between $0.146809 and $0.151711 during the same period, showing a narrow range around the $0.15 level.
+
+The price remains weak on a longer timeline. PI is down 12.38% over seven days and 12.54% over the past month. It also remains about 95% below its all-time high of $2.99, set on Feb. 26, 2025.
+
+TradingView chart shows PI trading near the lower Bollinger Band at $0.1494. The middle band sits at $0.1702, while the upper band is near $0.1911. That makes $0.17 the first recovery level to watch.
+
+MACD also remains negative. The MACD line is below the signal line, while the histogram still sits under zero. This shows that sellers still control short-term momentum, even with a small intraday bounce.
+
+Pi Core Team said most major Mainnet nodes have now upgraded to v23. The official update said,
+
+“Most major Nodes have now been upgraded, and the protocol is expected to move to v23 soon.”
+
+The team also said this was one of its most difficult upgrades because it involved several infrastructure changes. These included Protocol 22 to 23, Ubuntu 20 to 24, and PostgreSQL 12 to 16.
+
+That progress gives the project a technical catalyst. Still, the market has not treated it as enough to reverse the price trend. PI remains pinned near $0.15, showing that traders are still focused on supply and liquidity risks.
+
+Pi Network is also pushing Pi App Studio as part of its broader ecosystem plan. The update allows creators using external AI coding tools to connect apps to Pi’s ecosystem, which the project says includes more than 60 million engaged users.
+
+Related market coverage said 195.65 million PI are scheduled to unlock over the next 30 days. That equals about 3.17% of the locked supply and an average of 6.52 million PI per day.
+
+The largest single-day unlock is expected on May 27, when more than 18.22 million PI could become available. At current prices, the 30-day unlock wave is worth about $29.3 million.
+
+This matters because PI still trades with thinner liquidity than larger crypto assets. Related coverage noted that PI remains absent from Binance and Coinbase, which limits the market’s ability to absorb heavy selling.
+
+Early users also received PI through mobile mining over several years. As more tokens migrate and become transferable, some holders may sell to realize gains. This keeps sell-side pressure in focus.
+
+The chart shows PI sitting close to its lower Bollinger Band. If buyers defend the $0.1468 to $0.1494 zone, the token could attempt a short rebound toward $0.1702.
+
+A move above $0.1702 would be the first sign of improving momentum. After that, traders may watch $0.1911 and the broader $0.19 to $0.20 zone, where earlier rallies failed.
+
+On the downside, failure to hold $0.15 keeps the $0.13 area in focus. Related coverage pointed to $0.1297 as a deeper support zone, close to Pi Network’s all-time low region.
+
+For now, PI remains caught between v23 progress and unlock pressure. The upgrade may support the long-term ecosystem, but the chart still needs a clear reclaim of $0.17 before buyers regain control.",news:cryptonews,https://crypto.news/pi-network-v23-waits-as-pi-loses-12-weekly/,BTC,BTCUSDT,BTCUSDT,token_unlock,risk,3,market_wide,medium,high,true,include,,market_wide_event,95,"has_asset,has_binance_symbol,time_ok,typed_event,time_confidence_high",include,high,2026-05-20T10:47:02Z,192.1781,mature_72h,true
+cand_01837,2056914856251408846,2026-05-20T01:48:12Z,2026-05-20 09:48:12 UTC+8,2026-05-20T01:48:12Z,2026-05-20 09:48:12 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 09:48:12 UTC+8,2026-05-20T01:48:12Z,2026-05-20 09:48:12 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"JUST IN: #Bitcoin is now over 76,500. 🔥 https://t.co/LPuAm9FpEp","JUST IN: #Bitcoin is now over 76,500. 🔥 https://t.co/LPuAm9FpEp",webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-20T01:48:12Z,201.1586,mature_72h,true
+cand_01789,2056931606536106419,2026-05-20T02:54:45Z,2026-05-20 10:54:45 UTC+8,2026-05-20T02:54:45Z,2026-05-20 10:54:45 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 10:54:45 UTC+8,2026-05-20T02:54:45Z,2026-05-20 10:54:45 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,据新民晚报，上海崇明一名 70 多岁老人近日因听信网上“投资导师”宣传比特币投资高收益，接连两次前往银行准备取出 10 万元现金转账，最终在警银联动下被成功劝阻。民警提醒，针对老年人的“比特币投资”“养老理财”等虚假投资诈骗高发，诈骗分子常,据新民晚报，上海崇明一名 70 多岁老人近日因听信网上“投资导师”宣传比特币投资高收益，接连两次前往银行准备取出 10 万元现金转账，最终在警银联动下被成功劝阻。民警提醒，针对老年人的“比特币投资”“养老理财”等虚假投资诈骗高发，诈骗分子常在短视频平台伪装成“理财高手”，通过虚假盈利截图、“低投入、高回报、稳赚不赔”等话术诱导转账，涉及大额资金操作应先与家人核实并及时报警。https://t.co/0cIVrX72qU,webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-20T02:54:45Z,200.0494,mature_72h,true
+cand_01728,2056958163287486930,2026-05-20T04:40:17Z,2026-05-20 12:40:17 UTC+8,2026-05-20T04:40:17Z,2026-05-20 12:40:17 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 12:40:17 UTC+8,2026-05-20T04:40:17Z,2026-05-20 12:40:17 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,南卡罗来纳州州长签署法案保护比特币自我保管权利,币界网消息，据Cointelegraph报道，南卡罗来纳州州长签署了S.163法案，该法案保护比特币自我保管权利，禁止对比特币征收歧视性税收，并保障该州的工作量证明挖矿。,webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-20T04:40:17Z,198.2906,mature_72h,true
+cand_01715,2056965404384493819,2026-05-20T05:09:03Z,2026-05-20 13:09:03 UTC+8,2026-05-20T05:09:03Z,2026-05-20 13:09:03 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-20 13:09:03 UTC+8,2026-05-20T05:09:03Z,2026-05-20 13:09:03 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,美国南卡罗来纳州州长已签署 S.163 法案。该法案将保护比特币自托管权利，禁止对比特币实施歧视性税收，并为该州工作量证明（PoW）挖矿活动提供法律保障。该法案被视为美国州层面围绕比特币持有、使用与挖矿权利进一步明确化的最新进展。（Coin,美国南卡罗来纳州州长已签署 S.163 法案。该法案将保护比特币自托管权利，禁止对比特币实施歧视性税收，并为该州工作量证明（PoW）挖矿活动提供法律保障。该法案被视为美国州层面围绕比特币持有、使用与挖矿权利进一步明确化的最新进展。（Cointelegraph）https://t.co/62T5XO24pX,webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-20T05:09:03Z,197.8111,mature_72h,true

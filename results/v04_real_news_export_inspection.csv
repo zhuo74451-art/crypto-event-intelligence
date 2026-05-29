@@ -1,0 +1,11 @@
+row_count,standard_field,source_column,source_column_present,non_empty_count,empty_count,sample_value,notes
+200,raw_id,raw_id,true,200,0,news:1033:92bd36bec0a7fe2e,
+200,published_at,published_at,true,200,0,2026-05-25T10:27:39Z,
+200,title,title,true,200,0,印度央行行长：将“竭尽所能”维护外汇市场的秩序,
+200,content,content,true,200,0,印度央行行长：将“竭尽所能”维护外汇市场的秩序。,
+200,source,source,true,200,0,news:jin10,
+200,url,url,true,200,0,https://www.jin10.com/detail/20260525102739627800.html,
+200,language,language,true,0,200,,all_empty
+200,author,author,true,200,0,jin10,
+200,category,category,true,200,0,[],
+200,tags,tags,true,200,0,news_article,

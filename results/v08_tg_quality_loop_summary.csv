@@ -1,0 +1,4 @@
+﻿step,status,returncode,started_at_china,finished_at_china,stdout_tail,stderr_tail
+enrich_sent_state,pass,0,2026-05-28 13:27:53 UTC+8,2026-05-28 13:27:53 UTC+8,updated_rows=0 unresolved_rows=0 wrote_output=C:\Users\PC\Desktop\Projects\事件情报系统\data\tg_live_sent_state.csv ,
+build_followup_report,pass,0,2026-05-28 13:27:53 UTC+8,2026-05-28 13:28:41 UTC+8,eligible_event_rows=8 backfill_rows=8 computable_4h_rows=7 computable_24h_rows=0 wrote_report=C:\Users\PC\Desktop\Projects\事件情报系统\results\v08_tg_alert_followup_report.md ,
+build_source_usefulness,pass,0,2026-05-28 13:28:41 UTC+8,2026-05-28 13:28:41 UTC+8,sent_count=8 source_count=4 wrote_report=C:\Users\PC\Desktop\Projects\事件情报系统\results\v08_tg_source_usefulness_report.md ,

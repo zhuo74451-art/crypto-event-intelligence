@@ -1,0 +1,4 @@
+﻿checked_at_china,draft_id,candidate_id,event_type,asset_symbol,amount_usd,confidence_label,strength_stars,quality_status,quality_score,quality_flags
+2026-05-28 12:39:24,tg_watcher_0003,watcher_fh_bd969b7df1ce5008,cex_netflow,USDT,501759001.15,中,★★★★★,pass,83,
+2026-05-28 12:39:24,tg_watcher_0004,watcher_fh_34031bf4f6c433d6,exchange_listing,OPENAI,0,高,★★★★★,pass,80,
+2026-05-28 12:39:24,tg_watcher_0005,watcher_fh_37416e7c9ea46b3e,exchange_listing,GENIUS,0,高,★★★★★,pass,80,

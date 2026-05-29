@@ -1,0 +1,2 @@
+total_rows,pass_count,warning_count,fail_count,timezone_assumed_china_count,source_lag_over_30m_count,source_lag_over_6h_count,source_timezone_assumed_count,price_kline_lag_out_of_range_count
+1055,1055,0,0,0,0,0,0,0

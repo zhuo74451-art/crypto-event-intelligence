@@ -1,0 +1,8 @@
+asset_symbol,binance_futures_symbol,enabled,alert_abs_rate_threshold,alert_change_threshold,lookback_limit,notes
+BTC,BTCUSDT,true,0.0005,0.0003,24,Major perp funding monitor
+ETH,ETHUSDT,true,0.0005,0.0003,24,Major perp funding monitor
+SOL,SOLUSDT,true,0.0008,0.0005,24,Major alt funding monitor
+BNB,BNBUSDT,true,0.0008,0.0005,24,Major alt funding monitor
+XRP,XRPUSDT,true,0.0008,0.0005,24,Major alt funding monitor
+DOGE,DOGEUSDT,true,0.001,0.0006,24,Meme/large-cap alt funding monitor
+HYPE,HYPEUSDT,true,0.001,0.0006,24,High-volatility perp funding monitor

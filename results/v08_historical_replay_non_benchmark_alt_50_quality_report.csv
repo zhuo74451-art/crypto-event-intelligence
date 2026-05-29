@@ -1,0 +1,23 @@
+event_id,event_time,title,asset_symbol,event_type,status,parsed_event_time_utc,parsed_event_time_china,time_quality_status,quality_status,quality_flags,skip_reason
+cand_00275,2026-05-19 04:30:00 UTC+8,XRP price slips 2% on profit taking,XRP,token_unlock,ok,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,pass,pass,,
+cand_00491,2026-05-19 00:45:00 UTC+8,"Bank of England, FCA Set Out ‘Shared Vision’ for Tokenization - Decrypt",ADA,institutional_flow,ok,2026-05-18T16:45:00Z,2026-05-19 00:45:00 UTC+8,pass,pass,,
+cand_00472,2026-05-19 01:00:26 UTC+8,XRP’s Recent Strategic Setup Could Mark The End For Bears - Crypto Analyst Says | Bitcoinist.com,BNB,hack_security,ok,2026-05-18T17:00:26Z,2026-05-19 01:00:26 UTC+8,pass,pass,,
+cand_00427,2026-05-19 01:34:57 UTC+8,Ethereum Founder Vitalik Buterin Says AI Verification Could Help Secure Crypto Networks - Decrypt,ADA,hack_security,ok,2026-05-18T17:34:57Z,2026-05-19 01:34:57 UTC+8,pass,pass,,
+cand_00371,2026-05-19 02:30:45 UTC+8,"Analyst Predicts Bitcoin And Ethereum Price For The Rest Of 2026, What To Expect | Bitcoinist.com",BNB,hack_security,ok,2026-05-18T18:30:45Z,2026-05-19 02:30:45 UTC+8,pass,pass,,
+cand_00297,2026-05-19 04:00:52 UTC+8,Patrick Witt Teases ‘Breakthrough’ On US Bitcoin Reserve,BNB,hack_security,ok,2026-05-18T20:00:52Z,2026-05-19 04:00:52 UTC+8,pass,pass,,
+cand_00220,2026-05-19 05:30:27 UTC+8,Ethereum Institutional Adoption Expands: ETH Held In Corporate Reserves Climbs To New Landmark | Bitcoinist.com,ADA,hack_security,ok,2026-05-18T21:30:27Z,2026-05-19 05:30:27 UTC+8,pass,pass,,
+cand_00164,2026-05-19 06:31:27 UTC+8,HYPE Jumps On Bitwise’s Hyperliquid ETF Move—Galaxy Secures BitLicense In NY | Bitcoinist.com,BNB,hack_security,ok,2026-05-18T22:31:27Z,2026-05-19 06:31:27 UTC+8,pass,pass,,
+cand_00121,2026-05-19 07:40:51 UTC+8,"Binance Retail Investor Bitcoin Inflows Drop By 73%, What's Next for BTC?",ADA,institutional_flow,ok,2026-05-18T23:40:51Z,2026-05-19 07:40:51 UTC+8,pass,pass,,
+cand_00020,2026-05-19 10:00:40 UTC+8,The XRP Asian Breakout: Japan And South Korea Lead The Charge | Bitcoinist.com,BNB,hack_security,ok,2026-05-19T02:00:40Z,2026-05-19 10:00:40 UTC+8,pass,pass,,
+cand_00478,2026-05-19 00:55:05 UTC+8,"Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:",AVAX,other,ok,2026-05-18T16:55:05Z,2026-05-19 00:55:05 UTC+8,pass,pass,,
+cand_00457,2026-05-19 01:10:18 UTC+8,"🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi",SOL,other,ok,2026-05-18T17:10:18Z,2026-05-19 01:10:18 UTC+8,pass,pass,,
+cand_00342,2026-05-19 03:13:48 UTC+8,$1.80 or $1.00? Analyst Maps Out XRP's Next Big Move - U.Today,XRP,other,ok,2026-05-18T19:13:48Z,2026-05-19 03:13:48 UTC+8,pass,pass,,
+cand_00242,2026-05-19 05:10:17 UTC+8,⚡️ NEW: Revolut unveiled a physical crypto card with Dogecoin branding and LED tap-to-pay functionality for users in the,DOGE,other,ok,2026-05-18T21:10:17Z,2026-05-19 05:10:17 UTC+8,pass,pass,,
+cand_00227,2026-05-19 05:20:51 UTC+8,Revolut推出首张实体加密卡，主打Dogecoin主题,DOGE,other,ok,2026-05-18T21:20:51Z,2026-05-19 05:20:51 UTC+8,pass,pass,,
+cand_00116,2026-05-19 07:51:19 UTC+8,吴说获悉，Revolut 宣布推出首张实体加密卡，采用 Dogecoin 主题设计，并配备支付时可点亮的 LED 显示。该卡可在支持 Visa 与 Mastercard 的商户使用，首批面向英国及欧洲经济区（不含匈牙利、瑞士和葡萄牙）用户开,DOGE,other,ok,2026-05-18T23:51:19Z,2026-05-19 07:51:19 UTC+8,pass,pass,,
+cand_00029,2026-05-19 09:49:23 UTC+8,Defillama：Hyperliquid仍维持链上永续合约市场领先地位,SOL,other,ok,2026-05-19T01:49:23Z,2026-05-19 09:49:23 UTC+8,pass,pass,,
+cand_00476,2026-05-19 00:55:56 UTC+8,Cardano Price Analysis: ADA Bears Eye $0.20 Support,ADA,network_upgrade,ok,2026-05-18T16:55:56Z,2026-05-19 00:55:56 UTC+8,pass,pass,,
+cand_00257,2026-05-19 04:55:33 UTC+8,"Bitcoin Faces Greater Quantum Computing Risk Than Ethereum, Citi Warns - Decrypt",ADA,network_upgrade,ok,2026-05-18T20:55:33Z,2026-05-19 04:55:33 UTC+8,pass,pass,,
+cand_00223,2026-05-19 05:28:02 UTC+8,Soluna Q1 Revenue Rises 58% as Data Center Hosting Surpasses Crypto Mining,ADA,halving,ok,2026-05-18T21:28:02Z,2026-05-19 05:28:02 UTC+8,pass,pass,,

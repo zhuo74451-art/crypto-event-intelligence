@@ -1,0 +1,6 @@
+address,label,entity,category,default_asset_symbol,alert_threshold_usd,enabled,label_confidence,notes
+0x50b309f78e774a756a2230e1769729094cac9f20,Hyperliquid ETH large short whale,Unknown Hyperliquid Whale,hyperliquid_whale,ETH,10000000,true,medium,Seeded from local HyperInsight news export; verify label before production publishing
+0xebe837cd345469cbc5d6e1fd3d15ee5079ac885f,Hyperliquid BTC large long whale,Unknown Hyperliquid Whale,hyperliquid_whale,BTC,10000000,true,medium,Seeded from local HyperInsight news export; verify label before production publishing
+0x6c8512516ce5669d35113a11ca8b8de322fd84f6,Matrixport related subaddress 1,Matrixport Related,hyperliquid_whale,ETH,10000000,true,medium,Seeded from local HyperInsight news export; verify label before production publishing
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae,Loracle,loraclexyz,hyperliquid_whale,HYPE,10000000,true,medium,Seeded from local HyperInsight news export; verify label before production publishing
+0x082e843a431aef031264dc232693dd710aedca88,HYPE top long whale,Unknown HYPE Whale,hyperliquid_whale,HYPE,10000000,true,medium,Seeded from local HyperInsight news export; verify label before production publishing

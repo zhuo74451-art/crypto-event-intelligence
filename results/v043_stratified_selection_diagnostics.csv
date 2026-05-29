@@ -1,0 +1,11 @@
+event_type,total_count,eligible_count,selected_count,type_cap,unused_eligible_after_cap,cap_binding
+macro,172,135,10,10,125,true
+hack_security,24,12,8,8,4,true
+other,254,18,5,5,13,true
+institutional_flow,15,3,3,10,0,false
+network_upgrade,12,3,3,8,0,false
+token_unlock,7,3,3,8,0,false
+halving,4,3,3,5,0,false
+staking_governance,8,2,2,5,0,false
+exchange_listing,2,0,0,8,0,false
+whale_position,2,0,0,10,0,false

@@ -1,0 +1,21 @@
+asset_symbol,binance_spot_symbol,binance_futures_symbol,coingecko_id,notes
+BTC,BTCUSDT,BTCUSDT,bitcoin,
+ETH,ETHUSDT,ETHUSDT,ethereum,
+SOL,SOLUSDT,SOLUSDT,solana,
+BNB,BNBUSDT,BNBUSDT,binancecoin,
+XRP,XRPUSDT,XRPUSDT,ripple,
+DOGE,DOGEUSDT,DOGEUSDT,dogecoin,
+ADA,ADAUSDT,ADAUSDT,cardano,
+LINK,LINKUSDT,LINKUSDT,chainlink,
+AVAX,AVAXUSDT,AVAXUSDT,avalanche-2,
+WLD,WLDUSDT,WLDUSDT,worldcoin-wld,
+ONDO,ONDOUSDT,ONDOUSDT,ondo-finance,
+SHIB,SHIBUSDT,,shiba-inu,Binance spot supported; no USD-M futures symbol in current validation
+TRX,TRXUSDT,TRXUSDT,tron,
+HYPE,,HYPEUSDT,hyperliquid,Binance spot not supported; USD-M futures supported in current validation
+UNI,UNIUSDT,UNIUSDT,uniswap,
+AAVE,AAVEUSDT,AAVEUSDT,aave,
+LDO,LDOUSDT,LDOUSDT,lido-dao,
+MKR,MKRUSDT,MKRUSDT,maker,
+USDT,,,tether,Stablecoin flow events use BTC as market proxy for current backtest normalization
+USDC,,,usd-coin,Stablecoin flow events use BTC as market proxy for current backtest normalization

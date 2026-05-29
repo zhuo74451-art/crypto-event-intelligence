@@ -1,0 +1,2 @@
+symbol,market_type,interval,target_time_utc,target_timestamp_ms,kline_open_time_utc,kline_open_time_ms,kline_close_time_utc,open_price,high_price,low_price,close_price,volume,raw_json,status
+BTCUSDT,spot,1m,2026-05-26T04:56:06Z,1779771366232,2026-05-26T04:57:00Z,1779771420000,2026-05-26T04:57:59Z,76802.2,76802.2,76788.35,76788.36,2.67444,"[1779771420000, ""76802.20000000"", ""76802.20000000"", ""76788.35000000"", ""76788.36000000"", ""2.67444000"", 1779771479999, ""205368.09686050"", 429, ""1.22835000"", ""94323.19158470"", ""0""]",ok

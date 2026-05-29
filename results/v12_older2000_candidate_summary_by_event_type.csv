@@ -1,0 +1,15 @@
+candidate_event_type,candidate_count,needs_review_count,include_count
+ai_infra,55,54,0
+exchange_listing,44,36,0
+hack_security,106,99,0
+halving,22,22,0
+institutional_flow,106,84,0
+macro,666,666,0
+market_structure,7,7,0
+network_upgrade,43,42,0
+other,705,705,0
+project_business,16,14,0
+stablecoin_flow,31,15,0
+staking_governance,39,29,0
+token_unlock,2,1,0
+whale_position,158,145,0

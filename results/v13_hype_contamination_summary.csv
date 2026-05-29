@@ -1,0 +1,2 @@
+﻿status,generated_at_china,hype_whale_rows,unique_days,max_daily_count,max_daily_ratio,top_source_count,top_source_ratio,top3_source_ratio,mean_abnormal_vs_btc_24h,median_abnormal_vs_btc_24h,time_pattern,source_pattern,return_pattern,recommended_action
+warning,2026-05-28 19:41:06 UTC+8,48,2,29,0.6042,34,0.7083,0.9792,0.09567,0.079823,burst,single_source_dominated,consistent,archive_or_digest_only

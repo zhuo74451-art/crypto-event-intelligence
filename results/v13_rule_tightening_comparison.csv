@@ -1,0 +1,5 @@
+﻿generated_at_china,metric,before,after,delta,note
+2026-05-28 19:55:16 UTC+8,total_candidates,2000,1507,-493,strict archive removes low-quality unknown candidates
+2026-05-28 19:55:16 UTC+8,archive_count,0,493,493,rows marked archive by v13 strict gate
+2026-05-28 19:55:16 UTC+8,other_uncategorized_count,567,74,-493,unknown bucket after strict gate
+2026-05-28 19:55:16 UTC+8,protected_valid_event_count,289,289,0,protected types should not be harmed by garbage gate

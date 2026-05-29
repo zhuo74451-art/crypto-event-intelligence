@@ -1,0 +1,2 @@
+﻿status,checked_at_china,rate_rows_checked,rate_pass_count,rate_blocked_count,daily_send_limit,token_cooldown_minutes,source_daily_caps_enabled,time_policy_enabled,time_window,time_window_priority,time_window_min_severity,effective_max_send_per_cycle,selected_after_rate_limit
+pass,2026-05-28 12:39:24,3,3,0,15,60,true,true,daytime_active,active,watch,3,3

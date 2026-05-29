@@ -1,0 +1,2 @@
+﻿input_alert_rows,deduped_alert_rows,event_rows,needs_model_review_rows,stablecoin_flow_rows,onchain_transfer_rows,cex_netflow_rows,funding_rate_rows,liquidation_rows,status
+9,9,9,5,0,0,0,0,0,pass

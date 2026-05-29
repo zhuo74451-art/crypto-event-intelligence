@@ -1,0 +1,2 @@
+﻿sent_state_rows,eligible_event_rows,backfill_rows,ok_rows,partial_rows,skipped_rows,computable_4h_rows,computable_24h_rows,min_age_hours,total_rows,non_sent_rows,eligible_rows
+18,8,8,7,0,1,7,0,4.0,18,10,8

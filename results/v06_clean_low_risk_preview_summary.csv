@@ -1,0 +1,2 @@
+input_rows,selected_low_risk_rows,excluded_medium_risk_rows,excluded_high_risk_rows,limit,status
+50,22,17,11,50,preview_only

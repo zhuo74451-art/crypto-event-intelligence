@@ -1,0 +1,81 @@
+entity_id,entity_type,canonical_symbol,canonical_name,aliases,market_scope,notes
+asset_btc,asset,BTC,Bitcoin,BTC|Bitcoin|比特币|比特幣,single_asset,
+asset_eth,asset,ETH,Ethereum,ETH|Ethereum|以太坊|Ether,single_asset,
+asset_sol,asset,SOL,Solana,SOL|Solana|索拉纳,single_asset,
+asset_bnb,asset,BNB,BNB,BNB|Binance Coin|币安币,single_asset,
+asset_xrp,asset,XRP,XRP,XRP|Ripple|瑞波,single_asset,
+asset_doge,asset,DOGE,Dogecoin,DOGE|Dogecoin|狗狗币,single_asset,
+asset_ada,asset,ADA,Cardano,ADA|Cardano,single_asset,
+asset_link,asset,LINK,Chainlink,LINK|Chainlink,single_asset,
+asset_avax,asset,AVAX,Avalanche,AVAX|Avalanche,single_asset,
+asset_hype,asset,HYPE,Hyperliquid,HYPE|Hyperliquid|HyperLiquid,single_asset,Binance support may be limited
+asset_wld,asset,WLD,Worldcoin,WLD|Worldcoin|WorldCoin,single_asset,
+asset_ondo,asset,ONDO,Ondo,ONDO|Ondo,single_asset,
+asset_ton,asset,TON,Toncoin,TON|Toncoin,single_asset,
+asset_zec,asset,ZEC,Zcash,ZEC|Zcash,single_asset,
+asset_trx,asset,TRX,TRON,TRX|TRON|Tron|波场,single_asset,
+asset_bch,asset,BCH,Bitcoin Cash,BCH|Bitcoin Cash,single_asset,
+asset_xmr,asset,XMR,Monero,XMR|Monero,single_asset,
+asset_shib,asset,SHIB,Shiba Inu,SHIB|Shiba Inu,single_asset,
+asset_wbtc,asset,BTC,Wrapped Bitcoin,WBTC|Wrapped Bitcoin,single_asset,Treat as BTC proxy
+asset_ebtc,asset,BTC,eBTC,eBTC,single_asset,Treat as BTC proxy where appropriate
+org_strategy,org,BTC,Strategy,Strategy|MicroStrategy|Michael Saylor|Saylor,asset_related,Treat as BTC-linked institutional flow
+org_blackrock,org,,BlackRock,BlackRock|IBIT|iShares,market_wide,
+org_fidelity,org,,Fidelity,Fidelity|FETH,market_wide,
+org_sec,regulator,,SEC,SEC|Securities and Exchange Commission|美国证券交易委员会,market_wide,
+org_cftc,regulator,,CFTC,CFTC|Commodity Futures Trading Commission,market_wide,
+org_fed,macro,,Federal Reserve,Fed|Federal Reserve|FOMC|美联储,market_wide,
+macro_cpi,macro,,CPI,CPI|通胀|消费者价格指数,market_wide,
+macro_ppi,macro,,PPI,PPI|生产者价格指数,market_wide,
+macro_rate,macro,,Interest Rate,rate|interest rate|利率|降息|加息,market_wide,
+macro_usd,macro,,US Dollar,美元|DXY|US Dollar,market_wide,
+macro_nasdaq,macro,,Nasdaq,纳斯达克|Nasdaq,market_wide,
+macro_oil,macro,,Crude Oil,原油|WTI|Brent|Crude Oil,market_wide,
+exchange_binance,exchange,,Binance,Binance|币安,market_wide,
+exchange_coinbase,exchange,,Coinbase,Coinbase,market_wide,
+exchange_okx,exchange,,OKX,OKX|欧易,market_wide,
+entity_etf,product,,ETF,ETF|现货ETF|spot ETF,market_wide,
+entity_stablecoin,sector,,Stablecoin,stablecoin|stablecoins|USDT|USDC|稳定币,sector,
+entity_rwa,sector,,RWA,RWA|real world asset|tokenized|tokenization|代币化,sector,
+entity_ai,sector,,AI,AI|artificial intelligence|人工智能,sector,
+entity_defi,sector,,DeFi,DeFi|DEX|lending|借贷,sector,
+entity_foundation,org,,Foundation,Foundation|基金会,asset_related,
+entity_whale,actor,,Whale,whale|巨鲸|smart money|聪明钱,asset_related,
+entity_wallet,actor,,Wallet,wallet|address|地址|钱包,asset_related,
+entity_hacker,actor,,Hacker,hack|hacker|exploit|攻击者|黑客,asset_related,
+asset_weth,asset,ETH,Wrapped Ether,WETH|Wrapped Ether,single_asset,Treat as ETH proxy
+asset_aave,asset,AAVE,Aave,AAVE|Aave,single_asset,
+asset_pol,asset,POL,Polygon,POL|MATIC|Polygon,single_asset,
+org_revolut,org,,Revolut,Revolut,asset_related,Crypto card/payment provider
+org_bitwise,org,,Bitwise,Bitwise,asset_related,
+org_galaxy,org,,Galaxy Digital,Galaxy Digital|Galaxy,asset_related,
+org_kraken,exchange,,Kraken,Kraken,market_wide,
+org_spacex,org,BTC,SpaceX,SpaceX,asset_related,Treat as BTC treasury related when Bitcoin is mentioned
+org_hive,org,BTC,HIVE Digital,HIVE|Hive Digital,asset_related,BTC miner equity; research-only unless tied to BTC mining or treasury
+org_nydig,org,,NYDIG,NYDIG,asset_related,
+org_zerohash,org,,Zerohash,Zerohash,asset_related,
+org_polymarket,org,,Polymarket,Polymarket,asset_related,
+org_nobitex,exchange,,Nobitex,Nobitex,asset_related,
+project_morpho,project,,Morpho,Morpho,asset_related,
+project_tempo,project,,Tempo,Tempo,asset_related,
+project_monad,project,,Monad,Monad,asset_related,
+project_echo,project,,Echo Protocol,EchoProtocol|Echo Protocol,asset_related,
+actor_machi,actor,,Machi Big Brother,Machi|Machi Big Brother|麻吉黄立成,asset_related,
+product_bitlicense,regulator,,BitLicense,BitLicense,market_wide,
+entity_crypto_card,product,,Crypto Card,crypto card|加密卡|实体加密卡,asset_related,
+project_curvance,project,,Curvance,Curvance|curvance,asset_related,DeFi lending protocol on Monad; involved in Echo Protocol exploit
+asset_rune,asset,RUNE,THORChain,RUNE|THORChain|Thorchain|ThorChain,single_asset,Cross-chain liquidity protocol; frequently targeted in hacks
+project_polymarket,project,,Polymarket,Polymarket|polymarket,asset_related,Crypto-native prediction market platform
+actor_tornado,actor,,Tornado Cash,Tornado Cash|TornadoCash|tornado cash,asset_related,On-chain mixer commonly used in hack fund laundering
+project_base,project,,Base,Base L2|Coinbase L2|on Base|base chain,asset_related,Coinbase Layer 2 network; distinguish from price base/support
+org_kevin_warsh,macro,,Kevin Warsh,Kevin Warsh|Warsh,market_wide,Incoming Federal Reserve Chair; publicly pro-Bitcoin
+actor_zachxbt,actor,,ZachXBT,ZachXBT|zachxbt|zach xbt,asset_related,On-chain investigator known for hack/manipulation reports
+org_citi,org,,Citigroup,Citi|Citigroup|Citi Research|Citi analyst,market_wide,Institutional bank publishing crypto research reports
+source_santiment,data_source,,Santiment,Santiment,asset_related,
+source_glassnode,data_source,,Glassnode,Glassnode,asset_related,
+source_lookonchain,data_source,,Lookonchain,Lookonchain,asset_related,
+source_arkham,data_source,,Arkham,Arkham,asset_related,
+source_nansen,data_source,,Nansen,Nansen,asset_related,
+source_peckshield,data_source,,PeckShield,PeckShield,asset_related,
+source_defillama,data_source,,DefiLlama,DefiLlama|Defillama,asset_related,
+source_messari,data_source,,Messari,Messari,asset_related,

@@ -1,0 +1,61 @@
+﻿event_id,error_type,reason,event_subtype,source_tier,observable_impact_type,conflict_type,criteria_block_reason,title
+adv_001,true_positive,ok,exchange_halt,official,exchange_halt,,pass,Binance announces emergency listing halt for ABC after contract risk
+adv_002,true_positive,ok,governance,official,protocol_parameter_change,,pass,Aave governance executes parameter change reducing LTV for CRV collateral
+adv_003,true_positive,ok,stablecoin_supply_or_flow,onchain_verified,large_confirmed_flow,,pass,Tether treasury mints 1B USDT on Ethereum with transaction hash
+adv_004,true_positive,ok,stablecoin_supply_or_flow,official,depeg,,pass,USDC depegs after issuer confirms banking exposure
+adv_005,true_positive,ok,exchange_halt,official,withdrawal_pause,,pass,Major exchange pauses SOL withdrawals citing network incident
+adv_006,true_positive,ok,exploit_or_theft,onchain_or_security_research,exploit_loss,,pass,Curve pool exploit drains funds from CRV pools with attacker address
+adv_007,true_positive,ok,exploit_or_theft,onchain_or_security_research,exploit_loss,,pass,Ronin bridge exploit confirmed with attacker address and stolen funds
+adv_008,true_positive,ok,exchange_listing,official,official_listing,,pass,Coinbase announces official listing for NEWCOIN with trading time
+adv_009,true_positive,ok,upgrade_or_fork,official,large_operational_change,,pass,Protocol mainnet hard fork activated at block height
+adv_010,true_positive,ok,whale_position,onchain_verified,forced_liquidation,,pass,Large liquidations force close whale ETH position on Hyperliquid
+adv_011,true_positive,ok,governance,official,protocol_parameter_change,,pass,MakerDAO executes emergency debt ceiling parameter change
+adv_012,true_positive,ok,exchange_listing,official,official_listing,,pass,OKX announces delisting of TOKEN perpetual contracts
+adv_013,true_positive,ok,exchange_halt,official,withdrawal_pause,,pass,Lending protocol disables borrowing after oracle malfunction
+adv_014,true_positive,ok,exploit_or_theft,onchain_or_security_research,exploit_loss,,pass,Bridge exploit drains 45M with verified attacker transaction
+adv_015,true_positive,ok,bankruptcy,court_or_regulatory_filing,bankruptcy_filing,,pass,Exchange confirms bankruptcy filing with court case number
+adv_016,false_negative,source_basis_ok,exchange_halt,trusted_media,withdrawal_pause,trusted_media_confirmed_but_source_gate_blocks,source_basis_ok,Trusted media reports exchange wallet freeze confirmed by three users
+adv_017,false_negative,source_basis_ok,exploit_or_theft,trusted_media,exploit_loss,source_tier_boundary,source_basis_ok,Research desk publishes signed proof of exploit loss before official post
+adv_018,false_negative,source_basis_ok,etf_or_fund_flow,trusted_media,large_operational_change,regulatory_source_not_whitelisted,source_basis_ok,ETF issuer files urgent amendment changing creation basket mechanics
+adv_019,false_negative,source_basis_ok,stablecoin_supply_or_flow,trusted_media,large_confirmed_flow,source_basis_boundary,source_basis_ok,Stablecoin issuer transaction observed by public dashboard before explorer label
+adv_020,false_negative,source_basis_ok,exchange_halt,community_or_unknown,protocol_shutdown,founder_source_boundary,source_basis_ok,Protocol emergency shutdown reported by verified founder account
+adv_021,true_negative,ok,etf_or_fund_flow,trusted_media,rumor,,"source_basis_ok,observable_impact_ok",ETF executive says Bitcoin may rise this year
+adv_022,true_negative,ok,upgrade_or_fork,official,maintenance_notice,,observable_impact_ok,Developer SDK release improves wallet integration
+adv_023,true_negative,ok,upgrade_or_fork,official,maintenance_notice,,observable_impact_ok,Validator deadline reminder for optional software update
+adv_024,true_negative,ok,stablecoin_supply_or_flow,onchain_verified,small_internal_transfer,,observable_impact_ok,Small internal exchange transfer of 200K USDT
+adv_025,true_negative,ok,whale_position,community_or_unknown,rumor,,"source_basis_ok,observable_impact_ok",KOL claims whale may buy BTC soon
+adv_026,true_negative,ok,exploit_or_theft,onchain_or_security_research,exploit_loss,,observable_impact_ok,Old exploit recap from last week resurfaces
+adv_027,true_negative,ok,governance,official,maintenance_notice,,observable_impact_ok,Protocol posts educational article about governance
+adv_028,true_negative,ok,exchange_halt,official,maintenance_notice,,observable_impact_ok,Exchange announces website maintenance window
+adv_029,true_negative,ok,exploit_or_theft,onchain_or_security_research,soft_security_warning_without_loss,threshold_boundary,observable_impact_ok,No-loss phishing warning without transaction evidence
+adv_030,true_negative,ok,etf_or_fund_flow,trusted_media,rumor,,"source_basis_ok,observable_impact_ok",ETF analyst commentary without actual flow data
+adv_031,true_negative,ok,stablecoin_supply_or_flow,onchain_verified,unclear_flow_direction,threshold_boundary,observable_impact_ok,Unclear wallet movement between unknown addresses
+adv_032,true_negative,ok,exchange_listing,official,official_listing,threshold_boundary,observable_impact_ok,Low liquidity token listing on minor venue
+adv_033,true_negative,ok,governance,official,temperature_check,,observable_impact_ok,Protocol temperature check opens non-binding vote
+adv_034,true_negative,ok,governance,official,small_tvl_change,,observable_impact_ok,Minor TVL dashboard change under reporting threshold
+adv_035,true_negative,ok,exchange_listing,official,official_listing,threshold_boundary,"observable_impact_ok,not_price_in_ok",Price already moved 8 percent before announcement
+adv_036,true_negative,ok,exchange_listing,official,official_listing,threshold_boundary,observable_impact_ok,Official listing but market cap is tiny and venue liquidity is weak
+adv_037,true_negative,ok,exploit_or_theft,official,exploit_loss,evidence_missing_boundary,observable_impact_ok,Official exploit post says suspected loss but no transaction hash yet
+adv_038,true_negative,ok,stablecoin_supply_or_flow,onchain_verified,large_confirmed_flow,direction_conflict,observable_impact_ok,Large USDT transfer from treasury to Binance but direction later reversed
+adv_039,true_negative,ok,upgrade_or_fork,official,large_operational_change,impact_scope_conflict,observable_impact_ok,Mainnet hard fork activated but only affects test validator tooling
+adv_040,true_negative,ok,exchange_halt,official,withdrawal_pause,liquidity_threshold_boundary,observable_impact_ok,Exchange pauses withdrawals for one low volume token
+adv_041,true_negative,ok,whale_position,onchain_verified,forced_liquidation,hedge_context_conflict,observable_impact_ok,Whale liquidation above threshold but account is known market maker hedge
+adv_042,true_negative,ok,etf_or_fund_flow,onchain_or_security_research,large_confirmed_flow,calendar_effect_conflict,observable_impact_ok,ETF net outflow large but due to holiday settlement catch-up
+adv_043,true_negative,ok,governance,official,protocol_parameter_change,magnitude_threshold_boundary,observable_impact_ok,Official governance execution changes collateral factor by 1 percent
+adv_044,true_negative,ok,exploit_or_theft,onchain_or_security_research,exploit_loss,asset_mapping_conflict,observable_impact_ok,Bridge exploit confirmed for non-tradable governance side token
+adv_045,true_positive,ok,exchange_halt,official,withdrawal_pause,multi_condition_conflict,pass,Emergency oracle pause blocks major lending market withdrawals
+adv_046,true_negative,ok,bankruptcy,court_or_regulatory_filing,bankruptcy_filing,price_already_untradable,observable_impact_ok,Court filing confirms asset freeze but token already halted
+adv_047,true_positive,ok,stablecoin_supply_or_flow,official,depeg,multi_condition_conflict,pass,Stablecoin depeg official update during banking incident
+adv_048,true_positive,ok,exchange_listing,official,official_listing,event_time_boundary,pass,CEX delisting notice with 12 hours lead time for liquid perpetual
+adv_049,true_negative,ok,exploit_or_theft,onchain_or_security_research,exploit_loss,price_in_boundary,not_price_in_ok,Security firm confirms exploit amount after price fell 12 percent
+adv_050,true_positive,ok,exchange_halt,onchain_verified,protocol_shutdown,source_impact_boundary,pass,Protocol shutdown confirmed by multisig transaction
+adv_051,true_negative,ok,etf_or_fund_flow,onchain_or_security_research,large_confirmed_flow,calendar_effect_conflict,observable_impact_ok,ETF daily flow is 96th percentile but from normal month-end rebalance
+adv_052,true_positive,ok,upgrade_or_fork,official,large_operational_change,impact_scope_boundary,pass,Official hard fork completed with fee market change
+adv_053,true_positive,ok,whale_position,onchain_verified,forced_liquidation,risk_threshold_boundary,pass,Whale adds large isolated short within 3 percent of liquidation
+adv_054,true_positive,ok,regulation,court_or_regulatory_filing,exchange_halt,source_impact_boundary,pass,Regulator files emergency injunction against exchange operations
+adv_055,true_negative,ok,bankruptcy,community_or_unknown,rumor,source_quality_boundary,"source_basis_ok,observable_impact_ok",Unverified screenshot claims exchange insolvency
+adv_056,false_positive,market_already_available,exchange_listing,official,official_listing,market_already_available,pass,Official listing notice for token already active on major perpetual venues
+adv_057,false_positive,deprecated_market_scope,governance,official,protocol_parameter_change,deprecated_market_scope,pass,Official parameter execution only affects deprecated isolated lending market
+adv_058,false_positive,asset_mapping_conflict_residual,exploit_or_theft,onchain_or_security_research,exploit_loss,asset_mapping_conflict_residual,pass,Bridge exploit confirmed but affected asset is an unlisted NFT collection
+adv_059,false_positive,inventory_rebalance_residual,stablecoin_supply_or_flow,onchain_verified,large_confirmed_flow,inventory_rebalance_residual,pass,Large stablecoin treasury flow later identified as exchange inventory rebalancing
+adv_060,false_positive,collateral_rotation_residual,whale_position,onchain_verified,forced_liquidation,collateral_rotation_residual,pass,Whale forced liquidation belongs to same-wallet collateral rotation

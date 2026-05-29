@@ -1,0 +1,141 @@
+﻿draft_id,candidate_id,published_at_china,asset_symbol,event_type,event_type_label,event_scope,channel_route,confidence_label,strength_stars,amount_usd,severity_tier,alert_priority_score,throttle_key,raw_signal_type,risk_category,needs_model_review,model_review_reason,source,title,url,why_this_matters,watch_next,context_summary,draft_text,draft_status,reviewer_decision,reviewer_usefulness,reviewer_issue_type,reviewer_notes,approved_text,draft_mode,auto_send_enabled,delivery_bucket,routing_score,routing_reason,interrupt_eligible,board_eligible,archive_eligible
+tg_watcher_0001,watcher_fh_dbb232d98231d333,2026-05-28 19:23:27 UTC+8,BTC,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,34959911.44,high,72,whale_position:BTC,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】BTC Hyperliquid 多头仓位：3495.99 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ 链上大户 BTC多头仓位异动</b>
+
+<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>主体：</b>Hyperliquid
+<b>类型：</b>巨鲸仓位
+<b>规模：</b>3495.99 万美元
+
+<b>关键事实：</b>
+• 某地址在Hyperliquid持有BTC多头3496.0万美元。
+• 当前浮亏157.4万美元。
+• 距离爆仓约15.3%。
+
+<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,archive,62.0,static_position_snapshot_archive,false,false,true
+tg_watcher_0002,watcher_fh_5c0ab6b52311e31a,2026-05-28 19:23:27 UTC+8,ETH,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,79520000.00,critical,87,whale_position:ETH,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】ETH Hyperliquid 多头仓位：7952.00 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ Matrixport Related ETH多头仓位异动</b>
+
+<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>主体：</b>Matrixport Related
+<b>类型：</b>巨鲸仓位
+<b>规模：</b>7952.00 万美元
+
+<b>关键事实：</b>
+• Matrixport Related持有ETH多头7952.0万美元。
+• 当前浮亏1109.8万美元。
+• 距离爆仓约31.8%。
+
+<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,archive,77.0,static_position_snapshot_archive,false,false,true
+tg_watcher_0003,watcher_fh_f03efc9e86591489,2026-05-28 19:23:27 UTC+8,BTC,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,34375168.54,high,72,whale_position:BTC,hyperliquid_position_short,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】BTC Hyperliquid 空头仓位：3437.52 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ loraclexyz BTC空头仓位异动</b>
+
+<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>主体：</b>loraclexyz
+<b>类型：</b>巨鲸仓位
+<b>规模：</b>3437.52 万美元
+
+<b>关键事实：</b>
+• loraclexyz持有BTC空头3437.5万美元。
+• 当前浮盈88.9万美元。
+• 距离爆仓约190.4%。
+
+<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,archive,62.0,static_position_snapshot_archive,false,false,true
+tg_watcher_0004,watcher_fh_dfd0158b68a27d1a,2026-05-28 19:23:27 UTC+8,HYPE,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★★,102660871.07,critical,90,whale_position:HYPE,hyperliquid_position_short,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】HYPE Hyperliquid 空头仓位：1.03 亿美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ loraclexyz HYPE空头仓位异动</b>
+
+<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>主体：</b>loraclexyz
+<b>类型：</b>巨鲸仓位
+<b>规模：</b>1.03 亿美元
+
+<b>关键事实：</b>
+• loraclexyz持有HYPE空头1.03亿美元。
+• 当前浮亏2063.8万美元。
+• 距离爆仓约58.7%。
+
+<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,board,80.0,known_entity_static_unusual_position_board,false,true,true
+tg_watcher_0005,watcher_fh_aa864d8c8c70ed6c,2026-05-28 19:23:27 UTC+8,HYPE,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,78367102.49,critical,87,whale_position:HYPE,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】HYPE Hyperliquid 多头仓位：7836.71 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ 链上大户 HYPE多头仓位异动</b>
+
+<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>主体：</b>Hyperliquid
+<b>类型：</b>巨鲸仓位
+<b>规模：</b>7836.71 万美元
+
+<b>关键事实：</b>
+• 某地址在Hyperliquid持有HYPE多头7836.7万美元。
+• 当前浮盈2499.3万美元。
+• 距离爆仓约13.6%。
+
+<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,archive,77.0,static_position_snapshot_archive,false,false,true
+tg_watcher_0006,watcher_fh_c882497a6ccec22f,2026-05-28 08:00:00 UTC+8,CTR,exchange_listing,交易所上新,single_asset,realtime,高,★★★★★,0,critical,90,exchange_listing:CTR,cex_listing_announcement,listing_event,false,,first_hand:cex_listing_announcement,【交易所上新】Binance 发布 CTR 相关上新公告,https://www.binance.com/en/support/announcement/ee40eb721abc460cb7edca6df04d782b,重点核对公告交易对、上线时间和是否已被市场提前消化。,关注公告链接、上线交易对、开盘时间、是否触发同类资产跟随。,重点核对公告交易对、上线时间和是否已被市场提前消化。,"<b>⚡ CTR交易所公告</b>
+
+<b>时间：</b>2026-05-28 08:00:00 北京时间
+<b>主体：</b>Binance
+<b>类型：</b>交易所上新
+<b>规模：</b>未披露
+
+<b>关键事实：</b>
+• 交易所上新：CTR，规模未披露。
+
+<b>关注点：</b>重点核对公告交易对、上线时间和是否已被市场提前消化。
+🔗 <b>来源：</b>https://www.binance.com/en/support/announcement/ee40eb721abc460cb7edca6df04d782b
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,interrupt,90.0,exchange_listing,true,true,true
+tg_watcher_0007,watcher_fh_e3179cf77941da9e,2026-05-28 19:23:36 UTC+8,HAEDAL,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,762030.98,watch,60,token_unlock:HAEDAL,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】HAEDAL 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ HAEDAL解锁预警</b>
+
+<b>时间：</b>2026-05-28 20:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>76.20 万美元
+
+<b>关键事实：</b>
+• HAEDAL将在2026-05-28 20:00:00 北京时间解锁76.2万美元。
+• 规模约占当前流通2.92%。
+• 距离发生：36 分钟内。
+• 主要释放给早期投资人。
+• 发现时间：2026-05-28 19:23:36 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,archive,60.0,small_unlock_archive_only,false,false,true
+tg_watcher_0008,watcher_fh_d52226e92055465c,2026-05-28 19:23:36 UTC+8,HOME,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★★☆,19617278.19,watch,65,token_unlock:HOME,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】HOME 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ HOME解锁预警</b>
+
+<b>时间：</b>2026-05-29 08:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>1961.73 万美元
+
+<b>关键事实：</b>
+• HOME将在2026-05-29 08:00:00 北京时间解锁1961.7万美元。
+• 规模约占当前流通7.50%。
+• 距离发生：约 12.6 小时后。
+• 主要释放给团队/贡献者。
+• 发现时间：2026-05-28 19:23:36 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,board,70.0,unlock_board,false,true,true
+tg_watcher_0009,watcher_fh_adbf5f85f5f6391f,2026-05-28 19:23:36 UTC+8,TBOT,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,1097.64,watch,60,token_unlock:TBOT,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】TBOT 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ TBOT解锁预警</b>
+
+<b>时间：</b>2026-05-31 08:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>1,097.64 美元
+
+<b>关键事实：</b>
+• TBOT将在2026-05-31 08:00:00 北京时间解锁1,098美元。
+• 规模约占当前流通10.76%。
+• 距离发生：约 2.5 天后。
+• 主要释放给早期投资人。
+• 发现时间：2026-05-28 19:23:36 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false,archive,60.0,small_unlock_archive_only,false,false,true

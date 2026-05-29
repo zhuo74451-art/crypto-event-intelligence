@@ -1,0 +1,25 @@
+# Human-readable term translations for TG reports.
+
+long_crowding:
+  original: 多空拥挤
+  translated: 多头集中度过高
+  explanation: 超过较多大户或账户集中在多头一侧，如果价格反向波动，可能出现集中平仓。
+  risk_level: 中
+
+short_crowding:
+  original: 空头拥挤
+  translated: 空头集中度过高
+  explanation: 超过较多大户或账户集中在空头一侧，如果价格反向波动，可能出现集中回补。
+  risk_level: 中
+
+funding_rate_extreme:
+  original: 资金费率偏离
+  translated: 资金费率异常
+  explanation: 多头或空头持仓成本偏高，说明市场一侧交易过热，需要观察是否回落。
+  risk_level: 中
+
+oi_price_divergence:
+  original: 价格下跌但持仓上升
+  translated: 价格回调但持仓增加
+  explanation: 说明新仓还在进入市场，可能是抄底资金，也可能是空头加仓，需要结合资金费率判断。
+  risk_level: 中

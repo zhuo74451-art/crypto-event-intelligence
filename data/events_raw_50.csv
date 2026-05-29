@@ -1,0 +1,10 @@
+event_id,event_time,title,content,source,asset_symbol,binance_spot_symbol,binance_futures_symbol,event_type,direction_hint,importance
+cand_00001,2024-01-10T21:15:00Z,US spot Bitcoin ETF approvals reported,Multiple US spot Bitcoin ETFs were approved and issuers prepared for launch.,news_site,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4
+cand_00002,2024-03-13T14:05:00Z,Ethereum Dencun upgrade goes live,Ethereum Dencun upgrade has activated on mainnet with blob transactions enabled.,official,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3
+cand_00003,2024-06-27T12:30:00Z,Solana ETF filing submitted,A fund issuer submitted paperwork for a proposed Solana ETF product.,news_site,SOL,SOLUSDT,SOLUSDT,institutional_flow,observe,4
+cand_00004,2024-07-01T08:05:00Z,XRP unlock alert,Large XRP token unlock was observed from scheduled escrow releases.,telegram,XRP,XRPUSDT,XRPUSDT,token_unlock,risk,3
+cand_00006,2024-05-23T18:10:00Z,SEC approves spot Ethereum ETF rule changes,SEC approved rule changes tied to spot Ethereum ETF listings.,news_site,ETH,ETHUSDT,ETHUSDT,institutional_flow,observe,4
+cand_00007,2024-04-19T00:15:00Z,Bitcoin halving completed,比特币第四次减半完成，矿工区块奖励下降。,telegram,BTC,BTCUSDT,BTCUSDT,halving,observe,3
+cand_00008,2024-02-01T09:10:00Z,Chainlink staking update released,Chainlink published an update related to staking and ecosystem participation.,official,LINK,LINKUSDT,LINKUSDT,staking_governance,observe,3
+cand_00009,2024-03-01T10:15:00Z,Dogecoin whale wallet transfers DOGE,A whale wallet transferred a large DOGE amount to an exchange address.,telegram,DOGE,DOGEUSDT,DOGEUSDT,whale_position,observe,3
+cand_00010,2024-06-15T13:05:00Z,CPI and Fed rate concerns pressure risk assets,美联储利率和 CPI 预期扰动风险资产，BTC 跟随市场波动。,news_site,BTC,BTCUSDT,BTCUSDT,macro,observe,4

@@ -1,0 +1,16 @@
+﻿generated_at_china,event_group,total_events,computed_count,data_missing_count,severe_price_in_count,severe_price_in_ratio,avg_price_in_ratio,status
+2026-05-28 20:11:00 UTC+8,exploit_or_theft,86,43,0,5,0.0581,0.389246,pass
+2026-05-28 20:11:00 UTC+8,etf_or_fund_flow,57,29,0,7,0.1228,0.472553,pass
+2026-05-28 20:11:00 UTC+8,needs_taxonomy_review,42,28,0,4,0.0952,0.324278,pass
+2026-05-28 20:11:00 UTC+8,upgrade_or_fork,30,21,0,2,0.0667,0.392357,pass
+2026-05-28 20:11:00 UTC+8,whale_wallet_position,17,9,0,0,0.0,0.227295,pass
+2026-05-28 20:11:00 UTC+8,staking_or_governance,16,9,0,1,0.0625,0.483319,pass
+2026-05-28 20:11:00 UTC+8,stablecoin_supply_or_flow,12,7,0,1,0.0833,0.455647,pass
+2026-05-28 20:11:00 UTC+8,listing_delisting,5,2,0,1,0.2,0.641625,pass
+2026-05-28 20:11:00 UTC+8,halving,4,3,0,0,0.0,0.590883,pass
+2026-05-28 20:11:00 UTC+8,payment_or_card_adoption,4,3,0,1,0.25,0.603413,pass
+2026-05-28 20:11:00 UTC+8,rwa_tokenization,3,2,0,0,0.0,0.303665,pass
+2026-05-28 20:11:00 UTC+8,price_market_structure,2,1,0,0,0.0,0.309256,pass
+2026-05-28 20:11:00 UTC+8,custody_or_institutional_product,1,1,0,0,0.0,0.13748,pass
+2026-05-28 20:11:00 UTC+8,foundation_team,1,0,0,0,0.0,0.0,pass
+2026-05-28 20:11:00 UTC+8,protocol_metric,1,0,0,0,0.0,0.0,pass

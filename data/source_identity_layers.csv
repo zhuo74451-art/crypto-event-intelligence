@@ -1,0 +1,24 @@
+﻿generated_at_china,source_id,source_family,source_channel,source_channel_type,candidate_count,backtested_count,uncategorized_count,uncategorized_ratio,top_event_type,top_event_type_share,top_event_subtype,top_asset,top_asset_share,avg_abnormal_vs_btc_24h,win_rate_vs_btc_24h,reliability_status
+2026-05-28 19:45:49 UTC+8,webhook,webhook_news,webhook,webhook,739,50,314,0.4249,uncategorized,0.4249,uncategorized,UNKNOWN,0.5467,0.058034,0.94,promising_needs_validation
+2026-05-28 19:45:49 UTC+8,news_jin10,news_import,news:jin10,unknown,654,0,246,0.3761,macro,0.4327,macro_event,UNKNOWN,0.5505,0.0,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,tg_hyperinsight,historical_news,tg:HyperInsight,telegram_channel,128,41,0,0.0,whale_position,0.9219,whale_wallet_position,BTC,0.6172,0.074125,0.9268,promising_needs_validation
+2026-05-28 19:45:49 UTC+8,news_cryptonews,news_import,news:cryptonews,unknown,82,11,0,0.0,macro,0.4878,macro_event,BTC,0.6829,0.022055,0.8182,promising_needs_validation
+2026-05-28 19:45:49 UTC+8,news_odaily_exchange_gap,news_import,news:odaily_exchange_gap,unknown,61,5,4,0.0656,macro,0.5902,macro_event,BTC,0.4426,0.067316,1.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,tg_onemillion_ai,telegram_news,tg:OneMillion_AI,telegram_channel,53,0,3,0.0566,ai_infra,0.2264,ai_compute_or_model,UNKNOWN,0.7358,0.0,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_cointelegraph,news_import,news:cointelegraph,unknown,37,20,0,0.0,macro,0.4324,macro_event,ADA,0.9189,3.1e-05,0.45,weak_or_context_only
+2026-05-28 19:45:49 UTC+8,news_coinpaper,news_import,news:coinpaper,unknown,31,1,0,0.0,macro,0.6452,macro_event,BTC,0.7742,0.203427,1.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_bitcoinist,news_import,news:bitcoinist,unknown,30,15,0,0.0,macro,0.5,macro_event,BNB,0.9333,0.009735,1.0,monitor
+2026-05-28 19:45:49 UTC+8,news_coindesk,news_import,news:coindesk,unknown,29,2,0,0.0,macro,0.4483,macro_event,BTC,0.7586,-0.003081,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_utoday,news_import,news:utoday,unknown,24,5,0,0.0,macro,0.5,macro_event,BTC,0.5833,0.00124,0.8,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_watcherguru,news_import,news:watcherguru,unknown,24,5,0,0.0,halving,0.7917,halving,BTC,0.7917,0.008048,1.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_kucoin_ann,news_import,news:kucoin_ann,unknown,23,2,0,0.0,macro,0.4783,macro_event,BTC,0.3478,0.006609,0.5,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_coinpedia,news_import,news:coinpedia,unknown,21,3,0,0.0,macro,0.4286,macro_event,BTC,0.5238,0.005986,1.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_decrypt,news_import,news:decrypt,unknown,19,7,0,0.0,macro,0.6316,macro_event,AAVE,1.0,0.006166,0.7143,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_coinjournal,news_import,news:coinjournal,unknown,8,1,0,0.0,macro,0.625,macro_event,BTC,0.625,0.013079,1.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_99bitcoins,news_import,news:99bitcoins,unknown,7,2,0,0.0,macro,0.4286,macro_event,ADA,0.5714,0.007144,0.5,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_cryptonewsflash,news_import,news:cryptonewsflash,unknown,7,1,0,0.0,macro,0.7143,macro_event,BTC,0.5714,0.01159,1.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_dailyhodl,news_import,news:dailyhodl,unknown,6,0,0,0.0,macro,0.5,macro_event,BTC,1.0,0.0,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_binance_ann,news_import,news:binance_ann,unknown,5,0,0,0.0,macro,0.6,macro_event,BTC,0.4,0.0,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_bybit_ann,news_import,news:bybit_ann,unknown,5,0,0,0.0,exchange_listing,1.0,listing_delisting,USDT,0.8,0.0,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_okx_ann,news_import,news:okx_ann,unknown,5,0,0,0.0,macro,0.4,macro_event,BTC,0.4,0.0,0.0,insufficient_data
+2026-05-28 19:45:49 UTC+8,news_kraken_ann,news_import,news:kraken_ann,unknown,2,0,0,0.0,staking_governance,0.5,staking_or_governance,UNKNOWN,0.5,0.0,0.0,insufficient_data

@@ -1,0 +1,25 @@
+event_id,event_time,title,content,source,asset_symbol,event_type,direction_hint,importance,abnormal_vs_btc_1h,abnormal_vs_btc_4h,abnormal_vs_btc_24h,abnormal_vs_btc_72h,status,skip_reason,proposed_event_type,taxonomy_issue,review_decision,review_notes
+cand_00478,2026-05-18T16:55:05Z,"Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:","Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:
+
+↳ @StraitsX + Monetary Authority of Singapore.
+↳ @Alipay and GrabPay rails.
+↳ Nonco doing on-chain FX in LatAm.
+↳ @rain as the on/off ramp.
+
+The non-US stablecoin universe is here.",webhook,AVAX,other,observe,3,-0.00021252339826860478,0.0011646045317201814,0.0010159438014498,0.0158555187831674,ok,,,,,
+cand_00457,2026-05-18T17:10:18Z,"🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi","🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi",webhook,SOL,other,observe,3,-0.003667540167069716,0.0013262624827858893,-0.001069699628714,0.0146808540989,ok,,,,,
+cand_00423,2026-05-18T17:39:01Z,"🚨MORE ETHEREUM FOUNDATION RESEARCHERS RESIGN
+
+Ethereum Foundation researchers Carl Beek and Julian Ma have resigned, add","🚨MORE ETHEREUM FOUNDATION RESEARCHERS RESIGN
+
+Ethereum Foundation researchers Carl Beek and Julian Ma have resigned, adding to a wider wave of exits.
+
+Recent departures also include Protocol team figures Barnabé Monnot and Tim Beiko, Protocol Guild organizer Trent Van Epps, and former Protocol co-lead Alex Stokes, who announced a sabbatical earlier this month.
+
+Why?",webhook,ETH,other,observe,3,-0.004236035325425935,0.009249178205146258,0.001793776445879,0.0022023889824536,ok,,,,,
+cand_00487,2026-05-18T16:48:55Z,Michael Saylor的策略现持有超过4%的比特币总供应量,币界网消息，Polymarket报道，Michael Saylor的策略现在已持有超过4%的比特币总供应量。,webhook,BTC,other,observe,3,0.0,0.0,0.0,0.0,ok,,,,,
+cand_00469,2026-05-18T17:03:17Z,Michael Saylor的策略现已持有超过4%的比特币总供应量,币界网消息，据Bitcoin Magazine报道，Michael Saylor的投资策略现已持有超过4%的比特币总供应量。,webhook,BTC,other,observe,3,0.0,0.0,0.0,0.0,ok,,,,,

@@ -1,0 +1,10 @@
+﻿policy_scope,name,sample_count,valid_1h_count,avg_abnormal_primary_1h,win_rate_1h,live_policy_status,tg_action,reason_cn
+event_subtype,long_short_crowding_extreme,1,1,-0.00033578,0.0000,insufficient_live_sample,monitor,实时样本仍少，继续观察，不做强结论。
+event_subtype,token_unlock_team_large,1,1,-0.00473393,0.0000,background_only,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。
+event_subtype,whale_position_static_large,1,1,-0.01753546,0.0000,weak_early_reaction,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。
+repeat_group,indicator,1,1,-0.00033578,0.0000,insufficient_live_sample,monitor,实时样本仍少，继续观察，不做强结论。
+repeat_group,static_position,1,1,-0.01753546,0.0000,weak_early_reaction,downrank,静态大仓位 1h 初步表现偏弱，先降低盘中重复曝光，等待仓位变化或接近清算再提高。
+repeat_group,token_unlock,1,1,-0.00473393,0.0000,background_only,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。
+source_type,hyperliquid,1,1,-0.01753546,0.0000,insufficient_live_sample,monitor,实时样本仍少，继续观察，不做强结论。
+source_type,long_short,1,1,-0.00033578,0.0000,insufficient_live_sample,monitor,实时样本仍少，继续观察，不做强结论。
+source_type,token_unlock,1,1,-0.00473393,0.0000,background_only,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。

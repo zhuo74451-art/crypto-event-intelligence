@@ -1,0 +1,14 @@
+﻿policy_scope,name,sample_count,valid_24h_count,avg_abnormal_primary_24h,win_rate_primary_24h,false_positive_like_rate,matrix_status,tg_action,priority_delta,cooldown_multiplier,reason_cn
+event_subtype,whale_wallet_position,59,59,0.07914,0.898303,,promising_needs_validation,collect_more,-4.0,1.3,表现强但未通过污染/多样性检查：资产覆盖不足、HYPE 占比过高、单资产集中度过高、鲸鱼仓位污染检查未通过
+event_subtype,exploit_or_theft,36,36,0.00939,0.638878,,weak_or_context_only,digest_only,-20.0,1.8,历史表现更像背景信息，降低盘中曝光。
+event_subtype,etf_or_fund_flow,21,21,0.013622,0.904762,,promising_needs_validation,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,needs_taxonomy_review,20,20,0.042162,0.900005,,promising_needs_validation,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,staking_or_governance,10,10,0.050737,0.80001,,promising_needs_validation,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,upgrade_or_fork,9,9,0.010917,1.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,stablecoin_supply_or_flow,7,7,0.026638,0.857143,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,halving,4,4,0.007439,1.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,listing_delisting,4,4,0.009346,1.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,rwa_tokenization,1,1,0.027797,1.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,long_short_crowding_extreme,1,0,0.0,0.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,token_unlock_team_large,1,0,0.0,0.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。
+event_subtype,whale_position_static_large,1,0,0.0,0.0,,insufficient_sample,collect_more,-4.0,1.2,样本或稳定性不足，继续收集，不做强路由结论。

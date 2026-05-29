@@ -1,0 +1,181 @@
+services:
+  hermes-bridge:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-hermes-bridge
+    command: >
+      /bin/sh -lc
+      "python hermes/summary_bridge.py --serve --host 0.0.0.0 --port 8765"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8765/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  app:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-app
+    command: >
+      /bin/sh -lc
+      "uvicorn app:app --host 0.0.0.0 --port ${APP_PORT:-8001}"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "${APP_PORT:-8001}:${APP_PORT:-8001}"
+    depends_on:
+      hermes-bridge:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,urllib.request;u=f\"http://127.0.0.1:{os.getenv('APP_PORT','8001')}/health\";urllib.request.urlopen(u, timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  pipeline-watcher:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-pipeline-watcher
+    command: >
+      /bin/sh -lc
+      "python run_pipeline_watch_resilient.py --config newsflash_publish_config.json
+      --sleep-seconds ${PIPELINE_SLEEP_SECONDS:-10}
+      --log-mode ${WATCH_LOG_MODE:-compact}"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+  news-watcher:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-news-watcher
+    command: >
+      /bin/sh -lc
+      "python watch_news.py
+      --interval ${NEWS_INTERVAL_SECONDS:-600}
+      --limit-per-source ${NEWS_LIMIT_PER_SOURCE:-5}
+      --pipeline-limit ${NEWS_PIPELINE_LIMIT:-20}"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+
+
+  jin10-watcher:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-jin10-watcher
+    command: >
+      /bin/sh -lc
+      "python watch_jin10_realtime.py
+      --interval ${JIN10_INTERVAL_SECONDS:-120}"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+  telegram-watcher:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-telegram-watcher
+    command: >
+      /bin/sh -lc
+      "if [ \"${TELEGRAM_WATCH_ENABLED:-true}\" != \"true\" ]; then
+         echo '[telegram-watcher] disabled by TELEGRAM_WATCH_ENABLED';
+         sleep infinity;
+       fi;
+       python watch_telegram.py
+       --config ${TELEGRAM_CONFIG_PATH:-telegram_channels_config.json}
+       --tick ${TELEGRAM_TICK_SECONDS:-15}"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+  telegram-publisher:
+    build: .
+    image: x-monitor-telegram-publisher:latest
+    container_name: x-monitor-telegram-publisher
+    command: >
+      /bin/sh -lc
+      "if [ \"${TELEGRAM_PUBLISH_ENABLED:-false}\" != \"true\" ]; then
+         echo '[telegram-publisher] disabled by TELEGRAM_PUBLISH_ENABLED';
+         sleep infinity;
+       fi;
+       python telegram_publisher.py
+       --config ${TELEGRAM_PUBLISH_CONFIG_PATH:-telegram_publish_config.json}"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+
+  search-poller:
+    build: .
+    image: x-monitor:latest
+    container_name: x-monitor-search-poller
+    command: >
+      /bin/sh -lc
+      "if [ \"${SEARCH_POLL_ENABLED:-true}\" != \"true\" ]; then
+         echo '[search-poller] disabled by SEARCH_POLL_ENABLED';
+         sleep infinity;
+       fi;
+       if [ -z \"${SOCIALDATA_API_KEY:-}\" ]; then
+         echo '[search-poller] missing SOCIALDATA_API_KEY, waiting';
+         sleep infinity;
+       fi;
+       python search_poll.py"
+    env_file:
+      - .env
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      LOCAL_INGEST_URL: http://app:${APP_PORT:-8001}/webhook/twitter
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped

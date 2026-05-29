@@ -1,0 +1,2 @@
+﻿status,generated_at_china,backfill_rows,whale_rows,unique_assets,hype_count,hype_ratio,max_asset,max_single_asset_count,max_single_asset_ratio,timespan_days,quality_flags
+fail,2026-05-28 19:24:39 UTC+8,171,59,6,48,0.8136,HYPE,48,0.8136,1.4,"hype_contamination,single_asset_concentration,low_asset_diversity,short_time_span"

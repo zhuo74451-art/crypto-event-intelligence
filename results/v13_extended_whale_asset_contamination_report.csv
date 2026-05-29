@@ -1,0 +1,8 @@
+﻿generated_at_china,asset_symbol,event_count,asset_share,unique_sources,top_source,top_source_share,timespan_days,burst_window_days,burst_window_share,avg_abnormal_vs_btc_24h,win_rate_vs_btc_24h,contamination_flags,recommendation
+2026-05-28 20:05:55 UTC+8,SOL,7,0.4118,2,tg:HyperInsight,0.7143,2.8175,3,1.0,0.00862,1.0,"short_time_span,burst_window_concentration,single_source_dominated",collect_more_with_contamination_flag
+2026-05-28 20:05:55 UTC+8,ONDO,3,0.1765,2,webhook,0.6667,0.0086,3,1.0,-0.039745,0.0,"short_time_span,burst_window_concentration,single_source_dominated",collect_more_with_contamination_flag
+2026-05-28 20:05:55 UTC+8,AAVE,2,0.1176,1,webhook,1.0,1.0185,3,1.0,0.004853,1.0,"short_time_span,burst_window_concentration,single_source_dominated",collect_more_with_contamination_flag
+2026-05-28 20:05:55 UTC+8,XRP,2,0.1176,2,tg:HyperInsight,0.5,0.0846,3,1.0,-0.003633,0.0,"short_time_span,burst_window_concentration",collect_more_with_contamination_flag
+2026-05-28 20:05:55 UTC+8,ADA,1,0.0588,1,webhook,1.0,0.0,3,1.0,-0.01076,0.0,"burst_window_concentration,single_source_dominated",collect_more_with_contamination_flag
+2026-05-28 20:05:55 UTC+8,BNB,1,0.0588,1,news:bitcoinist,1.0,0.0,3,1.0,0.009199,1.0,"burst_window_concentration,single_source_dominated",collect_more_with_contamination_flag
+2026-05-28 20:05:55 UTC+8,LINK,1,0.0588,1,tg:HyperInsight,1.0,0.0,3,1.0,0.019699,1.0,"burst_window_concentration,single_source_dominated",collect_more_with_contamination_flag

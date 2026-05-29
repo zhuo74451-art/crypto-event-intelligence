@@ -1,0 +1,9 @@
+candidate_event_type,selected_count,v06_human_review_count,v06_discard_count,v06_discard_rate
+macro,10,5,5,0.5
+other,5,3,2,0.4
+halving,3,1,2,0.6667
+token_unlock,3,1,2,0.6667
+hack_security,8,7,1,0.125
+institutional_flow,3,2,1,0.3333
+network_upgrade,3,2,1,0.3333
+staking_governance,2,2,0,0.0

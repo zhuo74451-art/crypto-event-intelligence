@@ -1,0 +1,4 @@
+raw_id,asset_symbol,unlock_time,unlock_name,unlock_amount_usd,unlock_pct_circulating,source,url,timezone,enabled,notes
+sample_001,XRP,2026-05-30T00:00:00Z,Sample XRP scheduled escrow unlock,50000000,2.5,manual_template,,UTC,true,Sample row for importer validation only
+sample_002,AVAX,2026-06-15 08:00:00,Sample AVAX token unlock,25000000,1.8,manual_template,,Asia/Shanghai,true,Sample row for importer validation only
+sample_003,SOL,2026/06/20 20:00:00,Sample SOL vesting unlock,75000000,3.2,manual_template,,Asia/Shanghai,true,Sample row for importer validation only

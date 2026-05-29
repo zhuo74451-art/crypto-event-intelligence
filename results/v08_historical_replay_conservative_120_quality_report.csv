@@ -1,0 +1,159 @@
+event_id,event_time,title,asset_symbol,event_type,status,parsed_event_time_utc,parsed_event_time_china,time_quality_status,quality_status,quality_flags,skip_reason
+cand_00484,2026-05-19 00:50:18 UTC+8,Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金,ETH,hack_security,ok,2026-05-18T16:50:18Z,2026-05-19 00:50:18 UTC+8,pass,pass,,
+cand_00482,2026-05-19 00:53:58 UTC+8,Bitwise to add HYPE to balance sheet using fees from Hyperliquid ETF,HYPE,institutional_flow,ok,2026-05-18T16:53:58Z,2026-05-19 00:53:58 UTC+8,pass,pass,,
+cand_00419,2026-05-19 01:41:53 UTC+8,White House: Bitcoin Reserve Announcement Is Imminent,BTC,hack_security,ok,2026-05-18T17:41:53Z,2026-05-19 01:41:53 UTC+8,pass,pass,,
+cand_00365,2026-05-19 02:45:00 UTC+8,Bitwise将用10%管理费购买$HYPE,HYPE,institutional_flow,ok,2026-05-18T18:45:00Z,2026-05-19 02:45:00 UTC+8,pass,pass,,
+cand_00324,2026-05-19 03:37:15 UTC+8,Leopold Aschenbrenner bets $13.6b on miners,BTC,institutional_flow,ok,2026-05-18T19:37:15Z,2026-05-19 03:37:15 UTC+8,pass,pass,,
+cand_00146,2026-05-19 06:58:05 UTC+8,Delphi Digital：比特币在流动性趋紧背景下表现可能优于多数加密资产,BTC,institutional_flow,ok,2026-05-18T22:58:05Z,2026-05-19 06:58:05 UTC+8,pass,pass,,
+cand_00124,2026-05-19 07:36:51 UTC+8,"#PeckShieldAlert @dcfgod reports that @EchoProtocol_ was hacked on @monad 
+
+The hacker minted 1k $eBTC ($76.7M) &, utili",ETH,hack_security,ok,2026-05-18T23:36:51Z,2026-05-19 07:36:51 UTC+8,pass,pass,,
+cand_00117,2026-05-19 07:50:00 UTC+8,"Exploit Alert 🚨
+
+According to @dcfgod, @EchoProtocol_ on @monad has been exploited.
+
+The attacker reportedly minted 1,00",ETH,hack_security,ok,2026-05-18T23:50:00Z,2026-05-19 07:50:00 UTC+8,pass,pass,,
+cand_00105,2026-05-19 08:04:35 UTC+8,链上监测：黑客在Monad平台上铸造1000枚EBTC并洗钱,ETH,hack_security,ok,2026-05-19T00:04:35Z,2026-05-19 08:04:35 UTC+8,pass,pass,,
+cand_00094,2026-05-19 08:17:14 UTC+8,链上监测：过去4天内发生三起重大黑客事件,ETH,hack_security,ok,2026-05-19T00:17:14Z,2026-05-19 08:17:14 UTC+8,pass,pass,,
+cand_00074,2026-05-19 08:40:15 UTC+8,Santiment：持有至少100 BTC的钱包数量增至20229,BTC,institutional_flow,ok,2026-05-19T00:40:15Z,2026-05-19 08:40:15 UTC+8,pass,pass,,
+cand_00064,2026-05-19 09:00:20 UTC+8,"🔥 BULLISH: Bitwise announces it will hold $HYPE on its balance sheet, allocating 10% of its Hyperliquid ETF (BHYP) manag",HYPE,institutional_flow,ok,2026-05-19T01:00:20Z,2026-05-19 09:00:20 UTC+8,pass,pass,,
+cand_00047,2026-05-19 09:19:01 UTC+8,Lookonchain：过去4天内发生3起重大黑客攻击事件,ETH,hack_security,ok,2026-05-19T01:19:01Z,2026-05-19 09:19:01 UTC+8,pass,pass,,
+cand_00011,2026-05-19 10:23:18 UTC+8,黑客攻击Monad Echo协议，损失约7600万美元,ETH,hack_security,ok,2026-05-19T02:23:18Z,2026-05-19 10:23:18 UTC+8,pass,pass,,
+cand_00449,2026-05-19 01:19:22 UTC+8,Ethereum Foundation 研究员 Carl Beek 与 Julian Ma 于周一宣布离职。其中，Carl Beek 在以太坊工作约 7 年，曾参与 Beacon Chain 及以太坊 PoS 升级；Julian Ma 在以,ETH,network_upgrade,ok,2026-05-18T17:19:22Z,2026-05-19 01:19:22 UTC+8,pass,pass,,
+cand_00291,2026-05-19 04:10:27 UTC+8,"In 2019 I sincerely questioned myself whether I wanted to continue trading crypto.
+
+Almost all markets went down, crypto",BTC,network_upgrade,ok,2026-05-18T20:10:27Z,2026-05-19 04:10:27 UTC+8,pass,pass,,
+cand_00275,2026-05-19 04:30:00 UTC+8,XRP price slips 2% on profit taking,XRP,staking_governance,ok,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,pass,pass,,
+cand_00193,2026-05-19 06:07:31 UTC+8,"JUST IN: 100,000 blocks remain until the next Bitcoin Halving. https://t.co/y8wcvN854g",BTC,halving,ok,2026-05-18T22:07:31Z,2026-05-19 06:07:31 UTC+8,pass,pass,,
+cand_00187,2026-05-19 06:13:29 UTC+8,"JUST IN: There’s now less than 100,000 blocks until the next Bitcoin halving 👀 https://t.co/pDPSl8nLiY",BTC,halving,ok,2026-05-18T22:13:29Z,2026-05-19 06:13:29 UTC+8,pass,pass,,
+cand_00160,2026-05-19 06:42:26 UTC+8,以太坊质押比例上升至31%，长期持有者信心依旧,ETH,staking_governance,ok,2026-05-18T22:42:26Z,2026-05-19 06:42:26 UTC+8,pass,pass,,
+cand_00080,2026-05-19 08:33:49 UTC+8,"仅在过去 2 个月时间里，Ondo 项目方的多签钱包就向 Coinbase 等交易所累计转移了超过 3.28 亿枚 $ONDO ($9842 万)。
+
+地址：
+https://t.co/eqO2dMOrZL
+https://t.co/3c8",ONDO,whale_position,ok,2026-05-19T00:33:49Z,2026-05-19 08:33:49 UTC+8,pass,pass,,
+cand_00077,2026-05-19 08:36:06 UTC+8,"Whale Loracle.hl (@loraclexyz) has further increased his $HYPE (5x) short position to 1.44M $HYPE, valued at $69.3M with",HYPE,whale_position,ok,2026-05-19T00:36:06Z,2026-05-19 08:36:06 UTC+8,pass,pass,,
+cand_00053,2026-05-19 09:11:27 UTC+8,Bitcoin Whales Defy $77K Drop as Large Wallets Surge 11%,BTC,halving,ok,2026-05-19T01:11:27Z,2026-05-19 09:11:27 UTC+8,pass,pass,,
+cand_00016,2026-05-19 10:12:50 UTC+8,"5/18 Ethereum ETF Net Flow: $-84.14m
+$ETHA (BlackRock): –$55.40m
+$FETH (Fidelity): –$14.70m
+$ETHW (Bitwise): $0.00m
+$TET",ETH,staking_governance,ok,2026-05-19T02:12:50Z,2026-05-19 10:12:50 UTC+8,pass,pass,,
+cand_00493,2026-05-19 00:43:00 UTC+8,"JUST IN: Strategy $MSTR has generated an 84,987 #Bitcoin gain ($6.6 billion) so far this year, which is already 75% of t",BTC,macro,ok,2026-05-18T16:43:00Z,2026-05-19 00:43:00 UTC+8,pass,pass,,
+cand_00458,2026-05-19 01:08:39 UTC+8,【知名交易员Loracle「 HYPE 空仓 TOP 1」】CBRS 空单 止盈 啦!,HYPE,macro,ok,2026-05-18T17:08:39Z,2026-05-19 01:08:39 UTC+8,pass,pass,,
+cand_00456,2026-05-19 01:11:22 UTC+8,Ethereum's Vitalik Buterin Explains How AI Could Make Smart Contracts Truly Secure,ETH,macro,ok,2026-05-18T17:11:22Z,2026-05-19 01:11:22 UTC+8,pass,pass,,
+cand_00455,2026-05-19 01:15:00 UTC+8,🔥HUGE: White House Executive Director says an announcement on a Strategic Bitcoin Reserve is coming soon.,BTC,macro,ok,2026-05-18T17:15:00Z,2026-05-19 01:15:00 UTC+8,pass,pass,,
+cand_00400,2026-05-19 02:01:27 UTC+8,Crude Oil Prices: Brent and WTI Rise as Markets Respond to Trump-Xi Trade Talks,XRP,macro,ok,2026-05-18T18:01:27Z,2026-05-19 02:01:27 UTC+8,pass,pass,,
+cand_00388,2026-05-19 02:13:48 UTC+8,"Leading AI day trading bots in 2026: Why most fail, and what actually works",BTC,macro,ok,2026-05-18T18:13:48Z,2026-05-19 02:13:48 UTC+8,pass,pass,,
+cand_00347,2026-05-19 03:10:16 UTC+8,Cointelegraph：币安持有超过90亿美元比特币未平仓合约,BTC,macro,ok,2026-05-18T19:10:16Z,2026-05-19 03:10:16 UTC+8,pass,pass,,
+cand_00339,2026-05-19 03:17:10 UTC+8,JUST IN: Pro-Bitcoin Kevin Warsh to be sworn in as Federal Reserve Chair this Friday 👀🇺🇸 https://t.co/61p7sCHfHu,BTC,macro,ok,2026-05-18T19:17:10Z,2026-05-19 03:17:10 UTC+8,pass,pass,,
+cand_00329,2026-05-19 03:30:07 UTC+8,Messari报告：2026年Q1 Solana链上应用总收入达3.422亿美元,SOL,macro,ok,2026-05-18T19:30:07Z,2026-05-19 03:30:07 UTC+8,pass,pass,,
+cand_00303,2026-05-19 04:00:00 UTC+8,Kraken parent Payward grows Q1 revenue 3% as derivatives jump 51%,BTC,macro,ok,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,pass,pass,,
+cand_00304,2026-05-19 04:00:00 UTC+8,Kraken revenue hits $507m in Q1 despite slump,BTC,macro,ok,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,pass,pass,,
+cand_00277,2026-05-19 04:28:40 UTC+8,【知名交易员Loracle「 HYPE 空仓 TOP 1」】SNDK 空单 平仓止盈!,HYPE,macro,ok,2026-05-18T20:28:40Z,2026-05-19 04:28:40 UTC+8,pass,pass,,
+cand_00253,2026-05-19 05:00:00 UTC+8,HIVE soars over 35% on plans for $2.55b Toronto AI 'super factory',BTC,macro,ok,2026-05-18T21:00:00Z,2026-05-19 05:00:00 UTC+8,pass,pass,,
+cand_00251,2026-05-19 05:01:00 UTC+8,"The two largest corporate holders of Bitcoin:
+
+Strategy - 843,738 BTC
+BlackRock - 817,138 BTC
+
+Who will win the race to",BTC,macro,ok,2026-05-18T21:01:00Z,2026-05-19 05:01:00 UTC+8,pass,pass,,
+cand_00239,2026-05-19 05:12:40 UTC+8,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!,HYPE,macro,ok,2026-05-18T21:12:40Z,2026-05-19 05:12:40 UTC+8,pass,pass,,
+cand_00238,2026-05-19 05:12:43 UTC+8,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈扩大！,HYPE,macro,ok,2026-05-18T21:12:43Z,2026-05-19 05:12:43 UTC+8,pass,pass,,
+cand_00233,2026-05-19 05:15:00 UTC+8,SpaceX Bitcoin treasury tops $637m pre-IPO,BTC,macro,ok,2026-05-18T21:15:00Z,2026-05-19 05:15:00 UTC+8,pass,pass,,
+cand_00230,2026-05-19 05:18:40 UTC+8,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!,HYPE,macro,ok,2026-05-18T21:18:40Z,2026-05-19 05:18:40 UTC+8,pass,pass,,
+cand_00229,2026-05-19 05:18:42 UTC+8,【Abraxas Capital主地址】HYPE 空单 割肉 啦!,HYPE,macro,ok,2026-05-18T21:18:42Z,2026-05-19 05:18:42 UTC+8,pass,pass,,
+cand_00199,2026-05-19 06:00:00 UTC+8,Bitwise HYPE ETF pledges 10% fees to buybacks,HYPE,macro,ok,2026-05-18T22:00:00Z,2026-05-19 06:00:00 UTC+8,pass,pass,,
+cand_00178,2026-05-19 06:18:56 UTC+8,美国司法部：俄亥俄州居民因加密庞氏骗局被判9年监禁,BTC,macro,ok,2026-05-18T22:18:56Z,2026-05-19 06:18:56 UTC+8,pass,pass,,
+cand_00167,2026-05-19 06:27:22 UTC+8,How Did Anthropic’s Claude AI Help Recover 5 BTC Locked Crypto Wallet for 11 Years?,BTC,macro,ok,2026-05-18T22:27:22Z,2026-05-19 06:27:22 UTC+8,pass,pass,,
+cand_00134,2026-05-19 07:20:00 UTC+8,Revolut launches first physical crypto card,DOGE,macro,ok,2026-05-18T23:20:00Z,2026-05-19 07:20:00 UTC+8,pass,pass,,
+cand_00118,2026-05-19 07:48:43 UTC+8,【麻吉黄立成】ETH 多单 滚仓 啦!,ETH,macro,ok,2026-05-18T23:48:43Z,2026-05-19 07:48:43 UTC+8,pass,pass,,
+cand_00112,2026-05-19 08:00:00 UTC+8,Galaxy Digital wins New York BitLicense,BTC,macro,ok,2026-05-19T00:00:00Z,2026-05-19 08:00:00 UTC+8,pass,pass,,
+cand_00098,2026-05-19 08:11:04 UTC+8,WorldCoin团队将1318枚WLD存入Coinbase,WLD,macro,ok,2026-05-19T00:11:04Z,2026-05-19 08:11:04 UTC+8,pass,pass,,
+cand_00096,2026-05-19 08:12:41 UTC+8,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!,HYPE,macro,ok,2026-05-19T00:12:41Z,2026-05-19 08:12:41 UTC+8,pass,pass,,
+cand_00091,2026-05-19 08:21:45 UTC+8,比特币矿工哈希价格降至35.29美元，收入下降9.44%,BTC,macro,ok,2026-05-19T00:21:45Z,2026-05-19 08:21:45 UTC+8,pass,pass,,
+cand_00079,2026-05-19 08:34:50 UTC+8,Ondo项目方多签钱包过去2个月向Coinbase等交易所累计转移超3.28亿枚ONDO,ONDO,macro,ok,2026-05-19T00:34:50Z,2026-05-19 08:34:50 UTC+8,pass,pass,,
+cand_00070,2026-05-19 08:46:14 UTC+8,余烬监测：ondo项目方多签钱包向Coinbase转入超3.28亿枚ondo,ONDO,macro,ok,2026-05-19T00:46:14Z,2026-05-19 08:46:14 UTC+8,pass,pass,,
+cand_00069,2026-05-19 08:47:28 UTC+8,Worldcoin团队向Coinbase充值1318万枚WLD,WLD,macro,ok,2026-05-19T00:47:28Z,2026-05-19 08:47:28 UTC+8,pass,pass,,
+cand_00028,2026-05-19 09:50:06 UTC+8,". $HYPE TOP1 和 TOP2 头寸互为对手方，六千多万刀的头寸，总有一个要投降🙌
+
+🔴Loracle：5x 做空 144 万枚 HYPE，价值 6843 万美元，入场价格 $42.55，目前浮亏 700.4 万美元
+https:/",HYPE,macro,ok,2026-05-19T01:50:06Z,2026-05-19 09:50:06 UTC+8,pass,pass,,
+cand_00026,2026-05-19 09:55:05 UTC+8,据 Reuters 调查报道，数据分析显示，自 2023 年以来，受制裁影响的伊朗最大加密交易所 Nobitex 已通过 Tron 和 BNB Chain 网络处理了至少 23 亿美元。报道指出，这两个区块链的创始人孙宇晨与赵长鹏均为特朗普,BNB,macro,ok,2026-05-19T01:55:05Z,2026-05-19 09:55:05 UTC+8,pass,pass,,
+cand_00025,2026-05-19 09:57:11 UTC+8,"燕子回来了！💪
+
+「先定 10 个大目标」老哥晒图展示其 $BTC 空单已浮盈 1222.5 万美元，但具体仓位和开仓点位并未露出
+
+05.06 时他止损 BTC 空单最大亏损约 286.7 万美元，这下一把子都回来了",BTC,macro,ok,2026-05-19T01:57:11Z,2026-05-19 09:57:11 UTC+8,pass,pass,,
+cand_00024,2026-05-19 09:58:27 UTC+8,黑石比特币ETF单日净流出5847枚BTC，创2026年第二大流出,BTC,macro,ok,2026-05-19T01:58:27Z,2026-05-19 09:58:27 UTC+8,pass,pass,,
+cand_00023,2026-05-19 09:59:51 UTC+8,比特币ETF总净流出达6.49亿美元，创2026年第三大流出,BTC,macro,ok,2026-05-19T01:59:51Z,2026-05-19 09:59:51 UTC+8,pass,pass,,
+cand_00017,2026-05-19 10:12:19 UTC+8,"黑石以太坊ETF 5月18日净流出26,269 ETH，交易量达5亿美元",ETH,macro,ok,2026-05-19T02:12:19Z,2026-05-19 10:12:19 UTC+8,pass,pass,,
+cand_00009,2026-05-19 10:28:37 UTC+8,交易员Loracle加仓HYPE空单20万枚，总规模升至6810万美元,HYPE,macro,ok,2026-05-19T02:28:37Z,2026-05-19 10:28:37 UTC+8,pass,pass,,
+cand_00002,2026-05-19 10:40:16 UTC+8,美联储新主席即将宣誓就职，谷歌与黑石合作推出AI云公司,HYPE,macro,ok,2026-05-19T02:40:16Z,2026-05-19 10:40:16 UTC+8,pass,pass,,
+cand_00499,2026-05-19 00:38:41 UTC+8,【交易员yixie「存储股主力」】AMD 多单 止盈 啦!,BTC,macro,ok,2026-05-18T16:38:41Z,2026-05-19 00:38:41 UTC+8,pass,pass,,
+cand_00492,2026-05-19 00:44:41 UTC+8,【交易员yixie「存储股主力」】AMD 多单 止盈 啦!,BTC,macro,ok,2026-05-18T16:44:41Z,2026-05-19 00:44:41 UTC+8,pass,pass,,
+cand_00489,2026-05-19 00:48:00 UTC+8,荷兰国际：随着伊朗战争持续，欧洲天然气价格上涨,BTC,macro,ok,2026-05-18T16:48:00Z,2026-05-19 00:48:00 UTC+8,pass,pass,,
+cand_00488,2026-05-19 00:48:42 UTC+8,【交易员yixie「存储股主力」】AMD 多单 止盈 啦!,BTC,macro,ok,2026-05-18T16:48:42Z,2026-05-19 00:48:42 UTC+8,pass,pass,,
+cand_00479,2026-05-19 00:54:18 UTC+8,Tempo集成Morpho借贷协议，扩展稳定币支付功能,BTC,macro,ok,2026-05-18T16:54:18Z,2026-05-19 00:54:18 UTC+8,pass,pass,,
+cand_00475,2026-05-19 00:56:29 UTC+8,市场消息：意大利总理梅洛尼正向布鲁塞尔施压，要求放宽欧盟财政规则，以帮助各国政府吸收伊朗战争和能源价格飙升带来的经济冲击,BTC,macro,ok,2026-05-18T16:56:29Z,2026-05-19 00:56:29 UTC+8,pass,pass,,
+cand_00474,2026-05-19 00:57:40 UTC+8,JUST IN: Trump will host Fed Chair Kevin Warsh’s swearing-in ceremony at the White House on Friday.,BTC,macro,ok,2026-05-18T16:57:40Z,2026-05-19 00:57:40 UTC+8,pass,pass,,
+cand_00473,2026-05-19 00:58:37 UTC+8,"JUST IN: 🇺🇸 Kevin Warsh to be sworn in as Fed Chair on Friday, officially replacing Jerome Powell. https://t.co/WM9MWULn",BTC,macro,ok,2026-05-18T16:58:37Z,2026-05-19 00:58:37 UTC+8,pass,pass,,
+cand_00464,2026-05-19 01:05:18 UTC+8,荷兰国际：债券收益率的上涨趋势暂无逆转迹象,BTC,macro,ok,2026-05-18T17:05:18Z,2026-05-19 01:05:18 UTC+8,pass,pass,,
+cand_00460,2026-05-19 01:07:24 UTC+8,伊朗外交部发言人巴加埃：强加给我们的战争对整个世界造成了严重影响,BTC,macro,ok,2026-05-18T17:07:24Z,2026-05-19 01:07:24 UTC+8,pass,pass,,
+cand_00451,2026-05-19 01:16:31 UTC+8,据AXIOS：特朗普的盟友敦促他在AI模型发布前进行审查,BTC,macro,ok,2026-05-18T17:16:31Z,2026-05-19 01:16:31 UTC+8,pass,pass,,
+cand_00437,2026-05-19 01:26:19 UTC+8,XBIT DEX：马斯克年末净资产将突破1万亿美元概率94%,BTC,macro,ok,2026-05-18T17:26:19Z,2026-05-19 01:26:19 UTC+8,pass,pass,,
+cand_00436,2026-05-19 01:27:04 UTC+8,Trump-Xi Summit Produced Two Different Stories On Oil Trade And Tariffs,BTC,macro,ok,2026-05-18T17:27:04Z,2026-05-19 01:27:04 UTC+8,pass,pass,,
+cand_00435,2026-05-19 01:27:15 UTC+8,Galaxy Digital获得纽约州虚拟货币业务牌照,BTC,macro,ok,2026-05-18T17:27:15Z,2026-05-19 01:27:15 UTC+8,pass,pass,,
+cand_00433,2026-05-19 01:30:00 UTC+8,"""Taxes on unrealized gains are absurd.""
+
+Michael Green (@profplum99) on Dutch box 3 policy.
+
+""They're trying to tax the",BTC,macro,ok,2026-05-18T17:30:00Z,2026-05-19 01:30:00 UTC+8,pass,pass,,
+cand_00426,2026-05-19 01:37:33 UTC+8,"""Taxes on unrealized gains are absurd.""
+
+Michael Green (@profplum99) on Dutch box 3 policy.
+
+""They're trying to tax the",BTC,macro,ok,2026-05-18T17:37:33Z,2026-05-19 01:37:33 UTC+8,pass,pass,,
+cand_00424,2026-05-19 01:38:42 UTC+8,【山寨空军车头「多币种空仓 TOP 1」】LIT 空单 止盈 啦!,BTC,macro,ok,2026-05-18T17:38:42Z,2026-05-19 01:38:42 UTC+8,pass,pass,,
+cand_00414,2026-05-19 01:50:17 UTC+8,代币化国债总额创历史新高达137亿美元,BTC,macro,ok,2026-05-18T17:50:17Z,2026-05-19 01:50:17 UTC+8,pass,pass,,
+cand_00406,2026-05-19 01:58:41 UTC+8,【交易员yixie「存储股主力」】AMD 多单 平仓止盈!,BTC,macro,ok,2026-05-18T17:58:41Z,2026-05-19 01:58:41 UTC+8,pass,pass,,
+cand_00405,2026-05-19 01:59:03 UTC+8,伊朗哈尔克岛附近油轮数量触及美封锁后峰值,BTC,macro,ok,2026-05-18T17:59:03Z,2026-05-19 01:59:03 UTC+8,pass,pass,,
+cand_00403,2026-05-19 01:59:40 UTC+8,Lotment Capital announces a new standard in client success,BTC,hack_security,ok,2026-05-18T17:59:40Z,2026-05-19 01:59:40 UTC+8,pass,pass,,
+cand_00402,2026-05-19 02:00:00 UTC+8,NYDIG warns US crypto market-structure bill could 'fail' if August window is missed,BTC,macro,ok,2026-05-18T18:00:00Z,2026-05-19 02:00:00 UTC+8,pass,pass,,
+cand_00398,2026-05-19 02:03:56 UTC+8,日本经济再生大臣赤泽亮正：巴西是与我们建立了紧密贸易与投资关系的重要伙伴，同时也是全球第九大产油国,BTC,macro,ok,2026-05-18T18:03:56Z,2026-05-19 02:03:56 UTC+8,pass,pass,,
+cand_00396,2026-05-19 02:05:17 UTC+8,"Stock Market Today: S&P 500, Dow Jones Slip as Oil Prices and Treasury Yields Rise",BTC,macro,ok,2026-05-18T18:05:17Z,2026-05-19 02:05:17 UTC+8,pass,pass,,
+cand_00394,2026-05-19 02:06:46 UTC+8,美国和菲律宾正“迅速推进”建设人工智能中心的计划,BTC,macro,ok,2026-05-18T18:06:46Z,2026-05-19 02:06:46 UTC+8,pass,pass,,
+cand_00387,2026-05-19 02:14:57 UTC+8,据伊朗塔斯尼姆通讯社：来自谈判团队的消息人士透露，伊朗的新方案侧重于就结束战争进行谈判以及由美方建立信任,BTC,macro,ok,2026-05-18T18:14:57Z,2026-05-19 02:14:57 UTC+8,pass,pass,,
+cand_00379,2026-05-19 02:24:46 UTC+8,【ZEC最大空头】BRENTOIL 空单 摊平 啦!,BTC,macro,ok,2026-05-18T18:24:46Z,2026-05-19 02:24:46 UTC+8,pass,pass,,
+cand_00376,2026-05-19 02:27:39 UTC+8,美媒：特朗普盟友敦促其在AI模型发布前进行测试和审查,BTC,macro,ok,2026-05-18T18:27:39Z,2026-05-19 02:27:39 UTC+8,pass,pass,,
+cand_00370,2026-05-19 02:35:14 UTC+8,据日经新闻：巴西外长表示，巴西准备增加对日本的原油出口,BTC,macro,ok,2026-05-18T18:35:14Z,2026-05-19 02:35:14 UTC+8,pass,pass,,
+cand_00367,2026-05-19 02:44:32 UTC+8,世界银行：提供3.5亿美元融资以帮助应对孟加拉国燃料市场波动,BTC,macro,ok,2026-05-18T18:44:32Z,2026-05-19 02:44:32 UTC+8,pass,pass,,
+cand_00357,2026-05-19 03:00:00 UTC+8,"ZachXBT offers $10,000 bounty for evidence against Hong Kong market maker HSBG",BTC,macro,ok,2026-05-18T19:00:00Z,2026-05-19 03:00:00 UTC+8,pass,pass,,
+cand_00351,2026-05-19 03:04:45 UTC+8,【ZEC最大空头】BRENTOIL 空单 摊平 啦!,BTC,macro,ok,2026-05-18T19:04:45Z,2026-05-19 03:04:45 UTC+8,pass,pass,,
+cand_00344,2026-05-19 03:13:11 UTC+8,1. 与内塔尼亚胡通话，讨论重启对伊战事可能性——据以媒报道，以色列总理内塔尼亚胡与特朗普通电话，讨论重启对伊朗军事行动…,BTC,macro,ok,2026-05-18T19:13:11Z,2026-05-19 03:13:11 UTC+8,pass,pass,,
+cand_00340,2026-05-19 03:14:43 UTC+8,【ZEC最大空头】TON 空单 新开仓!,BTC,macro,ok,2026-05-18T19:14:43Z,2026-05-19 03:14:43 UTC+8,pass,pass,,
+cand_00332,2026-05-19 03:28:19 UTC+8,黎巴嫩总统：我的责任是尽一切可能，尽量以更低的成本来阻止战争对我的人民和国家的影响,BTC,macro,ok,2026-05-18T19:28:19Z,2026-05-19 03:28:19 UTC+8,pass,pass,,
+cand_00328,2026-05-19 03:30:18 UTC+8,"🇺🇸 UPDATE: US CPI inflation is projected to rise above 5% this year if recent monthly trends continue, potentially marki",BTC,macro,ok,2026-05-18T19:30:18Z,2026-05-19 03:30:18 UTC+8,pass,pass,,
+cand_00327,2026-05-19 03:32:25 UTC+8,巴基斯坦据悉已向沙特派遣了一个战斗机中队和数千名士兵,BTC,hack_security,ok,2026-05-18T19:32:25Z,2026-05-19 03:32:25 UTC+8,pass,pass,,
+cand_00320,2026-05-19 03:41:31 UTC+8,现货黄金短线拉升约25美元，报4553.22美元/盎司；现货白银短线上扬约1美元，报76.69美元/盎司,BTC,macro,ok,2026-05-18T19:41:31Z,2026-05-19 03:41:31 UTC+8,pass,pass,,
+cand_00319,2026-05-19 03:42:17 UTC+8,美元指数DXY短线下挫近20点，报99.06,BTC,macro,ok,2026-05-18T19:42:17Z,2026-05-19 03:42:17 UTC+8,pass,pass,,
+cand_00308,2026-05-19 03:58:19 UTC+8,古巴驻美国大使馆：连续表态（共 2 条）,BTC,macro,ok,2026-05-18T19:58:19Z,2026-05-19 03:58:19 UTC+8,pass,pass,,
+cand_00302,2026-05-19 04:00:00 UTC+8,"🚨BREAKING: FED TO INJECT $10 BILLION INTO THE ECONOMY THIS WEEK! 
+
+The Federal Reserve will conduct two Treasury bill pu",BTC,macro,ok,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,pass,pass,,
+cand_00300,2026-05-19 04:00:39 UTC+8,IMF：上调英国经济预期，但政治动荡可能影响经济增长,BTC,macro,ok,2026-05-18T20:00:39Z,2026-05-19 04:00:39 UTC+8,pass,pass,,
+cand_00299,2026-05-19 04:00:46 UTC+8,【ZEC最大空头】TON 空单 滚仓 啦!,BTC,macro,ok,2026-05-18T20:00:46Z,2026-05-19 04:00:46 UTC+8,pass,pass,,
+cand_00294,2026-05-19 04:05:38 UTC+8,摩根士丹利：预计英伟达(NVDA.O)将再次迎来一个“超预期并上调指引”的季度，预计营收比预期高出约30亿美元，业绩指引…,BTC,macro,ok,2026-05-18T20:05:38Z,2026-05-19 04:05:38 UTC+8,pass,pass,,
+cand_00287,2026-05-19 04:12:59 UTC+8,据伊朗伊斯兰共和国通讯社：伊朗卫生部长与伊朗革命卫队负责人讨论美国和以色列施加的战争造成的损害,BTC,macro,ok,2026-05-18T20:12:59Z,2026-05-19 04:12:59 UTC+8,pass,pass,,
+cand_00284,2026-05-19 04:18:26 UTC+8,国际能源署署长比罗尔：连续表态（共 2 条）,BTC,macro,ok,2026-05-18T20:18:26Z,2026-05-19 04:18:26 UTC+8,pass,pass,,
+cand_00278,2026-05-19 04:27:49 UTC+8,加皇银行：标普500指数下行空间有限，回调幅度最多可达10%,BTC,macro,ok,2026-05-18T20:27:49Z,2026-05-19 04:27:49 UTC+8,pass,pass,,
+cand_00270,2026-05-19 04:34:48 UTC+8,【ZEC最大空头】ZEC 空单 摊平 啦!,BTC,macro,ok,2026-05-18T20:34:48Z,2026-05-19 04:34:48 UTC+8,pass,pass,,
+cand_00264,2026-05-19 04:48:40 UTC+8,哈莫尼黄金公司：连续表态（共 2 条）,BTC,macro,ok,2026-05-18T20:48:40Z,2026-05-19 04:48:40 UTC+8,pass,pass,,
+cand_00261,2026-05-19 04:51:15 UTC+8,法院文件显示：特朗普已驳回对美国国税局的诉讼,BTC,macro,ok,2026-05-18T20:51:15Z,2026-05-19 04:51:15 UTC+8,pass,pass,,
+cand_00259,2026-05-19 04:52:33 UTC+8,Cuban: Crypto Industry Finally Wants Regulation - U.Today,BTC,macro,ok,2026-05-18T20:52:33Z,2026-05-19 04:52:33 UTC+8,pass,pass,,
+cand_00254,2026-05-19 04:57:53 UTC+8,Elon Musk Loses OpenAI Lawsuit as Jury Rejects Claims Against Sam Altman,BTC,macro,ok,2026-05-18T20:57:53Z,2026-05-19 04:57:53 UTC+8,pass,pass,,
+cand_00248,2026-05-19 05:04:21 UTC+8,伊拉克石油部：4月原油出口量为988.4万桶,BTC,macro,ok,2026-05-18T21:04:21Z,2026-05-19 05:04:21 UTC+8,pass,pass,,
+cand_00234,2026-05-19 05:14:42 UTC+8,【ZEC最大空头】TON 空单 滚仓 啦!,BTC,macro,ok,2026-05-18T21:14:42Z,2026-05-19 05:14:42 UTC+8,pass,pass,,
+cand_00232,2026-05-19 05:15:00 UTC+8,亚洲主导稳定币支付，近三分之二交易量来自亚洲,BTC,macro,ok,2026-05-18T21:15:00Z,2026-05-19 05:15:00 UTC+8,pass,pass,,
+cand_00224,2026-05-19 05:26:44 UTC+8,据华尔街日报：人工智能软件初创公司Decart融资3亿美元，估值接近40亿美元,BTC,macro,ok,2026-05-18T21:26:44Z,2026-05-19 05:26:44 UTC+8,pass,pass,,
+cand_00219,2026-05-19 05:32:20 UTC+8,小摩：本月美债收益率的大幅上升或已接近峰值,BTC,macro,ok,2026-05-18T21:32:20Z,2026-05-19 05:32:20 UTC+8,pass,pass,,

@@ -1,0 +1,47 @@
+file,response_type,title,generated_at,model,prompt,prompt_sha256_16,size_bytes,line_count,modified_at_china,content_sha256_16
+results\claude_cost_control_response.md,next_consultation,Claude Response,2026-05-27 17:07:01 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_COST_CONTROL_PROMPT.md,b19eecb98c9a29d0,13763,317,2026-05-27 17:07:01,80908ce7c545858c
+results\claude_next_response_20260527_163346.md,next_consultation,Claude Response,2026-05-27 16:35:10 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,fca19de014d58043,13114,356,2026-05-27 16:35:10,5ff0385bd09a4145
+results\claude_next_response_20260527_163625.md,next_consultation,Claude Response,2026-05-27 16:38:23 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,46c573c780a900fd,18893,428,2026-05-27 16:38:23,7d128ac057c2b1d1
+results\v06_claude_after_gate_next_step.md,other,Rationale,,,,,1888,44,2026-05-27 15:20:38,c684c70b0974717a
+results\v06_claude_macro_holdout_decision.md,macro_holdout,Rule,,,,,1205,28,2026-05-27 15:19:43,013080741bcca330
+results\v06_claude_manual_reduction_call_status.md,manual_reduction,Claude Call Status,,,,,654,25,2026-05-27 14:54:42,cc104ad3c4866609
+results\v06_claude_manual_reduction_response.md,manual_reduction,1. Decision Table: AI vs Human by Step,,,,,2378,56,2026-05-27 15:11:02,ec405c945b42f0e0
+results\v06_claude_manual_review_release_rules.md,release_rules,AUTO-RELEASE CRITERIA (manual_review_required=FALSE),,,,,1366,37,2026-05-27 15:18:11,57873b79b777ab07
+results\v06_claude_next_engineering_direction.md,engineering_direction,Why This Is The Right Next Step,,,,,2376,54,2026-05-27 15:15:54,e7df8b14a479f97f
+results\v06_claude_question_backlog_response.md,question_backlog,Crypto Event Intelligence v0.6 - 架构与产品评估,,,,,9736,200,2026-05-27 12:20:33,d6e8aff408d453be
+results\v06_claude_tg_pilot_gate.md,tg_pilot,Recommended Numeric Gates (Sequential):,,,,,771,15,2026-05-27 15:11:33,a6d5a4ebccfae79b
+results\v07_claude_onchain_intel_strategy.md,next_consultation,Claude Response,2026-05-27 17:29:47 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V07_ONCHAIN_INTEL_PROMPT.md,1f54327ec4edd3b1,18674,584,2026-05-27 17:29:47,731590aa25ca9cf4
+results\v07_claude_watcher_server_review.md,other,Claude v0.7 Watcher Server Review,,,,,20183,619,2026-05-28 09:55:25,74da14951506af81
+results\v08_claude_project_planning_response.md,other,Claude v0.8 Project Planning Response,,,,,12084,270,2026-05-28 11:45:03,7eebb3d4cba50f9e
+results\v08_claude_remaining_plan_review.md,next_consultation,Claude Response,2026-05-28 10:28:22 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V08_REMAINING_PLAN_PROMPT.md,97d53e7eff0b22ec,7898,155,2026-05-28 10:28:22,79c480defb69d895
+results\v08_claude_tg_product_card_review.md,next_consultation,Claude Response,2026-05-28 15:04:20 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V08_TG_PRODUCT_CARD_REVIEW_PROMPT.md,cd6dc06f1ddc763b,25703,905,2026-05-28 15:04:20,269db06d90b50f90
+results\v08_claude_tg_product_card_review_continuation.md,next_consultation,Claude Response,2026-05-28 15:07:43 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V08_TG_PRODUCT_CARD_REVIEW_CONTINUATION_PROMPT.md,1725927a31a3a9ec,23224,636,2026-05-28 15:07:43,e41555c2143a3672
+results\v08_claude_user_view_project_review.md,next_consultation,Claude Response,2026-05-28 12:24:02 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V08_USER_VIEW_PROJECT_REVIEW_PROMPT.md,72cc365d77293179,23861,650,2026-05-28 12:24:02,98d5e1cbea35e0f7
+results\v09_claude_tg_readability_review.md,next_consultation,Claude Response,2026-05-28 15:37:55 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V09_TG_READABILITY_REVIEW_PROMPT.md,1f29cda44912b65d,21562,694,2026-05-28 15:37:55,e7f3052fceffe194
+results\v10_claude_quant_collaboration_continuation.md,next_consultation,Claude Response,2026-05-28 16:18:38 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V10_QUANT_COLLABORATION_CONTINUATION_PROMPT.md,d0e5a9981cc00dd9,20501,639,2026-05-28 16:18:38,0decb16a13b2ec07
+results\v10_claude_quant_collaboration_plan.md,next_consultation,Claude Response,2026-05-28 16:15:41 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V10_QUANT_COLLABORATION_PROMPT.md,4f2bd476aa350bfe,31996,881,2026-05-28 16:15:41,e71495c9281bed8e
+results\v11_claude_external_reference_upgrade_plan.md,next_consultation,Claude Response,2026-05-28 18:04:11 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V11_EXTERNAL_REFERENCE_UPGRADE_PROMPT.md,c6489ab6fd4e95a7,25723,574,2026-05-28 18:04:11,9b3608ff4a3dbbe1
+results\v11_claude_external_reference_upgrade_plan_continuation.md,next_consultation,Claude Response,2026-05-28 18:07:36 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V11_EXTERNAL_REFERENCE_UPGRADE_CONTINUATION_PROMPT.md,63fa2721aa2c20c1,22881,649,2026-05-28 18:07:36,2db4f726eff1f819
+results\v12_claude_continuation_response.md,next_consultation,Claude Response,2026-05-28 19:34:48 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V12_CONTINUATION_PROMPT.md,8c190e43eef48c4a,17856,496,2026-05-28 19:34:48,c745fa726a223889
+results\v12_claude_historical_policy_review.md,next_consultation,Claude Response,2026-05-28 19:14:27 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V12_HISTORICAL_POLICY_REVIEW_PROMPT.md,c47d9e6f96280b5d,18457,630,2026-05-28 19:14:27,4239d31e4230d1b9
+results\v13_claude_extended_replay_review.md,next_consultation,Claude Response,2026-05-28 20:14:46 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V13_EXTENDED_REPLAY_REVIEW_PROMPT.md,aedd5966ac737322,15071,447,2026-05-28 20:14:46,e58679ca382155f2
+results\v13_claude_quality_audit_continuation.md,next_consultation,Claude Response,2026-05-28 19:53:37 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V13_QUALITY_AUDIT_CONTINUATION_PROMPT.md,3363284cdfab6b10,15668,505,2026-05-28 19:53:37,875becb55553224c
+results\v14_claude_after_p0_p1_review.md,next_consultation,Claude Response,2026-05-28 22:45:55 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,6acb13e743c1bc96,10227,171,2026-05-28 22:45:55,f0cc81895d658e85
+results\v14_claude_composer_policy_review.md,next_consultation,Claude Response,2026-05-28 20:59:19 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_COMPOSER_POLICY_REVIEW_PROMPT.md,fa275c1ff9148d3e,12852,385,2026-05-28 20:59:19,e2fdbf3d1c29e9c5
+results\v14_claude_derivatives_percentile_review.md,next_consultation,Claude Response,2026-05-28 23:01:02 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,4c0f56d7399455e8,9533,272,2026-05-28 23:01:02,60795ce0480f031a
+results\v14_claude_digest_integration_review.md,other,验证报告综合审查意见,,,,,8394,234,2026-05-28 22:11:10,0fad3f838bf0bb4f
+results\v14_claude_external_reference_upgrade.md,next_consultation,Claude Response,2026-05-28 20:43:36 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_EXTERNAL_REFERENCE_UPGRADE_PROMPT.md,5472f243ec2bbd0d,20257,604,2026-05-28 20:43:36,1ff14bd3c7b43f4b
+results\v14_claude_first_hand_source_review.md,next_consultation,Claude Response,2026-05-28 21:36:31 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_FIRST_HAND_SOURCE_REVIEW_PROMPT.md,5040a1ca5c63d40a,5294,173,2026-05-28 21:36:31,f8a7030b68deddf0
+results\v14_claude_five_task_acceptance_review.md,next_consultation,Claude Response,2026-05-28 21:47:39 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_FIVE_TASK_ACCEPTANCE_REVIEW_PROMPT.md,61f50667898bdcc7,11194,270,2026-05-28 21:47:39,43c87122ebac951e
+results\v14_claude_gate_next_review.md,other,验证报告审查意见,,,,,5945,192,2026-05-28 22:02:21,3277dd91058055b6
+results\v14_claude_gate_policy_review.md,next_consultation,Claude Response,2026-05-28 21:09:31 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_GATE_POLICY_REVIEW_PROMPT.md,957bbc5b8aba699f,15157,364,2026-05-28 21:09:31,260eec23a0bc1ed6
+results\v14_claude_market_state_next_review.md,next_consultation,Claude Response,2026-05-28 22:35:17 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,4c5b0b0a5b356efe,17028,451,2026-05-28 22:35:17,2404d65b486451a9
+results\v14_claude_next_data_layer_review.md,other,综合审查意见：v14 系统上线评估,,,,,9422,298,2026-05-28 22:18:58,42ee1d8d2c4aa55d
+results\v14_claude_next_public_data_tasks.md,other,v14 系统上线评估：综合审查意见,,,,,12578,379,2026-05-28 22:23:07,9dd7602673e08ab4
+results\v14_claude_next_user_value_review.md,other,综合审查意见：v14 系统上线评估,,,,,9450,298,2026-05-28 22:15:28,181c60ec1107478c
+results\v14_claude_three_task_followup_review.md,other,验证报告总结,,,,,4651,149,2026-05-28 21:59:12,60bd723f27da5a66
+results\v14_claude_upgrade_digest_review.md,next_consultation,Claude Response,2026-05-28 21:24:21 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_UPGRADE_DIGEST_REVIEW_PROMPT.md,76a9f9ee066d7890,9165,229,2026-05-28 21:24:21,1ad80f8ff860d83e
+results\v14_claude_validation_loop_review.md,next_consultation,Claude Response,2026-05-28 21:41:17 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_V14_VALIDATION_LOOP_REVIEW_PROMPT.md,f8898a2d6f3af330,10634,340,2026-05-28 21:41:17,ecb842de95f166b1
+results\v15_claude_hyperliquid_after_impl_review.md,next_consultation,Claude Response,2026-05-29 12:20:52 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,83a6893dd1d86696,13220,423,2026-05-29 12:20:52,f773a7d221b5a750
+results\v15_claude_liquidation_whale_onchain_review.md,next_consultation,Claude Response,2026-05-29 12:52:15 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,825af2ca0fc0608a,18190,497,2026-05-29 12:52:15,25c1dd0cb9e5afb7
+results\v15_claude_tg_digest_hyperliquid_review.md,next_consultation,Claude Response,2026-05-29 12:09:56 UTC+8,anthropic/claude-sonnet-4.5,docs\CLAUDE_NEXT_PROMPT.md,4975a77292a159ff,13364,355,2026-05-29 12:09:56,71236dd61d995645

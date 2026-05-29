@@ -1,0 +1,2 @@
+﻿generated_at_china,digest_label,window_start_china,window_end_china,sent_rows_in_window,ledger_rows_in_window,long_short_rows,digest_only_rows,evidence_rows,etf_context_loaded,hyperliquid_context_loaded,send_mode,status,message
+2026-05-28 22:08:27 UTC+8,noon,2026-05-28 08:00:00 UTC+8,2026-05-28 12:00:00 UTC+8,4,0,7,0,3,true,true,dry_run,pass,ok

@@ -1,0 +1,374 @@
+﻿event_id,asset_symbol,event_subtype,prefilter_passed,prefilter_blocks,prefilter_warnings,pre_event_abnormal_6h,price_in_5m,price_in_15m,price_in_1h,short_price_in_flag,price_in_flag,market_hours_block,title
+cand_04833,BNB,etf_or_fund_flow,true,pass,none,0.004277,-0.000030,0.000061,0.000487,pass,none,false,VanEck和Grayscale向SEC提交BNB ETF修正文件
+cand_04490,SOL,exploit_or_theft,false,"primary_asset_confidence_below_70pct,weak_chain_token_attribution",none,-0.003230,0.000347,0.000927,0.001391,pass,none,false,Is Q-Day crypto’s next threat as blockchains rush quantum fixes?
+cand_04117,SOL,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.003202,-0.000589,-0.000824,-0.004692,pass,none,false,"🚀@GoPlusSecurity is now live on the @wallet Plugin Store.
+
+Users can now access GoPlus security protection directly thro"
+cand_04079,AAVE,exploit_or_theft,true,pass,none,-0.002936,-0.001129,-0.000904,0.003518,pass,none,false,Aave restores Ether borrowing limits after $230 million exploit
+cand_04015,HYPE,etf_or_fund_flow,true,pass,none,-0.003213,0.005035,0.004108,0.011708,pass,none,false,Lookonchain：与a16z关联的钱包0xb5e4今日买入37.2万枚HYPE
+cand_03933,LINK,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.005905,0.001060,0.002123,-0.003168,pass,none,false,Crypto Users Warn of Official-Looking Phishing Emails: Exchange and DeFi Users Targeted - U.Today
+cand_03916,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003856,0.002614,0.001476,-0.000566,pass,none,false,AAVE恢复WETH抵押限额，正常运营
+cand_03794,XRP,etf_or_fund_flow,true,pass,none,-0.000588,0.001505,0.000931,0.009611,pass,none,false,"Goldman Sachs Liquidates $154 Million XRP Position via ETF, Pivots to Hyperliquid Treasury - U.Today"
+cand_03657,BNB,etf_or_fund_flow,true,pass,none,0.002728,-0.001758,-0.003431,-0.007660,pass,none,false,AEON raises $8m to wire AI agents into 50m real-world merchants
+cand_03481,HYPE,etf_or_fund_flow,true,pass,none,-0.001903,0.000712,0.001068,0.003301,pass,none,false,Bitwise to add HYPE to balance sheet using fees from Hyperliquid ETF
+cand_03399,XRP,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000456,-0.002245,-0.002823,0.000000,pass,none,false,Crude Oil Prices: Brent and WTI Rise as Markets Respond to Trump-Xi Trade Talks
+cand_03364,HYPE,etf_or_fund_flow,true,pass,none,0.004224,-0.001040,-0.001328,-0.007063,pass,none,false,Bitwise将用10%管理费购买$HYPE
+cand_03198,HYPE,etf_or_fund_flow,false,pre_event_price_moved_+4.03%_6h,none,0.040285,-0.004567,-0.005492,0.025084,pass,moderate,false,Bitwise HYPE ETF pledges 10% fees to buybacks
+cand_03063,HYPE,etf_or_fund_flow,false,pre_event_price_moved_+5.15%_6h,none,0.051452,-0.002764,0.004417,0.004080,pass,none,false,"🔥 BULLISH: Bitwise announces it will hold $HYPE on its balance sheet, allocating 10% of its Hyperliquid ETF (BHYP) manag"
+cand_02824,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003783,-0.000620,-0.002786,0.001399,pass,moderate,false,BNB Reveals Biggest Challenge of Post-Quantum Network Migrations - U.Today
+cand_02338,XRP,etf_or_fund_flow,true,pass,none,0.000452,-0.000291,0.001679,0.003877,pass,none,false,参议员：OCC不应向Ripple和Coinbase等加密企业授予国家信托牌照
+cand_02076,HYPE,etf_or_fund_flow,true,pass,none,0.002200,0.002775,0.004598,-0.006080,pass,none,false,"Hyperliquid ETF pulls $5M in days, 21Shares says"
+cand_01769,LINK,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.004965,0.002421,0.003477,0.002421,pass,none,false,Bitwise研究院：资金从LayerZero迁移至Chainlink CCIP
+cand_01767,LINK,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.004920,-0.000630,0.002526,0.003583,pass,none,false,吴说获悉，Bitwise 加密研究院 Ishmael Asad 发文表示，在 rsETH 攻击事件后，资金在从 LayerZero 向 Chainlink CCIP 迁移，其中 LayerZero 日活跃地址数已跌至近三年来的最低点，ZRO
+cand_01593,XRP,etf_or_fund_flow,true,pass,none,0.002689,-0.000073,0.000073,0.001755,pass,severe,false,"XRP selling pressure fades, but $1.50 still blocks bulls"
+cand_01570,XRP,etf_or_fund_flow,true,pass,none,0.001454,0.000437,0.001241,0.000875,pass,severe,false,"XRP ETF rises as bulls target $2, while SHRMiner cloud mining's daily passive income of $5,700 attracts attention"
+cand_01439,XRP,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.004476,-0.000512,0.000806,-0.003064,pass,none,false,Why Is Elizabeth Warren Attacking Ripple? The Answer Reveals Who Really Fears the CLARITY Act
+cand_01434,XRP,etf_or_fund_flow,true,pass,none,-0.003824,0.000366,0.000512,-0.002699,pass,none,false,"XRP Records 100% Uptick in U.S. ETFs, but 105-Day Sideways Drift Blocks Price Breakout - U.Today"
+cand_01288,SOL,etf_or_fund_flow,true,pass,none,0.000867,0.003193,0.000826,-0.000707,pass,none,false,Token Terminal：代币化ETF持有地址增至4.44万个
+cand_01202,SOL,etf_or_fund_flow,true,pass,none,0.007270,-0.001635,-0.005584,0.011598,pass,none,false,🔥 NEW: Morgan Stanley filed an amended Solana ETF application with $MSOL as the proposed ticker. https://t.co/Qw1LVgdMnE
+cand_01143,XRP,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.003307,-0.000364,0.001385,0.000291,pass,none,false,Ripple CLO Alderoty Breaks Down What Clarity Act Really Means for US Market - U.Today
+cand_00886,HYPE,etf_or_fund_flow,false,pre_event_price_moved_+2.26%_6h,none,0.022637,0.001583,-0.006190,0.009111,pass,none,false,"🚨HYPERLIQUID ETFs SEE $22M INFLOWS IN FIRST WEEK
+
+The first U.S. spot $HYPE ETFs have pulled in $22.3M in net inflows si"
+cand_00649,SOL,etf_or_fund_flow,true,pass,none,-0.008168,-0.000465,-0.000698,-0.000698,pass,none,false,吴说获悉，据彭博 ETF 分析师 James Seyffart，Morgan Stanley 今晨提交了 Solana ETF 修订版申请文件，拟使用代码“MSOL”，目前尚未披露管理费率。https://t.co/7BbQCjRkqs
+cand_00523,HYPE,etf_or_fund_flow,false,"pre_event_price_moved_+7.98%_6h,already_priced_in_60m_+3.00%",none,0.079783,0.002143,0.002741,0.030038,price_in_block,severe,false,Grayscale：已提交$HYPE ETF注册申请，过去一周购入51万枚
+cand_00481,LINK,etf_or_fund_flow,true,pass,none,0.008352,0.003089,0.003605,0.004951,pass,none,false,"SpaceX IPO Playbook: 7 Supply Chain Stocks Riding the IPO Wave
+
+The Space Economy is entering its most explosive phase y"
+cand_00413,HYPE,etf_or_fund_flow,false,pre_event_price_moved_+6.53%_6h,none,0.065308,-0.001202,-0.000690,0.009557,pass,severe,false,链上监测：鲸鱼和机构大量购买$HYPE
+cand_00412,HYPE,etf_or_fund_flow,false,pre_event_price_moved_+6.77%_6h,none,0.067728,0.001042,0.001821,0.012741,pass,severe,false,多个巨鲸及机构近期持续增持HYPE
+cand_00258,LINK,etf_or_fund_flow,true,pass,none,-0.002427,-0.000622,-0.000830,-0.004238,pass,none,false,"Crypto traders are front-running the SpaceX IPO big time 🚀
+
+While Wall Street targets a $1.75T valuation, SpaceX trackin"
+cand_00048,HYPE,etf_or_fund_flow,false,pre_event_price_moved_+3.99%_6h,none,0.039939,-0.002201,-0.011061,-0.006162,pass,moderate,false,"BITWISE IS BUYING $HYPE
+
+Bitwise have announced their ETF addresses. They have bought a total of $19.78M HYPE so far and"
+cand_04766,SOL,listing_delisting,true,pass,none,-0.004008,-0.001157,-0.001966,-0.003924,pass,severe,false,Jump Crypto上线Firedancer验证器客户端，已处理数千万笔交易
+cand_04652,ADA,whale_wallet_position,true,pass,none,0.007259,-0.001171,-0.002338,0.001957,pass,none,false,"🐋 INTERESTING: Cardano whales now control nearly 67% of the entire ADA supply, the highest concentration since 2020. htt"
+cand_04610,SOL,upgrade_or_fork,true,pass,none,-0.002428,-0.000574,-0.000459,0.002649,pass,none,false,"Firedancer quietly hits Solana mainnet, but validators must wait"
+cand_04537,XRP,upgrade_or_fork,true,pass,none,-0.000081,0.000000,-0.000634,-0.003372,pass,none,false,XRP Upgrade Nears Rollout With Critical Fixes Across Several Features - U.Today
+cand_04273,BNB,staking_or_governance,true,pass,none,0.002073,0.000666,0.001566,-0.003393,pass,severe,false,Cointelegraph：Vaneck和Grayscale提交BNB ETF提案修正案
+cand_03950,SOL,foundation_team,true,pass,none,-0.005820,-0.000355,-0.002834,-0.003657,pass,none,false,"⚡️ INSIGHT: Solana Foundation President Lily Liu says, “Memecoins don’t define Solana.” https://t.co/UlqW33QEtM"
+cand_03936,HYPE,upgrade_or_fork,true,pass,none,0.002263,-0.001301,-0.000022,-0.006102,pass,none,false,吴说获悉，Hyperliquid 宣布，约一个月后其活跃验证者集合将从 24 个增至 27 个，网络仍将保持当前的无需许可（permissionless）验证机制。官方提醒验证者在主网上线前充分熟悉测试网与相关技术细节，并表示验证者需自质押
+cand_03902,XRP,upgrade_or_fork,true,pass,none,-0.008418,-0.000797,-0.000363,-0.003326,pass,moderate,false,XRPL Validators Face Upgrade Deadline Ahead of Amendment Activation - U.Today
+cand_03867,XRP,upgrade_or_fork,true,pass,none,-0.005450,0.001159,0.002321,0.002103,pass,none,false,XRPL validators face May 27 deadline as upgrade nears activation
+cand_03704,SOL,whale_wallet_position,true,pass,none,0.000970,-0.002827,-0.002944,-0.010519,pass,none,false,"在 Pump 把 100% 收入回购调整为 50% 收入回购后，他们开始重新恢复把 SOL 转进交易所：
+过去半小时里把 8.27 万枚 SOL ($702 万) 转进了 Kraken。
+
+他们以前经常把手续费收入的 SOL 转进 Krak"
+cand_03677,BNB,upgrade_or_fork,true,pass,none,0.000820,-0.004897,-0.004912,-0.008696,pass,none,false,BNBAgent SDK已上线BSC主网，为AI代理在链上的规模化落地提供核心基础设施
+cand_03668,SOL,whale_wallet_position,true,pass,none,-0.002791,0.000474,-0.001302,-0.010204,pass,none,false,"Lookonchain：某地址在9个月后再次出售82,700枚SOL"
+cand_03666,SOL,upgrade_or_fork,true,pass,none,-0.002286,0.001068,-0.000118,-0.009741,pass,none,false,吴说获悉，Solana 核心开发团队 Anza 表示，Agave 4.0 已正式向主网验证者推荐升级。该版本重点提升网络传输效率与区块处理能力，包括引入 XDP 技术后将 Turbine 重传延迟从约 600ms 降至约 0.8ms，并全面
+cand_03562,BNB,upgrade_or_fork,true,pass,none,0.003673,-0.000078,0.001399,-0.000345,pass,severe,false,BNB Chain推出BNBAgent SDK，支持AI代理链上身份验证
+cand_03477,AVAX,stablecoin_supply_or_flow,true,pass,none,0.006937,0.000000,0.002203,0.000000,pass,severe,false,"Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:"
+cand_03456,SOL,rwa_tokenization,true,pass,none,0.004943,-0.001418,0.000592,0.001541,pass,none,false,"🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi"
+cand_03391,ONDO,rwa_tokenization,true,pass,none,0.009640,-0.001744,-0.009801,0.004386,pass,none,false,"🔥 BULLISH: Tokenized stocks on Ondo Finance crossed $1.5B in TVL, with Ondo’s top five assets making up 25% of the secto"
+cand_03341,XRP,price_market_structure,true,pass,none,0.002776,-0.001520,0.008700,0.002908,pass,none,false,$1.80 or $1.00? Analyst Maps Out XRP's Next Big Move - U.Today
+cand_03274,XRP,staking_or_governance,true,pass,none,0.002168,0.000144,0.000072,0.007894,pass,none,false,XRP price slips 2% on profit taking
+cand_03241,DOGE,payment_or_card_adoption,true,pass,none,-0.009582,-0.000096,-0.002684,-0.009613,pass,moderate,false,⚡️ NEW: Revolut unveiled a physical crypto card with Dogecoin branding and LED tap-to-pay functionality for users in the
+cand_03226,DOGE,payment_or_card_adoption,true,pass,none,-0.004354,0.001823,0.003555,-0.004195,pass,none,false,Revolut推出首张实体加密卡，主打Dogecoin主题
+cand_03115,DOGE,payment_or_card_adoption,true,pass,none,0.003187,-0.000286,-0.001431,-0.000382,pass,none,false,吴说获悉，Revolut 宣布推出首张实体加密卡，采用 Dogecoin 主题设计，并配备支付时可点亮的 LED 显示。该卡可在支持 Visa 与 Mastercard 的商户使用，首批面向英国及欧洲经济区（不含匈牙利、瑞士和葡萄牙）用户开
+cand_03079,ONDO,whale_wallet_position,false,"pre_event_price_moved_+12.39%_6h,already_priced_in_5m_-1.38%",none,0.123894,-0.013783,-0.012017,0.010196,price_in_block,none,false,"仅在过去 2 个月时间里，Ondo 项目方的多签钱包就向 Coinbase 等交易所累计转移了超过 3.28 亿枚 $ONDO ($9842 万)。
+
+地址：
+https://t.co/eqO2dMOrZL
+https://t.co/3c8"
+cand_03078,ONDO,whale_wallet_position,false,"pre_event_price_moved_+12.40%_6h,already_priced_in_5m_-1.13%",none,0.124007,-0.011256,-0.011003,0.003635,price_in_block,none,false,Ondo项目方多签钱包过去2个月向Coinbase等交易所累计转移超3.28亿枚ONDO
+cand_03069,ONDO,whale_wallet_position,false,pre_event_price_moved_+11.53%_6h,none,0.115289,0.002617,-0.011355,-0.005452,pass,none,false,余烬监测：ondo项目方多签钱包向Coinbase转入超3.28亿枚ondo
+cand_03028,SOL,protocol_metric,true,pass,none,0.002893,-0.001174,-0.002111,-0.007812,pass,none,false,Defillama：Hyperliquid仍维持链上永续合约市场领先地位
+cand_02900,XRP,upgrade_or_fork,true,pass,none,-0.001862,-0.000865,0.002097,-0.000216,pass,none,false,Ripple CTO Explains XRPL Hard Forks - U.Today
+cand_02846,BNB,staking_or_governance,true,pass,none,-0.004645,0.000901,0.000917,-0.000233,pass,moderate,false,BNB Chain发布后量子密码学迁移报告，测试显示数据膨胀挑战
+cand_02802,SOL,upgrade_or_fork,true,pass,none,0.000578,0.000234,0.003289,-0.000585,pass,none,false,Solana Chain GDP Hits $342M as RWA Market Cap Tops $2B
+cand_02714,BNB,upgrade_or_fork,true,pass,none,-0.004066,0.000672,0.000844,0.000672,pass,moderate,false,"BNB Chain Passes Post-Quantum Security Test, Network Speed Falls 40%"
+cand_02664,XRP,upgrade_or_fork,true,pass,none,-0.007621,0.000948,-0.001164,-0.001527,pass,none,false,Ripple CTO explains XRPL hard forks before 3.1.3 deadline
+cand_02258,UNI,custody_or_institutional_product,true,pass,none,0.003930,0.000573,0.002582,0.004022,pass,none,false,⚡️ NEW: Figure CEO Brett Adcock said the company’s humanoid robot has more possible body positions than atoms in the uni
+cand_02246,SOL,listing_delisting,true,pass,none,-0.001813,0.000000,-0.000946,-0.002362,pass,none,false,"🚨 INSIGHT: @mert said Solana should focus on spot listings, onchain binary markets, capital formation, privacy, and vaul"
+cand_02206,XRP,payment_or_card_adoption,true,pass,none,-0.011366,-0.000806,0.000073,-0.001537,pass,severe,false,"🇺🇸SEN. WARREN QUESTIONS OCC OVER CRYPTO BANK CHARTERS
+
+Senator Elizabeth Warren is questioning OCC approvals for crypto"
+cand_01972,HYPE,staking_or_governance,true,pass,none,-0.018425,-0.002415,-0.010954,-0.013951,pass,none,false,"链上监测：鲸鱼在过去10小时内购买206,325枚HYPE并质押"
+cand_01875,TRX,staking_or_governance,true,pass,none,0.002267,-0.000281,-0.000562,-0.001683,pass,none,false,TRX 固定促銷，享年化收益 8%！
+cand_01727,SOL,upgrade_or_fork,true,pass,none,0.001075,0.000471,0.001533,0.002715,pass,none,false,Galaxy lifts CLARITY Act odds to 75%
+cand_01440,HYPE,staking_or_governance,false,pre_event_price_moved_+2.66%_6h,none,0.026556,-0.000741,0.006924,-0.000381,pass,none,false,"Anchorage (@Anchorage) linked wallet further withdrew 44,510 $HYPE worth $2.16M from #Gate.
+
+They have bought 2.385M $HY"
+cand_01433,XRP,stablecoin_supply_or_flow,true,pass,none,-0.003363,0.000659,0.000659,-0.002262,pass,none,false,Ripple's RLUSD Hits New All-Time High in Market Cap - U.Today
+cand_01390,BNB,stablecoin_supply_or_flow,true,pass,none,-0.000719,-0.001549,-0.000821,0.001818,pass,none,false,Fetch.ai Launches Agent Launch for AI Agent Tokens on BNB Chain
+cand_01333,SHIB,upgrade_or_fork,true,pass,none,-0.000538,-0.001739,0.001745,-0.006920,pass,none,false,"Shibarium Transactions Surge 44%, but SHIB Isn't Moving - U.Today"
+cand_01282,LINK,stablecoin_supply_or_flow,false,already_priced_in_5m_+1.15%,none,0.000900,0.011460,0.008703,0.005015,price_in_block,none,false,"Make your own custom stablecoins with Coinbase!
+
+See link in follow on post https://t.co/kUGOkgIVoo"
+cand_01146,SOL,listing_delisting,true,pass,none,0.012091,0.000000,0.002916,-0.000581,pass,moderate,false,Solana链上定制稳定币USDF已上线
+cand_00748,XRP,staking_or_governance,true,pass,none,-0.005816,-0.000365,0.000000,-0.000876,pass,none,false,Clarity Act could unlock $2T says Ripple CLO
+cand_00585,XRP,staking_or_governance,true,pass,none,-0.003219,0.000657,0.000511,0.004909,pass,none,false,Clarity Act floor vote could come by August says Lummis
+cand_00581,HYPE,staking_or_governance,false,pre_event_price_moved_+6.77%_6h,none,0.067726,0.000686,0.003912,0.021297,pass,moderate,false,"Anchorage (@Anchorage) linked wallet further withdrew 142,308 $HYPE worth $7.38M from #Gate and #OKX.
+
+They have bought"
+cand_00426,XRP,staking_or_governance,true,pass,none,0.005183,0.000434,0.000869,-0.001228,pass,none,false,GSX settles $350m on-chain as $125m liquidity waits
+cand_00301,HYPE,staking_or_governance,false,pre_event_price_moved_+2.23%_6h,none,0.022295,-0.002464,0.001945,0.011313,pass,none,false,"This address 0x85C just withdrew $5.72M HYPE from Bitget and staked it.
+
+They have now staked $15.33M of HYPE.
+
+0x85C is"
+cand_00259,HYPE,upgrade_or_fork,true,pass,none,0.014903,0.001488,0.011353,0.007540,pass,severe,false,Pi Price Rally Soon? Pi Network Breaks Into US Market Through OKX Integration
+cand_00245,SOL,whale_wallet_position,true,pass,none,0.003203,0.000347,0.001852,0.000116,pass,none,false,【Abraxas Capital主地址】SOL 空单 新开仓!
+cand_00242,LINK,whale_wallet_position,true,pass,none,-0.001464,0.000933,0.002493,-0.003304,pass,none,false,【重仓布局三大市场】LINK 空单 平仓止盈!
+cand_00240,XRP,whale_wallet_position,true,pass,none,-0.000290,0.000437,0.000802,-0.001382,pass,none,false,【重仓布局三大市场】XRP 空单 平仓止盈!
+cand_00199,SOL,whale_wallet_position,true,pass,none,0.002585,0.001496,0.003808,0.007061,pass,none,false,【Abraxas Capital主地址】SOL 空单 摊平 啦!
+cand_00191,ADA,upgrade_or_fork,true,pass,none,-0.007332,0.000000,0.001603,0.007255,pass,none,false,Charles Hoskinson: ‘Cardano Is My Life's Work and I Want ADA to Succeed No Matter What’
+cand_00184,SOL,whale_wallet_position,true,pass,none,0.003460,0.000920,-0.000803,0.006591,pass,none,false,【Abraxas Capital主地址】SOL 空单 摊平 啦!
+cand_00151,SOL,whale_wallet_position,true,pass,none,0.003542,-0.000690,0.001960,-0.001034,pass,none,false,【Abraxas Capital主地址】SOL 空单 摊平 啦!
+cand_00127,SOL,whale_wallet_position,true,pass,none,0.001693,-0.002417,-0.002646,-0.002761,pass,none,false,【Abraxas Capital主地址】SOL 空单 摊平 啦!
+cand_00125,XRP,whale_wallet_position,true,pass,none,-0.000858,-0.002680,-0.002896,-0.002608,pass,none,false,"A crypto whale has made a $224,000 bet that XRP's price stays perfectly flat through June"
+cand_00094,HYPE,rwa_tokenization,false,pre_event_price_moved_+2.76%_6h,none,0.027616,0.001795,0.002435,-0.007013,pass,none,false,"Top 5 Projects on RootData🔥 
+https://t.co/69bunclw2J
+
+1. @NexusLabs - Massively-parallelized proof mining network; 
+📅 $N"
+cand_04990,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000826,-0.003916,-0.005363,-0.001458,pass,none,false,What Is AI Jailbreaking? A Beginner's Guide to the Cat-and-Mouse Game Behind Every Chatbot - Decrypt
+cand_04953,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.001096,0.000000,-0.001179,-0.000393,pass,none,false,OpenAI and Malta Partner to Give All Citizens Free ChatGPT Plus Access
+cand_04889,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000642,0.000152,0.001067,0.002442,pass,none,false,Tether Urged To Transfer $344M In Frozen USDT To Terror Victims | Bitcoinist.com
+cand_04846,BNB,etf_or_fund_flow,true,pass,none,0.003300,-0.000228,-0.001307,0.002211,pass,none,false,PrimeXBT: How Crypto Funding Changes Access to Global Markets | Bitcoinist.com
+cand_04822,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.003116,-0.000221,0.000332,0.000332,pass,severe,false,KelpDAO: rsETH Records $936k Net Outflows One Month Post-Hack - Details | Bitcoinist.com
+cand_04711,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003415,0.000799,-0.000414,0.000384,pass,none,false,$10M Gone: Thorchain Exploit Triggers Security Fears Across DeFi
+cand_04629,BNB,etf_or_fund_flow,true,pass,none,-0.004399,0.000292,-0.002926,-0.005196,pass,moderate,false,BNB ETF race tightens as VanEck and Grayscale update SEC filings
+cand_04600,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.004312,-0.001298,-0.001161,0.000811,pass,moderate,false,Crypto Report Card: How Institutional Investors Allocated Capital In Q1 2026 | Bitcoinist.com
+cand_04560,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001521,-0.001157,-0.001932,0.002093,pass,none,false,Crypto Confidence Surges As Italy's Largest Bank Doubles Holdings In Q1
+cand_04539,DOGE,etf_or_fund_flow,true,pass,none,0.012430,0.000269,0.001974,-0.004902,pass,none,false,Dogecoin Teases 27% Breakout out of Bollinger Bands as ETF Inflows Hit 3-Week Streak - U.Today
+cand_04482,BNB,etf_or_fund_flow,true,pass,none,0.001114,0.000138,0.000261,0.000583,pass,none,false,XRP ETF inflows surge as network activity hits March highs
+cand_04468,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.001655,-0.000046,-0.001808,-0.002022,pass,moderate,false,"CLARITY Act Could Unlock Wider Tech Growth In America, Says a16z"
+cand_04407,AVAX,etf_or_fund_flow,true,pass,none,-0.003426,-0.001076,0.000000,0.003243,pass,none,false,"🔥BITWISE’S BHYP LEADS 2026 ALTCOIN ETF DEBUTS
+
+Bitwise’s $HYPE ETF ""BHYP"" saw $4.31M in debut trading volume on May 15,"
+cand_04389,AAVE,etf_or_fund_flow,true,pass,none,-0.003279,0.001770,0.001105,0.000995,pass,severe,false,What Is Arc? The Stablecoin Blockchain From USDC Issuer Circle - Decrypt
+cand_04379,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000081,-0.000244,-0.000733,-0.002165,pass,none,false,"Crypto Systems Could Be Outpaced By Quantum Tech By 2033, Says Hoskinson"
+cand_04376,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.004200,0.001178,0.000000,0.000392,pass,none,false,Bernstein Sees Figure Q1 Proves Uniqueness of Blockchain Marketplaces
+cand_04354,ADA,etf_or_fund_flow,true,pass,none,-0.000625,-0.000394,-0.001182,-0.003536,pass,none,false,"Grayscale, VanEck File Amendments For BNB ETF - Next Altcoin Launch? | Bitcoinist.com"
+cand_04272,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.002073,0.000666,0.001566,-0.003393,pass,severe,false,"Bitcoin's Social Euphoria Hits Annual Peak Due To CLARITY Act, But History Says Caution Is Warranted"
+cand_04206,ADA,etf_or_fund_flow,true,pass,none,0.006977,0.000795,-0.003562,0.009218,pass,none,false,"Grayscale, VanEck Amend BNB ETF Applications"
+cand_04139,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003349,-0.001351,-0.000338,0.003281,pass,none,false,Aave Restores Wrapped Ether Borrowing Following Kelp DAO Hack
+cand_04119,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001877,-0.000226,-0.000566,-0.004398,pass,none,false,Aave restores WETH borrowing as Kelp DAO recovery moves ahead
+cand_04074,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.007391,-0.001603,-0.001603,-0.000401,pass,none,false,Verus Ethereum Bridge Reportedly Exploited for $11.58 Million
+cand_04055,AAVE,etf_or_fund_flow,true,pass,none,-0.004098,0.001134,-0.000453,-0.002711,pass,none,false,"还是有巨鲸在抄底的：手持 13.2 万枚 ETH 的巨鲸，今天在 3 小时前以 $2,110 的价格加仓抄底了 5,000 枚 ETH：
+他从 Spark 和 Aave 借款 1060 万 USDT，然后买成了 5,001 枚 ETH，买入"
+cand_03976,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.002161,0.002155,0.000340,-0.000452,pass,none,false,Crypto ATM Operator Bitcoin Depot Files for Chapter 11 Bankruptcy - Decrypt
+cand_03967,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.005819,-0.000531,0.001612,0.001095,pass,none,false,Hacker Drains $11.58 Million From Verus-Ethereum Bridge | Bitcoinist.com
+cand_03913,ADA,etf_or_fund_flow,true,pass,none,-0.007991,0.002418,0.001208,-0.004802,pass,none,false,"Goldman Sachs Cuts Crypto ETF Exposure, Rebalances Holdings"
+cand_03911,SOL,etf_or_fund_flow,true,pass,none,-0.007560,0.001542,0.001186,-0.003070,pass,none,false,⚡️ UPDATE: Goldman Sachs exited its XRP and Solana ETF positions in Q1 2026. https://t.co/Jp2vuwZMVj
+cand_03899,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.004406,-0.000626,-0.001017,-0.001252,pass,severe,false,"BREAKING - Bitcoin Depot, Operator Of 9,000+ ATMs, Files For Bankruptcy Protection"
+cand_03853,HYPE,etf_or_fund_flow,true,pass,none,-0.005736,0.005583,0.011139,0.005539,pass,none,false,David Schwartz rejects XRP meme coin investment hype after FUZZY rumors
+cand_03830,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.006323,0.000559,0.003364,0.014166,pass,none,false,"Morning Minute: Bitcoin Slides Back to $77K on Rising Bond Yields, Oil Spike - Decrypt"
+cand_03802,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.002183,-0.000793,-0.000699,0.006639,pass,none,false,Ex-Ripple CTO Schwartz Sends XRP To John Deaton Senate Campaign
+cand_03698,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001419,-0.004802,-0.001205,-0.010346,pass,none,false,Did The Cardano Founder Help To Derail XRP’s Growth? Ripple Community Draws Out Hoskinson | Bitcoinist.com
+cand_03688,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.008119,0.000337,-0.000673,-0.002575,pass,none,false,CoinEx’s crypto savings push in the age of falling DeFi yields
+cand_03595,BNB,etf_or_fund_flow,true,pass,none,0.003694,-0.002623,-0.002247,-0.002905,pass,moderate,false,"This US Mega Bank Is Going Big On XRP, Here’s How Large A Share They Own Of XRP ETFs | Bitcoinist.com"
+cand_03583,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000755,0.002833,0.002427,-0.001612,pass,moderate,false,Ether Bears Take Control With Drop to $2K: What Will Stop ETH Price Crash?
+cand_03543,AAVE,etf_or_fund_flow,true,pass,none,0.001756,-0.001933,-0.000911,0.000684,pass,none,false,"Bitcoin, Ethereum ETFs Bleed as Crypto Funds Shed $1.07 Billion, Ending 6-Week Win Streak - Decrypt"
+cand_03490,AAVE,etf_or_fund_flow,true,pass,none,0.002552,0.002733,0.005825,0.003647,pass,none,false,"Bank of England, FCA Set Out ‘Shared Vision’ for Tokenization - Decrypt"
+cand_03470,ADA,etf_or_fund_flow,true,pass,none,0.004356,-0.001607,-0.002008,0.000805,pass,none,false,"Crypto Funds Post $1B in Outflows as Iran Tensions Weigh on Bitcoin, Ether"
+cand_03426,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001736,-0.000227,0.001249,0.003985,pass,none,false,Ethereum Founder Vitalik Buterin Says AI Verification Could Help Secure Crypto Networks - Decrypt
+cand_03374,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.007152,0.003440,-0.002166,-0.007711,pass,none,false,Standard Chartered: $4T tokenized by 2028
+cand_03370,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.005498,0.001333,-0.000517,-0.003450,pass,none,false,"Analyst Predicts Bitcoin And Ethereum Price For The Rest Of 2026, What To Expect | Bitcoinist.com"
+cand_03357,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.009783,-0.001716,-0.002287,-0.011333,pass,none,false,Polymarket Users Spur Insider Trading Suspicions With $2.4 Million in Iran Prediction Wins - Decrypt
+cand_03296,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.007424,0.001443,0.002376,0.006926,pass,none,false,Patrick Witt Teases ‘Breakthrough’ On US Bitcoin Reserve
+cand_03256,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.004012,0.002479,0.000675,0.001802,pass,none,false,"Bitcoin Faces Greater Quantum Computing Risk Than Ethereum, Citi Warns - Decrypt"
+cand_03227,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.006879,0.001195,0.004796,0.001195,pass,none,false,Georgia Primary to Test Crypto PAC’s Support for Democratic Candidate
+cand_03206,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.005192,0.000000,-0.000396,0.010004,pass,none,false,3 Factors May Send Bitcoin Price Back To $80K
+cand_03163,BNB,etf_or_fund_flow,true,pass,none,0.004191,-0.000387,0.000248,0.001054,pass,none,false,HYPE Jumps On Bitwise’s Hyperliquid ETF Move—Galaxy Secures BitLicense In NY | Bitcoinist.com
+cand_03120,ADA,etf_or_fund_flow,true,pass,none,0.005085,0.001589,0.001987,0.001191,pass,none,false,"Binance Retail Investor Bitcoin Inflows Drop By 73%, What's Next for BTC?"
+cand_03082,ADA,etf_or_fund_flow,true,pass,none,0.009645,0.001188,0.001585,0.004769,pass,none,false,Binance Inflow Data Explains The Mechanics Behind Ethereum Weakness – Details | Bitcoinist.com
+cand_03019,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000469,-0.000591,-0.002436,-0.003703,pass,none,false,The XRP Asian Breakout: Japan And South Korea Lead The Charge | Bitcoinist.com
+cand_02949,BNB,etf_or_fund_flow,true,pass,none,-0.000415,-0.000342,-0.002870,0.002136,pass,none,false,Bitcoin Retail Activity Hits Record Low As Inflows Plunge
+cand_02940,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000170,-0.002778,-0.002382,-0.000398,pass,none,false,Tom Lee says Ether Pullback was Chance for Bitmine to Buy 71K ETH
+cand_02923,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.004950,0.001191,0.003182,0.001589,pass,none,false,Echo Protocol Hacked for $76.7M in Admin Key Exploit
+cand_02865,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001773,-0.001257,-0.001737,-0.000171,pass,none,false,South Korea's KB Completes Stablecoin Pilot Ahead Of Rules
+cand_02860,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000939,0.000000,-0.001587,-0.001587,pass,none,false,Ethereum Foundation Sees 2 More High-Profile Departures
+cand_02763,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.005231,0.000203,-0.002089,-0.004076,pass,severe,false,Crypto Hack Hits Echo As Monad’s eBTC Market Faces Fallout
+cand_02758,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.007736,0.000000,-0.002393,-0.005962,pass,none,false,Swan Bitcoin Faces Nearly $1B Lawsuit Over Prime Trust Transfers
+cand_02679,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.009445,-0.001241,0.000791,-0.000452,pass,none,false,Bitcoin DeFi Platform Echo Protocol Hit By $76M Monad Exploit - Decrypt
+cand_02667,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.008716,-0.001130,-0.002033,-0.000904,pass,none,false,"Morning Minute: SEC Reverses Course on Tokenized Stocks, HYPE Soars - Decrypt"
+cand_02642,AAVE,etf_or_fund_flow,true,pass,none,-0.008556,0.000000,0.000227,-0.002375,pass,none,false,Bitcoin ETFs Shed $649M in a Day as Long-Term BTC Holders ‘Limit Downside Potential’ - Decrypt
+cand_02630,AVAX,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.012254,0.001096,0.002195,-0.001094,pass,none,false,"XRP-Linked Ripple Never Had Gag Order, Clarifies SEC Veteran; Binance Drops Major Uniswap and Bitcoin Pairs; Crypto Faces Shai-Hulud Malware Again - Morning Crypto Report - U.Today"
+cand_02571,ADA,etf_or_fund_flow,true,pass,none,-0.005714,0.000401,-0.000800,0.001203,pass,none,false,South Korean Funeral Company Faces $33M Unrealized Loss on Leveraged Ether ETFs
+cand_02555,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003221,-0.000399,0.004411,0.004411,pass,none,false,Estonia Suspends Zondacrypto Operator License
+cand_02538,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.007641,-0.001805,0.000792,-0.001467,pass,none,false,AI Slop Floods Bug Bounty Programs as Companies Struggle with Fake Reports - Decrypt
+cand_02535,BNB,etf_or_fund_flow,true,pass,none,-0.002293,-0.000312,0.000985,-0.002043,pass,severe,false,"XRP Exchange Netflow Data Says Accumulation Is Ongoing, But Who’s Buying? | Bitcoinist.com"
+cand_02389,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003890,0.000000,-0.001608,-0.002811,pass,none,false,Dexsport Review: Web3 Sportsbook and Casino for Crypto-First Players
+cand_02381,ADA,etf_or_fund_flow,true,pass,none,-0.003167,0.001209,0.001209,0.000805,pass,none,false,XRP Risks 50% Dip to $0.65 Despite Persistent ETF Inflows
+cand_02363,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.004075,0.000790,0.003737,0.004761,pass,none,false,"People Are More Willing to Lie to AI Than Humans, Study Finds - Decrypt"
+cand_02270,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000849,0.002001,0.001140,0.000734,pass,none,false,National Trust Charters For Crypto Under Fire—Senator Warren Says It Goes Beyond The Law | Bitcoinist.com
+cand_02253,BNB,etf_or_fund_flow,true,pass,none,-0.001121,-0.000641,-0.001592,-0.001046,pass,none,false,Is Citadel’s XRP ETF A Game-Changer Or Is It Another Empty Whistle? | Bitcoinist.com
+cand_02170,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000767,0.000985,0.000500,-0.000999,pass,none,false,Donald Trump Abandons Meme Coins In Favor Of These Indirect Bitcoin Exposure Vehicles | Bitcoinist.com
+cand_02105,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.002862,0.000343,0.001202,0.002281,pass,none,false,XRP Ledger Announces Quantum-Era Partnership: Project Eleven Teams With Ripple | Bitcoinist.com
+cand_01849,ADA,etf_or_fund_flow,true,pass,none,-0.002447,-0.001212,-0.002824,0.000000,pass,none,false,Truth Social’s ETF Issuer Withdraws Crypto ETFs
+cand_01828,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003319,0.000404,0.000809,-0.002419,pass,moderate,false,Bankr Disables Transactions After Hacker Accessed 14 Crypto Wallets
+cand_01737,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000593,0.000093,0.000280,0.003388,pass,none,false,Japan To Expand Foreign Stablecoins Rules Starting June 1
+cand_01699,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000446,-0.001998,-0.002396,-0.001998,pass,none,false,GitHub Internal Repositories Breached via VS Code Extension
+cand_01677,BNB,etf_or_fund_flow,true,pass,none,-0.000328,-0.000698,0.000217,0.002944,pass,none,false,Trump Media’s Truth Social Withdraws Bitcoin ETF Filing
+cand_01622,HYPE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.010403,0.001480,0.002180,0.005799,pass,none,false,SEC Chair Paul Atkins Signals a New Era for Crypto — XRP Leads the Conversation
+cand_01590,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.002248,-0.001201,-0.002798,0.001606,pass,none,false,OpenAI Opens First Overseas AI Lab in Singapore With $234M Commitment
+cand_01578,ADA,etf_or_fund_flow,true,pass,none,-0.005516,-0.000400,0.000401,-0.000801,pass,moderate,false,"Crypto News Today (May 20): Bitcoin Struggling Below $80K, SOL & XRP ETFs Green as ETH and BTC ETFs Bleed - 99Bitcoins"
+cand_01558,AAVE,etf_or_fund_flow,true,pass,none,-0.002262,-0.000228,-0.000228,0.002974,pass,none,false,Trump's Truth Social Pulls Bitcoin ETF Application From SEC Review - Decrypt
+cand_01531,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.002520,0.000714,0.000885,-0.000666,pass,none,false,Chainlink's Nazarov Reveals 3 Trends He’s Watching Closely
+cand_01490,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.004968,-0.001599,-0.001599,-0.000800,pass,none,false,South Carolina Governor Signs Bill Protecting Bitcoin Miners and Banning CBDC Payments
+cand_01473,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.006459,-0.001202,-0.001603,-0.002402,pass,none,false,Bitcoin Momentum Weakens as BTC Price Support at $75K Becomes Key
+cand_01459,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001375,-0.000233,0.000249,-0.000948,pass,none,false,Crypto AI Platform Bankr Locks Down System After Hacker Breaches 14 Crypto Wallets
+cand_01427,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.006665,-0.001256,-0.000800,-0.002509,pass,none,false,Morning Minute: Markets Flip Green Overnight Ahead of NVDA Earnings - Decrypt
+cand_01386,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.003551,-0.001201,-0.002001,0.001204,pass,none,false,Singapore Revokes Bsquared’s Crypto Licence Over Regulatory Breaches
+cand_01383,ADA,etf_or_fund_flow,true,pass,none,-0.004912,-0.001203,-0.003201,0.000000,pass,moderate,false,Bitcoin Model Projects BTC to Reach $255K ‘Conservative’ Target in 2026
+cand_01316,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.001084,0.003227,0.001208,-0.004005,pass,none,false,Fireblocks Unveils Infrastructure For AI Agents
+cand_01273,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.001539,-0.000455,0.010920,0.005488,pass,none,false,"AI Watchdog Warns of 'Rogue Deployment' Risk at Top Labs, With Capabilities Growing Fast - Decrypt"
+cand_01122,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.008228,-0.002018,-0.001926,-0.002602,pass,none,false,Top Crypto Exchange Expands Into UK With New Local Platform
+cand_01107,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.009798,-0.000031,-0.001990,-0.003697,pass,moderate,false,Arthur Hayes' Bombshell CLARITY Act Warning Just Resurfaced — And The Timing Couldn't Be Worse | Bitcoinist.com
+cand_01085,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.011118,-0.001802,0.001922,-0.001015,pass,none,false,"GitHub Confirms 3,800 Internal Repos Stolen Through Poisoned VS Code Extension - Decrypt"
+cand_01022,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.003995,0.000000,-0.002392,0.000800,pass,moderate,false,Fairshake PAC’s $20M Investment Pays off in Three US State Primaries
+cand_00941,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.006600,-0.000015,0.001942,0.001248,pass,none,false,Washington Targets Iran’s $7 Billion Crypto Network To Cut Off Financial Channels—FOX | Bitcoinist.com
+cand_00931,ADA,etf_or_fund_flow,true,pass,none,0.003436,-0.000799,0.000400,0.001601,pass,none,false,Bitcoin Reclaims $77.5K As Altcoins Finally Show Strength
+cand_00872,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.004678,0.001169,-0.000292,0.001077,pass,none,false,Binance Says it Prevented Over $10T in Fraud Using AI Models
+cand_00732,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.002484,-0.002002,-0.003995,-0.005584,pass,none,false,Missouri AG Sues Crypto ATM Operator CoinFlip ‘For Enabling Scams’
+cand_00695,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000893,-0.000586,0.000818,-0.003397,pass,none,false,US Treasury Cracks Down Drug Lord’s Crypto Money-Laundering Ring Linked To Sinaloa Cartel | Bitcoinist.com
+cand_00666,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.009136,-0.002266,-0.001361,-0.003056,pass,severe,false,Shai-Hulud: What to Know About the Malware Spreading Through Software Pipelines - Decrypt
+cand_00374,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000310,-0.003176,-0.003571,-0.003967,pass,none,false,Map Protocol Loses 96% After Quadrillion Token Exploit
+cand_00373,ADA,etf_or_fund_flow,true,pass,none,0.001697,-0.001589,-0.002382,-0.002778,pass,none,false,Hyperliquid ETF Volumes Rise 50% Due to Well-Timed Launches
+cand_00326,ADA,etf_or_fund_flow,true,pass,none,-0.004288,-0.001201,-0.001601,-0.008350,pass,none,false,SEC Seeks Feedback on Prediction Markets ETFs
+cand_00277,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.001974,0.000861,0.000031,-0.002313,pass,none,false,"MAPO crashes to record lows, bridge attack overwhelms circulating supply"
+cand_00269,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.001800,0.000630,0.001045,-0.001395,pass,none,false,Bitcoin Quantum Exposure: Glassnode Says 30% of Supply Is Highly Vulnerable | Bitcoinist.com
+cand_00248,ADA,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.006284,0.001612,0.001612,-0.004008,pass,none,false,Syndicate Labs Shuts Down After Ethereum Rollup Market Shift
+cand_00239,AAVE,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,-0.000246,0.001238,0.004064,-0.001011,pass,none,false,Digital Assets Like Ordinals Used in Tax Evasion Schemes: Chainalysis
+cand_00213,BNB,exploit_or_theft,false,"missing_primary_tradable_asset,primary_asset_confidence_below_70pct",none,0.000004,0.000337,0.001380,0.002548,pass,none,false,By The Numbers: How Much Bitcoin Is Exposed To Quantum?
+cand_00019,AAVE,etf_or_fund_flow,true,pass,none,-0.005733,0.000567,-0.001131,0.002840,pass,none,false,HYPE Jumps Double Digits as Hyperliquid ETFs Add $25.5M - Decrypt
+cand_04918,UNI,needs_taxonomy_review,true,pass,none,0.006272,0.000285,0.001712,0.005731,pass,none,false,"This is now the LARGEST PATRIOTIC wave in decades.
+
+Tens of thousands of protesters have flooded central London for ""Uni"
+cand_04915,HYPE,needs_taxonomy_review,true,pass,none,-0.009703,-0.002030,-0.001566,-0.006064,pass,none,false,"These are the altcoins that I think will do provide me the largest return in the coming months.
+
+- NEAR Protocol: Clearl"
+cand_04894,DOGE,needs_taxonomy_review,true,pass,none,0.005373,0.000273,0.000547,0.001277,pass,moderate,false,"I spoke with @jvisserlabs to break down why all-time highs in the stock market are flashing warning signs, how the Iran"
+cand_04845,HYPE,needs_taxonomy_review,true,pass,none,0.010891,0.001491,0.005069,0.017299,pass,none,false,Hyperliquid团队与美国政策制定者会面讨论链上衍生品市场
+cand_04834,HYPE,needs_taxonomy_review,true,pass,none,0.013749,0.000933,0.001819,0.010452,pass,none,false,"I don't think we'll ever see altseason back. 
+
+Most of the altcoins will die and have literally no purpose in this ecosy"
+cand_04783,SOL,needs_taxonomy_review,true,pass,none,-0.001766,0.000462,0.001155,0.001387,pass,none,false,I haven’t gotten a reaction like this since asking polygon users to try solana
+cand_04358,ADA,needs_taxonomy_review,true,pass,none,-0.002870,-0.000787,0.000000,-0.006651,pass,none,false,Bonus points for mentioning that the Pentad were promised 0.83 cent Ada provisions and got less than 0.50 cents but stil
+cand_04289,AAVE,needs_taxonomy_review,true,pass,none,-0.001437,0.000450,-0.001459,0.019830,pass,none,false,🚨 UPDATE: Aave confirms WETH LTVs have been restored to pre-incident levels across all affected V3 deployments following
+cand_04233,SOL,needs_taxonomy_review,true,pass,none,-0.003283,0.002472,0.004126,-0.001992,pass,none,false,吴说获悉，Solana Labs 联合创始人 Anatoly Yakovenko（toly）在回应有关 Hyperliquid 去中心化程度的讨论时表示，他对所有 L2 也提出过同样批评：判断一个系统是否 permissionless，关键
+cand_04205,SOL,needs_taxonomy_review,true,pass,none,-0.001431,0.000707,-0.000706,0.003069,pass,none,false,"Hey, solana defi projects, maybe formally verify your code pls before the mythopocolypse is upon us"
+cand_04075,HYPE,needs_taxonomy_review,false,pre_event_price_moved_-2.44%_6h,none,-0.024400,-0.001473,0.000440,0.002184,pass,none,false,"A massive $HYPE buy!
+
+Wallet 0xb5E4, linked to #a16z, bought another 372,000 $HYPE($16.91M) over the past 3 hours.
+
+Sinc"
+cand_04044,SOL,needs_taxonomy_review,true,pass,none,-0.003506,-0.001294,0.001298,0.001298,pass,none,false,https://t.co/nMjQcILxG5 is on @solana
+cand_03925,HYPE,needs_taxonomy_review,true,pass,none,0.003738,0.001676,0.002073,0.001300,pass,none,false,"A wallet linked to Anchorage (@Anchorage) bought 397,000 $HYPE ($18M) from #Bybit and #OKX.
+
+Over the past month, the wa"
+cand_03823,LINK,needs_taxonomy_review,true,pass,none,-0.000528,-0.001046,0.004206,0.012725,pass,none,false,"ARKHAM @ PFL SAN DIEGO: TICKETS STILL AVAILABLE
+
+We’re hosting Arkham community members & VIPs at PFL San Diego on June"
+cand_03713,SOL,needs_taxonomy_review,true,pass,none,0.002718,0.001891,-0.001296,-0.009466,pass,moderate,false,"PumpFun deposited 82,702 $SOL worth $7M into #Kraken.
+
+https://t.co/P1YMeOjwt4 https://t.co/YjOd7jjv1V"
+cand_03709,SOL,needs_taxonomy_review,true,pass,none,0.002421,0.001654,0.004144,-0.008419,pass,moderate,false,"PumpFun deposited 82,703 $SOL worth $7M into #Kraken.
+
+https://t.co/P1YMeOjwt4 https://t.co/rS1AbVimNY"
+cand_03647,SOL,needs_taxonomy_review,true,pass,none,-0.001755,-0.000119,-0.003554,-0.004969,pass,none,false,"JUST IN: Solana now projected to plunge below $80 by the end of the month.
+
+65% chance. https://t.co/vJKgV0QxNE"
+cand_03181,AAVE,needs_taxonomy_review,true,pass,none,0.010787,0.000446,0.001898,0.005602,pass,none,false,"🚨 🚨  20,000 $WETH (42,749,158 USD) transferred from unknown wallet to #Aave
+
+https://t.co/FOjHHUI5nI"
+cand_03098,WLD,needs_taxonomy_review,false,pre_event_price_moved_+2.50%_6h,none,0.024981,0.002069,0.001654,0.001654,pass,none,false,"WorldCoin team deposited 13.18M $WLD worth $3.09M into #Coinbase.
+
+Address: 0xE79718Fe76c718fE98a9a3D106FCa773a40861a3 h"
+cand_02789,HYPE,needs_taxonomy_review,true,pass,none,0.012812,0.004633,0.004214,0.006524,pass,severe,false,"Persistence pays off!
+
+More than 6 months ago, trader 0x082e opened a 5x long on 1.38M $HYPE ($66.3M), becoming the larg"
+cand_02653,XRP,needs_taxonomy_review,true,pass,none,-0.008608,-0.001457,-0.001020,-0.001093,pass,none,false,"🇺🇸 NEW: Sen. Elizabeth Warren questioned OCC approvals for crypto trust charters tied to Coinbase, Ripple and Paxos, per"
+cand_02373,SOL,needs_taxonomy_review,true,pass,none,0.000078,0.001305,0.002614,0.002495,pass,none,false,I think it’s gonna be a slog to get meaningful progress.  I also think that solana is best at slogging
+cand_02262,SOL,needs_taxonomy_review,true,pass,none,-0.000248,-0.000708,0.001182,-0.002003,pass,none,false,Basically everyone at solana had an immune response to competitive narratives coming from previous cycles.  Sidechains/L
+cand_02165,HYPE,needs_taxonomy_review,true,pass,none,0.000911,-0.007365,-0.006693,0.002341,pass,none,false,"There are still so many opportunities in the altcoin markets.
+
+People are just to stubborn and lazy to chase them as peo"
+cand_01764,SOL,needs_taxonomy_review,true,pass,none,0.000101,0.004742,0.006771,0.008448,pass,none,false,吴说获悉，L2Beat 表示已从源代码重新生成了 Lighter 永续合约 DEX L2 所使用的所有 ZK 电路（包括 Lighter verifier 和 Lighter Desert verifier），从而实现了真正无需信任 Lig
+cand_01745,SOL,needs_taxonomy_review,true,pass,none,0.000750,-0.001061,-0.001414,0.007970,pass,none,false,"8Qef2u, the largest $ASTEROID holder on Solana, bought 10.04M $VIRL ($17.7K).
+
+This wallet already holds 25.03M $ASTEROI"
+cand_01739,HYPE,needs_taxonomy_review,true,pass,none,0.001817,0.001077,0.003154,0.000911,pass,none,false,"Evaded (@ICanPlug) made $2.1M in just 2 days!
+
+Yesterday, he opened 10x longs on 36,875 $ZEC($21.59M) and 287,618 $HYPE("
+cand_01738,HYPE,needs_taxonomy_review,true,pass,none,0.002907,0.001180,0.002550,0.000124,pass,none,false,"Evaded (@ICanPlug) made $2.1M in just 2 days!
+
+Yesterday, he opened 10x longs on 36,875 $ZEC($21.59M) and 287,618 $HYPE("
+cand_01638,XRP,needs_taxonomy_review,true,pass,none,0.003623,-0.000658,-0.002118,-0.003210,pass,moderate,false,🔥 NEW: Ripple ranked No. 16 on CNBC’s 2026 Disruptor 50 list. https://t.co/ze9O5hWs7W
+cand_01391,HYPE,needs_taxonomy_review,false,pre_event_price_moved_+2.32%_6h,none,0.023198,-0.006534,-0.009502,0.000745,pass,none,false,"🔥 BITWISE SAYS HYPE IS UNDERVALUED
+
+Bitwise CIO Matt Hougan says the market is wrongly valuing Hyperliquid as only a per"
+cand_01373,UNI,needs_taxonomy_review,true,pass,none,0.005288,0.000278,-0.000555,-0.001664,pass,none,false,"CoinDesk 20 performance update: Uniswap (UNI), up 3.7%, leads index higher"
+cand_00985,LINK,needs_taxonomy_review,true,pass,none,0.002739,0.001041,-0.002076,-0.005995,pass,none,false,"Phenomenal post by @SergeyNazarov on the current state of Chainlink and the markets.
+
+It makes me even more excited and"
+cand_00539,HYPE,needs_taxonomy_review,false,pre_event_price_moved_+7.80%_6h,none,0.077988,-0.000497,-0.001898,0.025781,pass,severe,false,Congrats hype hodlers.  Well deserved.  It’s a no bullshit awesome product.  🎂🎂🎂
+cand_00500,SOL,needs_taxonomy_review,true,pass,none,0.002895,0.000231,-0.000693,-0.000808,pass,none,false,JUST IN: Hyperliquid flips Solana in fully diluted valuation.
+cand_00497,SOL,needs_taxonomy_review,true,pass,none,0.002785,-0.000347,-0.001846,-0.000347,pass,none,false,JUST IN: Hyperliquid flips Solana in fully diluted valuation.
+cand_00444,HYPE,needs_taxonomy_review,false,pre_event_price_moved_+7.29%_6h,none,0.072872,-0.001662,-0.001323,-0.009890,pass,moderate,false,"loracle.hl(@loraclexyz) is now down nearly $20M on his $HYPE short, but he is still adding to it.
+
+He currently holds a"
+cand_00375,SOL,needs_taxonomy_review,true,pass,none,0.001164,-0.001380,-0.001035,0.000115,pass,none,false,Hyperliquid has flipped Solana by FDV. https://t.co/rDF5FRg4TK
+cand_00344,SOL,needs_taxonomy_review,true,pass,none,0.003215,-0.001723,-0.002640,-0.000575,pass,none,false,SOL生态代币普涨，FIDA涨超34%
+cand_00294,HYPE,needs_taxonomy_review,false,pre_event_price_moved_+2.18%_6h,none,0.021820,-0.000071,-0.003541,0.009621,pass,none,false,"All time $HYPE is almost here. $150 is much closer than it was. 
+
+Yachtzee 😘😘😘😘 https://t.co/N6t3u2OcfR"
+cand_00267,XRP,needs_taxonomy_review,true,pass,none,0.000147,0.000584,-0.001020,-0.002620,pass,none,false,🔥 NEW: Ripple Prime has partnered with EDX Markets to give institutional clients unified access to digital asset spot an
+cand_00225,HYPE,needs_taxonomy_review,false,"pre_event_price_moved_+2.68%_6h,already_priced_in_60m_+3.25%",none,0.026838,0.002280,0.009182,0.032544,price_in_block,severe,false,"loracle.hl(@loraclexyz)'s $HYPE short has now grown to over $100M!
+
+He is currently down over $23M, with a liquidation p"
+cand_00176,HYPE,needs_taxonomy_review,false,pre_event_price_moved_+5.12%_6h,none,0.051169,0.000119,0.003056,0.018919,pass,severe,false,"🚨HYPERLIQUID NEARS ITS ALL-TIME HIGH AT 59$
+
+$HYPE is now trading near its ATH around $59.30, putting bulls back in cont"
+cand_04775,AAVE,whale_wallet_position,true,pass,none,-0.008753,-0.000888,-0.001331,-0.000666,pass,none,false,"🚨 🚨 🚨 🚨 🚨 🚨  138,220,412 $USDC (138,215,989 USD) transferred from Unknown Whale 1 to #Aave
+
+https://t.co/EKOUxSLk2c"
+cand_04571,BNB,staking_or_governance,true,pass,none,-0.001494,0.000716,0.002012,0.003986,pass,none,false,BREAKING: Bitcoin steadies near $78K as Iran responds to U.S. peace terms
+cand_04443,ADA,staking_or_governance,true,pass,none,-0.005154,0.000000,0.001181,0.002364,pass,moderate,false,Michael Saylor Signals Weekly BTC Buy While Pushing STRC Proxy Vote
+cand_04286,AAVE,whale_wallet_position,true,pass,none,-0.001856,-0.000788,-0.002808,0.006690,pass,none,false,"🚨 🚨 🚨 🚨 🚨 🚨  138,260,885 $USDC (138,276,338 USD) transferred from Unknown Whale 1 to #Aave
+
+https://t.co/4eO0RP4XwB"
+cand_04249,BNB,stablecoin_supply_or_flow,true,pass,none,0.001560,0.000451,0.000778,-0.003439,pass,moderate,false,"没想到，现在市场交易热情已经比上轮熊市底部 (2022 年 12 月份) 都要低的多了。这还是在几大主流币价格其实都还远超当时价格的情况下。
+
+◎BTC：上次周期底部 Binance 上 BTC/USDT 平均每天交易量在 $20 亿附近，"
+cand_03926,SOL,listing_delisting,true,pass,none,-0.004840,-0.000711,0.000356,-0.004133,pass,none,false,KuCoin Alpha 新上線代幣 — BABYTROLL & SPCX
+cand_03906,ADA,staking_or_governance,true,pass,none,-0.008708,-0.000402,-0.000805,-0.003610,pass,none,false,South Korea FSC Reportedly Reviews Hana Bank Dunamu Stake
+cand_03475,ADA,upgrade_or_fork,true,pass,none,0.007150,-0.000401,0.001206,0.002819,pass,none,false,Cardano Price Analysis: ADA Bears Eye $0.20 Support
+cand_03415,AAVE,stablecoin_supply_or_flow,true,pass,none,-0.004918,0.000113,0.001589,0.002271,pass,none,false,Elon Musk Loses $150 Billion AI Lawsuit Against OpenAI and Sam Altman - Decrypt
+cand_03222,ADA,halving,true,pass,none,0.008451,0.001991,0.002390,0.001991,pass,none,false,Soluna Q1 Revenue Rises 58% as Data Center Hosting Surpasses Crypto Mining
+cand_02811,HYPE,staking_or_governance,true,pass,none,0.007106,0.000902,-0.002614,-0.013138,pass,none,false,Hyperliquid price nears ATH as HYPE rallies 24% in 6 days
+cand_02785,BNB,upgrade_or_fork,true,pass,none,-0.004275,-0.000342,-0.001601,-0.002113,pass,moderate,false,BNB Chain post-quantum test cuts BSC TPS by 40%
+cand_02706,SOL,stablecoin_supply_or_flow,true,pass,none,-0.007404,0.001184,-0.002477,-0.001299,pass,moderate,false,"AI agents could outspend humans, Coinbase CEO says"
+cand_02623,ADA,upgrade_or_fork,true,pass,none,-0.009733,-0.000401,0.000000,0.001205,pass,moderate,false,Pump.fun Drives Over a Third of Solana's Q1 Revenue Despite Memecoin Slowdown
+cand_02616,BNB,upgrade_or_fork,true,pass,none,-0.002937,0.000531,0.000359,0.001140,pass,none,false,XRP Ledger Hard Fork In 8 Days? Upgrade Sparks Split Debate
+cand_02570,ADA,price_market_structure,true,pass,none,-0.005047,-0.000401,-0.002001,0.000803,pass,none,false,Is Zcash 'Running Its Own Bull Market?' This 88% ZEC Price Rally Setup Shows
+cand_02469,ADA,upgrade_or_fork,true,pass,none,-0.005125,0.002418,0.002015,-0.004802,pass,none,false,MetaMask Just Added Tokenized US Stocks - NOT for US Users
+cand_02454,ADA,upgrade_or_fork,true,pass,none,-0.005119,-0.002012,-0.002012,-0.002414,pass,moderate,false,Mark Zuckerberg New META AI Predicts PI Coin Price by End of 2026 - 99Bitcoins
+cand_02448,BNB,upgrade_or_fork,true,pass,none,0.001765,0.002741,0.001204,0.002332,pass,moderate,false,Market Expert Updates XRP Roadmap To $300 With New Data | Bitcoinist.com
+cand_02340,ADA,upgrade_or_fork,true,pass,none,0.000852,-0.000400,0.000802,0.004831,pass,none,false,Here’s Why Ethereum Is Becoming The Biggest Winner Of The Clarity Act | Bitcoinist.com
+cand_02304,HYPE,upgrade_or_fork,true,pass,none,0.010273,-0.002403,-0.002177,0.006402,pass,none,false,Why the XRP Ledger Could Become a Major Backbone of SEC-Approved Tokenized Stocks
+cand_02241,DOGE,upgrade_or_fork,true,pass,none,-0.004295,0.000579,0.003290,0.000676,pass,moderate,false,Dogecoin price prediction: Can DOGE hold $0.10 or is a deeper reset coming?
+cand_02143,ADA,stablecoin_supply_or_flow,true,pass,none,-0.007345,0.000000,0.000805,0.000805,pass,moderate,false,Bitcoin Traders Target $68K As Key Support Zone: Here's Why
+cand_01957,BNB,upgrade_or_fork,true,pass,none,-0.000322,0.001754,0.002320,-0.001982,pass,none,false,Ripple Just Moved This $2 Billion Industry Onto The XRP Ledger | Bitcoinist.com
+cand_01644,LINK,staking_or_governance,true,pass,none,0.006630,-0.001458,0.000313,-0.002705,pass,moderate,false,'China's Buffett' Buys Into Circle in Surprise Portfolio Addition - U.Today
+cand_01546,SOL,listing_delisting,true,pass,none,-0.000986,0.000589,-0.000235,0.000825,pass,none,false,KuCoin Alpha 新上線代幣 — VIRL & DEGEN
+cand_01495,BNB,upgrade_or_fork,true,pass,none,0.000012,-0.000233,-0.000233,-0.000931,pass,none,false,$140k in less than 24 hours: Meme Punch's battle arena is drawing a crowd before launch
+cand_01405,HYPE,stablecoin_supply_or_flow,false,pre_event_price_moved_+2.97%_6h,none,0.029733,0.001059,0.004250,0.012203,pass,none,false,HYPE突破50 USDT，24H涨幅5.25%
+cand_01389,AAVE,stablecoin_supply_or_flow,true,pass,none,-0.006590,-0.002273,-0.002046,0.004347,pass,none,false,Crypto Wealth Firm Nexo Sponsors $3 Million Golf Tournament at Trump International Scotland - Decrypt
+cand_01352,BNB,upgrade_or_fork,true,pass,none,-0.000372,-0.000808,-0.001568,-0.000979,pass,none,false,"XRP Is Not The Real Leader Of RWA Despite Its Popularity, Here’s Where The Real Volume Is | Bitcoinist.com"
+cand_01326,BNB,stablecoin_supply_or_flow,true,pass,none,0.000810,-0.000622,0.000607,-0.004553,pass,none,false,"Someone paid a 536.88 $BNB($343K) bribe fee to snipe $ZEST at launch, and ended up making ~$277K.
+
+The sniper paid an ex"
+cand_01137,BNB,halving,true,pass,none,0.008581,0.001959,0.001063,0.003088,pass,moderate,false,Binance BNB Down To $640 Support: Will Regulatory Clarity Help?
+cand_01124,ADA,stablecoin_supply_or_flow,true,pass,none,0.001635,-0.002400,-0.002799,-0.007166,pass,none,false,"Bitcoin Price Fails to Retake $78,000 as Markets Eye Nvidia Earnings"
+cand_01110,BNB,halving,true,pass,none,0.009344,-0.001699,-0.004328,-0.003269,pass,moderate,false,"Trump Stocks: Should You Buy NFLX, DIS, JPM Like He Did?"
+cand_01073,BNB,halving,true,pass,none,0.010251,0.000648,0.000015,-0.001816,pass,moderate,false,"Is Micron Stock Too Expensive? Wall Street Eyes Massive $1,200 Rally"
+cand_01019,BNB,whale_wallet_position,true,pass,none,0.007940,0.000508,-0.001137,0.001819,pass,none,false,"XRP Whales Have Just Set An 8-Year Record, Is This The Start Of The Next Bull Run? | Bitcoinist.com"
+cand_00071,ADA,upgrade_or_fork,true,pass,none,-0.008794,-0.000405,-0.008032,-0.008032,pass,none,false,Solana's Q1 Report Is Out: What Network Data Means for Retail

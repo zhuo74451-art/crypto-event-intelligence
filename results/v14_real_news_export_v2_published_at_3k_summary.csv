@@ -1,0 +1,8 @@
+﻿metric,value
+time_field,published_at
+days_ago_min,7.0
+days_ago_max,365.0
+limit,3000
+scan_limit,10000
+line_count_estimate,23717
+output,C:\Users\PC\Desktop\Projects\事件情报系统\data\raw_news_real_3k_365d_v2_published_at.csv

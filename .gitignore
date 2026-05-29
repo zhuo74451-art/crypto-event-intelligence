@@ -1,0 +1,22 @@
+# Local secrets must never be committed or copied into docs/results.
+config/local_secrets.ps1
+config/*.local.ps1
+.env
+.env.*
+
+# Keys & certs
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Runtime noise
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+*.log
+
+# IDE
+.vscode/settings.json
+.idea/

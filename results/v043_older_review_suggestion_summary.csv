@@ -1,0 +1,2 @@
+total,suggest_include_count,suggest_fix_count,suggest_exclude_count,high_priority_count,medium_priority_count,low_priority_count,drop_count,missing_asset_count,missing_symbol_count,unknown_event_type_count,multi_asset_count,market_wide_count
+500,234,1,265,199,35,1,265,263,279,254,43,150

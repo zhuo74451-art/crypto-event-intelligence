@@ -1,0 +1,2 @@
+﻿line_count,focus_assets,btc_price_change_pct_24h,eth_price_change_pct_24h,etf_loaded,derivatives_percentiles_loaded,percentile_alerts_loaded,status
+4,BTC;ETH,0.4400,1.1440,true,true,true,pass

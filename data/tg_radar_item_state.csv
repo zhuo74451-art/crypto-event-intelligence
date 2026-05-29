@@ -1,0 +1,10 @@
+﻿included_at_china,board_id,item_key,source_type,asset,repeat_group,final_priority,policy_action,policy_reason_cn,dynamic_boost_reason,last_included_china,text
+2026-05-28 16:00:21 UTC+8,tg_board_20260528_160021,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,,,,,2026-05-28 16:00:21 UTC+8,"HOME明日08:00解锁$18.6M
+  占流通7.5%，主要释放给团队/贡献者"
+2026-05-28 16:00:21 UTC+8,tg_board_20260528_160021,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,,,,,2026-05-28 16:00:21 UTC+8,DOGE多头拥挤，大户持仓约为散户2.1倍，主动卖出偏强
+2026-05-28 16:00:21 UTC+8,tg_board_20260528_160021,hyper:loraclexyz:HYPE:空头:position_snapshot,hyperliquid,HYPE,static_position,,,,,2026-05-28 16:00:21 UTC+8,"loraclexyz持有HYPE空头$104.8M
+  HYPE $58.06，24h -6.6%；浮亏$22.8M，静态大仓位"
+2026-05-28 18:35:19 UTC+8,tg_board_20260528_183519,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,130.1900,monitor,实时样本仍少，继续观察，不做强结论。,拥挤变化,2026-05-28 18:35:19 UTC+8,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动买入偏强
+  DOGE $0.0985，24h -3.3%；动态提权：拥挤变化"
+2026-05-28 18:35:19 UTC+8,tg_board_20260528_183519,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,66.4719,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,2026-05-28 18:35:19 UTC+8,"HOME明日08:00解锁$19.0M
+  占流通7.5%，主要释放给团队/贡献者"

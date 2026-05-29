@@ -1,0 +1,2 @@
+total_rows,released_rows,manual_review_required_remaining,manual_review_required_rate,target_rate,status
+201,8,51,0.2537,0.1,fail

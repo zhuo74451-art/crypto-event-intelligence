@@ -1,0 +1,16 @@
+﻿generated_at_china,event_group,sample_count,computed_1h_count,avg_abnormal_vs_btc_1h,win_rate_vs_btc_1h,computed_4h_count,avg_abnormal_vs_btc_4h,win_rate_vs_btc_4h,computed_24h_count,avg_abnormal_vs_btc_24h,win_rate_vs_btc_24h,computed_72h_count,avg_abnormal_vs_btc_72h,win_rate_vs_btc_72h,post_archive_route_status
+2026-05-28 20:05:55 UTC+8,exploit_or_theft,86,86,0.000108,0.4302,86,0.001144,0.5698,86,0.002591,0.5465,86,0.004788,0.4419,digest_only
+2026-05-28 20:05:55 UTC+8,etf_or_fund_flow,57,57,-0.000733,0.5088,57,0.003587,0.5088,57,0.009409,0.6316,57,0.036736,0.5263,digest_only
+2026-05-28 20:05:55 UTC+8,needs_taxonomy_review,42,42,0.001109,0.4524,42,0.00226,0.5238,42,0.027382,0.8571,42,0.059542,0.7857,collect_more_after_cleaning
+2026-05-28 20:05:55 UTC+8,upgrade_or_fork,30,30,0.000472,0.5333,30,0.000293,0.5,30,0.003302,0.4667,30,0.022711,0.5667,collect_more
+2026-05-28 20:05:55 UTC+8,whale_wallet_position,17,17,-0.000905,0.3529,17,-0.000551,0.2353,17,-0.002254,0.6471,17,0.015581,0.8235,collect_more
+2026-05-28 20:05:55 UTC+8,staking_or_governance,16,16,0.002644,0.75,16,0.004339,0.5,16,0.021847,0.625,16,0.043433,0.625,collect_more
+2026-05-28 20:05:55 UTC+8,stablecoin_supply_or_flow,12,12,0.003258,0.5833,12,0.005957,0.75,12,0.015499,0.75,12,0.017277,0.5833,collect_more
+2026-05-28 20:05:55 UTC+8,listing_delisting,5,5,0.00154,0.4,5,0.00182,0.8,5,0.007762,0.8,5,0.006579,0.8,insufficient_sample
+2026-05-28 20:05:55 UTC+8,halving,4,4,0.000113,0.5,4,-0.000173,0.25,4,0.002701,0.75,4,0.015189,0.75,insufficient_sample
+2026-05-28 20:05:55 UTC+8,payment_or_card_adoption,4,4,0.003158,0.75,4,0.00218,0.75,4,-0.007556,0.0,4,0.000342,0.5,insufficient_sample
+2026-05-28 20:05:55 UTC+8,rwa_tokenization,3,3,-0.001396,0.3333,3,0.039991,1.0,3,0.035185,0.6667,3,0.108697,1.0,insufficient_sample
+2026-05-28 20:05:55 UTC+8,price_market_structure,2,2,0.001514,1.0,2,-0.000377,0.5,2,-0.013488,0.0,2,-0.00346,0.5,insufficient_sample
+2026-05-28 20:05:55 UTC+8,custody_or_institutional_product,1,1,-0.006128,0.0,1,-0.009507,0.0,1,0.024654,1.0,1,0.032693,1.0,insufficient_sample
+2026-05-28 20:05:55 UTC+8,foundation_team,1,1,-5.5e-05,0.0,1,0.001573,1.0,1,0.004128,1.0,1,0.014624,1.0,insufficient_sample
+2026-05-28 20:05:55 UTC+8,protocol_metric,1,1,-0.001199,0.0,1,-0.00028,0.0,1,-0.009701,0.0,1,0.01167,1.0,insufficient_sample

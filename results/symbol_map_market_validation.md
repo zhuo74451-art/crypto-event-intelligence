@@ -1,0 +1,33 @@
+# Symbol Map Market Validation
+
+Last updated: 2026-05-27 17:36:41 UTC+8
+
+symbol_count: 20
+spot_mismatch_count: 0
+futures_mismatch_count: 0
+status: pass
+
+This check uses public Binance exchangeInfo endpoints only. It does not require API keys and does not place orders.
+
+| asset | spot | spot_exists | futures | futures_exists | status |
+|---|---|---|---|---|---|
+| BTC | BTCUSDT | yes | BTCUSDT | yes | pass |
+| ETH | ETHUSDT | yes | ETHUSDT | yes | pass |
+| SOL | SOLUSDT | yes | SOLUSDT | yes | pass |
+| BNB | BNBUSDT | yes | BNBUSDT | yes | pass |
+| XRP | XRPUSDT | yes | XRPUSDT | yes | pass |
+| DOGE | DOGEUSDT | yes | DOGEUSDT | yes | pass |
+| ADA | ADAUSDT | yes | ADAUSDT | yes | pass |
+| LINK | LINKUSDT | yes | LINKUSDT | yes | pass |
+| AVAX | AVAXUSDT | yes | AVAXUSDT | yes | pass |
+| WLD | WLDUSDT | yes | WLDUSDT | yes | pass |
+| ONDO | ONDOUSDT | yes | ONDOUSDT | yes | pass |
+| SHIB | SHIBUSDT | yes |  | blank | pass |
+| TRX | TRXUSDT | yes | TRXUSDT | yes | pass |
+| HYPE |  | blank | HYPEUSDT | yes | pass |
+| UNI | UNIUSDT | yes | UNIUSDT | yes | pass |
+| AAVE | AAVEUSDT | yes | AAVEUSDT | yes | pass |
+| LDO | LDOUSDT | yes | LDOUSDT | yes | pass |
+| MKR | MKRUSDT | yes | MKRUSDT | yes | pass |
+| USDT |  | blank |  | blank | pass |
+| USDC |  | blank |  | blank | pass |

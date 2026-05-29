@@ -1,0 +1,24 @@
+﻿generated_at_china,source,source_family,total_candidates,backtested_count,clean_backtested_count,valid_event_ratio,avg_abnormal_return_24h,top_asset,top_asset_share,source_score,score_reasons,daily_quota,burst_window_limit,recommended_action
+2026-05-28 19:55:21 UTC+8,webhook,webhook_news,739,50,38,0.5751,0.042589,UNKNOWN,0.5467,55,"avg_24h>5pct,backtested_count>20,promising_needs_validation",20,5,validate
+2026-05-28 19:55:21 UTC+8,news:odaily_exchange_gap,news_import,61,5,4,0.9344,0.047454,BTC,0.4426,50,"valid_event_ratio>60,avg_24h>5pct",20,5,validate
+2026-05-28 19:55:21 UTC+8,tg:HyperInsight,historical_news,128,41,7,1.0,0.010151,BTC,0.6172,45,"valid_event_ratio>60,avg_24h>5pct,backtested_count>20,promising_needs_validation,single_asset_penalty,known_hype_contamination_penalty",5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:cryptonews,news_import,82,11,10,1.0,0.004857,BTC,0.6829,30,"valid_event_ratio>60,promising_needs_validation,single_asset_penalty",5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:utoday,news_import,24,5,5,1.0,0.00124,BTC,0.5833,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:coinpedia,news_import,21,3,3,1.0,0.005986,BTC,0.5238,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:99bitcoins,news_import,7,2,2,1.0,0.007144,ADA,0.5714,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:kucoin_ann,news_import,23,2,2,1.0,0.006609,BTC,0.3478,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:coinpaper,news_import,31,1,1,1.0,0.203427,BTC,0.7742,30,"valid_event_ratio>60,avg_24h>5pct,single_asset_penalty",5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:cryptonewsflash,news_import,7,1,1,1.0,0.01159,BTC,0.5714,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:binance_ann,news_import,5,0,0,1.0,0.0,BTC,0.4,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:jin10,news_import,654,0,0,0.6239,0.0,UNKNOWN,0.5505,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:kraken_ann,news_import,2,0,0,1.0,0.0,UNKNOWN,0.5,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:okx_ann,news_import,5,0,0,1.0,0.0,BTC,0.4,30,valid_event_ratio>60,5,2,throttle
+2026-05-28 19:55:21 UTC+8,news:cointelegraph,news_import,37,20,20,1.0,3.1e-05,ADA,0.9189,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:bitcoinist,news_import,30,15,15,1.0,0.009735,BNB,0.9333,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:decrypt,news_import,19,7,7,1.0,0.006166,AAVE,1.0,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:watcherguru,news_import,24,5,5,1.0,0.008048,BTC,0.7917,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:coindesk,news_import,29,2,2,1.0,-0.003081,BTC,0.7586,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:coinjournal,news_import,8,1,1,1.0,0.013079,BTC,0.625,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:bybit_ann,news_import,5,0,0,1.0,0.0,USDT,0.8,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,news:dailyhodl,news_import,6,0,0,1.0,0.0,BTC,1.0,10,"valid_event_ratio>60,single_asset_penalty",0,0,block
+2026-05-28 19:55:21 UTC+8,tg:OneMillion_AI,telegram_news,53,0,0,0.9434,0.0,UNKNOWN,0.7358,10,"valid_event_ratio>60,single_asset_penalty",0,0,block

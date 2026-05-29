@@ -1,0 +1,53 @@
+candidate_id,candidate_event_type,suggested_review_decision,candidate_asset_symbol,candidate_binance_spot_symbol,candidate_binance_futures_symbol,event_scope,auto_quality_score,eligible_for_stratified,block_reasons,title,source
+cand_00055,exchange_listing,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",戴尔：连续表态（共 2 条）,news:jin10
+cand_00056,exchange_listing,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",戴尔：连续表态（共 4 条）,news:jin10
+cand_00020,hack_security,include,BNB,BNBUSDT,BNBUSDT,multi_asset,85,False,multi_asset_score_below_90,The XRP Asian Breakout: Japan And South Korea Lead The Charge | Bitcoinist.com,news:bitcoinist
+cand_00038,hack_security,include,BTC,BTCUSDT,BTCUSDT,multi_asset,85,False,multi_asset_score_below_90,星球早讯,news:odaily_exchange_gap
+cand_00164,hack_security,include,BNB,BNBUSDT,BNBUSDT,multi_asset,85,False,multi_asset_score_below_90,HYPE Jumps On Bitwise’s Hyperliquid ETF Move—Galaxy Secures BitLicense In NY | Bitcoinist.com,news:bitcoinist
+cand_00220,hack_security,include,ADA,ADAUSDT,ADAUSDT,multi_asset,85,False,multi_asset_score_below_90,Ethereum Institutional Adoption Expands: ETH Held In Corporate Reserves Climbs To New Landmark | Bitcoinist.com,news:bitcoinist
+cand_00297,hack_security,include,BNB,BNBUSDT,BNBUSDT,multi_asset,85,False,multi_asset_score_below_90,Patrick Witt Teases ‘Breakthrough’ On US Bitcoin Reserve,news:bitcoinist
+cand_00371,hack_security,include,BNB,BNBUSDT,BNBUSDT,multi_asset,85,False,multi_asset_score_below_90,"Analyst Predicts Bitcoin And Ethereum Price For The Rest Of 2026, What To Expect | Bitcoinist.com",news:bitcoinist
+cand_00427,hack_security,include,ADA,ADAUSDT,ADAUSDT,multi_asset,85,False,multi_asset_score_below_90,Ethereum Founder Vitalik Buterin Says AI Verification Could Help Secure Crypto Networks - Decrypt,news:decrypt
+cand_00472,hack_security,include,BNB,BNBUSDT,BNBUSDT,multi_asset,85,False,multi_asset_score_below_90,XRP’s Recent Strategic Setup Could Mark The End For Bears - Crypto Analyst Says | Bitcoinist.com,news:bitcoinist
+cand_00090,hack_security,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",又又又又又又一起因为傻逼 admin 单点私钥沦陷导致的智能合约协议被盗事件…🤦🏻‍♂️没救了,webhook
+cand_00170,hack_security,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",2026年全球贸易投资促进峰会在京举行,news:jin10
+cand_00316,hack_security,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",阿布扎比国家石油公司首席执行官：针对巴拉卡核电站的攻击是对和平项目的“恐怖主义行为”,news:jin10
+cand_00438,hack_security,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",克里姆林宫：连续表态（共 3 条）,news:jin10
+cand_00223,halving,include,ADA,ADAUSDT,ADAUSDT,multi_asset,75,False,multi_asset_score_below_90,Soluna Q1 Revenue Rises 58% as Data Center Hosting Surpasses Crypto Mining,news:cointelegraph
+cand_00064,institutional_flow,include,HYPE,,,single_asset,85,False,missing_binance_symbol,"🔥 BULLISH: Bitwise announces it will hold $HYPE on its balance sheet, allocating 10% of its Hyperliquid ETF (BHYP) manag",webhook
+cand_00121,institutional_flow,include,ADA,ADAUSDT,ADAUSDT,multi_asset,85,False,multi_asset_score_below_90,"Binance Retail Investor Bitcoin Inflows Drop By 73%, What's Next for BTC?",news:cointelegraph
+cand_00365,institutional_flow,include,HYPE,,,single_asset,85,False,missing_binance_symbol,Bitwise将用10%管理费购买$HYPE,webhook
+cand_00482,institutional_flow,include,HYPE,,,single_asset,85,False,missing_binance_symbol,Bitwise to add HYPE to balance sheet using fees from Hyperliquid ETF,webhook
+cand_00491,institutional_flow,include,ADA,ADAUSDT,ADAUSDT,multi_asset,85,False,multi_asset_score_below_90,"Bank of England, FCA Set Out ‘Shared Vision’ for Tokenization - Decrypt",news:decrypt
+cand_00135,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",明尼苏达州州长签署虚拟货币托管法案,webhook
+cand_00292,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",⚡️ JUST IN: Korean robotics startup WIRobotics raised ~$63 million in Series B funding and plans to launch its ALLEX hum,webhook
+cand_00318,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",Zerohash Europe获得荷兰央行电子货币机构牌照,webhook
+cand_00389,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",伊朗成立管理霍尔木兹海峡新机构,news:jin10
+cand_00494,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",机构：美团的长期盈利前景看起来十分乐观,news:jin10
+cand_00498,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",Galaxy Digital获得纽约BitLicense,webhook
+cand_00500,institutional_flow,exclude,,,,unknown,-75,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",野村证券：騰訊控股(00700.HK)核心业务稳健支撑AI投资，评级为买入,news:jin10
+cand_00257,network_upgrade,include,ADA,ADAUSDT,ADAUSDT,multi_asset,75,False,multi_asset_score_below_90,"Bitcoin Faces Greater Quantum Computing Risk Than Ethereum, Citi Warns - Decrypt",news:decrypt
+cand_00258,network_upgrade,include,BTC,BTCUSDT,BTCUSDT,multi_asset,75,False,multi_asset_score_below_90,Citi warns Bitcoin faces quantum risk,news:cryptonews
+cand_00476,network_upgrade,include,ADA,ADAUSDT,ADAUSDT,multi_asset,75,False,multi_asset_score_below_90,Cardano Price Analysis: ADA Bears Eye $0.20 Support,news:99bitcoins
+cand_00089,network_upgrade,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",Coinbase：将与5月23日系统升级，交易不中断但订单状态或受影响,news:odaily_exchange_gap
+cand_00155,network_upgrade,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",高盛：连续表态（共 2 条）,news:jin10
+cand_00237,network_upgrade,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",华为董事侯金龙：全球AIDC装机规模将持续突破,news:jin10
+cand_00274,network_upgrade,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",币安链推出BNBAgent SDK，支持AI代理使用链上身份,webhook
+cand_00385,network_upgrade,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",德国总理默茨：我们强烈谴责伊朗对阿联酋及其他合作伙伴的空袭升级,news:jin10
+cand_00431,network_upgrade,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",百度一季度AI业务收入占比过半，昆仑芯全国产集群已完成对文心大模型5.1重要版本的训练,news:jin10
+cand_00107,staking_governance,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol","Forgot to say, make no mistakes",webhook
+cand_00140,staking_governance,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",据AXIOS：一位美国高级官员表示，伊朗已提交了一份更新的停战协议提案，但白宫认为该提案没有实质性改进，不足以达成协议,news:jin10
+cand_00149,staking_governance,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",美国SEC最快本周推出代币化股票创新豁免框架,webhook
+cand_00268,staking_governance,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",报道：伊朗提议长期多阶段停火 可以将浓缩铀无条件转移至俄罗斯,news:jin10
+cand_00272,staking_governance,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol","JUST IN: Trump calls for a DOJ investigation into Maryland voting, alleging the state sent out 500,000 illegal mail-in b",webhook
+cand_00360,staking_governance,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol","🚨 JUST IN: A senior U.S. official said Iran’s latest proposal to end the war is “insufficient,” raising the risk of rene",webhook
+cand_00065,token_unlock,include,BTC,BTCUSDT,BTCUSDT,multi_asset,75,False,multi_asset_score_below_90,黄金白银小幅反弹，加密波动率下降，BVIX日内跌幅0.54%,news:odaily_exchange_gap
+cand_00051,token_unlock,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",Android上线实时语音！开源智能体OpenClaw发新版，全面解锁GPT-5,tg:OneMillion_AI
+cand_00430,token_unlock,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",巴加埃：释放被冻结资金并解除制裁是伊方一贯诉求,news:jin10
+cand_00445,token_unlock,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol",国际能源署署长比罗尔：战略石油储备的释放已为市场每日增加250万桶石油，但这些储备并非取之不尽,news:jin10
+cand_00077,whale_position,include,HYPE,,,single_asset,75,False,missing_binance_symbol,"Whale Loracle.hl (@loraclexyz) has further increased his $HYPE (5x) short position to 1.44M $HYPE, valued at $69.3M with",webhook
+cand_00080,whale_position,exclude,,,,unknown,-85,False,"suggested_exclude,missing_asset_flag,missing_asset_symbol,missing_binance_symbol","仅在过去 2 个月时间里，Ondo 项目方的多签钱包就向 Coinbase 等交易所累计转移了超过 3.28 亿枚 $ONDO ($9842 万)。
+
+地址：
+https://t.co/eqO2dMOrZL
+https://t.co/3c8",webhook

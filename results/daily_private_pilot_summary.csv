@@ -1,0 +1,2 @@
+﻿generated_at,status,total_drafts,reviewed_count,review_completion_rate,useful_or_interesting_count,issue_count,validation_fail_count,auto_send_enabled_count,other_review_keep_review_count,prefilter_input_rows,prefilter_pass_rows,prefilter_reject_rows,approved_pool_rows,dashboard_fail_or_blocked_count,dashboard_review_or_ready_count,claude_open_questions,claude_threshold,next_action
+2026-05-27 18:38:15 UTC+8,pilot_signal_ready,9,9,1.0,9,0,0,0,5,22,9,13,9,0,12,0,20,Use feedback summary to decide whether to expand the private pilot sample.

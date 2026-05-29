@@ -1,0 +1,5 @@
+event_scope,candidate_count,needs_review_count,include_count
+market_wide,1387,1387,0
+multi_asset,722,722,0
+single_asset,628,431,0
+unknown,2263,2263,0

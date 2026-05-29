@@ -1,0 +1,2 @@
+﻿generated_at_china,overall_status,fail_count,warning_count,source_registry_status,adapter_validation_status,source_rows,shadow_or_no_live_data_count,insufficient_live_outcomes_count,event_matrix_rows,non_benchmark_matrix_rows,signal_decay_rows,false_positive_group_rows,v11_signal_policy_rows,shadow_event_rows,evidence_snippet_rows,digest_preview_status,llm_call_count,llm_estimated_cost_usd
+2026-05-28 19:24:41 UTC+8,warning,0,2,pass,pass,10,7,3,40,56,36,3,62,1,3,pass,1,0.112074

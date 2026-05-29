@@ -1,0 +1,66 @@
+﻿event_id,event_time_utc,event_date_utc,source,candidate_source,author,source_id,abnormal_vs_btc_24h,title
+cand_01916,2026-05-20T00:20:58Z,2026-05-20,webhook,webhook,,webhook,0.155904,"Whale 0xde42 sold 50K $HYPE ($2.41M) over the past 10 hours while also opening a 10x short on 223,404 $HYPE($10.55M).
+
+h"
+cand_01883,2026-05-20T00:58:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.168782,【知名交易员Loracle「 HYPE 空仓 TOP 1」】LIT 多单 新开仓!
+cand_01877,2026-05-20T01:04:39Z,2026-05-20,webhook,webhook,,webhook,0.166404,"Whale Loracle.hl (@loraclexyz) has started opening a $LIT (3x) long position, currently valued at ~$1M and it’s still in"
+cand_01844,2026-05-20T01:42:41Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.179194,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈扩大！
+cand_01835,2026-05-20T01:48:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.176597,【知名交易员Loracle「 HYPE 空仓 TOP 1」】LIT 多单 滚仓 啦!
+cand_01826,2026-05-20T02:03:39Z,2026-05-20,webhook,webhook,,webhook,0.159375,a16z crypto相关地址成为HYPE第六大持仓实体
+cand_01793,2026-05-20T02:52:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.159498,【知名交易员Loracle「 HYPE 空仓 TOP 1」】LIT 多单 滚仓 啦!
+cand_01693,2026-05-20T05:52:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.155999,【知名交易员Loracle「 HYPE 空仓 TOP 1」】LIT 多单 滚仓 啦!
+cand_01590,2026-05-20T08:14:44Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.195324,【ZEC最大空头】HYPE 空单 摊平 啦!
+cand_01577,2026-05-20T08:38:41Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.198224,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_01529,2026-05-20T09:30:06Z,2026-05-20,webhook,webhook,,webhook,0.20201,"随着 $HYPE 来到 $49，去年 11 月份以 $38.6 的价格追高开多 138 万枚 $HYPE ($6740 万) 的鲸鱼，目前浮盈 $1400 万了。
+
+好奇这老哥是准备要到啥价位才会平仓，他这个 HYPE 多单已经开了 7 个"
+cand_01483,2026-05-20T10:28:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.171502,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_01425,2026-05-20T11:38:15Z,2026-05-20,webhook,webhook,,webhook,0.151358,"As $HYPE trades around ~$50
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit of"
+cand_01387,2026-05-20T12:12:55Z,2026-05-20,news:odaily_exchange_gap,news:odaily_exchange_gap,,news:odaily_exchange_gap,0.146765,Anchorge关联钱包再次从CEX提取44510枚HYPE
+cand_01353,2026-05-20T12:48:42Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.158647,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_01313,2026-05-20T13:22:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.1623,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_01144,2026-05-20T15:18:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.206605,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 浮亏扩大！
+cand_01143,2026-05-20T15:18:43Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.206605,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_00893,2026-05-20T19:28:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.093524,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00884,2026-05-20T19:34:49Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.099429,【ZEC最大空头】HYPE 空单 摊平 啦!
+cand_00666,2026-05-20T22:18:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.079648,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00659,2026-05-20T22:28:41Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.079999,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_00650,2026-05-20T22:32:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.077143,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00591,2026-05-20T23:36:49Z,2026-05-20,webhook,webhook,,webhook,0.083403,"As $HYPE trades around ~$50,
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit o"
+cand_00590,2026-05-20T23:38:40Z,2026-05-20,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.074131,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00587,2026-05-20T23:40:02Z,2026-05-20,webhook,webhook,,webhook,0.07495,"As $HYPE trades around ~$54,
+
+A whale (“0x082”) holding a $HYPE (5x) long position is now sitting on a floating profit o"
+cand_00575,2026-05-20T23:57:04Z,2026-05-20,webhook,webhook,,webhook,0.071577,"HYPE 已经 $54 了，看来是有望突破去年 9 月份创造的前高 $59，毕竟只差 8 个点了。
+
+◎最大 HYPE 多头的 138 万枚 $HYPE 目前已经浮盈高达 $2160 万。
+https://t.co/wqnznUBMo0"
+cand_00562,2026-05-21T00:08:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.062501,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00560,2026-05-21T00:12:43Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.054633,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_00558,2026-05-21T00:13:54Z,2026-05-21,webhook,webhook,,webhook,0.052961,"As $ZEC is pumping
+
+Whale “0xd63” closed most of the position, taking a loss of over $3.27M, and is still holding the re"
+cand_00521,2026-05-21T00:38:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.020625,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00517,2026-05-21T00:42:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.031128,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00477,2026-05-21T01:22:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.006037,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00476,2026-05-21T01:22:42Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.006037,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_00432,2026-05-21T02:18:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.040298,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00408,2026-05-21T02:43:33Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.039909,「交易员Loracle」逆势加码26.8万枚HYPE空单，浮亏扩大至2010万
+cand_00353,2026-05-21T03:58:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.017447,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 浮亏扩大！
+cand_00190,2026-05-21T07:32:59Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.004247,【重仓布局三大市场】HYPE 多单 平仓止盈!
+cand_00186,2026-05-21T07:38:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.003157,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00181,2026-05-21T07:38:55Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.003157,【重仓布局三大市场】HYPE 多单 新开仓!
+cand_00178,2026-05-21T07:41:29Z,2026-05-21,webhook,webhook,,webhook,-0.002054,"As $HYPE continues to rise, a whale (0x842) increased its 5x short position to 353,832 $HYPE valued at $20M, with a floa"
+cand_00155,2026-05-21T08:02:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,-0.005491,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00154,2026-05-21T08:02:43Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,-0.005491,【疑似HYPE上币内幕「 HYPE 多仓 TOP 1」】HYPE 多单 浮盈收窄！
+cand_00118,2026-05-21T08:50:19Z,2026-05-21,webhook,webhook,,webhook,0.01971,"It's just CRAZY!!! 🤯
+
+The whale ""0x082"" has been holding its $HYPE (5x) long position since Dec 5th, 2025 - and now his"
+cand_00082,2026-05-21T09:32:41Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.020631,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 摊平 啦!
+cand_00058,2026-05-21T09:58:40Z,2026-05-21,tg:HyperInsight,tg:HyperInsight,,tg:hyperinsight,0.026089,【知名交易员Loracle「 HYPE 空仓 TOP 1」】HYPE 空单 浮亏收窄！
+cand_01614,2026-05-20T07:45:33Z,2026-05-20,news:cryptonews,news:cryptonews,,news:cryptonews,0.194038,HYPE whale alert: a16z-linked wallets may rank No. 6
+cand_01371,2026-05-20T12:29:35Z,2026-05-20,webhook,webhook,,webhook,0.147684,某地址向HyperLiquid转入1900万USDC购买HYPE现货

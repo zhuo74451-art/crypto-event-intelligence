@@ -1,0 +1,10 @@
+event_type,selected_count,eligible_count,type_cap,limit
+TOTAL,37,179,,50
+hack_security,8,12,8,50
+halving,3,3,5,50
+institutional_flow,3,3,10,50
+macro,10,135,10,50
+network_upgrade,3,3,8,50
+other,5,18,5,50
+staking_governance,2,2,5,50
+token_unlock,3,3,8,50

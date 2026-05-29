@@ -1,0 +1,2 @@
+total_rows,manual_labeled_rows,manual_unlabeled_rows,auto_apply_rows,auto_apply_unlabeled_rows,manual_review_required_rows,selected_batch_size,selected_publish_review,selected_other_review,selected_discard_audit,selected_multi_or_unknown_scope,selected_manual_review_required
+201,201,0,73,0,59,30,21,0,9,9,30

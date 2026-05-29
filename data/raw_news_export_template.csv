@@ -1,0 +1,11 @@
+raw_id,published_at,source_published_at,source_timezone,title,content,source,url,language,author,category,tags
+raw_001,45301.885416666664,,,US spot Bitcoin ETF approvals reported,Multiple US spot Bitcoin ETFs were approved and issuers prepared for launch.,news_site,https://example.com/raw_001,en,editor,etf,"BTC,ETF"
+raw_002,2024-03-13T14:05:00Z,,,Ethereum Dencun upgrade goes live,Ethereum Dencun upgrade has activated on mainnet with blob transactions enabled.,official,https://example.com/raw_002,en,eth_foundation,upgrade,"ETH,upgrade"
+raw_003,2024-06-27T12:30:00Z,,,Solana ETF filing submitted,A fund issuer submitted paperwork for a proposed Solana ETF product.,news_site,https://example.com/raw_003,en,editor,etf,"SOL,ETF"
+raw_004,2024-07-01T08:05:00Z,,,XRP unlock alert,Large XRP token unlock was observed from scheduled escrow releases.,telegram,,en,bot,unlock,"XRP,unlock"
+raw_005,2024-08-15T10:10:00Z,,,HYPE ecosystem update,Hyperliquid ecosystem news circulated but Binance market support is unclear.,telegram,,en,bot,ecosystem,"HYPE"
+raw_006,2024-05-23T18:10:00Z,2024-05-23 10:10:00,America/New_York,SEC approves spot Ethereum ETF rule changes,SEC approved rule changes tied to spot Ethereum ETF listings.,news_site,https://example.com/raw_006,en,editor,regulation,"ETH,SEC,ETF"
+raw_007,2024-04-19T00:15:00Z,,,Bitcoin halving completed,Bitcoin fourth halving completed and miner block rewards declined.,telegram,,cn,bot,market_structure,"BTC,halving"
+raw_008,2024-02-01T09:10:00Z,,,Chainlink staking update released,Chainlink published an update related to staking and ecosystem participation.,official,https://example.com/raw_008,en,chainlink,ecosystem,"LINK,staking"
+raw_009,2024-03-01T10:15:00Z,,,Dogecoin whale wallet transfers DOGE,A whale wallet transferred a large DOGE amount to an exchange address.,telegram,,en,bot,onchain,"DOGE,whale"
+raw_010,2024-06-15T13:05:00Z,,,CPI and Fed rate concerns pressure risk assets,Fed rate and CPI expectations pressured risk assets; BTC followed broader market volatility.,news_site,https://example.com/raw_010,cn,editor,macro,"BTC,macro"

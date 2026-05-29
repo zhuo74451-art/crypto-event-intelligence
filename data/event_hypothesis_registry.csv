@@ -1,0 +1,15 @@
+event_type,event_subtype,hypothesis_cn,expected_observation,required_fields,minimum_threshold,known_false_positives,tg_priority
+whale_position,whale_position_static_large,静态大仓位本身不一定有方向性，但可作为后续仓位变化和清算风险的背景。,observe,"asset_symbol,amount_usd,entity_or_address,side",">=75000000 USD for non-BTC/ETH known entity","长期持仓不动;重复曝光;未知地址无行为变化",low
+whale_position,whale_position_size_change,大户仓位明显变化比静态仓位更可能携带短期结构信息。,observe_change,"asset_symbol,amount_usd,delta_usd,change_pct,side",">=10000000 USD delta or >=50% change","价格已先动;自动调仓;同一地址重复变化",high
+whale_position,whale_position_near_liquidation,接近清算的大仓位可能提高短期波动和连锁风险。,risk_observation,"asset_symbol,amount_usd,liquidation_distance_pct,side","<=5% liquidation distance","盘口深度足够;交易者主动补保证金;价格源延迟",high
+cex_netflow,cex_netflow_inflow_spike,交易所异常流入可能代表潜在卖压或资金调度，需要结合基线和价格吸收情况。,risk_or_flow_observation,"asset_symbol,amount_usd,exchange,baseline_zscore",">=500000000 USD or zscore>=2","内部归集;冷热钱包迁移;稳定币调拨",medium
+cex_netflow,cex_netflow_outflow_spike,交易所异常流出可能代表提币囤积或交易所内部调拨，需要结合地址标签判断。,flow_observation,"asset_symbol,amount_usd,exchange,baseline_zscore",">=500000000 USD or zscore>=2","交易所钱包整理;跨链桥迁移;托管调拨",medium
+stablecoin_flow,stablecoin_mint,稳定币大额增发是流动性背景变量，单次不一定对应方向，需要结合交易所流入和市场状态。,liquidity_observation,"asset_symbol,amount_usd,issuer,tx_hash",">=500000000 USD","授权未发行;金库内部操作;链间迁移",medium
+stablecoin_flow,stablecoin_cex_inflow,稳定币大额流入交易所可能代表可用购买力增加，但必须看后续是否被风险资产吸收。,liquidity_observation,"asset_symbol,amount_usd,exchange,tx_hash",">=500000000 USD","交易所内部归集;做市商调拨;跨链换链",medium
+market_structure,funding_extreme_positive,资金费率极端偏正代表多头拥挤，可能是趋势延续也可能是反向风险，需要按市场状态验证。,crowding_observation,"asset_symbol,funding_rate,baseline_percentile",">=95th percentile","低流动性合约;短时异常;交易所单点数据",medium
+market_structure,funding_extreme_negative,资金费率极端偏负代表空头拥挤，可能带来反弹风险或趋势延续，需要按市场状态验证。,crowding_observation,"asset_symbol,funding_rate,baseline_percentile","<=5th percentile","低流动性合约;短时异常;交易所单点数据",medium
+market_structure,long_short_crowding_extreme,多空持仓极端拥挤更适合做风险观察，不直接代表方向。,crowding_observation,"asset_symbol,long_short_ratio,taker_buy_sell_ratio,crowding_score",">=80 crowding score","样本口径变化;交易所单点偏差;跟随价格滞后",medium
+token_unlock,token_unlock_team_large,团队/贡献者大额解锁通常是供给压力背景，盘中不应重复推送，适合日报/早晚报。,risk_observation,"asset_symbol,unlock_time,amount_usd,pct_circulating,allocation",">=10000000 USD and >=5% circulating","已提前充分定价;解锁后不立即流通;数据源误差",low
+token_unlock,token_unlock_investor_large,投资人大额解锁可能带来流通供给变化，需要观察临近前后价格是否已提前反应。,risk_observation,"asset_symbol,unlock_time,amount_usd,pct_circulating,allocation",">=10000000 USD and >=5% circulating","已提前充分定价;场外锁仓延期;解锁口径不等于抛售",low
+hack_security,security_exploit_confirmed,已确认攻击/盗币事件更适合看短期风险、波动率和同类项目连带反应，而不是普通方向信号。,risk_observation,"asset_symbol,amount_usd,protocol,source_url,confirmed_status",">=1000000 USD or official/security firm confirmed","谣言;历史旧事件重复;影响资产非交易标的",high
+hack_security,security_soft_warning,安全软信号只作为候选或复核，不应自动高优先级推送。,review_needed,"asset_symbol,protocol,warning_source,details","credible source or repeated warnings","误报;钓鱼消息;非核心合约风险",low

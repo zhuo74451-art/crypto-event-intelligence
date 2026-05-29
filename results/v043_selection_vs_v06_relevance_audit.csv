@@ -1,0 +1,423 @@
+candidate_id,raw_id,raw_published_at,published_at,published_at_utc,published_at_china,raw_source_published_at,source_published_at_utc,source_published_at_china,source_timezone,source_timezone_assumption,source_lag_minutes,backtest_time,backtest_time_utc,backtest_time_china,backtest_time_basis,time_timezone_assumption,time_parse_status,time_parse_flags,title,content,source,url,candidate_asset_symbol,candidate_binance_spot_symbol,candidate_binance_futures_symbol,candidate_event_type,candidate_direction_hint,candidate_importance,event_scope,asset_confidence,time_confidence,needs_review,review_decision,review_notes,quality_flags,auto_quality_score,suggested_reason,suggested_review_decision,review_priority,parsed_backtest_time_utc,event_age_hours,horizon_status,is_mature_72h,publish_decision,discard_reason,primary_discard_reason,channel_route,event_type_l1,event_type_l2,entity_flags,relevance_score_realtime
+cand_00324,news:1023:0b5e5f49d6fd3a14,2026-05-18T19:37:15Z,2026-05-19 03:37:15 UTC+8,2026-05-18T19:37:15Z,2026-05-19 03:37:15 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 03:37:15 UTC+8,2026-05-18T19:37:15Z,2026-05-19 03:37:15 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Leopold Aschenbrenner bets $13.6b on miners,"Ex-OpenAI researcher Leopold Aschenbrenner’s Situational Awareness fund has doubled to $13.67b, with Bitcoin miners as its top long positions.
+
+Aschenbrenner, who was fired from OpenAI in 2024 over an alleged information leak, filed the fund’s Q1 2026 13F with the SEC on May 15, with the regulator accepting it on May 18. The document shows disclosed equity exposure more than doubling from $5.52 billion at end-2025 to $13.67 billion as of March 31.
+
+The largest long positions span Bitcoin miners IREN, Core Scientific, Riot Platforms, CleanSpark, Bitfarms, Bitdeer, and Hive Digital, alongside energy and compute plays Bloom Energy, SanDisk, and CoreWeave. As Fortune noted in its March profile, the thesis holds that “the most valuable assets in the AI era may not be algorithms, but electricity and computing power.”
+
+Aschenbrenner’s investment logic holds that AI buildout will be bottlenecked by power and land, not chips. Bitcoin miners already hold high-density power sites and grid access that AI companies cannot replicate quickly. His 165-page “Situational Awareness: The Decade Ahead” paper argued that compute infrastructure, not model development, would determine the pace of AGI progress.
+
+The trend is reshaping reported earnings across the sector. As crypto.news reported , TeraWulf’s AI and HPC hosting revenue of $21 million outpaced Bitcoin mining revenue for the first time in Q1 2026. Core Scientific, among Aschenbrenner’s disclosed holdings, has announced plans to repurpose its Pecos site into a 1.5GW AI data center campus, repurposing 300MW of existing mining capacity.
+
+Alongside the miner longs, the fund opened $7.46 billion in put options against the chip sector. The largest positions were $2.04 billion against the VanEck Semiconductor ETF, $1.57 billion against Nvidia, $1.07 billion against Oracle, and $1.01 billion against Broadcom, the filing shows.
+
+The pairing makes the thesis internally consistent: if AI value accrues to power sites rather than chip makers, semiconductor valuations face compression even as infrastructure operators gain.
+
+Crypto.news documented this broader miner pivot in an earlier analysis of firms leaping into HPC , noting that companies from Bitdeer to Riot are accelerating the conversion of mining facilities into AI data centers. Full Q1 holdings data is available at the Situational Awareness LP 13F tracker on 13f.info.",news:cryptonews,https://crypto.news/leopold-aschenbrenner-bets-13-6b-on-miners/,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T19:37:15Z,202.4936,mature_72h,true,human_review,,,research_only,institutional_flow,etf_or_fund_flow,,69.75
+cand_00275,news:1023:74dd421949306c03,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 04:30:00 UTC+8,2026-05-18T20:30:00Z,2026-05-19 04:30:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,XRP price slips 2% on profit taking,"XRP price dropped 2% on May 18, sliding to $1.3865 as traders sold aggressively into the $1.42 resistance zone.
+
+XRP fell as traders took profits aggressively after another failed push above $1.42, knocking the token back below $1.40 in the 24-hour session ending May 18.
+
+The sharpest move came during the May 17 23:00 UTC session, when 144.3 million in volume pushed price from the $1.42 area to lows near $1.378. Buyers stepped in around $1.38 to limit the loss, and XRP recovered partially into the close.
+
+The rejection is technically significant. As crypto.news reported , roughly 1.24 billion XRP tokens are held by investors who entered between $1.45 and $1.47, creating a structural supply wall that absorbs buying on every approach to that level.
+
+Analysts have pointed to a months-long symmetrical triangle compressing XRP’s price action, with the apex tightening toward a resolution in late May. The pattern is approaching a decisive breakout point, with sellers still controlling the $1.42 upper edge even as buyers defend $1.38 on each test.
+
+Standard Chartered analyst Geoffrey Kendrick has projected that Senate Banking Committee advancement of the CLARITY Act could unlock $4 to $8 billion in additional XRP ETF inflows, making that vote the primary binary catalyst for any breakout above $1.45. As crypto.news documented , XRP ETFs recorded $81.63 million in net inflows in April, the best month of 2026, yet price failed to sustain momentum despite consistent institutional demand.
+
+A clean breakdown below $1.38 removes the floor under the current consolidation and opens the path toward $1.30. Traders who entered at higher levels have been the primary selling force on each recovery attempt. The crypto.news XRP price page shows the token trading at roughly a 62% discount to its July 2025 all-time high of $3.65.
+
+A close above $1.42 would be the first signal that sellers are losing their grip on the upper range. Until then, the symmetrical triangle continues to compress toward a resolution that technical analysts warn could be sharp in either direction.",news:cryptonews,https://crypto.news/xrp-price-slips-2percent-on-profit-taking/,XRP,XRPUSDT,XRPUSDT,token_unlock,risk,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T20:30:00Z,201.6144,mature_72h,true,discard,generic_price_recap,generic_price_recap,research_only,market_structure,price_market_structure,possible_price_recap,62.25
+cand_00484,2056417103637254305,2026-05-18T16:50:18Z,2026-05-19 00:50:18 UTC+8,2026-05-18T16:50:18Z,2026-05-19 00:50:18 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 00:50:18 UTC+8,2026-05-18T16:50:18Z,2026-05-19 00:50:18 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金,币界网消息，据Cointelegraph报道，Adshares桥的攻击者已归还256枚ETH，覆盖了被盗资金的86%。,webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T16:50:18Z,205.2761,mature_72h,true,human_review,,,alpha_candidate,hack_security,exploit_or_theft,,72.75
+cand_00449,2056424419023823124,2026-05-18T17:19:22Z,2026-05-19 01:19:22 UTC+8,2026-05-18T17:19:22Z,2026-05-19 01:19:22 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 01:19:22 UTC+8,2026-05-18T17:19:22Z,2026-05-19 01:19:22 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Ethereum Foundation 研究员 Carl Beek 与 Julian Ma 于周一宣布离职。其中，Carl Beek 在以太坊工作约 7 年，曾参与 Beacon Chain 及以太坊 PoS 升级；Julian Ma 在以,Ethereum Foundation 研究员 Carl Beek 与 Julian Ma 于周一宣布离职。其中，Carl Beek 在以太坊工作约 7 年，曾参与 Beacon Chain 及以太坊 PoS 升级；Julian Ma 在以太坊工作约 4 年，曾参与 FOCIL（EIP-7805）提案撰写及 Fast Confirmation Rule 推进工作。此前，Ethereum Foundation 前联合执行董事 Tomasz K. Stańczak、前成员 Josh Stark，以及 Protocol 团队成员 Barnabé Monnot、Tim Beiko、Alex Stokes 等人也已相继离职或暂时休假。（The Block）https://t.co/9gtDyj94Sj,webhook,,ETH,ETHUSDT,ETHUSDT,network_upgrade,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T17:19:22Z,204.7917,mature_72h,true,human_review,,,research_only,network_upgrade,upgrade_or_fork,,68.25
+cand_00193,2056496934328680460,2026-05-18T22:07:31Z,2026-05-19 06:07:31 UTC+8,2026-05-18T22:07:31Z,2026-05-19 06:07:31 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 06:07:31 UTC+8,2026-05-18T22:07:31Z,2026-05-19 06:07:31 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"JUST IN: 100,000 blocks remain until the next Bitcoin Halving. https://t.co/y8wcvN854g","JUST IN: 100,000 blocks remain until the next Bitcoin Halving. https://t.co/y8wcvN854g",webhook,,BTC,BTCUSDT,BTCUSDT,halving,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T22:07:31Z,199.9892,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,research_only,halving,halving,,59.25
+cand_00160,2056505718988275732,2026-05-18T22:42:26Z,2026-05-19 06:42:26 UTC+8,2026-05-18T22:42:26Z,2026-05-19 06:42:26 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 06:42:26 UTC+8,2026-05-18T22:42:26Z,2026-05-19 06:42:26 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,以太坊质押比例上升至31%，长期持有者信心依旧,币界网消息，据The Block报道，尽管以太坊年内价格已下跌约26%，但其质押比例由年初的约29%升至总供应量的约31%。持续增长的质押规模显示，长期持有者在价格承压及链上风险仍存的情况下，依然对以太坊保持信心，并逐步减少市场流通供应。随着现货以太坊ETF发展及以太坊上代币化活动扩张，机构对质押以太坊的需求可能为质押生态带来新的结构性资金流入，但是否会进一步传导至以太坊价格，仍取决于机构资金的实际配置进展。,webhook,,ETH,ETHUSDT,ETHUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T22:42:26Z,199.4072,mature_72h,true,human_review,,,research_only,institutional_flow,etf_or_fund_flow,possible_price_recap,69.75
+cand_00487,2056416753874329796,2026-05-18T16:48:55Z,2026-05-19 00:48:55 UTC+8,2026-05-18T16:48:55Z,2026-05-19 00:48:55 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 00:48:55 UTC+8,2026-05-18T16:48:55Z,2026-05-19 00:48:55 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Michael Saylor的策略现持有超过4%的比特币总供应量,币界网消息，Polymarket报道，Michael Saylor的策略现在已持有超过4%的比特币总供应量。,webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-18T16:48:55Z,205.2992,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,research_only,institutional_flow,etf_or_fund_flow,,75.0
+cand_00419,news:1006:80c4d6c2f38d9763,2026-05-18T17:41:53Z,2026-05-19 01:41:53 UTC+8,2026-05-18T17:41:53Z,2026-05-19 01:41:53 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-19 01:41:53 UTC+8,2026-05-18T17:41:53Z,2026-05-19 01:41:53 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,White House: Bitcoin Reserve Announcement Is Imminent,"The White House is nearing a formal announcement on a U.S. Strategic Bitcoin Reserve, with Patrick Witt saying the administration has already cleared a key legal hurdle.
+
+The White House is on the verge of a formal announcement on the U.S. Strategic Bitcoin Reserve — and the official leading the charge says the hard part is done.
+
+Patrick Witt, Executive Director of the President’s Council of Advisors for Digital Assets, told an interviewer this week that the administration has cleared a major legal hurdle in standing up the reserve.
+
+“We’ll have an announcement,” Witt said. “I wish I could say more… It’s a breakthrough as far as getting everything in place, legally sound, properly safeguarding the assets.”
+
+The signal follows a similar declaration Witt made at the Bitcoin 2026 conference in Las Vegas, where he told the crowd an update was coming within weeks.
+
+President Trump signed the executive order establishing the Strategic Bitcoin Reserve on March 6, 2025. Since then, Witt says his deputy Harry John has driven the interagency process: identifying what legal authorities exist, commissioning the necessary legal memos, and building a custody and reporting infrastructure across federal agencies that were designed for gold, not private keys.
+
+The reserve holds an estimated 328,372 BTC — roughly 1.6% of total global supply — accumulated through law enforcement seizures, including the Silk Road takedown, the 2022 Bitfinex hack recovery, and years of criminal forfeitures.
+
+The executive order bars the Treasury from selling a single coin.
+
+Witt pointed to a breach at the U.S. Marshals Service as proof that the reserve’s security mandate is urgent. A government contractor named John Daghita allegedly stole more than $46 million in cryptocurrency from USMS custody accounts in late 2025, and the FBI arrested him in March 2026. A separate $24 million theft was traced to October 2024.
+
+“It’s a case in point for why it was so necessary that the president established the SBR,” Witt said.
+
+An executive order dies the moment a new president takes office. That vulnerability is the core argument for two bills now moving through Congress. Rep. Nick Begich recently rebranded the BITCOIN Act as the American Reserves Modernization Act (ARMA), which would authorize the U.S. Treasury to purchase up to 200,000 BTC per year for five years — with holdings locked for a minimum of 20 years. Senator Cynthia Lummis has put Congress on a deadline, pushing for a vote before the summer recess as midterm campaigning begins to consume floor time.
+
+If the BITCOIN Act passes, the Treasury’s first open-market Bitcoin purchase is projected for Q4 2026 — making the U.S. the first sovereign nation to actively accumulate Bitcoin as a strategic reserve asset.",news:bitcoinmagazine,https://bitcoinmagazine.com/news/white-house-strategic-bitcoin-reserve,BTC,BTCUSDT,BTCUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T17:41:53Z,204.4164,mature_72h,true,human_review,,,macro_policy,regulation_macro,bitcoin_reserve_policy,,76.25
+cand_00375,news:1023:cefcf6894139222d,2026-05-18T18:30:00Z,2026-05-19 02:30:00 UTC+8,2026-05-18T18:30:00Z,2026-05-19 02:30:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 02:30:00 UTC+8,2026-05-18T18:30:00Z,2026-05-19 02:30:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Standard Chartered: $4T tokenized by 2028,"Standard Chartered projects $4 trillion in tokenized assets onchain by 2028, with mature DeFi protocols as the main beneficiaries.
+
+Standard Chartered projects that $4 trillion in tokenized assets will sit onchain by the end of 2028, evenly split between stablecoins and real-world assets. The forecast positions established DeFi protocols as the main winners.
+
+Geoffrey Kendrick, the bank’s global head of digital assets research, said DeFi’s composability allows the same asset to generate yield, serve as collateral, and trade for liquidity without traditional intermediaries.
+
+Kendrick cited BlackRock’s BUIDL fund as proof of concept. The $2.85 billion tokenized Treasury fund earns Treasury yield, converts to sBUIDL for DeFi compatibility, and serves as core reserve collateral for Ethena’s USDtb and Ondo’s OUSG.
+
+Aave, the largest DeFi lending protocol, processed daily stablecoin lending volumes between $1.5 billion and $2 billion at its peak. Coinbase’s lending product with Morpho has reached $1.75 billion in loans.
+
+Kendrick views passage of the CLARITY Act as the most significant near-term catalyst for accelerating the shift from traditional rails to DeFi. The bill cleared Senate Banking 15-9 on May 14 and now heads to a full floor vote.
+
+The projection consolidates two forecasts Kendrick has maintained separately: a $2 trillion stablecoin target and a $2 trillion RWA market, both by end-2028. The bank reaffirmed the RWA call in April despite recent DeFi exploits.
+
+There are currently roughly 1,000 times more assets offchain than onchain, according to the note. Kendrick believes tokenizing institutional-grade assets is the most likely source of growth, with protocols that scale safely positioned to benefit most.
+
+“TradFi operators moving assets onchain will favor established players with strong risk metrics,” Kendrick wrote. Aave, Compound, and Morpho are positioned to lead, with Ethereum remaining the dominant settlement layer.",news:cryptonews,https://crypto.news/standard-chartered-4t-tokenized-by-2028/,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T18:30:00Z,203.6144,mature_72h,true,human_review,,,research_only,project_business,rwa_tokenization,"multiple_assets_detected,candidate_asset_mismatch",61.75
+cand_00146,2056509658588963032,2026-05-18T22:58:05Z,2026-05-19 06:58:05 UTC+8,2026-05-18T22:58:05Z,2026-05-19 06:58:05 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 06:58:05 UTC+8,2026-05-18T22:58:05Z,2026-05-19 06:58:05 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Delphi Digital：比特币在流动性趋紧背景下表现可能优于多数加密资产,币界网消息，吴说获悉，Delphi Digital表示，在未来一年流动性趋紧背景下，比特币表现可能优于多数加密资产。该机构认为，当市场偏好高质量流动性资产时，资金通常会先从山寨币流向比特币，再进一步流向现金与美国国债。Delphi的流动性安全边际指数（LMOS）目前已升至接近全球金融危机前水平，而中央银行政策广度指数与美国政策领先指标均已出现回落，历史上通常对应未来12至18个月实际收益率上升环境。该机构还称，LMOS指标通常领先比特币市占率约12个月，当前读数意味着BTC dominance或继续上升，市场环境可能面临类似2022年的流动性压力。,webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T22:58:05Z,199.1464,mature_72h,true,discard,opinion_or_analysis,opinion_or_analysis,research_only,institutional_flow,etf_or_fund_flow,opinion_or_analysis,85.5
+cand_00124,2056519415211192670,2026-05-18T23:36:51Z,2026-05-19 07:36:51 UTC+8,2026-05-18T23:36:51Z,2026-05-19 07:36:51 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 07:36:51 UTC+8,2026-05-18T23:36:51Z,2026-05-19 07:36:51 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"#PeckShieldAlert @dcfgod reports that @EchoProtocol_ was hacked on @monad 
+
+The hacker minted 1k $eBTC ($76.7M) &, utili","#PeckShieldAlert @dcfgod reports that @EchoProtocol_ was hacked on @monad 
+
+The hacker minted 1k $eBTC ($76.7M) &, utilizing the tested flow, deposited 45 $eBTC ($3.45M) into Curvance. They then borrowed ~11.29 $WBTC ($867.7K) against it, bridged the $WBTC to #Ethereum, swapped them for $ETH, and sent 384 $ETH (~$821.7K) to #TornadoCash.",webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T23:36:51Z,198.5003,mature_72h,true,human_review,,,alpha_candidate,hack_security,exploit_or_theft,"multiple_assets_detected,candidate_asset_mismatch",69.25
+cand_00117,2056522722461761612,2026-05-18T23:50:00Z,2026-05-19 07:50:00 UTC+8,2026-05-18T23:50:00Z,2026-05-19 07:50:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 07:50:00 UTC+8,2026-05-18T23:50:00Z,2026-05-19 07:50:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Exploit Alert 🚨
+
+According to @dcfgod, @EchoProtocol_ on @monad has been exploited.
+
+The attacker reportedly minted 1,00","Exploit Alert 🚨
+
+According to @dcfgod, @EchoProtocol_ on @monad has been exploited.
+
+The attacker reportedly minted 1,000 $eBTC worth $76.7M and used a previously tested exploit flow to extract funds through Curvance.
+
+So far, the exploiter has:
+
+• Deposited 45 $eBTC ($3.45M) into Curvance as collateral
+• Borrowed ~11.29 $WBTC ($867.7K) against it
+• Bridged the $WBTC to #Ethereum
+• Swapped the funds into $ETH
+• Sent 385 $ETH (~$818K) to #TornadoCash
+
+The attacker still appears to control a significant amount of minted $eBTC.
+
+https://t.co/YDPfoYULvD",webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T23:50:00Z,198.2811,mature_72h,true,human_review,,,alpha_candidate,hack_security,exploit_or_theft,multiple_assets_detected,70.75
+cand_00105,2056526392758788419,2026-05-19T00:04:35Z,2026-05-19 08:04:35 UTC+8,2026-05-19T00:04:35Z,2026-05-19 08:04:35 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 08:04:35 UTC+8,2026-05-19T00:04:35Z,2026-05-19 08:04:35 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,链上监测：黑客在Monad平台上铸造1000枚EBTC并洗钱,"币界网消息，据链上监测平台Lookonchain报道，最近发生了一起黑客攻击事件。黑客在Monad平台上铸造了1000枚$EBTC（约合7664万美元），随后将45枚$EBTC（约合345万美元）存入Curvance，借入11.3枚$WBTC（约合867,000美元），并将其跨链至以太坊，兑换为385枚$ETH（约合821,000美元）。最后，黑客将这385枚$ETH存入Tornado Cash进行洗钱，目前仍持有955枚$EBTC（约合7320万美元）。",webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T00:04:35Z,198.0381,mature_72h,true,human_review,,,alpha_candidate,hack_security,exploit_or_theft,"multiple_assets_detected,candidate_asset_mismatch",69.25
+cand_00094,2056529579813343720,2026-05-19T00:17:14Z,2026-05-19 08:17:14 UTC+8,2026-05-19T00:17:14Z,2026-05-19 08:17:14 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 08:17:14 UTC+8,2026-05-19T00:17:14Z,2026-05-19 08:17:14 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,链上监测：过去4天内发生三起重大黑客事件,币界网消息，据Lookonchain监测，过去4天内发生了三起重大黑客事件。5月15日，一次攻击导致超过1000万美元的资金被盗5月18日，Verus-以太坊桥被黑客攻击，损失约1150万美元今天，又发生了一起攻击，黑客铸造了1000枚$EBTC（价值约7664万美元），并已利用这些资金盗取了385枚$ETH（约82.1万美元）。请保持警惕，注意安全。,webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T00:17:14Z,197.8272,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,alpha_candidate,hack_security,exploit_or_theft,multiple_assets_detected,70.75
+cand_00074,2056535371408724123,2026-05-19T00:40:15Z,2026-05-19 08:40:15 UTC+8,2026-05-19T00:40:15Z,2026-05-19 08:40:15 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 08:40:15 UTC+8,2026-05-19T00:40:15Z,2026-05-19 08:40:15 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Santiment：持有至少100 BTC的钱包数量增至20229,"币界网消息，据Cointelegraph报道，持有至少100枚BTC的钱包数量已上升至20,229个，比一年前增长了11.2%。这表明，尽管市场波动，鲸鱼和机构投资者仍在持续积累比特币。",webhook,,BTC,BTCUSDT,BTCUSDT,institutional_flow,observe,4,single_asset,high,high,false,include,,,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T00:40:15Z,197.4436,mature_72h,true,human_review,,,alpha_candidate,onchain_data,wallet_metric,,75.0
+cand_00047,2056545124453327243,2026-05-19T01:19:01Z,2026-05-19 09:19:01 UTC+8,2026-05-19T01:19:01Z,2026-05-19 09:19:01 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 09:19:01 UTC+8,2026-05-19T01:19:01Z,2026-05-19 09:19:01 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Lookonchain：过去4天内发生3起重大黑客攻击事件,"币界网消息，据Lookonchain监测，过去4天内链上连续发生3起重大黑客攻击事件。其中，Thorchain于5月15日被盗超1000万美元Verus-Ethereum跨链桥于5月18日被盗约1150万美元。今日最新发生的一起攻击针对Echo Protocol，黑客恶意铸造了1,000枚eBTC（价值约7664万美元），并已借此窃取了385枚ETH（价值约82.1万美元）。",webhook,,ETH,ETHUSDT,ETHUSDT,hack_security,risk,4,single_asset,high,high,true,include,,market_wide_event,130,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-19T01:19:01Z,196.7975,mature_72h,true,human_review,,,alpha_candidate,hack_security,exploit_or_theft,multiple_assets_detected,70.75
+cand_00291,2056467474426556617,2026-05-18T20:10:27Z,2026-05-19 04:10:27 UTC+8,2026-05-18T20:10:27Z,2026-05-19 04:10:27 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 04:10:27 UTC+8,2026-05-18T20:10:27Z,2026-05-19 04:10:27 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"In 2019 I sincerely questioned myself whether I wanted to continue trading crypto.
+
+Almost all markets went down, crypto","In 2019 I sincerely questioned myself whether I wanted to continue trading crypto.
+
+Almost all markets went down, crypto usecases weren't there. 
+
+All the promises of 2017 were diminishing away. 
+
+There was an hard fork on Bitcoin claiming to be the actual Bitcoin.
+
+This is the feeling that most of the people have, and as a consequence, it's actually the best period to be investing into assets.
+
+The years after 2019 have completely changed my life. 
+
+I've had large returns within my portfolio. 
+I've been able to travel to several places I've not been before.
+I've had the ability to work with incredible people within our enterprises.
+
+The lesson in here is to remain patient and to be calm. 
+
+Yes, most of the altcoins will die. That doesn't mean that yours should die. There are many strong altcoins out there, we simply don't need millions of those coins in the ecosystem.
+
+I can tell you that the only game is to remain in the game, do your research, avoid leverage, pick your bets and stick to them. 
+
+That's the game that I'm playing when it comes to my altcoin picks and my portfolio. 
+
+If I thought there wouldn't be any upside anymore, I'd be selling the positions. 
+
+That's just simply not the case.
+
+Be patient.",webhook,,BTC,BTCUSDT,BTCUSDT,network_upgrade,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T20:10:27Z,201.9403,mature_72h,true,discard,"opinion_or_analysis,generic_market_commentary",generic_market_commentary,research_only,network_upgrade,upgrade_or_fork,"opinion_or_analysis,generic_market_commentary",78.75
+cand_00213,news:1023:a012891aa1151cb0,2026-05-18T21:45:00Z,2026-05-19 05:45:00 UTC+8,2026-05-18T21:45:00Z,2026-05-19 05:45:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 05:45:00 UTC+8,2026-05-18T21:45:00Z,2026-05-19 05:45:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Shiba Inu sees 3b SHIB hit exchanges,"Shiba Inu saw billions of SHIB hit exchanges on May 18 as crypto market liquidations accelerated.
+
+On-chain exchange flow data tracked by CoinGlass shows SHIB open interest at $61.2 million on May 18, with $42,485 in futures positions liquidated in the 24-hour session. The inflow spike coincided with wider crypto market liquidations as leveraged long positions were unwound across multiple assets.
+
+SHIB was trading at $0.00000567 at time of writing, down roughly 10% on the week. The token is 54% lower over the past 12 months and well below its all-time high of $0.00008616.
+
+Exchange reserve data showed assets on Binance alone reaching 61.8 trillion tokens, a marked rise since March as profit-takers moved holdings onto platforms ahead of potential distribution.
+
+Tokens moved onto exchanges are one step from the open market and available for immediate liquidation. The spike in SHIB inflows creates a mechanical increase in available sell-side supply, which typically suppresses price during periods of weak demand.
+
+As crypto.news reported , institutional and whale-level SHIB transactions surged 111% earlier in 2026, indicating large holders are actively repositioning rather than holding passively.
+
+Meme coins have faced persistent pressure throughout 2026. Bitcoin’s 22% decline in Q1 tightened conditions across speculative assets, with SHIB bearing the brunt alongside other high-beta tokens. The token’s 589 trillion circulating supply gives it limited leverage from burn activity, as individual whale distribution events can rapidly absorb months of supply reduction.
+
+Stabilisation requires demand to absorb incoming supply rather than sellers finding a thin order book. As crypto.news noted in its Shibarium upgrade analysis, on-chain adoption remains uneven and without acceleration in utility metrics, upside moves in SHIB continue to struggle.
+
+A Fully Homomorphic Encryption upgrade planned for Q2 2026 through cryptography firm Zama could add a privacy dimension, but near-term price action depends on whether these exchange inflows reverse.
+
+The broader context for meme coin behaviour in 2026 was covered by crypto.news in its analysis of how on-chain activity spikes often precede continued downside rather than reversals.",news:cryptonews,https://crypto.news/shiba-inu-sees-3b-shib-hit-exchanges/,BTC,BTCUSDT,BTCUSDT,network_upgrade,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T21:45:00Z,200.3644,mature_72h,true,human_review,,,research_only,institutional_flow,etf_or_fund_flow,"multiple_assets_detected,candidate_asset_mismatch",66.25
+cand_00187,2056498436640260546,2026-05-18T22:13:29Z,2026-05-19 06:13:29 UTC+8,2026-05-18T22:13:29Z,2026-05-19 06:13:29 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 06:13:29 UTC+8,2026-05-18T22:13:29Z,2026-05-19 06:13:29 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"JUST IN: There’s now less than 100,000 blocks until the next Bitcoin halving 👀 https://t.co/pDPSl8nLiY","JUST IN: There’s now less than 100,000 blocks until the next Bitcoin halving 👀 https://t.co/pDPSl8nLiY",webhook,,BTC,BTCUSDT,BTCUSDT,halving,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T22:13:29Z,199.8897,mature_72h,true,human_review,,,research_only,halving,halving,,59.25
+cand_00178,2056499804675735762,2026-05-18T22:18:56Z,2026-05-19 06:18:56 UTC+8,2026-05-18T22:18:56Z,2026-05-19 06:18:56 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 06:18:56 UTC+8,2026-05-18T22:18:56Z,2026-05-19 06:18:56 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,美国司法部：俄亥俄州居民因加密庞氏骗局被判9年监禁,币界网消息，美国司法部表示，俄亥俄州居民Rathnakishore Giri因运营加密货币投资庞氏骗局被判处9年监禁及3年监督释放。根据法庭文件，Giri以擅长比特币衍生品交易为名，向投资者承诺“保本高收益”，累计骗取超过1000万美元资金，并使用新投资者资金向早期投资者兑付。Giri已于2024年10月承认一项电信欺诈罪名，但在等待量刑期间仍继续向加密投资者募资，并造成新增受害者损失。,webhook,,BTC,BTCUSDT,BTCUSDT,token_unlock,risk,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-18T22:18:56Z,199.7989,mature_72h,true,human_review,,,research_only,legal_enforcement,fraud_or_enforcement,,65.25
+cand_00053,news:1029:d50b047736db2652,2026-05-19T01:11:27Z,2026-05-19 09:11:27 UTC+8,2026-05-19T01:11:27Z,2026-05-19 09:11:27 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-19 09:11:27 UTC+8,2026-05-19T01:11:27Z,2026-05-19 09:11:27 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Bitcoin Whales Defy $77K Drop as Large Wallets Surge 11%,"Steve is a crypto news writer with a passion for decoding market moves. He blends breaking blockchain news with sharp technical analysis and bold price predictions. From Bitcoin rallies to altcoin breakouts, Steve breaks it all down with clarity and insight. Whether you're a trader or just curious, his analysis keeps you ahead of the curve.
+
+Steve is a crypto news writer with a passion for decoding market moves. He blends breaking blockchain news with sharp technical analysis and bold price predictions. From Bitcoin rallies to altcoin breakouts, Steve breaks it all down with clarity and insight. Whether you're a trader or just curious, his analysis keeps you ahead of the curve.
+
+Steve is a crypto news writer with a passion for decoding market moves. He blends breaking blockchain news with sharp technical analysis and bold price predictions. From Bitcoin rallies to altcoin breakouts, Steve breaks it all down with clarity and insight. Whether you're a trader or just curious, his analysis keeps you ahead of the curve.
+
+Bitcoin whale wallets have increased by 11.2% over the past year, despite BTC losing 27.2% in value over the same period.
+
+Geopolitical tensions have been a sore spot in the crypto space since February, causing the recent price pullback and ETF outflows.
+
+Whale conviction indicates long-term bullish conviction amid a rise in retail sell pressure.
+
+The number of Bitcoin (BTC) wallets holding at least 100 BTC (roughly $7.7 million at press time) has risen to 20,229. This represents an 11.2% increase over the past year, from 18,191.
+
+On-chain data show that wallets of this size typically belong to whales, institutions, major investors, and highly capitalized long-term holders. The holdings indicate strong long-term conviction, given that Bitcoin has dumped by 27.2% in price over the same period ($105,574 to $77,000).
+
+More recently, Bitcoin experienced a major pullback , dropping from over $82,000 a week ago to $77,000. Geopolitical tensions between the US and Iran have contributed to market-wide risk aversion, with Sunday seeing the largest single-day liquidation of bullish bets (over $700 million) since February 6.
+
+Last week also marked the first negative week in seven for ETF flows. According to CoinShares , digital asset investment products saw $1.07 billion in outflows, with Bitcoin accounting for $982 million.
+
+In the past year, Bitcoin has also experienced major volatility – literally halving in price from its all-time high of about $126,000 to $63,000 on February 28 – the day active hostilities began in the Middle East.
+
+According to the blockchain analytics platform, Santiment Intelligence, whales are showing steady resilience during a time when retail is exuding panic, fear, and skepticism.
+
+“Historically, rising whale wallet counts are viewed as a sign that key stakeholders still have confidence in Bitcoin’s future value and scarcity.”
+
+Additionally, bullish reversals typically form when retail fear sets in as whale accumulation rises.
+
+That said, the US-Iran conflict remains a major sentiment mover among institutions and retailers alike, causing price swings as consequential developments on the war roll out. We now wait to see whether whales will step in to offset selling pressure and hold larger positions, as has historically been a catalyst for a bullish trend.",news:coinpedia,https://coinpedia.org/news/bitcoin-whales-defy-77k-drop-as-large-wallets-surge-11/,BTC,BTCUSDT,BTCUSDT,halving,observe,3,single_asset,high,high,true,include,,market_wide_event,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-19T01:11:27Z,196.9236,mature_72h,true,discard,"duplicate_non_primary,opinion_or_analysis",duplicate_non_primary,alpha_candidate,onchain_data,wallet_metric,opinion_or_analysis,72.5
+cand_00016,2056558668813148369,2026-05-19T02:12:50Z,2026-05-19 10:12:50 UTC+8,2026-05-19T02:12:50Z,2026-05-19 10:12:50 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 10:12:50 UTC+8,2026-05-19T02:12:50Z,2026-05-19 10:12:50 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"5/18 Ethereum ETF Net Flow: $-84.14m
+$ETHA (BlackRock): –$55.40m
+$FETH (Fidelity): –$14.70m
+$ETHW (Bitwise): $0.00m
+$TET","5/18 Ethereum ETF Net Flow: $-84.14m
+$ETHA (BlackRock): –$55.40m
+$FETH (Fidelity): –$14.70m
+$ETHW (Bitwise): $0.00m
+$TETH (21Shares): $0.00m
+$QETH (Invesco): $0.00m
+$EZET (Franklin): $0.00m
+$ETHV (VanEck): $0.00m
+$ETHB (BlackRock Staked): –$0.01m
+$ETHE (Grayscale): –$3.96m
+$ETH (Grayscale mini): –$10.08m",webhook,,ETH,ETHUSDT,ETHUSDT,staking_governance,observe,3,single_asset,high,high,false,include,,,120,"has_asset,has_binance_symbol,time_ok,typed_event,single_asset,asset_confidence_high,time_confidence_high",include,high,2026-05-19T02:12:50Z,195.9006,mature_72h,true,human_review,,,research_only,institutional_flow,etf_or_fund_flow,,69.75
+cand_00493,2056415265085079912,2026-05-18T16:43:00Z,2026-05-19 00:43:00 UTC+8,2026-05-18T16:43:00Z,2026-05-19 00:43:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 00:43:00 UTC+8,2026-05-18T16:43:00Z,2026-05-19 00:43:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"JUST IN: Strategy $MSTR has generated an 84,987 #Bitcoin gain ($6.6 billion) so far this year, which is already 75% of t","JUST IN: Strategy $MSTR has generated an 84,987 #Bitcoin gain ($6.6 billion) so far this year, which is already 75% of the entire 2025 BTC gain. 
+
+""Digital credit is helping us deliver faster growth in 2026 than in 2025,"" said CEO Phong Le. 🔥 https://t.co/VOvgjmcQWo",webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T16:43:00Z,205.3978,mature_72h,true,human_review,,,macro_policy,institutional_flow,etf_or_fund_flow,,72.0
+cand_00456,news:1029:025910545d4c28a2,2026-05-18T17:11:22Z,2026-05-19 01:11:22 UTC+8,2026-05-18T17:11:22Z,2026-05-19 01:11:22 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-19 01:11:22 UTC+8,2026-05-18T17:11:22Z,2026-05-19 01:11:22 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Ethereum's Vitalik Buterin Explains How AI Could Make Smart Contracts Truly Secure,"Writer by choice, CryptoCurrency Writer, and Researcher by chance. Currently, focusing on financial news and analysis, as well as cryptocurrency news and data. One may not call me a crypto “Enthusiast” but trust me I'm getting there.
+
+Writer by choice, CryptoCurrency Writer, and Researcher by chance. Currently, focusing on financial news and analysis, as well as cryptocurrency news and data. One may not call me a crypto “Enthusiast” but trust me I'm getting there.
+
+Writer by choice, CryptoCurrency Writer, and Researcher by chance. Currently, focusing on financial news and analysis, as well as cryptocurrency news and data. One may not call me a crypto “Enthusiast” but trust me I'm getting there.
+
+Ethereum co-founder Vitalik Buterin has published a detailed argument that AI-assisted formal verification could fundamentally change how secure software is built, pushing back against growing pessimism in the cybersecurity community about whether trustless systems can survive increasingly powerful AI-driven attacks.
+
+“Many people have claimed that with AI-assisted bug finding, secure code will be impossible,” Buterin wrote. “I have a much more optimistic take, and AI-assisted formal verification is a major part of the reason why.”
+
+Formal verification is the practice of writing mathematical proofs about code that can be checked automatically by a computer. Rather than testing software and hoping bugs do not appear, developers write proofs that mathematically guarantee a piece of code behaves exactly as intended under all conditions.
+
+Many people have claimed that with AI-assisted bug finding, secure code (and hence trustless anything) will be impossible. I have a much more optimistic take, and AI-assisted formal verification is a major part of the reason why: https://t.co/0ceMBZ6uqj
+
+The technology has existed for decades but remained niche because writing these proofs by hand is extremely difficult and time-consuming. Buterin’s argument is that AI changes this equation dramatically. AI can write both the code and the proofs, while humans simply verify that the statements being proved match what they actually want the software to do.
+
+He described this combination as what researcher Yoichi Hirai calls “the final form of software development.”
+
+Buterin pointed to several areas where formal verification is already being applied within Ethereum’s development ecosystem. These include quantum-resistant signatures, STARK proof systems, consensus algorithms, and ZK-EVMs, all areas where the security properties are simple to define even though the underlying code is extraordinarily complex.
+
+Projects like Arklib are working toward a fully formally verified STARK implementation. The evm-asm project is building an entire EVM written directly in RISC-V assembly, verified mathematically against a human-readable reference implementation. Byzantine fault-tolerant consensus protocols are also being formally specified and verified in Lean.
+
+The main insight is that for these systems the gap between what the code does and what it is supposed to do can be closed with mathematical certainty rather than probabilistic testing.
+
+Buterin was careful not to overstate the case. Formal verification has real failure modes. Proofs can be written about only part of a system while critical bugs hide in unverified sections. Developers can forget to specify properties that matter. The formal specification itself can be wrong. Hardware vulnerabilities like side-channel attacks can bypass even mathematically correct software.
+
+“Provable correctness does not prove that software is correct in the way most human beings understand correctness,” he wrote. What formal verification actually does is allow developers to express their intentions in multiple different redundant ways and automatically check that all those expressions are compatible with each other.
+
+Buterin described an optimistic future where software splits into two layers. An insecure edge layer handles lower-stakes functions, runs in sandboxes, and operates with minimal permissions. A secure core handles everything critical, including Ethereum itself, operating system kernels, and sensitive IoT infrastructure.
+
+The secure core is kept deliberately small and subjected to aggressive formal verification. AI brings the computational power to make verification practical at scale. The result is not software with zero bugs but software where the most critical components can be trusted with mathematical confidence rather than hope.
+
+“Defenders finally have a chance to win, decisively,” he concluded, citing Mozilla’s own experience hardening its codebase against AI-assisted attack tools.",news:coinpedia,https://coinpedia.org/news/ethereums-vitalik-buterin-explains-how-ai-could-make-smart-contracts-truly-secure/,ETH,ETHUSDT,ETHUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T17:11:22Z,204.925,mature_72h,true,human_review,,,macro_policy,regulation_macro,regulation,,68.0
+cand_00455,2056423318279106667,2026-05-18T17:15:00Z,2026-05-19 01:15:00 UTC+8,2026-05-18T17:15:00Z,2026-05-19 01:15:00 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 01:15:00 UTC+8,2026-05-18T17:15:00Z,2026-05-19 01:15:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,🔥HUGE: White House Executive Director says an announcement on a Strategic Bitcoin Reserve is coming soon.,🔥HUGE: White House Executive Director says an announcement on a Strategic Bitcoin Reserve is coming soon.,webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T17:15:00Z,204.8644,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,macro_policy,regulation_macro,bitcoin_reserve_policy,,75.75
+cand_00400,news:1032:ccd8d48f7607c427,2026-05-18T18:01:27Z,2026-05-19 02:01:27 UTC+8,2026-05-18T18:01:27Z,2026-05-19 02:01:27 UTC+8,,,,Asia/Shanghai,default_china,,2026-05-19 02:01:27 UTC+8,2026-05-18T18:01:27Z,2026-05-19 02:01:27 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Crude Oil Prices: Brent and WTI Rise as Markets Respond to Trump-Xi Trade Talks,"Oil prices rise as US-Iran talks stall, keeping the Strait of Hormuz restricted and tightening global supply.
+
+WTI crude oil futures climbed back toward $107 per barrel on Monday, while Brent crude rose toward $111, as renewed uncertainty around US-Iran negotiations rattled energy markets and revived fears of prolonged supply disruptions.
+
+The latest move marks a sharp reversal from last week’s pullback. Why the sudden shift? Because confidence in a near-term agreement to reopen the Strait of Hormuz has quickly faded, and traders are reacting fast.
+
+Hopes for a breakthrough weakened after reports suggested Iran’s updated proposal failed to meet US expectations. According to Axios, Washington views the revised framework as insufficient to support a deal that would end the conflict and restore normal shipping flows.
+
+At the same time, Iranian officials signaled that US demands remain too strict, even after adjustments to the proposal. This back-and-forth reveals a clear impasse. Both sides continue negotiations, yet neither appears willing to compromise on key issues.
+
+So, where does that leave the market? In limbo. Traders now assume the Strait of Hormuz will remain restricted for longer than previously expected.
+
+The Strait of Hormuz handles roughly one-fifth of global oil shipments, making it one of the most important chokepoints in the energy market. Any disruption there immediately tightens supply.
+
+Current restrictions from both US and Iranian forces have slowed tanker movement, limiting exports of crude oil, natural gas, and refined fuels. Even partial closures create ripple effects across global markets.
+
+Can flows resume quickly once a deal emerges? Not likely. Analysts expect shipping activity to take weeks to normalize due to logistical bottlenecks and security concerns.
+
+Tensions escalated further after President Donald Trump warned that Iran must act quickly or face intensified military consequences. In public remarks, he described the negotiation timeline as urgent and expressed frustration with Tehran’s response.
+
+Iran, however, pushed back. Officials stated that they would not yield to pressure and emphasized their readiness to respond to any escalation.
+
+This exchange raises a key question: does tough rhetoric speed up a deal or delay it? In this case, it appears to deepen uncertainty rather than resolve it.
+
+At the same time, reports of drone attacks in the Gulf region have added another layer of risk. Incidents involving vessels and infrastructure continue to fuel concerns about a broader regional escalation.
+
+While geopolitical tensions dominate headlines, underlying supply conditions also play a major role. The International Energy Agency warned that global oil inventories are declining rapidly.
+
+This trend suggests that markets have less buffer to absorb shocks. When inventories fall, even small disruptions can trigger large price swings.
+
+Earlier optimism had been supported by reports of a potential US waiver on oil sanctions. However, officials have not confirmed such a move, leaving markets without clarity on future supply increases.
+
+Oil markets now face a mix of unresolved diplomacy, tightening supply, and rising geopolitical risk. Each factor reinforces the upward pressure on prices.
+
+The key variable remains the status of US-Iran talks. A breakthrough could quickly reverse gains and ease supply concerns. On the other hand, continued deadlock would likely keep prices elevated or push them higher.
+
+For now, traders appear to lean toward caution. With negotiations stalled and the Strait of Hormuz still constrained, the market continues to price in risk.
+
+That leaves one central takeaway: until clarity emerges, volatility in oil prices is not going away anytime soon.
+
+Don’t miss out and join our newsletter to get the latest, well-curated news from the crypto world!
+
+Enos is a Financial Markets analyst, Day trader, and a Journalist with extensive experience covering everything related to the digital asset industry, from market analysis to blockchain innovation. Mwangi has contributed research and analysis across top crypto-focused platforms and independent publications. He has a strong interest in macro trends, market structure, and regulatory developments shaping the future of digital assets worldwide.
+
+https://coinpaper.com/17112/ude-oil-prices-brent-and-wti-rise-as-markets-respond-to-trump-xi-trade-talks",news:coinpaper,https://coinpaper.com/17112/ude-oil-prices-brent-and-wti-rise-as-markets-respond-to-trump-xi-trade-talks,XRP,XRPUSDT,XRPUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T18:01:27Z,204.0903,mature_72h,true,discard,low_crypto_relevance,low_crypto_relevance,macro_policy,regulation_macro,macro,,67.0
+cand_00388,news:1023:ef688f76e73df0b7,2026-05-18T18:13:48Z,2026-05-19 02:13:48 UTC+8,2026-05-18T18:13:48Z,2026-05-19 02:13:48 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 02:13:48 UTC+8,2026-05-18T18:13:48Z,2026-05-19 02:13:48 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Leading AI day trading bots in 2026: Why most fail, and what actually works","Disclosure: This article does not represent investment advice. The content and materials featured on this page are for educational purposes only.
+
+AI crypto trading bots surge in demand as traders struggle with volatility and unreliable automation tools.
+
+The global AI trading platform market surpassed $11 billion in 2024 and is on track toward $33 billion by 2030. Demand is surging — and so is disappointment.
+
+Thousands of traders in 2026 are searching for a Claude AI trading bot , a quick ChatGPT-powered script, or a generic AI day trading bot they can deploy overnight. Most fail to profit. Many lose money. The reasons are consistent: untested strategies, zero built-in risk controls, and no live market optimization.
+
+In 2026, crypto markets move faster than ever. Bitcoin volatility remains elevated, memecoin rotations happen within hours, and macro events shift liquidity across the entire digital asset market in minutes. Reacting manually — or relying on an improvised LLM-based script — is no longer viable.
+
+This guide ranks the best platforms for automated AI crypto day trading , with an honest look at what separates winners from the rest.
+
+Best for: Beginners, passive investors, and anyone who wants a no-code AI crypto trading bot with real risk management
+
+SaintQuant is the clearest answer for traders who want automated AI day trading without technical setup or coding knowledge. While other platforms require strategy configuration, API wiring, and ongoing maintenance, SaintQuant provides pre-optimized quantitative strategies that are live and running from day one.
+
+What makes SaintQuant stand out in 2026:
+
+Best for: Anyone searching for a reliable no-code AI crypto trading platform that handles execution, risk, and strategy automatically.
+
+Limitation: Crypto-only (not stocks or forex); pre-built strategies are not manually customizable.
+
+Verdict: SaintQuant is the most complete answer to what most traders actually want from an AI day trading bot in 2026 — hands-free execution with real risk controls, zero setup, and a risk-free way to start.
+
+Best for: Active traders who want multi-exchange control and custom strategy workflows
+
+3Commas remains one of the most recognized names in crypto automation in 2026. It supports DCA bots, grid bots, and SmartTrade workflows across multiple exchanges. Its AI assistant surfaces model-driven suggestions for entries, risk settings, and targets — but users must review and act on these themselves.
+
+Best for: Experienced traders who want hands-on control. Not ideal for beginners — results depend heavily on the user’s own strategy quality, and misconfigured bots are a common cause of losses.
+
+Verdict: Powerful for active traders. Too complex and high-maintenance for those seeking a passive AI trading bot experience.
+
+Best for: Cost-conscious beginners wanting built-in bots on a single exchange
+
+Pionex integrates trading bots directly into its exchange, eliminating the need for external API connections. Its PionexGPT feature allows plain-English strategy creation for basic automation. No subscription fees — only standard trading fees apply.
+
+Best for: Casual crypto traders who want low-cost automated crypto trading with minimal overhead. Falls short as a true AI-driven risk management solution in volatile 2026 market conditions.
+
+Verdict: A solid starting point for experimentation, but not a substitute for a platform with genuine quantitative strategy depth.
+
+Best for: Traders who want a strategy marketplace and copy trading
+
+Cryptohopper combines a visual Strategy Designer, a curated Marketplace of community strategies, and Social/copy trading in a cloud environment. Its Algorithm Intelligence feature can switch strategies automatically based on conditions.
+
+Best for: Traders who want AI-assisted crypto automation with community strategy access. The open marketplace means strategy quality is uneven — beginners may struggle to identify what works.
+
+Verdict: More flexible than most, but the burden of selecting good strategies still falls on the user.
+
+Best for: Developers exploring experimental prototypes (not live trading)
+
+In 2026, many traders still attempted to build a Claude AI trading bot or GPT-powered script from scratch using language model APIs. The appeal is obvious — but the execution is consistently problematic.
+
+LLMs are not designed for real-time financial execution. They lack:
+
+The result is typically an unreliable bot that generates inconsistent signals, requires constant debugging, and operates with no circuit breakers during drawdowns. Several 2026 trading communities have documented significant capital losses from poorly implemented DIY bots.
+
+Best for: Technical experimentation only. Never recommended for live capital deployment without a full quantitative infrastructure built around the LLM layer.
+
+Verdict: An interesting engineering exercise — not a viable AI day trading bot for consistent returns. Use purpose-built platforms like SaintQuant instead.
+
+The strongest AI crypto trading platforms in 2026 share three qualities: they simplify strategy setup, include adaptive risk management, and operate continuously without requiring user intervention. Here is a quick decision framework:
+
+SaintQuant’s AI quantitative strategies are live and ready. No setup, no coding, no deposit needed to begin.
+
+New user bonuses — automatically credited on registration:
+
+Start Trading Free at SaintQuant — No Deposit Required
+
+Can I use Claude AI as a crypto trading bot? Claude is a conversational AI assistant — it is not built for live automated crypto execution. It lacks real-time exchange integrations and quantitative risk controls. For actual AI-powered day trading , purpose-built platforms like SaintQuant are far more reliable and safer to use with real capital.
+
+What makes an AI day trading bot actually profitable in 2026? Profitability in 2026 depends on two things most bots still lack: battle-tested quantitative strategies and adaptive risk management. SaintQuant embeds both into every strategy, so users are not exposed to unchecked drawdowns during volatile markets.
+
+Is SaintQuant free to try? Yes. New users receive a $99 free trial credit to run live strategies, plus a $7 cash bonus on registration — with no deposit required and no hidden terms.
+
+Do I need coding skills or trading experience to use SaintQuant? None at all. SaintQuant is designed specifically for users who want automated crypto trading without any technical background. Strategies are pre-configured and start with a few clicks.
+
+How is SaintQuant different from other AI trading bots in 2026? Most platforms require users to configure strategies, monitor performance, and manage risk manually. SaintQuant handles all of this automatically — including built-in risk controls — making it the closest thing to a fully managed AI crypto trading solution available to retail investors.
+
+Disclosure: This content is provided by a third party. Neither crypto.news nor the author of this article endorses any product mentioned on this page. Users should conduct their own research before taking any action related to the company.",news:cryptonews,https://crypto.news/leading-ai-day-trading-bots-in-2026-why-most-fail-and-what-actually-works/,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T18:13:48Z,203.8844,mature_72h,true,discard,"duplicate_non_primary,scraped_footer_noise",scraped_footer_noise,macro_policy,institutional_flow,etf_or_fund_flow,scraped_footer_noise,66.75
+cand_00347,2056452328039882780,2026-05-18T19:10:16Z,2026-05-19 03:10:16 UTC+8,2026-05-18T19:10:16Z,2026-05-19 03:10:16 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 03:10:16 UTC+8,2026-05-18T19:10:16Z,2026-05-19 03:10:16 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Cointelegraph：币安持有超过90亿美元比特币未平仓合约,币界网消息，据Cointelegraph报道，币安目前持有超过90亿美元的比特币未平仓合约，比其最近的竞争对手高出73%。,webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T19:10:16Z,202.9433,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,macro_policy,regulation_macro,macro,,70.5
+cand_00339,2056454065106698551,2026-05-18T19:17:10Z,2026-05-19 03:17:10 UTC+8,2026-05-18T19:17:10Z,2026-05-19 03:17:10 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 03:17:10 UTC+8,2026-05-18T19:17:10Z,2026-05-19 03:17:10 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,JUST IN: Pro-Bitcoin Kevin Warsh to be sworn in as Federal Reserve Chair this Friday 👀🇺🇸 https://t.co/61p7sCHfHu,JUST IN: Pro-Bitcoin Kevin Warsh to be sworn in as Federal Reserve Chair this Friday 👀🇺🇸 https://t.co/61p7sCHfHu,webhook,,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T19:17:10Z,202.8283,mature_72h,true,human_review,,,macro_policy,regulation_macro,macro,,70.5
+cand_00329,2056457321799377121,2026-05-18T19:30:07Z,2026-05-19 03:30:07 UTC+8,2026-05-18T19:30:07Z,2026-05-19 03:30:07 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 03:30:07 UTC+8,2026-05-18T19:30:07Z,2026-05-19 03:30:07 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Messari报告：2026年Q1 Solana链上应用总收入达3.422亿美元,币界网消息，据Messari报告，2026年第一季度，Solana链上应用总收入（chain gdp）为3.422亿美元，其中Pumpfun收入达1.247亿美元，仍为收入最高的应用。同期，真实经济价值（rev）下降1%至8950万美元，在所有网络中仅次于Hyperliquid。同时，Solana DeFi TVL下降22%至61.6亿美元，主要受SOL价格下跌33%影响，而非用户流失所致。,webhook,,SOL,SOLUSDT,SOLUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T19:30:07Z,202.6125,mature_72h,true,human_review,,,alpha_candidate,onchain_data,protocol_metric,"multiple_assets_detected,possible_price_recap",64.75
+cand_00303,news:1023:4e90951d1e9c8b40,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 04:00:00 UTC+8,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Kraken parent Payward grows Q1 revenue 3% as derivatives jump 51%,"Payward, Kraken’s parent, grew Q1 2026 adjusted revenue 3% to $507m as derivatives jumped 51%, even while Bitcoin, market cap and spot volumes all saw steep double‑digit drops.
+
+Kraken parent Payward has posted Q1 2026 adjusted revenue of $507 million, a 3% increase from a year earlier, even as Bitcoin, total crypto market capitalization and industry spot volumes all suffered double-digit declines, according to CoinDesk. During the quarter, Bitcoin fell 22%, overall crypto market cap slid 23% and spot trading volume across the industry dropped 38%, underscoring how unusual it is for a major exchange group to grow topline in that environment.
+
+The outperformance was driven in large part by derivatives, where Payward’s futures business saw daily average revenue trades jump 51% year-on-year. Management attributed that surge to the expansion of NinjaTrader and Breakout, as well as the broader build-out of Kraken’s derivatives franchise, which is increasingly offsetting cyclicality in spot trading.
+
+Despite the revenue growth, adjusted EBITDA declined to $18 million in the quarter as the company leaned into spending. Payward said it is deliberately prioritizing mergers and acquisitions, product development and regulatory infrastructure over near-term profitability, characterizing the current bear-market stretch as the right time to invest.
+
+The company’s strategic push appears to be translating into real market-share gains. Payward disclosed that Kraken ’s spot market share has climbed from about 3.5% in mid-2025 to 5.2% in March 2026, a meaningful jump in a market where incremental share is typically hard-won.
+
+User metrics are also moving sharply higher: the number of funded accounts on Kraken grew 47% year-on-year to 6.1 million in Q1 2026, while total client assets on the platform rose to $40 billion. Co-CEO Arjun Sethi framed that performance as validation of the firm’s long-term strategy, saying, “While other companies choose to contract, we choose to continue investing.”
+
+That stance stands in contrast to rivals that have cut headcount, scaled back product lines or pulled out of tougher regulatory jurisdictions over the past year. If the derivatives momentum and market-share gains continue, Payward’s decision to endure thinner EBITDA today in exchange for deeper global footprint and more diversified revenue streams could leave Kraken better positioned when the next upcycle in crypto volumes arrives.",news:cryptonews,https://crypto.news/kraken-parent-payward-grows-q1-revenue-3-as-derivatives-jump-51/,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T20:00:00Z,202.1144,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,macro_policy,regulation_macro,macro,,75.75
+cand_00304,news:1023:433959eb334ddec6,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,,,,UTC,source_rule:news:cryptonews,,2026-05-19 04:00:00 UTC+8,2026-05-18T20:00:00Z,2026-05-19 04:00:00 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Kraken revenue hits $507m in Q1 despite slump,"Kraken revenue rose 3% year-on-year to $507m in Q1 2026 as futures trading jumped 51%, Payward said Monday.
+
+Payward, Kraken’s Wyoming-based parent company, said in a Monday press release that it generated $507 million in Q1 2026 adjusted revenue, up 3% from the same quarter a year earlier. Bitcoin fell 22% during the quarter and industry-wide spot trading volume dropped 38%, yet Payward’s diversified platform cushioned the decline.
+
+A year earlier, Payward had reported $492 million in Q1 2025 adjusted revenue, making the 3% year-on-year gain notable given the steeper market downturn this cycle.
+
+Co-CEO Arjun Sethi said in the release: “Where others pulled back, we leaned in.” Growth in futures and newer business lines offset weakness in core crypto markets, with Kraken’s spot market share rising to 5.2% in March from roughly 3.5% in mid-2025.
+
+Rival platforms reported sharper declines in trading revenue over the same period. Payward attributed its resilience to its stronger institutional business and growing derivatives offering, built partly through its $550 million acquisition of CFTC-licensed platform Bitnomial, which crypto.news covered when the deal completed on May 4.
+
+Total platform transaction volume reached $357 billion in Q1, while funded accounts rose 47% year-on-year to 6.1 million and assets on platform reached $40 billion.
+
+Adjusted EBITDA fell to $18 million as Payward continued investing in acquisitions including tokenization platform Backed, token management firm Magna, Bitnomial, and payments company Reap.
+
+Crypto.news reported that non-trading revenue sources including custody, payments, and financing accounted for 53% of Payward’s 2025 total, a structural shift that reduces dependence on volatile trading volumes.
+
+Payward filed its draft S-1 with the SEC confidentially in November 2025 but paused the process in March, citing market conditions. Sources indicate a public listing may slip to 2027. The exchange also cut approximately 150 employees in May, attributing the reductions to AI-driven operational efficiencies, representing roughly 5% of its total workforce.
+
+Payward’s M&A push positions it as the most comprehensively regulated crypto derivatives platform in the US. Crypto.news documented how the Bitnomial deal and Deutsche Börse’s $200 million stake established Payward as a regulated hub for digital asset futures and options inside the US, with its IPO filing remaining active.",news:cryptonews,https://crypto.news/kraken-revenue-hits-507m-in-q1-despite-slump/,BTC,BTCUSDT,BTCUSDT,macro,observe,4,market_wide,high,high,true,include,,market_wide_event,115,"has_asset,has_binance_symbol,time_ok,typed_event,asset_confidence_high,time_confidence_high,importance_ge_4",include,high,2026-05-18T20:00:00Z,202.1144,mature_72h,true,human_review,,,macro_policy,institutional_flow,etf_or_fund_flow,,72.0
+cand_00141,news:1033:51d62d973158bed3,2026-05-18T23:02:36Z,2026-05-19 07:02:36 UTC+8,2026-05-18T23:02:36Z,2026-05-19 07:02:36 UTC+8,,,,Asia/Shanghai,source_rule:news:jin10,,2026-05-19 07:02:36 UTC+8,2026-05-18T23:02:36Z,2026-05-19 07:02:36 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,欧盟官员：伊朗冲突阴影下，欧盟将下调经济增长预期并上调通胀预测,据CNBC报道，欧盟经济事务专员东布罗夫斯基斯表示，由于伊朗战争带来的“滞胀冲击”，欧盟将下调其经济增长预期。他表示，本周晚些时候发布的春季经济预测将显示经济增长数据会有所下调，而通胀数据则会上升。东布罗夫斯基斯称：“我们正遭遇一场滞胀冲击。”他还补充称，如今政策制定者的行动空间“更为有限”，几乎没有余地采取像在疫情期间那样大规模的财政应对措施。他表示：“我们认为，我们所采取的支持措施应当是暂时性的、有针对性的，而不是那些实际上会持续推动对化石燃料需求增长的措施。”与此同时，东布罗夫斯基斯将欧盟释放战略石油储备的行动描述为“正在进行中”，并补充说，在创新燃料等领域存在供应短缺的担忧。他称：“冲突持续时间越长，出现某些供应瓶颈的风险就越大，这进一步印证了我们的观点：政策应对措施不应增加对化石燃料的需求。”,news:jin10,https://www.jin10.com/detail/20260518230236230800.html,BTC,BTCUSDT,BTCUSDT,token_unlock,risk,3,market_wide,medium,high,true,include,,market_wide_event,95,"has_asset,has_binance_symbol,time_ok,typed_event,time_confidence_high",include,high,2026-05-18T23:02:36Z,199.0711,mature_72h,true,discard,"opinion_or_analysis,low_crypto_relevance",low_crypto_relevance,alpha_candidate,token_supply,unlock_or_supply,opinion_or_analysis,60.75
+cand_00478,2056418306362634718,2026-05-18T16:55:05Z,2026-05-19 00:55:05 UTC+8,2026-05-18T16:55:05Z,2026-05-19 00:55:05 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 00:55:05 UTC+8,2026-05-18T16:55:05Z,2026-05-19 00:55:05 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:","Stablecoins aren't just a US story.
+
+@John1wu spoke to @LowBeta on what @avax is quietly building across Asia and LatAm:
+
+↳ @StraitsX + Monetary Authority of Singapore.
+↳ @Alipay and GrabPay rails.
+↳ Nonco doing on-chain FX in LatAm.
+↳ @rain as the on/off ramp.
+
+The non-US stablecoin universe is here.",webhook,,AVAX,AVAXUSDT,AVAXUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-18T16:55:05Z,205.1964,mature_72h,true,human_review,,,research_only,stablecoin_flow,stablecoin,,69.75
+cand_00469,2056420369632817572,2026-05-18T17:03:17Z,2026-05-19 01:03:17 UTC+8,2026-05-18T17:03:17Z,2026-05-19 01:03:17 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 01:03:17 UTC+8,2026-05-18T17:03:17Z,2026-05-19 01:03:17 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,Michael Saylor的策略现已持有超过4%的比特币总供应量,币界网消息，据Bitcoin Magazine报道，Michael Saylor的投资策略现已持有超过4%的比特币总供应量。,webhook,,BTC,BTCUSDT,BTCUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-18T17:03:17Z,205.0597,mature_72h,true,discard,duplicate_non_primary,duplicate_non_primary,research_only,institutional_flow,etf_or_fund_flow,,75.0
+cand_00457,2056422137951371638,2026-05-18T17:10:18Z,2026-05-19 01:10:18 UTC+8,2026-05-18T17:10:18Z,2026-05-19 01:10:18 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 01:10:18 UTC+8,2026-05-18T17:10:18Z,2026-05-19 01:10:18 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi","🔥 UPDATE: Solana’s RWA market just crossed $2.8B, a new all-time high. https://t.co/cUH5EbjwVi",webhook,,SOL,SOLUSDT,SOLUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-18T17:10:18Z,204.9428,mature_72h,true,human_review,,,research_only,project_business,rwa_tokenization,,65.25
+cand_00423,2056429362757648764,2026-05-18T17:39:01Z,2026-05-19 01:39:01 UTC+8,2026-05-18T17:39:01Z,2026-05-19 01:39:01 UTC+8,,,,Asia/Shanghai,source_rule:webhook,,2026-05-19 01:39:01 UTC+8,2026-05-18T17:39:01Z,2026-05-19 01:39:01 UTC+8,published_at,Asia/Shanghai_for_naive_time,ok,,"🚨MORE ETHEREUM FOUNDATION RESEARCHERS RESIGN
+
+Ethereum Foundation researchers Carl Beek and Julian Ma have resigned, add","🚨MORE ETHEREUM FOUNDATION RESEARCHERS RESIGN
+
+Ethereum Foundation researchers Carl Beek and Julian Ma have resigned, adding to a wider wave of exits.
+
+Recent departures also include Protocol team figures Barnabé Monnot and Tim Beiko, Protocol Guild organizer Trent Van Epps, and former Protocol co-lead Alex Stokes, who announced a sabbatical earlier this month.
+
+Why?",webhook,,ETH,ETHUSDT,ETHUSDT,other,observe,3,single_asset,high,high,true,include,,unknown_event_type,80,"has_asset,has_binance_symbol,time_ok,unknown_event_type,single_asset,asset_confidence_high,time_confidence_high",include,medium,2026-05-18T17:39:01Z,204.4642,mature_72h,true,human_review,,,research_only,project_business,foundation_team,,65.25

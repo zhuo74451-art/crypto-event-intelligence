@@ -1,0 +1,8 @@
+metric,value
+total_input_rows,500
+eligible_rows,1
+selected_rows,1
+limit,200
+mode,non_btc_single_asset
+selected_event_type:token_unlock,1
+selected_asset:XRP,1

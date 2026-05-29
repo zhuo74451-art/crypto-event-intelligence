@@ -1,0 +1,2 @@
+﻿mode,input_rows,candidate_rows,sent_rows,failed_rows,status,message
+send,1,1,1,0,pass,ok

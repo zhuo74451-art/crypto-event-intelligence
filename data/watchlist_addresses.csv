@@ -1,0 +1,17 @@
+address,blockchain,label,entity,category,asset_symbol,alert_threshold_usd,enabled,label_confidence,notes
+0x28C6c06298d514Db089934071355E5743bf21d60,ethereum,Binance Hot Wallet 1,Binance,cex_hot,,5000000,true,medium,Seed watchlist; verify label before production publishing
+0x21a31Ee1afC51d94C2eFcCAa2092aD1028285549,ethereum,Binance Hot Wallet 2,Binance,cex_hot,,5000000,true,medium,Seed watchlist; verify label before production publishing
+0x71660c4005BA85c37ccec55d0C4493E66Fe775d3,ethereum,Coinbase Hot Wallet,Coinbase,cex_hot,,5000000,true,medium,Seed watchlist; verify label before production publishing
+0x5754284f345afc66a98fbb0a0afe71e0f007b949,ethereum,Tether Treasury,Tether,stablecoin_issuer,USDT,50000000,true,medium,USDT treasury monitoring seed
+0x55fe002aeff02f77364de339a1292923a15844b8,ethereum,Circle USDC Treasury,Circle,stablecoin_issuer,USDC,50000000,true,medium,USDC treasury monitoring seed
+0x1a9C8182C09F50C8318d769245beA52c32BE35BC,ethereum,Uniswap Treasury,Uniswap,protocol_treasury,UNI,2000000,true,medium,Protocol treasury monitoring seed
+0x25F2226B597E8F9514B3F68F00f494cF4f286491,ethereum,Aave Ecosystem Reserve,Aave,protocol_treasury,AAVE,2000000,true,medium,Protocol treasury monitoring seed
+0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c,ethereum,Lido Treasury,Lido,protocol_treasury,LDO,2000000,true,medium,Protocol treasury monitoring seed
+0x9e1585d9CA64243CE43D42f7dD7333190F66Ca09,ethereum,MakerDAO Treasury,MakerDAO,protocol_treasury,MKR,2000000,true,medium,Protocol treasury monitoring seed
+0x00000000219ab540356cBB839Cbe05303d7705Fa,ethereum,ETH2 Deposit Contract,Ethereum,staking,ETH,50000000,true,high,System contract
+0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B,ethereum,Wormhole Bridge,Wormhole,bridge,,10000000,true,medium,Bridge monitoring seed
+0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97,ethereum,Stargate Bridge,Stargate,bridge,,10000000,true,medium,Bridge monitoring seed
+0xF977814e90dA44bFA03b6295A0616a897441aceC,ethereum,Binance Hot Wallet 20,Binance,cex_hot,,10000000,true,high,Etherscan-labeled Binance Hot Wallet 20; high threshold to reduce routine exchange churn
+0x742d35Cc6634C0532925a3b844Bc454e4438f44e,ethereum,Bitfinex 2,Bitfinex,cex_hot,,10000000,true,high,Etherscan-labeled Bitfinex 2; high threshold to reduce routine exchange churn
+0x267be1C1D684F78cb4F6a176C4911b741E4Ffdc0,ethereum,Kraken 4,Kraken,cex_hot,,10000000,true,medium,Bloxy-labeled Kraken 4 exchange wallet; high threshold pending further source cross-check
+0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe,ethereum,Ethereum Foundation Main Wallet,Ethereum Foundation,protocol_treasury,ETH,5000000,true,medium,Publicly referenced Ethereum Foundation wallet; monitor only large movements

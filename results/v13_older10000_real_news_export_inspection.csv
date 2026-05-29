@@ -1,0 +1,17 @@
+row_count,standard_field,source_column,source_column_present,non_empty_count,empty_count,sample_value,notes
+2000,raw_id,raw_id,true,2000,0,2057414857235063289,
+2000,published_at,published_at,true,2000,0,2026-05-21T10:55:01Z,
+2000,source_published_at,,false,0,2000,,"source_column_missing,all_empty"
+2000,source_timezone,,false,0,2000,,"source_column_missing,all_empty"
+2000,title,title,true,2000,0,"Iranian sailors return home after diplomatic push over US vessel seizure
+
+https://t.co/0HflQlkzNh https://t.co/5OZr23C2O",
+2000,content,content,true,2000,0,"Iranian sailors return home after diplomatic push over US vessel seizure
+
+https://t.co/0HflQlkzNh https://t.co/5OZr23C2O9",
+2000,source,source,true,2000,0,webhook,
+2000,url,url,true,1261,739,https://coinpaper.com/17189/bitcoin-price-prediction-bitcoin-bulls-need-78-600-breakout-as-ema-cross-nears,
+2000,language,language,true,0,2000,,all_empty
+2000,author,author,true,2000,0,IrnaEnglish,
+2000,category,category,true,1451,549,news_article,
+2000,tags,tags,true,1451,549,news_article,

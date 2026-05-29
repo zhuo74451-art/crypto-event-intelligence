@@ -1,0 +1,2 @@
+﻿status,generated_at_china,outcome_rows,published_rows,skipped_rows,partial_rows,ok_rows,computed_1h,computed_4h,computed_24h,computed_72h,best_event_type_24h,worst_event_type_24h,output
+pass,2026-05-28 19:24:39 UTC+8,3,3,0,3,0,3,0,0,0,,,C:\Users\PC\Desktop\Projects\事件情报系统\results\tg_alert_quality_daily.md

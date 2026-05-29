@@ -1,0 +1,15 @@
+row_count,standard_field,source_column,source_column_present,non_empty_count,empty_count,sample_value,notes
+500,raw_id,raw_id,true,500,0,news:3002:a1eb533f3bef00de,
+500,published_at,published_at,true,500,0,2026-05-19T02:42:30Z,
+500,source_published_at,,false,0,500,,"source_column_missing,all_empty"
+500,source_timezone,,false,0,500,,"source_column_missing,all_empty"
+500,title,title,true,500,0,AI包月「续杯」终结！谷歌Gemini改用「算力限额」,
+500,content,content,true,500,0,"AI包月「续杯」终结！谷歌Gemini改用「算力限额」
+谷歌针对其 AI 助手 Gemini 的服务条款发布公告，宣布自 2026 年 5 月 17 日起，全面调整年满 18 周岁用户的用量限额规则。Gemini 将彻底弃用传统的「每日固定提问次数」限制，改用基于计算的用量限额，额度每 5 小时刷新一次并设有每周上限。
+根据新规，系统将依据提示的复杂程度、用户所用功能以及对话长度来实时计算额度消耗",
+500,source,source,true,500,0,tg:OneMillion_AI,
+500,url,url,true,304,196,https://t.me/OneMillion_AI/2155,
+500,language,language,true,0,500,,all_empty
+500,author,author,true,500,0,OneMillion_AI,
+500,category,category,true,353,147,"[""AI界""]",
+500,tags,tags,true,353,147,telegram_message,

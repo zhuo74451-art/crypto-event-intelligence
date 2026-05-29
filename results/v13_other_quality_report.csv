@@ -1,0 +1,765 @@
+﻿candidate_id,raw_id,source_id,title,candidate_asset_symbol,source_quality_score,text_quality_score,timeliness_score,duplicate_score,relevance_score,duplicate_count,overall_quality,grade,recommended_action,quality_flags
+cand_00001,2057414857235063289,webhook,"Iranian sailors return home after diplomatic push over US vessel seizure
+
+https://t.co/0HflQlkzNh https://t.co/5OZr23C2O",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00002,2057414703760990626,webhook,"UNSC must not stay silent on Trump’s repeated threats against Iran: Envoy
+
+https://t.co/vl9Bg96q9d https://t.co/ZRWuO5P7",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00004,2057414561150710141,webhook,Foreign Minister @araghchi has met Pakistani Interior Minister Mohsin Naqvi in Tehran to discuss the indirect Iran-US ne,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00007,2057414358574010657,webhook,"President @drpezeshkian stresses dialogue, regional cooperation in talks with Pakistani minister
+
+https://t.co/zNTBlYzkh",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00013,2057413130339180833,webhook,Good morning. Today is going to be a great day. Let’s get after it relentlessly.,,100,100,70,40,20,1,66.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_00016,2057411142171963701,webhook,"🚨 TODAY: Crypto Fear &amp; Greed Index at 29, signaling Fear. https://t.co/466SOw0uxB",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00017,news:1033:5660f82fdef2b1c9,news:jin10,伊朗努尔新闻(Nour News)：伊朗外交部发言人表示已收到美方意见，目前正在进行审查,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00022,2057409800435032312,webhook,"BREAKING: Iran’s Supreme Leader has ordered that near-weapons-grade uranium must NOT leave Iran, per Reuters citing two",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00023,news:1033:c341391b6cab1f85,news:jin10,古特雷斯强烈谴责以色列决定在近东救济工程处大院建立军事设施,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00030,2057407253792293050,webhook,法国媒体 Le Journal du Dimanche 报道，The Sandbox 的联合创始人兼首席运营官 Sebastien Borget 的妻子，本周在法国塞纳的家中遭遇一起绑架未遂事件。嫌疑人伪装成快递员骗其打开大门，随后 5 名,,100,70,70,100,65,0,79.25,potential,continue_classify,"spam_keyword,missing_source_lag,missing_asset"
+cand_00031,news:1033:4d08adbf699fa7d7,news:jin10,阿联酋绕霍尔木兹海峡输油管道建设完成近半,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00033,2057406546930278868,webhook,"🚨 NEW POLYMARKET: SpaceX IPO date?
+
+https://t.co/pvftT70n3L",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00034,news:1033:15c1c675c238a2e4,news:jin10,据日本电视新闻网：日本正考虑提出约3万亿日元的补充预算案,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00035,2057406109569188038,webhook,"📊 UPDATE: Top 12 perp DEX volume averaged $611.6B in 2026, with Hyperliquid dominating, per CoinGecko. https://t.co/tx6l",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00036,2057406068855087441,webhook,"Fantasy Top to shut down, says trading card game model was 'never built' for crypto",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00041,news:1033:954045a056b6153a,news:jin10,中亦科技中标某大型保险集团信创服务器项目,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00046,2057403233421889717,webhook,Bithumb宣布限制与Heleket平台相关的虚拟资产交易,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00050,2057402119490273530,webhook,"🔥 ARTHUR HAYES ON CLARITY ACT: ""I HOPE TRUMP VETOES IT.""
+
+Hayes said that “institutionalizing Bitcoin $BTC risks turning",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00051,news:1033:dc85d1e8a8a4ec26,news:jin10,三星罢工威胁暂时解除，韩国股市大涨逾6%,,100,70,70,100,15,0,66.75,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00054,2057401131991490751,webhook,"⚡️ CZ: ""Optimistic people tend to achieve their goals. Pessimistic people usually live in jealousy."" https://t.co/r9P9uU",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00062,2057398375465824709,webhook,GPT Deepseek is the most popular model on https://t.co/nMjQcILxG5 https://t.co/7dp3Ngc6IJ,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00063,2057398115691601932,webhook,"SpaceX (@SpaceX), which is reportedly preparing for an #IPO, currently holds a total of 18,712 $BTC ($1.46B).
+
+https://t",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00069,news:1033:4a8520f98ef16b5f,news:jin10,日本央行审议委员小枝淳子：日本央行必须评估当前中东局势将持续多久，其对全球经济及外部需求的影响，并结合当前的汇率水平，研…,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00073,2057395059923079540,webhook,"JUST IN: Pre-market just started. Strive's $SATA is only 3 cents away from par. #Bitcoin accumulation starting soon.
+
+Po",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00090,news:1033:822e32b3dc6f11a6,news:jin10,港股开盘，恒指开涨0.71%，科指开涨1.04%，半导体、AI应用板块多股高开，智谱(02513.HK)开涨7.84%、…,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00091,2057390692419391921,webhook,JUST IN: Bolivia moves to overhaul its cabinet as nationwide unrest &amp; highway blockades strangle La Paz.,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00096,2057389607273021544,webhook,美国财政部海外资产控制办公室（OFAC）宣布对十多名个人和实体实施制裁，这些个人和实体与两个同墨西哥西纳罗亚卡特尔（Sinaloa Cartel）相关的网络存在关联。其中一个洗钱网络涉嫌代表该卡特尔将贩卖芬太尼和其他毒品所得的现金收益转换为,,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_00105,news:1033:fb2efe87ed44bcce,news:jin10,上海黄金交易所黄金T+D 5月21日（周四）早盘盘初上涨1.05%报994.34元/克；上海黄金交易所白银T+D 5月2…,,100,100,70,100,15,0,74.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00109,2057385925542387735,webhook,"🚨NEW: China BLOCKS a visit by Pentagon until Trump decides on a $14 BILLION Taiwan arms deal, per FT.
+
+The arms package",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00119,2057383389238571379,webhook,"Irish Police moving Clifton Collins’ BTC
+
+Another 500 BTC linked to Irish drug dealer Clifton Collins just moved on-chai",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00122,news:1033:388ec45ca2eec48b,news:jin10,招商证券：“电价+气候+算力”三重催化 看好电力板块结构性行情,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00124,2057381094295773284,webhook,"Are humanoids the future of entertainment?
+
+https://t.co/aD3bkdVdLv",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00125,2057380713310392511,webhook,"🚨HYPERLIQUID NEARS ITS ALL-TIME HIGH AT 59$
+
+$HYPE is now trading near its ATH around $59.30, putting bulls back in cont",HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00130,2057378685338914919,webhook,"Syndicate Labs to wind down operations after five years, citing rollup market slump",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00134,2057376851690238182,webhook,JUST IN: Brazil is reportedly expected to export an all-time high 50 million bags of green coffee in the 2026/27 crop ye,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00137,2057375912308441139,webhook,"🇮🇷 BIG: Iran’s crypto stockpile is reportedly worth ~$7,700,000,000, per Fox News. https://t.co/vkwkQK1haX",,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_00138,2057375842079306002,webhook,"🔥TAX EVADERS FOUND HIDING $1.1 MILLION ON BITCOIN
+
+Bitcoin Ordinals and BRC-20 tokens are now being used by tax evaders",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00158,2057371258363465731,webhook,https://t.co/xoq6jaUZJN,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00164,news:1033:3c53904c734b987e,news:jin10,中信建投：全球石油库存锐减 能源短缺风险加剧,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00166,news:1033:199ec5fadc030546,news:jin10,日本4月季调后商品贸易帐 2364亿日元，预期-2002亿日元，前值907亿日元,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00168,news:1033:439ee3ef12bf8a83,news:jin10,日本至5月15日当周外资买进日债 -10334亿日元，前值1062亿日元,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00169,news:1033:eaedf29ce72800b9,news:jin10,日本至5月15日当周买进外国股票 414亿日元，前值-5936亿日元,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00170,news:1033:53f11e2d337657c3,news:jin10,日本至5月15日当周买进外国债券 7587亿日元，前值由16407亿日元修正为16443亿日元,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00171,news:1033:f16d3c7b87056872,news:jin10,日本4月未季调商品贸易帐 3019亿日元，预期-445亿日元，前值由6670亿日元修正为6430亿日元,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00172,news:1033:5e1ca90db5674020,news:jin10,日本至5月15日当周外资买进日股 9496亿日元，前值由14375亿日元修正为13935亿日元,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00174,2057367411188437043,webhook,"loracle.hl(@loraclexyz)'s $HYPE short has now grown to over $100M!
+
+He is currently down over $23M, with a liquidation p",HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00180,2057365865767551247,webhook,When did you buy your first Bitcoin? 🧡 https://t.co/AU1r4JJLhG,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00187,2057365023303795030,webhook,JUST IN: UK commits $26.87 million to help contain the Ebola outbreak in Congo.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00211,2057358228753985836,webhook,"🚨 ANOTHER ETHEREUM BUILDER JUST SHUT DOWN
+
+Syndicate Labs is closing after 5 years of building infrastructure for custom",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00217,2057355833147621754,webhook,"🚨 UPDATE: Bitcoin has been rejected at the 200-day MA, mirroring the March 2022 bear market setup, historically a signal",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00241,news:1033:dec277af0065bef0,news:jin10,国际货币基金组织：IMF工作人员结束对巴基斯坦的访问,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00243,2057347939459051596,webhook,"All time $HYPE is almost here. $150 is much closer than it was. 
+
+Yachtzee 😘😘😘😘 https://t.co/N6t3u2OcfR",HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00246,2057347407159984350,webhook,JUST IN: China is reportedly refusing to approve a Pentagon official’s Beijing visit until Trump decides whether to proc,,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_00249,2057345867754184716,webhook,"JD Vance just tried to shut down insider trading concerns by saying Trump isn’t making the trades himself, his advisors",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00252,2057345441834910106,webhook,"Iran dismisses speculation over @araghchi's possible New York trip
+
+https://t.co/VyQfwFPnli https://t.co/CEer8JzRj0",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00260,2057340731933499778,webhook,"🚨 INTERESTING: SpaceX says Starship could reduce most international long-haul flights to under 30 minutes, per its IPO f",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00261,2057340728146366797,webhook,Closing half of the gap with frontier emerging markets could boost output in sub-Saharan Africa by about 20% within a de,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00265,news:1033:18e2bd6d666ba30e,news:jin10,英伟达CEO黄仁勋：包含人工智能新型云业务的新报告板块增速将超过超大规模数据中心子板块,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00267,2057338969202049069,webhook,WBTC and HTX are now live on https://t.co/nMjQcILxG5,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00274,news:1033:80b3dec575a66094,news:jin10,英伟达CEO黄仁勋：包括自身产品在内的基于SRAM的AI芯片，在一段时间内将是一个小众产品,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00278,news:1033:e4bf73eefe13d7ac,news:jin10,英伟达CEO黄仁勋：我们的增长速度应该会超过超大规模企业的资本支出增速,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00283,news:1033:41cb3ab623d478dc,news:jin10,英伟达(NVDA.O)CFO：预计2027财年全年税率为16%至18%，低于初步预期,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00284,2057332056099901486,webhook,NEW: Former Austrian intelligence officer found guilty of spying for Russia.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00288,2057330610612441235,webhook,"🚨 NOW: Elon Musk announces SpaceX is actively hiring world-class engineers and physicists for SpaceXAI, saying ""smart hu",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00291,news:1033:2605cdf1bbefcb8d,news:jin10,英伟达(NVDA.O)CFO：所有主要的超大规模企业、云服务商和模型开发商都在使用英伟达的Blackwell平台,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00292,news:1033:36b2b826ba6469ec,news:jin10,英伟达(NVDA.O)CFO：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00293,news:2012:3144e0d61288aca7,news:odaily_exchange_gap,SOL生态代币普涨，FIDA涨超34%,SOL,100,70,70,100,100,0,88.0,potential,continue_classify,"spam_keyword,missing_source_lag"
+cand_00296,2057327713065808101,webhook,"A newly created wallet (t3TFwP) just withdrew 11,827 $ZEC($7.96M) from #Binance.
+
+https://t.co/C5V15YF8jx https://t.co/5",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00300,2057325599287312504,webhook,摩根大通首席执行官：将招聘更多AI专家，减少传统银行家,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00303,news:1033:52e9dcb5fbad36e6,news:jin10,SpaceX：计划在月球和火星建立制造基础设施,,100,100,70,100,45,0,81.75,potential,continue_classify,"missing_source_lag,missing_asset,macro_wire_without_asset"
+cand_00305,news:1033:8614ee5b15b1f465,news:jin10,SpaceX：在五月，与Anthropic签署了云服务协议,,100,100,70,100,45,0,81.75,potential,continue_classify,"missing_source_lag,missing_asset,macro_wire_without_asset"
+cand_00308,news:3002:cd595de623a8e2bd,tg:onemillion_ai,智谱联合提出下一代大模型推理网络架构ZCube，破解PD分离引发的结构性网络拥塞,,100,70,70,100,65,0,79.25,potential,continue_classify,"spam_keyword,missing_source_lag,missing_asset"
+cand_00316,2057320689267610039,webhook,Shame,,100,50,70,100,20,0,63.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00317,news:1033:2f4848075a0e6614,news:jin10,英伟达(NVDA.O)：我们的网络产品全球供应链未受到中东冲突的显著影响,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00320,2057320319766200452,webhook,"A newly created wallet withdrew 11,827 $ZEC worth $7.97M from #Binance
+
+https://t.co/jgYFzAzznB https://t.co/knNO6h5KMe",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00324,2057318638953377844,webhook,Hyperliquid has flipped Solana by FDV. https://t.co/rDF5FRg4TK,SOL,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00327,2057317813115932930,webhook,"A newly created wallet withdrew 5,000 $ZEC worth $3.37M from #Binance
+
+https://t.co/jgYFzAzznB https://t.co/Sfx6DoOEqL",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00328,news:1033:cf9157da011c827f,news:jin10,英伟达(NVDA.O)：将拥有数据中心和边缘计算市场平台,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00330,news:1033:2a1a44fea166c94e,news:jin10,英伟达(NVDA.O)美股盘后转涨，其第一财季营收及第二财季营收展望均超出平均预期,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00343,2057313936765267981,webhook,"🚨 NEW POLYMARKET: Prabowo Subianto out as President of Indonesia by...?
+
+https://t.co/mqy9I4mmnq",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00346,news:1033:7a62e7c478fed61e,news:jin10,英国首相办公室：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00350,2057310563022279120,webhook,"Many people misunderstand my (lack of) ambition.
+
+I never tried to be the world's number 1 at anything. I always just tr",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00359,news:1033:971c34fd0aa1caac,news:jin10,英伟达将于十分钟后在美股盘后公布财报并举行电话会,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00367,news:1033:d612f99516d9ed44,news:jin10,美国财长贝森特：在巴黎与卡塔尔财政大臣讨论了伊朗问题,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00368,news:1033:951a5f7389aee5c0,news:jin10,古巴国家主席：美国所谓“指控”出于政治动机 愈加暴露其挫败感,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00376,news:1033:56204f07fc418f07,news:jin10,摩根士丹利：AI并购潮呈现“全谱系”发展趋势,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00380,2057299032234701017,webhook,真是没道理🙃 https://t.co/MpzDAThUVK,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00383,2057297152100237696,webhook,吴说获悉，据香港证券及期货事务监察委员会（SFC）官方网站更新信息显示，NewBX Limited 集团已于 2026 年 5 月 18  日正式获批《证券及期货条例》及/或《打击洗钱条例》下的相关牌照。 其获批的受规管活动及业务包括：证券,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00384,2057297028171092409,webhook,newbx limited获批香港虚拟资产交易平台牌照,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00386,2057296183534494004,webhook,JUST IN: SpaceX’s IPO filing says Starship could enable point-to-point travel anywhere on Earth in about 30 minutes or l,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00393,2057295017484628258,webhook,"loracle.hl(@loraclexyz) is now down nearly $20M on his $HYPE short, but he is still adding to it.
+
+He currently holds a",HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00397,2057294140036255938,webhook,CZ：比特币仍占主导地位，未来将更需高效货币,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00398,2057293858455658689,webhook,🥩🥩🥩,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00399,2057293159277977828,webhook,⛏️⛏️⛏️,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00405,2057291744786727193,webhook,🧠🧠🧠,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00407,2057291318351794635,webhook,Why not for bird lovers?,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00414,news:1033:8a2fd785fad4c4bc,news:jin10,西班牙首相桑切斯：以色列部长羞辱“全球坚韧船队”成员的画面是不可接受的,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00415,news:1033:8d0ad7e1e09e7728,news:jin10,花旗集团CEO弗雷泽：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00418,news:1033:d64ed5e5bbab5214,news:jin10,上海黄金交易所黄金T+D 5月20日（周三）晚盘收盘上涨1.05%报994.34元/克；上海黄金交易所白银T+D 5月2…,,100,100,70,100,15,0,74.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00419,2057289346726928545,webhook,Vib needs more monitors.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00422,news:2012:196e737528334681,news:odaily_exchange_gap,韩国KOSPI指数涨幅扩大至7%，LG电子涨超24%,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00424,2057287271687020649,webhook,NEW: Self-driving Waymo stranded in rising floodwaters during flash flooding in Atlanta.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00426,2057286039085912135,webhook,Trying have a totally formally proven design for perps sucks.,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00435,2057284545217736885,webhook,🧠🧠🧠,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00437,2057284371552645562,webhook,🤫🤫🤫,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00439,2057283922053263772,webhook,💯💯💯,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00446,2057281422126199023,webhook,JUST IN: Hyperliquid flips Solana in fully diluted valuation.,SOL,100,100,70,40,100,1,86.5,potential,continue_classify,"missing_source_lag,potential_duplicate"
+cand_00449,2057280911205433730,webhook,JUST IN: Hyperliquid flips Solana in fully diluted valuation.,SOL,100,100,70,40,100,1,86.5,potential,continue_classify,"missing_source_lag,potential_duplicate"
+cand_00468,2057274777887261030,webhook,"JUST IN: California doctor convicted in what the FBI calls the ""largest Botox fraud scheme in U.S. history.""",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00469,2057274494977249773,webhook,"I strongly recommend reading this Alphractal post.
+
+It provides excellent context on the Bitcoin cycle using a powerful",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00470,news:1033:729adf1c2477822b,news:jin10,据伊朗电视台：伊朗外长阿拉格奇正在准备前往美国，参加联合国会议,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00473,news:1033:a2cf873eee16595b,news:jin10,伊朗总统佩泽希齐扬在伊朗会见了巴基斯坦内政部长莫辛·纳克维,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00474,news:1033:7d3e16f80bf37469,news:jin10,伊朗称将在“强烈不信任美国”的情况下继续推进谈判,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00483,2057268587233194323,webhook,"A smart trader who made $1.4M on $ALON spent $12.6K to buy 5M $VIRL over the past 2 days, right after $VIRL was added to",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00488,2057267080211394795,webhook,Congrats hype hodlers.  Well deserved.  It’s a no bullshit awesome product.  🎂🎂🎂,HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00491,2057266345910403170,webhook,You can’t beat our top trader,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00493,news:1033:142b8f3448f3025c,news:jin10,伊朗外交部发言人：美国的威胁不会影响德黑兰的决策,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00495,2057265471179940180,webhook,"JUST IN: #Bitcoin is now over $77,500 🔥 https://t.co/aXQnN7xJSn",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00496,news:1033:603dbf1892193314,news:jin10,美国军方：美国海军陆战队周三登上了一艘悬挂伊朗国旗的商业油轮,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00498,news:1033:2f419f060c765c49,news:jin10,伊朗外交部发言人：我们强调伊朗对霍尔木兹海峡的主权问题,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00503,news:1033:5216938559cf4f5e,news:jin10,伊朗外交部发言人：伊朗目前正在研究美国的观点,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00505,2057264506972053922,webhook,The ABC’s,,100,50,70,100,20,0,63.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00507,news:1033:4f529d3e685c519c,news:jin10,伊朗外交部发言人：美国必须证明其善意，并结束对伊朗船只的“海盗行为”,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00508,news:1033:3c25ec2f05273783,news:jin10,乌克兰总统泽连斯基：连续表态（共 3 条）,,100,100,70,40,0,1,61.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset,potential_duplicate"
+cand_00509,news:1033:7d3b3e8bf7132c9a,news:jin10,乌克兰总统泽连斯基：连续表态（共 2 条）,,100,100,70,40,0,1,61.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset,potential_duplicate"
+cand_00515,news:1033:1d1c28d1d8c5af87,news:jin10,伊朗外交部发言人：伊美双方继续通过巴基斯坦中介交换信息,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00522,2057259542304665842,webhook,"🚨LATEST: SpaceX officially files for IPO.
+
+The details include:
+
+1. Ticker: $SPCX
+2. Valuation: $1.75T to $2T
+3. Raise:",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00527,news:1033:ebc14d38742c15f1,news:jin10,乌克兰总统泽连斯基：已经在着手加强这一方向的防御，同时也在对白俄罗斯以及俄罗斯境内部分构成威胁的地区采取预防性措施,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00531,news:1033:d3e8bf7a331ddc13,news:jin10,乌克兰总统泽连斯基：今天就白俄罗斯-布良斯克地区的局势进行了详细讨论,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00547,2057255835148189888,webhook,"🔥 NOW: hyperliquid:native just broke past $55K.
+
+New ATH soon?",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00548,news:2012:6eec765f28201840,news:odaily_exchange_gap,日韩股市高开,,100,70,70,100,20,0,68.0,garbage,archive,"short_title,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00554,2057254284350419217,webhook,"GitHub 被黑涉及的VS 插件 Nx Console
+👇",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00567,news:1033:2c47d858086fee3c,news:jin10,英国政府：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00569,2057250275585593822,webhook,"Trading Trail Week 2 begins 🏔️
+
+▸ New level unlocked: Up to $500 in cash rewards
+▸ Extra $10 reward for new users comple",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00573,2057250019124945095,webhook,Eric Trump：加密行业正在进行两场竞赛,BTC,100,70,70,100,100,0,88.0,potential,continue_classify,"spam_keyword,missing_source_lag"
+cand_00580,2057248113191227675,webhook,On Science https://t.co/2SzNmG44LD,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00582,2057247293288448403,webhook,🐐🐐🐐,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00584,2057246155596071296,webhook,He was a consul of Rome,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00592,news:1033:83383720b02fe3e5,news:jin10,以军总参谋长：军队处于“最高级别戒备状态”,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00593,news:1033:3af39c47bc700d12,news:jin10,乌克兰总统泽连斯基与塞尔维亚总统武契奇进行了电话交谈,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00594,news:1033:5a54c0f85ef76fd5,news:jin10,据国际文传电讯社：俄罗斯获得向印度尼西亚出口牛肉的权利,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00597,2057241924025856343,webhook,🙂‍↔️,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00604,2057239139796369648,webhook,😭😭😭,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00605,2057239055075618875,webhook,Plumbing is the new spaghetti 🍝,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00607,2057238705866182931,webhook,"NEW: Scientists detected a mysterious solar radio signal that lasted nearly three weeks and pulsed ""like a heartbeat"" ev",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00608,2057238691655913771,webhook,JUST IN: Strive's $SATA is estimated to have raised enough money to buy 132 #Bitcoin today with 6 trading days to ex-div,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00611,news:1033:6ed9d157e8bca96d,news:jin10,加拿大外交部长：加拿大将召见以色列大使，抗议对加沙船队成员的不可接受待遇,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00614,news:1033:85439fc8270a3300,news:jin10,据沙特媒体Alhadath：巴基斯坦内政部长在德黑兰会见伊朗总统佩泽希齐扬,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00616,news:1033:515020cb4036464c,news:jin10,以色列驻美国大使：任何与伊朗达成的潜在协议都必须基于不信任原则，并接受全面核查,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00618,news:1033:eba0a340d50e9d76,news:jin10,伊朗外交部发言人：谈判正通过巴基斯坦中间人继续进行,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00619,news:1033:e2987c2fab51fca0,news:jin10,伊朗外交部发言人：我们正与许多国家保持密切沟通，以确保其船只安全通过霍尔木兹海峡，不受损害,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00622,news:1033:e79850f73f197efe,news:jin10,伊朗外交部发言人：不能允许美国和以色列通过霍尔木兹海峡，因为这会影响我们的国家安全,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00623,news:1033:21baec823219243e,news:jin10,英国央行副行长布里登：金融稳定面临的风险显著且高企,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00627,2057232223812960707,webhook,We really a leaderboard,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00629,news:1033:0824552979a6895d,news:jin10,俄罗斯总统普京访华期间两国元首会晤成果文件清单,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00630,2057231680927338555,webhook,"Cash is king, king made",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00638,2057230596259373506,webhook,.@tolybot out lasted bankless,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00642,news:1033:4adfb2587898aab0,news:jin10,英国央行行长贝利：我们没有看到国债市场出现无序状况,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00645,2057229152655380893,webhook,"🔥 INSIGHT: Marc Andreessen says AI could surpass the internet, electricity, and steam power in importance to humanity.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00648,news:1033:b2f2cbf9412a4d0c,news:jin10,市场定价显示，交易员不再完全预期2026年将有两次英国央行加息,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00651,news:1033:68913ca683b66407,news:jin10,美国至5月15日当周EIA战略石油储备库存 -992万桶，前值-860.5万桶,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00653,2057227633025237413,webhook,"🚨 UPDATE: Elon Musk will remain CEO, CTO, and Chairman of the Board of SpaceX following the company’s IPO. https://t.co/",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00668,2057224431961788857,webhook,⛴️🚢🛳️,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00669,2057224387967725584,webhook,🤯🤯🤯,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00670,news:1033:e3ae9ecefa9091aa,news:jin10,据阿拉伯电视台：消息人士表示，巴基斯坦陆军参谋长可能于明天访问伊朗，宣布协议文本的最终版本,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00672,news:1033:55359abef019795e,news:jin10,普京结束访华 将乘专机离开北京,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00673,news:1033:8dc71e1ab61f4c23,news:jin10,乌克兰高级安全官员：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00674,news:1033:c6af64cb32d50500,news:jin10,英国央行行长贝利：英国国家统计局在改善劳动统计方面取得了显著进展,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00675,2057222800260100529,webhook,The SpaceX IPO is going to be a once in a lifetime bonanza for the tech industry.,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00679,news:1033:793e7f2722f9d2a3,news:jin10,英国央行副行长布里登：令人惊讶的是，企业告诉我他们并没有替换离职员工，这对生产力有利，但对入门级职位不利,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00680,news:1033:0debeb33eda6dd25,news:jin10,以色列国防军：一名军官在黎巴嫩遭到爆炸无人机袭击，受重伤,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00682,2057220584891687239,webhook,JUST IN: Artemis astronauts confronted by a man at the Capitol who insists they never went to space.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00683,news:1033:eb0aee1b265643d5,news:jin10,据The Information：谷歌将其人工智能编码工具定位为高性价比选择,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00685,news:1033:a36ba644a6551fa8,news:jin10,伊朗议会议长卡利巴夫：我们必须让敌人感到绝望，以便在谈判中迫使他们接受我们人民的正当要求,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00691,news:1033:68e9c75d96f93248,news:jin10,法国外交部长：法国召见以色列大使，因对加沙船队乘客的处理,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00696,news:1033:8aad293712f8bb87,news:jin10,据沙特媒体Alhadath：巴基斯坦内政部长在德黑兰会见伊朗革命卫队指挥官,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00700,2057218264816566747,webhook,"🚨 🚨 🚨 🚨 🚨  123,999,999 $PYUSD (124,021,689 USD) transferred from #Paxos to unknown wallet
+
+https://t.co/uQsUzzCyTj",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00703,2057217484147630529,webhook,🔥 LATEST: Elon Musk’s SpaceX holds $1.45 billion in Bitcoin. https://t.co/VQyttop5mL,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00711,news:1033:30d1b0c48ceb2507,news:jin10,沙特外交大臣：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00714,2057215910247538722,webhook,"🚨 🚨 🚨 🚨 🚨  73,179,900 $XRP (100,318,353 USD) transferred from unknown wallet to unknown wallet
+
+https://t.co/E2T0uv3GLM",XRP,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00716,2057215695247544397,webhook,JUST IN: NASA to hold a live news event on May 26 to share updates on its Moon base &amp; lunar exploration plans.,,100,70,70,100,20,0,68.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00722,2057214783414513987,webhook,"🤖 AI COULD EVEN TAKE THE BARBER’S JOB IN CHINA
+
+China just showed off a robotic barber that can cut hair, proving AI aut",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00726,news:1033:239c74785916471a,news:jin10,以色列总理内塔尼亚胡：我们有完全的权利阻止哈马斯支持者的挑衅舰队进入我们的领海并抵达加沙,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00727,news:1033:8727f27c618e6bcd,news:jin10,英国央行行长贝利：政府应当牢记，大规模财政措施的成本最终还是会回到自己身上,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00731,news:1033:848337ab3563ddd0,news:jin10,英国央行行长贝利：期货曲线相对平稳,,100,80,70,100,0,0,65.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00733,2057213525119181139,webhook,"🤖 INTERESTING: Agibot showcased its A3 humanoid performing advanced gymnastic moves, including flips and flares, highlig",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00734,news:1033:35494d9c8f82032a,news:jin10,伊朗议会议长卡利巴夫：伊朗军队已具备令敌人震惊的准备状态，必将让任何对伊朗的再次侵犯追悔莫及,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00741,news:1033:0fc28171669acd80,news:jin10,美股开盘，道指开涨0.31%，标普500指数涨0.29%，纳指涨0.49%,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00749,news:1033:741cff8d0ce743a0,news:jin10,英国央行行长贝利：降息预期的消除已导致政策收紧,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00750,news:1033:fd4cf5edcca2e716,news:jin10,英国央行行长贝利：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00751,news:1033:c16c6dc534b32975,news:jin10,市场消息：英国央行行长贝利、英国央行副行长布里登、英国央行货币政策委员丁格拉和英国央行货币政策委员曼恩开始向英国立法者作…,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00754,2057209815781302512,webhook,🚨 LATEST: Most top $BTC traders on Hyperliquid are currently holding long positions. https://t.co/F5n1xVBGip,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00755,news:1033:340f5f9fdd207262,news:jin10,数据显示：俄罗斯4月黄金持有量降至7390万盎司,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00757,news:1033:74010fa093091ba7,news:jin10,北约秘书长吕特：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00762,news:1033:36daf845dbeea1c2,news:jin10,伊朗最高领袖：伊朗官员肩负重任,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00764,2057208250404094179,webhook,🚨 JUST IN: SpaceX has officially filed for an IPO under the ticker $SPCX. https://t.co/MY5mkqGusZ,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00765,news:1033:887a395f13617166,news:jin10,伊朗前外长扎里夫：我们不需要背信弃义者提供的保证,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00766,news:1033:b52021d465f760f2,news:jin10,美国软件公司财捷集团（INTU.N）将裁员17%以精简运营，聚焦人工智能,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00767,news:1033:9ee4616510553c81,news:jin10,据伊朗伊斯兰共和国通讯社（IRNA）：伊朗和巴基斯坦内政部长会晤，双方就政治、经济、边界和安全等议题进行了讨论,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00768,2057207642637082960,webhook,Pre ETH https://t.co/dxRXimZwcR,ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00769,2057207487196168234,webhook,Pre AGI https://t.co/9u1UUEi0ta,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00773,news:1033:fba4a618499f1e23,news:jin10,声明显示：哥伦比亚民族军反政府武装宣布为总统选举单方面停火三天,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00779,news:1033:88f2aa1cc1dc4396,news:jin10,阿斯麦(ASML.O)CEO：连续表态（共 4 条）,,100,100,70,40,0,1,61.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset,potential_duplicate"
+cand_00782,news:1033:b44b6bdeb14fbaca,news:jin10,阿斯麦(ASML.O)CEO：连续表态（共 5 条）,,100,100,70,40,0,1,61.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset,potential_duplicate"
+cand_00784,2057205130399793279,webhook,NEW: PepsiCo is reportedly preparing to raise prices on some smaller Frito-Lay chip bags.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00787,2057204814530900175,webhook,"🚨 UPDATE: Meta is reportedly laying off around 8,000 employees, or roughly 10% of its workforce, as the company ramps up",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00788,2057204811246768161,webhook,"$MSTR &amp; $STRC Retail Investor Q&amp;A with @PhongLe, hosted by @NatBrunell
+https://t.co/G0frA3Ekem",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00795,2057203462056591434,webhook,"Pretty strong day on the markets.
+
+Altcoins are trending heavier than Bitcoin. 
+
+I do think this will continue to be the",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00796,2057203266815983859,webhook,JUST IN: 🇺🇸 Pro-Bitcoin Congressman Tom Emmer says “CBDC is the ultimate surveillance tool that should NEVER have a plac,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00798,2057202826812522877,webhook,JUST IN: Elon Musk's SpaceX officially files for IPO under ticker $SPCX. https://t.co/VQ0TmSSz5D,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00802,news:1033:b51d771617d7002c,news:jin10,亚马逊创始人贝索斯：人工智能与犁、蒸汽机的发明意义并无不同,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00804,2057200691051901135,webhook,NEW: “Stop Hiring Humans” billboard appears in New York City.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00805,news:1033:256c0de6948ff4b6,news:jin10,亚马逊创始人贝索斯：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00809,news:1033:947956e0eb8fc7b3,news:jin10,据华尔街日报：Meta公司开始裁员数千名员工，以适应人工智能转型,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00813,news:1033:3de4809eb8fb47ee,news:jin10,阿布扎比国家石油公司首席执行官：恢复全面运营能力视具体情况而定，可能需要几周或几个月,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00814,news:1033:713946f7cc3c3014,news:jin10,马士基：因中东安全局势，将对全球其它地区至海湾上游国家的紧急应急附加费进行调整,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00816,news:1033:880da7259d2feddc,news:jin10,阿布扎比国家石油公司首席执行官：阿布扎比国家石油公司仍在评估冲突造成的损失和成本,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00823,news:1033:21d11d8550792b3b,news:jin10,阿布扎比国家石油公司首席执行官：连续表态（共 4 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00824,news:1033:f40d128eeaced19d,news:jin10,伊朗革命卫队海军指挥官：过去24小时内，有26艘船只（包括油轮、集装箱船和其他商船）在革命卫队海军的协调和安保下通过了霍…,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00825,news:1033:ed2d13df221cb358,news:jin10,阿布扎比国家石油公司首席执行官：在欧佩克之外，阿联酋将继续在能源市场中保持有序、负责任和稳定的力量,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00827,2057194961196503444,webhook,"🚨 ALERT: Food prices could rise globally as fertilizer prices jump 44% since the Iran war began, hitting the highest lev",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00829,2057194922420125912,webhook,"JUST IN: Nvidia $NVDA reports $81.6 billion in revenue for Q1 2026, higher than expectations.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00830,news:1033:1f3d31e0e83e3339,news:jin10,以色列军方：我们在周一袭击了位于黎巴嫩南部图尔地区的真主党武器生产设施,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00832,news:1033:a7f289f77df4d8ae,news:jin10,阿布扎比国家石油公司首席执行官：全球备用产能约为每日300万桶，应达到每日500万桶,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00833,news:1033:b8acdeb1ff87b5b3,news:jin10,乌克兰总统泽连斯基：乌克兰将对白俄罗斯采取“非公开措施”,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00834,news:1033:e63af97484f6166a,news:jin10,阿布扎比国家石油公司首席执行官：我们在2025年推进了绕过霍尔木兹海峡的新管道项目，如今该项目已完成50%,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00836,news:1033:7032b748b6a076ec,news:jin10,阿布扎比国家石油公司首席执行官：我们利用自身的贸易网络扩大了对亚洲的供应,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00837,news:1033:c66206111915fa55,news:jin10,阿布扎比国家石油公司首席执行官：一旦你接受一个国家可以将世界上最重要的水道作为“人质”，自由航行的概念就结束了,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00838,news:1033:aecc071e1adafe28,news:jin10,乌克兰总统泽连斯基：乌克兰将在国内北部加强军力，以便在俄罗斯向切尔尼戈夫-基辅方向发起攻势时做好应对准备,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00839,news:1033:7cd504b027b7d355,news:jin10,阿布扎比国家石油公司首席执行官：恢复到冲突前流量的80%至少需要4个月,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00841,news:1033:e01bd963f87a53a3,news:jin10,阿布扎比国家石油公司首席执行官：霍尔木兹海峡的关闭是有史以来最严重的供应中断,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00842,news:1033:225d2d7e15e27814,news:jin10,中国内地访日游客数量4月同比下降56.8%,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00844,news:1033:e5d893f849e9a059,news:jin10,上海黄金交易所黄金T+D 5月20日（周三）晚盘盘初上涨0.37%报987.7元/克；上海黄金交易所白银T+D 5月20…,,100,100,70,100,15,0,74.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00846,news:1033:788c98cdfba86a01,news:jin10,印尼自由港首席执行官：2026年阴极铜产量预计为8亿磅，黄金产量预计为70万盎司,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00847,news:1033:3c29a463ead76fe7,news:jin10,印尼自由港首席执行官：预计2027年铜阴极产量约为12亿磅，黄金产量为100万盎司,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00850,news:1033:dded0902cc6812a3,news:jin10,市场消息：泽连斯基办公室副主任帕利萨会见洛克希德·马丁公司代表,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00851,news:1033:6edde84247b5ba13,news:jin10,据伊朗电视台：韩国周三与伊朗伊斯兰革命卫队就穿越海峡进行了协调,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00853,2057189361398038557,webhook,"JUST IN: Sinkhole appears on runway at LaGuardia Airport, forcing the runway to immediately close.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00855,news:1033:f7b1e51b891a434a,news:jin10,消息人士：美国展现有限灵活性 但不会在核要求和海峡问题上让步,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00857,2057188359424835745,webhook,"Trump announces 'final stages' of a peace deal.
+
+✅ Oil reaches $106+ and Yields continue to rally.
+✅ Monday started with",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00860,news:1033:2fcf83f1d9f3ae60,news:jin10,意大利总理梅洛尼：意大利将召见以色列大使，要求对发生的事件作出正式解释,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00861,news:1033:bc4795143c3f039f,news:jin10,意大利总理梅洛尼：以色列对船队活动人士的处理是不可接受的,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00867,news:1033:ecd8bde0fe429b95,news:jin10,德国外交部发言人：任何能够使俄罗斯继续对乌克兰发动冲突的事物也对德国安全构成威胁,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00868,2057185373487349953,webhook,"JUST IN: Virginia adults can legally possess cannabis, but still cannot legally buy it after Gov. Abigail Spanberger vet",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00869,2057185083002597710,webhook,A consistently bad trader is as good as a consistently good trader,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00871,2057184889867575735,webhook,lol,,100,50,70,40,20,1,54.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_00874,news:1033:ec81d5d33adcad0d,news:jin10,赛意信息：拟8.33亿元采购高性能算力服务器,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00878,news:1033:860f2d6bf2639318,news:jin10,伊朗国际关系事务副代表库米：伊朗的重要成就之一是培养了有信仰、有担当的人,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00879,news:1033:107e72b221b8f8f7,news:jin10,俄罗斯副总理诺瓦克：全球市场无法在没有俄罗斯石油的情况下运作，这就是为什么一些国家正在解除限制,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00882,news:1033:81e92bd1548d2817,news:jin10,德国总理默茨：在工业人工智能的进步中，数据安全比数据隐私保护更为重要,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00883,news:1033:8584f43f51066d41,news:jin10,据伊朗塔斯尼姆通讯社：伊朗方面表示，在霍尔木兹海峡的入口处，违规和隐蔽的油轮已被识别并受到惩罚,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00887,news:1033:e0121946a4dfac19,news:jin10,据路透调查：13位经济学家中有10位预计以色列央行将降息25个基点至3.75%；3位预计按兵不动,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00892,news:1033:7a3d23e29d79523b,news:jin10,伊朗卫生部长：美国和以色列对伊朗医疗中心犯下了滔天罪行,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00894,2057180919350345965,webhook,"Bulls dial “P” for privacy, Bears dial “P” for poor. Choose wisely degen. https://t.co/5uC7j2qOT9",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00896,news:1033:810963028b990230,news:jin10,真主党：我们昨天与试图从拉沙夫镇向哈达萨推进的以色列部队交火，迫使其在遭受损失后撤退,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00897,2057180065536909521,webhook,JUST IN: Michael Bay to direct a movie about Operation Epic Fury &amp; the rescue mission that saved two U.S. airmen beh,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00899,2057179551344611792,webhook,🇨🇳 NEW: Chinese cities are rolling out AI-powered robot barber kiosks that scan customers in 3D and cut hair with millim,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00900,2057178824950092004,webhook,"Optimistic people tend to achieve their goals.
+Pessimistic people usually live in jealousy.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00906,2057176959822528809,webhook,"JUST IN: U.S. Transportation Department to provide another $200,000,000.00 to rebuild New York's Penn Station.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00907,news:1033:261804cc260a007b,news:jin10,英国首相斯塔默：现有的对俄罗斯的制裁不会以任何方式被解除,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00908,news:1033:6b70e47b75e9bdaf,news:jin10,英国首相斯塔默：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00910,news:1033:335f0ced64a5e392,news:jin10,欧盟委员会主席冯德莱恩：俄罗斯和白俄罗斯应对无人机危及民众生命和安全的行为承担直接责任,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00912,news:1033:c3eec7d89a63445e,news:jin10,欧盟委员会主席冯德莱恩：俄罗斯对波罗的海国家的公开威胁完全不可接受,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00913,news:1033:981d8b0c784840e7,news:jin10,联合石油数据库JODI：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00915,2057174621380632829,webhook,Glassnode：630.4万枚BTC面临量子风险,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00917,2057174529693135265,webhook,"JUST IN: Strive's $SATA is now estimated to have raised enough money to buy over 100 #Bitcoin today.
+
+6 full trading day",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00918,2057174325543809296,webhook,JUST IN: U.S. enlists biotech firm to deliver an experimental Ebola treatment.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00919,2057173330273173999,webhook,"🇺🇸 NEW: The US House passed a housing bill that would limit large investors from buying too many single-family homes, ai",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00920,news:1033:1ecf415d67238726,news:jin10,欧盟委员会发言人：欧盟仍然致力于对俄罗斯石油和天然气进口实施制裁，并重申不希望俄罗斯在冲突中获益,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00924,news:1033:039a07a679fcfbb0,news:jin10,伊朗最高领袖穆杰塔巴·哈梅内伊：伊朗人民的热情激励使得官员的责任更加沉重,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00927,news:1033:7f7f748419552172,news:jin10,伊朗外交部：外长阿拉格齐是否参加5月26日安理会会议尚未最终决定,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00928,2057170045415940580,webhook,"JUST IN: Acting U.S. Attorney General Blanche says Raul Castro will ""show up here by his own will or by another way.”",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00933,news:1033:b354f88649322baa,news:jin10,日本财务大臣片山皋月：巴西是一个资源丰富的国家，拥有石油和重要矿物等多种资源，我们决定列出清单来进行讨论,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00934,2057168183241343055,webhook,"Phenomenal post by @SergeyNazarov on the current state of Chainlink and the markets.
+
+It makes me even more excited and",LINK,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00935,news:1033:564144c8428d611e,news:jin10,伊朗最高领袖穆杰塔巴·哈梅内伊：我们创造了伊朗民族在面对两个全球恐怖主义军队时所展现的抵抗史诗,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00936,2057167011164155927,webhook,The price of houses isn't going up; the USD is going down. #Bitcoin https://t.co/ZNxUJRKPdU,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_00937,news:1033:2844dd539697d5f8,news:jin10,据日本共同社：4月赴日外国游客数量同比下降5.5%至369万人，主要归因于中东冲突导致的航班停飞和减少,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00942,news:1033:98b89161d5aafa80,news:jin10,以色列军方：真主党正在用监测工具追踪我们在黎巴嫩南部的部队,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00943,2057164519797932038,webhook,"🚨 JUST IN: Donald Trump said the U.S. is in the “final stages” of negotiations with Iran, warning that “either we have a",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00944,2057164164456468796,webhook,NEW: Trump announces his endorsements went 37-0 in yesterday’s primary races.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00947,news:1033:c4a8f59e72cac7e7,news:jin10,老铺黄金：控股股东徐东波增持1.66亿港元公司股份,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00948,2057162195826585758,webhook,"Humans built their money stack over decades. bank, card, exchange, ID. and now agents have the same thing on @0xPolygon.",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_00951,news:1033:df82234915e41f94,news:jin10,据伊朗塔斯尼姆通讯社：一名伊朗军方消息人士称，最近对阿联酋的无人机袭击是由以色列实施的,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00952,2057161641746108902,webhook,"Iran will fight when necessary, negotiate where needed: @araghchi
+
+https://t.co/KiNjvDeFYj https://t.co/v0U8gz3dFr",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_00953,news:1033:258e8afb89ec33ed,news:jin10,捷克外交部长：捷克不会允许欧盟对以色列实施任何进一步的贸易制裁,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00955,news:1033:883098a19b55db35,news:jin10,波兰总理图斯克：目前俄罗斯对波兰没有直接威胁,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00956,news:1033:613478a0a50735d0,news:jin10,伊朗在德黑兰逮捕一名与摩萨德有关联人员,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00957,news:1033:09ff426e8cf1fc4a,news:jin10,云南：力争到2027年全省算力规模达20Eflops,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00959,news:1033:d150108dc5bdbe87,news:jin10,波兰总理图斯克：俄罗斯在乌克兰的冲突可能导致我们需要采取坚定反应的局面,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00960,news:1033:1b5ab52899853fd2,news:jin10,匈牙利总理毛焦尔：希望我们能在6月与总统乌克兰总统泽连斯基会面,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00962,news:1033:d0f92c05d134c4d8,news:jin10,匈牙利总理毛焦尔：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00963,news:1033:e04f69361eea366b,news:jin10,市场消息：伊拉克总理指示跟进增加石油出口量和实现出口渠道多元化的问题,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00965,2057159775306326370,webhook,👑👑👑,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00966,2057159706683027832,webhook,JUST IN: 🇺🇸 US House passes bill to limit large investors from buying up single-family homes.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00967,news:1033:a56a32e35dc4f653,news:jin10,匈牙利总理毛焦尔：我们支持尽快在乌克兰实现持久停火,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00973,news:1033:5a8bd886a99064d5,news:jin10,据路透计算：得益于全球油价上涨，俄罗斯5月国家油气收入预计同比增长39%，达到7000亿卢布,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00974,news:1033:fd03f328ab3be761,news:jin10,伊朗议会否认卡利巴夫辞去谈判代表团团长职务,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00976,news:1033:ba0de131780f4134,news:jin10,市场消息：欧盟与乌克兰签署谅解备忘录，部分乌克兰贷款援助协议达成,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_00981,2057156010037608639,webhook,👑👑👑,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00982,news:1033:bd9284cd1b78e676,news:jin10,据沙特媒体Alhadath：解散以色列议会的法案已通过初步审议，该法案以110票全票通过,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00983,2057155792952807516,webhook,NEW: Environmental group claims it tracked 36 Starbucks “recyclable” cups &amp; found none made it to recycling faciliti,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00988,2057154451404709928,webhook,"⚡️ BEZOS: “If I do my job right, the value to society from my companies will be much larger than the good I do through c",,100,100,70,40,20,1,66.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_00990,2057153647478509609,webhook,2001 and 2008 were completely financially nuts.  We are living in the simpler times https://t.co/TDM6sU7Au2,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00991,2057153266803155156,webhook,"NEW: Castro &amp; ""several other"" Cuban officials charged with conspiracy to kill U.S. nationals.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_00993,news:1033:65f20501a33ed50c,news:jin10,据伊朗伊斯兰共和国通讯社（IRNA）：外交消息人士表示，巴基斯坦内政部长已启程前往德黑兰，与伊朗官员会面,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_00994,2057151987825975358,webhook,lol,,100,50,70,40,20,1,54.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_00998,news:1033:714b6b5e49ca26cc,news:jin10,中国音像与数字出版协会围绕出版业人工智能技术应用情况开展专题调研,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01000,news:1033:7094b05a019884dc,news:jin10,据沙特媒体Alhadath：消息人士称，巴基斯坦内政部长将再次访问德黑兰,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01001,news:1033:95a6df3c35e4af0b,news:jin10,北约秘书长吕特：讨论确保对乌克兰的可持续长期支持,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01004,news:1033:4451b4c22efa0de9,news:jin10,伊朗革命卫队：霍尔木兹海峡这一战略水道的局势不可能回到以前的状态,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01013,news:1033:940f04d45c220c17,news:jin10,伊朗革命卫队：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01016,2057147655931715802,webhook,"Jeff Bezos is openly advocating for income tax to be abolished for the bottom 50% of Americans.
+
+Great idea that would h",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01017,2057146897744249091,webhook,"Every Bond Market on Earth Is Breaking at Once. This Is 2008 x10
+https://t.co/MIFvN3hcLY",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01018,news:1033:bc3920e040fb9c21,news:jin10,俄将延长对华免签,,100,70,70,100,0,0,63.0,garbage,archive,"short_title,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01020,2057146071349174556,webhook,It’s NostradamUS not NostradamU,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01021,news:1033:3dd0143e69ec98dc,news:jin10,伊朗：美国对我们的敌意始于1953年,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01023,2057144531758596572,webhook,"KOL @CryptoGodJohn bought $15.4K of $MANIFEST, and is up over 5x on the trade.
+
+MANIFEST only has one tagged KOL in thei",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01024,2057144507611930979,webhook,💀💀💀,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01027,2057144293241020574,webhook,This is how NATO was created,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01030,2057144164564021475,webhook,🛳️🚢⛴️,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01032,news:1033:7f32b68ce6636db1,news:jin10,据半岛电视台：以色列对黎巴嫩南部的雅赫默尔·沙基夫地区进行了炮击,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01037,2057141655363260808,webhook,JUST IN: Galaxy Digital Head of Firmwide Research tells Bloomberg the Clarity Act has a 75% chance of being signed into,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01038,news:1033:00386aaf1fd2211d,news:jin10,捷克总理巴比什：我们希望从以色列购买四套新型斯派德防空导弹系统,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01041,news:1033:0c6fc76446d31c2e,news:jin10,市场消息：欧盟委员会与乌克兰签署宏观金融援助谅解备忘录，为6月中旬发放32亿欧元的资金铺平了道路,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01058,2057136770701996084,webhook,"⚡️SGX FX TAPS CHAINLINK TO BRING OTC FX DATA ONCHAIN
+
+SGX FX, a major technology partner for the global institutional FX",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01061,2057135586280948114,webhook,"JUST IN: 🇺🇸 Former President Joe Biden's son Hunter is now selling artwork for Bitcoin, his website shows. https://t.co/",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01062,news:1033:ef2190cd530513ac,news:jin10,乌克兰军方：已袭击俄罗斯下诺夫哥罗德地区的石油精炼厂,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01067,2057134888591978694,webhook,JUST IN: UK says Russian jets “dangerously intercepted” a British surveillance plane over the Black Sea last month.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01072,news:1033:79c29f598d2bc5df,news:jin10,欧洲央行管委温施：债券抛售未影响对伊朗局势的判断,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01074,news:1033:5308793ba11df14a,news:jin10,乌克兰DTEK电力公司表示，俄罗斯在夜间袭击了其在敖德萨地区的能源设施,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01077,news:1033:b711f830b3338d99,news:jin10,阿联酋富查伊拉成品油库存十周来首增，但仍处历史低位附近,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01080,2057131760681709849,webhook,"Solutions we said were years away are landing now. the bottleneck on hard problems was always expertise and time, AI han",,100,70,70,100,65,0,79.25,potential,continue_classify,"spam_keyword,missing_source_lag,missing_asset"
+cand_01083,news:1033:9cb053aba4bc9744,news:jin10,以军称未来数月人员短缺问题或将加剧,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01085,2057130592639070364,webhook,"Bitcoin rejected at the 200-day MA.
+
+The setup mirrors March 2022: a sharp bear market rally into the 200-day MA, follow",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01090,2057129223802798136,webhook,"🔥ELON MUSK SAYS BRAIN CHIPS COULD CREATE “JESUS-LEVEL” MIRACLES
+
+In a new interview, Elon Musk says Brain-machine interf",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01094,2057128518627238026,webhook,⛴️🚢🛳️,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01096,2057127768891228285,webhook,"Pezeshkian @drpezeshkian issues message on 2nd martyrdom anniversary of President Raisi
+
+https://t.co/ScisCdYc1S https:/",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01097,2057127376157392966,webhook,".@mb_ghalibaf: Enemy will regret any renewed aggression against Iran
+
+https://t.co/dsEVnhyt4L https://t.co/NRZsSZ8VZF",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01100,news:1033:b0bb143cdb490d0e,news:jin10,印尼央行行长：我们将确保银行继续拥有充足的流动性以支持GDP增长,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01101,2057126741013893399,webhook,https://t.co/FnoAp0JKOG,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01102,news:1033:e47265d698dc894d,news:jin10,印尼央行行长：我们相信，尽管加息50个基点，印尼GDP增长仍将保持在预期范围内,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01108,news:1033:229cfa1788a658f9,news:jin10,印尼央行行长：我们相信，印尼盾在6月将保持稳定,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01111,news:1033:995296ea32c641dc,news:jin10,印尼央行行长：我曾多次表示，我们已加大了在岸和离岸货币干预的力度，以捍卫印尼盾,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01112,2057124951925428373,webhook,"JUST IN: Strive's $SATA is now estimated to have raised enough money to buy over 65 #Bitcoin today.
+
+TRACK IT LIVE: http",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01115,news:1033:ab2861101a2e3ced,news:jin10,印尼央行行长：连续表态（共 2 条）,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01117,news:1033:62c1587397c141d0,news:jin10,印尼央行行长：我们的决定是经过深思熟虑的，优先考虑稳定，同时也支持经济增长,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01118,2057124186632671278,webhook,"⚡️ BEZOS: “If I do my job right, the value to society from my companies will be much larger than the good I do through c",,100,100,70,40,20,1,66.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_01120,news:1033:da586e3b538ede2d,news:jin10,外交部：中方决定将对俄罗斯免签政策延长至2027年12月31日,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01125,news:1033:ebeed729cb688d0a,news:jin10,上海黄金交易所黄金T+D 5月20日（周三）收盘下跌1.36%报984.9元/克；上海黄金交易所白银T+D 5月20日（…,,100,100,70,100,15,0,74.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01128,2057121800082055583,webhook,👑👑👑,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01131,2057121386934485196,webhook,NEW: U.S. officially indicts 94-year-old former Cuban President Raul Castro.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01132,news:1033:ba85f1c372b0cc70,news:jin10,印尼央行行长：从7月1日起放宽宏观审慎中介比率规则,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01140,news:1033:94ebe920ca9bf2ea,news:jin10,据塔斯社引述克里姆林宫发言人的话称，俄罗斯军方正在密切监视有关无人机穿越波罗的海国家领空的情况，并正在制定相应的应对措施,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01145,news:1033:14ed7972f985600b,news:jin10,市场消息：美国希望乌克兰协助放宽对白俄罗斯钾肥的限制,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01149,2057117493244596279,webhook,👑👑👑,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01150,2057117297878221302,webhook,👑👑👑,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01154,2057116245657620589,webhook,🔥🔥🔥,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01156,news:1033:6bd2edfa15e04a7f,news:jin10,印尼央行行长：保持2026年GDP展望在4.9%至5.7%范围内不变,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01161,news:1033:dc22fcda789fb4f6,news:jin10,印尼央行行长：国内经济增长势头需要保持,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01162,2057115659054579771,webhook,"LIVE: Bitcoin Treasury Roundtable
+
+✅Bear Market Over.
+💰Strive's Daily Dividends.
+🟠Digital Credit Is On The Rise.
+
+Joinin",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01170,news:1033:5cb246df7fed0fbc,news:jin10,A股收评：沪指震荡回升收跌0.18% 半导体板块集体爆发,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01171,news:1033:2d431f37ed59220e,news:jin10,沪深两市今日成交额合计29537.15亿元，中芯国际成交额居首,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01181,2057113548883472727,webhook,CME：清晰法案签署将进一步巩固比特币在金融领域的地位,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01182,news:1033:b6e20f33263ed85b,news:jin10,挪威石油局：4月石油产量初值为194.4万桶/日，天然气产量初值为102亿立方米,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01183,news:1033:0ab2a73c3d59898e,news:jin10,联合国秘书长古特雷斯：联合国在遏制全球冲突剧增方面面临极大困难,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01185,2057113009399672958,webhook,"K3 Capital (@k3_capital) withdrew 7,930 $ETH worth $16.88M from #Binance.
+
+https://t.co/iaarxLJij1 https://t.co/Fte4c6rE",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01186,2057112853400723737,webhook,Railgun has risen to a leading position among privacy protocols with $4.7 million in annualized fees https://t.co/O3HaBo,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01188,2057112672957546753,webhook,"🚨 🚨 🚨 🚨 🚨  1,302 $BTC (100,840,113 USD) transferred from Coinbase Institutional to unknown new wallet
+
+https://t.co/40ft",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01195,2057111462913434040,webhook,https://t.co/wsDHAM31n6,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01199,2057109856859922865,webhook,"JUST IN: Intuit to reportedly lay off 3,000 workers, cutting 17% of its staff.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01200,2057109852321992793,webhook,"Next week I’m headed to Tokyo to meet with the X Japan team.
+
+What is the most American thing I can bring them?",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01206,2057108702297985503,webhook,MoneyGram named 'anchor remittance validator' for Stripe-backed Tempo blockchain,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01210,2057107499283873799,webhook,"Ladies and gentlemen, https://t.co/wWFiMBb658",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01212,news:1033:6cbf77b0a3261336,news:jin10,瑞典央行副行长扬松：我仍然抱有希望，认为中东影响可能相对有限，尤其是在瑞典,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01216,2057106734309597693,webhook,"JUST IN: Switzerland encourages workers to retire later, offering incentives to stay employed beyond age 65.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01224,2057104990708314166,webhook,228 would probably pass now,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01225,news:1033:cc38e501a01ecbb3,news:jin10,俄罗斯国防部：在核力量演习期间，确保了核弹药可被运送到导弹旅的场内储存设施中,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01226,2057104757500571919,webhook,"Iran envoy: Sanctions and military threats are two sides of pressure policy against nations
+
+https://t.co/KQXcSlCbXp htt",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01227,news:1033:33bb151b8ec3e97d,news:jin10,据国际文传电讯社：俄罗斯国防部表示，在核力量演习期间，进行了提高部队和编队至最高战备状态的程序演练,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01229,2057104171090723167,webhook,JUST IN: Nvidia to report Q1 earnings after market close today.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01232,2057103459812319382,webhook,"Catena Labs lands $30 million Series A, files for national trust bank charter to underpin agentic finance",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01236,2057102887130689563,webhook,美国交易所River披露持有437枚BTC，成为第九大私人BTC财库,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01238,2057102563179413533,webhook,Oi is a better metric imho,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01242,news:1033:b9a23fe3d94456ca,news:jin10,印度巴拉特石油公司：公司正从未受制裁的实体购买俄罗斯石油,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01244,news:1033:b1ae09ac454931af,news:jin10,据国际文传电讯社：俄罗斯向印度供应S-400防空系统的进度正常,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01246,2057101609520312472,webhook,🇭🇰 UPDATE: Hong Kong’s SFC says scammers are charging fake fees to “recover” past investment losses. https://t.co/Un96f9,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01248,2057101254711775371,webhook,Write a program so critical that it gets optimized,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01252,2057100961965887861,webhook,"🚨 NEW POLYMARKET: What will Trump say during his Coast Guard Keynote this morning?
+https://t.co/OPdwXPH8jW",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01253,news:1033:c7be518cd5c1888a,news:jin10,日本首相高市早苗：可能的额外预算主要旨在应对中东局势,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01257,2057100205498175701,webhook,What Really Happens After the US CLARITY Act? [ft. Gate founder] #CHAINREACTION https://t.co/mwgfCcrTGP,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01261,2057099271829143855,webhook,"🚨 🚨 🚨 🚨 🚨 🚨 🚨  2,251 $BTC (173,726,420 USD) transferred from Coinbase Institutional to unknown new wallet
+
+https://t.co/",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01262,2057099218762789203,webhook,"JUST IN: US &amp; Cuba projected to hold a diplomatic meeting by the end of the month, as tensions rise.
+
+62% chance. ht",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01270,2057098368393118023,webhook,吴说每日晚报 https://t.co/bFPDBLfNty,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01283,2057096425545126110,webhook,BREAKING: TSA now allows medical marijuana on flights — in both carry-on &amp; checked bags. https://t.co/x8k9Xp5YOW,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01284,news:1033:e2fb21ea4e90872b,news:jin10,韩国总统李在明：以色列在违反国际法的情况下，以不正当的理由绑架了一名韩国公民,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01285,2057095845267288193,webhook,JUST IN: Trump says he thinks it’s “good” Xi is meeting with Putin.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01287,news:1033:5c19ec48dd28f8ad,news:jin10,当地州长称，俄罗斯下诺夫哥罗德地区两处工业场所遭无人机袭击起火,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01288,2057095203912135078,webhook,Variational raises $50 million Series A to bring liquidity from traditional markets to blockchain rails,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01289,2057094414762135980,webhook,"IRGC Navy says transits via Strait of Hormuz proceed under its coordination
+
+https://t.co/MSzXkFAKQU https://t.co/yvH1Ph",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01290,2057094252870439276,webhook,"President @drpezeshkian praises oil industry for uninterrupted fuel supply amid war
+
+https://t.co/Ca0pGeQ6eN https://t.c",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01292,news:1033:f8a1a23c0dd16dd5,news:jin10,印度巴拉特石油公司：3月当季俄罗斯石油加工量占比已增至31%，而12月当季为25%,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01295,2057092616458477876,webhook,JUST IN: Standard Chartered CEO reassures staff following backlash over his remark about using AI to replace “lower-valu,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01299,news:1033:ff8ea243ebfacda3,news:jin10,日本石油协会会长：预计在夏季期间确保足够的替代石油产品,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01304,2057091471522566411,webhook,"🔥NVIDIA'S REPORT TONIGHT COULD MAKE OR BREAK THE ENTIRE AI RALLY
+
+Nvidia $NVDA reports earnings at 5PM ET, and Wall Stre",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01309,2057090259553251673,webhook,"$NVDA earnings day, did Jensen sign enough boobs to keep my AI stonks afloat?",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01317,2057088719769780573,webhook,JUST IN: WHO confirms the Ebola outbreak in Africa has surpassed 600 suspected cases.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01319,2057088152926355732,webhook,"Speech by Governor Barr on consumer financial health metrics: https://t.co/wXjSy2DXGS
+
+Learn more about Governor Barr: h",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01328,2057086584760250818,webhook,📉JUST IN: Stock market drops to its LOWEST level of Greed in over a month.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01334,news:1033:f349438b286df7a4,news:jin10,据克里姆林宫记者，美国总统特使威特科夫很快将访问俄罗斯,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01340,2057083930176577645,webhook,"🔥 BITWISE SAYS HYPE IS UNDERVALUED
+
+Bitwise CIO Matt Hougan says the market is wrongly valuing Hyperliquid as only a per",HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01343,2057083891463410138,webhook,"BlackRock dumped 10,086 $BTC($782.7M) in the past 2 days!
+
+https://t.co/qmuDIrPHc6 https://t.co/e9RAmTdzCT",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01350,2057082357526438386,webhook,https://t.co/3jYX1ODJ1L,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01355,news:1033:7a68985f2c0d9602,news:jin10,俄罗斯地方当局称，下诺夫哥罗德地区遭到无人机袭击,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01356,2057080391710720357,webhook,JUST IN: Trump reportedly preparing to tell NATO allies that U.S. will reduce the forces it makes available to the allia,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01358,2057080039171301748,webhook,"Blackrock deposited 4,986 $BTC ($386.2M) and 28,081 $ETH ($59.8M) into #Coinbase.
+
+https://t.co/pyOLoPpL7H https://t.co/",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01366,2057077581485089258,webhook,南卡罗来纳州州长签署法案允许企业使用比特币和加密货币,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01370,2057076373517107577,webhook,"📽️WATCH: New footage shows U.S. combat operations in the Middle East unfolding in real time, as CENTCOM says American fo",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01373,2057075685487686098,webhook,"🚨 UPDATE: Goldman Sachs sold $152M $XRP, $500M $ETH and $450M $BTC, but bought $HYPE, per Arkham. https://t.co/cgnBObOtW",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01378,2057073603179667545,webhook,🚨 NEW POLYMARKET:  What will Candace Owens &amp; Hunter Biden say on today’s podcast? https://t.co/ANAoxiV7dD,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01390,2057071462570185026,webhook,"🚨 🚨 🚨  671 $BTC (52,036,001 USD) transferred from Coinbase Institutional to unknown wallet
+
+https://t.co/kxOuX2O8fA",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01394,news:1033:c43d825cd2865e69,news:jin10,据CNBC：英伟达(NVDA.O)将在新加坡设立研究中心,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01396,2057070236050887108,webhook,"🚨 🚨 🚨  671 $BTC (52,001,867 USD) transferred from Coinbase Institutional to unknown wallet
+
+https://t.co/sUFJbHE5pp",BTC,100,100,70,40,100,1,86.5,potential,continue_classify,"missing_source_lag,potential_duplicate"
+cand_01397,news:1033:3498d9c32f0b1e46,news:jin10,印度尼西亚总统：我不希望我们的棕榈油价格受到其他国家的影响,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01399,news:1033:0ba582630d6031e8,news:jin10,据英国金融时报：欧盟各国政府正在讨论，由前欧洲央行行长德拉基还是前德国总理默克尔来代表欧盟与俄罗斯总统普京进行潜在谈判,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01401,2057069952536809960,webhook,"🚨 🚨 🚨  671 $BTC (52,001,867 USD) transferred from Coinbase Institutional to unknown wallet
+
+https://t.co/lNv9SOkmGb",BTC,100,100,70,40,100,1,86.5,potential,continue_classify,"missing_source_lag,potential_duplicate"
+cand_01406,2057069040997449816,webhook,Governments can respond to energy and food price shocks in ways that help vulnerable people and keep businesses open wit,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01407,news:1033:2d4152309d366220,news:jin10,马来西亚四月石油产品出口同比激增70.2%，达到144.7亿林吉特,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01410,news:1033:1b4e758221a3dfcd,news:jin10,俄罗斯总统普京：（关于中东局势）谈判尤为重要,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01423,2057063787056746866,webhook,"🚨 🚨 🚨  671 $BTC (52,006,931 USD) transferred from Coinbase Institutional to unknown wallet
+
+https://t.co/bbFaBWLbnz",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01431,news:1033:8d7e4aa1a52b9466,news:jin10,知情人士：印度拟派油轮穿越霍尔木兹海峡，恢复中东能源进口,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01437,2057059959314215347,webhook,JUST IN: The pre-market is open. Strive's $SATA #Bitcoin accumulation has started. Will Strive set a new weekly record t,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01449,news:1033:3d12ed76795af809,news:jin10,俄罗斯总统普京乘车抵达北京人民大会堂,,100,80,70,100,0,0,65.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01454,2057053732039426397,webhook,⚡️ NEW: Robinhood has listed Algorand’s $ALGO. https://t.co/hTIw5xSxQt,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01455,2057053731204612585,webhook,"This 1990 Trump interview is SAVAGE.
+
+Barbara Walters confronted Trump over his “billionaire” image,  brought up his $3",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01456,2057053718294807007,webhook,"JUST IN: Strive's $SATA has bought an estimated 218 #Bitcoin in the last 2 days.
+
+If $SATA holds the pace this week, it",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01462,news:1033:973e703579777c4d,news:jin10,当地州长称，俄罗斯斯塔夫罗波尔地区内维诺莫伊斯克周边的工业区在无人机袭击后未受损害,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01463,news:1033:0d93d132374bef8f,news:jin10,当地州长称，俄罗斯在列宁格勒地区击落无人机,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01471,2057047734302146775,webhook,"President @drpezeshkian: Old methods cannot solve Iran’s current challenges
+
+https://t.co/vezE1rGxz8 https://t.co/zDrsDM",,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_01485,2057044582035030164,webhook,$HYPE fifty American dollars https://t.co/m4aAv9x9vu,HYPE,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01486,2057044410798350437,webhook,JUST IN: More than 60 British Labour MPs call for a review of the UK's voting system.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01491,2057043418694463559,webhook,https://t.co/hazgmSisxc,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01498,news:1033:004e38645821a0ff,news:jin10,韩国股市将于6月3日地方选举日休市,,100,100,70,100,45,0,81.75,potential,continue_classify,"missing_source_lag,missing_asset,macro_wire_without_asset"
+cand_01500,news:1033:55d74b88a542911d,news:jin10,美国中央司令部：美军正继续全面执行针对伊朗的海上封锁行动,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01503,2057040524737904956,webhook,Good morning. Today is going to be a great day. Let’s get after it relentlessly.,,100,100,70,40,20,1,66.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_01508,2057038749184225677,webhook,Qivalis获得37家欧洲银行支持其欧元稳定币项目,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01517,news:3002:e8b66080fcc772a7,tg:onemillion_ai,扎克伯格解释追踪员工键鼠原因：外包太笨，而你们很聪明,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01528,news:1033:0b6dc4eeb97588ca,news:jin10,黄金期货瞬时波动系有某客户申报较大手数卖出指令全部成交所致,,100,100,70,100,45,0,81.75,potential,continue_classify,"missing_source_lag,missing_asset,macro_wire_without_asset"
+cand_01531,2057030479182983227,webhook,"哈佛来币圈都得亏 1.5 亿再挨两脚
+Fake News？—— 不，这次还真就这样
+
+10.7w-11.4w 买 $BTC，4000 美金买 $ETH
+来看看全球最顶尖的学府之一是如何在加密领域「追涨杀跌」的😬👇",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01536,2057028775058055190,webhook,"IRGC warns Iran will push conflict beyond region if aggression resumes
+
+https://t.co/eJtL4mzX1x https://t.co/RzPtZbisCL",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01538,2057027801300230654,webhook,🚨 NEW POLYMARKET: Largest private company at the end of next month? https://t.co/woj7P6ipZR,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01551,news:1033:9ddac2463ce5e111,news:jin10,上海黄金交易所黄金T+D 5月20日（周三）早盘盘初下跌1.01%报988.46元/克；上海黄金交易所白银T+D 5月2…,,100,100,70,100,15,0,74.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01552,2057024533367046583,webhook,What was your gateway into crypto?,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01556,2057023529208754279,webhook,"ANYONE with a laptop can now access spy-grade surveillance tools for FREE.
+
+It's called OSIRIS, an open-source clone of",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01564,news:1033:f680056f2966decd,news:jin10,美军驻欧洲旅级战斗队总数缩减至3个,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01565,news:1033:3f05ce6a16260ded,news:jin10,汇丰银行CEO：员工应积极拥抱人工智能转型，而非抵制,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01567,news:1033:0131d80b5c571008,news:jin10,汇丰银行CEO：随着银行将重点放在员工再培训上，人工智能将摧毁某些工作岗位，同时也会创造新的就业机会,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01576,2057018554172522741,webhook,"🇺🇸 LUMMIS: “If you think the status quo protects American consumers, explain FTX. I spent years working on the CLARITY A",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01581,news:1033:7804cc5963e98060,news:jin10,银河证券：绿色电力与算力协同有望实现互利共赢 绿电价值迎重估,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01582,2057016141172637952,webhook,"💸  A fee of 89 $ETH (190,530 USD) has just been paid for a single transaction!
+
+https://t.co/XxvFTQOPSb",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01584,2057014927940829211,webhook,Binance Research estimates that illicit cryptocurrency accounts for less than 1% of total transaction volume https://t.c,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01586,2057014342995075301,webhook,"JUST IN: Strive's $SATA #Bitcoin accumulation for today has just started in pre-market.
+
+WATCH IT LIVE: https://t.co/PS4",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01587,2057013526271508963,webhook,🔥 NEW: Ripple ranked No. 16 on CNBC’s 2026 Disruptor 50 list. https://t.co/ze9O5hWs7W,XRP,100,100,70,100,55,0,84.25,potential,continue_classify,"missing_source_lag,low_crypto_relevance"
+cand_01592,news:1033:84a2e997b6b7e5f6,news:jin10,据塔斯社：俄罗斯副外长表示，俄方愿意协助美伊谈判,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01596,2057009709597503771,webhook,".@MearsheimerJ : Iran has learned how to counter US
+
+https://t.co/XNeYtFhFRI https://t.co/J3wmyzQmiy",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01599,2057008430414729285,webhook,"💰HUGE: Hyperliquid now controls 43% of crypto’s fee market with $11M/week, crushing Ethereum’s 13% and Solana’s 10%.
+
+Th",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01604,2057006724913963256,webhook,南卡罗来纳州州长签署支持加密货币、反对CBDC法案,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01605,2057006414363607135,webhook,"UAE fails to build consensus against Iran at IMO
+
+https://t.co/akNqdPFnAd https://t.co/1TpYgLnutH",,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01611,news:1033:8e021f247b204596,news:jin10,欧洲地中海地震中心：伊朗南部地区发生5级地震,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01616,2057004420282642517,webhook,"GOLDMAN SACHS SOLD $152M XRP
+THEY SOLD $500 MILLION OF ETHEREUM
+THEY SOLD $450 MILLION OF BITCOIN
+
+BUT THEY BOUGHT hyper",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01624,2057001628826222966,webhook,NEW: UK finance ministry pressures supermarkets to cap prices on some foods.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01627,2057000827642949657,webhook,"Health minister urges solidarity against ‘enemy aggression’ in Geneva talks
+
+https://t.co/RiOaGMRqET https://t.co/RN0kO4",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01632,2057000254998765788,webhook,"⚡️ NEW: Vitalik shared short-term plans to improve Ethereum native privacy, including AA + FOCIL, keyed nonces and acces",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01633,2056999964119867719,webhook,"BREAKING: PUTIN AND XI JUST SIGNED TO EXTEND THEIR RUSSIA-CHINA ALLIANCE
+
+The Kremlin says around 40 deals are signed.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01640,2056995980416041352,webhook,Vitalik Buterin：以太坊推进原生隐私能力,ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01657,2056992175318073477,webhook,"Short-term things being done to shift Ethereum toward native privacy:
+
+* AA + FOCIL (makes privacy protocol txs, among m",ETH,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01664,2056988968286298481,webhook,"A gambler has again opened $BTC and $ETH 20x long positions, combined valued at $36M.
+
+https://t.co/Zq2Mspj1A6 https://t",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01670,2056985522598477993,webhook,JUST IN: Europe's leading AI firm Mistral ​to acquire Austrian AI physics startup Emmi.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01674,news:1033:31548b98a1f54c97,news:jin10,俄罗斯斯塔夫罗波尔边疆区州长表示，该地区工业区正遭受无人机袭击,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01685,2056978352150384938,webhook,🇺🇸 LATEST: The US Senate has advanced a resolution that could require President Trump to seek congressional approval to,,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_01687,2056978082565939527,webhook,"Evaded (@ICanPlug) made $2.1M in just 2 days!
+
+Yesterday, he opened 10x longs on 36,875 $ZEC($21.59M) and 287,618 $HYPE(",HYPE,100,100,70,40,100,1,86.5,potential,continue_classify,"missing_source_lag,potential_duplicate"
+cand_01688,2056977896733131244,webhook,"Evaded (@ICanPlug) made $2.1M in just 2 days!
+
+Yesterday, he opened 10x longs on 36,875 $ZEC($21.59M) and 287,618 $HYPE(",HYPE,100,100,70,40,100,1,86.5,potential,continue_classify,"missing_source_lag,potential_duplicate"
+cand_01694,2056975100625477910,webhook,"8Qef2u, the largest $ASTEROID holder on Solana, bought 10.04M $VIRL ($17.7K).
+
+This wallet already holds 25.03M $ASTEROI",SOL,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01704,2056970675416416303,webhook,"⚖️SENATE WANTS TO STOP TRUMP FROM CONTINUING THE IRAN WAR
+
+The Senate advanced the resolution 50-47, which would require",,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_01705,2056968661597123067,webhook,NEW: GM to start assembling Chevrolet Groove &amp; Aveo in Mexico as it shifts away from China.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01706,news:1033:b4893f1823faa26d,news:jin10,雪佛龙(CVX.N)与沙特阿美旗下的莫蒂瓦公司（Motiva）限制关键机油原料的交付,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01711,2056966653687345361,webhook,中国香港拟于2028年前实施CRS2.0加密资产纳入申报范围,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01713,2056965933193957481,webhook,吴说获悉，L2Beat 表示已从源代码重新生成了 Lighter 永续合约 DEX L2 所使用的所有 ZK 电路（包括 Lighter verifier 和 Lighter Desert verifier），从而实现了真正无需信任 Lig,SOL,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01714,news:1033:0d17fcd704adae5d,news:jin10,伊朗方面表示，美国关于其击中的伊朗学校位于巡航导弹基地内的说法毫无根据,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01715,2056965404384493819,webhook,美国南卡罗来纳州州长已签署 S.163 法案。该法案将保护比特币自托管权利，禁止对比特币实施歧视性税收，并为该州工作量证明（PoW）挖矿活动提供法律保障。该法案被视为美国州层面围绕比特币持有、使用与挖矿权利进一步明确化的最新进展。（Coin,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01724,2056961563194716433,webhook,But can he lose consistently?,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01728,2056958163287486930,webhook,南卡罗来纳州州长签署法案保护比特币自我保管权利,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01730,news:1033:11e10b6760b6a89d,news:jin10,英伟达(NVDA.O)：与谷歌云助力下一波人工智能开发者,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01748,2056950290495012877,webhook,"JUST IN: Google announces its using AI to sequence animal genomes in just days to ""preserve the genetic information of e",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01753,2056948507404279970,webhook,Lmao,,100,50,70,100,20,0,63.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01754,2056948104725766293,webhook,🚨 LATEST: Bitwise CIO Matt Hougan says Hyperliquid is still undervalued despite being the best-performing large-cap cryp,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01755,2056948025575288955,webhook,肖风：AI天然需要区块链处理小额汇款,,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01758,news:1033:2c43b0cb39570d09,news:jin10,xAI允许在OpenClaw中使用Grok,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01759,2056946767346688117,webhook,"🚨ALERT: Stock Market Fear &amp; Greed has fallen to 60, its lowest Greed reading in over a month.
+
+Risk appetite is cool",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01760,news:3002:07eda5e8bd4ed6bc,tg:onemillion_ai,OpenClaw 原生打通 Grok 订阅，C 端会员权益直通本地,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01774,2056938029864943878,webhook,"⚡️ NOW: Meta has begun notifying employees of layoffs as part of an efficiency push driven by AI investment, with roughl",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01778,news:1033:0858cd16386fadf7,news:jin10,消息人士：Meta提议向竞争对手的人工智能聊天机器人提供有限的免费WhatsApp访问权限，竞争对手在向用户发送消息达到…,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01780,news:1033:98637af9760beb45,news:jin10,花旗：如果霍尔木兹海峡在2027年初仍关闭，1970年代的石油冲击可能会重演,,100,70,70,100,0,0,63.0,garbage,archive,"spam_keyword,missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01786,news:1033:af657e9847ec1f91,news:jin10,花旗集团仍然认为，石油市场对“持续时间风险”和“尾部风险”的定价不足,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01787,2056932784535437330,webhook,NEW: JPMorgan executive Lorna Hajdini is suing Chirayu Rana for defamation over his “sex slave” allegations — as predict,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01789,2056931606536106419,webhook,据新民晚报，上海崇明一名 70 多岁老人近日因听信网上“投资导师”宣传比特币投资高收益，接连两次前往银行准备取出 10 万元现金转账，最终在警银联动下被成功劝阻。民警提醒，针对老年人的“比特币投资”“养老理财”等虚假投资诈骗高发，诈骗分子常,BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01795,2056930936520859845,webhook,"It's not @RepThomasMassie who lost today; it's the Republican Party that lost, and more importantly, it's the United Sta",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01799,news:1033:ccc3540b21319772,news:jin10,据华尔街日报：三名美国官员称，美方在印度洋扣押了一艘与伊朗有关的油轮,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01808,news:1033:da28f022d6162411,news:jin10,上海黄金交易所黄金T+D 5月19日（周二）晚盘收盘下跌0.97%报988.87元/克；上海黄金交易所白银T+D 5月1…,,100,100,70,100,15,0,74.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01817,2056921852253966451,webhook,NEW: U-Haul will soon allow customers to rent 13-ton Peterbilt semi trucks without needing a CDL.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01818,2056921792158069120,webhook,"Congrats @nic_carter 
+
+This is joyful news 🗞️ 
+
+In Him 🙏",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01825,2056919022843641939,webhook,Ticker is $STRC,,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01828,2056917905753747823,webhook,"🚨 JUST IN: Goldman Sachs is set to be named lead underwriter for SpaceX's IPO, with the prospectus expected to drop as s",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01830,news:1033:b0f415ec3aa64bff,news:jin10,美国副总统万斯：俄罗斯接管伊朗的浓缩铀并不在计划之内,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01834,news:1033:9038cc6c1fa0572f,news:jin10,美国副总统万斯：我不能自信地说我们会与伊朗达成协议,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01837,2056914856251408846,webhook,"JUST IN: #Bitcoin is now over 76,500. 🔥 https://t.co/LPuAm9FpEp",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01842,2056914019739373751,webhook,"JUST IN: Meta has begun sweeping layoffs affecting 8,000 employees, starting with workers in Singapore who reportedly re",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01846,news:1033:88f31f47d0420df3,news:jin10,美国副总统万斯：我们在伊朗问题上取得了很大进展,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01852,2056911759924203960,webhook,Big deal. I speak 31 languages fluently,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01854,news:1033:9bf8e530a76f5396,news:jin10,委内瑞拉国家石油公司副总裁：石油、天然气合同将得到履行；呼吁外国投资,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01855,2056911247271166087,webhook,Bird is the word,,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01859,2056909768716177491,webhook,I lease my intelligence,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01862,news:1033:36780aea542b2bae,news:jin10,消息人士：莫斯科一家炼油厂在5月17日遭到乌克兰无人机袭击后暂停运营,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01865,2056906528956076333,webhook,"If you have API keys in your code, even private repos, now is the time to double check and change them...",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01866,2056906484076728816,webhook,JUST IN: FIFA to ban pre-revolutionary Iran flags &amp; apparel from World Cup stadiums.,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics"
+cand_01867,news:1033:e93f94a767313c0e,news:jin10,美国国务院：美国国务卿鲁比奥与联合国秘书长古特雷斯周二就美国阻止伊朗在霍尔木兹海峡布雷和收取过境费的努力进行了交谈,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01869,2056905286053429515,webhook,"🚨 NEW POLYMARKET: How long will it take Ant Middleton to summit Everest?
+https://t.co/WqJtUHctJe",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01870,2056905082902376772,webhook,My kids can’t tell the difference,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01872,2056904751925641292,webhook,It’s hard,,100,50,70,100,20,0,63.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01875,2056904238253355240,webhook,"ICYMI: https://t.co/RY38xpkgqt has acquired the New York Bitcoin Treasuries Unconference.
+
+Tickets, sponsorships, and sp",BTC,100,100,70,100,100,0,95.5,potential,continue_classify,missing_source_lag
+cand_01878,2056903835889873165,webhook,"NPM 互联网上最成功的俄罗斯套娃命令…大坑
+NPM让前端进入万物皆包的时代，每天都在npm install… 装个业务20M，能装几千个依赖 2.3G，而且你永远不知道自己装的是什么，这些依赖有没有人维护、有没有被投毒🤣 https://",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01879,news:1033:905d21570b58fbb0,news:jin10,以色列国防军：经过形势评估，国内前线指挥部的防御指引保持不变，将持续至2026年5月23日21:00,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01880,2056902886030823529,webhook,JUST IN: GitHub announces it is investigating unauthorized access to its internal repositories.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01881,2056902802094395723,webhook,"🚨 ALERT: GitHub is investigating unauthorized access to its internal repositories, saying there is currently no evidence",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01887,2056899720274919707,webhook,"You fought a good fight, but the modern Republican party isn't recognizable anymore. It has no core, stable philosophy,",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01896,2056897035190915275,webhook,"🔎
+开发者注意排查了 👇",,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01898,2056896817883689444,webhook,NEW: “Taxi Driver” writer Paul Schrader says his AI girlfriend dumped him.,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01899,2056896764213637554,webhook,That’s just great,,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01908,2056894912638136376,webhook,🙂‍↕️,,100,10,70,100,20,0,53.0,garbage,archive,"short_title,emoji_heavy,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01911,2056894094136447210,webhook,"Granafa 调查没有发现任何证据表明客户的生产系统或运营受到损害。
+经过初步评估，除了源代码外，下载的内容还包括一些Grafana Labs团队用来协作和存储内部运营信息以及有关业务的其他详细信息的GitHub存储库。",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01918,news:2012:0847d8197810d178,news:odaily_exchange_gap,韩国KOSPI指数向下触及7100点，日内跌2.37%,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01920,2056891614707277993,webhook,"wtf？？
+GitHub 疑似被黑？ 坐等看看",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01926,2056890351739396160,webhook,Shippers ship,,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01927,2056890224110624929,webhook,"Thanks to Donald Trump, we now have two Democratic parties. With the defeat of @RepThomasMassie for being a principled f",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01932,2056889030785294360,webhook,It’s virtually impossible for them to do more long term good then to just invest it into the s&amp;p 500,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01933,2056888898546970816,webhook,"JUST IN: NYC hotel housekeepers will earn more than $100,000 a year under a new union contract.",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01942,news:1033:4b07b2672ff62f84,news:jin10,消息人士：俄罗斯里亚赞石油炼油厂在5月15日乌克兰无人机袭击后停止运营,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01943,news:1033:0c9876d4145137f1,news:jin10,伊朗驻墨西哥大使：伊朗视墨西哥为拉美友好、有影响力且重要的国家，并特别重视全面扩大各领域的双边关系,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01944,news:1033:cf0c54fb9b887e64,news:jin10,美国中央司令部司令Brad Cooper：我们已准备好应对与伊朗相关的多种紧急情况,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01948,news:1033:759ca441aaaddb93,news:jin10,拉脱维亚驻联合国大使：俄罗斯关于乌克兰无人机从该国发射的说法是“纯粹虚构”,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01949,2056882780881994149,webhook,"According to Trump, @RepThomasMassie is ""the worst Congressman in the history of our country."" There have been a lot of",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01951,news:1033:0e14a31b1230ac8a,news:jin10,伊朗最高领袖穆杰塔巴·哈梅内伊：很明显，伊朗正崛起成为一个强大而有影响力的国家,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01952,news:1033:32e8b4bbf5568238,news:jin10,俄罗斯驻联合国大使：乌克兰计划从拉脱维亚及其他波罗的海国家发射无人机,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01955,news:1033:37924949d86758b6,news:jin10,伊朗最高领袖穆杰塔巴·哈梅内伊：实现人口增长是有必要的，通过坚定推行正确的人口增长政策，伊朗民族将能够在未来发挥重要作用…,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01958,2056879841253749138,webhook,"JUST IN: Goldman Sachs will reportedly be named lead underwriter in the SpaceX IPO.
+
+As predicted by Polymarket. https:/",,100,100,70,100,65,0,86.75,potential,continue_classify,"missing_source_lag,missing_asset"
+cand_01959,2056879538177749423,webhook,Whats a stop loss?,,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01961,2056878583633805722,webhook,Ship ship ship,,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01962,2056878372148707362,webhook,Woot!,,100,50,70,40,20,1,54.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_01963,news:1033:adba774bf22fd777,news:jin10,拉脱维亚武装部队表示，与俄罗斯接壤的两个县领空可能存在威胁，北约战斗机已部署就位,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,macro_wire_without_asset"
+cand_01968,2056876806293406129,webhook,🚨 NEW POLYMARKET: Will Hunter Biden announce a Delaware Senate run? https://t.co/otZv1UsBkx,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01971,2056876213050945926,webhook,"Ahaha, lmao",,100,80,70,100,20,0,70.5,garbage,archive,"thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01973,2056875235794636929,webhook,"Live podcast today at 8pm EST
+https://t.co/zgqBz3zWAQ",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01976,2056874453070704817,webhook,"If you dont know what liquidated means, can you get liquidated?",,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01977,2056873932041699587,webhook,Woot!,,100,50,70,40,20,1,54.0,garbage,archive,"short_title,thin_content,missing_source_lag,missing_asset,low_crypto_relevance,potential_duplicate"
+cand_01979,2056873261854834694,webhook,Nice!!!,,100,30,70,100,20,0,58.0,garbage,archive,"short_title,special_char_heavy,thin_content,missing_source_lag,missing_asset,low_crypto_relevance"
+cand_01983,news:1033:7eed411580d6aa32,news:jin10,美国财政部：我们的盟友需监控伊朗的影子舰队，以防止通过不受制裁的油轮转运石油,,100,100,70,100,0,0,70.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance,off_topic_macro_or_politics,macro_wire_without_asset"
+cand_01986,2056871773212201220,webhook,JUST IN: Four Senate Republicans joined Democrats to advance a resolution limiting Trump’s war powers in Iran.,,100,100,70,100,35,0,79.25,garbage,archive,"missing_source_lag,missing_asset,off_topic_macro_or_politics"
+cand_01997,2056868265750569160,webhook,I wrote a script to chop wood overnight in Ultima Online,,100,100,70,100,20,0,75.5,garbage,archive,"missing_source_lag,missing_asset,low_crypto_relevance"

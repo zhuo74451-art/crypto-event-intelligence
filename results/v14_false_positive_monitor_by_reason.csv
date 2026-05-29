@@ -1,0 +1,7 @@
+﻿error_type,reason,count
+false_negative,source_basis_ok,5
+false_positive,market_already_available,1
+false_positive,deprecated_market_scope,1
+false_positive,asset_mapping_conflict_residual,1
+false_positive,inventory_rebalance_residual,1
+false_positive,collateral_rotation_residual,1

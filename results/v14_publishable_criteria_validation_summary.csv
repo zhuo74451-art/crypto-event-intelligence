@@ -1,0 +1,2 @@
+﻿generated_at_china,golden_rows,expected_publishable_rows,actual_publishable_rows,recall,precision_estimate,false_positive_rows,false_negative_rows,failed_rows,top_rejection_reasons,status
+2026-05-28 21:59:49 UTC+8,30,18,18,1.0,1.0,0,0,0,observable_impact_ok:11;source_basis_ok:4;not_price_in_ok:1,pass

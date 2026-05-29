@@ -1,0 +1,156 @@
+﻿draft_id,candidate_id,published_at_china,asset_symbol,event_type,event_type_label,event_scope,channel_route,confidence_label,strength_stars,source,title,url,draft_text,draft_status,reviewer_decision,reviewer_usefulness,reviewer_issue_type,reviewer_notes,approved_text,draft_mode,auto_send_enabled
+tg_0001,cand_00077,2026-05-19 08:36:06 UTC+8,HYPE,whale_position,链上巨鲸,single_asset,alpha_candidate,medium,★★★☆☆,webhook,巨鲸 Loracle.hl 继续增加 HYPE 5x 空头仓位，规模约 $69.3M / $69.64 / $8M,,"⚡【链上巨鲸】HYPE 大额仓位信号
+━━━━━━━━━━━━━━
+📌 事件：巨鲸 Loracle.hl 继续增加 HYPE 5x 空头仓位，规模约 $69.3M / $69.64 / $8M
+🕒 时间：2026-05-19 08:36:06 UTC+8
+🏷️ 主体：HYPE
+🔎 类型：链上巨鲸 / 单资产
+💰 规模：$69.3M / $69.64 / $8M
+🔥 强度：★★★☆☆
+✅ 置信：中
+📍 路由：重点观察
+
+🧠 解读：大额地址或巨鲸仓位出现变化，属于需要优先观察的链上/合约结构信号；重点看是否持续加仓、减仓或触发清算压力。
+
+🧾 复核：建议
+原因：发布前建议快速扫一眼事实和措辞
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,useful,none,巨鲸大额做空仓位及浮亏信息，有参考价值,,private_pilot,false
+tg_0002,cand_00419,2026-05-19 01:41:53 UTC+8,BTC,regulation_macro,监管宏观,single_asset,macro_policy,medium,★★★★☆,news:bitcoinmagazine,白宫比特币储备相关公告临近,https://bitcoinmagazine.com/news/white-house-strategic-bitcoin-reserve,"⚡【监管宏观】BTC 政策/宏观信号
+━━━━━━━━━━━━━━
+📌 事件：白宫比特币储备相关公告临近
+🕒 时间：2026-05-19 01:41:53 UTC+8
+🏷️ 主体：news:bitcoinmagazine
+🔎 类型：监管宏观 / 单资产
+💰 规模：$46 m / $24 m / 328,372 BTC
+🔥 强度：★★★★☆
+✅ 置信：中
+📍 路由：宏观/政策观察
+
+🧠 解读：宏观/监管事件通常影响全市场风险偏好，单条消息不宜直接归因到单一资产，需要结合市场环境观察。
+
+🧾 复核：建议
+原因：发布前建议快速扫一眼事实和措辞
+🔗 来源：
+https://bitcoinmagazine.com/news/white-house-strategic-bitcoin-reserve
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,useful,none,白宫即将宣布比特币储备，重大政策事件,,private_pilot,false
+tg_0003,cand_00074,2026-05-19 08:40:15 UTC+8,BTC,onchain_data,链上数据,single_asset,alpha_candidate,medium,★★★★☆,webhook,Santiment：持有至少100 BTC的钱包数量增至20229,,"⚡【链上数据】BTC 链上数据变化
+━━━━━━━━━━━━━━
+📌 事件：Santiment：持有至少100 BTC的钱包数量增至20229
+🕒 时间：2026-05-19 08:40:15 UTC+8
+🏷️ 主体：BTC
+🔎 类型：链上数据 / 单资产
+💰 规模：100 BTC / 100枚
+🔥 强度：★★★★☆
+✅ 置信：中
+📍 路由：重点观察
+
+🧠 解读：链上数据变化是结构性观察信号，重点看是否持续、是否伴随资金流或价格波动。
+
+🧾 复核：建议
+原因：发布前建议快速扫一眼事实和措辞
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,interesting,none,大户钱包数量增加，反映链上积累趋势,,private_pilot,false
+tg_0004,cand_00484,2026-05-19 00:50:18 UTC+8,ETH,hack_security,安全事件,single_asset,alpha_candidate,medium,★★★★☆,webhook,Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金,,"⚡【安全事件】ETH 安全风险信号
+━━━━━━━━━━━━━━
+📌 事件：Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金
+🕒 时间：2026-05-19 00:50:18 UTC+8
+🏷️ 主体：ETH
+🔎 类型：安全事件 / 单资产
+💰 规模：256枚
+🔥 强度：★★★★☆
+✅ 置信：中
+📍 路由：重点观察
+
+🧠 解读：安全事件会直接影响信任、流动性和相关资产风险，需要关注损失规模、资金去向和官方处置。
+
+🧾 复核：建议
+原因：发布前建议快速扫一眼事实和措辞
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,useful,none,攻击者归还大部分资金，安全事件后续进展,,private_pilot,false
+tg_0005,cand_00339,2026-05-19 03:17:10 UTC+8,BTC,regulation_macro,监管宏观,market_wide,macro_policy,medium,★★★★☆,webhook,亲比特币立场的 Kevin Warsh 将宣誓就任美联储主席,,"⚡【监管宏观】BTC 政策/宏观信号
+━━━━━━━━━━━━━━
+📌 事件：亲比特币立场的 Kevin Warsh 将宣誓就任美联储主席
+🕒 时间：2026-05-19 03:17:10 UTC+8
+🏷️ 主体：BTC
+🔎 类型：监管宏观 / 全市场
+💰 规模：未提取到明确金额
+🔥 强度：★★★★☆
+✅ 置信：中
+📍 路由：宏观/政策观察
+
+🧠 解读：宏观/监管事件通常影响全市场风险偏好，单条消息不宜直接归因到单一资产，需要结合市场环境观察。
+
+🧾 复核：建议
+原因：发布前建议快速扫一眼事实和措辞
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,useful,none,亲比特币的美联储主席本周就职，重要宏观事件,,private_pilot,false
+tg_0006,cand_00016,2026-05-19 10:12:50 UTC+8,ETH,institutional_flow,机构资金,single_asset,research_only,medium,★★★☆☆,webhook,以太坊 ETF 出现净流变化，规模约 $55.40m / $14.70m / $0.00m,,"⚡【机构资金】ETH 资金流动信号
+━━━━━━━━━━━━━━
+📌 事件：以太坊 ETF 出现净流变化，规模约 $55.40m / $14.70m / $0.00m
+🕒 时间：2026-05-19 10:12:50 UTC+8
+🏷️ 主体：ETH
+🔎 类型：机构资金 / 单资产
+💰 规模：$55.40m / $14.70m / $0.00m
+🔥 强度：★★★☆☆
+✅ 置信：中
+📍 路由：研究记录
+
+🧠 解读：机构、ETF 或资金账户出现流入/流出变化，反映资金侧边际变化；需要结合连续性和后续公告确认。
+
+🧾 复核：需要
+原因：研究型或价格源受限事件，进入发布前需复核
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,useful,none,ETH ETF大额净流出，机构资金动向明确,,private_pilot,false
+tg_0007,cand_00064,2026-05-19 09:00:20 UTC+8,HYPE,institutional_flow,机构资金,single_asset,research_only,medium,★★★★☆,webhook,Bitwise 将把 10% Hyperliquid ETF 管理费用于持有 HYPE,,"⚡【机构资金】HYPE 资金流动信号
+━━━━━━━━━━━━━━
+📌 事件：Bitwise 将把 10% Hyperliquid ETF 管理费用于持有 HYPE
+🕒 时间：2026-05-19 09:00:20 UTC+8
+🏷️ 主体：HYPE
+🔎 类型：机构资金 / 单资产
+💰 规模：未提取到明确金额
+🔥 强度：★★★★☆
+✅ 置信：中
+📍 路由：研究记录
+
+🧠 解读：机构、ETF 或资金账户出现流入/流出变化，反映资金侧边际变化；需要结合连续性和后续公告确认。
+
+🧾 复核：需要
+原因：研究型或价格源受限事件，进入发布前需复核
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,useful,none,Bitwise将持有HYPE并分配管理费，机构配置信号,,private_pilot,false
+tg_0008,cand_00457,2026-05-19 01:10:18 UTC+8,SOL,project_business,项目进展,single_asset,research_only,medium,★★★☆☆,webhook,Solana RWA 市场规模突破 $2.8B / . Sol,,"⚡【项目进展】SOL 项目进展信号
+━━━━━━━━━━━━━━
+📌 事件：Solana RWA 市场规模突破 $2.8B / . Sol
+🕒 时间：2026-05-19 01:10:18 UTC+8
+🏷️ 主体：SOL
+🔎 类型：项目进展 / 单资产
+💰 规模：$2.8B / . Sol
+🔥 强度：★★★☆☆
+✅ 置信：中
+📍 路由：研究记录
+
+🧠 解读：业务指标出现变化，属于项目基本面观察信号；需要看是否有连续增长和真实资金支撑。
+
+🧾 复核：需要
+原因：研究型或价格源受限事件，进入发布前需复核
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,interesting,none,Solana RWA市场创新高，生态发展指标,,private_pilot,false
+tg_0009,cand_00392,2026-05-19 02:10:16 UTC+8,ONDO,onchain_data,链上数据,unknown,alpha_candidate,low,★★★☆☆,webhook,Ondo Finance 代币化股票 TVL 突破 $1.5B,,"⚡【链上数据】ONDO 链上数据变化
+━━━━━━━━━━━━━━
+📌 事件：Ondo Finance 代币化股票 TVL 突破 $1.5B
+🕒 时间：2026-05-19 02:10:16 UTC+8
+🏷️ 主体：ONDO
+🔎 类型：链上数据 / 待确认
+💰 规模：$1.5B
+🔥 强度：★★★☆☆
+✅ 置信：低
+📍 路由：重点观察
+
+🧠 解读：链上数据变化是结构性观察信号，重点看是否持续、是否伴随资金流或价格波动。
+
+🧾 复核：需要
+原因：置信度偏低，需要复核实体、资产和时间
+
+⚠️ 仅作事件情报与研究观察，不构成任何交易建议。",approved,approve,interesting,none,Ondo代币化股票TVL突破15亿，RWA赛道数据,,private_pilot,false

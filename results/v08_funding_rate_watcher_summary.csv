@@ -1,0 +1,2 @@
+﻿watcher,mode,watchlist_rows,queried_markets,alert_rows,skipped_rows,skip_reasons,status
+binance_funding_rates,live,7,7,0,7,"{""below_threshold"":7}",pass

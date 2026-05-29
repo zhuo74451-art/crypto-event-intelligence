@@ -1,0 +1,2 @@
+﻿generated_at_china,source,rows,latest_date,latest_date_sort,latest_days_lag,date_validation_status,latest_total_net_flow_usd,flow_7d_avg,flow_30d_avg,flow_30d_std,flow_zscore,is_anomaly,anomaly_reason,top_3_etf_by_flow,publishable_daily_digest,status,error
+2026-05-28 21:44:43 UTC+8,Farside Investors,612,27 May 2026,2026-05-27,1,ok,-733400000.0,-239242857.14,-33690000.0,340470833.16,-2.0551,true,abs_zscore_ge_2_or_abs_flow_ge_threshold,IBIT:-527800000.0;GBTC:-104800000.0;FBTC:-60300000.0,true,pass,

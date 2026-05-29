@@ -1,0 +1,2 @@
+﻿status,generated_at_china,input_rows,original_other_count,reclassified_count,uncategorized_count,uncategorized_ratio,output,report
+warning,2026-05-28 19:16:58 UTC+8,2000,705,138,567,0.8043,C:\Users\PC\Desktop\Projects\事件情报系统\data\event_candidates_real_2000_older_v12_reclassified.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\v12_other_reclassification_report.csv
