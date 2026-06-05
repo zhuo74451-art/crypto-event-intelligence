@@ -1,0 +1,2 @@
+﻿generated_at,asset_count,event_count,card_count,raw_signal_count,first_hand_event_count,radar_card_count,digest_card_count,source_file,output_markdown
+2026-06-01 10:23:05 UTC+8,14,41,14,64,20,3,7,data/aggregated_events.csv,results/v16_asset_event_cards.md

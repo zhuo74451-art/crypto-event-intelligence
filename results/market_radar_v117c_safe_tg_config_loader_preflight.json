@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-06-05T16:20:30+08:00",
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_162029",
+  "task_id": "20260605_v117c_safe_tg_config_loader_real_test_group_rerun",
+  "safe_loader_found": true,
+  "safe_loaders_detected": [
+    "powershell_secrets_dot_source",
+    "powershell_secrets_values_file",
+    "secrets_template",
+    "env_template"
+  ],
+  "env_vars_pre_existing": {
+    "TELEGRAM_BOT_TOKEN": false,
+    "TELEGRAM_CHAT_ID": false
+  },
+  "load_attempted": true,
+  "load_success": true,
+  "load_method": "powershell_subprocess_dot_source",
+  "load_error": null,
+  "bot_token_present": true,
+  "bot_token_length": 46,
+  "bot_token_sha256_prefix": "d4fb60833e8c",
+  "chat_id_present": true,
+  "chat_id_length": 14,
+  "chat_id_sha256_prefix": "df017e9af8bf",
+  "config_ready": true,
+  "config_missing_reason": null
+}

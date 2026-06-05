@@ -1,0 +1,59 @@
+# Market Radar v1.10-A — Free Data Source Configuration
+# 所有数据源均为免费公开 API，不需要任何付费 Key。
+# 地址为示例，请替换为实际关注的地址。
+
+hyperliquid_watchlist:
+  # 示例：Hyperliquid 上公开的大额持仓地址
+  # 地址均为公开链上数据，不涉及隐私
+  addresses:
+    - address: "0x082d2ca88b5e0e6c1e8c0b5e2d3f4a5b6c7d8e9f"  # 示例地址，请替换为实际观察地址
+      label: "HYPE 主力地址示例"
+      asset: "HYPE"
+    - address: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b"  # 示例地址
+      label: "BTC 大额地址示例"
+      asset: "BTC"
+
+market_symbols:
+  # 关注的交易对列表（Hyperliquid 永续合约符号）
+  - "BTC"
+  - "ETH"
+  - "HYPE"
+  - "SOL"
+  - "ARB"
+  - "SUI"
+
+news_sources:
+  # 免费公开加密货币新闻 API
+  # 均为免费公开接口，无需 API Key
+  - name: "coindesk_rss"
+    url: "https://www.coindesk.com/arc/outboundfeeds/rss/"
+    type: "rss"
+    enabled: true
+  - name: "cointelegraph_rss"
+    url: "https://cointelegraph.com/rss"
+    type: "rss"
+    enabled: true
+  - name: "cryptopanic_news"
+    url: "https://cryptopanic.com/api/v1/posts/?filter=important"
+    type: "json_api"
+    enabled: false  # 需要免费注册 API key（非付费），先禁用
+
+risk_sources:
+  # 免费公开风险数据源
+  - name: "hyperliquid_funding_extreme"
+    type: "derived"
+    description: "从 Hyperliquid 公开 API 计算极端资金费率"
+    threshold_funding_pct: 0.01  # 1% / 8h
+  - name: "market_volatility"
+    type: "derived"
+    description: "从公开行情数据计算异常波动"
+    threshold_price_change_pct: 10  # 10% 24h 涨跌
+
+# 全局开关
+enable_live_fetch: true
+request_timeout_seconds: 8
+
+# 输出配置
+output:
+  card_samples_md: "results/market_radar_v110a_free_card_samples.md"
+  signals_json: "results/market_radar_v110a_free_signals.json"

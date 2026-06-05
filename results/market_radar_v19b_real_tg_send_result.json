@@ -1,0 +1,83 @@
+{
+  "status": "done",
+  "sent_count": 1,
+  "max_send_count": 1,
+  "message_id": "2195",
+  "target_type": "group",
+  "tg_api_called": true,
+  "sent_exceed_1": false,
+  "sent_channel": false,
+  "loop_started": false,
+  "sensitive_printed": false,
+  "remote_db_written": false,
+  "dry_run": false,
+  "gate_results": [],
+  "error": "",
+  "success": true,
+  "status_code": 200,
+  "error_type": "",
+  "error_message": "",
+  "retry_after": null,
+  "provider": "telegram",
+  "provider_metadata": {
+    "transport_name": "telegram",
+    "raw_api_response": {
+      "ok": true,
+      "result": {
+        "message_id": 2195,
+        "from": {
+          "id": 8848089028,
+          "is_bot": true,
+          "first_name": "币界快讯ai",
+          "username": "BjieNewsPushBot"
+        },
+        "chat": {
+          "id": -1003977074640,
+          "title": "币界网官方群",
+          "type": "supergroup"
+        },
+        "date": 1780547300,
+        "text": "🚀 主力仓位雷达｜HYPE 多头大户浮盈\n\n【HYPE 大额仓位地址｜HYPE 多头】当前持仓约 1.00亿美元\n\n▫️ 持仓规模：1.00亿美元\n▫️ 持仓数量：138.0万枚 HYPE\n▫️ 均价：38.68美元\n▫️ 当前盈亏：+4669.85万美元（+87.5%）\n▫️ 当前价格：72.51美元\n▫️ 清算价：54.93美元\n▫️ 距清算：24.3%\n\n🔥 注：该地址为 Hyperliquid 上大规模持仓地址，当前卡片仅展示其 HYPE 多头。\n\n📌 地址：0x082e...ca88\n\nHyperliquid 查看：https://app.hyperliquid.xyz/\n\n⚠️ 仅供观察，不构成交易建议。",
+        "entities": [
+          {
+            "offset": 0,
+            "length": 21,
+            "type": "bold"
+          },
+          {
+            "offset": 269,
+            "length": 28,
+            "type": "url"
+          }
+        ],
+        "link_preview_options": {
+          "is_disabled": true
+        }
+      }
+    },
+    "request_payload_preview": {
+      "chat_id": "-100XXXX_REDACTED",
+      "text_preview": "<b>🚀 主力仓位雷达｜HYPE 多头大户浮盈</b>\n\n【HYPE 大额仓位地址｜HYPE 多头】当前持仓约 1.00亿美元\n\n▫️ 持仓规模：1.00亿美元\n▫️ 持仓数量：138.0万枚 HYPE\n▫️ 均价：38.68美元\n▫️ 当前盈亏：+4669.85万美元（+87.5%）\n▫️ 当前价格：72.51美元\n▫️ 清算价：54.93美元\n▫️ 距清算：24.3%\n\n🔥 注：该地址为 Hy",
+      "text_length": 319,
+      "parse_mode": "HTML",
+      "disable_web_page_preview": true,
+      "api_endpoint": "/bot[REDACTED]/sendMessage"
+    }
+  },
+  "generated_at": "2026-06-04 12:28:20 UTC+8",
+  "component_version": "v1.9B-final-R2",
+  "executor_lane": 1,
+  "project_label": "market_radar",
+  "task_id": "20260604_121532.r02",
+  "raw_manifest_unmodified": true,
+  "effective_data_used": true,
+  "component_chain": [
+    "schema/market_radar_v19.json",
+    "validate_and_apply_policy()",
+    "effective_data",
+    "MarketRadarSender",
+    "TGTransport",
+    "RealHttpClient",
+    "SendResult"
+  ]
+}

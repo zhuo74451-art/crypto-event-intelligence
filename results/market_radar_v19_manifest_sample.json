@@ -1,0 +1,30 @@
+{
+  "$schema": "../schemas/market_radar_v19.json",
+  "version": "v1.9A-s2",
+  "schema_version": "1.9A-S2",
+  "project_label": "market_radar",
+
+  "artifact_id": "market_radar::static_position_v18g",
+  "created_at": "2026-06-04T10:54:25+08:00",
+  "candidate_md_path": "results/static_position_v18g_send_candidate.md",
+  "candidate_json_path": "results/static_position_v18g_send_candidate.json",
+  "preview_report_path": "results/static_position_v18h_preview_report.md",
+  "parse_mode": "HTML",
+  "target_type": "group",
+  "max_send_count": 1,
+  "blocked": false,
+  "leak_count": 0,
+  "full_address_count": 0,
+
+  "token_name": null,
+  "symbol": null,
+  "wallet_short": "0x082e...ca88",
+  "side": "long",
+  "pnl": "+12.5%",
+  "entry_price": null,
+  "liquidation_distance": null,
+  "extra_context": {
+    "source": "v1.8G static position pipeline",
+    "dry_run": true
+  }
+}

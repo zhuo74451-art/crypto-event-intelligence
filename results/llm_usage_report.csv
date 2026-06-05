@@ -1,2 +1,2 @@
 ﻿task_type,model,status,call_count,prompt_tokens,completion_tokens,total_tokens,estimated_cost_usd
-claude_consultation,anthropic/claude-sonnet-4.5,ok,1,2358,7000,9358,0.112074
+claude_consultation,anthropic/claude-sonnet-4.5,ok,17,34209,89587,123796,1.446432

@@ -1,0 +1,22 @@
+{
+  "stage": "v115f_whale_address_audit_operator_workbook_local_only",
+  "input_audit_forms": 4,
+  "workbook_rows": 4,
+  "addresses": 4,
+  "manual_fields_prefilled": false,
+  "upgrade_ready_count": 0,
+  "blocked_upgrade_count": 4,
+  "send_ready": false,
+  "tg_test_group_ready": false,
+  "local_review_ready": true,
+  "external_api_called": false,
+  "ai_model_called": false,
+  "credentials_read": false,
+  "tg_sent": false,
+  "prod_state_write": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "real_send_candidate_generated": false,
+  "generated_at": "2026-06-05T07:18:29.331424+08:00"
+}

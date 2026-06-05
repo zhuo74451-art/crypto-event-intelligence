@@ -1,0 +1,81 @@
+﻿event_id,event_time,asset_symbol,event_type,source,title
+cand_00324,2026-05-19 03:37:15,BTC,institutional_flow,news:cryptonews,Leopold Aschenbrenner bets $13.6b on miners
+cand_00275,2026-05-19 04:30:00,XRP,token_unlock,news:cryptonews,XRP price slips 2% on profit taking
+cand_00484,2026-05-19 00:50:18,ETH,hack_security,webhook,Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金
+cand_00449,2026-05-19 01:19:22,ETH,network_upgrade,webhook,Ethereum Foundation 研究员 Carl Beek 与 Julian Ma 于周一宣布离职。其中，Carl Beek 在以太坊工作约 7 年，曾参与 Beacon Chain 及以太坊 PoS 升级；Julian Ma 在以
+cand_00193,2026-05-19 06:07:31,BTC,halving,webhook,"JUST IN: 100,000 blocks remain until the next Bitcoin Halving. https://t.co/y8wcvN854g"
+cand_00160,2026-05-19 06:42:26,ETH,staking_governance,webhook,以太坊质押比例上升至31%，长期持有者信心依旧
+cand_00419,2026-05-19 01:41:53,BTC,hack_security,news:bitcoinmagazine,White House: Bitcoin Reserve Announcement Is Imminent
+cand_00375,2026-05-19 02:30:00,ETH,hack_security,news:cryptonews,Standard Chartered: $4T tokenized by 2028
+cand_00146,2026-05-19 06:58:05,BTC,institutional_flow,webhook,Delphi Digital：比特币在流动性趋紧背景下表现可能优于多数加密资产
+cand_00124,2026-05-19 07:36:51,ETH,hack_security,webhook,"#PeckShieldAlert @dcfgod reports that @EchoProtocol_ was hacked on @monad 
+
+The hacker minted 1k $eBTC ($76.7M) &, utili"
+cand_00117,2026-05-19 07:50:00,ETH,hack_security,webhook,"Exploit Alert 🚨
+
+According to @dcfgod, @EchoProtocol_ on @monad has been exploited.
+
+The attacker reportedly minted 1,00"
+cand_00105,2026-05-19 08:04:35,ETH,hack_security,webhook,链上监测：黑客在Monad平台上铸造1000枚EBTC并洗钱
+cand_00094,2026-05-19 08:17:14,ETH,hack_security,webhook,链上监测：过去4天内发生三起重大黑客事件
+cand_00074,2026-05-19 08:40:15,BTC,institutional_flow,webhook,Santiment：持有至少100 BTC的钱包数量增至20229
+cand_00047,2026-05-19 09:19:01,ETH,hack_security,webhook,Lookonchain：过去4天内发生3起重大黑客攻击事件
+cand_00291,2026-05-19 04:10:27,BTC,network_upgrade,webhook,"In 2019 I sincerely questioned myself whether I wanted to continue trading crypto.
+
+Almost all markets went down, crypto"
+cand_00213,2026-05-19 05:45:00,BTC,network_upgrade,news:cryptonews,Shiba Inu sees 3b SHIB hit exchanges
+cand_00187,2026-05-19 06:13:29,BTC,halving,webhook,"JUST IN: There’s now less than 100,000 blocks until the next Bitcoin halving 👀 https://t.co/pDPSl8nLiY"
+cand_00178,2026-05-19 06:18:56,BTC,token_unlock,webhook,美国司法部：俄亥俄州居民因加密庞氏骗局被判9年监禁
+cand_00053,2026-05-19 09:11:27,BTC,halving,news:coinpedia,Bitcoin Whales Defy $77K Drop as Large Wallets Surge 11%
+cand_00016,2026-05-19 10:12:50,ETH,staking_governance,webhook,"5/18 Ethereum ETF Net Flow: $-84.14m
+$ETHA (BlackRock): –$55.40m
+$FETH (Fidelity): –$14.70m
+$ETHW (Bitwise): $0.00m
+$TET"
+cand_00011,2026-05-19 10:23:18,ETH,hack_security,webhook,黑客攻击Monad Echo协议，损失约7600万美元
+cand_00016,2026-05-19 10:12:50,ETH,staking_governance,webhook,"5/18 Ethereum ETF Net Flow: $-84.14m
+$ETHA (BlackRock): –$55.40m
+$FETH (Fidelity): –$14.70m
+$ETHW (Bitwise): $0.00m
+$TET"
+cand_00020,2026-05-19 10:00:40,BNB,hack_security,news:bitcoinist,The XRP Asian Breakout: Japan And South Korea Lead The Charge | Bitcoinist.com
+cand_00038,2026-05-19 09:30:00,BTC,hack_security,news:odaily_exchange_gap,星球早讯
+cand_00047,2026-05-19 09:19:01,ETH,hack_security,webhook,Lookonchain：过去4天内发生3起重大黑客攻击事件
+cand_00053,2026-05-19 09:11:27,BTC,halving,news:coinpedia,Bitcoin Whales Defy $77K Drop as Large Wallets Surge 11%
+cand_00064,2026-05-19 09:00:20,HYPE,institutional_flow,webhook,"🔥 BULLISH: Bitwise announces it will hold $HYPE on its balance sheet, allocating 10% of its Hyperliquid ETF (BHYP) manag"
+cand_00065,2026-05-19 09:00:03,BTC,token_unlock,news:odaily_exchange_gap,黄金白银小幅反弹，加密波动率下降，BVIX日内跌幅0.54%
+cand_00074,2026-05-19 08:40:15,BTC,institutional_flow,webhook,Santiment：持有至少100 BTC的钱包数量增至20229
+cand_00084,2026-05-19 08:28:26,BTC,hack_security,tg:OneMillion_AI,多语种SWE-Bench压制GPT-5.5！Cursor发布最强模型Composer2.5，确认调用Colossus2百万卡集群
+cand_00094,2026-05-19 08:17:14,ETH,hack_security,webhook,链上监测：过去4天内发生三起重大黑客事件
+cand_00105,2026-05-19 08:04:35,ETH,hack_security,webhook,链上监测：黑客在Monad平台上铸造1000枚EBTC并洗钱
+cand_00117,2026-05-19 07:50:00,ETH,hack_security,webhook,"Exploit Alert 🚨
+
+According to @dcfgod, @EchoProtocol_ on @monad has been exploited.
+
+The attacker reportedly minted 1,00"
+cand_00124,2026-05-19 07:36:51,ETH,hack_security,webhook,"#PeckShieldAlert @dcfgod reports that @EchoProtocol_ was hacked on @monad 
+
+The hacker minted 1k $eBTC ($76.7M) &, utili"
+cand_00146,2026-05-19 06:58:05,BTC,institutional_flow,webhook,Delphi Digital：比特币在流动性趋紧背景下表现可能优于多数加密资产
+cand_00160,2026-05-19 06:42:26,ETH,staking_governance,webhook,以太坊质押比例上升至31%，长期持有者信心依旧
+cand_00164,2026-05-19 06:31:27,BNB,hack_security,news:bitcoinist,HYPE Jumps On Bitwise’s Hyperliquid ETF Move—Galaxy Secures BitLicense In NY | Bitcoinist.com
+cand_00178,2026-05-19 06:18:56,BTC,token_unlock,webhook,美国司法部：俄亥俄州居民因加密庞氏骗局被判9年监禁
+cand_00187,2026-05-19 06:13:29,BTC,halving,webhook,"JUST IN: There’s now less than 100,000 blocks until the next Bitcoin halving 👀 https://t.co/pDPSl8nLiY"
+cand_00193,2026-05-19 06:07:31,BTC,halving,webhook,"JUST IN: 100,000 blocks remain until the next Bitcoin Halving. https://t.co/y8wcvN854g"
+cand_00213,2026-05-19 05:45:00,BTC,network_upgrade,news:cryptonews,Shiba Inu sees 3b SHIB hit exchanges
+cand_00258,2026-05-19 04:55:00,BTC,network_upgrade,news:cryptonews,Citi warns Bitcoin faces quantum risk
+cand_00275,2026-05-19 04:30:00,XRP,token_unlock,news:cryptonews,XRP price slips 2% on profit taking
+cand_00291,2026-05-19 04:10:27,BTC,network_upgrade,webhook,"In 2019 I sincerely questioned myself whether I wanted to continue trading crypto.
+
+Almost all markets went down, crypto"
+cand_00297,2026-05-19 04:00:52,BNB,hack_security,news:bitcoinist,Patrick Witt Teases ‘Breakthrough’ On US Bitcoin Reserve
+cand_00324,2026-05-19 03:37:15,BTC,institutional_flow,news:cryptonews,Leopold Aschenbrenner bets $13.6b on miners
+cand_00365,2026-05-19 02:45:00,HYPE,institutional_flow,webhook,Bitwise将用10%管理费购买$HYPE
+cand_00371,2026-05-19 02:30:45,BNB,hack_security,news:bitcoinist,"Analyst Predicts Bitcoin And Ethereum Price For The Rest Of 2026, What To Expect | Bitcoinist.com"
+cand_00375,2026-05-19 02:30:00,ETH,hack_security,news:cryptonews,Standard Chartered: $4T tokenized by 2028
+cand_00403,2026-05-19 01:59:40,BTC,hack_security,news:cryptonews,Lotment Capital announces a new standard in client success
+cand_00419,2026-05-19 01:41:53,BTC,hack_security,news:bitcoinmagazine,White House: Bitcoin Reserve Announcement Is Imminent
+cand_00449,2026-05-19 01:19:22,ETH,network_upgrade,webhook,Ethereum Foundation 研究员 Carl Beek 与 Julian Ma 于周一宣布离职。其中，Carl Beek 在以太坊工作约 7 年，曾参与 Beacon Chain 及以太坊 PoS 升级；Julian Ma 在以
+cand_00472,2026-05-19 01:00:26,BNB,hack_security,news:bitcoinist,XRP’s Recent Strategic Setup Could Mark The End For Bears - Crypto Analyst Says | Bitcoinist.com
+cand_00482,2026-05-19 00:53:58,HYPE,institutional_flow,webhook,Bitwise to add HYPE to balance sheet using fees from Hyperliquid ETF
+cand_00484,2026-05-19 00:50:18,ETH,hack_security,webhook,Adshares桥攻击者归还256枚ETH，覆盖86%被盗资金

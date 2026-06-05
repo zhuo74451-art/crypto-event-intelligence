@@ -1,0 +1,458 @@
+{
+  "version": "v112X",
+  "source": "hyperliquid_public_info",
+  "dry_run_only": true,
+  "one_shot": true,
+  "external_api_called": true,
+  "api_key_used": false,
+  "authorization_header_used": false,
+  "retry_count": 0,
+  "daemon_started": false,
+  "tg_sent": false,
+  "production_state_written": false,
+  "eligible_for_real_send": false,
+  "addresses_requested": [
+    "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+    "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+    "0x082e843a431aef031264dc232693dd710aedca88",
+    "0x50b309f78e774a756a2230e1769729094cac9f20"
+  ],
+  "responses": [
+    {
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "address_short": "0x6c85...d84f6",
+      "address_label": "Matrixport Related",
+      "label_confidence": "medium",
+      "entity_type": "fund_wallet",
+      "label_source": "hyperliquid_observer",
+      "http_status": 200,
+      "positions_count": 1,
+      "positions": [
+        {
+          "symbol": "ETH",
+          "side": "long",
+          "position_size": 70572000.0,
+          "entry_price": 2265.44,
+          "mark_price": 1764.3,
+          "unrealized_pnl": -20045764.97,
+          "leverage": 20,
+          "liquidation_price": 1366.013631,
+          "liquidation_distance_pct": 22.57,
+          "margin_used": 3528600.0,
+          "position_value": 70572000.0,
+          "cum_funding": {
+            "all_time": "656852.542212",
+            "since_open": "656852.542212",
+            "since_change": "655354.011052"
+          },
+          "observed_at": "2026-06-05T06:01:57.037293+08:00",
+          "raw_source_fields": {
+            "coin": "ETH",
+            "szi": "40000.0",
+            "entryPx": "2265.44",
+            "liquidationPx": "1366.0136313559",
+            "unrealizedPnl": "-20045764.9732090011",
+            "leverage_type": "cross",
+            "leverage_value": 20,
+            "marginUsed": "3528600.0",
+            "positionValue": "70572000.0",
+            "cumFunding": {
+              "allTime": "656852.542212",
+              "sinceOpen": "656852.542212",
+              "sinceChange": "655354.011052"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        }
+      ],
+      "raw_response_asset_positions_count": 1,
+      "timestamp": "2026-06-05T06:01:57.037293+08:00"
+    },
+    {
+      "address": "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+      "address_short": "0x8def...92dae",
+      "address_label": "loraclexyz",
+      "label_confidence": "medium",
+      "entity_type": "high_leverage_trader",
+      "label_source": "hyperliquid_observer",
+      "http_status": 200,
+      "positions_count": 7,
+      "positions": [
+        {
+          "symbol": "WLD",
+          "side": "long",
+          "position_size": 4908191.33,
+          "entry_price": 0.51465,
+          "mark_price": 0.51703,
+          "unrealized_pnl": 22591.1,
+          "leverage": 10,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 490819.13,
+          "position_value": 4908191.33,
+          "cum_funding": {
+            "all_time": "2410.947478",
+            "since_open": "2410.947478",
+            "since_change": "1520.047619"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "WLD",
+            "szi": "9493049.4000000004",
+            "entryPx": "0.51465",
+            "liquidationPx": null,
+            "unrealizedPnl": "22591.09958",
+            "leverage_type": "cross",
+            "leverage_value": 10,
+            "marginUsed": "490819.133128",
+            "positionValue": "4908191.3312820001",
+            "cumFunding": {
+              "allTime": "2410.947478",
+              "sinceOpen": "2410.947478",
+              "sinceChange": "1520.047619"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        },
+        {
+          "symbol": "TON",
+          "side": "long",
+          "position_size": 3137097.52,
+          "entry_price": 1.86584,
+          "mark_price": 1.6538,
+          "unrealized_pnl": -402224.96,
+          "leverage": 5,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 627419.5,
+          "position_value": 3137097.52,
+          "cum_funding": {
+            "all_time": "53405.999614",
+            "since_open": "4896.341598",
+            "since_change": "3480.10497"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "TON",
+            "szi": "1896902.6000000001",
+            "entryPx": "1.86584",
+            "liquidationPx": null,
+            "unrealizedPnl": "-402224.96436",
+            "leverage_type": "cross",
+            "leverage_value": 5,
+            "marginUsed": "627419.503976",
+            "positionValue": "3137097.51988",
+            "cumFunding": {
+              "allTime": "53405.999614",
+              "sinceOpen": "4896.341598",
+              "sinceChange": "3480.10497"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        },
+        {
+          "symbol": "NEAR",
+          "side": "long",
+          "position_size": 2041996.18,
+          "entry_price": 2.76534,
+          "mark_price": 2.2549,
+          "unrealized_pnl": -462251.55,
+          "leverage": 10,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 204199.62,
+          "position_value": 2041996.18,
+          "cum_funding": {
+            "all_time": "1723.570432",
+            "since_open": "1723.570432",
+            "since_change": "1362.49127"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "NEAR",
+            "szi": "905581.7",
+            "entryPx": "2.76534",
+            "liquidationPx": null,
+            "unrealizedPnl": "-462251.54759",
+            "leverage_type": "cross",
+            "leverage_value": 10,
+            "marginUsed": "204199.617533",
+            "positionValue": "2041996.17533",
+            "cumFunding": {
+              "allTime": "1723.570432",
+              "sinceOpen": "1723.570432",
+              "sinceChange": "1362.49127"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        },
+        {
+          "symbol": "HYPE",
+          "side": "long",
+          "position_size": 8898642.09,
+          "entry_price": 70.5359,
+          "mark_price": 65.135,
+          "unrealized_pnl": -737873.41,
+          "leverage": 2,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 4449321.04,
+          "position_value": 8898642.09,
+          "cum_funding": {
+            "all_time": "251448.337743",
+            "since_open": "10782.695494",
+            "since_change": "1334.292321"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "HYPE",
+            "szi": "136618.44",
+            "entryPx": "70.5359",
+            "liquidationPx": null,
+            "unrealizedPnl": "-737873.40648",
+            "leverage_type": "cross",
+            "leverage_value": 2,
+            "marginUsed": "4449321.0447000004",
+            "positionValue": "8898642.0894000009",
+            "cumFunding": {
+              "allTime": "251448.337743",
+              "sinceOpen": "10782.695494",
+              "sinceChange": "1334.292321"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        },
+        {
+          "symbol": "ASTER",
+          "side": "long",
+          "position_size": 2346202.25,
+          "entry_price": 0.74332,
+          "mark_price": 0.65456,
+          "unrealized_pnl": -318151.57,
+          "leverage": 5,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 469240.45,
+          "position_value": 2346202.25,
+          "cum_funding": {
+            "all_time": "3206.686895",
+            "since_open": "3206.686895",
+            "since_change": "2915.569388"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "ASTER",
+            "szi": "3584396.0",
+            "entryPx": "0.74332",
+            "liquidationPx": null,
+            "unrealizedPnl": "-318151.5748",
+            "leverage_type": "cross",
+            "leverage_value": 5,
+            "marginUsed": "469240.449152",
+            "positionValue": "2346202.2457599998",
+            "cumFunding": {
+              "allTime": "3206.686895",
+              "sinceOpen": "3206.686895",
+              "sinceChange": "2915.569388"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        },
+        {
+          "symbol": "ZEC",
+          "side": "long",
+          "position_size": 4398661.07,
+          "entry_price": 543.6207,
+          "mark_price": 484.12,
+          "unrealized_pnl": -540617.67,
+          "leverage": 10,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 439866.11,
+          "position_value": 4398661.07,
+          "cum_funding": {
+            "all_time": "7874.146379",
+            "since_open": "7874.146379",
+            "since_change": "7208.454613"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "ZEC",
+            "szi": "9085.89",
+            "entryPx": "543.6207",
+            "liquidationPx": null,
+            "unrealizedPnl": "-540617.6673",
+            "leverage_type": "cross",
+            "leverage_value": 10,
+            "marginUsed": "439866.10668",
+            "positionValue": "4398661.0668000001",
+            "cumFunding": {
+              "allTime": "7874.146379",
+              "sinceOpen": "7874.146379",
+              "sinceChange": "7208.454613"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        },
+        {
+          "symbol": "XMR",
+          "side": "long",
+          "position_size": 2342631.05,
+          "entry_price": 336.877,
+          "mark_price": 364.8,
+          "unrealized_pnl": 179308.46,
+          "leverage": 5,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "margin_used": 468526.21,
+          "position_value": 2342631.05,
+          "cum_funding": {
+            "all_time": "10508.793469",
+            "since_open": "10508.793469",
+            "since_change": "8643.200635"
+          },
+          "observed_at": "2026-06-05T06:01:57.409223+08:00",
+          "raw_source_fields": {
+            "coin": "XMR",
+            "szi": "6421.686",
+            "entryPx": "336.877",
+            "liquidationPx": null,
+            "unrealizedPnl": "179308.45606",
+            "leverage_type": "cross",
+            "leverage_value": 5,
+            "marginUsed": "468526.21056",
+            "positionValue": "2342631.0528000002",
+            "cumFunding": {
+              "allTime": "10508.793469",
+              "sinceOpen": "10508.793469",
+              "sinceChange": "8643.200635"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        }
+      ],
+      "raw_response_asset_positions_count": 7,
+      "timestamp": "2026-06-05T06:01:57.409223+08:00"
+    },
+    {
+      "address": "0x082e843a431aef031264dc232693dd710aedca88",
+      "address_short": "0x082e...dca88",
+      "address_label": "Unknown HYPE Whale",
+      "label_confidence": "low",
+      "entity_type": "unknown_whale",
+      "label_source": "hyperliquid_observer",
+      "http_status": 200,
+      "positions_count": 1,
+      "positions": [
+        {
+          "symbol": "HYPE",
+          "side": "long",
+          "position_size": 89889078.66,
+          "entry_price": 38.6755,
+          "mark_price": 65.135,
+          "unrealized_pnl": 36515148.61,
+          "leverage": 5,
+          "liquidation_price": 55.011704,
+          "liquidation_distance_pct": 15.54,
+          "margin_used": 17977815.73,
+          "position_value": 89889078.66,
+          "cum_funding": {
+            "all_time": "2864577.0596929998",
+            "since_open": "2864577.0596929998",
+            "since_change": "2147902.1171019999"
+          },
+          "observed_at": "2026-06-05T06:01:57.763584+08:00",
+          "raw_source_fields": {
+            "coin": "HYPE",
+            "szi": "1380042.6599999999",
+            "entryPx": "38.6755",
+            "liquidationPx": "55.0117035855",
+            "unrealizedPnl": "36515148.6123519987",
+            "leverage_type": "cross",
+            "leverage_value": 5,
+            "marginUsed": "17977815.7318199985",
+            "positionValue": "89889078.6590999961",
+            "cumFunding": {
+              "allTime": "2864577.0596929998",
+              "sinceOpen": "2864577.0596929998",
+              "sinceChange": "2147902.1171019999"
+            }
+          },
+          "validation_status": {
+            "required_fields_present": true,
+            "numeric_parse_ok": true,
+            "side_determined": true,
+            "missing_fields": [],
+            "parse_errors": []
+          }
+        }
+      ],
+      "raw_response_asset_positions_count": 1,
+      "timestamp": "2026-06-05T06:01:57.763584+08:00"
+    },
+    {
+      "address": "0x50b309f78e774a756a2230e1769729094cac9f20",
+      "address_short": "0x50b3...c9f20",
+      "address_label": "Unknown Hyperliquid Whale",
+      "label_confidence": "low",
+      "entity_type": "unknown_whale",
+      "label_source": "hyperliquid_observer",
+      "http_status": 200,
+      "positions_count": 0,
+      "positions": [],
+      "raw_response_asset_positions_count": 0,
+      "timestamp": "2026-06-05T06:01:58.113977+08:00"
+    }
+  ],
+  "failures": [],
+  "started_at": "2026-06-05T06:01:56.610555+08:00",
+  "completed_at": "2026-06-05T06:01:58.113977+08:00"
+}

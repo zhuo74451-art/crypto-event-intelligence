@@ -1,0 +1,211 @@
+{
+  "version": "v115K",
+  "registry_name": "whale_label_evidence_source_registry",
+  "description": "Defines which evidence sources can support a whale address label upgrade from low/medium to high confidence, which serve as weak reference only, and which must be rejected. This registry feeds into v115F/v115G/v115H operator workbook and adjudication gates.",
+  "registry_categories": 4,
+  "generated_at": "2026-06-05T08:00:00+08:00",
+  "categories": {
+    "primary_source": {
+      "description": "Evidence sources that carry strong, verifiable provenance and can independently support label confidence upgrades. At least one primary source is required for any high-confidence label.",
+      "types": [
+        {
+          "type_id": "primary_project_official_docs",
+          "label": "Project/Team Official Docs or Disclosure",
+          "description": "Official documentation, blog post, governance proposal, or public disclosure from the project team or entity that verifiably links an address to their identity.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": true,
+          "examples": ["protocol docs listing treasury address", "governance proposal with on-chain identity", "official blog post from team domain"]
+        },
+        {
+          "type_id": "primary_exchange_institution_label",
+          "label": "Verified Exchange/Institution Address Label Page",
+          "description": "Public address labeling page from a verified centralized exchange (e.g., Binance, Coinbase, OKX) or institution (e.g., Arkham, Nansen) that identifies the address owner.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": true,
+          "examples": ["Binance proof-of-reserves address page", "Arkham entity label with on-chain verification", "Coinbase transparency report address"]
+        },
+        {
+          "type_id": "primary_reputable_explorer_label",
+          "label": "Reputable Block Explorer Label",
+          "description": "Label from a reputable block explorer (Etherscan, Solscan, etc.) that has been verified through the explorer's own labeling program or public tag system.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": true,
+          "examples": ["Etherscan public name tag", "Solscan verified label", "Polygonscan public tag"]
+        },
+        {
+          "type_id": "primary_signed_statement",
+          "label": "Public Signed Statement by Entity/Operator",
+          "description": "Cryptographically signed message or public statement from the entity or operator confirming address ownership or identity.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": true,
+          "examples": ["Signed Ethereum message from known entity wallet", "Tweet with address confirmation from verified entity account", "On-chain signature verification"]
+        },
+        {
+          "type_id": "primary_internal_verified_label",
+          "label": "Internally Verified Historical Label Record",
+          "description": "A previously verified and operator-reviewed label record from this project's own historical data that has gone through the full evidence intake and adjudication process.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": true,
+          "examples": ["Previous v115 pipeline verified label", "Operator-reviewed label with complete evidence pack"]
+        }
+      ]
+    },
+    "secondary_source": {
+      "description": "Evidence sources that provide corroborating but not independently sufficient evidence. At least one secondary source is required alongside a primary source for high-confidence labels.",
+      "types": [
+        {
+          "type_id": "secondary_analytics_dashboard",
+          "label": "Reputable Analytics Dashboard Label",
+          "description": "Label from a reputable on-chain analytics platform (Dune, Nansen, DefiLlama, etc.) that is publicly accessible and allows verification of the labeling methodology.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": true,
+          "examples": ["Dune dashboard with labeled addresses", "Nansen smart money label", "DefiLlama protocol treasury label"]
+        },
+        {
+          "type_id": "secondary_cross_source_clustering",
+          "label": "Cross-Source Wallet Clustering Note",
+          "description": "Evidence that multiple independent sources or clustering algorithms identify the same address or wallet cluster with the same entity.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": true,
+          "examples": ["Arkham + Nansen both label as same entity", "Cross-chain address clustering match", "Multi-explorer label consensus"]
+        },
+        {
+          "type_id": "secondary_tx_behavior_evidence",
+          "label": "Historical Transaction Behavior Evidence",
+          "description": "On-chain transaction patterns that are consistent with the claimed entity identity (e.g., typical DeFi strategies, CEX deposit/withdrawal patterns, known protocol interactions).",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": true,
+          "examples": ["Historical interaction with known protocol contracts", "Consistent deposit pattern to known CEX hot wallets", "Trading pattern matching known entity style"]
+        },
+        {
+          "type_id": "secondary_social_identity_linkage",
+          "label": "Public Social Identity Linkage",
+          "description": "Public social media profile, ENS name, or other on-chain identity system that links the address to a known entity or individual.",
+          "verification_required": true,
+          "url_or_doc_ref_required": true,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": true,
+          "examples": ["Verified ENS name matching entity", "Lens protocol profile linked to entity", "Farcaster verified identity"]
+        },
+        {
+          "type_id": "secondary_operator_reviewed_note",
+          "label": "Previous Operator-Reviewed Label Note",
+          "description": "A previous review note from a project operator that documented findings about the address identity but stopped short of full evidence completion.",
+          "verification_required": false,
+          "url_or_doc_ref_required": false,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": true,
+          "examples": ["Operator note from earlier pipeline run", "Partial evidence note from v115E evidence request"]
+        }
+      ]
+    },
+    "activity_source": {
+      "description": "Evidence from on-chain activity patterns that support but do not independently prove address identity. Activity sources are supplementary and cannot serve as primary or secondary evidence alone.",
+      "types": [
+        {
+          "type_id": "activity_counterparty_pattern",
+          "label": "Consistent Counterparty Pattern",
+          "description": "Repeated, observable pattern of transactions with specific counterparty addresses that are consistent with the claimed entity's known behavior.",
+          "verification_required": false,
+          "url_or_doc_ref_required": false,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": false,
+          "supplementary_only": true,
+          "examples": ["Regular interaction with known market maker addresses", "Consistent flow to known OTC desks"]
+        },
+        {
+          "type_id": "activity_asset_venue_pattern",
+          "label": "Repeated Asset/Venue Pattern",
+          "description": "Observable pattern of trading specific assets or using specific venues (DEXs, CEXs) that matches the claimed entity's known preferences or style.",
+          "verification_required": false,
+          "url_or_doc_ref_required": false,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": false,
+          "supplementary_only": true,
+          "examples": ["Consistent HyperLiquid position pattern", "Repeated use of specific DEX aggregator", "Asset preference matching known entity portfolio"]
+        },
+        {
+          "type_id": "activity_position_consistency",
+          "label": "Position Behavior Consistency",
+          "description": "HyperLiquid or other derivatives exchange position behavior (size, leverage, timing) that is consistent with the claimed entity's known trading style.",
+          "verification_required": false,
+          "url_or_doc_ref_required": false,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": false,
+          "supplementary_only": true,
+          "examples": ["Position size range matching entity profile", "Leverage preference matching known style", "Entry/exit timing consistent with entity behavior"]
+        },
+        {
+          "type_id": "activity_historical_entity_interaction",
+          "label": "Historical Interaction with Known Entity Addresses",
+          "description": "On-chain record of past transactions with addresses that are already verified as belonging to the claimed entity or its known associates.",
+          "verification_required": false,
+          "url_or_doc_ref_required": false,
+          "can_support_high_confidence": false,
+          "can_support_medium_confidence": false,
+          "supplementary_only": true,
+          "examples": ["Received funds from verified entity address", "Sent funds to verified entity-controlled contract", "Interacted with entity's known DeFi positions"]
+        }
+      ]
+    },
+    "rejected_source": {
+      "description": "Evidence sources that MUST NOT be used to support label confidence upgrades. Any label relying primarily on rejected sources must remain blocked. Rejected sources may be noted for operator awareness only.",
+      "automatic_rejection_note": "Any label whose ONLY evidence comes from rejected_source categories must be immediately blocked with REJECTED_EVIDENCE_ONLY block reason.",
+      "types": [
+        {
+          "type_id": "rejected_unsourced_social_post",
+          "label": "Unsourced Social Post",
+          "description": "Social media post (Twitter/X, Telegram, Discord, Reddit) that claims an address belongs to an entity but provides no verifiable source, link, or evidence.",
+          "rejection_reason": "No verifiable source; social posts alone cannot establish address identity."
+        },
+        {
+          "type_id": "rejected_single_anonymous_claim",
+          "label": "Single Anonymous Claim",
+          "description": "A single claim from an anonymous or pseudonymous source without any corroborating evidence, reputation, or track record.",
+          "rejection_reason": "Anonymous single-source claim without corroboration is insufficient."
+        },
+        {
+          "type_id": "rejected_ai_attribution",
+          "label": "AI-Generated Attribution Without Source",
+          "description": "Address attribution generated by an AI/LLM without providing the underlying source, URL, or verifiable reference that the AI used.",
+          "rejection_reason": "AI-generated labels hallucinate; source must be independently verifiable."
+        },
+        {
+          "type_id": "rejected_screenshot_without_url",
+          "label": "Screenshot Without Verifiable URL or Note",
+          "description": "Screenshot of a label or attribution that does not include a verifiable URL, timestamp, or operator note documenting how to reproduce the finding.",
+          "rejection_reason": "Screenshots without reproducible evidence are not verifiable."
+        },
+        {
+          "type_id": "rejected_stale_label_no_date",
+          "label": "Stale Label Without Update Date",
+          "description": "A label from any source that has no update date, no version history, and no way to determine if it is still current.",
+          "rejection_reason": "Stale labels without timestamps may be outdated or incorrect."
+        },
+        {
+          "type_id": "rejected_tg_chat_label",
+          "label": "Label Copied from TG/Chat Without Evidence",
+          "description": "An address label copied from a Telegram group, Discord chat, or other messaging platform without any supporting evidence, URL, or source documentation.",
+          "rejection_reason": "Chat-based labels without evidence are hearsay."
+        },
+        {
+          "type_id": "rejected_vague_whale_claim",
+          "label": "Vague 'Whale Said to Be X' Style Notes",
+          "description": "Notes or labels that use vague language like 'whale said to be X', 'rumored to be Y', or 'possibly Z entity' without any specific evidence or source.",
+          "rejection_reason": "Vague claims without specific evidence do not meet any evidence standard."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,288 @@
+{
+  "gate_version": "v1.11-b",
+  "generated_at": "2026-06-04 17:06:44 UTC+8",
+  "total_signals": 8,
+  "allow_count": 6,
+  "observe_count": 0,
+  "block_count": 2,
+  "allowed_assets": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "ARB",
+    "SUI",
+    "HYPE"
+  ],
+  "observed_assets": [],
+  "blocked_assets": [
+    "LINK",
+    "DOT"
+  ],
+  "decision_breakdown": {
+    "allow": 6,
+    "block": 2
+  },
+  "warnings": [
+    "funding rate is near zero — no extreme funding signal in current market",
+    "volume field missing — volume confirmation not available",
+    "missing volume: -10 score penalty",
+    "open_interest field missing — OI confirmation not available",
+    "funding field missing — funding extreme not available",
+    "missing open_interest: -10 score penalty"
+  ],
+  "details": [
+    {
+      "asset": "BTC",
+      "signal_type": "market_anomaly",
+      "price_change_pct": -5.54,
+      "open_interest": 1826000000,
+      "volume": 6345000000,
+      "funding_rate": 4e-05,
+      "gate_result": {
+        "allowed": true,
+        "decision": "allow",
+        "value_score": 100,
+        "value_tier": "high",
+        "reasons": [
+          "price_move: abs(-5.54%) >= 5%",
+          "oi_confirmation: open_interest=1826000000.0",
+          "volume_confirmation: volume=6345000000.0",
+          "multi_asset_sync: 6 assets in same direction (down)"
+        ],
+        "warnings": [
+          "funding rate is near zero — no extreme funding signal in current market"
+        ],
+        "factor_hits": {
+          "price_move": true,
+          "oi_confirmation": true,
+          "volume_confirmation": true,
+          "funding_extreme": false,
+          "multi_asset_sync": true
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "ETH",
+      "signal_type": "market_anomaly",
+      "price_change_pct": -8.2,
+      "open_interest": 890000000,
+      "volume": null,
+      "funding_rate": -0.025,
+      "gate_result": {
+        "allowed": true,
+        "decision": "allow",
+        "value_score": 110,
+        "value_tier": "high",
+        "reasons": [
+          "price_move: abs(-8.20%) >= 5%",
+          "strong_price_move: abs(-8.20%) >= 8%",
+          "oi_confirmation: open_interest=890000000.0",
+          "funding_extreme: abs(funding)=0.0250 >= 0.01",
+          "multi_asset_sync: 6 assets in same direction (down)"
+        ],
+        "warnings": [
+          "volume field missing — volume confirmation not available",
+          "missing volume: -10 score penalty"
+        ],
+        "factor_hits": {
+          "price_move": true,
+          "oi_confirmation": true,
+          "volume_confirmation": false,
+          "funding_extreme": true,
+          "multi_asset_sync": true
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "SOL",
+      "signal_type": "market_anomaly",
+      "price_change_pct": -11.5,
+      "open_interest": null,
+      "volume": 1200000000,
+      "funding_rate": null,
+      "gate_result": {
+        "allowed": true,
+        "decision": "allow",
+        "value_score": 85,
+        "value_tier": "high",
+        "reasons": [
+          "price_move: abs(-11.50%) >= 5%",
+          "strong_price_move: abs(-11.50%) >= 8%",
+          "volume_confirmation: volume=1200000000.0",
+          "multi_asset_sync: 6 assets in same direction (down)"
+        ],
+        "warnings": [
+          "open_interest field missing — OI confirmation not available",
+          "funding field missing — funding extreme not available",
+          "missing open_interest: -10 score penalty"
+        ],
+        "factor_hits": {
+          "price_move": true,
+          "oi_confirmation": false,
+          "volume_confirmation": true,
+          "funding_extreme": false,
+          "multi_asset_sync": true
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "ARB",
+      "signal_type": "market_anomaly",
+      "price_change_pct": -7.55,
+      "open_interest": 4656700,
+      "volume": null,
+      "funding_rate": null,
+      "gate_result": {
+        "allowed": true,
+        "decision": "allow",
+        "value_score": 70,
+        "value_tier": "high",
+        "reasons": [
+          "price_move: abs(-7.55%) >= 5%",
+          "oi_confirmation: open_interest=4656700.0",
+          "multi_asset_sync: 6 assets in same direction (down)"
+        ],
+        "warnings": [
+          "volume field missing — volume confirmation not available",
+          "funding field missing — funding extreme not available",
+          "missing volume: -10 score penalty"
+        ],
+        "factor_hits": {
+          "price_move": true,
+          "oi_confirmation": true,
+          "volume_confirmation": false,
+          "funding_extreme": false,
+          "multi_asset_sync": true
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "SUI",
+      "signal_type": "market_anomaly",
+      "price_change_pct": -6.73,
+      "open_interest": 27997200,
+      "volume": null,
+      "funding_rate": 4e-05,
+      "gate_result": {
+        "allowed": true,
+        "decision": "allow",
+        "value_score": 70,
+        "value_tier": "high",
+        "reasons": [
+          "price_move: abs(-6.73%) >= 5%",
+          "oi_confirmation: open_interest=27997200.0",
+          "multi_asset_sync: 6 assets in same direction (down)"
+        ],
+        "warnings": [
+          "volume field missing — volume confirmation not available",
+          "funding rate is near zero — no extreme funding signal in current market",
+          "missing volume: -10 score penalty"
+        ],
+        "factor_hits": {
+          "price_move": true,
+          "oi_confirmation": true,
+          "volume_confirmation": false,
+          "funding_extreme": false,
+          "multi_asset_sync": true
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "LINK",
+      "signal_type": "market_anomaly",
+      "price_change_pct": -3.2,
+      "open_interest": 150000000,
+      "volume": null,
+      "funding_rate": null,
+      "gate_result": {
+        "allowed": false,
+        "decision": "block",
+        "value_score": 50,
+        "value_tier": "medium",
+        "reasons": [
+          "oi_confirmation: open_interest=150000000.0",
+          "multi_asset_sync: 6 assets in same direction (down)",
+          "price_move not hit — no significant price change detected"
+        ],
+        "warnings": [
+          "volume field missing — volume confirmation not available",
+          "funding field missing — funding extreme not available"
+        ],
+        "factor_hits": {
+          "price_move": false,
+          "oi_confirmation": true,
+          "volume_confirmation": false,
+          "funding_extreme": false,
+          "multi_asset_sync": true
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "DOT",
+      "signal_type": "market_anomaly",
+      "price_change_pct": null,
+      "open_interest": null,
+      "volume": null,
+      "funding_rate": null,
+      "gate_result": {
+        "allowed": false,
+        "decision": "block",
+        "value_score": 0,
+        "value_tier": "low",
+        "reasons": [
+          "price_move not hit — no significant price change detected"
+        ],
+        "warnings": [
+          "open_interest field missing — OI confirmation not available",
+          "volume field missing — volume confirmation not available",
+          "funding field missing — funding extreme not available"
+        ],
+        "factor_hits": {
+          "price_move": false,
+          "oi_confirmation": false,
+          "volume_confirmation": false,
+          "funding_extreme": false,
+          "multi_asset_sync": false
+        },
+        "gate_version": "v1.11-b"
+      }
+    },
+    {
+      "asset": "HYPE",
+      "signal_type": "onchain_position",
+      "price_change_pct": 15.0,
+      "open_interest": 450000000,
+      "volume": 890000000,
+      "funding_rate": null,
+      "gate_result": {
+        "allowed": true,
+        "decision": "allow",
+        "value_score": 95,
+        "value_tier": "high",
+        "reasons": [
+          "price_move: abs(15.00%) >= 5%",
+          "strong_price_move: abs(15.00%) >= 8%",
+          "oi_confirmation: open_interest=450000000.0",
+          "volume_confirmation: volume=890000000.0"
+        ],
+        "warnings": [
+          "funding field missing — funding extreme not available"
+        ],
+        "factor_hits": {
+          "price_move": true,
+          "oi_confirmation": true,
+          "volume_confirmation": true,
+          "funding_extreme": false,
+          "multi_asset_sync": false
+        },
+        "gate_version": "v1.11-b"
+      }
+    }
+  ]
+}

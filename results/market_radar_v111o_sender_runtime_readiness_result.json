@@ -1,0 +1,31 @@
+{
+  "version": "v1.11-O",
+  "mode": "sender_runtime_readiness",
+  "real_tg_sent": false,
+  "telegram_api_called": false,
+  "secrets_printed": false,
+  "env_readiness": {
+    "telegram_bot_token_present": true,
+    "telegram_chat_id_present": true,
+    "telegram_chat_id_masked": {
+      "present_masked": true,
+      "length_bucket": "medium"
+    },
+    "values_printed": false
+  },
+  "candidate_readiness": {
+    "signal_id": "H6-07",
+    "asset": "ARB",
+    "public_card_ready": true,
+    "debug_leak_count": 0,
+    "eth_enters_readiness": false
+  },
+  "v111n_status": {
+    "blocked": true,
+    "reason": "missing_runtime_test_channel_credentials",
+    "blocked_by_credentials": true
+  },
+  "ready_to_attempt_real_test_send": true,
+  "checked_at": "2026-06-04T22:15:06.984387+08:00",
+  "generated_at": "2026-06-04T22:15:06.984387+08:00"
+}

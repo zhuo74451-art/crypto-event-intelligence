@@ -1,0 +1,71 @@
+{
+  "status": "done",
+  "sent_count": 1,
+  "max_send_count": 1,
+  "message_id": "dry-run-20260604_115407",
+  "target_type": "group",
+  "tg_api_called": false,
+  "sent_exceed_1": false,
+  "sent_channel": false,
+  "loop_started": false,
+  "sensitive_printed": false,
+  "remote_db_written": false,
+  "dry_run": true,
+  "gate_results": [
+    {
+      "name": "gate_blocked_false",
+      "passed": true,
+      "detail": "preview report confirms blocked=false"
+    },
+    {
+      "name": "gate_candidate_blocked_false",
+      "passed": true,
+      "detail": "candidate JSON blocked=False"
+    },
+    {
+      "name": "gate_no_blocker",
+      "passed": true,
+      "detail": "blocked_reasons=[]"
+    },
+    {
+      "name": "gate_leak_count_zero",
+      "passed": true,
+      "detail": "leak_count=0"
+    },
+    {
+      "name": "gate_full_address_count_zero",
+      "passed": true,
+      "detail": "full_address_count=0"
+    },
+    {
+      "name": "gate_consistency_pass",
+      "passed": true,
+      "detail": "consistency_status=pass confirmed"
+    },
+    {
+      "name": "gate_forbidden_terms_zero",
+      "passed": true,
+      "detail": "forbidden_terms_count=0"
+    },
+    {
+      "name": "gate_machine_terms_zero",
+      "passed": true,
+      "detail": "machine_terms_count=0"
+    },
+    {
+      "name": "gate_no_full_address_in_md",
+      "passed": true,
+      "detail": "no full addresses in candidate text"
+    }
+  ],
+  "error": "",
+  "success": true,
+  "status_code": 0,
+  "error_type": "",
+  "error_message": "",
+  "retry_after": null,
+  "provider": "",
+  "provider_metadata": {},
+  "generated_at": "2026-06-04 11:54:07 UTC+8",
+  "component_version": "v1.9A-S2"
+}

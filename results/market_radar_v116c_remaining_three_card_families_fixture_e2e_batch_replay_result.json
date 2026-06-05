@@ -1,0 +1,63 @@
+{
+  "stage": "v116c_remaining_three_card_families_fixture_e2e_batch_replay_local_only",
+  "version": "v1.16-C",
+  "description": "Fixture-only E2E gate batch replay for the 3 remaining card families (price_oi_volume_anomaly, liquidation_pressure, news_event_market_impact). Reads v116A coverage records, builds fixture input records from existing fixture/preview artifacts, replays all gates locally. No TG sends, no production writes, no external APIs, no AI/model calls.",
+  "generated_at": "2026-06-05T10:08:57.873868+08:00",
+  "source_from_v116a": "market_radar_v116a_five_card_family_coverage_status_audit_result.json",
+  "target_card_families": [
+    "price_oi_volume_anomaly",
+    "liquidation_pressure",
+    "news_event_market_impact"
+  ],
+  "target_card_family_count": 3,
+  "family_result_records": {
+    "price_oi_volume_anomaly": {
+      "status": "fixture_e2e_passed",
+      "total_records": 7,
+      "quality_gate_passed": 1,
+      "workflow_ready": 1,
+      "fixture_e2e_passed": true
+    },
+    "liquidation_pressure": {
+      "status": "fixture_e2e_passed",
+      "total_records": 5,
+      "quality_gate_passed": 3,
+      "workflow_ready": 3,
+      "fixture_e2e_passed": true
+    },
+    "news_event_market_impact": {
+      "status": "fixture_e2e_passed",
+      "total_records": 7,
+      "quality_gate_passed": 5,
+      "workflow_ready": 5,
+      "fixture_e2e_passed": true
+    }
+  },
+  "price_oi_volume_anomaly_fixture_e2e_passed": true,
+  "liquidation_pressure_fixture_e2e_passed": true,
+  "news_event_market_impact_fixture_e2e_passed": true,
+  "families_fixture_e2e_passed_count": 3,
+  "families_partial_count": 0,
+  "families_blocked_count": 0,
+  "families_not_found_count": 0,
+  "fixture_input_records": 19,
+  "quality_gate_records": 19,
+  "send_readiness_records": 19,
+  "workflow_replay_decisions": 19,
+  "quality_gate_passed_count": 9,
+  "send_readiness_passed_count": 9,
+  "workflow_ready_count": 9,
+  "real_e2e_passed_count": 0,
+  "tg_test_group_ready_count": 0,
+  "production_send_ready_count": 0,
+  "send_candidate_generated_count": 0,
+  "real_send_candidate_generated": false,
+  "tg_sent": false,
+  "prod_state_write": false,
+  "external_api_called": false,
+  "credentials_read": false,
+  "ai_model_called": false,
+  "files_deleted": false,
+  "historical_artifacts_modified": false,
+  "audit_result": "remaining_three_fixture_e2e_passed_real_e2e_not_started"
+}

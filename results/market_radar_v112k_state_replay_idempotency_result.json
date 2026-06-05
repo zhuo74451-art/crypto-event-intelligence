@@ -1,0 +1,92 @@
+{
+  "version": "v1.12-K",
+  "schema_version": "1.0.0",
+  "gate_library_version": "v1.12-I",
+  "run_id": "20260604_202718",
+  "generated_at": "2026-06-05 04:13:19 UTC+8",
+  "replay_mode": "canonical_state_replay",
+  "replay_evaluated_at": "2026-06-05T04:13:19+08:00",
+  "prior_state_source": "results/market_radar_v112l_canonical_prior_state.json",
+  "input_envelope_count": 13,
+  "first_pass_eligible_count": 9,
+  "replay_decision_count": 13,
+  "replay_passed_count": 4,
+  "replay_blocked_dedupe_count": 9,
+  "replay_blocked_cooldown_count": 0,
+  "replay_blocked_invalid_count": 0,
+  "replay_blocked_leak_count": 0,
+  "replay_eligible_for_send_count": 4,
+  "first_pass_eligible_reblocked_count": 9,
+  "idempotency_passed": true,
+  "unexpected_repass_signal_ids": [],
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "full_wallet_leak": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "live_ready": false,
+  "dry_run_only": true,
+  "production_send_allowed": false,
+  "decision_count_matches_input": true,
+  "card_type_summary": {
+    "price_oi_volume_anomaly": {
+      "total": 1,
+      "pass": 1,
+      "blocked_dedupe": 0,
+      "blocked_cooldown": 0,
+      "blocked_invalid": 0,
+      "blocked_leak": 0
+    },
+    "whale_position_alert": {
+      "total": 3,
+      "pass": 1,
+      "blocked_dedupe": 2,
+      "blocked_cooldown": 0,
+      "blocked_invalid": 0,
+      "blocked_leak": 0
+    },
+    "liquidation_pressure": {
+      "total": 3,
+      "pass": 1,
+      "blocked_dedupe": 2,
+      "blocked_cooldown": 0,
+      "blocked_invalid": 0,
+      "blocked_leak": 0
+    },
+    "multi_asset_market_sync": {
+      "total": 3,
+      "pass": 0,
+      "blocked_dedupe": 3,
+      "blocked_cooldown": 0,
+      "blocked_invalid": 0,
+      "blocked_leak": 0
+    },
+    "news_event_market_impact": {
+      "total": 3,
+      "pass": 1,
+      "blocked_dedupe": 2,
+      "blocked_cooldown": 0,
+      "blocked_invalid": 0,
+      "blocked_leak": 0
+    }
+  },
+  "prior_state_entry_count": 9,
+  "notes": [
+    "Replay mode: canonical_state_replay.",
+    "Replay evaluated 13 envelopes against 9 prior state entries.",
+    "First-pass eligible signals reblocked: 9/9.",
+    "Idempotency passed: True.",
+    "Unexpected repasses: 0.",
+    "Debug leaks: 0, Secret leaks: 0.",
+    "Dry-run only — no live state writes, no TG send, no external APIs.",
+    "Replay passes (4): ['sig-pova-cf3a0c25-202606042000', 'sig-wpa-1ae7a01d-202606042010', 'sig-lipr-a94980e2-202606041200', 'sig-nemi-d3dbfd91-202606041430']. Details in replay_gate_decisions.jsonl."
+  ],
+  "legacy_replay_comparison": {
+    "legacy_first_pass_eligible_reblocked_count": 9,
+    "legacy_idempotency_passed": true,
+    "legacy_unexpected_repass_signal_ids": []
+  },
+  "canonical_idempotency_passed": true
+}

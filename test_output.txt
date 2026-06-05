@@ -1,0 +1,252 @@
+﻿python : test_001_runner_executes_successfully (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_001_ru
+nner_executes_successfully)
+At line:1 char:41
++ ... cts\事件情报系统; python scripts/test_market_radar_v112q_multi_asset_noise_ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_001_runner...s_successfully):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Runner should exit with code 0. ... ok
+test_002_result_json_exists (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_002_result_json_exists)
+Result JSON file should exist. ... ok
+test_003_noise_results_jsonl_exists (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_003_noise_results
+_jsonl_exists)
+Noise case results JSONL should exist. ... ok
+test_004_report_md_exists (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_004_report_md_exists)
+Report MD should exist. ... ok
+test_005_handoff_md_exists (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_005_handoff_md_exists)
+Handoff MD should exist. ... ok
+test_010_status_passed (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_010_status_passed)
+Result JSON: status should be 'passed'. ... ok
+test_011_dry_run_only (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_011_dry_run_only)
+Result JSON: dry_run_only should be true. ... ok
+test_012_live_ready (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_012_live_ready)
+Result JSON: live_ready should be false. ... ok
+test_013_real_tg_sent (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_013_real_tg_sent)
+Result JSON: real_tg_sent should be false. ... ok
+test_014_external_api_called (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_014_external_api_called)
+Result JSON: external_api_called should be false. ... ok
+test_015_external_ai_called (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_015_external_ai_called)
+Result JSON: external_ai_called should be false. ... ok
+test_016_daemon_started (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_016_daemon_started)
+Result JSON: daemon_started should be false. ... ok
+test_017_files_deleted (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_017_files_deleted)
+Result JSON: files_deleted should be false. ... ok
+test_018_candidate_card_type (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_018_candidate_card_type)
+Result JSON: candidate_card_type should be 'multi_asset_market_sync'. ... ok
+test_019_one_shot_plan_ready (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_019_one_shot_plan_ready)
+Result JSON: one_shot_plan_ready should be true. ... ok
+test_020_noise_injection_cases_total (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_020_noise_inject
+ion_cases_total)
+Result JSON: noise_injection_cases_total should be >= 6. ... ok
+test_021_noise_injection_cases_passed (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_021_noise_injec
+tion_cases_passed)
+Result JSON: noise_injection_cases_passed should equal total. ... ok
+test_022_stricter_thresholds_ready (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_022_stricter_thres
+holds_ready)
+Result JSON: stricter_thresholds_ready should be true. ... ok
+test_023_real_live_api_called (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_023_real_live_api_calle
+d)
+Result JSON: real_live_api_called should be false. ... ok
+test_024_real_send_ready (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_024_real_send_ready)
+Result JSON: real_send_ready should be false. ... ok
+test_025_production_state_write_ready (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_025_production_
+state_write_ready)
+Result JSON: production_state_write_ready should be false. ... ok
+test_026_debug_leak_count_zero (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_026_debug_leak_count_z
+ero)
+Result JSON: debug_leak_count should be 0. ... ok
+test_027_secret_leak_count_zero (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_027_secret_leak_count
+_zero)
+Result JSON: secret_leak_count should be 0. ... ok
+test_028_recommended_second_candidate (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_028_recommended
+_second_candidate)
+Result JSON: recommended_second_candidate should be 'whale_position_alert'. ... ok
+test_029_upstream_validated (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_029_upstream_validated)
+Result JSON: upstream_validated should be true. ... ok
+test_030_all_required_fields (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_030_all_required_fields)
+Result JSON should contain all required fields. ... ok
+test_040_six_noise_results (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_040_six_noise_results)
+Should have exactly 6 noise case results. ... ok
+test_041_all_six_case_ids (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_041_all_six_case_ids)
+All 6 required noise case IDs should be present. ... ok
+test_042_all_cases_have_required_fields (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_042_all_cases
+_have_required_fields)
+Each noise case result should have all required fields. ... ok
+test_043_clean_sync_should_pass (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_043_clean_sync_should
+_pass)
+clean_sync_should_pass: expected passed, actual passed. ... ok
+test_044_two_of_three_direction_should_block (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_044_two_
+of_three_direction_should_block)
+two_of_three_direction_should_block: must be blocked. ... ok
+test_045_single_asset_volume_spike_should_block (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_045_s
+ingle_asset_volume_spike_should_block)
+single_asset_volume_spike_should_block: must be blocked. ... ok
+test_046_timestamp_skew_should_block_or_degrade (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_046_t
+imestamp_skew_should_block_or_degrade)
+timestamp_skew_should_block: must be blocked or degraded. ... ok
+test_047_leader_driven_should_downgrade_or_block (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_047_
+leader_driven_should_downgrade_or_block)
+leader_driven_move_should_downgrade_or_block: must be blocked or downgraded. ... ok
+test_048_mixed_sector_low_confidence (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_048_mixed_sector
+_low_confidence)
+mixed_sector_should_flag_low_confidence: should be low_confidence. ... ok
+test_049_clean_sync_no_noise_vectors (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_049_clean_sync_n
+o_noise_vectors)
+clean_sync_should_pass should have no noise vectors triggered. ... ok
+test_050_no_secrets_in_result_json (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_050_no_secrets_in_
+result_json)
+Result JSON must not contain secret patterns. ... ok
+test_051_no_secrets_in_noise_results (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_051_no_secrets_i
+n_noise_results)
+Noise case results must not contain secret patterns. ... ok
+test_052_no_secrets_in_report (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_052_no_secrets_in_repor
+t)
+Report MD must not contain secret patterns. ... ok
+test_053_no_secrets_in_handoff (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_053_no_secrets_in_hand
+off)
+Handoff MD must not contain secret patterns. ... ok
+test_054_no_misleading_in_report (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_054_no_misleading_in
+_report)
+Report must not contain misleading language. ... ok
+test_055_no_misleading_in_handoff (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_055_no_misleading_i
+n_handoff)
+Handoff must not contain misleading language. ... ok
+test_056_no_misleading_in_result_json (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_056_no_misleadi
+ng_in_result_json)
+Result JSON values must not contain misleading language. ... ok
+test_060_runner_stdout_mentions_v112p (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_060_runner_stdo
+ut_mentions_v112p)
+Runner stdout should mention v112P validation. ... ok
+test_061_runner_stdout_mentions_v112o (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_061_runner_stdo
+ut_mentions_v112o)
+Runner stdout should mention v112O validation. ... ok
+test_062_runner_stdout_mentions_noise (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_062_runner_stdo
+ut_mentions_noise)
+Runner stdout should mention noise cases. ... ok
+test_063_report_mentions_news_event_market_impact (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_063
+_report_mentions_news_event_market_impact)
+Report should explain why not news_event_market_impact. ... ok
+test_064_report_mentions_signal_quality (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_064_report_me
+ntions_signal_quality)
+Report should mention signal quality / false positive gap. ... ok
+test_065_report_has_noise_table (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_065_report_has_noise_
+table)
+Report should contain a noise case results table. ... ok
+test_066_report_mentions_next_steps (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_066_report_mentio
+ns_next_steps)
+Report should contain next steps / v112R recommendation. ... ok
+test_067_report_mentions_whale_position_alert (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_067_rep
+ort_mentions_whale_position_alert)
+Report should recommend whale_position_alert as second candidate. ... ok
+test_068_handoff_mentions_upstream_artifacts (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_068_hand
+off_mentions_upstream_artifacts)
+Handoff should list upstream artifacts read. ... ok
+test_069_handoff_has_safety_section (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_069_handoff_has_s
+afety_section)
+Handoff should explicitly state what is NOT enabled. ... FAIL
+test_070_rerun_produces_same_result (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_070_rerun_produce
+s_same_result)
+Re-running should produce the same result JSON key values. ... ok
+test_080_upstream_v112p_test_passes (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_080_upstream_v112
+p_test_passes)
+v112P test should still pass. ... ok
+test_081_upstream_v112o_test_passes (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_081_upstream_v112
+o_test_passes)
+v112O test should still pass. ... ok
+test_082_upstream_v112n_test_passes (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_082_upstream_v112
+n_test_passes)
+v112N test should still pass. ... ok
+test_083_upstream_v112g_test_passes (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_083_upstream_v112
+g_test_passes)
+v112G test should still pass. ... ok
+test_090_report_mentions_why_multi_asset (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_090_report_m
+entions_why_multi_asset)
+Report must explain why multi_asset_market_sync was chosen. ... ok
+test_091_report_mentions_why_not_news (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_091_report_ment
+ions_why_not_news)
+Report must explain why news_event_market_impact was NOT chosen. ... ok
+test_092_report_mentions_six_noise_risks (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_092_report_m
+entions_six_noise_risks)
+Report should mention all 6 noise risk categories. ... ok
+test_093_report_mentions_real_send_not_ready (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_093_repo
+rt_mentions_real_send_not_ready)
+Report must mention why real send is NOT ready. ... ok
+test_094_handoff_recommends_v112r (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_094_handoff_recomme
+nds_v112r)
+Handoff should recommend v112R proceed. ... ok
+test_095_no_live_api_in_outputs (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_095_no_live_api_in_ou
+tputs)
+None of the outputs should claim live API was called. ... ok
+
+======================================================================
+FAIL: test_069_handoff_has_safety_section (__main__.TestV112QMultiAssetNoiseAwareOneShotPlan.test_069_handoff
+_has_safety_section)
+Handoff should explicitly state what is NOT enabled.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\Projects\�¼��鱨ϵͳ\scripts\test_market_radar_v112q_multi_asset_noise_aware_one_shot
+_plan.py", line 491, in test_069_handoff_has_safety_section
+    self.assertIn("NOT called", self.handoff_text.lower())
+AssertionError: 'NOT called' not found in "# v112q handoff �� multi-asset market sync noise-aware one-shot pl
+an\n\n**handoff time**: 2026-06-05 03:20:25 utc+8\n**status**: passed\n\n---\n\n## what v112q did\n\n1. **val
+idated upstream state**: confirmed v112p status=passed, readiness_matrix_ready=true, recommended candidate=mu
+lti_asset_market_sync. confirmed v112o status=passed, preview_card_count=9.\n\n2. **created stricter threshol
+d config**: `config/market_radar_v112q_multi_asset_thresholds.json` with 9 stricter rules covering direction 
+agreement, per-asset price floors, secondary metrics, timestamp skew, leader detection, volume outliers, and 
+sector concentration.\n\n3. **created noise injection fixture**: `data/fixtures/market_radar_v112q_multi_asse
+t_noise_cases.json` with 6 test cases covering clean sync, direction conflict, volume distortion, timestamp s
+kew, leader-driven pseudo-sync, and sector dispersion.\n\n4. **ran noise-aware validation**: each case evalua
+ted against stricter thresholds. 6/6 cases produced expected results.\n\n5. **generated outputs**: result jso
+n, noise case results jsonl, report md, and this handoff md.\n\n## upstream artifacts read\n\n| artifact | pa
+th | key fields verified |\n|----------|------|---------------------|\n| v112p result | `results/market_radar
+_v112p_live_source_readiness_audit_result.json` | status=passed, readiness_matrix_ready=true, recommended=mul
+ti_asset_market_sync |\n| v112p matrix | `results/market_radar_v112p_live_source_matrix.json` | 5 card types,
+ mam score=18/18 |\n| v112o result | `results/market_radar_v112o_send_preview_pack_result.json` | status=pass
+ed, preview_card_count=9 |\n| v112o cards | `results/market_radar_v112o_send_preview_cards.jsonl` | 9 preview
+ cards, 3 mam cards |\n| v112g code | `scripts/market_radar_multi_asset_sync_feed_v112g.py` | read-only impor
+t for sector constants |\n\n## files generated\n\n| file | type | description |\n|------|------|-------------
+|\n| `config/market_radar_v112q_multi_asset_thresholds.json` | config | 9 stricter threshold rules |\n| `data
+/fixtures/market_radar_v112q_multi_asset_noise_cases.json` | fixture | 6 noise injection test cases |\n| `scr
+ipts/run_market_radar_v112q_multi_asset_noise_aware_one_shot_plan.py` | runner | main v112q runner |\n| `scri
+pts/test_market_radar_v112q_multi_asset_noise_aware_one_shot_plan.py` | test | test suite |\n| `results/marke
+t_radar_v112q_multi_asset_noise_aware_plan_result.json` | result | result json |\n| `results/market_radar_v11
+2q_multi_asset_noise_case_results.jsonl` | result | per-case results |\n| `runs/market_radar/v112q_multi_asse
+t_noise_aware_one_shot_plan.md` | report | full report |\n| `runs/market_radar/v112q_multi_asset_noise_aware_
+one_shot_plan_handoff.md` | handoff | this file |\n\n## test results\n\n### noise case results\n\n- \u2705 **
+clean_sync_should_pass**: expected=`passed` �� actual=`passed` (confidence=`high`, noise_vectors=`[]`)\n- \u2
+705 **two_of_three_direction_should_block**: expected=`blocked` �� actual=`blocked` (confidence=`medium`, noi
+se_vectors=`['direction_conflict']`)\n- \u2705 **single_asset_volume_spike_should_block**: expected=`blocked`
+ �� actual=`blocked` (confidence=`low`, noise_vectors=`['single_asset_volume_distortion']`)\n- \u2705 **times
+tamp_skew_should_block**: expected=`degraded` �� actual=`degraded` (confidence=`low`, noise_vectors=`['timest
+amp_skew']`)\n- \u2705 **leader_driven_move_should_downgrade_or_block**: expected=`downgraded` �� actual=`dow
+ngraded` (confidence=`low`, noise_vectors=`['leader_driven_pseudo_sync']`)\n- \u2705 **mixed_sector_should_fl
+ag_low_confidence**: expected=`low_confidence` �� actual=`low_confidence` (confidence=`low`, noise_vectors=`[
+'sector_dispersion']`)\n\n**total**: 6/6 passed\n\n### upstream validation\n\n- \u2705 upstream state validat
+ion: passed\n  - \u2705 v112p_result_exists: file found\n  - \u2705 v112p_status_passed: status=passed\n  - \
+u2705 v112p_readiness_matrix_ready: readiness_matrix_ready=true\n  - \u2705 v112p_recommended_is_multi_asset_
+market_sync: recommended=multi_asset_market_sync\n  - \u2705 v112o_result_exists: file found\n  - \u2705 v112
+o_status_passed: status=passed\n  - \u2705 v112o_preview_card_count_9: preview_card_count=9\n  - \u2705 v112o
+_multi_asset_market_sync_cards_present: multi_asset_market_sync cards in v112o=3\n  - \u2705 v112p_matrix_has
+_multi_asset_market_sync: entry found\n  - \u2705 v112p_matrix_mam_readiness_score_high: readiness_score=18\n
+\n## recommendation for v112r\n\n**yes �� recommend v112r proceed to mock adapter �� envelope compatibility.*
+*\n\nthe v112q noise-aware threshold rules are validated against 6 mock cases. the next step is to integrate 
+these rules into the envelope pipeline as a mock adapter, ensuring that:\n\n1. stricter-filtered candidates c
+an be serialized into v112h envelope format\n2. noise-blocked signals are correctly excluded at the envelope 
+stage\n3. the dedupe/cooldown gate (v112i) correctly processes stricter-filtered candidates\n4. eligible pack
+s (v112j) only contain noise-validated signals\n\n## safety: still not enabled\n\n| constraint | status |\n|-
+-----------|--------|\n| live api (coingecko, coincap, exchange) | \u274c not called |\n| tg send (any channe
+l) | \u274c not sent |\n| production state write | \u274c not written |\n| daemon / cron / background loop | 
+\u274c not started |\n| external ai/llm api | \u274c not called |\n| files deleted | \u274c not deleted |\n| 
+credentials read | \u274c not read |\n| secrets/tokens/keys in output | \u274c none present |\n\n---\n\n*hand
+off generated by v112q runner on 2026-06-05 03:20:25 utc+8*"
+
+----------------------------------------------------------------------
+Ran 64 tests in 2.259s
+
+FAILED (failures=1)
+
+============================================================
+Running v112Q Multi-Asset Market Sync Noise-Aware One-Shot Plan runner...
+============================================================
+

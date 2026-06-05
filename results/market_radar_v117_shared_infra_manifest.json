@@ -1,0 +1,35 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_155249",
+  "generated_at": "2026-06-05T15:53:17+08:00",
+  "shared_package": "market_radar/shared/",
+  "components": [
+    "models.py — CardFamily, NormalizedSignal, GateDecision, etc.",
+    "adapter_contract.py — SignalAdapter, FixtureSignalAdapter, FixtureCatalog",
+    "free_api_adapters.py — MultiAssetMarketSyncFreeApiAdapter, PriceOIVolumeAnomalyFreeApiAdapter",
+    "gate_contract.py — QualityGate, SendReadinessGate",
+    "renderer_contract.py — CardRenderer (all 5 card types)",
+    "sender_contract.py — TGTestGroupSender (redacted, test_group only)",
+    "evidence_ledger.py — EvidenceLedger (sha256 proofs, no raw secrets)",
+    "pipeline.py — SharedPipeline orchestrator"
+  ],
+  "card_families": [
+    "multi_asset_market_sync",
+    "price_oi_volume_anomaly",
+    "news_event_market_impact",
+    "liquidation_pressure",
+    "whale_position_alert"
+  ],
+  "real_free_api_adapters": [
+    "MultiAssetMarketSyncFreeApiAdapter (Binance public REST)",
+    "PriceOIVolumeAnomalyFreeApiAdapter (Binance spot + futures OI)"
+  ],
+  "constraints": {
+    "production_send_ready": false,
+    "formal_channel_blocked": true,
+    "x_twitter_blocked": true,
+    "daemon_cron_loop_blocked": true,
+    "liquidation_gate_not_lowered": true,
+    "whale_manual_evidence_not_bypassed": true
+  }
+}

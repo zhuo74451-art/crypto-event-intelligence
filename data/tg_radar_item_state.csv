@@ -8,3 +8,14 @@
   DOGE $0.0985，24h -3.3%；动态提权：拥挤变化"
 2026-05-28 18:35:19 UTC+8,tg_board_20260528_183519,unlock:HOME:cmc_unlock_home_981f5d6e414a01,token_unlock,HOME,token_unlock,66.4719,digest_only,解锁属于静态供给背景，盘中只在临近或异常放大时出现，默认转早晚报。,,2026-05-28 18:35:19 UTC+8,"HOME明日08:00解锁$19.0M
   占流通7.5%，主要释放给团队/贡献者"
+2026-06-01 11:06:26 UTC+8,tg_board_20260601_110626,hyper:0x082e843a431aef031264dc232693dd710aedca88:HYPE:多头:position_increased,hyperliquid,HYPE,position_change,156.2405,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,动仓优先,2026-06-01 11:06:26 UTC+8,"已知地址HYPE多头仓位变化$100.5M
+  HYPE $72.77，24h +6.2%；浮盈$47.1M，需看是否连续调整
+  样本状态：继续收集，不做强结论
+  动态提权：动仓优先"
+2026-06-01 11:06:26 UTC+8,tg_board_20260601_110626,hyper:loraclexyz:HYPE:空头:position_decreased,hyperliquid,HYPE,position_change,136.6978,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,动仓优先,2026-06-01 11:06:26 UTC+8,"loraclexyzHYPE空头仓位变化$61.4M
+  HYPE $72.77，24h +6.2%；浮亏$23.0M，需看是否连续调整
+  样本状态：继续收集，不做强结论
+  动态提权：动仓优先"
+2026-06-01 11:06:26 UTC+8,tg_board_20260601_110626,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,122.6600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,2026-06-01 11:06:26 UTC+8,"DOGE多头拥挤，大户持仓约为散户2.5倍，主动买入偏强
+  DOGE $0.1011，24h -0.0%；样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"

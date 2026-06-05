@@ -1,2 +1,2 @@
 overall_status,blocking_or_fail_count,review_count,total_checks
-pass,0,2,28
+fail,8,2,28

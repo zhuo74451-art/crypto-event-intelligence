@@ -1,10 +1,10 @@
 area,metric,value,target,status
-project_os,project_os_validation_fail_count,0,0,pass
+project_os,project_os_validation_fail_count,8,0,fail
 environment,local_environment_fail_count,0,0,pass
 project_os,command_registry_missing_scripts,0,0,pass
 project_os,review_action_unknown_rules,0,0,pass
 project_os,artifact_missing_required_count,0,0,pass
-project_os,artifact_stale_required_count,0,0,pass
+project_os,artifact_stale_required_count,103,0,fail
 project_os,open_review_actions,12,tracked,info
 project_os,project_os_validation_review_count,2,tracked,review
 data,older500_candidates,500,,info

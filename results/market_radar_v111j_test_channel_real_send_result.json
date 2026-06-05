@@ -1,0 +1,21 @@
+{
+  "version": "v1.11-J",
+  "mode": "test_channel_real_send",
+  "tg_sent": false,
+  "official_channel_touched": false,
+  "paid_api_called": false,
+  "loop_or_daemon_started": false,
+  "target_type": "test_channel",
+  "attempted_count": 3,
+  "sent_count": 0,
+  "failed_count": 0,
+  "sent_messages": [],
+  "failed_messages": [],
+  "security_checks": {
+    "no_secret_printed": true,
+    "no_formal_channel": true,
+    "no_ai_relay_desk_write": true
+  },
+  "error": "missing_runtime_test_channel_credentials",
+  "generated_at": "2026-06-04 20:48:04 UTC+8"
+}

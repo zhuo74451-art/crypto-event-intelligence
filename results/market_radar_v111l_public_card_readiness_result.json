@@ -1,0 +1,250 @@
+{
+  "version": "v1.11-L",
+  "mode": "public_card_readiness",
+  "real_tg_sent": false,
+  "external_ai_called": false,
+  "paid_api_called": false,
+  "reviewed_count": 3,
+  "public_ready_count": 3,
+  "debug_leak_count": 0,
+  "best_candidate": {
+    "mock_message_id": "mock_v111j_001",
+    "signal_id": "H6-07",
+    "asset": "ARB",
+    "grade": "A",
+    "recommendation": "keep",
+    "reason": "value_score=140; cooldown=upgrade_override; factors=4/4 (OI=True, Vol=True, Funding=True, MultiAsset=True); upgrade_override=yes; signal_value_score=95, risk_score=8, grade=A"
+  },
+  "records": [
+    {
+      "mock_message_id": "mock_v111j_001",
+      "signal_id": "H6-07",
+      "asset": "ARB",
+      "approach": "natural",
+      "public_card": {
+        "text": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 24h 跌幅 \\-8\\.50%，多因子异动信号 — OI/成交量同步放大，资金费率极端偏空。\n\n● 币种：ARB\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-1\\.80%（年化 \\-1971\\.0%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)\n\n💡 触发原因：ARB 多因子同步异动（价格跌幅 \\+ OI \\+ 成交量 \\+ 资金费率偏空），短时升级信号。\n\n⚠️ 仅供观察，不构成交易建议。",
+        "parse_mode": "MarkdownV2",
+        "text_length": 358,
+        "text_preview": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 24h 跌幅 \\-8\\.50%，多因子异动信号 — OI/成交量同步放大，资金费率极端偏空。\n\n● 币种：ARB\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-1\\.80%（年化 \\-1971\\.0%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)\n\n💡 触发原因：ARB 多因子同",
+        "payload_text_sha256": "360740678af3b0ace16fc43a85e0c2abcb321c93c931070e311dccfcca438d88"
+      },
+      "redaction_check": {
+        "debug_terms_found": [],
+        "ai_style_terms_found": [],
+        "passed": true
+      },
+      "readiness": {
+        "public_ready": true,
+        "reason": "Public card text clean — no debug/gate/internal terms detected."
+      },
+      "audit_metadata_preserved": true,
+      "audit_metadata": {
+        "value_gate": {
+          "decision": "allow",
+          "score": 140,
+          "reasons": [
+            "price_move: abs(-8.50%) >= 5%",
+            "strong_price_move: abs(-8.50%) >= 8%",
+            "oi_confirmation: open_interest=5200000.0",
+            "volume_confirmation: volume=6100000.0",
+            "funding_extreme: abs(funding)=0.0180 >= 0.01",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme, multi_asset_sync (backed)"
+          ]
+        },
+        "cooldown_gate": {
+          "decision": "upgrade_override",
+          "reason": "Upgrade override for ARB: value_score improved from 100 → 140 (Δ+40 >= 15) within cooldown window — allow as upgrade"
+        },
+        "pre_send_gate": {
+          "decision": "pass",
+          "reasons": []
+        },
+        "format_check": {
+          "markdown_or_html_safe": true,
+          "issues": []
+        },
+        "content_quality": {
+          "classification": "ready_to_test_send",
+          "reason": "All gates pass. Value score=140 (tier=high), cooldown=upgrade_override, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, upgrade signal (score Δ ≥ 15), not price-only noise.",
+          "is_price_only_noise": false,
+          "has_oi_or_volume_support": true,
+          "has_multi_factor_support": true,
+          "has_upgrade_signal": true
+        },
+        "_k_content_review": {
+          "is_price_only_noise": false,
+          "has_multi_factor_support": true,
+          "has_oi_support": true,
+          "has_volume_support": true,
+          "has_upgrade_signal": true,
+          "has_clear_trade_relevance": true,
+          "has_overclaiming_risk": false,
+          "has_ai_style_risk": false,
+          "has_duplicate_risk": false,
+          "readability_score": 95,
+          "signal_value_score": 95,
+          "risk_score": 8,
+          "final_grade": "A",
+          "recommendation": "keep",
+          "reason": "value_score=140; cooldown=upgrade_override; factors=4/4 (OI=True, Vol=True, Funding=True, MultiAsset=True); upgrade_override=yes; signal_value_score=95, risk_score=8, grade=A"
+        }
+      }
+    },
+    {
+      "mock_message_id": "mock_v111j_002",
+      "signal_id": "H5-01",
+      "asset": "ETH",
+      "approach": "upgrade_focus",
+      "public_card": {
+        "text": "📉 行情异动｜ETH 急跌\n\n一句话：ETH 24h 跌幅 \\-8\\.50%，多因子同步确认 — OI/成交量/资金费率三者共振，信号强度升级。\n\n● 币种：ETH\n● 涨跌幅：\\-8\\.50%\n● OI：$12\\.50B\n● 成交量：$18\\.20B\n● Funding：\\-2\\.50%（年化 \\-2737\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 价格跌幅扩大，OI 与成交量同步放大，资金费率极端偏空，信号强度较前次明显升级。\n\n⚠️ 仅供观察，不构成交易建议。",
+        "parse_mode": "MarkdownV2",
+        "text_length": 386,
+        "text_preview": "📉 行情异动｜ETH 急跌\n\n一句话：ETH 24h 跌幅 \\-8\\.50%，多因子同步确认 — OI/成交量/资金费率三者共振，信号强度升级。\n\n● 币种：ETH\n● 涨跌幅：\\-8\\.50%\n● OI：$12\\.50B\n● 成交量：$18\\.20B\n● Funding：\\-2\\.50%（年化 \\-2737\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/",
+        "payload_text_sha256": "fb5f38df96e08d2e689f6590b7b849e2a3598aa47ff4124dc5a69dc46ac18d22"
+      },
+      "redaction_check": {
+        "debug_terms_found": [],
+        "ai_style_terms_found": [],
+        "passed": true
+      },
+      "readiness": {
+        "public_ready": true,
+        "reason": "Public card text clean — no debug/gate/internal terms detected."
+      },
+      "audit_metadata_preserved": true,
+      "audit_metadata": {
+        "value_gate": {
+          "decision": "allow",
+          "score": 115,
+          "reasons": [
+            "price_move: abs(-8.50%) >= 5%",
+            "strong_price_move: abs(-8.50%) >= 8%",
+            "oi_confirmation: open_interest=12500000000.0",
+            "volume_confirmation: volume=18200000000.0",
+            "funding_extreme: abs(funding)=0.0250 >= 0.01",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme"
+          ]
+        },
+        "cooldown_gate": {
+          "decision": "upgrade_override",
+          "reason": "Upgrade override for ETH: value_score improved from 45 → 115 (Δ+70 >= 15) within cooldown window — allow as upgrade"
+        },
+        "pre_send_gate": {
+          "decision": "pass",
+          "reasons": []
+        },
+        "format_check": {
+          "markdown_or_html_safe": true,
+          "issues": []
+        },
+        "content_quality": {
+          "classification": "ready_to_test_send",
+          "reason": "All gates pass. Value score=115 (tier=high), cooldown=upgrade_override, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, upgrade signal (score Δ ≥ 15), not price-only noise.",
+          "is_price_only_noise": false,
+          "has_oi_or_volume_support": true,
+          "has_multi_factor_support": true,
+          "has_upgrade_signal": true
+        },
+        "_k_content_review": {
+          "is_price_only_noise": false,
+          "has_multi_factor_support": true,
+          "has_oi_support": true,
+          "has_volume_support": true,
+          "has_upgrade_signal": true,
+          "has_clear_trade_relevance": true,
+          "has_overclaiming_risk": false,
+          "has_ai_style_risk": true,
+          "has_duplicate_risk": true,
+          "readability_score": 95,
+          "signal_value_score": 100,
+          "risk_score": 38,
+          "final_grade": "B",
+          "recommendation": "revise",
+          "reason": "value_score=115; cooldown=upgrade_override; factors=3/4 (OI=True, Vol=True, Funding=True, MultiAsset=False); upgrade_override=yes; duplicate_asset_with=mock_v111j_003; ai_style_detected; signal_value_score=100, risk_score=38, grade=B"
+        }
+      }
+    },
+    {
+      "mock_message_id": "mock_v111j_003",
+      "signal_id": "H1-01",
+      "asset": "ETH",
+      "approach": "strength_focus",
+      "public_card": {
+        "text": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 24h 跌幅 \\-6\\.80%，基础面偏空 — 大额 OI 配合成交量放大，资金费率转负。\n\n● 币种：ETH\n● 涨跌幅：\\-6\\.80%\n● OI：$12\\.90B\n● 成交量：$16\\.00B\n● Funding：\\-1\\.50%（年化 \\-1642\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 价格持续走弱，OI 维持高位，成交量明显放大，短期偏空压力未缓解。\n\n⚠️ 仅供观察，不构成交易建议。",
+        "parse_mode": "MarkdownV2",
+        "text_length": 375,
+        "text_preview": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 24h 跌幅 \\-6\\.80%，基础面偏空 — 大额 OI 配合成交量放大，资金费率转负。\n\n● 币种：ETH\n● 涨跌幅：\\-6\\.80%\n● OI：$12\\.90B\n● 成交量：$16\\.00B\n● Funding：\\-1\\.50%（年化 \\-1642\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/sear",
+        "payload_text_sha256": "32f1dbdb7fb669a4ff7460b2e59eb7bfa62651739bb82b0d139348d2628e46f8"
+      },
+      "redaction_check": {
+        "debug_terms_found": [],
+        "ai_style_terms_found": [],
+        "passed": true
+      },
+      "readiness": {
+        "public_ready": true,
+        "reason": "Public card text clean — no debug/gate/internal terms detected."
+      },
+      "audit_metadata_preserved": true,
+      "audit_metadata": {
+        "value_gate": {
+          "decision": "allow",
+          "score": 120,
+          "reasons": [
+            "price_move: abs(-6.80%) >= 5%",
+            "oi_confirmation: open_interest=12900000000.0",
+            "volume_confirmation: volume=16000000000.0",
+            "funding_extreme: abs(funding)=0.0150 >= 0.01",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme, multi_asset_sync (backed)"
+          ]
+        },
+        "cooldown_gate": {
+          "decision": "allow",
+          "reason": "First occurrence of ETH — no cooldown applied"
+        },
+        "pre_send_gate": {
+          "decision": "pass",
+          "reasons": []
+        },
+        "format_check": {
+          "markdown_or_html_safe": true,
+          "issues": []
+        },
+        "content_quality": {
+          "classification": "ready_to_test_send",
+          "reason": "All gates pass. Value score=120 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+          "is_price_only_noise": false,
+          "has_oi_or_volume_support": true,
+          "has_multi_factor_support": true,
+          "has_upgrade_signal": false
+        },
+        "_k_content_review": {
+          "is_price_only_noise": false,
+          "has_multi_factor_support": true,
+          "has_oi_support": true,
+          "has_volume_support": true,
+          "has_upgrade_signal": false,
+          "has_clear_trade_relevance": true,
+          "has_overclaiming_risk": true,
+          "has_ai_style_risk": true,
+          "has_duplicate_risk": true,
+          "readability_score": 95,
+          "signal_value_score": 80,
+          "risk_score": 41,
+          "final_grade": "C",
+          "recommendation": "revise",
+          "reason": "value_score=120; cooldown=allow; factors=4/4 (OI=True, Vol=True, Funding=True, MultiAsset=True); duplicate_asset_with=mock_v111j_002; overclaiming_detected; ai_style_detected; signal_value_score=80, risk_score=41, grade=C"
+        }
+      }
+    }
+  ],
+  "mvp_judgement": {
+    "technical_loop_complete": true,
+    "content_loop_complete": true,
+    "public_card_layer_ready": true,
+    "ready_for_official_channel": false,
+    "reason": "v1.11-L public card readiness complete. 3/3 cards pass redaction check. Public card text layer is separated from audit metadata. Formal channel must remain frozen: no real TG send has occurred, sender security abstraction and cooldown persistence are not yet implemented. Next step: v1.11-M (Gemini external review of public card quality) or v1.11-N (real test-channel delivery after safety checks)."
+  }
+}

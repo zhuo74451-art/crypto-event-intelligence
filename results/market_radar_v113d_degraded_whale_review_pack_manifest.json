@@ -1,0 +1,32 @@
+{
+  "version": "v113D",
+  "seal_type": "degraded_whale_review_pack_local_only",
+  "sealed": true,
+  "stage_conclusion": "local_operator_review_ready_not_send_ready",
+  "input_chain": {
+    "v112x_stop_decision": "DEGRADE_TO_MOCK",
+    "v112y_replay_records": 10,
+    "v112z_envelopes": 10,
+    "v113a_preview_cards": 10,
+    "v113b_quality_decisions": 10,
+    "v113c_operator_review_cards": 10
+  },
+  "safety": {
+    "external_api_called_in_this_step": false,
+    "eligible_for_real_send_count": 0,
+    "real_send_candidate_count": 0,
+    "tg_send_allowed_count": 0,
+    "prod_state_write": false,
+    "credentials_read": false,
+    "daemon_started": false,
+    "watcher_started": false,
+    "files_deleted": false
+  },
+  "review_pack_status": {
+    "operator_review_ready_count": 10,
+    "review_only_no_send_count": 10,
+    "blocked_count": 0
+  },
+  "next_policy": "handoff_to_gpt_for_next_stage_decision",
+  "generated_at": "2026-06-05T05:56:46+08:00"
+}

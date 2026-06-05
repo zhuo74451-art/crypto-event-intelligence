@@ -1,0 +1,123 @@
+{
+  "pipeline_version": "v1.18A",
+  "run_id": "20260605_171902",
+  "task_id": "20260605_v118a_market_radar_three_card_digest_shared_pipeline_tg_one_shot",
+  "generated_at": "2026-06-05T17:19:48+08:00",
+  "type": "real_free_api_three_card_digest_tg_one_shot",
+  "card_count": 3,
+  "digest": {
+    "card_count": 3,
+    "allowed_count": 2,
+    "priority_order": "news_event > price_oi_anomaly > multi_asset_sync",
+    "digest_length": 1031,
+    "digest_text": "📊 Market Radar v118A — Operator Digest\n\n✅ 📰 News Event\n   Source: free_public_source\n   Gate: allow | Send: sent\n   Signal: [high] other: Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%\n   Note: event_extraction: rule_based_keyword_matching — NO AI/model; not_causal_proof: event observed alongside market data, not\n   ⚠ Observation only — not causal proof\n\n⛔ 🔍 Price/OI/Vol Anomaly\n   Source: free_public_api\n   Gate: block | Send: blocked\n   Signal: BTCUSDT: Δ-0.16% anomaly=normal; ETHUSDT: Δ-4.30% anomaly=normal; SOLUSDT: Δ-3.02% anomaly=normal\n\n✅ 📊 Multi-Asset Sync\n   Source: free_public_api\n   Gate: allow | Send: sent\n   Signal: BTCUSDT: -0.21%; ETHUSDT: -4.33%; SOLUSDT: -3.03% (All monitored assets showing bearish alignment (corr≈0.80))\n\n---\nCards: 2/3 allowed through quality gate\nPipeline: v1.18A\nRun ID: 20260605_171902\nProduction: FALSE | One-shot: TRUE | Test group only\n\n⚠ All observations are NOT causal proof. Data from free public sources only.\n⚠ 内部数据观察，不构成投资建议。Production Send = False。"
+  },
+  "cards": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "pipeline_passed": true,
+      "error": null,
+      "gate_allow": true,
+      "gate_reason": "Multi-asset data available for 3 assets",
+      "send_readiness_allow": true,
+      "tg_status": "sent",
+      "adapter_fetch_count": 1,
+      "data_source": "free_public_api",
+      "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+      "source_refs": [
+        "binance_public_api:/api/v3/ticker/24hr"
+      ],
+      "asset_count": 3,
+      "correlation_score": 0.8
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "pipeline_passed": false,
+      "error": null,
+      "gate_allow": false,
+      "gate_reason": "No asset passed admission threshold — insufficient anomaly signal strength",
+      "send_readiness_allow": false,
+      "tg_status": "blocked",
+      "adapter_fetch_count": 1,
+      "data_source": "free_public_api",
+      "asset_or_topic": "BTCUSDT",
+      "source_refs": [
+        "binance_public_api:/api/v3/ticker/24hr",
+        "binance_public_api:openInterest(BTCUSDT)",
+        "binance_public_api:openInterest(ETHUSDT)",
+        "binance_public_api:openInterest(SOLUSDT)"
+      ],
+      "asset_count": 3,
+      "anomalies": [
+        "normal",
+        "normal",
+        "normal"
+      ]
+    },
+    {
+      "card_family": "news_event_market_impact",
+      "pipeline_passed": true,
+      "error": null,
+      "gate_allow": true,
+      "gate_reason": "News event with high intensity accepted",
+      "send_readiness_allow": true,
+      "tg_status": "sent",
+      "adapter_fetch_count": 1,
+      "data_source": "free_public_source",
+      "asset_or_topic": "BTC, HYPE, NEAR",
+      "source_refs": [
+        "free_public_source:4_sources_165_articles",
+        "binance_public_api:/api/v3/ticker/24hr",
+        "free_public_source:CoinDesk",
+        "free_public_source:Cointelegraph",
+        "free_public_source:Decrypt",
+        "free_public_source:Binance Announcements"
+      ],
+      "observation_only": true,
+      "not_causal_proof": true,
+      "event_intensity": "high",
+      "event_type": "other"
+    }
+  ],
+  "adapter_fetch_counts": {
+    "multi_asset_market_sync": 1,
+    "price_oi_volume_anomaly": 1,
+    "news_event_market_impact": 1
+  },
+  "each_adapter_max_one_fetch": true,
+  "tg_digest": {
+    "attempted": true,
+    "success": true,
+    "status": "sent",
+    "reason": "TG test group one-shot sent successfully",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": true,
+    "token_proof_present": true,
+    "chat_id_proof_present": true,
+    "credentials_printed": false,
+    "message_count": 1
+  },
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": true,
+    "tg_message_count_this_run": 1,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false
+  },
+  "preflight": {
+    "safe_loader_found": true,
+    "load_success": true,
+    "config_ready": true,
+    "bot_token_present": true,
+    "chat_id_present": true
+  },
+  "shared_pipeline_proof": "v118A proves the system has graduated from single-card verification to multi-card operator digest. 3 verified card families run through the same shared pipeline, producing 1 aggregated TG digest message (not 3 separate sends). Each adapter fetches at most once from free public APIs only."
+}

@@ -1,0 +1,74 @@
+{
+  "version": "v1.12-q",
+  "status": "passed",
+  "dry_run_only": true,
+  "live_ready": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "files_deleted": false,
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "candidate_card_type": "multi_asset_market_sync",
+  "one_shot_plan_ready": true,
+  "noise_injection_cases_total": 6,
+  "noise_injection_cases_passed": 6,
+  "stricter_thresholds_ready": true,
+  "real_send_ready": false,
+  "production_state_write_ready": false,
+  "real_live_api_called": false,
+  "recommended_second_candidate": "whale_position_alert",
+  "v112p_status": "passed",
+  "v112p_readiness_matrix_ready": true,
+  "v112o_status": "passed",
+  "v112o_preview_card_count": 9,
+  "upstream_validated": true,
+  "noise_case_results_summary": {
+    "clean_sync_should_pass": {
+      "expected": "passed",
+      "actual": "passed",
+      "passed": true,
+      "confidence": "high"
+    },
+    "two_of_three_direction_should_block": {
+      "expected": "blocked",
+      "actual": "blocked",
+      "passed": true,
+      "confidence": "medium"
+    },
+    "single_asset_volume_spike_should_block": {
+      "expected": "blocked",
+      "actual": "blocked",
+      "passed": true,
+      "confidence": "low"
+    },
+    "timestamp_skew_should_block": {
+      "expected": "degraded",
+      "actual": "degraded",
+      "passed": true,
+      "confidence": "low"
+    },
+    "leader_driven_move_should_downgrade_or_block": {
+      "expected": "downgraded",
+      "actual": "downgraded",
+      "passed": true,
+      "confidence": "low"
+    },
+    "mixed_sector_should_flag_low_confidence": {
+      "expected": "low_confidence",
+      "actual": "low_confidence",
+      "passed": true,
+      "confidence": "low"
+    }
+  },
+  "thresholds_applied": {
+    "small_basket_max_size": 3,
+    "small_basket_required_direction_agreement": 1.0,
+    "large_basket_required_direction_agreement": 0.8,
+    "max_timestamp_skew_seconds": 60,
+    "leader_driven_downgrade_enabled": true,
+    "historical_baseline_required_before_real_send": true
+  },
+  "generated_at": "2026-06-05 04:13:17 UTC+8"
+}

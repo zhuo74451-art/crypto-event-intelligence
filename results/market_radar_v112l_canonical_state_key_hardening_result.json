@@ -1,0 +1,62 @@
+{
+  "version": "v1.12-L",
+  "schema_version": "1.1.0",
+  "validator_version": "v1.12-L",
+  "run_id": "20260604_202718",
+  "generated_at": "2026-06-05 04:13:19 UTC+8",
+  "envelope_count": 13,
+  "eligible_signal_count": 9,
+  "prior_fixture_entry_count": 7,
+  "proposed_state_entry_count": 16,
+  "canonical_state_entry_count": 9,
+  "prior_fixture_canonical_match_count": 2,
+  "prior_fixture_synthetic_or_unknown_count": 5,
+  "proposed_state_canonical_match_count": 11,
+  "canonical_state_all_match": true,
+  "synthetic_key_risk_detected": true,
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "full_wallet_leak": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "live_ready": false,
+  "dry_run_only": true,
+  "production_state_written": false,
+  "prior_fixture_audit_summary": {
+    "total": 7,
+    "canonical_match": 2,
+    "synthetic_or_unknown": 5,
+    "dedupe_key_mismatch": 0,
+    "cooldown_key_mismatch": 0,
+    "payload_hash_mismatch": 0,
+    "missing_required_key": 0
+  },
+  "proposed_state_audit_summary": {
+    "total": 16,
+    "canonical_match": 11,
+    "synthetic_or_unknown": 5,
+    "dedupe_key_mismatch": 0,
+    "cooldown_key_mismatch": 0,
+    "payload_hash_mismatch": 0,
+    "missing_required_key": 0
+  },
+  "canonical_state_audit_summary": {
+    "total": 9,
+    "canonical_match": 9,
+    "synthetic_or_unknown": 0,
+    "dedupe_key_mismatch": 0,
+    "cooldown_key_mismatch": 0,
+    "payload_hash_mismatch": 0,
+    "missing_required_key": 0
+  },
+  "notes": [
+    "Audited 7 prior fixture entries: 2 canonical, 5 synthetic/unknown.",
+    "Audited 16 proposed state entries: 11 canonical.",
+    "Generated 9 canonical state entries from eligible signals.",
+    "Canonical state all canonical: True.",
+    "Synthetic key risk detected: True.",
+    "Dry-run only — no live state writes, no TG send, no external APIs."
+  ]
+}

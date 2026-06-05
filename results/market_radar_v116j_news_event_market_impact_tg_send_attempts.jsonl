@@ -1,0 +1,7 @@
+{"attempted": false, "success": false, "blocked_reason": "gate_not_passed", "target_type": "test_group", "one_shot": true}
+{"attempted": false, "success": false, "blocked_reason": "gate_not_passed", "target_type": "test_group", "one_shot": true}
+{"attempted": false, "success": false, "blocked_reason": "gate_not_passed", "target_type": "test_group", "one_shot": true}
+{"attempted": false, "success": false, "blocked_reason": "gate_not_passed", "target_type": "test_group", "one_shot": true}
+{"attempted": true, "success": true, "status": "done", "message_id_present": true, "message_id_redacted": "sha256:9d1ef11e7923e54a", "status_code": 200, "error_type": "", "error_message": null, "provider": "telegram", "tg_api_called": true, "provider_metadata_redacted": true, "target_type": "test_group", "one_shot": true, "production_send": false, "sent_at": "2026-06-05T13:25:21.737789+08:00"}
+{"attempted": false, "success": false, "blocked_reason": "gate_not_passed", "target_type": "test_group", "one_shot": true}
+{"attempted": true, "success": true, "status": "done", "message_id_present": true, "message_id_redacted": "sha256:9dc6abc967dad3e2", "status_code": 200, "error_type": "", "error_message": null, "provider": "telegram", "tg_api_called": true, "provider_metadata_redacted": true, "target_type": "test_group", "one_shot": true, "production_send": false, "sent_at": "2026-06-05T13:25:22.831880+08:00"}

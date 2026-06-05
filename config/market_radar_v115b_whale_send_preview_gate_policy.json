@@ -1,0 +1,83 @@
+{
+  "version": "v115B",
+  "policy_name": "whale_send_preview_gate_policy",
+  "description": "Defines the one-shot send preview gate that must be satisfied before any TG test group send. Send is disabled by default and requires explicit gate passage. No send occurs without preview, approval, and dedupe.",
+  "send_enabled_by_default": false,
+  "tg_send_allowed": false,
+  "gate_requirements": {
+    "one_shot_preview_pack": {
+      "required": true,
+      "description": "Before any TG test send, a one-shot preview pack must be generated showing exact message content, recipient scope, and routing decision.",
+      "contents": [
+        "exact_tg_copy_text",
+        "target_test_group_id",
+        "label_confidence_level",
+        "routing_decision",
+        "cooldown_status",
+        "no_repeat_status",
+        "payload_hash"
+      ]
+    },
+    "no_repeat_key": {
+      "required": true,
+      "format": "{address}_{asset}_{side}_{delta_type}_{date}",
+      "description": "Unique dedupe key preventing the same position/delta from being sent twice in the same window."
+    },
+    "cooldown_key": {
+      "required": true,
+      "format": "{address}_{asset}_{date}",
+      "description": "Cooldown key preventing same address+asset from being sent within cooldown window."
+    },
+    "payload_hash": {
+      "required": true,
+      "description": "SHA-256 hash of the exact TG copy payload. Used for duplicate detection and rollback identification.",
+      "algorithm": "sha256",
+      "input": "exact_tg_copy_text + address + asset + timestamp"
+    },
+    "operator_approval_field": {
+      "required": true,
+      "description": "Explicit operator approval flag. Must be set to true by operator after reviewing the preview pack.",
+      "default": false,
+      "must_be_explicitly_set": true
+    },
+    "test_group_scope_field": {
+      "required": true,
+      "description": "Explicitly defines the test group scope. Must be 'tg_test_group_only' — production channel is never in scope.",
+      "allowed_values": [
+        "tg_test_group_only"
+      ],
+      "default": "tg_test_group_only"
+    },
+    "user_pre_authorization": {
+      "required": true,
+      "description": "Explicit user pre-authorization scoped to TG test group only. Does NOT imply production publish permission.",
+      "scope": "tg_test_group_only",
+      "must_be_explicit": true,
+      "revocable": true
+    }
+  },
+  "send_flow": {
+    "step_1": "Generate one-shot preview pack with exact TG copy",
+    "step_2": "Check no-repeat key — block if duplicate",
+    "step_3": "Check cooldown key — block if within window",
+    "step_4": "Compute payload hash for tracking",
+    "step_5": "Present preview pack to operator for review",
+    "step_6": "Operator sets approval field explicitly",
+    "step_7": "User pre-authorization confirmed (test group only)",
+    "step_8": "TG test send executed (one-shot, no auto-repeat)"
+  },
+  "after_send": {
+    "record_no_repeat_key": true,
+    "start_cooldown": true,
+    "record_payload_hash": true,
+    "do_not_auto_resend": true,
+    "do_not_retry_on_failure_without_review": true
+  },
+  "current_state": {
+    "send_gate_active": false,
+    "any_preview_pack_generated": false,
+    "any_operator_approval": false,
+    "any_send_executed": false
+  },
+  "generated_at": "2026-06-05T06:41:34.874054+08:00"
+}

@@ -1,24 +1,24 @@
 # Project OS Validation Report
 
-Last updated: 2026-05-29 14:29:05 UTC+8
+Last updated: 2026-06-01 10:24:17 UTC+8
 
-overall_status: pass
-blocking_or_fail_count: 0
+overall_status: fail
+blocking_or_fail_count: 8
 review_count: 2
 
 | area | check | actual | expected | status | evidence |
 |---|---|---:|---|---|---|
-| freshness | dashboard_metrics_age_hours | 1.61 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv` |
-| freshness | tg_gate_age_hours | 2.2478 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\v06_tg_pilot_gate_report.csv` |
-| freshness | secret_summary_age_hours | 2.2551 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\secret_leak_summary.csv` |
-| freshness | claude_decisions_age_hours | 1.6126 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\data\claude_decision_review_queue.csv` |
-| freshness | decisions_doc_age_hours | 17.1204 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\docs\DECISIONS.md` |
-| freshness | command_registry_summary_age_hours | 0.1662 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\command_registry_summary.csv` |
-| freshness | review_action_summary_age_hours | 1.6113 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_review_action_summary.csv` |
-| freshness | environment_summary_age_hours | 1.6133 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\local_environment_summary.csv` |
-| freshness | artifact_manifest_summary_age_hours | 0.1734 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\artifact_manifest_summary.csv` |
-| freshness | dashboard_metrics_not_older_than_tg_gate | 2026-05-29 12:52:29 | >= 2026-05-29 12:14:13 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv vs C:\Users\PC\Desktop\Projects\事件情报系统\results\v06_tg_pilot_gate_report.csv` |
-| project_os | blocking_dashboard_items | 0 | 0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv` |
+| freshness | dashboard_metrics_age_hours | 0.2777 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv` |
+| freshness | tg_gate_age_hours | 70.1677 | <= 24.0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\results\v06_tg_pilot_gate_report.csv` |
+| freshness | secret_summary_age_hours | 0.0037 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\secret_leak_summary.csv` |
+| freshness | claude_decisions_age_hours | 69.5325 | <= 24.0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\data\claude_decision_review_queue.csv` |
+| freshness | decisions_doc_age_hours | 85.0403 | <= 24.0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\docs\DECISIONS.md` |
+| freshness | command_registry_summary_age_hours | 67.9196 | <= 24.0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\results\command_registry_summary.csv` |
+| freshness | review_action_summary_age_hours | 69.5312 | <= 24.0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_review_action_summary.csv` |
+| freshness | environment_summary_age_hours | 69.5332 | <= 24.0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\results\local_environment_summary.csv` |
+| freshness | artifact_manifest_summary_age_hours | 0.2807 | <= 24.0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\artifact_manifest_summary.csv` |
+| freshness | dashboard_metrics_not_older_than_tg_gate | 2026-06-01 10:07:37 | >= 2026-05-29 12:14:13 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv vs C:\Users\PC\Desktop\Projects\事件情报系统\results\v06_tg_pilot_gate_report.csv` |
+| project_os | blocking_dashboard_items | 1 | 0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv` |
 | project_os | review_dashboard_items | 12 | tracked, may be >0 | review | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_dashboard_metrics.csv` |
 | tg_gate | all_tg_gate_rows_pass | 0 | 0 non-pass rows | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\v06_tg_pilot_gate_report.csv` |
 | tg_gate | auto_publish_count | 0 | 0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\v06_tg_pilot_gate_report.csv` |
@@ -34,7 +34,7 @@ review_count: 2
 | environment | local_environment_fail_count | 0 | 0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\local_environment_summary.csv` |
 | project_os | review_action_unknown_rules | 0 | 0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\project_review_action_summary.csv` |
 | project_os | artifact_missing_required_count | 0 | 0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\artifact_manifest_summary.csv` |
-| project_os | artifact_stale_required_count | 0 | 0 | pass | `C:\Users\PC\Desktop\Projects\事件情报系统\results\artifact_manifest_summary.csv` |
+| project_os | artifact_stale_required_count | 103 | 0 | fail | `C:\Users\PC\Desktop\Projects\事件情报系统\results\artifact_manifest_summary.csv` |
 | boundaries | static_boundary_scan_findings | 0 | 0 | pass | `scripts/docs/data text scan` |
 
 Interpretation:

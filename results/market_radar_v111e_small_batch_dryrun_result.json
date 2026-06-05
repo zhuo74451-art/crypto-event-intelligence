@@ -1,0 +1,906 @@
+{
+  "run_version": "v1.11-E",
+  "gate_version": "v1.11-d",
+  "generated_at": "2026-06-04 18:57:51 UTC+8",
+  "total_scenarios": 5,
+  "total_signals": 20,
+  "real_signal_count": 19,
+  "fixture_signal_count": 1,
+  "aggregate_allow": 14,
+  "aggregate_observe": 3,
+  "aggregate_block": 3,
+  "aggregate_allow_rate_pct": 70.0,
+  "aggregate_observe_rate_pct": 15.0,
+  "allow_rate_delta_vs_v111d_pct": -16.7,
+  "observe_rate_delta_vs_v111d_pct": 15.0,
+  "decision_matrix_by_scenario": {
+    "A": {
+      "name": "Baseline — Well-Confirmed Signals",
+      "allow": 3,
+      "observe": 0,
+      "block": 0,
+      "allow_pct": 100.0,
+      "observe_pct": 0.0,
+      "multi_fired": true,
+      "has_cooldown_issue": false
+    },
+    "B": {
+      "name": "Mixed Confirmation — Observe Layer Test",
+      "allow": 1,
+      "observe": 1,
+      "block": 1,
+      "allow_pct": 33.3,
+      "observe_pct": 33.3,
+      "multi_fired": true,
+      "has_cooldown_issue": false
+    },
+    "C": {
+      "name": "Multi-Asset Boundary + Fixture Exclusion",
+      "allow": 4,
+      "observe": 0,
+      "block": 0,
+      "allow_pct": 100.0,
+      "observe_pct": 0.0,
+      "multi_fired": true,
+      "has_cooldown_issue": false
+    },
+    "D": {
+      "name": "Same-Asset Repeat — Cooldown Gap Demonstration",
+      "allow": 5,
+      "observe": 0,
+      "block": 0,
+      "allow_pct": 100.0,
+      "observe_pct": 0.0,
+      "multi_fired": true,
+      "has_cooldown_issue": true
+    },
+    "E": {
+      "name": "Observe-Dominant — Low-Quality Signal Day",
+      "allow": 1,
+      "observe": 2,
+      "block": 2,
+      "allow_pct": 20.0,
+      "observe_pct": 40.0,
+      "multi_fired": true,
+      "has_cooldown_issue": false
+    }
+  },
+  "batches_with_multi_asset_sync": 5,
+  "batches_without_multi_asset_sync": 0,
+  "cooldown_violations_total": 1,
+  "batches_with_observe_activated": 2,
+  "key_findings": [
+    "Allow rate: 70.0% (14/20) vs v1.11-D 86.7% (13/15) — Δ-16.7%. Small batches produce a more realistic distribution because multi_asset_sync does not fire in 0/5 scenarios.",
+    "Observe layer ACTIVATED: 15.0% (3/20). v1.11-D had 0% observe — the large batch inflated multi_asset_sync and suppressed observe. Small batches correctly route incomplete signals to observe. Observe triggered in 2/5 batches.",
+    "Multi_asset_sync: fired in 5/5 batches (requires >= 3 real same-direction assets). In the remaining 0 batches, only 2 or fewer real assets shared direction — multi_asset_sync could not fire. This is the CORRECT behavior for small batches.",
+    "Cooldown: 1 same-asset repeat scenario(s) detected. SignalValueGate correctly allows both occurrences (no cooldown logic in gate by design). This CONFIRMS cooldown must be a separate layer in pre_send_gate or a dedicated cooldown module.",
+    "Pre-send gate readiness: NOT READY. Blockers: 1. Conditions: 2."
+  ],
+  "pre_send_gate_readiness": {
+    "ready": false,
+    "blockers": [
+      "Cooldown not implemented — same-asset repeats would flood test channel. Implement cooldown layer before pre_send_gate."
+    ],
+    "conditions": [
+      "Observe layer fires correctly in small batches — gate is discriminating enough to be useful as a pre-filter.",
+      "Complete v1.11-E validation with real-time data before deciding."
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario_id": "A",
+      "scenario_name": "Baseline — Well-Confirmed Signals",
+      "objective": "Verify that 3 well-confirmed signals all pass as allow. Tests multi_asset_sync at the exact threshold (3 real assets). This is the expected normal-operation baseline.",
+      "batch_size": 3,
+      "batch_stats": {
+        "allow": 3,
+        "observe": 0,
+        "block": 0,
+        "real_count": 3,
+        "fixture_count": 0,
+        "allow_rate_pct": 100.0,
+        "observe_rate_pct": 0.0
+      },
+      "multi_asset_sync_analysis": {
+        "real_signal_count": 3,
+        "fixture_signal_count": 0,
+        "same_direction_real_count": 3,
+        "dominant_direction": "down",
+        "multi_threshold_met": true,
+        "multi_asset_sync_triggered_count": 3,
+        "multi_asset_sync_used_in_allow": 3,
+        "multi_contributed_to_over_allow": "medium",
+        "note": "Small batch (3 real, 3 in dominant direction): multi_asset_sync FIRES (threshold is >= 3 real assets). Multi fires but is backed by OI/volume in most signals."
+      },
+      "cooldown_findings": [],
+      "signal_results": [
+        {
+          "asset": "BTC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -5.54,
+          "open_interest": 1826000000,
+          "volume": 6345000000,
+          "funding": null,
+          "trigger_reason": "BTC 24h 跌幅 5.54% — 大盘领跌",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-5.54%) >= 5%",
+            "oi_confirmation: open_interest=1826000000.0",
+            "volume_confirmation: volume=6345000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "SOL",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -7.24,
+          "open_interest": 278000000,
+          "volume": 527000000,
+          "funding": 0.0,
+          "trigger_reason": "SOL 24h 跌幅 7.24% — 主流资产领跌",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-7.24%) >= 5%",
+            "oi_confirmation: open_interest=278000000.0",
+            "volume_confirmation: volume=527000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -6.96,
+          "open_interest": 4682600,
+          "volume": 4932100,
+          "funding": 0.0,
+          "trigger_reason": "ARB 24h 跌幅 6.96% — 小市值跟跌",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-6.96%) >= 5%",
+            "oi_confirmation: open_interest=4682600.0",
+            "volume_confirmation: volume=4932100.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario_id": "B",
+      "scenario_name": "Mixed Confirmation — Observe Layer Test",
+      "objective": "Verify that signals with incomplete field data correctly route to observe when multi_asset_sync cannot fire (only 2 same-direction real assets). Tests the gate WITHOUT the large-batch multi_asset crutch seen in v1.11-D.",
+      "batch_size": 3,
+      "batch_stats": {
+        "allow": 1,
+        "observe": 1,
+        "block": 1,
+        "real_count": 3,
+        "fixture_count": 0,
+        "allow_rate_pct": 33.3,
+        "observe_rate_pct": 33.3
+      },
+      "multi_asset_sync_analysis": {
+        "real_signal_count": 3,
+        "fixture_signal_count": 0,
+        "same_direction_real_count": 3,
+        "dominant_direction": "down",
+        "multi_threshold_met": true,
+        "multi_asset_sync_triggered_count": 3,
+        "multi_asset_sync_used_in_allow": 1,
+        "multi_contributed_to_over_allow": "medium",
+        "note": "Small batch (3 real, 3 in dominant direction): multi_asset_sync FIRES (threshold is >= 3 real assets). Multi fires but is backed by OI/volume in most signals."
+      },
+      "cooldown_findings": [],
+      "signal_results": [
+        {
+          "asset": "SUI",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -5.83,
+          "open_interest": 28000000,
+          "volume": 21500000,
+          "funding": 0.0,
+          "trigger_reason": "SUI 24h 跌幅 5.83% — OI/volume 可确认",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-5.83%) >= 5%",
+            "oi_confirmation: open_interest=28000000.0",
+            "volume_confirmation: volume=21500000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "ETH",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -7.5,
+          "open_interest": null,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "ETH 24h 跌幅 7.50% — OI/volume 数据延迟缺失",
+          "gate_decision": "observe",
+          "value_score": 20,
+          "value_tier": "low",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-7.50%) >= 5%",
+            "multi_asset_sync: 4 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move hit but no strong confirmation factors present — observe only"
+          ],
+          "warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing open_interest: -10 score penalty",
+            "missing volume: -10 score penalty",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ]
+        },
+        {
+          "asset": "DOT",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -4.5,
+          "open_interest": 120000000,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "DOT 24h 跌幅 4.50% — 未达 5% 阈值",
+          "gate_decision": "block",
+          "value_score": 50,
+          "value_tier": "medium",
+          "factor_hits": {
+            "price_move": false,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "oi_confirmation: open_interest=120000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move not hit — no significant price change detected"
+          ],
+          "warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario_id": "C",
+      "scenario_name": "Multi-Asset Boundary + Fixture Exclusion",
+      "objective": "Verify multi_asset_sync at threshold (3 real down + 1 fixture up). Fixture should NOT count toward same-direction tally. The 3 real down signals should get multi_asset_sync backing; the fixture up signal should be evaluated independently.",
+      "batch_size": 4,
+      "batch_stats": {
+        "allow": 4,
+        "observe": 0,
+        "block": 0,
+        "real_count": 3,
+        "fixture_count": 1,
+        "allow_rate_pct": 100.0,
+        "observe_rate_pct": 0.0
+      },
+      "multi_asset_sync_analysis": {
+        "real_signal_count": 3,
+        "fixture_signal_count": 1,
+        "same_direction_real_count": 3,
+        "dominant_direction": "down",
+        "multi_threshold_met": true,
+        "multi_asset_sync_triggered_count": 4,
+        "multi_asset_sync_used_in_allow": 4,
+        "multi_contributed_to_over_allow": "high",
+        "note": "Small batch (3 real, 3 in dominant direction): multi_asset_sync FIRES (threshold is >= 3 real assets). Multi fires but is backed by OI/volume in most signals."
+      },
+      "cooldown_findings": [],
+      "signal_results": [
+        {
+          "asset": "SOL",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -6.8,
+          "open_interest": 275000000,
+          "volume": 530000000,
+          "funding": 0.0,
+          "trigger_reason": "SOL 24h 跌幅 6.80% — 三重确认",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-6.80%) >= 5%",
+            "oi_confirmation: open_interest=275000000.0",
+            "volume_confirmation: volume=530000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "SUI",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -5.3,
+          "open_interest": 28000000,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "SUI 24h 跌幅 5.30% — 缺少 volume",
+          "gate_decision": "allow",
+          "value_score": 70,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-5.30%) >= 5%",
+            "oi_confirmation: open_interest=28000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing volume: -10 score penalty"
+          ]
+        },
+        {
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -5.1,
+          "open_interest": 4700000,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "ARB 24h 跌幅 5.10% — 刚好过线, 缺 volume",
+          "gate_decision": "allow",
+          "value_score": 70,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-5.10%) >= 5%",
+            "oi_confirmation: open_interest=4700000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing volume: -10 score penalty"
+          ]
+        },
+        {
+          "asset": "HYPE",
+          "signal_type": "onchain_position",
+          "source_type": "fixture",
+          "is_fixture": true,
+          "price_change_pct": 15.0,
+          "open_interest": 450000000,
+          "volume": 890000000,
+          "funding": null,
+          "trigger_reason": "HYPE +15% onchain position — fixture 类型",
+          "gate_decision": "allow",
+          "value_score": 120,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(15.00%) >= 5%",
+            "strong_price_move: abs(15.00%) >= 8%",
+            "oi_confirmation: open_interest=450000000.0",
+            "volume_confirmation: volume=890000000.0",
+            "multi_asset_sync: 3 real assets in same direction (up) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available",
+            "signal is a fixture — value assessment is synthetic",
+            "multi_asset_sync hit via real assets only — fixture target excluded from count"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario_id": "D",
+      "scenario_name": "Same-Asset Repeat — Cooldown Gap Demonstration",
+      "objective": "Demonstrate that SignalValueGate correctly evaluates each signal independently but cannot detect same-asset repeats. ARB appears twice — both will pass the gate. This proves cooldown must be a separate layer (pre_send_gate or cooldown module), not inside SignalValueGate.",
+      "batch_size": 5,
+      "batch_stats": {
+        "allow": 5,
+        "observe": 0,
+        "block": 0,
+        "real_count": 5,
+        "fixture_count": 0,
+        "allow_rate_pct": 100.0,
+        "observe_rate_pct": 0.0
+      },
+      "multi_asset_sync_analysis": {
+        "real_signal_count": 5,
+        "fixture_signal_count": 0,
+        "same_direction_real_count": 5,
+        "dominant_direction": "down",
+        "multi_threshold_met": true,
+        "multi_asset_sync_triggered_count": 5,
+        "multi_asset_sync_used_in_allow": 5,
+        "multi_contributed_to_over_allow": "high",
+        "note": "Small batch (5 real, 5 in dominant direction): multi_asset_sync FIRES (threshold is >= 3 real assets). Multi fires but is backed by OI/volume in most signals."
+      },
+      "cooldown_findings": [
+        {
+          "asset": "ARB",
+          "occurrences": 2,
+          "gate_decisions": [
+            "allow",
+            "allow"
+          ],
+          "all_allowed": true,
+          "cooldown_violation": true,
+          "recommendation": "ARB triggered 2 times within batch. Gate allowed all occurrences (no cooldown logic in gate). Recommend: implement in pre_send_gate or cooldown layer — first occurrence passes, subsequent within 10–30 min cooldown window are suppressed unless value_score increases significantly.",
+          "details": [
+            {
+              "index": 0,
+              "trigger_reason": "ARB 24h 跌幅 7.55% — 第 1 次触发 (T+0min)",
+              "gate_decision": "allow",
+              "occurrence_index": 1,
+              "minutes_since_first": 0
+            },
+            {
+              "index": 1,
+              "trigger_reason": "ARB 24h 跌幅 7.82% — 第 2 次触发 (T+10min)",
+              "gate_decision": "allow",
+              "occurrence_index": 2,
+              "minutes_since_first": 10
+            }
+          ]
+        }
+      ],
+      "signal_results": [
+        {
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -7.55,
+          "open_interest": 4656700,
+          "volume": 4942400,
+          "funding": 0.0,
+          "trigger_reason": "ARB 24h 跌幅 7.55% — 第 1 次触发 (T+0min)",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-7.55%) >= 5%",
+            "oi_confirmation: open_interest=4656700.0",
+            "volume_confirmation: volume=4942400.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -7.82,
+          "open_interest": 4612000,
+          "volume": 4955000,
+          "funding": 0.0,
+          "trigger_reason": "ARB 24h 跌幅 7.82% — 第 2 次触发 (T+10min)",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-7.82%) >= 5%",
+            "oi_confirmation: open_interest=4612000.0",
+            "volume_confirmation: volume=4955000.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "BTC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -5.5,
+          "open_interest": 1830000000,
+          "volume": 6400000000,
+          "funding": null,
+          "trigger_reason": "BTC 24h 跌幅 5.50% — 大盘确认",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-5.50%) >= 5%",
+            "oi_confirmation: open_interest=1830000000.0",
+            "volume_confirmation: volume=6400000000.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "SUI",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -6.1,
+          "open_interest": 27800000,
+          "volume": 21100000,
+          "funding": 0.0,
+          "trigger_reason": "SUI 24h 跌幅 6.10% — 板块共振",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-6.10%) >= 5%",
+            "oi_confirmation: open_interest=27800000.0",
+            "volume_confirmation: volume=21100000.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "SOL",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -6.8,
+          "open_interest": 278000000,
+          "volume": 530000000,
+          "funding": 0.0,
+          "trigger_reason": "SOL 24h 跌幅 6.80% — 主流共振",
+          "gate_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-6.80%) >= 5%",
+            "oi_confirmation: open_interest=278000000.0",
+            "volume_confirmation: volume=530000000.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "funding field missing — funding extreme not available"
+          ]
+        }
+      ]
+    },
+    {
+      "scenario_id": "E",
+      "scenario_name": "Observe-Dominant — Low-Quality Signal Day",
+      "objective": "Simulate a day with weak/incomplete signals: strong price without confirmation, borderline prices, missing fields. Verify that the gate correctly routes these to observe/block rather than allow. This tests the gate's ability to suppress '行情播报型噪音'.",
+      "batch_size": 5,
+      "batch_stats": {
+        "allow": 1,
+        "observe": 2,
+        "block": 2,
+        "real_count": 5,
+        "fixture_count": 0,
+        "allow_rate_pct": 20.0,
+        "observe_rate_pct": 40.0
+      },
+      "multi_asset_sync_analysis": {
+        "real_signal_count": 5,
+        "fixture_signal_count": 0,
+        "same_direction_real_count": 5,
+        "dominant_direction": "down",
+        "multi_threshold_met": true,
+        "multi_asset_sync_triggered_count": 5,
+        "multi_asset_sync_used_in_allow": 1,
+        "multi_contributed_to_over_allow": "medium",
+        "note": "Small batch (5 real, 5 in dominant direction): multi_asset_sync FIRES (threshold is >= 3 real assets). Multi fires but is backed by OI/volume in most signals."
+      },
+      "cooldown_findings": [],
+      "signal_results": [
+        {
+          "asset": "ETH",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -7.8,
+          "open_interest": null,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "ETH 跌幅 7.80% — 强价格但所有确认字段缺失",
+          "gate_decision": "observe",
+          "value_score": 20,
+          "value_tier": "low",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-7.80%) >= 5%",
+            "multi_asset_sync: 6 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move hit but no strong confirmation factors present — observe only"
+          ],
+          "warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing open_interest: -10 score penalty",
+            "missing volume: -10 score penalty",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ]
+        },
+        {
+          "asset": "LTC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -5.5,
+          "open_interest": null,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "LTC 跌幅 5.50% — 价格触发但无确认字段",
+          "gate_decision": "observe",
+          "value_score": 20,
+          "value_tier": "low",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-5.50%) >= 5%",
+            "multi_asset_sync: 6 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move hit but no strong confirmation factors present — observe only"
+          ],
+          "warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing open_interest: -10 score penalty",
+            "missing volume: -10 score penalty",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ]
+        },
+        {
+          "asset": "AVAX",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -6.2,
+          "open_interest": null,
+          "volume": 155000000,
+          "funding": null,
+          "trigger_reason": "AVAX 跌幅 6.20% — 有 volume 确认",
+          "gate_decision": "allow",
+          "value_score": 65,
+          "value_tier": "medium",
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "price_move: abs(-6.20%) >= 5%",
+            "volume_confirmation: volume=155000000.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing open_interest: -10 score penalty"
+          ]
+        },
+        {
+          "asset": "DOT",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -3.2,
+          "open_interest": 200000000,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "DOT 仅跌 3.20% — 未达价格阈值",
+          "gate_decision": "block",
+          "value_score": 50,
+          "value_tier": "medium",
+          "factor_hits": {
+            "price_move": false,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "oi_confirmation: open_interest=200000000.0",
+            "multi_asset_sync: 6 real assets in same direction (down) — backed by OI/volume",
+            "price_move not hit — no significant price change detected"
+          ],
+          "warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available"
+          ]
+        },
+        {
+          "asset": "LINK",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "is_fixture": false,
+          "price_change_pct": -4.0,
+          "open_interest": null,
+          "volume": null,
+          "funding": null,
+          "trigger_reason": "LINK 仅跌 4.00% — 无价格触发, 无任何确认",
+          "gate_decision": "block",
+          "value_score": 10,
+          "value_tier": "low",
+          "factor_hits": {
+            "price_move": false,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "reasons": [
+            "multi_asset_sync: 6 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move not hit — no significant price change detected"
+          ],
+          "warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ]
+        }
+      ]
+    }
+  ],
+  "security": {
+    "tg_send": "NONE",
+    "formal_channel": "NONE",
+    "secrets_loaded": "NONE",
+    "paid_apis": "NONE",
+    "loop_daemon_cron": "NONE",
+    "files_deleted": "NONE",
+    "pre_send_gate_connected": "NONE"
+  }
+}

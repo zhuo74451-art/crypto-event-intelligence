@@ -1,0 +1,51 @@
+{
+  "version": "v115B",
+  "status": "passed",
+  "local_policy_plan_only": true,
+  "label_confidence_routing_policy_created": true,
+  "label_upgrade_targets_written": 4,
+  "tg_test_copy_gate_policy_created": true,
+  "send_preview_gate_policy_created": true,
+  "rollback_cooldown_policy_created": true,
+  "send_ready": false,
+  "tg_test_group_ready": false,
+  "local_review_ready": true,
+  "external_api_called": false,
+  "prod_state_write": false,
+  "tg_sent": false,
+  "credentials_read": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "eligible_for_real_send_count": 0,
+  "real_send_candidate_count": 0,
+  "tg_send_allowed_count": 0,
+  "current_label_confidence_distribution": {
+    "high": 0,
+    "medium": 8,
+    "low": 2
+  },
+  "upgrade_target_summary": {
+    "high_priority": 2,
+    "medium_priority": 2,
+    "total": 4,
+    "high_priority_addresses": [
+      "0x082e843a431aef031264dc232693dd710aedca88 (Unknown HYPE Whale, low)",
+      "0x50b309f78e774a756a2230e1769729094cac9f20 (Unknown Hyperliquid Whale, low)"
+    ],
+    "medium_priority_addresses": [
+      "0x6c8512516ce5669d35113a11ca8b8de322fd84f6 (Matrixport Related, medium, 1 positions)",
+      "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae (loraclexyz, medium, 7 positions)"
+    ]
+  },
+  "v115a_blockers_addressed": {
+    "LABEL_CONFIDENCE_NO_HIGH": "Addressed — routing policy created. High=0 confirmed. Upgrade targets identified for all 4 addresses.",
+    "LOW_CONFIDENCE_UNKNOWN_WHALES": "Addressed — policy explicitly denies TG routing for low-confidence. Both unknown whales flagged as high-priority upgrade targets.",
+    "REVIEW_ONLY_NO_SEND": "Acknowledged — all 10 cards remain review_only_no_send. No promotion occurred. Upgrade targets documented.",
+    "TG_COPY_NOT_TESTED": "Addressed — TG test copy gate policy created. Operator review copy separation enforced. Banned phrases list defined.",
+    "HISTORICAL_COUNT_MISMATCH_NOTE": "Noted — historical artifact preserved. No action required.",
+    "NO_SEND_TEMPLATE_GATE": "Addressed — send preview gate policy created. One-shot preview, no-repeat, cooldown, and rollback protections defined."
+  },
+  "next_step": "v115c_whale_tg_test_copy_template_gate_local_only",
+  "generated_at": "2026-06-05T06:41:34.875062+08:00"
+}

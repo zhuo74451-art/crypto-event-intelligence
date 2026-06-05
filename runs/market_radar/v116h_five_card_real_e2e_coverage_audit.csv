@@ -1,0 +1,6 @@
+card_family,display_name,router_passed,fixture_e2e_passed,real_external_api_called,real_card_generated,quality_gate_passed,send_readiness_passed,tg_test_sent,tg_test_group_ready,production_send_ready,real_e2e_status
+whale_position_alert,Whale Position Alert,True,True,False,False,False,False,False,False,False,blocked_manual_evidence
+multi_asset_market_sync,Multi-Asset Market Sync,True,True,True,True,True,True,True,True,False,real_free_api_tg_test_sent
+price_oi_volume_anomaly,Price/OI/Volume Anomaly,True,True,True,True,True,True,True,True,False,real_free_api_tg_test_sent
+liquidation_pressure,Liquidation Pressure,True,True,False,False,False,False,False,False,False,fixture_e2e_passed_real_not_started
+news_event_market_impact,News Event Market Impact,True,True,False,False,False,False,False,False,False,fixture_e2e_passed_real_not_started

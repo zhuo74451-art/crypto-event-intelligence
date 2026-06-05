@@ -1,2 +1,2 @@
 ﻿status,generated_at_china,outcome_rows,published_rows,skipped_rows,partial_rows,ok_rows,computed_1h,computed_4h,computed_24h,computed_72h,best_event_type_24h,worst_event_type_24h,output
-pass,2026-05-28 19:24:39 UTC+8,3,3,0,3,0,3,0,0,0,,,C:\Users\PC\Desktop\Projects\事件情报系统\results\tg_alert_quality_daily.md
+pass,2026-06-01 13:29:49 UTC+8,3,3,0,0,3,3,3,3,3,token_unlock_team_large,long_short_crowding_extreme,C:\Users\PC\Desktop\Projects\事件情报系统\results\tg_alert_quality_daily.md

@@ -1,2 +1,2 @@
 ﻿provider,api_url,api_total_count,output_rows,future_rows,next_72h_rows,include_small_unlocks,min_amount_usd,min_unlock_pct,output,raw_output,status
-coinmarketcap_token_unlocks,https://api.coinmarketcap.com/data-api/v3/token-unlock/listing,1264,500,495,229,true,0.0,0.0,C:\Users\PC\Desktop\Projects\事件情报系统\data\token_unlock_calendar_cmc.csv,C:\Users\PC\Desktop\Projects\事件情报系统\data\token_unlock_calendar_cmc_raw.json,pass
+coinmarketcap_token_unlocks,https://api.coinmarketcap.com/data-api/v3/token-unlock/listing,1266,500,495,263,true,0.0,0.0,C:\Users\PC\Desktop\Projects\事件情报系统\data\token_unlock_calendar_cmc.csv,C:\Users\PC\Desktop\Projects\事件情报系统\data\token_unlock_calendar_cmc_raw.json,pass

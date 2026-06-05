@@ -1,0 +1,93 @@
+{
+  "status": "done",
+  "sent_count": 1,
+  "max_send_count": 1,
+  "message_id": "2239",
+  "target_type": "supergroup",
+  "tg_api_called": true,
+  "sent_exceed_1": false,
+  "sent_channel": false,
+  "loop_started": false,
+  "sensitive_printed": false,
+  "remote_db_written": false,
+  "dry_run": false,
+  "gate_results": [],
+  "error": "",
+  "success": true,
+  "status_code": 200,
+  "error_type": "",
+  "error_message": "",
+  "retry_after": null,
+  "provider": "telegram",
+  "provider_metadata": {
+    "transport_name": "telegram",
+    "raw_api_response": {
+      "ok": true,
+      "result": {
+        "message_id": 2239,
+        "from": {
+          "id": 8848089028,
+          "is_bot": true,
+          "first_name": "币界快讯ai",
+          "username": "BjieNewsPushBot"
+        },
+        "chat": {
+          "id": -1003977074640,
+          "title": "币界网官方群",
+          "type": "supergroup"
+        },
+        "date": 1780559166,
+        "text": "📉 行情异动｜SOL 下跌\n\n一句话：SOL 24h 跌幅 7.24% 触发行情异动监测\n\n● 币种：SOL\n● 涨跌幅：-7.24%\n● Funding：+0.00%（年化 0.1%）\n● 清算情况：OI: 2.78 亿美元，24h成交量: 5.27 亿美元\n● 是否拥挤：否\n● 观察窗口：1-4 小时\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/en/coins/solana) / [DexScreener](https://dexscreener.com/search?q=SOL)\n📎 原始来源：[Hyperliquid](https://app.hyperliquid.xyz/)\n\n💡 触发原因：SOL 24h 跌幅 7.24% 触发行情异动监测\n\n⚠️ 行情异动不代表交易方向，请结合其他信号判断，不构成交易建议。",
+        "entities": [
+          {
+            "offset": 176,
+            "length": 41,
+            "type": "url"
+          },
+          {
+            "offset": 235,
+            "length": 36,
+            "type": "url"
+          },
+          {
+            "offset": 295,
+            "length": 28,
+            "type": "url"
+          }
+        ],
+        "link_preview_options": {
+          "is_disabled": true
+        }
+      }
+    },
+    "request_payload_preview": {
+      "chat_id": "-100XXXX_REDACTED",
+      "text_preview": "📉 行情异动｜SOL 下跌\n\n一句话：SOL 24h 跌幅 7\\.24% 触发行情异动监测\n\n● 币种：SOL\n● 涨跌幅：\\-7\\.24%\n● Funding：\\+0\\.00%（年化 0\\.1%）\n● 清算情况：OI: 2\\.78 亿美元，24h成交量: 5\\.27 亿美元\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.c",
+      "text_length": 418,
+      "parse_mode": "MarkdownV2",
+      "disable_web_page_preview": true,
+      "api_endpoint": "/bot[REDACTED]/sendMessage"
+    }
+  },
+  "generated_at": "2026-06-04 15:46:05 UTC+8",
+  "component_version": "v1.10-B",
+  "executor_lane": 1,
+  "project_label": "market_radar",
+  "task_id": "20260604_154132.r01",
+  "run_id": "20260604_154132",
+  "card_type": "market_anomaly",
+  "core_entity": "SOL",
+  "source_type": "api",
+  "parse_mode_initial": "MarkdownV2",
+  "parse_mode_final": "MarkdownV2",
+  "fallback_used": false,
+  "warnings": [],
+  "attempts": 1,
+  "provider_metadata_redacted": true,
+  "component_chain": [
+    "render_card_payload()",
+    "TGTransport.send()",
+    "RealHttpClient",
+    "SendResult"
+  ]
+}

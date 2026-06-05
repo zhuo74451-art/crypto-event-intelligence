@@ -1,0 +1,4 @@
+﻿address,asset,entity,should_send,readability,info_gain,safety_intrusion,note_has_real_info,title_has_action,first_screen_clear,machine_terms
+0xebe837cd345469,BTC,Unknown Hyperliquid Whale,False,0,0,0,False,False,False,
+0x6c8512516ce566,ETH,Matrixport Related,False,0,0,0,False,False,False,
+0x8def9f50456c6c,TON,loraclexyz,True,95,100,0,True,True,True,0

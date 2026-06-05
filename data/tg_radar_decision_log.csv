@@ -83,3 +83,50 @@
 2026-05-28 19:23:51 UTC+8,tg_board_20260528_192351,晚间雷达,suppressed_cooldown,冷却期未到：0.81h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.1倍，主动卖出偏强
   样本状态：继续收集，不做强结论
   动态提权：拥挤变化"
+2026-06-01 11:06:26 UTC+8,tg_board_20260601_110626,午间雷达,selected,进入本轮雷达板,hyper:0x082e843a431aef031264dc232693dd710aedca88:HYPE:多头:position_increased,hyperliquid,HYPE,position_change,priority,156.2405,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,动仓优先,"已知地址HYPE多头仓位变化$100.5M
+  浮盈$47.1M，需看是否连续调整
+  样本状态：继续收集，不做强结论
+  动态提权：动仓优先"
+2026-06-01 11:06:26 UTC+8,tg_board_20260601_110626,午间雷达,selected,进入本轮雷达板,hyper:loraclexyz:HYPE:空头:position_decreased,hyperliquid,HYPE,position_change,priority,136.6978,collect_more,历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。,动仓优先,"loraclexyzHYPE空头仓位变化$61.4M
+  浮亏$23.0M，需看是否连续调整
+  样本状态：继续收集，不做强结论
+  动态提权：动仓优先"
+2026-06-01 11:06:26 UTC+8,tg_board_20260601_110626,午间雷达,selected,进入本轮雷达板,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,122.6600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍，主动买入偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 11:44:22 UTC+8,tg_board_20260601_114422,午间雷达,suppressed_cooldown,冷却期未到：0.63h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,122.6600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍，主动买入偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 11:49:07 UTC+8,tg_board_20260601_114907,午间雷达,suppressed_cooldown,冷却期未到：0.71h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,122.6600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍，主动买入偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:04:28 UTC+8,tg_board_20260601_120428,午间雷达,suppressed_cooldown,冷却期未到：0.97h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:13:54 UTC+8,tg_board_20260601_121354,午间雷达,suppressed_cooldown,冷却期未到：1.12h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:19:57 UTC+8,tg_board_20260601_121957,午间雷达,suppressed_cooldown,冷却期未到：1.23h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:29:36 UTC+8,tg_board_20260601_122936,午间雷达,suppressed_cooldown,冷却期未到：1.39h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:39:59 UTC+8,tg_board_20260601_123959,午间雷达,suppressed_cooldown,冷却期未到：1.56h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:49:58 UTC+8,tg_board_20260601_124958,午间雷达,suppressed_cooldown,冷却期未到：1.73h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 12:57:11 UTC+8,tg_board_20260601_125711,午间雷达,suppressed_cooldown,冷却期未到：1.85h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.7600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.5倍
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 13:07:58 UTC+8,tg_board_20260601_130758,午间雷达,suppressed_cooldown,冷却期未到：2.03h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.6倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 13:18:16 UTC+8,tg_board_20260601_131816,午间雷达,suppressed_cooldown,冷却期未到：2.20h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.6倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"
+2026-06-01 13:28:25 UTC+8,tg_board_20260601_132825,午间雷达,suppressed_cooldown,冷却期未到：2.37h < 2.40h,long_short:DOGE:多头拥挤,long_short,DOGE,indicator,context,121.4600,collect_more,样本或稳定性不足，继续收集，不做强路由结论。,拥挤变化,"DOGE多头拥挤，大户持仓约为散户2.6倍，主动卖出偏强
+  样本状态：继续收集，不做强结论
+  动态提权：拥挤变化"

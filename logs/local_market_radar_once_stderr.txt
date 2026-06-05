@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\PC\Desktop\Projects\事件情报系统\scripts\run_v09_market_radar_cycle.py", line 605, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\PC\Desktop\Projects\事件情报系统\scripts\run_v09_market_radar_cycle.py", line 547, in main
+    ok, tail = run_step(name, cmd)
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PC\Desktop\Projects\事件情报系统\scripts\run_v09_market_radar_cycle.py", line 75, in run_step
+    print(tail)
+UnicodeEncodeError: 'gbk' codec can't encode character '\ufffd' in position 129: illegal multibyte sequence

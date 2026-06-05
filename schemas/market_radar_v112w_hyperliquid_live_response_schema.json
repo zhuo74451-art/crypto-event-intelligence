@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HyperLiquid Live Response Schema — v112W Planning",
+  "description": "Expected schema for a one-shot read-only HyperLiquid clearinghouseState response, transformed into v112W internal format. This is a PLANNING schema, not a production validation schema.",
+  "version": "v1.12-w",
+  "generated_at": "2026-06-05 04:13:00 UTC+8",
+  "type": "object",
+  "required": [
+    "source_name",
+    "fetched_at",
+    "request_mode",
+    "addresses",
+    "stop_decision",
+    "eligible_for_real_send"
+  ],
+  "properties": {
+    "source_name": {
+      "type": "string",
+      "const": "hyperliquid_info_public",
+      "description": "Canonical source identifier."
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp when the response was received."
+    },
+    "request_mode": {
+      "type": "string",
+      "const": "planned_one_shot_read_only",
+      "description": "Always 'planned_one_shot_read_only' for v112W. This is a planning artifact."
+    },
+    "addresses": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Array of tracked addresses and their positions.",
+      "items": {
+        "type": "object",
+        "required": ["address", "label_confidence", "positions"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Full wallet address (not shortened in internal processing)."
+          },
+          "address_label": {
+            "type": ["string", "null"],
+            "description": "Human-readable label for the address. Null if unknown."
+          },
+          "label_confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level of the address label."
+          },
+          "entity_type": {
+            "type": "string",
+            "description": "Entity classification: smart_money, high_leverage_trader, exchange_related, fund_wallet, unknown_whale, market_maker."
+          },
+          "label_source": {
+            "type": "string",
+            "description": "Source of the label: hyperliquid_observer, arkham_intelligence_label, nansen_ai_label, onchain_heuristic, local_fixture."
+          },
+          "positions": {
+            "type": "array",
+            "description": "Array of positions for this address.",
+            "items": {
+              "type": "object",
+              "required": [
+                "symbol",
+                "side",
+                "position_size",
+                "entry_price",
+                "mark_price",
+                "unrealized_pnl",
+                "leverage",
+                "observed_at"
+              ],
+              "properties": {
+                "symbol": {
+                  "type": "string",
+                  "description": "Asset symbol (e.g., BTC, ETH, SOL)."
+                },
+                "side": {
+                  "type": "string",
+                  "enum": ["long", "short"],
+                  "description": "Position direction."
+                },
+                "position_size": {
+                  "type": "number",
+                  "description": "Position size in USD."
+                },
+                "entry_price": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Average entry price."
+                },
+                "mark_price": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Current mark price."
+                },
+                "unrealized_pnl": {
+                  "type": "number",
+                  "description": "Unrealized profit/loss in USD."
+                },
+                "leverage": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Effective leverage."
+                },
+                "liquidation_price": {
+                  "type": ["number", "null"],
+                  "description": "Liquidation price. Null if unavailable."
+                },
+                "margin_used": {
+                  "type": "number",
+                  "description": "Margin used in USD."
+                },
+                "cum_funding": {
+                  "type": "number",
+                  "description": "Cumulative funding payments."
+                },
+                "position_value": {
+                  "type": "number",
+                  "description": "Total position value in USD."
+                },
+                "observed_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "When this position was observed."
+                },
+                "raw_source_fields": {
+                  "type": "object",
+                  "description": "Original fields from HyperLiquid response, preserved for traceability.",
+                  "properties": {
+                    "coin": { "type": "string" },
+                    "szi": { "type": "string" },
+                    "entryPx": { "type": "string" },
+                    "liquidationPx": { "type": ["string", "null"] },
+                    "unrealizedPnl": { "type": "string" },
+                    "leverage_type": { "type": "string" },
+                    "leverage_value": { "type": "number" },
+                    "marginUsed": { "type": "string" },
+                    "positionValue": { "type": "string" },
+                    "cumFunding": { "type": "string" }
+                  }
+                },
+                "validation_status": {
+                  "type": "object",
+                  "properties": {
+                    "required_fields_present": { "type": "boolean" },
+                    "numeric_parse_ok": { "type": "boolean" },
+                    "side_determined": { "type": "boolean" },
+                    "missing_fields": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "parse_errors": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "stop_decision": {
+      "type": "string",
+      "enum": ["CONTINUE", "ABORT", "DEGRADE_TO_MOCK"],
+      "description": "The decision made after evaluating stop conditions."
+    },
+    "stop_decision_reasons": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Reasons for the stop decision (matched condition IDs)."
+    },
+    "eligible_for_real_send": {
+      "type": "boolean",
+      "const": false,
+      "description": "ALWAYS false for v112W. This is a planning artifact, not a production signal."
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Human-readable notes about the response processing."
+    }
+  }
+}

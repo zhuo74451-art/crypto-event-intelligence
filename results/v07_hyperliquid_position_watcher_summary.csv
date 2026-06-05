@@ -1,2 +1,2 @@
 ﻿watcher,mode,watchlist_rows,queried_accounts,raw_position_rows,alert_rows,skipped_rows,changed_position_rows,unchanged_position_rows,state_rows,min_change_pct,min_change_usd,alert_first_seen,top_skip_reason,top_skip_count,status,message
-hyperliquid_positions,live,5,5,9,5,4,5,4,9,0.15,5000000,true,below_threshold,4,pass,ok
+hyperliquid_positions,live,5,5,9,3,6,3,6,11,0.15,5000000,true,below_threshold,6,pass,ok

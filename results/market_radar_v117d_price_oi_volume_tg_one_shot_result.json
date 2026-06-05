@@ -1,0 +1,95 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_163218",
+  "task_id": "20260605_v117d_price_oi_volume_real_card_shared_pipeline_tg_one_shot",
+  "generated_at": "2026-06-05T16:32:39+08:00",
+  "type": "real_free_api_price_oi_volume_anomaly_tg_one_shot",
+  "card_family": "price_oi_volume_anomaly",
+  "signals": [
+    {
+      "symbol": "BTCUSDT",
+      "price_ok": true,
+      "price_change_24h_pct_rounded": -0.99,
+      "volume_24h_ok": true,
+      "oi_available": true,
+      "oi_error": null,
+      "anomaly_type": "normal",
+      "admission_passed": false,
+      "confirmation_factors": []
+    },
+    {
+      "symbol": "ETHUSDT",
+      "price_ok": true,
+      "price_change_24h_pct_rounded": -5.62,
+      "volume_24h_ok": true,
+      "oi_available": true,
+      "oi_error": null,
+      "anomaly_type": "notable",
+      "admission_passed": true,
+      "confirmation_factors": [
+        "price_move_significant"
+      ]
+    },
+    {
+      "symbol": "SOLUSDT",
+      "price_ok": true,
+      "price_change_24h_pct_rounded": -4.37,
+      "volume_24h_ok": true,
+      "oi_available": true,
+      "oi_error": null,
+      "anomaly_type": "normal",
+      "admission_passed": false,
+      "confirmation_factors": [
+        "price_move_significant"
+      ]
+    }
+  ],
+  "binance_endpoints_used": [
+    "binance_public_api:openInterest(BTCUSDT)",
+    "binance_public_api:openInterest(ETHUSDT)",
+    "binance_public_api:/api/v3/ticker/24hr",
+    "binance_public_api:openInterest(SOLUSDT)"
+  ],
+  "binance_api_success": true,
+  "binance_api_error": null,
+  "oi_errors": [],
+  "gate_allow": true,
+  "gate_reason": "Anomaly detected: notable on ETHUSDT",
+  "send_readiness_allow_test_group": true,
+  "send_readiness_reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+  "tg_result": {
+    "attempted": true,
+    "success": true,
+    "status": "sent",
+    "reason": "TG test group one-shot sent successfully",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": true,
+    "token_proof_present": true,
+    "chat_id_proof_present": true,
+    "credentials_printed": false
+  },
+  "pipeline_passed": true,
+  "pipeline_error": null,
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": true,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false
+  },
+  "preflight": {
+    "safe_loader_found": true,
+    "load_success": true,
+    "config_ready": true,
+    "bot_token_present": true,
+    "chat_id_present": true
+  },
+  "shared_pipeline_proof": "v117D proves the shared pipeline works for price_oi_volume_anomaly (second real card family), not just multi_asset_market_sync. Same adapter -> gate -> renderer -> send-readiness -> tg-sender -> ledger chain."
+}

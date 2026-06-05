@@ -1,0 +1,151 @@
+{
+  "milestone_version": "v116L",
+  "source_version_range": "v116A-v116K",
+  "local_only": true,
+  "external_api_called_this_run": false,
+  "tg_sent_this_run": false,
+  "production_send_ready_count": 0,
+  "generated_at": "2026-06-05T13:56:06.692354+08:00",
+  "task_id": "20260605_v116l_market_radar_real_e2e_milestone_pack_local_only",
+  "run_id": "20260605_124925.r05",
+  "card_family_count": 5,
+  "summary": {
+    "fixture_e2e_passed": "5/5",
+    "real_api_public_source_tg_test_sent": "3/5",
+    "real_api_attempted_but_gate_blocked": "1/5",
+    "manual_evidence_blocked": "1/5",
+    "production_send_ready": "0/5"
+  },
+  "card_family_status": {
+    "whale_position_alert": {
+      "display_name": "Whale Position Alert",
+      "real_e2e_status": "blocked_manual_evidence",
+      "fixture_e2e_passed": true,
+      "real_external_api_called": false,
+      "real_public_source_called": false,
+      "real_card_generated": false,
+      "quality_gate_passed": false,
+      "send_readiness_passed": false,
+      "tg_test_sent": false,
+      "tg_test_group_ready": false,
+      "production_send_ready": false,
+      "current_blocker": "Real operator workbook has empty fields for all 4 addresses. Requires real operator evidence collection (v115O preflight) before gate rerun. Cannot be automated — requires human on-chain attribution verification."
+    },
+    "multi_asset_market_sync": {
+      "display_name": "Multi-Asset Market Sync",
+      "real_e2e_status": "real_free_api_tg_test_sent",
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": false,
+      "real_card_generated": true,
+      "quality_gate_passed": true,
+      "send_readiness_passed": true,
+      "tg_test_sent": true,
+      "tg_test_group_ready": true,
+      "production_send_ready": false,
+      "current_blocker": null
+    },
+    "price_oi_volume_anomaly": {
+      "display_name": "Price/OI/Volume Anomaly",
+      "real_e2e_status": "real_free_api_tg_test_sent",
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": false,
+      "real_card_generated": true,
+      "quality_gate_passed": true,
+      "send_readiness_passed": true,
+      "tg_test_sent": true,
+      "tg_test_group_ready": true,
+      "production_send_ready": false,
+      "current_blocker": null
+    },
+    "liquidation_pressure": {
+      "display_name": "Liquidation Pressure",
+      "real_e2e_status": "blocked_gate_not_passed",
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": false,
+      "real_card_generated": false,
+      "quality_gate_passed": false,
+      "send_readiness_passed": false,
+      "tg_test_sent": false,
+      "tg_test_group_ready": false,
+      "production_send_ready": false,
+      "current_blocker": "Calm market conditions — proxy admission threshold not met. All 3 assets (BTCUSDT, ETHUSDT, SOLUSDT) fetched successfully via Binance public REST endpoints. Signals generated for all 3 assets, but 0/3 signals admitted. Quality gate correctly blocked by design (no forced card generation during calm market). OI history data unavailable for composite proxy scoring."
+    },
+    "news_event_market_impact": {
+      "display_name": "News Event Market Impact",
+      "real_e2e_status": "real_free_public_source_tg_test_sent",
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": true,
+      "real_card_generated": true,
+      "quality_gate_passed": true,
+      "send_readiness_passed": true,
+      "tg_test_sent": true,
+      "tg_test_group_ready": true,
+      "production_send_ready": false,
+      "current_blocker": null
+    }
+  },
+  "artifact_inventory": [
+    {
+      "file": "results/market_radar_v116l_milestone_pack_manifest.json",
+      "type": "manifest",
+      "description": "v116L milestone pack manifest with card family status and artifact inventory"
+    },
+    {
+      "file": "results/market_radar_v116l_real_e2e_acceptance_matrix.json",
+      "type": "acceptance_matrix",
+      "description": "Five-card acceptance matrix with fixture/real/TG/production status"
+    },
+    {
+      "file": "results/market_radar_v116l_tg_evidence_index.jsonl",
+      "type": "evidence_index",
+      "description": "TG test send evidence index with 5 redacted entries"
+    },
+    {
+      "file": "runs/market_radar/v116l_market_radar_real_e2e_milestone_summary.md",
+      "type": "milestone_summary",
+      "description": "Human-readable milestone summary"
+    },
+    {
+      "file": "runs/market_radar/v116l_market_radar_real_e2e_acceptance_matrix.csv",
+      "type": "acceptance_matrix_csv",
+      "description": "CSV version of the acceptance matrix"
+    },
+    {
+      "file": "runs/market_radar/v116l_operator_review_pack.md",
+      "type": "operator_review_pack",
+      "description": "Operator-facing review pack for user acceptance"
+    },
+    {
+      "file": "runs/market_radar/v116l_next_phase_roadmap.md",
+      "type": "next_phase_roadmap",
+      "description": "Prioritized next-phase roadmap"
+    },
+    {
+      "file": "runs/market_radar/v116l_local_only_handoff.md",
+      "type": "handoff",
+      "description": "Local-only handoff with safety confirmation"
+    }
+  ],
+  "source_artifacts_referenced": [
+    "results/market_radar_v116k_five_card_real_e2e_coverage_audit_result.json",
+    "results/market_radar_v116k_tg_test_send_evidence_ledger.jsonl",
+    "runs/market_radar/v116k_five_card_real_e2e_coverage_audit.md",
+    "runs/market_radar/v116k_next_real_e2e_candidate_decision.md",
+    "runs/market_radar/v116k_local_only_handoff.md"
+  ],
+  "safety_constraints_verified": {
+    "external_api_called_this_run": false,
+    "public_source_called_this_run": false,
+    "tg_sent_this_run": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "historical_artifacts_modified": false,
+    "credentials_read": false
+  }
+}

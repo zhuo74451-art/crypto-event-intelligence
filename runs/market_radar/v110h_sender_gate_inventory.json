@@ -1,0 +1,115 @@
+{
+  "task": "v1.10-H Sender Gate Coverage Audit & Minimal Wiring",
+  "result_source": "claude_code_executor",
+  "task_id": "20260604_162516.r02",
+  "run_id": "20260604_162516",
+  "generated_at": "2026-06-04 17:00:00 UTC+8",
+  "summary": {
+    "total_tg_sender_candidates": 15,
+    "category_a_already_gated": 2,
+    "category_b_needs_gating": 1,
+    "category_c_not_market_radar": 9,
+    "category_d_uncertain": 3,
+    "newly_wired_this_round": 1
+  },
+  "categories": {
+    "A_already_gated": [
+      {
+        "script": "_v110e_gate_protected_test_channel_send.py",
+        "gating_method": "pre_send_gate() via v1.10-G",
+        "status": "confirmed_active",
+        "notes": "Imports pre_send_gate from market_radar_pre_send_gate. Calls pre_send_gate(signal, payload, target_env='test') between render and TGTransport.send(). Real send to test channel."
+      },
+      {
+        "script": "_v110f_gate_protected_test_channel_matrix_send.py",
+        "gating_method": "pre_send_gate() via v1.10-G",
+        "status": "confirmed_active",
+        "notes": "Multi-card matrix send. Imports pre_send_gate. Calls pre_send_gate(signal, payload, target_env='test') for each card. Real send to test channel."
+      }
+    ],
+    "B_newly_wired_this_round": [
+      {
+        "script": "send_address_behavior_card_gate.py",
+        "original_status": "Has own inline gate (scoring + cooldown + keyword filter). No pre_send_gate().",
+        "wiring": "Added pre_send_gate() call before existing send_tg(). Builds minimal signal from card metadata (entity, asset, action). Gate runs in addition to existing scoring gate.",
+        "wiring_location": "After score_card() check passes, before send_tg() call (line ~230 in original)",
+        "signal_structure": "Built from card['entity'], card['asset'], card['action'] with source_type='hyperliquid_onchain'"
+      }
+    ],
+    "C_not_market_radar": [
+      {
+        "script": "send_local_news_flow_preview_to_tg.py",
+        "purpose": "Sends local_news_flow_preview.md summary to TG",
+        "reason_excluded": "News flow pipeline, not Market Radar card send chain. Sends aggregated previews, not individual signal cards."
+      },
+      {
+        "script": "send_project_progress_card.py",
+        "purpose": "Sends project progress update card to TG",
+        "reason_excluded": "Project admin/status card, not Market Radar signal card. No signal→render→send pipeline."
+      },
+      {
+        "script": "send_tg_quality_summary_card.py",
+        "purpose": "Sends TG alert quality summary card",
+        "reason_excluded": "Quality/metrics reporting, not Market Radar signal card. Sends aggregated quality stats."
+      },
+      {
+        "script": "send_tg_draft_test.py",
+        "purpose": "Manual TG draft test sender (dry-run default)",
+        "reason_excluded": "Test/debug utility for draft testing. Not part of automated Market Radar pipeline."
+      },
+      {
+        "script": "test_local_tg_send.py",
+        "purpose": "Test script to verify token/chat_id config",
+        "reason_excluded": "Pure test utility. Not a sender in any pipeline."
+      },
+      {
+        "script": "run_local_tg_publisher.py",
+        "purpose": "v16 pipeline — runs build_raw_signals → aggregate → render → send to TG",
+        "reason_excluded": "Uses v16 pipeline (not Market Radar v1.10 card router). Separate product with own dedup/rate-limiting. No render_card_payload() usage."
+      },
+      {
+        "script": "run_v07_tg_live_monitor.py",
+        "purpose": "Watcher-based live monitor with TG alert delivery",
+        "reason_excluded": "Watcher/alert pipeline (v07), not Market Radar v1.10 card system. Different signal source and pipeline."
+      },
+      {
+        "script": "build_tg_morning_digest.py",
+        "purpose": "Builds and sends morning digest to TG",
+        "reason_excluded": "Digest/report product, not Market Radar individual card send. Sends aggregated daily summaries."
+      },
+      {
+        "script": "remote_x_monitor/telegram_publisher.py",
+        "purpose": "X/Twitter → TG relay publisher",
+        "reason_excluded": "Twitter/X content relay, not Market Radar signal pipeline. Different data source and product."
+      }
+    ],
+    "D_uncertain": [
+      {
+        "script": "market_radar_sender.py",
+        "purpose": "Core sender framework — MarketRadarSender class + TGTransport + send_from_manifest()",
+        "uncertainty": "Framework/library code. send_from_manifest() calls transport.send() without pre_send_gate(). However, consumers (v110e, v110f) wire pre_send_gate() externally. Adding pre_send_gate() here would affect all consumers and may break existing contracts. No clear signal dict available in send_from_manifest() — it receives a manifest, not a signal.",
+        "recommendation": "Keep as-is. Consumers are responsible for gating. Consider adding docstring note that callers must gate before calling send_from_manifest()."
+      },
+      {
+        "script": "send_tg_market_radar_board.py",
+        "purpose": "Sends Market Radar board (aggregated multi-section content) to TG",
+        "uncertainty": "Board-level sender — sends pre-built board text from tg_market_radar_boards.csv. No individual signal/card structure. The board is an aggregated product with multiple sections. No clear single-signal to map to pre_send_gate(). However, it IS in the Market Radar pipeline (called by run_v09_market_radar_cycle.py).",
+        "recommendation": "If boards need gating, a separate board-level gate (board_pre_send_gate) may be needed. For now, record in inventory for human review."
+      },
+      {
+        "script": "_v110b_real_tg_single_card_send.py + _v110d_prod_dry_run_signal_gate.py + _r2_real_tg_send.py",
+        "purpose": "Archival/experimental scripts from v1.10-B/C/D stages",
+        "uncertainty": "These are versioned scripts superseded by v1.10-E/F. _v110b uses SignalTrustGate directly (not pre_send_gate). _v110d dry-run only. _r2 has redacted tokens. They should not be used as active senders going forward.",
+        "recommendation": "Consider archiving to _archive/ or adding deprecation warning. No gating needed since they should not be run."
+      }
+    ]
+  },
+  "verification": {
+    "pre_send_gate_exists": true,
+    "all_gated_scripts_verified": true,
+    "no_secret_leaks_in_inventory": true,
+    "no_real_tg_send_this_round": true,
+    "no_background_loops_started": true,
+    "no_paid_api_calls": true
+  }
+}

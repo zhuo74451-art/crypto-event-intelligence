@@ -1,18 +1,18 @@
 # Source Effectiveness Report
 
-- generated_at_china: 2026-05-28 19:24:39 UTC+8
+- generated_at_china: 2026-06-01 13:29:49 UTC+8
 - source_rows: 10
 - ledger_rows: 3
 - outcome_rows: 3
-- decision_rows: 33
+- decision_rows: 48
 
 ## Source Matrix
 
 | source_type | enabled | shadow_mode | sent_count | outcome_rows | computed_1h_count | computed_4h_count | avg_abnormal_primary_1h | false_positive_like_rate | historical_status | live_effectiveness_status | recommended_route |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| hyperliquid | true | false | 1 | 1 | 1 | 0 | -0.017535 | 0.0 | needs_more_outcomes | insufficient_live_outcomes | board |
-| long_short | true | false | 1 | 1 | 1 | 0 | -0.000336 | 1.0 | needs_more_outcomes | insufficient_live_outcomes | board |
-| token_unlock | true | false | 1 | 1 | 1 | 0 | -0.004734 | 0.0 | needs_more_outcomes | insufficient_live_outcomes | digest |
+| hyperliquid | true | false | 1 | 1 | 1 | 1 | -0.017535 | 0.0 | needs_more_outcomes | insufficient_live_outcomes | board |
+| long_short | true | false | 1 | 1 | 1 | 1 | -0.000336 | 0.0 | needs_more_outcomes | insufficient_live_outcomes | board |
+| token_unlock | true | false | 1 | 1 | 1 | 1 | -0.004734 | 0.0 | needs_more_outcomes | insufficient_live_outcomes | digest |
 | address_transfer | true | true | 0 | 0 | 0 | 0 | 0.0 | 0.0 | shadow_collect | shadow_or_no_live_data | shadow |
 | cex_netflow | true | false | 0 | 0 | 0 | 0 | 0.0 | 0.0 | needs_baseline | shadow_or_no_live_data | shadow |
 | exchange_listing | true | true | 0 | 0 | 0 | 0 | 0.0 | 0.0 | shadow_collect | shadow_or_no_live_data | shadow |

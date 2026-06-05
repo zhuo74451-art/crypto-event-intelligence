@@ -1,0 +1,17 @@
+﻿address,asset,entity,current_side,fills_7d_count,buy_ratio_7d,sell_ratio_7d,trade_bias_label,net_size_delta_7d,net_flow_usd_7d,net_flow_label,funding_label,behavior_card_type,semantic_conflict_flag,semantic_conflict_note,card_should_send,card_suppress_reason,preview_card_text
+0xebe837cd345469,BTC,Unknown Hyperliquid Whale,long,0,0.000,1.000,low_activity,+0.0000,0,unavailable,funding_neutral,quiet_address_summary,False,,False,quiet_address_no_recent_activity,Unknown Hyperliquid Whale BTC：近 7d 无成交、无账本变动，仅保留为静态背景地址，不进入实时 Radar。
+0x6c8512516ce566,ETH,Matrixport Related,long,0,0.000,1.000,low_activity,+0.0000,0,unavailable,funding_neutral,quiet_address_summary,False,,False,quiet_address_no_recent_activity,Matrixport Related ETH：近 7d 无成交、无账本变动，仅保留为静态背景地址，不进入实时 Radar。
+0x8def9f50456c6c,TON,loraclexyz,long,2000,1.000,0.000,buy_execution_pressure,+398141.9300,0,neutral_flow,funding_neutral,active_behavior_card,False,,True,,"<b>⚡️ [Market Radar] TON 活跃地址持续加注</b>
+━━━━━━━━━━━━━━━━━━━━
+👤 loraclexyz ｜ 当前 TON 持仓方向为 Long
+
+过去 7 天完成 2000 笔成交，买方占比接近 100%，净成交规模约 +398141.9300 TON。
+
+📊 买方执行增强，方向与当前持仓一致。需关注后续 Size 变化确认是否持续加注。
+
+📈 行为轨迹：
+7d 净成交：+398141.9300 TON
+账本变动 15 条，无明显资金进出
+Funding：费率倾向较弱，不作现金流判断
+
+⚠️ 仅供结构观察；不构成交易建议。"

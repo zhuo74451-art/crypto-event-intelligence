@@ -1,0 +1,28 @@
+{
+  "decision": "DEGRADE_TO_MOCK",
+  "reason": "2 degrade rule(s) triggered",
+  "abort_rules_triggered": [],
+  "degrade_rules_triggered": [
+    {
+      "id": "DEGRADE_OPTIONAL_FIELDS_MISSING",
+      "detail": "6 optional field(s) missing across assets (OI, volume_change_pct unavailable from free sources)"
+    },
+    {
+      "id": "DEGRADE_MULTI_SOURCE_UNCERTAIN",
+      "detail": "Only primary source (CoinGecko) returned data; cross-validation impossible"
+    }
+  ],
+  "continue_rules_satisfied": [
+    {
+      "id": "CONTINUE_ALL_REQUIRED_COMPLETE",
+      "detail": "All 5 required fields present for 3 assets"
+    },
+    {
+      "id": "CONTINUE_ELIGIBLE_FALSE",
+      "detail": "eligible_for_real_send = false (policy constraint, always enforced)"
+    }
+  ],
+  "eligible_for_real_send": false,
+  "state_write_performed": false,
+  "real_tg_sent": false
+}

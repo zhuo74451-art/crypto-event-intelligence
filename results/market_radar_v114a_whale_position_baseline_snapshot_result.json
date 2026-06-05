@@ -1,0 +1,27 @@
+{
+  "version": "v114A",
+  "status": "passed",
+  "baseline_snapshot_created": true,
+  "positions_loaded": 10,
+  "baseline_records_written": 10,
+  "unique_addresses_count": 4,
+  "local_baseline_only": true,
+  "external_api_called": false,
+  "prod_state_write": false,
+  "eligible_for_real_send_count": 0,
+  "tg_send_allowed_count": 0,
+  "real_send_candidate_count": 0,
+  "credentials_read": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "future_delta_ready": true,
+  "next_step": "v114b_whale_second_probe_delta_compare_readonly",
+  "label_confidence_distribution": {
+    "high": 0,
+    "medium": 8,
+    "low": 2
+  },
+  "liquidation_price_null_count": 7,
+  "generated_at": "2026-06-05T06:01:47.619609+08:00"
+}

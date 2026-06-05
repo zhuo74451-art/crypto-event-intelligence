@@ -1,0 +1,191 @@
+{
+  "version": "v1.12-t",
+  "description": "Three-state stop conditions for v112T free-source one-shot plan. These rules determine whether a live source response triggers CONTINUE, ABORT, or DEGRADE_TO_MOCK. All rules are evaluated in order; the first matching condition determines the outcome. ABORT is checked first, then DEGRADE, then CONTINUE as the fallback.",
+  "generated_at": "2026-06-05 03:44:00 UTC+8",
+  "dry_run_only": true,
+  "decision_order": ["ABORT", "DEGRADE_TO_MOCK", "CONTINUE"],
+  "stop_conditions": {
+    "ABORT": {
+      "description": "Hard stop conditions. If ANY of these are true, the entire response is rejected. No mock fallback is produced. The v112T plan records the abort reason.",
+      "rules": [
+        {
+          "id": "ABORT_HTTP_NON_2XX",
+          "condition": "HTTP response status code is not in [200, 201, 202, 203, 204]",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Includes 3xx redirects (not expected from REST API), 4xx client errors, 5xx server errors."
+        },
+        {
+          "id": "ABORT_HTTP_429",
+          "condition": "HTTP response status code is 429 (Too Many Requests)",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Rate limited. Do not retry automatically. v112U may add backoff with user confirmation."
+        },
+        {
+          "id": "ABORT_REQUEST_TIMEOUT",
+          "condition": "Single request takes longer than 15 seconds to complete",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Timeout per-request, not cumulative. CoinGecko free tier may be slow during high load."
+        },
+        {
+          "id": "ABORT_TOTAL_DURATION",
+          "condition": "Total wall-clock time for all requests exceeds 120 seconds",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Cumulative timeout. Prevents runaway planning loops."
+        },
+        {
+          "id": "ABORT_JSON_PARSE_FAILURE",
+          "condition": "Response body cannot be parsed as valid JSON",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Includes truncated responses, HTML error pages, empty bodies."
+        },
+        {
+          "id": "ABORT_SCHEMA_MISMATCH",
+          "condition": "Parsed JSON does not match expected response schema (missing required top-level keys, wrong types)",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Schema validation against LiveSourceResponse schema. Structural mismatch only — missing optional fields go to DEGRADE."
+        },
+        {
+          "id": "ABORT_PRICE_DIVERGENCE",
+          "condition": "CoinGecko price vs CoinCap price for the same asset differs by > 5% (when both sources return data)",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Absolute percentage difference: |price_cg - price_cc| / max(price_cg, price_cc) > 0.05. Indicates data quality issue."
+        },
+        {
+          "id": "ABORT_TIMESTAMP_SKEW",
+          "condition": "Max timestamp difference between any two asset observations > 120 seconds",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Stale data risk. Timestamps from the source's last_updated / timestamp field."
+        },
+        {
+          "id": "ABORT_REQUIRED_FIELDS_MISSING",
+          "condition": "More than 20% of required_fields are missing across all assets in the response",
+          "severity": "fatal",
+          "action": "ABORT",
+          "note": "Required fields: asset_id, symbol, price_usd, price_change_pct, last_updated_at. Missing rate > 0.20 triggers ABORT."
+        }
+      ]
+    },
+    "DEGRADE_TO_MOCK": {
+      "description": "Soft degradation conditions. The response is usable but quality is insufficient for real send. The adapter converts the live response to mock envelope format, marking it as DEGRADE_TO_MOCK and ineligible for real send.",
+      "rules": [
+        {
+          "id": "DEGRADE_PARTIAL_ASSET_FAILURE",
+          "condition": "Some but not all requested assets returned successfully, and success rate < 80%",
+          "severity": "warning",
+          "action": "DEGRADE_TO_MOCK",
+          "note": "If CoinGecko returns 7/10 assets, that's 70% < 80% → DEGRADE. The successful assets are still processed."
+        },
+        {
+          "id": "DEGRADE_OPTIONAL_FIELDS_MISSING",
+          "condition": "One or more optional_fields are missing or null in the response",
+          "severity": "warning",
+          "action": "DEGRADE_TO_MOCK",
+          "note": "Optional fields include open_interest_change_pct, source_latency_ms. Missing optional fields are acceptable but reduce confidence."
+        },
+        {
+          "id": "DEGRADE_THRESHOLD_BOUNDARY",
+          "condition": "Any asset metric is within ±10% of the v112Q threshold boundary",
+          "severity": "warning",
+          "action": "DEGRADE_TO_MOCK",
+          "note": "Example: if min_per_asset_abs_price_change_pct is 2.0, and an asset shows 1.8-2.2% change, it's in the boundary zone. In a real live scenario, this could flip with a small price move."
+        },
+        {
+          "id": "DEGRADE_SOURCE_FRESHNESS",
+          "condition": "Source data freshness is degraded: last_updated_at > 120s from fetched_at, or source reports stale cache",
+          "severity": "warning",
+          "action": "DEGRADE_TO_MOCK",
+          "note": "CoinGecko free tier caches data for 30-60s. If data is older than 120s, freshness is degraded."
+        },
+        {
+          "id": "DEGRADE_MULTI_SOURCE_UNCERTAIN",
+          "condition": "Only one source returned data (the other failed, timed out, or returned no matching assets)",
+          "severity": "warning",
+          "action": "DEGRADE_TO_MOCK",
+          "note": "Cross-validation impossible with single source. The signal cannot be verified independently."
+        }
+      ]
+    },
+    "CONTINUE": {
+      "description": "Conditions for a successful response that can proceed to mock adapter processing. CONTINUE does NOT mean real_send is allowed — eligible_for_real_send remains false per v112T policy.",
+      "rules": [
+        {
+          "id": "CONTINUE_ALL_REQUIRED_COMPLETE",
+          "condition": "All required_fields are present and non-null for every asset in the response",
+          "severity": "info",
+          "action": "CONTINUE",
+          "note": "asset_id, symbol, price_usd, price_change_pct, last_updated_at must all be present."
+        },
+        {
+          "id": "CONTINUE_PRICE_CONSENSUS",
+          "condition": "When both CoinGecko and CoinCap return data for the same asset, price divergence < 2%",
+          "severity": "info",
+          "action": "CONTINUE",
+          "note": "Tight consensus threshold for high-confidence signals."
+        },
+        {
+          "id": "CONTINUE_TIMESTAMP_CONSENSUS",
+          "condition": "Max timestamp difference between any two observations < 60 seconds",
+          "severity": "info",
+          "action": "CONTINUE",
+          "note": "This aligns with v112Q max_timestamp_skew_seconds = 60."
+        },
+        {
+          "id": "CONTINUE_V112Q_THRESHOLD_PASS",
+          "condition": "All v112Q stricter thresholds pass (direction agreement, per-asset price filter, secondary metric, timestamp skew, leader detection, sector concentration, volume outlier)",
+          "severity": "info",
+          "action": "CONTINUE",
+          "note": "v112Q thresholds are evaluated with available data. If OI is missing, only volume serves as secondary metric."
+        },
+        {
+          "id": "CONTINUE_NO_ABORT_OR_DEGRADE",
+          "condition": "No ABORT or DEGRADE_TO_MOCK conditions have been triggered",
+          "severity": "info",
+          "action": "CONTINUE",
+          "note": "This is the default fallback when all checks above pass."
+        },
+        {
+          "id": "CONTINUE_ELIGIBLE_FALSE",
+          "condition": "eligible_for_real_send MUST be false regardless of CONTINUE status",
+          "severity": "info",
+          "action": "CONTINUE",
+          "note": "This is a policy-level constraint, not a data-quality constraint. Even a perfect CONTINUE response must not be eligible for real send in v112T."
+        }
+      ]
+    }
+  },
+  "rate_limit_and_fallback_strategy": {
+    "description": "Planned rate limit handling and fallback chain. Not executed in v112T — defined for v112U.",
+    "primary_timeout_ms": 15000,
+    "fallback_timeout_ms": 15000,
+    "total_duration_limit_ms": 120000,
+    "retry_policy": "no_automatic_retry",
+    "retry_justification": "Free tier APIs may interpret retries as abuse. v112U will prompt user before any retry.",
+    "fallback_chain": [
+      "1. Try CoinGecko /simple/price (primary)",
+      "2. If CoinGecko fails with non-2xx or timeout, try CoinCap /v2/assets (fallback)",
+      "3. If both fail, ABORT — no data available",
+      "4. If both succeed but disagree > 5%, ABORT (price divergence)",
+      "5. If only one succeeds, DEGRADE_TO_MOCK (multi-source uncertain)",
+      "6. If both succeed and agree < 2%, proceed to CONTINUE path"
+    ],
+    "concurrency_note": "Requests to different sources MAY be parallelized in v112U to reduce total duration. v112T defines this but does not execute it."
+  },
+  "state_write_policy": {
+    "description": "v112T does NOT write any production state.",
+    "production_state_write": false,
+    "temporary_plan_outputs_only": true,
+    "outputs": [
+      "results/market_radar_v112t_one_shot_free_source_plan_result.json",
+      "runs/market_radar/v112t_one_shot_free_source_plan.md",
+      "runs/market_radar/v112t_one_shot_free_source_plan_handoff.md"
+    ]
+  }
+}

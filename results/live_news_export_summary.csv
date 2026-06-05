@@ -1,0 +1,8 @@
+﻿metric,value
+time_field,published_at
+days_ago_min,0.0
+days_ago_max,1.0
+limit,50
+scan_limit,50000
+line_count_estimate,152
+output,C:\Users\PC\Desktop\Projects\事件情报系统\data\raw_news_live_incremental.csv

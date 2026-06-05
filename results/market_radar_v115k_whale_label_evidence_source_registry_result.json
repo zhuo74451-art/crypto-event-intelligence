@@ -1,0 +1,46 @@
+{
+  "stage": "v115k_whale_label_evidence_source_registry",
+  "registry_categories": 4,
+  "category_names": [
+    "primary_source",
+    "secondary_source",
+    "activity_source",
+    "rejected_source"
+  ],
+  "primary_source_types_count": 5,
+  "primary_source_types": [
+    "primary_project_official_docs",
+    "primary_exchange_institution_label",
+    "primary_reputable_explorer_label",
+    "primary_signed_statement",
+    "primary_internal_verified_label"
+  ],
+  "secondary_source_types_count": 5,
+  "secondary_source_types": [
+    "secondary_analytics_dashboard",
+    "secondary_cross_source_clustering",
+    "secondary_tx_behavior_evidence",
+    "secondary_social_identity_linkage",
+    "secondary_operator_reviewed_note"
+  ],
+  "activity_source_types_count": 4,
+  "activity_source_types": [
+    "activity_counterparty_pattern",
+    "activity_asset_venue_pattern",
+    "activity_position_consistency",
+    "activity_historical_entity_interaction"
+  ],
+  "rejected_source_types_count": 7,
+  "rejected_source_types": [
+    "rejected_unsourced_social_post",
+    "rejected_single_anonymous_claim",
+    "rejected_ai_attribution",
+    "rejected_screenshot_without_url",
+    "rejected_stale_label_no_date",
+    "rejected_tg_chat_label",
+    "rejected_vague_whale_claim"
+  ],
+  "categories_complete": true,
+  "rejected_source_not_empty": true,
+  "generated_at": "2026-06-05T08:04:08.040456+08:00"
+}

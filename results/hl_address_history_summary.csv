@@ -1,0 +1,4 @@
+﻿address,asset,fills_7d,net_size_delta,buy_size,sell_size,buy_ratio_7d,trade_bias_label,ledger_updates,deposit_usd_7d,withdrawal_usd_7d,net_flow_usd_7d,net_flow_label,funding_events,funding_net_7d,funding_label,history_quality,labels,card_history_lines,fetched_at
+0xebe837cd345469,BTC,0,+0.0000,0.0000,0.0000,0.000,low_activity,0,0,0,0,unavailable,168,0.000000,funding_neutral,unavailable,quiet_address,Funding：影响较弱,2026-06-01 15:31:36 UTC+8
+0x6c8512516ce566,ETH,0,+0.0000,0.0000,0.0000,0.000,low_activity,0,0,0,0,unavailable,168,0.000000,funding_neutral,unavailable,quiet_address,Funding：影响较弱,2026-06-01 15:31:37 UTC+8
+0x8def9f50456c6c,TON,2000,+398141.9300,398141.9300,0.0000,1.000,buy_execution_pressure,15,0,0,0,neutral_flow,500,0.000000,funding_neutral,good,recent_active_trader; recent_size_building,成交偏好：买方占比 100%，买方执行压力较强 || Funding：影响较弱,2026-06-01 15:31:39 UTC+8

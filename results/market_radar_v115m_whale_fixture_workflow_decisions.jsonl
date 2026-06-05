@@ -1,0 +1,1 @@
+{"address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6", "decision": "fixture_preview_allowed", "upgrade_preview_allowed": true, "real_label_upgrade_allowed": false, "real_label_upgrade_performed": false, "send_allowed": false, "tg_test_group_allowed": false, "public_send_allowed": false, "block_reasons": []}

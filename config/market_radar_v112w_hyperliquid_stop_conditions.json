@@ -1,0 +1,198 @@
+{
+  "version": "v1.12-w",
+  "generated_at": "2026-06-05 04:13:00 UTC+8",
+  "decision_modes": ["CONTINUE", "ABORT", "DEGRADE_TO_MOCK"],
+  "default_decision": "ABORT",
+  "stop_conditions": {
+    "ABORT": {
+      "description": "Irrecoverable failure — do NOT proceed to envelope or preview. Stop immediately.",
+      "conditions": [
+        {
+          "id": "ABORT_HTTP_NON_2XX",
+          "condition": "HTTP response status is not 2xx",
+          "severity": "critical",
+          "action": "Stop. Do not process response. Set eligible_for_real_send=false."
+        },
+        {
+          "id": "ABORT_TIMEOUT",
+          "condition": "Request timeout > 10 seconds",
+          "severity": "critical",
+          "action": "Stop. Do not retry in this run. Log timeout as ABORT reason."
+        },
+        {
+          "id": "ABORT_JSON_PARSE_ERROR",
+          "condition": "Response body is not valid JSON",
+          "severity": "critical",
+          "action": "Stop. Do not attempt to parse. Log raw response snippet (no keys)."
+        },
+        {
+          "id": "ABORT_SCHEMA_MISMATCH",
+          "condition": "Response JSON does not match expected schema (missing assetPositions or equivalent positions array)",
+          "severity": "critical",
+          "action": "Stop. Log schema mismatch details."
+        },
+        {
+          "id": "ABORT_RESPONSE_MISSING_POSITIONS_ARRAY",
+          "condition": "Response missing assetPositions / equivalent positions array",
+          "severity": "critical",
+          "action": "Stop. No positions data to process."
+        },
+        {
+          "id": "ABORT_EMPTY_TRACKED_ADDRESSES",
+          "condition": "Target address response empty for ALL tracked addresses",
+          "severity": "critical",
+          "action": "Stop. No tracked address has any position data."
+        },
+        {
+          "id": "ABORT_FIELD_MISSING_RATE_HIGH",
+          "condition": "Required position fields missing > 20% across all responses",
+          "severity": "critical",
+          "action": "Stop. Data quality too low to produce any meaningful signal."
+        },
+        {
+          "id": "ABORT_NUMERIC_PARSE_FAILURE",
+          "condition": "Numeric field parse failure for position_size / entry_price / mark_price / unrealized_pnl",
+          "severity": "critical",
+          "action": "Stop. Cannot validate position data without numeric values."
+        },
+        {
+          "id": "ABORT_RATE_LIMIT",
+          "condition": "Rate limit / anti-bot / blocked response detected",
+          "severity": "critical",
+          "action": "Stop. Do not retry. Log rate limit evidence."
+        },
+        {
+          "id": "ABORT_AUTH_REQUIRED",
+          "condition": "Any response requiring auth / API key / cookie",
+          "severity": "critical",
+          "action": "Stop. This source was planned as public/free. Auth requirement invalidates the plan."
+        },
+        {
+          "id": "ABORT_STATE_WRITE_ATTEMPTED",
+          "condition": "Any attempt to write production state",
+          "severity": "critical",
+          "action": "Stop. v112W is plan-only. Production state writes are forbidden."
+        }
+      ]
+    },
+    "DEGRADE_TO_MOCK": {
+      "description": "Partial data quality issues — can produce signals but with degraded confidence. Flag in envelope/preview.",
+      "conditions": [
+        {
+          "id": "DEGRADE_PARTIAL_ADDRESS_FAILURE",
+          "condition": "Partial tracked address failure, but success rate still >= 50%",
+          "severity": "warning",
+          "action": "Process successful addresses. Mark degraded addresses in metadata. Set stop_decision=DEGRADE_TO_MOCK."
+        },
+        {
+          "id": "DEGRADE_LABEL_MISSING",
+          "condition": "Address label missing or label confidence low",
+          "severity": "warning",
+          "action": "Use 'Unknown Whale' fallback. Set label_confidence=low. Flag in envelope."
+        },
+        {
+          "id": "DEGRADE_LIQUIDATION_PRICE_MISSING",
+          "condition": "liquidation_price missing but other core fields complete",
+          "severity": "warning",
+          "action": "Set liquidation_price=null. Note in card: '清算价格不可用'."
+        },
+        {
+          "id": "DEGRADE_PREVIOUS_SIZE_UNAVAILABLE",
+          "condition": "previous_position_size unavailable",
+          "severity": "warning",
+          "action": "Skip position_delta calculation. Mark alert_type based on current position only."
+        },
+        {
+          "id": "DEGRADE_DELTA_CANNOT_COMPUTE",
+          "condition": "position_delta cannot be computed (no history or inconsistent state)",
+          "severity": "warning",
+          "action": "Set position_delta_usd=0, position_delta_direction='unknown'. Note in card."
+        },
+        {
+          "id": "DEGRADE_TIMESTAMP_FRESHNESS",
+          "condition": "Timestamp freshness uncertain (response timestamp missing or > 5 min old)",
+          "severity": "warning",
+          "action": "Generate safe local timestamp. Note 'timestamp may be approximate' in card."
+        },
+        {
+          "id": "DEGRADE_POSITION_CHANGED",
+          "condition": "Position changed between local state and live response (race condition)",
+          "severity": "warning",
+          "action": "Use live response data. Flag 'position may have changed since last observation'."
+        },
+        {
+          "id": "DEGRADE_LABEL_STALE",
+          "condition": "Address label stale or unknown (label not updated > 30 days)",
+          "severity": "warning",
+          "action": "Use existing label but mark confidence as low. Flag in envelope metadata."
+        }
+      ]
+    },
+    "CONTINUE": {
+      "description": "All quality gates passed — produce v112F-compatible whale event. eligible_for_real_send remains false.",
+      "conditions": [
+        {
+          "id": "CONTINUE_ALL_REQUIRED_FIELDS",
+          "condition": "All required fields present for at least one tracked address",
+          "severity": "info",
+          "action": "Proceed to adapter stage."
+        },
+        {
+          "id": "CONTINUE_ACTIVE_POSITION",
+          "condition": "At least one tracked address returns active position",
+          "severity": "info",
+          "action": "Process positions for that address."
+        },
+        {
+          "id": "CONTINUE_NUMERIC_PARSE_OK",
+          "condition": "Numeric fields parse successfully (position_size, entry_price, mark_price, pnl)",
+          "severity": "info",
+          "action": "Proceed with normalized values."
+        },
+        {
+          "id": "CONTINUE_TIMESTAMP_OK",
+          "condition": "Timestamp / observed_at present or safely generated",
+          "severity": "info",
+          "action": "Use response timestamp or generate safe local timestamp."
+        },
+        {
+          "id": "CONTINUE_LABEL_OK",
+          "condition": "Address label confidence high, or fallback to 'Unknown Whale' acceptable",
+          "severity": "info",
+          "action": "Use label as-is or apply Unknown Whale fallback."
+        },
+        {
+          "id": "CONTINUE_ADAPTER_CAN_PRODUCE",
+          "condition": "Adapter can produce v112F-compatible whale event",
+          "severity": "info",
+          "action": "Transform live response to v112F-compatible format."
+        },
+        {
+          "id": "CONTINUE_ENVELOPE_ELIGIBLE",
+          "condition": "Envelope can remain eligible_for_real_send=false",
+          "severity": "info",
+          "action": "Create envelope with eligible_for_real_send=false. Do NOT mark as real_send ready."
+        },
+        {
+          "id": "CONTINUE_NO_ABORT_NO_DEGRADE",
+          "condition": "No ABORT condition triggered AND no DEGRADE_TO_MOCK condition triggered",
+          "severity": "info",
+          "action": "CONTINUE is the default when all checks pass cleanly."
+        }
+      ]
+    }
+  },
+  "decision_flow": {
+    "order": ["ABORT", "DEGRADE_TO_MOCK", "CONTINUE"],
+    "logic": "Check ABORT first. If any ABORT condition matches, stop immediately. Then check DEGRADE_TO_MOCK. If any DEGRADE condition matches, proceed with degraded quality flags. Otherwise CONTINUE.",
+    "fallback": "If neither CONTINUE nor DEGRADE is reached, default to ABORT (fail-safe)."
+  },
+  "invariants": {
+    "eligible_for_real_send_always_false": true,
+    "production_state_write_always_false": true,
+    "real_tg_send_always_false": true,
+    "no_api_key_ever_sent": true,
+    "no_auth_header_ever_sent": true,
+    "all_data_treated_as_plan_not_production": true
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "version": "v1.12-p",
+  "status": "passed",
+  "dry_run_only": true,
+  "live_ready": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "files_deleted": false,
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "card_types_total": 5,
+  "readiness_matrix_ready": true,
+  "one_shot_candidates_count": 5,
+  "recommended_first_one_shot_candidate": "multi_asset_market_sync",
+  "real_send_ready": false,
+  "production_state_write_ready": false,
+  "manual_review_required_before_send": true,
+  "v112n_validated": true,
+  "v112o_validated": true,
+  "upstream_artifacts_read": [
+    "results\\market_radar_v112n_local_master_dryrun_result.json",
+    "results\\market_radar_v112o_send_preview_pack_result.json",
+    "results\\market_radar_v112o_send_preview_cards.jsonl"
+  ],
+  "generated_at": "2026-06-05 04:13:18 UTC+8"
+}

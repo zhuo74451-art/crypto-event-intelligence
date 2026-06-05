@@ -1,0 +1,160 @@
+{
+  "version": "v1.12-B",
+  "mode": "liquidation_pressure_local_feed",
+  "description": "Fixture liquidation snapshots for v1.12-B local feed adapter. All samples are explicitly marked data_mode: fixture. No live data.",
+  "snapshots": [
+    {
+      "sample_id": "liq_v112b_fixture_001_btc_long_pressure",
+      "data_mode": "fixture",
+      "source": "local_fixture",
+      "asset": "BTC",
+      "timestamp_utc": "2026-06-04T12:00:00Z",
+      "price": 63500.00,
+      "long_liquidation_usd_1h": 18500000,
+      "short_liquidation_usd_1h": 3200000,
+      "long_liquidation_usd_24h": 125000000,
+      "short_liquidation_usd_24h": 28000000,
+      "liquidation_cluster_above": [
+        {
+          "price_low": 65000,
+          "price_high": 66000,
+          "liquidation_usd": 8000000,
+          "direction": "short"
+        }
+      ],
+      "liquidation_cluster_below": [
+        {
+          "price_low": 62000,
+          "price_high": 63000,
+          "liquidation_usd": 45000000,
+          "direction": "long"
+        },
+        {
+          "price_low": 60000,
+          "price_high": 61500,
+          "liquidation_usd": 32000000,
+          "direction": "long"
+        }
+      ],
+      "open_interest_usd": 18500000000,
+      "volume_24h_usd": 42000000000,
+      "note": "BTC 多头清算压力样本 — 下方存在大量多头清算密集区，近1h多头清算$18.5M"
+    },
+    {
+      "sample_id": "liq_v112b_fixture_002_eth_short_pressure",
+      "data_mode": "fixture",
+      "source": "local_fixture",
+      "asset": "ETH",
+      "timestamp_utc": "2026-06-04T12:00:00Z",
+      "price": 3050.00,
+      "long_liquidation_usd_1h": 4200000,
+      "short_liquidation_usd_1h": 22000000,
+      "long_liquidation_usd_24h": 38000000,
+      "short_liquidation_usd_24h": 145000000,
+      "liquidation_cluster_above": [
+        {
+          "price_low": 3100,
+          "price_high": 3200,
+          "liquidation_usd": 55000000,
+          "direction": "short"
+        },
+        {
+          "price_low": 3250,
+          "price_high": 3400,
+          "liquidation_usd": 28000000,
+          "direction": "short"
+        }
+      ],
+      "liquidation_cluster_below": [
+        {
+          "price_low": 2900,
+          "price_high": 2980,
+          "liquidation_usd": 12000000,
+          "direction": "long"
+        }
+      ],
+      "open_interest_usd": 8200000000,
+      "volume_24h_usd": 18500000000,
+      "note": "ETH 空头清算压力样本 — 上方存在大量空头清算密集区，近1h空头清算$22M"
+    },
+    {
+      "sample_id": "liq_v112b_fixture_003_sol_two_sided",
+      "data_mode": "fixture",
+      "source": "local_fixture",
+      "asset": "SOL",
+      "timestamp_utc": "2026-06-04T12:00:00Z",
+      "price": 142.50,
+      "long_liquidation_usd_1h": 28000000,
+      "short_liquidation_usd_1h": 31000000,
+      "long_liquidation_usd_24h": 185000000,
+      "short_liquidation_usd_24h": 210000000,
+      "liquidation_cluster_above": [
+        {
+          "price_low": 148,
+          "price_high": 155,
+          "liquidation_usd": 65000000,
+          "direction": "short"
+        }
+      ],
+      "liquidation_cluster_below": [
+        {
+          "price_low": 130,
+          "price_high": 138,
+          "liquidation_usd": 72000000,
+          "direction": "long"
+        }
+      ],
+      "open_interest_usd": 2100000000,
+      "volume_24h_usd": 5800000000,
+      "note": "SOL 双向清算密集样本 — 上下方均存在大量清算密集区，波动风险升高"
+    },
+    {
+      "sample_id": "liq_v112b_fixture_004_invalid_missing_asset",
+      "data_mode": "fixture",
+      "source": "local_fixture",
+      "asset": "",
+      "timestamp_utc": "2026-06-04T12:00:00Z",
+      "price": 50000.00,
+      "long_liquidation_usd_1h": 5000000,
+      "short_liquidation_usd_1h": 2000000,
+      "long_liquidation_usd_24h": 30000000,
+      "short_liquidation_usd_24h": 15000000,
+      "liquidation_cluster_above": [],
+      "liquidation_cluster_below": [
+        {
+          "price_low": 48000,
+          "price_high": 49500,
+          "liquidation_usd": 12000000,
+          "direction": "long"
+        }
+      ],
+      "open_interest_usd": 0,
+      "volume_24h_usd": 0,
+      "note": "无效样本 — 缺少 asset 字段，应被 block"
+    },
+    {
+      "sample_id": "liq_v112b_fixture_005_invalid_zero_liquidation",
+      "data_mode": "fixture",
+      "source": "local_fixture",
+      "asset": "DOGE",
+      "timestamp_utc": "2026-06-04T12:00:00Z",
+      "price": 0.12,
+      "long_liquidation_usd_1h": 0,
+      "short_liquidation_usd_1h": 0,
+      "long_liquidation_usd_24h": 0,
+      "short_liquidation_usd_24h": 0,
+      "liquidation_cluster_above": [],
+      "liquidation_cluster_below": [],
+      "open_interest_usd": 0,
+      "volume_24h_usd": 0,
+      "note": "无效样本 — 清算金额全部为 0，无清算集群，应被 block"
+    }
+  ],
+  "meta": {
+    "total_snapshots": 5,
+    "valid_samples": 3,
+    "invalid_samples": 2,
+    "data_mode": "all_fixture",
+    "note": "ALL samples in this fixture are explicitly marked data_mode: 'fixture'. None are live market data. This is intentional for testing the normalization and card rendering pipeline."
+  }
+}

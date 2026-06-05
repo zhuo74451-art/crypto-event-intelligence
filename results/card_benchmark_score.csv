@@ -1,0 +1,5 @@
+﻿card,score,passes,breakdown
+# HyperInsight-Style Card Preview v1.6E,20,False,"{'title_clarity': 0, 'identity': 5, 'action_clarity': 0, 'key_numbers': 0, 'annotation': 0, 'clean_language': 15}"
+"Unknown Hyperliquid Whale BTC (send=False, suppress=quiet_ad",28,False,"{'title_clarity': 8, 'identity': 5, 'action_clarity': 0, 'key_numbers': 0, 'annotation': 0, 'clean_language': 15}"
+"Matrixport Related ETH (send=False, suppress=quiet_address)",28,False,"{'title_clarity': 8, 'identity': 5, 'action_clarity': 0, 'key_numbers': 0, 'annotation': 0, 'clean_language': 15}"
+"loraclexyz TON (send=True, suppress=)",82,True,"{'title_clarity': 15, 'identity': 15, 'action_clarity': 7, 'key_numbers': 15, 'annotation': 15, 'clean_language': 15}"

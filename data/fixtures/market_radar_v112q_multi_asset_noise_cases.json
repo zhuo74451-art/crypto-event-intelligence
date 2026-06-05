@@ -1,0 +1,291 @@
+{
+  "version": "v1.12-q",
+  "description": "Noise injection test cases for multi_asset_market_sync stricter threshold validation",
+  "generated_at": "2026-06-05 02:29:52 UTC+8",
+  "total_cases": 6,
+  "noise_categories": [
+    "clean_sync_should_pass",
+    "two_of_three_direction_should_block",
+    "single_asset_volume_spike_should_block",
+    "timestamp_skew_should_block",
+    "leader_driven_move_should_downgrade_or_block",
+    "mixed_sector_should_flag_low_confidence"
+  ],
+  "cases": [
+    {
+      "case_id": "clean_sync_should_pass",
+      "description": "3 assets all bullish, sufficient price moves, timestamps aligned within tolerance",
+      "expected_result": "passed",
+      "noise_category": "clean_sync",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 5.2,
+          "volume_change_pct": 95.0,
+          "oi_change_pct": 8.5,
+          "funding_rate": 0.015,
+          "liquidation_usd": 85000000,
+          "observed_at_utc": "2026-06-05T02:00:00Z"
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 4.8,
+          "volume_change_pct": 110.0,
+          "oi_change_pct": 9.2,
+          "funding_rate": 0.018,
+          "liquidation_usd": 62000000,
+          "observed_at_utc": "2026-06-05T02:00:15Z"
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": 6.1,
+          "volume_change_pct": 135.0,
+          "oi_change_pct": 11.0,
+          "funding_rate": 0.022,
+          "liquidation_usd": 41000000,
+          "observed_at_utc": "2026-06-05T02:00:30Z"
+        }
+      ],
+      "window_minutes": 30,
+      "sector": "L1",
+      "expected_direction": "up",
+      "expected_sync_type": "market_wide_risk_on"
+    },
+    {
+      "case_id": "two_of_three_direction_should_block",
+      "description": "3 assets: BTC+5.5%, ETH+4.2%, SOL-3.8%. Old 0.66 threshold might allow (2/3=0.67), new small-basket rule (3 assets = 1.0 required) should block.",
+      "expected_result": "blocked",
+      "noise_category": "direction_conflict",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 5.5,
+          "volume_change_pct": 90.0,
+          "oi_change_pct": 7.0,
+          "funding_rate": 0.012,
+          "liquidation_usd": 72000000,
+          "observed_at_utc": "2026-06-05T02:00:00Z"
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 4.2,
+          "volume_change_pct": 85.0,
+          "oi_change_pct": 6.5,
+          "funding_rate": 0.014,
+          "liquidation_usd": 55000000,
+          "observed_at_utc": "2026-06-05T02:00:10Z"
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": -3.8,
+          "volume_change_pct": 70.0,
+          "oi_change_pct": -4.0,
+          "funding_rate": -0.005,
+          "liquidation_usd": 38000000,
+          "observed_at_utc": "2026-06-05T02:00:20Z"
+        }
+      ],
+      "window_minutes": 30,
+      "sector": "L1",
+      "expected_direction": "conflicted",
+      "expected_sync_type": "unknown",
+      "old_threshold_would_pass": true,
+      "new_threshold_blocks": true
+    },
+    {
+      "case_id": "single_asset_volume_spike_should_block",
+      "description": "3 L1 assets: BTC+3.5%, ETH+3.2%, SOL+2.8%. But SOL has a fake 800% volume spike from a single exchange wash-trade. Mean volume looks high, but only 1 asset carries it.",
+      "expected_result": "blocked",
+      "noise_category": "volume_spike_outlier",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 3.5,
+          "volume_change_pct": 45.0,
+          "oi_change_pct": 5.0,
+          "funding_rate": 0.01,
+          "liquidation_usd": 25000000,
+          "observed_at_utc": "2026-06-05T02:00:00Z"
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 3.2,
+          "volume_change_pct": 40.0,
+          "oi_change_pct": 4.5,
+          "funding_rate": 0.011,
+          "liquidation_usd": 20000000,
+          "observed_at_utc": "2026-06-05T02:00:10Z"
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": 2.8,
+          "volume_change_pct": 800.0,
+          "oi_change_pct": 3.0,
+          "funding_rate": 0.008,
+          "liquidation_usd": 15000000,
+          "observed_at_utc": "2026-06-05T02:00:15Z",
+          "volume_spike_flag": true,
+          "volume_spike_reason": "single_exchange_wash_trade"
+        }
+      ],
+      "window_minutes": 30,
+      "sector": "L1",
+      "expected_direction": "up",
+      "expected_sync_type": "market_wide_risk_on",
+      "old_threshold_would_pass": true,
+      "new_threshold_blocks": true,
+      "noise_vector": "single_asset_volume_distortion"
+    },
+    {
+      "case_id": "timestamp_skew_should_block",
+      "description": "3 assets with prices observed at times differing by >60 seconds. BTC at T+0, ETH at T+75s, SOL at T+90s. Should be blocked or degraded.",
+      "expected_result": "degraded",
+      "noise_category": "timestamp_skew",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 4.0,
+          "volume_change_pct": 80.0,
+          "oi_change_pct": 6.0,
+          "funding_rate": 0.012,
+          "liquidation_usd": 45000000,
+          "observed_at_utc": "2026-06-05T02:00:00Z"
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 4.2,
+          "volume_change_pct": 85.0,
+          "oi_change_pct": 6.5,
+          "funding_rate": 0.013,
+          "liquidation_usd": 40000000,
+          "observed_at_utc": "2026-06-05T02:01:15Z"
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": 5.0,
+          "volume_change_pct": 100.0,
+          "oi_change_pct": 8.0,
+          "funding_rate": 0.018,
+          "liquidation_usd": 35000000,
+          "observed_at_utc": "2026-06-05T02:01:30Z"
+        }
+      ],
+      "window_minutes": 30,
+      "sector": "L1",
+      "expected_direction": "up",
+      "expected_sync_type": "market_wide_risk_on",
+      "max_timestamp_skew_seconds": 90,
+      "timestamp_skew_exceeds_threshold": true
+    },
+    {
+      "case_id": "leader_driven_move_should_downgrade_or_block",
+      "description": "BTC surges +8.0%, but ETH only +1.2% and SOL +0.8% — two followers barely move. Leader-driven, not genuine sync. Should be downgraded or blocked.",
+      "expected_result": "downgraded",
+      "noise_category": "leader_driven_pseudo_sync",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 8.0,
+          "volume_change_pct": 180.0,
+          "oi_change_pct": 15.0,
+          "funding_rate": 0.025,
+          "liquidation_usd": 120000000,
+          "observed_at_utc": "2026-06-05T02:00:00Z",
+          "is_leader": true
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 1.2,
+          "volume_change_pct": 20.0,
+          "oi_change_pct": 1.5,
+          "funding_rate": 0.008,
+          "liquidation_usd": 12000000,
+          "observed_at_utc": "2026-06-05T02:00:10Z",
+          "is_follower": true
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": 0.8,
+          "volume_change_pct": 15.0,
+          "oi_change_pct": 1.0,
+          "funding_rate": 0.006,
+          "liquidation_usd": 8000000,
+          "observed_at_utc": "2026-06-05T02:00:20Z",
+          "is_follower": true
+        }
+      ],
+      "window_minutes": 30,
+      "sector": "L1",
+      "expected_direction": "up",
+      "expected_sync_type": "market_wide_risk_on",
+      "leader_asset": "BTC",
+      "leader_driven": true,
+      "follower_price_ratio": 0.125
+    },
+    {
+      "case_id": "mixed_sector_should_flag_low_confidence",
+      "description": "5 assets from 4 different sectors: BTC(L1), ARB(L2), DOGE(meme), USDT(stablecoin), OP(L2). Sector dispersion should flag low confidence even if prices move same direction.",
+      "expected_result": "low_confidence",
+      "noise_category": "sector_dispersion",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 3.0,
+          "volume_change_pct": 65.0,
+          "oi_change_pct": 4.5,
+          "funding_rate": 0.01,
+          "liquidation_usd": 35000000,
+          "observed_at_utc": "2026-06-05T02:00:00Z",
+          "sector": "L1"
+        },
+        {
+          "asset": "ARB",
+          "price_change_pct": 3.5,
+          "volume_change_pct": 70.0,
+          "oi_change_pct": 5.0,
+          "funding_rate": 0.012,
+          "liquidation_usd": 8000000,
+          "observed_at_utc": "2026-06-05T02:00:10Z",
+          "sector": "L2"
+        },
+        {
+          "asset": "DOGE",
+          "price_change_pct": 4.0,
+          "volume_change_pct": 90.0,
+          "oi_change_pct": 6.0,
+          "funding_rate": 0.015,
+          "liquidation_usd": 25000000,
+          "observed_at_utc": "2026-06-05T02:00:15Z",
+          "sector": "meme"
+        },
+        {
+          "asset": "USDT",
+          "price_change_pct": 0.02,
+          "volume_change_pct": 25.0,
+          "oi_change_pct": 0.5,
+          "funding_rate": 0.001,
+          "liquidation_usd": 5000000,
+          "observed_at_utc": "2026-06-05T02:00:20Z",
+          "sector": "stablecoin"
+        },
+        {
+          "asset": "OP",
+          "price_change_pct": 3.8,
+          "volume_change_pct": 75.0,
+          "oi_change_pct": 5.5,
+          "funding_rate": 0.014,
+          "liquidation_usd": 6000000,
+          "observed_at_utc": "2026-06-05T02:00:25Z",
+          "sector": "L2"
+        }
+      ],
+      "window_minutes": 30,
+      "sector": "mixed",
+      "expected_direction": "up",
+      "expected_sync_type": "unknown",
+      "unique_sectors": 4,
+      "sector_concentration_ratio": 0.4,
+      "confidence_downgrade_reason": "assets_from_4_distinct_sectors_weakens_sync_signal"
+    }
+  ]
+}

@@ -1,14 +1,16 @@
 # Project Dashboard
 
-Last updated: 2026-05-29 12:52:29 UTC+8
+Last updated: 2026-06-01 10:07:37 UTC+8
 
 ## Gates
 
-- Blocking/failing items: 0
+- Blocking/failing items: 2
 - Review items: 12
 
 | area | metric | value | target | status |
 |---|---|---:|---|---|
+| project_os | artifact_stale_required_count | 103 | 0 | fail |
+| project_os | project_os_validation_fail_count | 8 | 0 | fail |
 | backtest | backtest_readiness_review_count | 5 | 0 before conclusion use | review |
 | backtest | ready_for_statistical_conclusions | no | yes before product claims | review |
 | backtest | stratified_selected_count | 37 | 50 desired | review |
@@ -65,9 +67,7 @@ Last updated: 2026-05-29 12:52:29 UTC+8
 | labels | manual_labeled_rows | 201 | >=200 before TG | pass |
 | labels | manual_review_required_rate | 0.0647 | <=0.085 before TG drafts | pass |
 | project_os | artifact_missing_required_count | 0 | 0 | pass |
-| project_os | artifact_stale_required_count | 0 | 0 | pass |
 | project_os | command_registry_missing_scripts | 0 | 0 | pass |
-| project_os | project_os_validation_fail_count | 0 | 0 | pass |
 | project_os | review_action_unknown_rules | 0 | 0 | pass |
 | relevance | auto_publish_count | 0 | 0 | pass |
 | security | secret_leak_count | 0 | 0 | pass |

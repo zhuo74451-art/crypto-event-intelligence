@@ -14,6 +14,7 @@ Output: data/raw_signals.csv
 
 import csv
 import json
+import math
 import sys
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -46,6 +47,33 @@ def safe_float(value: Any) -> float:
         return float(str(value or "").replace(",", "").strip())
     except Exception:
         return 0.0
+
+
+def safe_strength(value: Any, scale: float = 1.0, cap: float = 100.0) -> float:
+    """Map a numeric value to [0, cap] using smooth log1p scaling.
+
+    Uses log1p over the full range to produce a gradual curve:
+    - Small inputs stay low (single-digit anomalies → strength 20-30)
+    - Medium inputs grow smoothly (multi-sigma → strength 50-70)
+    - Extreme inputs approach cap without sudden saturation
+    - Guaranteed output: [0, cap]
+    - NaN/Inf/None/empty → 0
+    """
+    try:
+        v = safe_float(value)
+    except Exception:
+        return 0.0
+    if math.isnan(v) or math.isinf(v):
+        return 0.0
+    if v == 0:
+        return 0.0
+
+    raw = abs(v) * scale
+    # Reference: log1p(100 * scale) maps to ~85% of cap
+    # This gives a smooth curve — no sudden jump at any threshold
+    ref = math.log1p(100.0 * scale)
+    score = math.log1p(raw) / max(ref, 1.0) * (cap * 0.85)
+    return round(min(cap, max(0.0, score)), 1)
 
 
 def utc_stamp(value: Any) -> str:
@@ -133,7 +161,7 @@ def build_from_watcher_events(signals: list[dict]) -> list[dict]:
             "signal_category": category if category else "news_flash",
             "signal_type": str(row.get("raw_signal_type", row.get("event_type", "")))[:80],
             "direction": direction,
-            "magnitude": min(100, max(0, safe_float(row.get("importance", 50)))),
+            "magnitude": safe_strength(row.get("importance", 50), scale=1.0),
             "confidence": min(1.0, max(0, safe_float(row.get("confidence", 0.5)))),
             "is_first_hand": str(row.get("source", "")).startswith("first_hand") or source_type in ("whale_position", "onchain_flow", "hyperliquid"),
             "latency_seconds": 0,
@@ -234,13 +262,13 @@ def build_from_percentile_alerts(signals: list[dict]) -> list[dict]:
 
             if percentile > 90:
                 direction = "crowded"
-                mag = min(100, percentile)
+                mag = safe_strength(percentile, scale=1.0)
             elif percentile > 70:
                 direction = "neutral"
                 mag = 50
             else:
                 direction = "neutral"
-                mag = 30
+                mag = safe_strength(percentile, scale=0.5)
 
             sig = {
                 "signal_id": f"pctl_{bucket}_{asset}_{alert_type}_{uid()}",
@@ -281,13 +309,23 @@ def build_from_market_state_snapshot(signals: list[dict]) -> list[dict]:
         ts_utc = utc_stamp(row.get("observed_at_utc", ""))
         ts_china = row.get("observed_at_china", "")
 
-        metrics = [
-            ("price", "price_change_pct_24h", safe_float(row.get("price_change_pct_24h", 0))),
-            ("volume", "quote_volume_usd_24h", safe_float(row.get("quote_volume_usd_24h", 0))),
-            ("open_interest", "open_interest_change_pct_24h", safe_float(row.get("open_interest_change_pct_24h", 0))),
+        # Volume field source: use 1h percentage change (matching price/OI pct-based metrics).
+        # Fallback priority:
+        #   1. quote_volume_change_pct_1h (percentage, preferred — avoids raw-USD scale mismatch)
+        #   2. volume_change_pct_24h (alternative pct column, if available)
+        #   3. Falls back to 0 if neither exists (volume signal is skipped at abs(val) < 0.01)
+        # Verified 2026-05-29 snapshot: quote_volume_change_pct_1h has real values for all 7 assets.
+        volume_val = safe_float(row.get("quote_volume_change_pct_1h",
+                            row.get("volume_change_pct_24h", 0)))
+
+        metrics: list[tuple[str, str, float, float]] = [
+            # (category, signal_type, raw_value, scale)
+            ("price", "price_change_pct_24h", safe_float(row.get("price_change_pct_24h", 0)), 5.0),
+            ("volume", "volume_change_pct_1h", volume_val, 5.0),
+            ("open_interest", "open_interest_change_pct_24h", safe_float(row.get("open_interest_change_pct_24h", 0)), 5.0),
         ]
 
-        for cat, stype, val in metrics:
+        for cat, stype, val, scale in metrics:
             if abs(val) < 0.01:
                 continue
             direction = "neutral"
@@ -297,7 +335,7 @@ def build_from_market_state_snapshot(signals: list[dict]) -> list[dict]:
                 direction = "down"
             elif cat == "open_interest" and val > 5:
                 direction = "crowded"
-            mag = min(100, max(0, abs(val) * 5))
+            mag = safe_strength(val, scale=scale)
             sig = {
                 "signal_id": f"market_{asset}_{cat}_{uid()}",
                 "source_type": "market",
@@ -351,7 +389,7 @@ def build_from_news_drafts(signals: list[dict]) -> list[dict]:
                 "signal_category": "news_flash",
                 "signal_type": str(row.get("event_type", row.get("raw_signal_type", "")))[:80],
                 "direction": "unknown",
-                "magnitude": safe_float(row.get("alert_priority_score", 50)),
+                "magnitude": safe_strength(row.get("alert_priority_score", 50), scale=1.0),
                 "confidence": conf,
                 "is_first_hand": str(row.get("source", "")).startswith("first_hand"),
                 "latency_seconds": 0,
@@ -368,8 +406,20 @@ def build_from_news_drafts(signals: list[dict]) -> list[dict]:
     return signals
 
 
-def main() -> None:
-    output_path = ROOT / "data" / "raw_signals.csv"
+def main(limit: int | None = None, output: str | None = None) -> None:
+    # Determine output path
+    if output:
+        output_path = Path(output)
+        if not output_path.is_absolute():
+            output_path = ROOT / output_path
+    elif limit is not None and limit > 0:
+        # --limit without --output → use smoke test file, protect production
+        output_path = ROOT / "data" / "raw_signals_smoke_test.csv"
+        print(f"  --limit mode: output will go to {output_path}")
+        print(f"  (use --output data/raw_signals.csv to override)")
+    else:
+        output_path = ROOT / "data" / "raw_signals.csv"
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     signals: list[dict] = []
@@ -383,6 +433,11 @@ def main() -> None:
     build_from_market_state_snapshot(signals)
     print("[5/5] Extracting news drafts...")
     build_from_news_drafts(signals)
+
+    # Apply --limit before writing
+    if limit is not None and limit > 0:
+        signals = signals[:limit]
+        print(f"\n  --limit {limit}: using first {len(signals)} signals only")
 
     with output_path.open("w", encoding="utf-8-sig", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=CSV_COLUMNS, extrasaction="ignore")
@@ -402,6 +457,39 @@ def main() -> None:
     print(f"  By signal_category: {dict(cat_counts)}")
     print(f"  Output: {output_path}")
 
+    # --- Smoke test output: first 5 rows with key fields ---
+    print(f"\n--- SMOKE TEST: first {min(5, len(signals))} signals ---")
+    print(f"{'asset':<8} {'category':<30} {'strength':>8} {'conf':>6} {'ts_china':<24} {'first_hand':>10}")
+    print("-" * 96)
+    for s in signals[:5]:
+        print(f"{s['asset']:<8} {s['signal_category']:<30} {s['magnitude']:>8} {s['confidence']:>6} {s['timestamp_china']:<24} {str(s['is_first_hand']):>10}")
+
+    # Verify all strength values are in [0, 100]
+    bad_strengths = [s for s in signals if safe_float(s["magnitude"]) < 0 or safe_float(s["magnitude"]) > 100]
+    if bad_strengths:
+        print(f"\n  *** WARNING: {len(bad_strengths)} signals with strength outside [0,100]!")
+        for bs in bad_strengths[:5]:
+            print(f"    signal_id={bs['signal_id']} magnitude={bs['magnitude']}")
+    else:
+        print(f"\n  All {len(signals)} signals: strength in [0, 100] OK")
+
+    # Extreme value test: verify safe_strength handles absurd inputs
+    print(f"\n--- EXTREME VALUE TEST ---")
+    extreme_tests = [0, 1, 50, 100, 1000, 1e6, 1e9, -999, None, "abc", float('nan'), float('inf')]
+    for tv in extreme_tests:
+        result = safe_strength(tv, scale=5.0)
+        status = "OK" if 0 <= result <= 100 else "FAIL"
+        print(f"  safe_strength({tv!r}, scale=5.0) = {result}  {status}")
+
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Build raw_signals.csv from existing data sources.")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Limit output to first N signals (smoke test mode). "
+                             "When used without --output, writes to data/raw_signals_smoke_test.csv")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Custom output path (default: data/raw_signals.csv; "
+                             "with --limit without --output: data/raw_signals_smoke_test.csv)")
+    args = parser.parse_args()
+    main(limit=args.limit, output=args.output)

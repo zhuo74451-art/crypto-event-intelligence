@@ -1,2 +1,2 @@
 ﻿status,input_rows,output_rows,interrupt_count,board_count,archive_count,discard_count,top_event_type,top_asset
-pass,9,9,1,2,6,0,whale_position,BTC
+pass,20,20,3,7,10,0,token_unlock,BTC

@@ -34,7 +34,7 @@ institutional_flow,etf_or_fund_flow,news:coinjournal,large_cap_alt,historical_un
 institutional_flow,etf_or_fund_flow,news:decrypt,other_alt,historical_unknown,1,1,0.002538,0.002538,1.0,1,-0.000758,-0.000758,0.0,1,0.012695,0.012695,1.0,1,-0.012242,-0.012242,0.0,insufficient_sample
 institutional_flow,etf_or_fund_flow,news:odaily_exchange_gap,other_alt,historical_unknown,1,1,-0.007862,-0.007862,0.0,1,0.027239,0.027239,1.0,1,0.018621,0.018621,1.0,1,0.079795,0.079795,1.0,insufficient_sample
 institutional_flow,etf_or_fund_flow,news:utoday,large_cap_alt,historical_unknown,1,1,0.002248,0.002248,1.0,1,0.00548,0.00548,1.0,1,0.000782,0.000782,1.0,1,0.004301,0.004301,1.0,insufficient_sample
-market_structure,long_short_crowding_extreme,long_short,large_cap_alt,downtrend,1,1,-0.000336,-0.000336,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,insufficient_sample
+market_structure,long_short_crowding_extreme,long_short,large_cap_alt,downtrend,1,1,-0.000336,-0.000336,0.0,1,-0.00608,-0.00608,0.0,1,0.009794,0.009794,1.0,1,0.014861,0.014861,1.0,insufficient_sample
 network_upgrade,upgrade_or_fork,news:99bitcoins,large_cap_alt,historical_unknown,1,1,0.001222,0.001222,1.0,1,0.005729,0.005729,1.0,1,0.019267,0.019267,1.0,1,-0.004896,-0.004896,0.0,insufficient_sample
 network_upgrade,upgrade_or_fork,news:coinpedia,other_alt,historical_unknown,1,1,0.017757,0.017757,1.0,1,0.006436,0.006436,1.0,1,0.00149,0.00149,1.0,1,0.086036,0.086036,1.0,insufficient_sample
 network_upgrade,upgrade_or_fork,news:coinpedia,large_cap_alt,historical_unknown,1,1,0.000886,0.000886,1.0,1,-9.4e-05,-9.4e-05,0.0,1,0.015483,0.015483,1.0,1,-0.001874,-0.001874,0.0,insufficient_sample
@@ -49,8 +49,8 @@ stablecoin_flow,stablecoin_supply_or_flow,news:odaily_exchange_gap,other_alt,his
 stablecoin_flow,stablecoin_supply_or_flow,news:utoday,large_cap_alt,historical_unknown,1,1,0.002039,0.002039,1.0,1,0.005655,0.005655,1.0,1,0.000592,0.000592,1.0,1,0.004423,0.004423,1.0,insufficient_sample
 staking_governance,staking_or_governance,news:kucoin_ann,other_alt,historical_unknown,1,1,0.002733,0.002733,1.0,1,-0.006787,-0.006787,0.0,1,-0.005549,-0.005549,0.0,1,0.036089,0.036089,1.0,insufficient_sample
 staking_governance,staking_or_governance,news:utoday,large_cap_alt,historical_unknown,1,1,0.000214,0.000214,1.0,1,-0.004008,-0.004008,0.0,1,0.005453,0.005453,1.0,1,-0.011947,-0.011947,0.0,insufficient_sample
-token_unlock,token_unlock_team_large,token_unlock,other_alt,downtrend,1,1,-0.004734,-0.004734,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,insufficient_sample
-whale_position,whale_position_static_large,hyperliquid,other_alt,downtrend,1,1,-0.017535,-0.017535,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,insufficient_sample
+token_unlock,token_unlock_team_large,token_unlock,other_alt,downtrend,1,1,-0.004734,-0.004734,0.0,1,0.060009,0.060009,1.0,1,0.109306,0.109306,1.0,1,0.219682,0.219682,1.0,insufficient_sample
+whale_position,whale_position_static_large,hyperliquid,other_alt,downtrend,1,1,-0.017535,-0.017535,0.0,1,-0.016238,-0.016238,0.0,1,0.084985,0.084985,1.0,1,0.190821,0.190821,1.0,insufficient_sample
 whale_position,whale_wallet_position,news:bitcoinist,large_cap_alt,historical_unknown,1,1,2.7e-05,2.7e-05,1.0,1,0.000683,0.000683,1.0,1,0.009199,0.009199,1.0,1,0.025548,0.025548,1.0,insufficient_sample
 whale_position,whale_wallet_position,news:coindesk,large_cap_alt,historical_unknown,1,1,-0.000789,-0.000789,0.0,1,-0.001958,-0.001958,0.0,1,-0.004489,-0.004489,0.0,1,0.002451,0.002451,1.0,insufficient_sample
 whale_position,whale_wallet_position,news:cryptonews,other_alt,historical_unknown,1,1,0.003661,0.003661,1.0,1,0.020924,0.020924,1.0,1,0.194038,0.194038,1.0,1,0.164015,0.164015,1.0,insufficient_sample

@@ -1,0 +1,43 @@
+{
+  "version": "v113D",
+  "status": "passed",
+  "sealed": true,
+  "local_only": true,
+  "stage_conclusion": "local_operator_review_ready_not_send_ready",
+  "all_required_artifacts_present": true,
+  "chain_counts_consistent": true,
+  "all_routing_guards_false": true,
+  "operator_review_cards_ready": 10,
+  "eligible_for_real_send_count": 0,
+  "real_send_candidate_count": 0,
+  "tg_send_allowed_count": 0,
+  "external_api_called": false,
+  "prod_state_write": false,
+  "credentials_read": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "label_confidence_distribution": {
+    "high": 0,
+    "medium": 8,
+    "low": 2
+  },
+  "warning_distribution": {
+    "标签置信度不足": 10,
+    "单次快照，暂无法计算仓位变化": 10,
+    "使用本地观察时间，非 HyperLiquid 服务端时间": 10,
+    "清算价格不可用": 7
+  },
+  "liquidation_price_missing_count": 7,
+  "errors": [],
+  "next_step": "gpt_decide_next_stage_after_v113d_seal",
+  "chain_counts": {
+    "v112X_positions": 10,
+    "v112Y_replay_records": 10,
+    "v112Z_envelopes": 10,
+    "v113A_preview_cards": 10,
+    "v113B_quality_decisions": 10,
+    "v113C_operator_review_cards": 10
+  },
+  "generated_at": "2026-06-05T05:56:46+08:00"
+}

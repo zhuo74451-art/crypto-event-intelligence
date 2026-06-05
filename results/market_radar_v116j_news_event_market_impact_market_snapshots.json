@@ -1,0 +1,109 @@
+{
+  "snapshot_id": "market_snap_20260605_132520",
+  "fetched_at": "2026-06-05T13:25:20.458792+08:00",
+  "symbols_queried": [
+    "BNBUSDT",
+    "ETHUSDT"
+  ],
+  "symbol_count": 2,
+  "spot_data_available": 2,
+  "futures_data_available": 2,
+  "funding_data_available": 2,
+  "api_source": "Binance public REST endpoints (no API key)",
+  "api_key_required": false,
+  "real_external_api_called": true,
+  "spot_data": {
+    "ETHUSDT": {
+      "symbol": "ETHUSDT",
+      "priceChange": "-60.51000000",
+      "priceChangePercent": "-3.379",
+      "weightedAvgPrice": "1760.66194256",
+      "prevClosePrice": "1791.00000000",
+      "lastPrice": "1730.50000000",
+      "lastQty": "0.10800000",
+      "bidPrice": "1730.49000000",
+      "bidQty": "45.29500000",
+      "askPrice": "1730.50000000",
+      "askQty": "30.00580000",
+      "openPrice": "1791.01000000",
+      "highPrice": "1802.06000000",
+      "lowPrice": "1718.25000000",
+      "volume": "546928.39300000",
+      "quoteVolume": "962956006.86216000",
+      "openTime": 1780550711985,
+      "closeTime": 1780637111985,
+      "firstId": 4075946407,
+      "lastId": 4083512324,
+      "count": 7565918
+    },
+    "BNBUSDT": {
+      "symbol": "BNBUSDT",
+      "priceChange": "-5.47000000",
+      "priceChangePercent": "-0.908",
+      "weightedAvgPrice": "600.35996007",
+      "prevClosePrice": "602.66000000",
+      "lastPrice": "597.19000000",
+      "lastQty": "0.00900000",
+      "bidPrice": "597.19000000",
+      "bidQty": "22.22800000",
+      "askPrice": "597.20000000",
+      "askQty": "1.91000000",
+      "openPrice": "602.66000000",
+      "highPrice": "610.98000000",
+      "lowPrice": "588.10000000",
+      "volume": "272874.16200000",
+      "quoteVolume": "163822721.00155000",
+      "openTime": 1780550712105,
+      "closeTime": 1780637112105,
+      "firstId": 1514992641,
+      "lastId": 1516595811,
+      "count": 1603171
+    }
+  },
+  "futures_data": {
+    "ETHUSDT": {
+      "symbol": "ETHUSDT",
+      "priceChange": "-60.01",
+      "priceChangePercent": "-3.354",
+      "weightedAvgPrice": "1760.11",
+      "lastPrice": "1729.31",
+      "lastQty": "1.539",
+      "openPrice": "1789.32",
+      "highPrice": "1801.44",
+      "lowPrice": "1717.58",
+      "volume": "6987658.454",
+      "quoteVolume": "12299015672.91",
+      "openTime": 1780550700000,
+      "closeTime": 1780637107674,
+      "firstId": 8208958829,
+      "lastId": 8220001340,
+      "count": 11027412
+    },
+    "BNBUSDT": {
+      "symbol": "BNBUSDT",
+      "priceChange": "-5.440",
+      "priceChangePercent": "-0.902",
+      "weightedAvgPrice": "600.764",
+      "lastPrice": "597.480",
+      "lastQty": "3.04",
+      "openPrice": "602.920",
+      "highPrice": "611.450",
+      "lowPrice": "588.330",
+      "volume": "1115709.76",
+      "quoteVolume": "670278619.048",
+      "openTime": 1780550700000,
+      "closeTime": 1780637107482,
+      "firstId": 2161712776,
+      "lastId": 2163970242,
+      "count": 2253275
+    }
+  },
+  "funding_data": {
+    "ETHUSDT": {
+      "funding_rate": 4.67e-05
+    },
+    "BNBUSDT": {
+      "funding_rate": 0.0
+    }
+  }
+}

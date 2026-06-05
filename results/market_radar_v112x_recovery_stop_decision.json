@@ -1,0 +1,18 @@
+{
+  "version": "v112X-recovery",
+  "decision": "NOT_EXECUTED_LOCAL_RECOVERY_ONLY",
+  "live_probe_executed": false,
+  "eligible_for_real_send": false,
+  "reason": "This recovery task only restores local contract and handoff artifacts after missing executor result.",
+  "generated_at": "2026-06-05T04:59:04.397523+08:00",
+  "stop_conditions_evaluated": false,
+  "stop_conditions_source": "config/market_radar_v112w_hyperliquid_stop_conditions.json",
+  "note": "Stop conditions will be evaluated during the real v112X one-shot dry-run, not during this recovery step.",
+  "next_decision_runner": "v112X_hyperliquid_one_shot_readonly_dryrun",
+  "safety": {
+    "no_real_send_possible": true,
+    "no_api_call_possible": true,
+    "no_state_write_possible": true,
+    "recovery_only": true
+  }
+}

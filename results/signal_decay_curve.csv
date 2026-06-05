@@ -28,10 +28,10 @@ institutional_flow,institutional_flow,news:cointelegraph,1,1,0.000554,0.000554,0
 institutional_flow,institutional_flow,news:cryptonews,1,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,insufficient_sample
 institutional_flow,institutional_flow,news:decrypt,1,1,0.000213,0.000213,0.000213,,1,-0.000981,-0.000981,0.000981,4.5964,1,-0.002342,-0.002342,0.002342,2.3878,1,-0.010788,-0.010788,0.010788,4.6072,insufficient_sample
 macro,macro,news:coinpedia,1,1,0.000379,0.000379,0.000379,,1,0.003623,0.003623,0.003623,9.5643,1,0.003498,0.003498,0.003498,0.9656,1,0.003355,0.003355,0.003355,0.9591,insufficient_sample
-market_structure,long_short_crowding_extreme,long_short,1,1,-0.000336,-0.000336,0.000336,,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,insufficient_sample
+market_structure,long_short_crowding_extreme,long_short,1,1,-0.000336,-0.000336,0.000336,,1,-0.00608,-0.00608,0.00608,18.108,1,0.009794,0.009794,0.009794,1.6109,1,0.014861,0.014861,0.014861,1.5173,insufficient_sample
 network_upgrade,network_upgrade,news:cryptonews,1,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,insufficient_sample
 token_unlock,token_unlock,news:cryptonews,1,1,0.00044,0.00044,0.00044,,1,0.001855,0.001855,0.001855,4.2189,1,-0.021927,-0.021927,0.021927,11.8207,1,-0.016717,-0.016717,0.016717,0.7624,insufficient_sample
 token_unlock,token_unlock,news:jin10,1,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,insufficient_sample
-token_unlock,token_unlock_team_large,token_unlock,1,1,-0.004734,-0.004734,0.004734,,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,insufficient_sample
+token_unlock,token_unlock_team_large,token_unlock,1,1,-0.004734,-0.004734,0.004734,,1,0.060009,0.060009,0.060009,12.6764,1,0.109306,0.109306,0.109306,1.8215,1,0.219682,0.219682,0.219682,2.0098,insufficient_sample
 token_unlock,token_unlock,webhook,1,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,1,0.0,0.0,0.0,,insufficient_sample
-whale_position,whale_position_static_large,hyperliquid,1,1,-0.017535,-0.017535,0.017535,,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,insufficient_sample
+whale_position,whale_position_static_large,hyperliquid,1,1,-0.017535,-0.017535,0.017535,,1,-0.016238,-0.016238,0.016238,0.926,1,0.084985,0.084985,0.084985,5.2338,1,0.190821,0.190821,0.190821,2.2453,insufficient_sample

@@ -1,0 +1,134 @@
+{
+  "version": "v1.12-D",
+  "card_type": "news_event_market_impact",
+  "valid_signal_count": 5,
+  "blocked_signal_count": 2,
+  "total_event_count": 7,
+  "public_card_count": 5,
+  "debug_leak_count": 0,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "live_ready": false,
+  "readiness_before": "missing",
+  "readiness_after": "partial",
+  "readiness_updated": true,
+  "readiness_reason": "v112d local feed adapter produced 5 valid signals with 5 clean public cards (0 debug leaks); live data pipeline still missing",
+  "fixed_card_matrix_summary": {
+    "ready_count": 1,
+    "partial_count": 3,
+    "missing_count": 1,
+    "card_types": [
+      {
+        "card_type": "liquidation_pressure",
+        "display_name": "清算压力预警卡",
+        "readiness_level": "missing"
+      },
+      {
+        "card_type": "multi_asset_market_sync",
+        "display_name": "多资产共振卡",
+        "readiness_level": "partial"
+      },
+      {
+        "card_type": "news_event_market_impact",
+        "display_name": "新闻事件影响卡",
+        "readiness_level": "partial"
+      },
+      {
+        "card_type": "price_oi_volume_anomaly",
+        "display_name": "多因子价格异动卡",
+        "readiness_level": "ready"
+      },
+      {
+        "card_type": "whale_position_alert",
+        "display_name": "巨鲸仓位警报卡",
+        "readiness_level": "partial"
+      }
+    ]
+  },
+  "valid_signals": [
+    {
+      "sample_id": "news_001_etf_fund_flow",
+      "category": "etf_flow",
+      "affected_assets": [
+        "BTC"
+      ],
+      "impact_direction": "bullish",
+      "public_card_length": 436,
+      "debug_leak_free": true
+    },
+    {
+      "sample_id": "news_002_regulation_policy",
+      "category": "regulation_policy",
+      "affected_assets": [
+        "DEFI",
+        "ETH"
+      ],
+      "impact_direction": "bullish",
+      "public_card_length": 427,
+      "debug_leak_free": true
+    },
+    {
+      "sample_id": "news_003_security_exploit",
+      "category": "security_exploit",
+      "affected_assets": [
+        "ARB",
+        "ETH",
+        "USDC"
+      ],
+      "impact_direction": "bearish",
+      "public_card_length": 454,
+      "debug_leak_free": true
+    },
+    {
+      "sample_id": "news_004_exchange_listing",
+      "category": "exchange_event",
+      "affected_assets": [
+        "BNB",
+        "HYPE",
+        "USDT"
+      ],
+      "impact_direction": "bullish",
+      "public_card_length": 465,
+      "debug_leak_free": true
+    },
+    {
+      "sample_id": "news_005_macro_liquidity",
+      "category": "macro_liquidity",
+      "affected_assets": [
+        "BTC",
+        "DXY",
+        "ETH"
+      ],
+      "impact_direction": "bullish",
+      "public_card_length": 472,
+      "debug_leak_free": true
+    }
+  ],
+  "blocked_signals": [
+    {
+      "sample_id": "news_006_invalid_no_assets",
+      "block_reason": "交易相关性为「极低」；无法提取受影响资产；分类未知且无明确受影响资产",
+      "category": "unknown"
+    },
+    {
+      "sample_id": "news_007_invalid_already_priced",
+      "block_reason": "交易相关性为「极低」；事件已被市场完全定价",
+      "category": "unknown"
+    }
+  ],
+  "no_network": true,
+  "no_external_ai": true,
+  "no_real_tg_send": true,
+  "generated_at": "2026-06-04 22:32:39 UTC+8",
+  "fixture_source": "C:\\Users\\PC\\Desktop\\Projects\\事件情报系统\\data\\fixtures\\market_radar_v112d_news_events.json",
+  "notes": [
+    "All events are fixtures — no live news API was used.",
+    "TG send is disabled — real_tg_sent=false.",
+    "No external API calls were made.",
+    "No external AI/LLM calls were made.",
+    "No daemon/loop/cron was started.",
+    "No tokens/keys/cookies/passwords were read or saved."
+  ]
+}

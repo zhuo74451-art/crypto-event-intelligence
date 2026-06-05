@@ -1,0 +1,139 @@
+{
+  "pipeline_version": "v1.17",
+  "variant": "v117F",
+  "run_id": "20260605_170616",
+  "task_id": "20260605_v117f_news_event_tg_delivery_recovery_and_source_stability",
+  "generated_at": "2026-06-05T17:06:33+08:00",
+  "type": "real_free_public_source_news_event_tg_one_shot_v117f_recovery",
+  "card_family": "news_event_market_impact",
+  "run_status": "sent",
+  "source_summary": {
+    "sources_attempted": 5,
+    "sources_succeeded": 4,
+    "articles_fetched": 165,
+    "events_found": 50,
+    "event_extracted": true,
+    "all_public_sources_unavailable": false,
+    "public_sources_config": [
+      "CoinDesk (RSS)",
+      "Cointelegraph (RSS)",
+      "Decrypt (RSS)",
+      "The Block (RSS)",
+      "Binance Announcements (JSON API)"
+    ]
+  },
+  "event_summary": {
+    "source_name": "CoinDesk",
+    "title": "Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%",
+    "url_redacted": "sha256:9af2a44348c6",
+    "url_domain": "coindesk.com",
+    "event_type": "other",
+    "intensity": "high",
+    "attribution_risk": "direct",
+    "assets_affected": [
+      "BTC",
+      "HYPE",
+      "NEAR"
+    ],
+    "observation_only": true,
+    "not_causal_proof": true
+  },
+  "market_data_summary": {
+    "market_api_success": true,
+    "market_fetch_attempted": true,
+    "adapter_fetch_count": 1,
+    "assets_with_data": [
+      "XRP",
+      "APT",
+      "NEAR",
+      "BNB",
+      "SOL",
+      "ETH",
+      "BTC",
+      "ARB"
+    ],
+    "asset_count_with_data": 8,
+    "duplicate_fetch_prevented": true
+  },
+  "gate_allow": true,
+  "gate_reason": "News event with high intensity accepted",
+  "send_readiness_allow_test_group": true,
+  "send_readiness_production_send_ready": false,
+  "send_readiness_block_x_twitter": true,
+  "send_readiness_block_daemon_cron_loop": true,
+  "tg_result": {
+    "attempted": true,
+    "success": true,
+    "status": "sent",
+    "reason": "TG test group one-shot sent successfully",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": true,
+    "token_proof_present": true,
+    "chat_id_proof_present": true,
+    "credentials_printed": false,
+    "network_failure_class": null,
+    "proxy_env_detected": false
+  },
+  "pipeline_passed": true,
+  "pipeline_error": null,
+  "card_observation_only": true,
+  "card_not_causal_proof": true,
+  "sources_detail": [
+    {
+      "source_name": "CoinDesk",
+      "source_domain": "coindesk.com",
+      "status": "ok",
+      "article_count": 25
+    },
+    {
+      "source_name": "Cointelegraph",
+      "source_domain": "cointelegraph.com",
+      "status": "ok",
+      "article_count": 30
+    },
+    {
+      "source_name": "Decrypt",
+      "source_domain": "decrypt.com",
+      "status": "ok",
+      "article_count": 30
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_domain": "binanceannouncements.com",
+      "status": "ok",
+      "article_count": 80
+    }
+  ],
+  "v117f_fixes": {
+    "market_fetch_once_caching": true,
+    "rss_xml_parser_warning_fixed": true,
+    "tg_network_failure_classification_enhanced": true,
+    "proxy_env_detection_boolean_only": true,
+    "adapter_fetch_count": 1,
+    "no_duplicate_market_fetch": true
+  },
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": true,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false,
+    "observation_only": true,
+    "not_causal_proof": true
+  },
+  "preflight": {
+    "safe_loader_found": true,
+    "load_success": true,
+    "config_ready": true,
+    "bot_token_present": true,
+    "chat_id_present": true,
+    "proxy_env_any_detected": false
+  }
+}

@@ -1,140 +1,312 @@
 ﻿draft_id,candidate_id,published_at_china,asset_symbol,event_type,event_type_label,event_scope,channel_route,confidence_label,strength_stars,amount_usd,severity_tier,alert_priority_score,throttle_key,raw_signal_type,risk_category,needs_model_review,model_review_reason,source,title,url,why_this_matters,watch_next,context_summary,draft_text,draft_status,reviewer_decision,reviewer_usefulness,reviewer_issue_type,reviewer_notes,approved_text,draft_mode,auto_send_enabled
-tg_watcher_0001,watcher_fh_dbb232d98231d333,2026-05-28 19:23:27 UTC+8,BTC,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,34959911.44,high,72,whale_position:BTC,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】BTC Hyperliquid 多头仓位：3495.99 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ 链上大户 BTC多头仓位异动</b>
+tg_watcher_0001,watcher_fh_b22dcf7f666fab1f,2026-06-03 17:47:47 UTC+8,BTC,stablecoin_flow,稳定币流动,single_asset,realtime,中,★★★★★,136900000.00,high,75,stablecoin_flow:BTC,stablecoin_treasury_in,supply_change,true,large_or_context_sensitive_transfer,first_hand:etherscan_v2_account_tokentx,【稳定币流动】USDT 金库转入：1.37 亿美元,,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,关注后续是否进入交易所、CEX 净流是否同步放大。,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,"<b>⚡ TetherUSDT大额流动</b>
 
-<b>时间：</b>2026-05-28 19:23:27 北京时间
-<b>主体：</b>Hyperliquid
-<b>类型：</b>巨鲸仓位
-<b>规模：</b>3495.99 万美元
+<b>时间：</b>2026-06-03 17:47:47 北京时间
+<b>主体：</b>Tether
+<b>类型：</b>稳定币流动
+<b>规模：</b>1.37 亿美元
 
 <b>关键事实：</b>
-• 某地址在Hyperliquid持有BTC多头3496.0万美元。
-• 当前浮亏157.4万美元。
-• 距离爆仓约15.3%。
+• Tether出现USDT金库转入，规模1.37亿美元。
 
-<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
+<b>关注点：</b>单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。
+🔗 <b>Tx：</b>0x460db5ca4689b8c8...
 
 仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0002,watcher_fh_5c0ab6b52311e31a,2026-05-28 19:23:27 UTC+8,ETH,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,79520000.00,critical,87,whale_position:ETH,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】ETH Hyperliquid 多头仓位：7952.00 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ Matrixport Related ETH多头仓位异动</b>
+tg_watcher_0002,watcher_fh_85424eddb842ca32,2026-06-03 17:25:59 UTC+8,BTC,stablecoin_flow,稳定币流动,single_asset,digest_or_realtime,中,★★★★☆,72356102.55,watch,57,stablecoin_flow:BTC,stablecoin_treasury_in,supply_change,true,large_or_context_sensitive_transfer,first_hand:etherscan_v2_account_tokentx,【稳定币流动】USDT 金库转入：7235.61 万美元,,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,关注后续是否进入交易所、CEX 净流是否同步放大。,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,"<b>⚡ TetherUSDT大额流动</b>
 
-<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>时间：</b>2026-06-03 17:25:59 北京时间
+<b>主体：</b>Tether
+<b>类型：</b>稳定币流动
+<b>规模：</b>7235.61 万美元
+
+<b>关键事实：</b>
+• Tether出现USDT金库转入，规模7235.6万美元。
+
+<b>关注点：</b>单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。
+🔗 <b>Tx：</b>0x8655c1e533d51dde...
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0003,watcher_fh_3c74283fe1d2d556,2026-06-03 17:21:11 UTC+8,BTC,stablecoin_flow,稳定币流动,single_asset,realtime,中,★★★★★,180000000.00,high,75,stablecoin_flow:BTC,stablecoin_treasury_out,supply_change,true,large_or_context_sensitive_transfer,first_hand:etherscan_v2_account_tokentx,【稳定币流动】USDT 金库转出：1.80 亿美元,,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,关注后续是否进入交易所、CEX 净流是否同步放大。,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,"<b>⚡ TetherUSDT大额流动</b>
+
+<b>时间：</b>2026-06-03 17:21:11 北京时间
+<b>主体：</b>Tether
+<b>类型：</b>稳定币流动
+<b>规模：</b>1.80 亿美元
+
+<b>关键事实：</b>
+• Tether出现USDT金库转出，规模1.80亿美元。
+
+<b>关注点：</b>单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。
+🔗 <b>Tx：</b>0x66e28a271e66c598...
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0004,watcher_fh_b8f8238b383c8ecc,2026-06-02 19:56:23 UTC+8,BTC,stablecoin_flow,稳定币流动,single_asset,realtime,中,★★★★★,500000000.00,critical,90,stablecoin_flow:BTC,stablecoin_treasury_in,supply_change,true,large_or_context_sensitive_transfer,first_hand:etherscan_v2_account_tokentx,【稳定币流动】USDT 金库转入：5.00 亿美元,,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,关注后续是否进入交易所、CEX 净流是否同步放大。,单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。,"<b>⚡ TetherUSDT大额流动</b>
+
+<b>时间：</b>2026-06-02 19:56:23 北京时间
+<b>主体：</b>Tether
+<b>类型：</b>稳定币流动
+<b>规模：</b>5.00 亿美元
+
+<b>关键事实：</b>
+• Tether出现USDT金库转入，规模5.00亿美元。
+
+<b>关注点：</b>单笔稳定币流动不等于方向判断，重点看后续是否进入交易所或持续放大。
+🔗 <b>Tx：</b>0x514bb8756fb7ace9...
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0005,watcher_fh_870ebc01a26f0c5a,2026-06-03 17:47:47 UTC+8,USDT,onchain_transfer,链上异动,single_asset,digest_or_realtime,高,★★★★★,109463867.56,watch,60,onchain_transfer:USDT,cex_transfer_out,cex_flow,true,large_or_context_sensitive_transfer,first_hand:etherscan_v2_account_tokentx,【链上异动】USDT 交易所钱包转出：1.09 亿美元,,,关注后续 4h/24h 是否出现价格、成交量或链上流向变化。,,"<b>⚡ USDT链上异动｜1.09亿美元</b>
+
+<b>时间：</b>2026-06-03 17:47:47 北京时间
+<b>主体：</b>Bitfinex
+<b>类型：</b>链上异动
+<b>规模：</b>1.09 亿美元
+
+<b>关键事实：</b>
+• 链上异动：USDT，规模1.09亿美元。
+🔗 <b>Tx：</b>0x5440cfcca7848e1c...
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0006,watcher_fh_e71623c66eea05af,2026-06-03 02:04:11 UTC+8,USDT,onchain_transfer,链上异动,single_asset,digest_or_realtime,高,★★★★☆,86954192.64,watch,57,onchain_transfer:USDT,cex_transfer_in,cex_flow,true,large_or_context_sensitive_transfer,first_hand:etherscan_v2_account_tokentx,【链上异动】USDT 交易所钱包转入：8695.42 万美元,,,关注后续 4h/24h 是否出现价格、成交量或链上流向变化。,,"<b>⚡ USDT链上异动｜8695.4万美元</b>
+
+<b>时间：</b>2026-06-03 02:04:11 北京时间
+<b>主体：</b>Bitfinex
+<b>类型：</b>链上异动
+<b>规模：</b>8695.42 万美元
+
+<b>关键事实：</b>
+• 链上异动：USDT，规模8695.4万美元。
+🔗 <b>Tx：</b>0xb918ef427f85653f...
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0007,watcher_fh_b8f2496d52d670fe,2026-06-03 19:37:54 UTC+8,BTC,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,69783114.70,critical,87,whale_position:BTC,hyperliquid_position_short,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】BTC Hyperliquid 空头仓位：6978.31 万美元,,爆仓距离很近，后续重点看是否触发连锁清算。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,爆仓距离很近，后续重点看是否触发连锁清算。,"<b>⚡ 链上大户 BTC空头仓位异动</b>
+
+<b>时间：</b>2026-06-03 19:37:54 北京时间
+<b>主体：</b>Hyperliquid
+<b>类型：</b>巨鲸仓位
+<b>规模：</b>6978.31 万美元
+
+<b>关键事实：</b>
+• 某地址在Hyperliquid持有BTC空头6978.3万美元。
+• 当前浮亏66.6万美元。
+• 距离爆仓约4.5%。
+
+<b>关注点：</b>爆仓距离很近，后续重点看是否触发连锁清算。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0008,watcher_fh_5c0ab6b52311e31a,2026-06-03 19:37:54 UTC+8,ETH,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,75180000.00,critical,87,whale_position:ETH,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】ETH Hyperliquid 多头仓位：7518.00 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ Matrixport Related ETH多头仓位异动</b>
+
+<b>时间：</b>2026-06-03 19:37:54 北京时间
 <b>主体：</b>Matrixport Related
 <b>类型：</b>巨鲸仓位
-<b>规模：</b>7952.00 万美元
+<b>规模：</b>7518.00 万美元
 
 <b>关键事实：</b>
-• Matrixport Related持有ETH多头7952.0万美元。
-• 当前浮亏1109.8万美元。
-• 距离爆仓约31.8%。
+• Matrixport Related持有ETH多头7518.0万美元。
+• 当前浮亏1543.8万美元。
+• 距离爆仓约24.6%。
 
 <b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
 
 仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0003,watcher_fh_f03efc9e86591489,2026-05-28 19:23:27 UTC+8,BTC,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,34375168.54,high,72,whale_position:BTC,hyperliquid_position_short,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】BTC Hyperliquid 空头仓位：3437.52 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ loraclexyz BTC空头仓位异动</b>
+tg_watcher_0009,watcher_fh_aa864d8c8c70ed6c,2026-06-03 19:37:54 UTC+8,HYPE,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★★,100072413.45,critical,90,whale_position:HYPE,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】HYPE Hyperliquid 多头仓位：1.00 亿美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ 链上大户 HYPE多头仓位异动</b>
 
-<b>时间：</b>2026-05-28 19:23:27 北京时间
-<b>主体：</b>loraclexyz
-<b>类型：</b>巨鲸仓位
-<b>规模：</b>3437.52 万美元
-
-<b>关键事实：</b>
-• loraclexyz持有BTC空头3437.5万美元。
-• 当前浮盈88.9万美元。
-• 距离爆仓约190.4%。
-
-<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
-
-仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0004,watcher_fh_dfd0158b68a27d1a,2026-05-28 19:23:27 UTC+8,HYPE,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★★,102660871.07,critical,90,whale_position:HYPE,hyperliquid_position_short,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】HYPE Hyperliquid 空头仓位：1.03 亿美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ loraclexyz HYPE空头仓位异动</b>
-
-<b>时间：</b>2026-05-28 19:23:27 北京时间
-<b>主体：</b>loraclexyz
-<b>类型：</b>巨鲸仓位
-<b>规模：</b>1.03 亿美元
-
-<b>关键事实：</b>
-• loraclexyz持有HYPE空头1.03亿美元。
-• 当前浮亏2063.8万美元。
-• 距离爆仓约58.7%。
-
-<b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
-
-仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0005,watcher_fh_aa864d8c8c70ed6c,2026-05-28 19:23:27 UTC+8,HYPE,whale_position,巨鲸仓位,single_asset,realtime,中,★★★★☆,78367102.49,critical,87,whale_position:HYPE,hyperliquid_position_long,perp_position,true,large_hyperliquid_position,first_hand:hyperliquid_clearinghouse_state,【巨鲸仓位】HYPE Hyperliquid 多头仓位：7836.71 万美元,,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,关注仓位是否继续增加、是否接近强平价、其他大户是否同步。,这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。,"<b>⚡ 链上大户 HYPE多头仓位异动</b>
-
-<b>时间：</b>2026-05-28 19:23:27 北京时间
+<b>时间：</b>2026-06-03 19:37:54 北京时间
 <b>主体：</b>Hyperliquid
 <b>类型：</b>巨鲸仓位
-<b>规模：</b>7836.71 万美元
+<b>规模：</b>1.00 亿美元
 
 <b>关键事实：</b>
-• 某地址在Hyperliquid持有HYPE多头7836.7万美元。
-• 当前浮盈2499.3万美元。
-• 距离爆仓约13.6%。
+• 某地址在Hyperliquid持有HYPE多头1.00亿美元。
+• 当前浮盈4669.8万美元。
+• 距离爆仓约24.3%。
 
 <b>关注点：</b>这是静态大仓位快照，只有继续变化或接近爆仓时才值得升级提醒。
 
 仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0006,watcher_fh_c882497a6ccec22f,2026-05-28 08:00:00 UTC+8,CTR,exchange_listing,交易所上新,single_asset,realtime,高,★★★★★,0,critical,90,exchange_listing:CTR,cex_listing_announcement,listing_event,false,,first_hand:cex_listing_announcement,【交易所上新】Binance 发布 CTR 相关上新公告,https://www.binance.com/en/support/announcement/ee40eb721abc460cb7edca6df04d782b,重点核对公告交易对、上线时间和是否已被市场提前消化。,关注公告链接、上线交易对、开盘时间、是否触发同类资产跟随。,重点核对公告交易对、上线时间和是否已被市场提前消化。,"<b>⚡ CTR交易所公告</b>
+tg_watcher_0010,watcher_fh_8a3ca560b51d49a2,2026-06-03 19:40:23 UTC+8,AORA,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,115613.40,watch,60,token_unlock:AORA,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】AORA 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ AORA解锁预警</b>
 
-<b>时间：</b>2026-05-28 08:00:00 北京时间
-<b>主体：</b>Binance
-<b>类型：</b>交易所上新
-<b>规模：</b>未披露
-
-<b>关键事实：</b>
-• 交易所上新：CTR，规模未披露。
-
-<b>关注点：</b>重点核对公告交易对、上线时间和是否已被市场提前消化。
-🔗 <b>来源：</b>https://www.binance.com/en/support/announcement/ee40eb721abc460cb7edca6df04d782b
-
-仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0007,watcher_fh_e3179cf77941da9e,2026-05-28 19:23:36 UTC+8,HAEDAL,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,762030.98,watch,60,token_unlock:HAEDAL,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】HAEDAL 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ HAEDAL解锁预警</b>
-
-<b>时间：</b>2026-05-28 20:00:00 北京时间
+<b>时间：</b>2026-06-04 08:00:00 北京时间
 <b>主体：</b>Token Unlocks
 <b>类型：</b>代币解锁
-<b>规模：</b>76.20 万美元
+<b>规模：</b>11.56 万美元
 
 <b>关键事实：</b>
-• HAEDAL将在2026-05-28 20:00:00 北京时间解锁76.2万美元。
-• 规模约占当前流通2.92%。
-• 距离发生：36 分钟内。
-• 主要释放给早期投资人。
-• 发现时间：2026-05-28 19:23:36 北京时间
+• AORA将在2026-06-04 08:00:00 北京时间解锁11.6万美元。
+• 规模约占当前流通3.27%。
+• 距离发生：约 12.3 小时后。
+• 主要释放给Aerodrome Ignition Program。
+• 发现时间：2026-06-03 19:40:23 北京时间
 
 <b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
 
 仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0008,watcher_fh_d52226e92055465c,2026-05-28 19:23:36 UTC+8,HOME,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★★☆,19617278.19,watch,65,token_unlock:HOME,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】HOME 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ HOME解锁预警</b>
+tg_watcher_0011,watcher_fh_204df23a3d9534e9,2026-06-03 19:40:23 UTC+8,LAB,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★★☆,10127642.47,watch,65,token_unlock:LAB,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】LAB 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ LAB解锁预警</b>
 
-<b>时间：</b>2026-05-29 08:00:00 北京时间
+<b>时间：</b>2026-06-04 08:00:00 北京时间
 <b>主体：</b>Token Unlocks
 <b>类型：</b>代币解锁
-<b>规模：</b>1961.73 万美元
+<b>规模：</b>1012.76 万美元
 
 <b>关键事实：</b>
-• HOME将在2026-05-29 08:00:00 北京时间解锁1961.7万美元。
-• 规模约占当前流通7.50%。
-• 距离发生：约 12.6 小时后。
+• LAB将在2026-06-04 08:00:00 北京时间解锁1012.8万美元。
+• 规模约占当前流通0.05%。
+• 距离发生：约 12.3 小时后。
+• 主要释放给生态激励。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0012,watcher_fh_d176d5cdf93e9cb4,2026-06-03 19:40:23 UTC+8,GATA,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,17896.17,watch,60,token_unlock:GATA,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】GATA 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ GATA解锁预警</b>
+
+<b>时间：</b>2026-06-05 04:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>1.79 万美元
+
+<b>关键事实：</b>
+• GATA将在2026-06-05 04:00:00 北京时间解锁1.8万美元。
+• 规模约占当前流通2.98%。
+• 距离发生：约 32.3 小时后。
+• 主要释放给生态激励。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0013,watcher_fh_b65d96c15f643a4b,2026-06-03 19:40:23 UTC+8,CTT,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,18662.02,watch,60,token_unlock:CTT,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】CTT 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ CTT解锁预警</b>
+
+<b>时间：</b>2026-06-05 08:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>1.87 万美元
+
+<b>关键事实：</b>
+• CTT将在2026-06-05 08:00:00 北京时间解锁1.9万美元。
+• 规模约占当前流通2.51%。
+• 距离发生：约 36.3 小时后。
+• 主要释放给早期投资人。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0014,watcher_fh_515b692864a1d9e2,2026-06-03 19:40:23 UTC+8,ENA,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★★☆,18158295.95,watch,65,token_unlock:ENA,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】ENA 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ ENA解锁预警</b>
+
+<b>时间：</b>2026-06-05 08:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>1815.83 万美元
+
+<b>关键事实：</b>
+• ENA将在2026-06-05 08:00:00 北京时间解锁1815.8万美元。
+• 规模约占当前流通1.15%。
+• 距离发生：约 36.3 小时后。
 • 主要释放给团队/贡献者。
-• 发现时间：2026-05-28 19:23:36 北京时间
+• 发现时间：2026-06-03 19:40:23 北京时间
 
 <b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
 
 仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
-tg_watcher_0009,watcher_fh_adbf5f85f5f6391f,2026-05-28 19:23:36 UTC+8,TBOT,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,1097.64,watch,60,token_unlock:TBOT,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】TBOT 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ TBOT解锁预警</b>
+tg_watcher_0015,watcher_fh_7a027a00f2f8f646,2026-06-03 19:40:23 UTC+8,MATTLE,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,10158.34,watch,60,token_unlock:MATTLE,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】MATTLE 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ MATTLE解锁预警</b>
 
-<b>时间：</b>2026-05-31 08:00:00 北京时间
+<b>时间：</b>2026-06-05 08:00:00 北京时间
 <b>主体：</b>Token Unlocks
 <b>类型：</b>代币解锁
-<b>规模：</b>1,097.64 美元
+<b>规模：</b>1.02 万美元
 
 <b>关键事实：</b>
-• TBOT将在2026-05-31 08:00:00 北京时间解锁1,098美元。
-• 规模约占当前流通10.76%。
-• 距离发生：约 2.5 天后。
+• MATTLE将在2026-06-05 08:00:00 北京时间解锁1.0万美元。
+• 规模约占当前流通2.22%。
+• 距离发生：约 36.3 小时后。
+• 主要释放给Treasury。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0016,watcher_fh_0e796bce7bd74ff1,2026-06-03 19:40:23 UTC+8,XION,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★☆☆,1837661.36,watch,60,token_unlock:XION,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】XION 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ XION解锁预警</b>
+
+<b>时间：</b>2026-06-05 13:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>183.77 万美元
+
+<b>关键事实：</b>
+• XION将在2026-06-05 13:00:00 北京时间解锁183.8万美元。
+• 规模约占当前流通7.53%。
+• 距离发生：约 41.3 小时后。
+• 主要释放给生态激励。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0017,watcher_fh_da3de894877ad150,2026-06-03 19:40:23 UTC+8,CUDIS,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★☆☆☆,153294.41,watch,60,token_unlock:CUDIS,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】CUDIS 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ CUDIS解锁预警</b>
+
+<b>时间：</b>2026-06-05 16:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>15.33 万美元
+
+<b>关键事实：</b>
+• CUDIS将在2026-06-05 16:00:00 北京时间解锁15.3万美元。
+• 规模约占当前流通2.46%。
+• 距离发生：约 44.3 小时后。
 • 主要释放给早期投资人。
-• 发现时间：2026-05-28 19:23:36 北京时间
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0018,watcher_fh_6e2438cb6887fe00,2026-06-03 19:40:23 UTC+8,POWER,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★☆☆,1641640.78,watch,60,token_unlock:POWER,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】POWER 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ POWER解锁预警</b>
+
+<b>时间：</b>2026-06-06 00:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>164.16 万美元
+
+<b>关键事实：</b>
+• POWER将在2026-06-06 00:00:00 北京时间解锁164.2万美元。
+• 规模约占当前流通2.16%。
+• 距离发生：约 2.2 天后。
+• 主要释放给生态激励。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0019,watcher_fh_856b44471d92db67,2026-06-03 19:40:23 UTC+8,BERA,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★☆☆,4191095.46,watch,60,token_unlock:BERA,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】BERA 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ BERA解锁预警</b>
+
+<b>时间：</b>2026-06-06 08:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>419.11 万美元
+
+<b>关键事实：</b>
+• BERA将在2026-06-06 08:00:00 北京时间解锁419.1万美元。
+• 规模约占当前流通2.45%。
+• 距离发生：约 2.5 天后。
+• 主要释放给生态激励。
+• 发现时间：2026-06-03 19:40:23 北京时间
+
+<b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
+
+仅供市场观察，不构成交易建议。",ready,,,,,,watcher_realtime_preview,false
+tg_watcher_0020,watcher_fh_ae335e054e793ea4,2026-06-03 19:40:23 UTC+8,MYX,token_unlock,代币解锁,single_asset,digest_or_realtime,中,★★★★☆,13057798.79,watch,65,token_unlock:MYX,token_unlock_upcoming,supply_event,false,,first_hand:token_unlock_calendar,【代币解锁】MYX 即将发生计划解锁,,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,关注解锁前后 4h/24h 价格、成交量、交易所流入和持仓变化。,重点看解锁前后交易所流入、成交量和价格是否已提前反应。,"<b>⚡ MYX解锁预警</b>
+
+<b>时间：</b>2026-06-06 16:00:00 北京时间
+<b>主体：</b>Token Unlocks
+<b>类型：</b>代币解锁
+<b>规模：</b>1305.78 万美元
+
+<b>关键事实：</b>
+• MYX将在2026-06-06 16:00:00 北京时间解锁1305.8万美元。
+• 规模约占当前流通3.27%。
+• 距离发生：约 2.8 天后。
+• 主要释放给团队/贡献者。
+• 发现时间：2026-06-03 19:40:23 北京时间
 
 <b>关注点：</b>重点看解锁前后交易所流入、成交量和价格是否已提前反应。
 

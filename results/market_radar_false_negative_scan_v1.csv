@@ -1,0 +1,3 @@
+﻿move_id,asset,move_time,horizon,move_return,threshold_quality,had_signal_1h,had_signal_4h,had_signal_24h,nearest_signal_time,nearest_signal_event_type,nearest_signal_source,false_negative_label
+mv_HYPE_202605190245,HYPE,2026-05-19 02:45:00,4h,4.3%,adjusted,True,True,True,2026-05-19 02:45:00,institutional_flow,webhook,covered
+mv_HYPE_202605190053,HYPE,2026-05-19 00:53:58,24h,6.8%,adjusted,True,True,True,2026-05-19 00:53:58,institutional_flow,webhook,covered

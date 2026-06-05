@@ -1,0 +1,54 @@
+{
+  "stage": "v115k_whale_label_evidence_scoring_policy",
+  "minimum_for_high_confidence": {
+    "total_requirements": 9,
+    "requirements": [
+      "HC_REQ_001",
+      "HC_REQ_002",
+      "HC_REQ_003",
+      "HC_REQ_004",
+      "HC_REQ_005",
+      "HC_REQ_006",
+      "HC_REQ_007",
+      "HC_REQ_008",
+      "HC_REQ_009"
+    ],
+    "all_defined": true
+  },
+  "minimum_for_medium_confidence": {
+    "operator_review_allowed": true,
+    "tg_test_group_allowed": false,
+    "full_checklist_for_upgrade": true,
+    "no_partial_send_ready": true
+  },
+  "automatic_reject_conditions": {
+    "conditions_count": 4,
+    "conditions": [
+      "REJECTED_EVIDENCE_ONLY",
+      "NO_PRIMARY_SOURCE_EVIDENCE",
+      "OPERATOR_CONFIRMATION_MISSING",
+      "UNKNOWN_WHALE_UNATTRIBUTED"
+    ]
+  },
+  "manual_review_required_conditions": {
+    "conditions_count": 4
+  },
+  "unknown_whale_upgrade_rules": {
+    "rules_count": 4,
+    "direct_upgrade_allowed": false,
+    "rules": [
+      "manual_attribution_required_first",
+      "no_direct_send_candidate",
+      "full_evidence_pack_required_for_low_unknown",
+      "blocked_until_complete"
+    ]
+  },
+  "medium_to_high_upgrade_rules": {
+    "rules_count": 3,
+    "full_checklist_required": true,
+    "operator_review_required": true,
+    "no_partial_upgrade": true
+  },
+  "send_guard_dependency": true,
+  "generated_at": "2026-06-05T08:04:08.040456+08:00"
+}

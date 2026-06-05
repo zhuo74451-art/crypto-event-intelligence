@@ -1,0 +1,26 @@
+{
+  "version": "v113C",
+  "status": "passed",
+  "input_preview_cards_loaded": 10,
+  "quality_decisions_loaded": 10,
+  "operator_preview_ready_loaded": 10,
+  "operator_review_cards_written": 10,
+  "external_api_called": false,
+  "local_review_only": true,
+  "eligible_for_real_send_count": 0,
+  "real_send_candidate_count": 0,
+  "tg_send_allowed_count": 0,
+  "prod_state_write": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "credentials_read": false,
+  "files_deleted": false,
+  "copy_preview_text_is_not_send_copy": true,
+  "all_review_cards_have_degraded_disclosure": true,
+  "label_confidence_summary": {
+    "high": 0,
+    "medium": 8,
+    "low": 2
+  },
+  "next_step": "v113d_degraded_whale_review_pack_seal_local_only"
+}

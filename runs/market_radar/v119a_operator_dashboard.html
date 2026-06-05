@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Radar Operator Dashboard v119A</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 2px solid #334155;
+            padding: 24px 32px;
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .header .subtitle {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .header .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .header .meta-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+        .header .meta-item .meta-key {
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+        .header .meta-item .meta-val {
+            color: #cbd5e1;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+        }
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 32px;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 32px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #334155;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .kpi-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .kpi-card .kpi-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+        .kpi-card .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 8px 0;
+        }
+        .kpi-accept .kpi-value { color: #22c55e; }
+        .kpi-watch .kpi-value { color: #f59e0b; }
+        .kpi-reject .kpi-value { color: #ef4444; }
+        .kpi-manual .kpi-value { color: #8b5cf6; }
+        .kpi-active .kpi-value { color: #3b82f6; }
+        .kpi-blocked .kpi-value { color: #6b7280; }
+        .live-badge {
+            display: inline-block;
+            background: #166534;
+            color: #4ade80;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid #334155;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th {
+            background: #1e293b;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid #475569;
+            white-space: nowrap;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #1e293b;
+            vertical-align: top;
+        }
+        tr:hover td {
+            background: #1e293b33;
+        }
+        code {
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            background: #1e293b;
+            padding: 1px 5px;
+            border-radius: 3px;
+            color: #e2e8f0;
+        }
+        .badge-accept {
+            display: inline-block;
+            background: #166534;
+            color: #bbf7d0;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-watch {
+            display: inline-block;
+            background: #78350f;
+            color: #fde68a;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-reject {
+            display: inline-block;
+            background: #7f1d1d;
+            color: #fecaca;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-manual {
+            display: inline-block;
+            background: #4c1d95;
+            color: #ddd6fe;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-unknown {
+            display: inline-block;
+            background: #334155;
+            color: #94a3b8;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .status-active { color: #22c55e; font-weight: 600; }
+        .status-blocked { color: #6b7280; font-weight: 600; }
+        .publishability {
+            font-size: 0.78rem;
+            color: #94a3b8;
+        }
+        .evidence-cell, .reason-cell, .action-cell {
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+        .risk-panel {
+            background: #450a0a;
+            border: 2px solid #dc2626;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+        .risk-panel h3 {
+            color: #fca5a5;
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+        }
+        .risk-panel ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .risk-panel li {
+            color: #fecaca;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+        }
+        .nosend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .nosend-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nosend-item .ns-key {
+            color: #94a3b8;
+            font-size: 0.78rem;
+            font-family: 'Cascadia Code', monospace;
+            white-space: nowrap;
+        }
+        .nosend-item .ns-val {
+            font-weight: 700;
+            font-family: 'Cascadia Code', monospace;
+            font-size: 0.82rem;
+        }
+        .ns-false { color: #22c55e; }
+        .ns-true { color: #ef4444; }
+        .action-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .action-card {
+            border-radius: 10px;
+            border: 1px solid #334155;
+            padding: 16px 20px;
+        }
+        .action-card.accept { background: #052e16; border-color: #166534; }
+        .action-card.watch { background: #451a03; border-color: #78350f; }
+        .action-card.reject { background: #450a0a; border-color: #7f1d1d; }
+        .action-card.manual_required { background: #2e1065; border-color: #4c1d95; }
+        .action-card h4 { margin: 0 0 8px 0; font-size: 0.95rem; }
+        .action-card.accept h4 { color: #4ade80; }
+        .action-card.watch h4 { color: #fbbf24; }
+        .action-card.reject h4 { color: #f87171; }
+        .action-card.manual_required h4 { color: #a78bfa; }
+        .action-card p { margin: 0; font-size: 0.82rem; color: #cbd5e1; }
+        .criterion-met { color: #22c55e; font-weight: 600; }
+        .criterion-not-met { color: #ef4444; font-weight: 600; }
+        .check-passed td { color: #cbd5e1; }
+        .check-failed td { color: #fca5a5; }
+        .footer {
+            margin-top: 48px;
+            padding: 20px 32px;
+            border-top: 1px solid #334155;
+            color: #475569;
+            font-size: 0.78rem;
+            text-align: center;
+        }
+        .footer .no-prod {
+            display: inline-block;
+            background: #450a0a;
+            color: #fca5a5;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            border: 1px solid #7f1d1d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Market Radar Operator Dashboard v119A <span class="live-badge">LIVE DATA</span></h1>
+        <div class="subtitle">
+            Generated: 2026-06-05T18:31:38+08:00 &nbsp;|&nbsp;
+            Run ID: 20260605_183130 &nbsp;|&nbsp;
+            Pipeline: v1.19A &nbsp;|&nbsp;
+            Mode: live one-shot refresh / no-send
+        </div>
+        <div class="meta-grid">
+            <div class="meta-item">
+                <div class="meta-key">Pipeline Version</div>
+                <div class="meta-val">v1.19A (live one-shot refresh)</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Run ID</div>
+                <div class="meta-val">20260605_183130</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Mode</div>
+                <div class="meta-val">live one-shot / no-send</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Production Readiness</div>
+                <div class="meta-val" style="color:#ef4444;">false / 0/5</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Telegram Sent</div>
+                <div class="meta-val" style="color:#22c55e;">false</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">AI/Model Called</div>
+                <div class="meta-val" style="color:#22c55e;">false</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <!-- Five-Card Pipeline Status -->
+        <h2 class="section-title">📋 Five-Card Pipeline Status (Live Data)</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card kpi-active">
+                <div class="kpi-label">Active (Gate Passed)</div>
+                <div class="kpi-value">2</div>
+            </div>
+            <div class="kpi-card kpi-blocked">
+                <div class="kpi-label">Blocked (Gate)</div>
+                <div class="kpi-value">3</div>
+            </div>
+            <div class="kpi-card" style="background:#1e293b;">
+                <div class="kpi-label">Total Cards</div>
+                <div class="kpi-value" style="color:#f1f5f9;">5</div>
+            </div>
+            <div class="kpi-card" style="background:#1e293b;">
+                <div class="kpi-label">Live API Adapters</div>
+                <div class="kpi-value" style="color:#3b82f6;">3</div>
+            </div>
+        </div>
+
+        <!-- Operator Decision Overview -->
+        <h2 class="section-title">⚖️ Operator Decision Overview</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card kpi-accept">
+                <div class="kpi-label">✅ Accept</div>
+                <div class="kpi-value">1</div>
+            </div>
+            <div class="kpi-card kpi-watch">
+                <div class="kpi-label">👀 Watch</div>
+                <div class="kpi-value">1</div>
+            </div>
+            <div class="kpi-card kpi-reject">
+                <div class="kpi-label">❌ Reject</div>
+                <div class="kpi-value">2</div>
+            </div>
+            <div class="kpi-card kpi-manual">
+                <div class="kpi-label">🔒 Manual Required</div>
+                <div class="kpi-value">1</div>
+            </div>
+        </div>
+
+        <!-- Full Decision Table -->
+        <h2 class="section-title">🗂️ Operator Decision Table</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Card Family</th>
+                        <th>Source</th>
+                        <th>Pipeline Status</th>
+                        <th>Operator Decision</th>
+                        <th>Publishability</th>
+                        <th>Evidence Summary</th>
+                        <th>Reason</th>
+                        <th>Next Action</th>
+                        <th>Obs Only</th>
+                        <th>Not Causal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><code>multi_asset_market_sync</code></td>
+                    <td>live_binance_public_api</td>
+                    <td><span class="status-active">active</span></td>
+                    <td><span class="badge-accept">✅ ACCEPT</span></td>
+                    <td><span class="publishability">test_group_only</span></td>
+                    <td class="evidence-cell" title="Live Binance public API: 3 assets fetched. Gate: Multi-asset data available for 3 assets. Source: free_public_api, no API key required.">Live Binance public API: 3 assets fetched. Gate: Multi-asset data available for 3 assets. Source: free_public_api, no AP…</td>
+                    <td class="reason-cell">Live Binance data available for 3 assets. Multi-asset sync card is active with real free public API data. Operator shoul…</td>
+                    <td class="action-cell">Review individual asset deltas. Confirm no stale ticker data. If correlation &gt; 0.7 persists, card is suitable for test-g…</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><code>price_oi_volume_anomaly</code></td>
+                    <td>live_binance_public_api</td>
+                    <td><span class="status-blocked">blocked</span></td>
+                    <td><span class="badge-reject">❌ REJECT</span></td>
+                    <td><span class="publishability">blocked</span></td>
+                    <td class="evidence-cell" title="Gate blocked: No asset passed admission threshold — insufficient anomaly signal strength. All signals below threshold.">Gate blocked: No asset passed admission threshold — insufficient anomaly signal strength. All signals below threshold.</td>
+                    <td class="reason-cell">No asset passed the admission threshold — insufficient anomaly signal strength. This is a correct gate block, not a fail…</td>
+                    <td class="action-cell">No action needed. Retry during higher-volatility windows. Do NOT lower threshold to force card generation.</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><code>news_event_market_impact</code></td>
+                    <td>live_free_public_rss_and_binance</td>
+                    <td><span class="status-active">active</span></td>
+                    <td><span class="badge-watch">👀 WATCH</span></td>
+                    <td><span class="publishability">test_group_only_with_caveat</span></td>
+                    <td class="evidence-cell" title="Live RSS/news: 4 sources, 50 events extracted. Extraction method: rule_based_keyword_matching. observation_only=true, not_causal_proof=true.">Live RSS/news: 4 sources, 50 events extracted. Extraction method: rule_based_keyword_matching. observation_only=true, no…</td>
+                    <td class="reason-cell">News events detected (50 events from 4 sources) with measurable market context. Event extraction is rule-based keyword m…</td>
+                    <td class="action-cell">Read the full article at source URL before citing. Cross-reference with at least one other news source. Do NOT present a…</td>
+                    <td>True</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><code>liquidation_pressure</code></td>
+                    <td>fixture</td>
+                    <td><span class="status-blocked">blocked</span></td>
+                    <td><span class="badge-reject">❌ REJECT</span></td>
+                    <td><span class="publishability">blocked</span></td>
+                    <td class="evidence-cell" title="Fixture: composite=0.35, threshold=0.60. Calm market. Threshold NOT lowered. Gate: Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Retry during high-volatility window..">Fixture: composite=0.35, threshold=0.60. Calm market. Threshold NOT lowered. Gate: Liquidation gate: blocked — calm mark…</td>
+                    <td class="reason-cell">Liquidation gate is CORRECTLY blocked. Calm market conditions (composite_score=0.35 &lt; threshold=0.60). The liquidation t…</td>
+                    <td class="action-cell">No action needed. DO NOT lower threshold. Monitor for volatility regime change. When composite_score exceeds 0.60, re-ev…</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><code>whale_position_alert</code></td>
+                    <td>fixture</td>
+                    <td><span class="status-blocked">blocked</span></td>
+                    <td><span class="badge-manual">🔒 MANUAL REQUIRED</span></td>
+                    <td><span class="publishability">blocked</span></td>
+                    <td class="evidence-cell" title="Fixture: 4 addresses tracked (total exposure ~$135M). Manual evidence: NOT PROVIDED (False). Manual evidence requirement: NOT BYPASSED. v116N checklist: APPLIED.">Fixture: 4 addresses tracked (total exposure ~$135M). Manual evidence: NOT PROVIDED (False). Manual evidence requirement…</td>
+                    <td class="reason-cell">Whale position tracking requires manual on-chain address attribution evidence. No free public API can reliably identify …</td>
+                    <td class="action-cell">Complete v116N whale evidence workbook: 1) Verify each address label against at least 2 on-chain sources. 2) Document ev…</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Risk Panel -->
+        <h2 class="section-title">🚨 Risk Panel</h2>
+        <div class="risk-panel">
+            <h3>⚠️ Operational Risk Warnings</h3>
+            <ul>
+                <li><strong>No Production Readiness:</strong> 0/5 criteria met — NOT FOR LIVE USE</li>
+                <li><strong>No Telegram Send:</strong> telegram_send=false (by design in this one-shot)</li>
+                <li><strong>No X/Twitter Send:</strong> x_twitter_send=false (never enabled)</li>
+                <li><strong>No Production Send:</strong> production_send=false (this is a local review tool)</li>
+                <li><strong>No Daemon/Loop:</strong> daemon_or_loop_started=false (this is a one-shot)</li>
+                <li><strong>Whale Position Alert:</strong> Still manual_required — address attribution NOT provided</li>
+                <li><strong>Liquidation Pressure:</strong> reject (blocked) — threshold NOT lowered</li>
+                <li><strong>News Event:</strong> observation_only=true, not_causal_proof=true — do NOT cite as causal</li>
+                <li><strong>Live Data:</strong> 3 live free API adapters used (Binance + RSS) — data may have latency</li>
+            </ul>
+        </div>
+
+        <!-- No-Send Confirmation -->
+        <h2 class="section-title">🚫 No-Send Confirmation</h2>
+        <div class="nosend-grid">
+            <div class="nosend-item"><span class="ns-key">telegram_send</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">x_twitter_send</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">production_send</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">daemon_or_loop_started</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">ai_model_called</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">external_api_write</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">files_deleted</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">v116_history_modified</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">credentials_printed</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">raw_secrets_stored</span><span class="ns-val ns-false">= false</span></div>
+        </div>
+
+        <!-- Adapter Diagnostics -->
+        <h2 class="section-title">🔌 Live Adapter Diagnostics</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>Adapter</th><th>Status</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>MultiAssetMarketSyncFreeApiAdapter</code></td>
+                        <td>✅ ok</td>
+                        <td>True</td>
+                    </tr>
+                    <tr>
+                        <td><code>PriceOIVolumeAnomalyFreeApiAdapter</code></td>
+                        <td>✅ ok</td>
+                        <td>True</td>
+                    </tr>
+                    <tr>
+                        <td><code>NewsEventMarketImpactFreePublicSourceAdapter</code></td>
+                        <td>✅ ok</td>
+                        <td>True</td>
+                    </tr>
+                    <tr>
+                        <td><code>FixtureSignalAdapter(liquidation_pressure)</code></td>
+                        <td>✅ ok</td>
+                        <td>False</td>
+                    </tr>
+                    <tr>
+                        <td><code>FixtureSignalAdapter(whale_position_alert)</code></td>
+                        <td>✅ ok</td>
+                        <td>False</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Operator Next Action -->
+        <h2 class="section-title">📋 Operator Next Action Guide</h2>
+        <div class="action-guide">
+            <div class="action-card accept"><h4>✅ Accept</h4><p>可进入测试群观察或内部复盘。Card has live data support. Review individual deltas before TG test inclusion.</p></div>
+            <div class="action-card watch"><h4>👀 Watch</h4><p>只观察，不得因果化发布。Treat as contextual awareness, not actionable signal. Do NOT present as causal analysis.</p></div>
+            <div class="action-card reject"><h4>❌ Reject</h4><p>不发布，等待真实市场条件。No action needed. Retry during higher-volatility windows. Do NOT lower threshold.</p></div>
+            <div class="action-card manual_required"><h4>🔒 Manual Required</h4><p>补人工证据后再进入 gate。Complete v116N whale evidence workbook before this card can become active.</p></div>
+        </div>
+
+        <!-- Production Readiness -->
+        <h2 class="section-title">🏭 Production Readiness Assessment</h2>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>Criterion</th><th>Status</th><th>Reason</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><code>automated_multi_asset_sync</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Free public API only — no institutional-grade data feed</td>
+                    </tr>
+                    <tr>
+                        <td><code>automated_price_oi_volume</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Anomaly detection threshold-based only — no ML/statistical model</td>
+                    </tr>
+                    <tr>
+                        <td><code>news_event_processing</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Rule-based keyword matching — NO AI/model, not causal proof, observation only</td>
+                    </tr>
+                    <tr>
+                        <td><code>liquidation_pressure_automation</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Calm market correctly blocks — requires high-volatility regime detection</td>
+                    </tr>
+                    <tr>
+                        <td><code>whale_position_attribution</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Manual address attribution evidence required — no automated solution</td>
+                    </tr></tbody>
+            </table>
+        </div>
+        <p style="color:#ef4444; font-weight:700; margin-top:12px;">⛔ Production Readiness: false / 0/5 — NOT FOR LIVE USE</p>
+        <p style="color:#94a3b8; font-size:0.85rem;">NOT FOR LIVE USE. All 5 production readiness criteria remain unmet. The system operates on free public data sources only. News event extraction is rule-based, not causal. Liquidation gate requires high-volatility detection. Whale tracking requires manual address attribution. No automated decision-making is production-grade.</p>
+
+        <!-- Contract Validation -->
+        <h2 class="section-title">🔍 Contract Validation</h2>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>Check</th><th>Passed</th><th>Detail</th></tr></thead>
+                <tbody>
+                    <tr class="check-passed">
+                        <td>five_card_families_present</td>
+                        <td>✅</td>
+                        <td>Present: [&#39;liquidation_pressure&#39;, &#39;multi_asset_market_sync&#39;, &#39;news_event_market_impact&#39;, &#39;price_oi_volume_anomaly&#39;, &#39;whale_position_alert&#39;]</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>decisions_in_allowed_set</td>
+                        <td>✅</td>
+                        <td>All valid</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>whale_position_alert_is_manual_required</td>
+                        <td>✅</td>
+                        <td>manual_required</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>liquidation_pressure_not_accepted</td>
+                        <td>✅</td>
+                        <td>reject</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>news_event_observation_only</td>
+                        <td>✅</td>
+                        <td>observation_only=True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>news_event_not_causal_proof</td>
+                        <td>✅</td>
+                        <td>not_causal_proof=True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>three_live_adapters_used</td>
+                        <td>✅</td>
+                        <td>3 live adapters used (need &gt;= 3)</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>production_readiness_false</td>
+                        <td>✅</td>
+                        <td>0/5 — NOT FOR LIVE USE</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>no_send_confirmed</td>
+                        <td>✅</td>
+                        <td>telegram_send=false, x_twitter_send=false, production_send=false</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>no_daemon_cron_loop</td>
+                        <td>✅</td>
+                        <td>daemon_or_loop_started=false</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>liquidation_threshold_not_lowered</td>
+                        <td>✅</td>
+                        <td>threshold &gt;= 0.60 maintained: True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>whale_manual_evidence_not_bypassed</td>
+                        <td>✅</td>
+                        <td>manual_evidence_not_bypassed=True</td>
+                    </tr></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div style="margin-bottom:8px;"><span class="no-prod">⛔ NOT FOR PRODUCTION USE — 0/5</span></div>
+        Market Radar Operator Dashboard v119A &nbsp;|&nbsp;
+        Pipeline: v1.19A &nbsp;|&nbsp;
+        Run ID: 20260605_183130 &nbsp;|&nbsp;
+        Mode: live one-shot / no-send &nbsp;|&nbsp;
+        telegram_send=false &nbsp;|&nbsp;
+        x_twitter_send=false &nbsp;|&nbsp;
+        production_send=false &nbsp;|&nbsp;
+        daemon_or_loop_started=false
+    </div>
+</body>
+</html>

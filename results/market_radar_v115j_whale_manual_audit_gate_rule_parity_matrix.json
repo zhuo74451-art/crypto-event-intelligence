@@ -1,0 +1,221 @@
+{
+  "audit_id": "v115j_whale_manual_audit_gate_rule_parity_audit",
+  "generated_at": "2026-06-05T07:55:51.939739+08:00",
+  "required_manual_fields": {
+    "shared_9_manual_evidence_fields": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "reviewed_at",
+      "reviewer",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "v115g_requires_ready_for_upgrade": true,
+    "v115i_requires_ready_for_upgrade": true,
+    "v115g_intake_gate_full_list": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "ready_for_upgrade",
+      "reviewed_at",
+      "reviewer",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "v115h_adjudication_gate_evidence_fields": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "v115i_fixture_intake_gate_manual_fields": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "reviewed_at",
+      "reviewer",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "v115i_fixture_adjudication_gate_evidence_fields": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "task_spec_required": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "ready_for_upgrade",
+      "reviewed_at",
+      "reviewer",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "parity": {
+      "v115g_covers_9_manual_evidence": true,
+      "v115i_covers_9_manual_evidence": true,
+      "v115h_vs_v115i_adjudication_evidence_fields": true,
+      "v115g_effective_10_fields": true,
+      "v115i_effective_10_fields": true,
+      "both_gates_require_all_10": true
+    }
+  },
+  "required_evidence_fields": {
+    "v115h_adjudication_evidence_fields": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "v115i_fixture_evidence_fields": [
+      "activity_pattern_note",
+      "operator_confidence_assessment",
+      "operator_confirmed_label",
+      "second_source_label_value",
+      "second_source_url_or_note",
+      "trusted_source_label_value",
+      "trusted_source_url_or_note"
+    ],
+    "parity": true
+  },
+  "required_boolean_flags": {
+    "v115g_ready_for_upgrade": true,
+    "v115i_fixture_ready_for_upgrade": true,
+    "v115i_fixture_only": true,
+    "v115i_synthetic_evidence": true,
+    "v115i_not_real_label_upgrade": true,
+    "v115i_not_send_candidate": true
+  },
+  "intake_block_reasons": {
+    "v115g_intake": [
+      "ACTIVITY_PATTERN_NOTE_MISSING",
+      "OPERATOR_CONFIDENCE_ASSESSMENT_MISSING",
+      "OPERATOR_CONFIRMED_LABEL_MISSING",
+      "OPERATOR_REJECTED",
+      "READY_FOR_UPGRADE_FALSE",
+      "REVIEWED_AT_MISSING",
+      "REVIEWER_MISSING",
+      "SECOND_SOURCE_LABEL_MISSING",
+      "SECOND_SOURCE_NOTE_OR_URL_MISSING",
+      "TRUSTED_SOURCE_LABEL_MISSING",
+      "TRUSTED_SOURCE_NOTE_OR_URL_MISSING"
+    ],
+    "v115i_fixture_intake": [
+      "ACTIVITY_PATTERN_NOTE_MISSING",
+      "OPERATOR_CONFIDENCE_ASSESSMENT_MISSING",
+      "OPERATOR_CONFIRMED_LABEL_MISSING",
+      "OPERATOR_REJECTED",
+      "READY_FOR_UPGRADE_FALSE",
+      "REVIEWED_AT_MISSING",
+      "REVIEWER_MISSING",
+      "SECOND_SOURCE_LABEL_MISSING",
+      "SECOND_SOURCE_NOTE_OR_URL_MISSING",
+      "TRUSTED_SOURCE_LABEL_MISSING",
+      "TRUSTED_SOURCE_NOTE_OR_URL_MISSING"
+    ],
+    "parity": true
+  },
+  "adjudication_block_reasons": {
+    "v115h_adjudication": [
+      "INTAKE_NOT_READY",
+      "MANUAL_EVIDENCE_INCOMPLETE",
+      "NO_CONFIDENCE_CHANGE_ALLOWED",
+      "SEND_GUARDS_REMAIN_FALSE",
+      "UPGRADE_CANDIDATE_FALSE"
+    ],
+    "v115i_fixture_adjudication": [
+      "INTAKE_NOT_READY",
+      "MANUAL_EVIDENCE_INCOMPLETE",
+      "NO_CONFIDENCE_CHANGE_ALLOWED",
+      "SEND_GUARDS_REMAIN_FALSE",
+      "UPGRADE_CANDIDATE_FALSE"
+    ],
+    "parity": true
+  },
+  "fixture_pass_conditions": {
+    "intake_passed": true,
+    "adjudication_passed": true,
+    "upgrade_candidate": true,
+    "label_upgrade_allowed": true,
+    "all_manual_fields_complete": true,
+    "all_evidence_categories_met": true,
+    "no_block_reasons": true,
+    "medium_confidence_only": true
+  },
+  "send_guard_fields": {
+    "v115g_send_guards_all_false": true,
+    "v115i_send_allowed_false": true,
+    "v115i_tg_test_group_allowed_false": true,
+    "v115i_public_send_allowed_false": true
+  },
+  "safety_invariants": {
+    "external_api_called": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "ai_model_called": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "credentials_read": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "tg_sent": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "prod_state_write": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "daemon_started": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "watcher_started": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    },
+    "files_deleted": {
+      "v115g": false,
+      "v115h": false,
+      "v115i": false,
+      "all_false": true
+    }
+  }
+}

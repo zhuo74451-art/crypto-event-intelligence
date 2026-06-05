@@ -1,0 +1,416 @@
+{
+  "version": "v1.12-p",
+  "generated_at": "2026-06-05 04:13:18 UTC+8",
+  "card_types_total": 5,
+  "entries": [
+    {
+      "card_type": "price_oi_volume_anomaly",
+      "current_status": "local_preview_ready",
+      "required_live_sources": [
+        {
+          "source": "CoinGecko Public API",
+          "data": "price",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "CoinCap Public API",
+          "data": "price (fallback)",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "Coinglass Public / Free Tier",
+          "data": "open_interest",
+          "cost": "free_tier",
+          "credential": "api_key_free"
+        },
+        {
+          "source": "Exchange Public REST (Binance/Bybit/OKX)",
+          "data": "volume",
+          "cost": "free",
+          "credential": "none"
+        }
+      ],
+      "required_fields": [
+        "asset_symbol",
+        "current_price",
+        "price_change_1h_pct",
+        "price_change_24h_pct",
+        "open_interest",
+        "oi_change_1h_pct",
+        "oi_change_24h_pct",
+        "volume_24h",
+        "volume_change_pct",
+        "observation_timestamp"
+      ],
+      "optional_fields": [
+        "funding_rate",
+        "basis_spread",
+        "spot_volume_vs_derivatives_volume",
+        "top_bid_ask_spread"
+      ],
+      "credential_required": false,
+      "paid_api_likely_required": false,
+      "websocket_required": false,
+      "daemon_required": false,
+      "one_shot_experiment_possible": true,
+      "recommended_frequency_if_future_live": "manual_one_shot_only",
+      "cost_risk": "low",
+      "failure_modes": [
+        "rate_limit: free API tier may throttle at >30 req/min",
+        "data_gap: OI data may lag 5-15 minutes behind price",
+        "exchange_availability: single exchange may pause API during maintenance",
+        "asset_coverage: some altcoins may not have OI data on free tier"
+      ],
+      "fallback_strategy": [
+        "use CoinCap as price fallback if CoinGecko rate-limited",
+        "use Binance public /ticker as volume fallback if Coinglass unavailable",
+        "skip OI field if unavailable; note in card as 'OI data temporarily unavailable'",
+        "use spot-only metrics as degraded mode for assets without derivatives data"
+      ],
+      "state_persistence_required": true,
+      "manual_review_required_before_send": true,
+      "real_send_allowed_now": false,
+      "readiness_score": 15,
+      "readiness_level": "high",
+      "next_step_recommendation": "FIRST CANDIDATE: price_oi_volume_anomaly scored highest (15/18). 0 preview cards exist. All sources free, no credentials, one-shot feasible. v112Q should plan a local one-shot experiment first.",
+      "scoring_breakdown": {
+        "local_artifact_complete": 1,
+        "has_preview_cards": 0,
+        "live_source_likely_free": 2,
+        "no_credential_required": 2,
+        "no_daemon_required": 2,
+        "one_shot_possible": 2,
+        "data_fields_simple": 2,
+        "easy_fallback": 2,
+        "no_production_write_risk": 2
+      }
+    },
+    {
+      "card_type": "whale_position_alert",
+      "current_status": "local_preview_ready",
+      "required_live_sources": [
+        {
+          "source": "HyperLiquid Public API",
+          "data": "position_data",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "CoinGecko Public API",
+          "data": "current_price",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "Wallet Label DB (local or public)",
+          "data": "address_labels",
+          "cost": "free",
+          "credential": "none"
+        }
+      ],
+      "required_fields": [
+        "wallet_address",
+        "address_label",
+        "asset_symbol",
+        "position_direction",
+        "position_size_usd",
+        "leverage",
+        "entry_price",
+        "current_price",
+        "unrealized_pnl",
+        "liquidation_price",
+        "liquidation_distance_pct",
+        "observation_timestamp"
+      ],
+      "optional_fields": [
+        "position_change_usd",
+        "position_age_hours",
+        "historical_win_rate",
+        "counterparty_risk_flag"
+      ],
+      "credential_required": false,
+      "paid_api_likely_required": false,
+      "websocket_required": false,
+      "daemon_required": false,
+      "one_shot_experiment_possible": true,
+      "recommended_frequency_if_future_live": "manual_one_shot_only",
+      "cost_risk": "low",
+      "failure_modes": [
+        "rate_limit: HyperLiquid API has burst limits",
+        "label_staleness: address labels may be outdated or incorrect",
+        "position_closure: position may close between pull and review",
+        "data_quality: leverage/entry_price may differ from actual due to partial closes"
+      ],
+      "fallback_strategy": [
+        "degrade to 'unknown whale' label if address DB unavailable",
+        "use CoinGecko price as fallback if HL price feed differs >2%",
+        "skip win_rate/historical if label data missing",
+        "flag 'position may have changed since observation' in card"
+      ],
+      "state_persistence_required": true,
+      "manual_review_required_before_send": true,
+      "real_send_allowed_now": false,
+      "readiness_score": 16,
+      "readiness_level": "high",
+      "next_step_recommendation": "FIRST CANDIDATE: whale_position_alert scored highest (16/18). 2 preview cards exist. All sources free, no credentials, one-shot feasible. v112Q should plan a local one-shot experiment first.",
+      "scoring_breakdown": {
+        "local_artifact_complete": 2,
+        "has_preview_cards": 2,
+        "live_source_likely_free": 2,
+        "no_credential_required": 2,
+        "no_daemon_required": 2,
+        "one_shot_possible": 2,
+        "data_fields_simple": 1,
+        "easy_fallback": 1,
+        "no_production_write_risk": 2
+      }
+    },
+    {
+      "card_type": "liquidation_pressure",
+      "current_status": "local_preview_ready",
+      "required_live_sources": [
+        {
+          "source": "Coinglass Liquidation API (free tier)",
+          "data": "liquidation_data",
+          "cost": "free_tier",
+          "credential": "api_key_free"
+        },
+        {
+          "source": "Exchange Public REST (Binance/Bybit)",
+          "data": "oi_and_volume",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "CoinGecko Public API",
+          "data": "current_price",
+          "cost": "free",
+          "credential": "none"
+        }
+      ],
+      "required_fields": [
+        "asset_symbol",
+        "current_price",
+        "liquidation_long_1h_usd",
+        "liquidation_short_1h_usd",
+        "liquidation_long_24h_usd",
+        "liquidation_short_24h_usd",
+        "open_interest",
+        "volume_24h",
+        "observation_window_hours",
+        "observation_timestamp"
+      ],
+      "optional_fields": [
+        "liquidation_cluster_price_top",
+        "liquidation_cluster_price_bottom",
+        "liquidation_heatmap_level",
+        "long_short_ratio"
+      ],
+      "credential_required": true,
+      "paid_api_likely_required": false,
+      "websocket_required": false,
+      "daemon_required": false,
+      "one_shot_experiment_possible": true,
+      "recommended_frequency_if_future_live": "manual_one_shot_only",
+      "cost_risk": "low",
+      "failure_modes": [
+        "coinglass_key_expired: free API key requires periodic renewal",
+        "data_lag: Coinglass liquidation data may be 5-30 minutes delayed",
+        "exchange_limited: free tier may only cover top exchanges/assets",
+        "sparse_markets: low-liquidity assets may have no meaningful liquidation data"
+      ],
+      "fallback_strategy": [
+        "use exchange public OI + volume as degraded proxy for liquidation pressure",
+        "skip cluster/heatmap if Coinglass premium data unavailable",
+        "flag 'liquidation data from free tier; may miss tail exchanges'",
+        "fallback to Binance-only liquidation data if aggregator unavailable"
+      ],
+      "state_persistence_required": true,
+      "manual_review_required_before_send": true,
+      "real_send_allowed_now": false,
+      "readiness_score": 15,
+      "readiness_level": "high",
+      "next_step_recommendation": "FIRST CANDIDATE: liquidation_pressure scored highest (15/18). 2 preview cards exist. All sources free, no credentials, one-shot feasible. v112Q should plan a local one-shot experiment first.",
+      "scoring_breakdown": {
+        "local_artifact_complete": 2,
+        "has_preview_cards": 2,
+        "live_source_likely_free": 1,
+        "no_credential_required": 1,
+        "no_daemon_required": 2,
+        "one_shot_possible": 2,
+        "data_fields_simple": 2,
+        "easy_fallback": 1,
+        "no_production_write_risk": 2
+      }
+    },
+    {
+      "card_type": "multi_asset_market_sync",
+      "current_status": "local_preview_ready",
+      "required_live_sources": [
+        {
+          "source": "CoinGecko Public API",
+          "data": "multi_asset_price",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "CoinCap Public API",
+          "data": "price_fallback",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "Exchange Public REST",
+          "data": "oi_and_volume",
+          "cost": "free",
+          "credential": "none"
+        }
+      ],
+      "required_fields": [
+        "asset_symbols_list",
+        "sync_type",
+        "direction",
+        "price_changes_pct_list",
+        "observation_window_minutes",
+        "avg_price_change_pct",
+        "avg_volume_change_pct",
+        "avg_oi_change_pct",
+        "sync_score",
+        "sector_label",
+        "total_liquidation_usd",
+        "observation_timestamp"
+      ],
+      "optional_fields": [
+        "correlation_matrix_short",
+        "leader_asset",
+        "laggard_asset",
+        "historical_sync_frequency"
+      ],
+      "credential_required": false,
+      "paid_api_likely_required": false,
+      "websocket_required": false,
+      "daemon_required": false,
+      "one_shot_experiment_possible": true,
+      "recommended_frequency_if_future_live": "manual_one_shot_only",
+      "cost_risk": "low",
+      "failure_modes": [
+        "rate_limit: pulling N assets simultaneously may hit free tier limit",
+        "sector_misclassification: sector labels may drift over time",
+        "false_sync: short-window correlation may be noise, not signal",
+        "data_consistency: different sources may timestamp differently"
+      ],
+      "fallback_strategy": [
+        "reduce asset count to top-5 if rate-limited",
+        "use CoinCap bulk endpoint for single-call multi-asset price",
+        "skip sector label if classification data unavailable",
+        "flag 'correlation may be spurious in short window' in card"
+      ],
+      "state_persistence_required": true,
+      "manual_review_required_before_send": true,
+      "real_send_allowed_now": false,
+      "readiness_score": 18,
+      "readiness_level": "high",
+      "next_step_recommendation": "FIRST CANDIDATE: multi_asset_market_sync scored highest (18/18). 3 preview cards exist. All sources free, no credentials, one-shot feasible. v112Q should plan a local one-shot experiment first.",
+      "scoring_breakdown": {
+        "local_artifact_complete": 2,
+        "has_preview_cards": 2,
+        "live_source_likely_free": 2,
+        "no_credential_required": 2,
+        "no_daemon_required": 2,
+        "one_shot_possible": 2,
+        "data_fields_simple": 2,
+        "easy_fallback": 2,
+        "no_production_write_risk": 2
+      }
+    },
+    {
+      "card_type": "news_event_market_impact",
+      "current_status": "local_preview_ready",
+      "required_live_sources": [
+        {
+          "source": "CryptoPanic News API (free tier)",
+          "data": "news_headlines",
+          "cost": "free_tier",
+          "credential": "api_key_free"
+        },
+        {
+          "source": "Twitter/X API (free tier)",
+          "data": "crypto_tweets",
+          "cost": "free_tier",
+          "credential": "api_key"
+        },
+        {
+          "source": "RSS feeds (CoinDesk, TheBlock, Decrypt)",
+          "data": "articles",
+          "cost": "free",
+          "credential": "none"
+        },
+        {
+          "source": "CoinGecko Public API",
+          "data": "price_impact",
+          "cost": "free",
+          "credential": "none"
+        }
+      ],
+      "required_fields": [
+        "event_title",
+        "event_category",
+        "market_impact_direction",
+        "affected_assets",
+        "source_name",
+        "source_url",
+        "published_at_utc",
+        "trading_relevance",
+        "is_priced_in",
+        "observation_timestamp"
+      ],
+      "optional_fields": [
+        "event_sentiment_score",
+        "social_volume",
+        "similar_event_historical_impact",
+        "related_news_cluster_id"
+      ],
+      "credential_required": true,
+      "paid_api_likely_required": true,
+      "websocket_required": false,
+      "daemon_required": false,
+      "one_shot_experiment_possible": true,
+      "recommended_frequency_if_future_live": "manual_one_shot_only",
+      "cost_risk": "medium",
+      "failure_modes": [
+        "api_key_expired: CryptoPanic/Twitter free keys may expire or change terms",
+        "source_unreliable: single news source may be inaccurate or biased",
+        "sentiment_misclassification: automated sentiment may misread sarcasm",
+        "priced_in_uncertainty: hard to determine if event already priced in",
+        "rate_limit_severe: Twitter free tier API very limited (read-only)",
+        "language_barrier: non-English news may be missed by free aggregators"
+      ],
+      "fallback_strategy": [
+        "use RSS feeds (CoinDesk, TheBlock) as baseline — always free, no key",
+        "skip sentiment/social_volume if NLP pipeline not available",
+        "flag 'single-source; cross-reference before trading decision'",
+        "degrade to manual-curation mode if all APIs unavailable",
+        "use CoinGecko trending as weak signal for unpriced events"
+      ],
+      "state_persistence_required": true,
+      "manual_review_required_before_send": true,
+      "real_send_allowed_now": false,
+      "readiness_score": 10,
+      "readiness_level": "medium",
+      "next_step_recommendation": "SECOND PRIORITY: news_event_market_impact scored 10/18. One-shot possible but may need free API key setup. Plan v112Q experiment after the highest-scored card type.",
+      "scoring_breakdown": {
+        "local_artifact_complete": 2,
+        "has_preview_cards": 2,
+        "live_source_likely_free": 0,
+        "no_credential_required": 0,
+        "no_daemon_required": 2,
+        "one_shot_possible": 1,
+        "data_fields_simple": 0,
+        "easy_fallback": 1,
+        "no_production_write_risk": 2
+      }
+    }
+  ]
+}

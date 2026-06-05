@@ -1,0 +1,142 @@
+{
+  "stage": "v116k_five_card_real_e2e_coverage_refresh_after_news_event_tg_sent_local_only",
+  "version": "v1.16-K",
+  "description": "Five card real E2E coverage audit REFRESH after v116J completed news_event_market_impact real free public source + TG test send and v116I completed liquidation_pressure real free API attempt (gate blocked). Reads v116A/C/E/G/I/J results. 3/5 families now at real E2E + TG sent. 1/5 real API attempted but gate blocked. 1/5 manual evidence blocked. 0/5 production send ready. NO external APIs, NO TG sends, NO AI calls, NO production writes.",
+  "generated_at": "2026-06-05T13:37:33.605383+08:00",
+  "task_id": "20260605_v116k_five_card_real_e2e_coverage_refresh_after_news_event_tg_sent_local_only",
+  "run_id": "20260605_124925.r04",
+  "card_family_count": 5,
+  "fixture_e2e_passed_count": 5,
+  "real_api_or_public_source_tg_test_sent_count": 3,
+  "real_api_attempted_but_gate_blocked_count": 1,
+  "manual_evidence_blocked_count": 1,
+  "production_send_ready_count": 0,
+  "external_api_called_this_run": false,
+  "public_source_called_this_run": false,
+  "tg_sent_this_run": false,
+  "prod_state_write": false,
+  "ai_model_called": false,
+  "daemon_or_loop_started": false,
+  "files_deleted": false,
+  "historical_artifacts_modified": false,
+  "credentials_read": false,
+  "coverage_records": [
+    {
+      "card_family": "whale_position_alert",
+      "display_name": "Whale Position Alert",
+      "router_passed": true,
+      "fixture_e2e_passed": true,
+      "real_external_api_called": false,
+      "real_public_source_called": false,
+      "real_card_generated": false,
+      "quality_gate_passed": false,
+      "send_readiness_passed": false,
+      "tg_test_sent": false,
+      "tg_test_group_ready": false,
+      "production_send_ready": false,
+      "real_e2e_status": "blocked_manual_evidence",
+      "current_blocker": "Real operator workbook has empty fields for all 4 addresses. Requires real operator evidence collection (v115O preflight) before gate rerun. Cannot be automated — requires human on-chain attribution verification.",
+      "next_action": "Open manual evidence collection task (v116L scope). Complete real operator workbook (v115F) with address verification evidence, then rerun v115R submission validator and v115Q fixture E2E gates. Do NOT attempt to bypass manual evidence requirement.",
+      "evidence_sources": [
+        "v116A: whale_position_alert_fixture_e2e_passed=true, real_e2e_passed=false",
+        "v115Q: fixture E2E gate replay 4/4 workflow-ready",
+        "v115R: real workbook submission blocked (empty fields)"
+      ]
+    },
+    {
+      "card_family": "multi_asset_market_sync",
+      "display_name": "Multi-Asset Market Sync",
+      "router_passed": true,
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": false,
+      "real_card_generated": true,
+      "quality_gate_passed": true,
+      "send_readiness_passed": true,
+      "tg_test_sent": true,
+      "tg_test_group_ready": true,
+      "production_send_ready": false,
+      "real_e2e_status": "real_free_api_tg_test_sent",
+      "current_blocker": null,
+      "next_action": "Multi-asset market sync is one of 3 card families at real_free_api_tg_test_sent. Next: validate TG delivery quality across all 3 completed families, then proceed to v116L milestone packaging.",
+      "evidence_sources": [
+        "v116B: fixture_e2e_passed=true, 7/8 QG passed, 5/8 workflow-ready",
+        "v116E: real Binance free API (BTC/ETH/SOL), TG test group one-shot sent, message proof sha256:4fbb9cf6972a100c, quality_gate_passed=true, send_readiness_passed=true, secret_preflight_passed=true"
+      ]
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "display_name": "Price/OI/Volume Anomaly",
+      "router_passed": true,
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": false,
+      "real_card_generated": true,
+      "quality_gate_passed": true,
+      "send_readiness_passed": true,
+      "tg_test_sent": true,
+      "tg_test_group_ready": true,
+      "production_send_ready": false,
+      "real_e2e_status": "real_free_api_tg_test_sent",
+      "current_blocker": null,
+      "next_action": "Price/OI/Volume Anomaly has completed real E2E via v116G. 2/3 assets (ETH, SOL) admitted and TG test sent. BTC blocked by admission gate (price_chg=-2.24%, only 2 confirm factors, OI missing). Next: validate TG delivery quality as part of v116L milestone packaging; improve OI data pipeline to increase admission rate long-term.",
+      "evidence_sources": [
+        "v116A: router_passed, fixture_preview",
+        "v116C: fixture_e2e_passed=true, QG=1/7, workflow_ready=1",
+        "v116G: real Binance free API (BTC/ETH/SOL), signals_generated=3, signals_admitted=2/3 (ETH, SOL passed; BTC blocked by admission gate), quality_gate_passed=true, send_readiness_passed=true, TG test group one-shot sent for ETH/SOL, message proofs sha256:3045ad039274b9fc (ETH), sha256:1070a982af22fe71 (SOL)"
+      ]
+    },
+    {
+      "card_family": "liquidation_pressure",
+      "display_name": "Liquidation Pressure",
+      "router_passed": true,
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": false,
+      "real_card_generated": false,
+      "quality_gate_passed": false,
+      "send_readiness_passed": false,
+      "tg_test_sent": false,
+      "tg_test_group_ready": false,
+      "production_send_ready": false,
+      "real_e2e_status": "blocked_gate_not_passed",
+      "current_blocker": "Calm market conditions — proxy admission threshold not met. All 3 assets (BTCUSDT, ETHUSDT, SOLUSDT) fetched successfully via Binance public REST endpoints. Signals generated for all 3 assets, but 0/3 signals admitted. Quality gate correctly blocked by design (no forced card generation during calm market). OI history data unavailable for composite proxy scoring.",
+      "next_action": "Retain liquidation_pressure as event-triggered card type. Do NOT lower admission threshold to force card generation. Rerun when market volatility increases (e.g., OI delta > threshold, funding rate extreme, or L/S ratio shift). Mark as 'future volatility rerun' in v116K audit.",
+      "evidence_sources": [
+        "v116A: router_passed, fixture_preview",
+        "v116C: fixture_e2e_passed=true, QG=3/5, workflow_ready=3",
+        "v116I: real Binance free API (BTC/ETH/SOL), signals_generated=3, signals_admitted=0/3 (all blocked by gate — calm market), quality_gate_any_passed=false, send_readiness_any_passed=false, tg_test_sent=false, audit_result=blocked_gate_not_passed"
+      ]
+    },
+    {
+      "card_family": "news_event_market_impact",
+      "display_name": "News Event Market Impact",
+      "router_passed": true,
+      "fixture_e2e_passed": true,
+      "real_external_api_called": true,
+      "real_public_source_called": true,
+      "real_card_generated": true,
+      "quality_gate_passed": true,
+      "send_readiness_passed": true,
+      "tg_test_sent": true,
+      "tg_test_group_ready": true,
+      "production_send_ready": false,
+      "real_e2e_status": "real_free_public_source_tg_test_sent",
+      "current_blocker": null,
+      "next_action": "News event market impact is the 3rd card family to reach real E2E TG test sent. 2/7 events admitted (admission rate ~29%). All sent cards carry risk disclaimer: '事件影响观察，不构成因果证明'. Next: validate TG delivery quality as part of v116L milestone packaging.",
+      "evidence_sources": [
+        "v116A: router_passed, fixture_preview",
+        "v116C: fixture_e2e_passed=true, QG=5/7, workflow_ready=5",
+        "v116J: real free public source (Binance RSS + Binance REST), 5 sources attempted, 1 succeeded (Binance Announcements), 80 articles fetched, 7 events extracted, 2 admitted, 7 cards generated, quality_gate_any_passed=true, send_readiness_any_passed=true, secret_preflight_passed=true, TG test group one-shot sent for 2 cards, message proofs sha256:9d1ef11e7923e54a, sha256:9dc6abc967dad3e2, risk disclaimer: '事件影响观察，不构成因果证明' present on all cards"
+      ]
+    }
+  ],
+  "summary": {
+    "fixture_e2e_passed_count": 5,
+    "real_api_or_public_source_tg_test_sent_count": 3,
+    "real_api_attempted_but_gate_blocked_count": 1,
+    "manual_evidence_blocked_count": 1,
+    "production_send_ready_count": 0,
+    "overall_status": "3_of_5_real_e2e_tg_sent_1_gate_blocked_1_manual_blocked_0_prod_ready"
+  }
+}

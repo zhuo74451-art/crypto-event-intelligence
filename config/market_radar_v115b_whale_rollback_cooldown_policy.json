@@ -1,0 +1,76 @@
+{
+  "version": "v115B",
+  "policy_name": "whale_rollback_cooldown_policy",
+  "description": "Defines rollback, cooldown, no-repeat, and manual stop protections for TG test group sends. No daemon, no loop, no auto-repeat. All sends are one-shot and operator-gated.",
+  "rollback": {
+    "instruction_placeholder": "ROLLBACK: To rollback a TG test send, identify the payload_hash of the sent message. The rollback procedure is: (1) Post a retraction message in the test group referencing the payload_hash, (2) Mark the send record as rolled_back in local state, (3) Document the reason for rollback. This is a manual operator action — no automated rollback.",
+    "rollback_triggers": [
+      "incorrect_label_confidence_displayed",
+      "banned_phrase_in_copy",
+      "unknown_whale_presented_as_confirmed",
+      "operator_error",
+      "preview_gate_not_passed",
+      "incorrect_routing_decision"
+    ],
+    "rollback_procedure": "manual_only_no_automation",
+    "post_rollback": "mark_send_rolled_back_in_local_state"
+  },
+  "no_repeat": {
+    "enabled": true,
+    "dedupe_key_format": "{address}_{asset}_{side}_{delta_type}_{date}",
+    "dedupe_key_example": "0x50b3...c9f20_BTC_short_closed_position_20260605",
+    "description": "Each unique position+delta+date combination may only be sent once.",
+    "duplicate_payload_hash_blocking": true,
+    "payload_hash_algorithm": "sha256",
+    "payload_hash_input": "exact_tg_copy_text + address + asset + timestamp",
+    "block_on_duplicate": true,
+    "duplicate_action": "block_send_and_notify_operator"
+  },
+  "cooldown": {
+    "enabled": true,
+    "cooldown_key_format": "{address}_{asset}_{date}",
+    "cooldown_key_example": "0x50b3...c9f20_BTC_20260605",
+    "minimum_window_hours": 24,
+    "minimum_window_description": "Same address+asset pair cannot be sent more than once per 24-hour cooldown window.",
+    "cooldown_scope": "per_address_per_asset",
+    "cooldown_check_before_send": true,
+    "cooldown_action": "block_send_within_window",
+    "cooldown_expiry_action": "allow_send_after_window"
+  },
+  "failed_send_handling": {
+    "policy": "do_not_auto_retry",
+    "description": "If a TG test send fails (network error, API error, etc.), do NOT auto-retry. Operator must review the failure.",
+    "on_failure": [
+      "log_failure_with_payload_hash",
+      "notify_operator",
+      "do_not_auto_resend",
+      "do_not_increment_retry_counter",
+      "require_operator_review_before_retry"
+    ],
+    "max_manual_retries": "unlimited_but_each_requires_review"
+  },
+  "manual_stop": {
+    "condition": "operator_sets_stop_flag",
+    "description": "Operator may set a manual stop condition at any time. This prevents ALL subsequent sends until explicitly cleared.",
+    "stop_triggers": [
+      "operator_manual_stop",
+      "data_quality_concern",
+      "market_volatility_concern",
+      "policy_violation_detected",
+      "external_event_requires_hold"
+    ],
+    "while_stopped": {
+      "all_sends_blocked": true,
+      "preview_packs_still_generated": true,
+      "local_review_still_allowed": true,
+      "tg_test_send_blocked": true
+    },
+    "resume": "operator_explicitly_clears_stop_flag"
+  },
+  "no_daemon_no_loop": {
+    "rule": "ABSOLUTE",
+    "description": "No daemon process, no cron job, no background loop, no timer, no auto-repeat shall be started for TG sending. All sends are one-shot, operator-initiated, and manually gated. This policy is non-negotiable.",
+    "enforcement": "Any code that starts a daemon, loop, or timer for TG send is in violation of this policy and must be immediately stopped."
+  },
+  "generated_at": "2026-06-05T06:41:34.875062+08:00"
+}

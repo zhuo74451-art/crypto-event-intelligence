@@ -1,0 +1,2 @@
+﻿asset,mark_price,open_interest_usd,funding_rate_hourly,funding_direction_cn,sample_address_count,active_position_count,whale_count,whale_long_pct,whale_short_pct,large_count,large_long_pct,large_short_pct,nearest_long_liq_price,nearest_long_liq_distance_pct,nearest_short_liq_price,nearest_short_liq_distance_pct,market_structure_quality,card_market_structure_lines,has_hl,scope_misuse
+TON,0,0,0,中性,1,1,1,100.0,0.0,1,100.0,0.0,0,0,0,0,partial,,False,True

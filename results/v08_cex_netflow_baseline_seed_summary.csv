@@ -1,2 +1,2 @@
-﻿status,rows_added
-missing_api_key,0
+﻿status,watch_addresses,raw_transfer_rows,used_transfer_rows,new_bucket_rows,output_rows,request_failed,hours,bucket_hours,output
+pass,6,6000,1339,24,2477,0,168.0,4.0,C:\Users\PC\Desktop\Projects\事件情报系统\data\cex_netflow_baseline_state.csv

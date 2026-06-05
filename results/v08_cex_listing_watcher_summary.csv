@@ -1,2 +1,2 @@
 ﻿watcher,source_rows,fetched_articles,alert_rows,skipped_not_listing,skipped_old,skipped_missing_time,lookback_hours,status,output
-cex_listing_announcement,1,20,1,2,10,7,24.0,pass,C:\Users\PC\Desktop\Projects\事件情报系统\data\watcher_alerts_cex_listings.csv
+cex_listing_announcement,1,20,0,3,12,4,24.0,pass,C:\Users\PC\Desktop\Projects\事件情报系统\data\watcher_alerts_cex_listings.csv

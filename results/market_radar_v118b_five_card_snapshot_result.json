@@ -1,0 +1,146 @@
+{
+  "pipeline_version": "v1.18B",
+  "run_id": "20260605_173357",
+  "task_id": "20260605_v118b_five_card_operator_snapshot_with_blocked_gate_overlay",
+  "generated_at": "2026-06-05T17:34:28+08:00",
+  "type": "five_card_operator_snapshot_with_blocked_gate_overlay",
+  "card_count": 5,
+  "snapshot": {
+    "card_count": 5,
+    "real_adapter_count": 3,
+    "blocked_overlay_count": 2,
+    "status_summary": {
+      "active": 2,
+      "blocked": 2,
+      "manual_required": 1
+    },
+    "active_count": 2,
+    "blocked_count": 2,
+    "manual_required_count": 1,
+    "snapshot_length": 1384,
+    "snapshot_text": "Market Radar v118B — Five-Card Operator Snapshot\n\n🟢 Active Signals\n  📊 Multi-Asset Sync: BTCUSDT: +0.24%; ETHUSDT: -3.61%; SOLUSDT: -2.52% (BTC strength + alt weakness — possible risk-off r\n  📰 News Event: [high] other: Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%\n    ⚠ Observation only / Not causal proof\n\n🔴 Blocked / Waiting for Conditions\n  🔍 Price/OI Anomaly: No asset passed admission threshold — insufficient anomaly signal strength\n  💥 Liquidation: Liquidation gate: blocked — calm market conditions (composite_score=0.35, thresh\n\n🟡 Manual Evidence Required\n  🐋 Whale Position: manual_attribution_evidence_required\n    See v116N whale evidence checklist\n\n--- Risk Notes ---\n  • news_event_market_impact: event_extraction: rule_based_keyword_matching — NO AI/model; not_causal_proof: event observed alongs\n  • liquidation_pressure: Liquidation gate explicitly maintained at threshold=0.60. Fixture composite_score=0.35 (< 0.60). Cal\n  • whale_position_alert: Whale tracking requires manual address attribution evidence. No free public API can provide reliable\n\n---\nCards: 5 total | Active: 2 | Blocked: 2 | Manual: 1 | Skipped/Failed: 0\nPipeline: v1.18B\nRun ID: 20260605_173357\nProduction: FALSE | One-shot: TRUE | Test group only\n\n⚠ All observations are NOT causal proof. Data from free public sources only.\n⚠ 内部数据观察，不构成投资建议。Production Send = False。"
+  },
+  "cards": [
+    {
+      "card_family": "news_event_market_impact",
+      "status": "active",
+      "data_source": "free_public_source",
+      "gate_reason": "News event with high intensity accepted",
+      "top_signal": "[high] other: Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%",
+      "risk_note": "event_extraction: rule_based_keyword_matching — NO AI/model; not_causal_proof: event observed alongside market data, not causal; sources: 4/5 succeeded, 165 articles, 50 events extracted",
+      "send_eligible": true,
+      "evidence_status": "clean",
+      "observation_only": true,
+      "not_causal_proof": true,
+      "adapter_fetch_count": 1,
+      "error": null
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "status": "blocked",
+      "data_source": "free_public_api",
+      "gate_reason": "No asset passed admission threshold — insufficient anomaly signal strength",
+      "top_signal": "BTCUSDT: Δ+0.22% anomaly=normal; ETHUSDT: Δ-3.69% anomaly=normal; SOLUSDT: Δ-2.56% anomaly=normal",
+      "risk_note": "",
+      "send_eligible": false,
+      "evidence_status": "clean",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "adapter_fetch_count": 1,
+      "error": null
+    },
+    {
+      "card_family": "multi_asset_market_sync",
+      "status": "active",
+      "data_source": "free_public_api",
+      "gate_reason": "Multi-asset data available for 3 assets",
+      "top_signal": "BTCUSDT: +0.24%; ETHUSDT: -3.61%; SOLUSDT: -2.52% (BTC strength + alt weakness — possible risk-off rotation)",
+      "risk_note": "",
+      "send_eligible": true,
+      "evidence_status": "clean",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "adapter_fetch_count": 1,
+      "error": null
+    },
+    {
+      "card_family": "liquidation_pressure",
+      "status": "blocked",
+      "data_source": "fixture_blocked_overlay",
+      "gate_reason": "Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Liquidation pressure is an event-triggered card type that only passes during high-volatility windows. Retry during volatile market conditions.",
+      "top_signal": "No active liquidation signal — calm market",
+      "risk_note": "Liquidation gate explicitly maintained at threshold=0.60. Fixture composite_score=0.35 (< 0.60). Calm market flag=True. Do NOT lower threshold to force card generation.",
+      "send_eligible": false,
+      "evidence_status": "blocked_by_gate_threshold",
+      "observation_only": false,
+      "not_causal_proof": null
+    },
+    {
+      "card_family": "whale_position_alert",
+      "status": "manual_required",
+      "data_source": "fixture_blocked_overlay",
+      "gate_reason": "Whale gate: blocked — manual evidence NOT provided. Address attribution requires human on-chain verification. Do NOT bypass manual evidence requirement. Gate correctly blocking automated-only signals. See runs/market_radar/v116n_whale_manual_evidence_checklist.md for required evidence types.",
+      "top_signal": "4 addresses tracked (total exposure $135M) — no address attribution evidence provided",
+      "risk_note": "Whale tracking requires manual address attribution evidence. No free public API can provide reliable address ownership. Fake/fabricated evidence is worse than no evidence. Operator must complete workbook with verified labels, sources, and position change evidence before this card can become active.",
+      "send_eligible": false,
+      "evidence_status": "manual_attribution_evidence_required",
+      "observation_only": false,
+      "not_causal_proof": null
+    }
+  ],
+  "adapter_fetch_counts": {
+    "multi_asset_market_sync": 1,
+    "price_oi_volume_anomaly": 1,
+    "news_event_market_impact": 1
+  },
+  "each_adapter_max_one_fetch": true,
+  "blocked_overlays": {
+    "liquidation_pressure": {
+      "status": "blocked",
+      "threshold_not_lowered": true,
+      "no_fake_spike": true,
+      "v116n_rationale_applied": true
+    },
+    "whale_position_alert": {
+      "status": "manual_required",
+      "manual_evidence_not_bypassed": true,
+      "no_address_guess": true,
+      "v116n_checklist_applied": true
+    }
+  },
+  "tg_snapshot": {
+    "attempted": true,
+    "success": false,
+    "status": "failed",
+    "reason": "TG send failed: [http_status_error] (transport_error_type=PROVIDER_REJECTION) Bad Request: can't parse entities: Unsupported start tag \"\" at byte offset 1046 (host=api.telegram.org, timeout=10s, proxy_detected=False)",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": false,
+    "token_proof_present": true,
+    "chat_id_proof_present": true,
+    "credentials_printed": false,
+    "message_count": 0
+  },
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": false,
+    "tg_message_count_this_run": 0,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false
+  },
+  "preflight": {
+    "safe_loader_found": true,
+    "load_success": true,
+    "config_ready": true,
+    "bot_token_present": true,
+    "chat_id_present": true
+  },
+  "five_card_proof": "v118B proves five card families can appear in a unified operator snapshot: 3 real-adapter cards run through shared pipeline, 2 blocked overlay cards use existing gate/checklist/v116N blocking rationale. Liquidation gate is NOT lowered. Whale manual evidence is NOT bypassed. At most 1 aggregated TG message is sent."
+}

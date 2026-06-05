@@ -1,0 +1,73 @@
+{
+  "source_name": "coingecko_public_rest",
+  "fetched_at": "2026-06-05T04:13:08.800423+08:00",
+  "request_mode": "live_one_shot",
+  "assets": [
+    {
+      "asset_id": "bitcoin",
+      "symbol": "BTC",
+      "price_usd": 63345.0,
+      "price_change_pct": -3.282308820606044,
+      "price_change_pct_1h": null,
+      "volume_change_pct": null,
+      "open_interest_change_pct": null,
+      "last_updated_at": "2026-06-05T04:13:08.800423+08:00",
+      "source_latency_ms": 522,
+      "raw_source_fields": {
+        "usd": 63345,
+        "usd_24h_change": -3.282308820606044
+      }
+    },
+    {
+      "asset_id": "ethereum",
+      "symbol": "ETH",
+      "price_usd": 1767.01,
+      "price_change_pct": -2.3544916476773388,
+      "price_change_pct_1h": null,
+      "volume_change_pct": null,
+      "open_interest_change_pct": null,
+      "last_updated_at": "2026-06-05T04:13:08.800423+08:00",
+      "source_latency_ms": 522,
+      "raw_source_fields": {
+        "usd": 1767.01,
+        "usd_24h_change": -2.3544916476773388
+      }
+    },
+    {
+      "asset_id": "solana",
+      "symbol": "SOL",
+      "price_usd": 68.53,
+      "price_change_pct": -4.799514994608399,
+      "price_change_pct_1h": null,
+      "volume_change_pct": null,
+      "open_interest_change_pct": null,
+      "last_updated_at": "2026-06-05T04:13:08.800423+08:00",
+      "source_latency_ms": 522,
+      "raw_source_fields": {
+        "usd": 68.53,
+        "usd_24h_change": -4.799514994608399
+      }
+    }
+  ],
+  "validation_status": "valid",
+  "stop_decision": "DEGRADE_TO_MOCK",
+  "stop_decision_reasons": [
+    "6 optional field(s) missing across assets (OI, volume_change_pct unavailable from free sources)",
+    "Only primary source (CoinGecko) returned data; cross-validation impossible"
+  ],
+  "cross_source_validation": {
+    "performed": false,
+    "price_divergence_pct": null,
+    "timestamp_divergence_seconds": null,
+    "assets_compared": 0,
+    "verdict": "not_performed"
+  },
+  "eligible_for_real_send": false,
+  "metadata": {
+    "plan_version": "v1.12-t",
+    "dry_run": true,
+    "assets_requested": 3,
+    "assets_returned": 3,
+    "request_duration_ms": 712
+  }
+}

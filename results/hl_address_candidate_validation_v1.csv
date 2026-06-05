@@ -1,0 +1,10 @@
+﻿address,source_type,query_ok,active_positions_count,assets_active,has_hype_position,hype_side,hype_position_value_usd,largest_position_asset,largest_position_value_usd,should_add,reason
+0x8def9f50456c6c,hyperinsight,True,4,"TON,HYPE,ASTER,ZEC",True,空单,53269864.37576,HYPE,53269864.37576,True,meets_100k_threshold;has_hype
+0x082e843a431aef,hyperinsight,True,1,HYPE,True,多单,100888018.6593,HYPE,100888018.6593,True,meets_100k_threshold;has_hype
+0x939f95036D2e7b,hyperinsight,True,5,"BTC,SOL,XRP,XLM,HYPE",True,空单,18345095.17165,BTC,24831086.2079,True,meets_100k_threshold;has_hype
+0xd47587702a9173,hyperinsight,True,17,"BTC,ETH,SOL,WLD,UNI,TON,NEAR,TAO,ENA,HYPE,FARTCOIN,PUMP,XPL,ASTER,ZEC,MON,XMR",True,空单,14505365.4352,HYPE,14505365.4352,True,meets_100k_threshold;has_hype
+0x92ea19eceb7a8d,hyperinsight,True,2,"BTC,ZEC",False,,0,BTC,92658203.92785,True,meets_100k_threshold
+0xcf67e4da9e9cd3,hyperinsight,True,2,"HYPE,VVV",True,多单,1169680.0,HYPE,1169680.0,True,meets_100k_threshold;has_hype
+0x4F83CaA457Ed33,hyperinsight,True,0,,False,,0,,0,False,no_active_positions
+0x5b5d51203a0f90,hyperinsight,True,9,"BTC,ETH,SOL,AVAX,SUI,XRP,HYPE,FARTCOIN,PUMP",True,空单,15653670.9953,ETH,21506218.2955,True,meets_100k_threshold;has_hype
+0x020cA66C30beC2,hyperinsight,True,1,ETH,False,,0,ETH,6760560.0,True,meets_100k_threshold

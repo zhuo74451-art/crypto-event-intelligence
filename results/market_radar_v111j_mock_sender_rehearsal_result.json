@@ -1,0 +1,60 @@
+{
+  "version": "v1.11-J-Mock",
+  "mode": "mock_sender_rehearsal",
+  "real_tg_sent": false,
+  "network_called": false,
+  "secrets_loaded": false,
+  "official_channel_touched": false,
+  "target_type": "test_channel",
+  "attempted_count": 3,
+  "mock_sent_count": 3,
+  "blocked_count": 0,
+  "mock_messages": [
+    {
+      "mock_message_id": "mock_v111j_001",
+      "signal_id": "H6-07",
+      "asset": "ARB",
+      "target_type": "test_channel",
+      "target_alias": "market_radar_test_channel",
+      "send_status": "mock_sent",
+      "payload_text_sha256": "3da888d54e3897e30d8144b726abd8f493a758b57e0b391bdae981c9025c738b",
+      "payload_length": 300,
+      "payload_preview": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 跌幅 8\\.50%，价值: allow, 冷却: upgrade\\_override \\(score↑\\), 安全: pass\n\n● 币种：ARB\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-1\\.80%（年化 \\-1971\\.0%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)",
+      "network_called": false,
+      "real_tg_sent": false
+    },
+    {
+      "mock_message_id": "mock_v111j_002",
+      "signal_id": "H5-01",
+      "asset": "ETH",
+      "target_type": "test_channel",
+      "target_alias": "market_radar_test_channel",
+      "send_status": "mock_sent",
+      "payload_text_sha256": "564534a56253e3a3fa0cf17454489e6239d0aa745eee8c97b759a4c3537177a0",
+      "payload_length": 300,
+      "payload_preview": "📉 行情异动｜ETH 急跌\n\n一句话：ETH 跌幅 8\\.50%，强信号: OI\\+Vol\\+Funding 全确认 \\(score\\~100\\)\n\n● 币种：ETH\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-2\\.50%（年化 \\-2737\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH ",
+      "network_called": false,
+      "real_tg_sent": false
+    },
+    {
+      "mock_message_id": "mock_v111j_003",
+      "signal_id": "H1-01",
+      "asset": "ETH",
+      "target_type": "test_channel",
+      "target_alias": "market_radar_test_channel",
+      "send_status": "mock_sent",
+      "payload_text_sha256": "9d16adbc6416c7702d549a50ae8a87777b163f55dfb0e0c5db5c442cce9437f1",
+      "payload_length": 300,
+      "payload_preview": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 24h 跌幅 6\\.80%，OI\\+Vol\\+Funding 极端四重确认\n\n● 币种：ETH\n● 涨跌幅：\\-6\\.80%\n● Funding：\\-1\\.50%（年化 \\-1642\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 24h 跌幅 6\\.80%",
+      "network_called": false,
+      "real_tg_sent": false
+    }
+  ],
+  "security_checks": {
+    "no_secret_read": true,
+    "no_secret_printed": true,
+    "no_real_tg_api_call": true,
+    "no_formal_channel": true,
+    "no_ai_relay_desk_write": true
+  }
+}

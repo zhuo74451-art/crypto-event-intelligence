@@ -1,0 +1,277 @@
+{
+  "pipeline_version": "v1.19A",
+  "run_id": "20260605_183130",
+  "task_id": "20260605_v119a_live_no_send_operator_one_shot_refresh_flow",
+  "generated_at": "2026-06-05T18:31:38+08:00",
+  "type": "live_no_send_operator_one_shot_refresh_flow",
+  "mode": "live_one_shot_no_send",
+  "data_sources": {
+    "live_free_public_apis": 3,
+    "fixture_adapters": 2
+  },
+  "cards": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "pipeline_status": "active",
+      "operator_decision": "accept",
+      "evidence_summary": "Live Binance public API: 3 assets fetched. Gate: Multi-asset data available for 3 assets. Source: free_public_api, no API key required.",
+      "reason": "Live Binance data available for 3 assets. Multi-asset sync card is active with real free public API data. Operator should review individual asset deltas before relying on correlation signal alone. Product is not production-grade.",
+      "publishability": "test_group_only",
+      "next_operator_action": "Review individual asset deltas. Confirm no stale ticker data. If correlation > 0.7 persists, card is suitable for test-group snapshot inclusion (when TG send is enabled).",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "gate_allowed": true,
+      "gate_reason": "Multi-asset data available for 3 assets",
+      "rendered_title": "📊 Market Sync: BTCUSDT/ETHUSDT/SOLUSDT",
+      "rendered_body": "**Multi-Asset Market Sync**\n\n  📈 BTCUSDT: $62,620.00 (+0.11%) Vol: $2.2B\n  📉 ETHUSDT: $1,680.39 (-4.41%) Vol: $1.3B\n  📉 SOLUSDT: $66.64 (-2.70%) Vol: $0.3B\n\nCorrelation: 0.30\nObservation: BTC strength + alt weakness — possible risk-off rotation\n\nSource: Binance Public API (no key required)",
+      "source": "live_binance_public_api"
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "pipeline_status": "blocked",
+      "operator_decision": "reject",
+      "evidence_summary": "Gate blocked: No asset passed admission threshold — insufficient anomaly signal strength. All signals below threshold.",
+      "reason": "No asset passed the admission threshold — insufficient anomaly signal strength. This is a correct gate block, not a failure. The threshold is designed to prevent noise from entering the operator feed.",
+      "publishability": "blocked",
+      "next_operator_action": "No action needed. Retry during higher-volatility windows. Do NOT lower threshold to force card generation.",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "gate_allowed": false,
+      "gate_reason": "No asset passed admission threshold — insufficient anomaly signal strength",
+      "rendered_title": "🔍 Anomaly Scan: BTCUSDT",
+      "rendered_body": "**Price / OI / Volume Anomaly Scan**\n\n  📈 BTCUSDT: +0.11% | OI: $0.0B | anomaly=normal | admit=❌ | factors=[none]\n  📉 ETHUSDT: -4.42% | OI: $0.0B | anomaly=normal | admit=❌ | factors=[price_move_significant]\n  📉 SOLUSDT: -2.73% | OI: $0.0B | anomaly=normal | admit=❌ | factors=[none]\n\nAnomaly criteria: |price_chg| > 5% + ≥1 confirmation factor\nConfirmation factors: price_move_significant, volume_spike, oi_elevated\n\nData: Binance Public API (spot 24hr tickers + futures OI)",
+      "source": "live_binance_public_api"
+    },
+    {
+      "card_family": "news_event_market_impact",
+      "pipeline_status": "active",
+      "operator_decision": "watch",
+      "evidence_summary": "Live RSS/news: 4 sources, 50 events extracted. Extraction method: rule_based_keyword_matching. observation_only=true, not_causal_proof=true.",
+      "reason": "News events detected (50 events from 4 sources) with measurable market context. Event extraction is rule-based keyword matching (NO AI/model). Event-market correlation is NOT causal proof. Operator is advised to treat this as contextual awareness, not actionable trading signal.",
+      "publishability": "test_group_only_with_caveat",
+      "next_operator_action": "Read the full article at source URL before citing. Cross-reference with at least one other news source. Do NOT present as causal market analysis. Always include observation-only disclaimer in any communication.",
+      "observation_only": true,
+      "not_causal_proof": true,
+      "gate_allowed": true,
+      "gate_reason": "News event with high intensity accepted",
+      "rendered_title": "📰 Event: Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%",
+      "rendered_body": "**Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%**\n\nSource: CoinDesk\nType: other | Intensity: 🔴 high\nAttribution: direct\nAssets: BTC, HYPE, NEAR\nURL: https://www.coindesk.com/markets/2026/06/05/bitcoin-plunges-to-near-usd62-000-as-the-ai-trade-unwinds-hype-falls-14\n\n⚠ **Observation Only — Not Causal Proof**\n本卡片仅记录事件影响观察，不构成因果证明。\nThe observed event may or may not cause the market move.\nMultiple confounding factors always present.",
+      "source": "live_free_public_rss_and_binance"
+    },
+    {
+      "card_family": "liquidation_pressure",
+      "pipeline_status": "blocked",
+      "operator_decision": "reject",
+      "evidence_summary": "Fixture: composite=0.35, threshold=0.60. Calm market. Threshold NOT lowered. Gate: Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Retry during high-volatility window..",
+      "reason": "Liquidation gate is CORRECTLY blocked. Calm market conditions (composite_score=0.35 < threshold=0.60). The liquidation threshold has NOT been lowered. This is a design-justified block — liquidation pressure is an event-triggered card type that only activates during high-volatility windows. Retry during volatile market conditions.",
+      "publishability": "blocked",
+      "next_operator_action": "No action needed. DO NOT lower threshold. Monitor for volatility regime change. When composite_score exceeds 0.60, re-evaluate.",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "gate_allowed": false,
+      "gate_reason": "Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Retry during high-volatility window.",
+      "rendered_title": "💥 Liquidation: BTCUSDT/ETHUSDT/SOLUSDT",
+      "rendered_body": "**[BLOCKED] Liquidation Pressure**\n\nComposite Score: 0.35 / Threshold: 0.60\nGate Status: ⛔ BLOCKED — calm market conditions\n\nThis is a DESIGN-JUSTIFIED block, NOT a failure:\n- Liquidation pressure is an event-triggered card type\n- Gate correctly prevents card generation during quiet markets\n- Do NOT lower the threshold to force card generation\n- Retry during high-volatility window",
+      "source": "fixture"
+    },
+    {
+      "card_family": "whale_position_alert",
+      "pipeline_status": "blocked",
+      "operator_decision": "manual_required",
+      "evidence_summary": "Fixture: 4 addresses tracked (total exposure ~$135M). Manual evidence: NOT PROVIDED (False). Manual evidence requirement: NOT BYPASSED. v116N checklist: APPLIED.",
+      "reason": "Whale position tracking requires manual on-chain address attribution evidence. No free public API can reliably identify wallet ownership. Automated signals without verified address labels are NOT actionable. Operator must complete the v116N whale evidence workbook with verified labels, sources, and position change evidence before this card can become active. Fake/fabricated evidence is worse than no evidence.",
+      "publishability": "blocked",
+      "next_operator_action": "Complete v116N whale evidence workbook: 1) Verify each address label against at least 2 on-chain sources. 2) Document evidence source URLs. 3) Record position change timestamps. 4) Have a second operator review the evidence. Do NOT publish this card until all 4 steps are complete.",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "gate_allowed": false,
+      "gate_reason": "Whale gate: blocked — manual evidence NOT provided. Address attribution requires human on-chain verification. Do NOT bypass manual evidence requirement. Gate correctly blocking automated-only signals.",
+      "rendered_title": "🐋 Whale Alert: Hyperliquid whale address tracking",
+      "rendered_body": "**[BLOCKED] Whale Position Alert**\n\nTracked Addresses: 4\nTotal Exposure: $135.0M\n\n⛔ Gate Status: BLOCKED — manual evidence NOT provided\n\nThis is a DESIGN-JUSTIFIED block, NOT a failure:\n- Whale position alert requires human on-chain address attribution\n- No free public API can provide address ownership verification\n- Fake/fabricated evidence is worse than no evidence\n- Do NOT bypass manual evidence requirement\n\nNext step: Complete operator workbook with address verification\nThen rerun with manua",
+      "source": "fixture"
+    }
+  ],
+  "decision_counts": {
+    "accept": 1,
+    "reject": 2,
+    "watch": 1,
+    "manual_required": 1
+  },
+  "production_readiness": {
+    "production_ready": false,
+    "production_readiness_score": "0/5",
+    "criteria": [
+      {
+        "criterion": "automated_multi_asset_sync",
+        "status": "not_met",
+        "reason": "Free public API only — no institutional-grade data feed"
+      },
+      {
+        "criterion": "automated_price_oi_volume",
+        "status": "not_met",
+        "reason": "Anomaly detection threshold-based only — no ML/statistical model"
+      },
+      {
+        "criterion": "news_event_processing",
+        "status": "not_met",
+        "reason": "Rule-based keyword matching — NO AI/model, not causal proof, observation only"
+      },
+      {
+        "criterion": "liquidation_pressure_automation",
+        "status": "not_met",
+        "reason": "Calm market correctly blocks — requires high-volatility regime detection"
+      },
+      {
+        "criterion": "whale_position_attribution",
+        "status": "not_met",
+        "reason": "Manual address attribution evidence required — no automated solution"
+      }
+    ],
+    "assessment": "NOT FOR LIVE USE. All 5 production readiness criteria remain unmet. The system operates on free public data sources only. News event extraction is rule-based, not causal. Liquidation gate requires high-volatility detection. Whale tracking requires manual address attribution. No automated decision-making is production-grade."
+  },
+  "contract_validation": {
+    "all_passed": true,
+    "checks": [
+      {
+        "check": "five_card_families_present",
+        "passed": true,
+        "detail": "Present: ['liquidation_pressure', 'multi_asset_market_sync', 'news_event_market_impact', 'price_oi_volume_anomaly', 'whale_position_alert']"
+      },
+      {
+        "check": "decisions_in_allowed_set",
+        "passed": true,
+        "detail": "All valid"
+      },
+      {
+        "check": "whale_position_alert_is_manual_required",
+        "passed": true,
+        "detail": "manual_required"
+      },
+      {
+        "check": "liquidation_pressure_not_accepted",
+        "passed": true,
+        "detail": "reject"
+      },
+      {
+        "check": "news_event_observation_only",
+        "passed": true,
+        "detail": "observation_only=True"
+      },
+      {
+        "check": "news_event_not_causal_proof",
+        "passed": true,
+        "detail": "not_causal_proof=True"
+      },
+      {
+        "check": "three_live_adapters_used",
+        "passed": true,
+        "detail": "3 live adapters used (need >= 3)"
+      },
+      {
+        "check": "production_readiness_false",
+        "passed": true,
+        "detail": "0/5 — NOT FOR LIVE USE"
+      },
+      {
+        "check": "no_send_confirmed",
+        "passed": true,
+        "detail": "telegram_send=false, x_twitter_send=false, production_send=false"
+      },
+      {
+        "check": "no_daemon_cron_loop",
+        "passed": true,
+        "detail": "daemon_or_loop_started=false"
+      },
+      {
+        "check": "liquidation_threshold_not_lowered",
+        "passed": true,
+        "detail": "threshold >= 0.60 maintained: True"
+      },
+      {
+        "check": "whale_manual_evidence_not_bypassed",
+        "passed": true,
+        "detail": "manual_evidence_not_bypassed=True"
+      }
+    ],
+    "validated_at": "2026-06-05T18:31:38+08:00"
+  },
+  "adapter_diagnostics": [
+    {
+      "adapter": "MultiAssetMarketSyncFreeApiAdapter",
+      "used": true,
+      "status": "ok",
+      "api_success": true,
+      "assets_fetched": 3,
+      "gate_allowed": true,
+      "error": null
+    },
+    {
+      "adapter": "PriceOIVolumeAnomalyFreeApiAdapter",
+      "used": true,
+      "status": "ok",
+      "api_success": true,
+      "signals_count": 3,
+      "gate_allowed": false,
+      "error": null
+    },
+    {
+      "adapter": "NewsEventMarketImpactFreePublicSourceAdapter",
+      "used": true,
+      "status": "ok",
+      "sources_succeeded": 4,
+      "articles_fetched": 165,
+      "events_found": 50,
+      "api_success": true,
+      "gate_allowed": true,
+      "observation_only": true,
+      "not_causal_proof": true,
+      "error": null
+    },
+    {
+      "adapter": "FixtureSignalAdapter(liquidation_pressure)",
+      "used": true,
+      "status": "ok",
+      "composite_score": 0.35,
+      "threshold": 0.6,
+      "calm_market": true,
+      "gate_allowed": false,
+      "threshold_not_lowered": true,
+      "error": null
+    },
+    {
+      "adapter": "FixtureSignalAdapter(whale_position_alert)",
+      "used": true,
+      "status": "ok",
+      "manual_evidence_provided": false,
+      "gate_allowed": false,
+      "manual_evidence_not_bypassed": true,
+      "error": null
+    }
+  ],
+  "no_send_preview": {
+    "telegram_send": false,
+    "x_twitter_send": false,
+    "production_send": false,
+    "daemon_or_loop_started": false
+  },
+  "safety": {
+    "tg_sent_this_run": false,
+    "tg_message_count_this_run": 0,
+    "x_twitter_sent_this_run": false,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "v116_history_modified": false,
+    "binance_api_key_used": false
+  },
+  "output_files": {
+    "snapshot_md": "runs\\market_radar\\v119a_live_operator_snapshot.md",
+    "decision_table_md": "runs\\market_radar\\v119a_operator_decision_table.md",
+    "dashboard_html": "runs\\market_radar\\v119a_operator_dashboard.html",
+    "no_send_preview_md": "runs\\market_radar\\v119a_no_send_preview.md",
+    "handoff_md": "runs\\market_radar\\v119a_local_only_handoff.md"
+  }
+}

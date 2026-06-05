@@ -1,0 +1,134 @@
+{
+  "version": "v1.12-w",
+  "audit_type": "whale_address_label_quality",
+  "generated_at": "2026-06-05T04:13:00+08:00",
+  "source_file": "data/hyperliquid_position_state.csv",
+  "source_columns_found": [
+    "﻿position_key",
+    "updated_at_utc",
+    "updated_at_china",
+    "address",
+    "entity",
+    "asset_symbol",
+    "side",
+    "szi_abs",
+    "position_value_usd",
+    "entry_px",
+    "liquidation_px",
+    "mark_px",
+    "liquidation_distance_pct",
+    "near_liquidation",
+    "unrealized_pnl",
+    "return_on_equity",
+    "above_threshold"
+  ],
+  "field_notes": [
+    "CSV field 'entity' maps to address label — used for label quality assessment.",
+    "CSV field 'address' maps to wallet address.",
+    "No dedicated 'label_confidence' column — confidence inferred from entity name.",
+    "Labels containing 'Unknown' prefix → low confidence.",
+    "Labels with known entity names → medium confidence.",
+    "Labels from Arkham/Nansen/confirmed sources → high confidence (none found)."
+  ],
+  "tracked_addresses_total": 4,
+  "positions_total": 11,
+  "labels_total": 4,
+  "high_confidence_labels": 0,
+  "medium_confidence_labels": 2,
+  "low_confidence_labels": 2,
+  "unknown_labels": 0,
+  "unknown_label_fallback_ready": true,
+  "label_quality_ready_for_one_shot_plan": true,
+  "address_label_details": [
+    {
+      "address": "0x082e843a431aef031264dc232693dd710aedca88",
+      "address_short": "0x082e...dca88",
+      "entity": "Unknown HYPE Whale",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "confidence_rationale": "Entity 'Unknown HYPE Whale' contains 'Unknown' — unverified source.",
+      "position_count": 1,
+      "assets": [
+        "HYPE"
+      ],
+      "above_threshold_positions": 1
+    },
+    {
+      "address": "0x50b309f78e774a756a2230e1769729094cac9f20",
+      "address_short": "0x50b3...c9f20",
+      "entity": "Unknown Hyperliquid Whale",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "confidence_rationale": "Entity 'Unknown Hyperliquid Whale' contains 'Unknown' — unverified source.",
+      "position_count": 1,
+      "assets": [
+        "BTC"
+      ],
+      "above_threshold_positions": 1
+    },
+    {
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "address_short": "0x6c85...d84f6",
+      "entity": "Matrixport Related",
+      "entity_type": "fund_wallet",
+      "confidence": "medium",
+      "confidence_rationale": "Entity 'Matrixport Related' is a known name but from unverified source (HyperLiquid observer or heuristic).",
+      "position_count": 1,
+      "assets": [
+        "ETH"
+      ],
+      "above_threshold_positions": 1
+    },
+    {
+      "address": "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+      "address_short": "0x8def...92dae",
+      "entity": "loraclexyz",
+      "entity_type": "high_leverage_trader",
+      "confidence": "medium",
+      "confidence_rationale": "Entity 'loraclexyz' is a known name but from unverified source (HyperLiquid observer or heuristic).",
+      "position_count": 8,
+      "assets": [
+        "TON",
+        "LIT",
+        "VVV",
+        "HYPE",
+        "NEAR",
+        "ASTER",
+        "ZEC",
+        "XMR"
+      ],
+      "above_threshold_positions": 0
+    }
+  ],
+  "confidence_distribution": {
+    "high": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "medium": {
+      "count": 2,
+      "pct": 50.0
+    },
+    "low": {
+      "count": 2,
+      "pct": 50.0
+    },
+    "unknown": {
+      "count": 0,
+      "pct": 0.0
+    }
+  },
+  "assessment": {
+    "ready_for_one_shot_plan": true,
+    "all_addresses_have_labels": true,
+    "no_completely_unlabeled_addresses": true,
+    "low_confidence_labels_acceptable": true,
+    "unknown_whale_fallback_works": true,
+    "concerns": [
+      "No high-confidence labels — all labels are medium or low confidence.",
+      "2 labels are low confidence ('Unknown * Whale').",
+      "Label freshness cannot be verified from CSV — timestamps only cover position updates."
+    ],
+    "recommendation": "Proceed with one-shot plan. Label quality is sufficient for observation purposes."
+  }
+}

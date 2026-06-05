@@ -1,0 +1,98 @@
+{
+  "overlay_version": "v116N",
+  "source_milestone_version": "v116L",
+  "audit_source": "v116M",
+  "local_only": true,
+  "external_api_called_this_run": false,
+  "tg_sent_this_run": false,
+  "production_send_ready_count": 0,
+  "generated_at": "2026-06-05T14:11:49.056392+08:00",
+  "task_id": "20260605_v116n_market_radar_user_acceptance_overlay_pack_local_only",
+  "run_id": "20260605_124925.r07",
+  "user_acceptance_ready_after_overlay": true,
+  "overlay_type": "user_acceptance_presentation",
+  "summary": {
+    "fixture_e2e_passed": "5/5",
+    "real_api_public_source_tg_test_sent": "3/5",
+    "real_api_attempted_but_gate_blocked": "1/5",
+    "manual_evidence_blocked": "1/5",
+    "production_send_ready": "0/5"
+  },
+  "card_family_status_summary": {
+    "whale_position_alert": {
+      "display_name": "Whale Position Alert",
+      "real_e2e_status": "blocked_manual_evidence"
+    },
+    "multi_asset_market_sync": {
+      "display_name": "Multi-Asset Market Sync",
+      "real_e2e_status": "real_free_api_tg_test_sent"
+    },
+    "price_oi_volume_anomaly": {
+      "display_name": "Price/OI/Volume Anomaly",
+      "real_e2e_status": "real_free_api_tg_test_sent"
+    },
+    "liquidation_pressure": {
+      "display_name": "Liquidation Pressure",
+      "real_e2e_status": "blocked_gate_not_passed"
+    },
+    "news_event_market_impact": {
+      "display_name": "News Event Market Impact",
+      "real_e2e_status": "real_free_public_source_tg_test_sent"
+    }
+  },
+  "created_files": [
+    "runs/market_radar/v116n_one_pager_acceptance_summary.md",
+    "runs/market_radar/v116n_operator_review_pack_user_facing.md",
+    "runs/market_radar/v116n_user_decision_tree.md",
+    "runs/market_radar/v116n_demo_sequence_10min.md",
+    "runs/market_radar/v116n_production_readiness_checklist.md",
+    "runs/market_radar/v116n_whale_manual_evidence_checklist.md",
+    "runs/market_radar/v116n_local_only_handoff.md",
+    "results/market_radar_v116n_user_acceptance_overlay_manifest.json"
+  ],
+  "source_files_read": [
+    "results/market_radar_v116l_milestone_pack_manifest.json",
+    "results/market_radar_v116l_real_e2e_acceptance_matrix.json",
+    "results/market_radar_v116l_tg_evidence_index.jsonl",
+    "runs/market_radar/v116l_market_radar_real_e2e_milestone_summary.md",
+    "runs/market_radar/v116l_operator_review_pack.md",
+    "runs/market_radar/v116l_next_phase_roadmap.md",
+    "runs/market_radar/v116l_local_only_handoff.md"
+  ],
+  "remaining_blockers": [
+    {
+      "blocker": "liquidation_pressure",
+      "status": "gate_blocked_calm_market",
+      "explanation": "Gate correctly blocked during calm market. NOT a bug. Rerun during high volatility.",
+      "not_a_failure": true
+    },
+    {
+      "blocker": "whale_position_alert",
+      "status": "manual_evidence_required",
+      "explanation": "Requires human on-chain address attribution. Cannot be automated via free APIs. NOT a bug.",
+      "not_a_failure": true
+    },
+    {
+      "blocker": "production_send",
+      "status": "0/5 ready",
+      "explanation": "No card family is production send ready. Requires explicit user approval, production target, secret preflight, and dry-run audit.",
+      "not_a_failure": true
+    }
+  ],
+  "user_next_step_options": [
+    "A",
+    "B",
+    "C"
+  ],
+  "safety_constraints_verified": {
+    "external_api_called_this_run": false,
+    "public_source_called_this_run": false,
+    "tg_sent_this_run": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "historical_artifacts_modified": false,
+    "credentials_read": false
+  }
+}

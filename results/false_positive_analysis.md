@@ -1,8 +1,8 @@
 # False Positive / Noise Analysis
 
-- 生成时间：2026-05-28 19:24:39 UTC+8
+- 生成时间：2026-06-01 13:29:50 UTC+8
 - outcome rows：3
-- decision rows：33
+- decision rows：48
 - group rows：3
 
 ## 结论
@@ -13,6 +13,6 @@
 
 ## Top Groups
 
-- token_unlock / token_unlock / token_unlock_team_large：样本 1，false-positive-like 1.0000，建议 collect_more。
-- long_short / market_structure / long_short_crowding_extreme：样本 1，false-positive-like 1.0000，建议 collect_more。
-- hyperliquid / whale_position / whale_position_static_large：样本 1，false-positive-like 1.0000，建议 collect_more。
+- token_unlock / token_unlock / token_unlock_team_large：样本 1，false-positive-like 0.0000，建议 collect_more。
+- long_short / market_structure / long_short_crowding_extreme：样本 1，false-positive-like 0.0000，建议 collect_more。
+- hyperliquid / whale_position / whale_position_static_large：样本 1，false-positive-like 0.0000，建议 collect_more。

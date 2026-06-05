@@ -1,0 +1,1 @@
+{"card_family": "price_oi_volume_anomaly", "pipeline_version": "v1.17", "timestamp": "2026-06-05T16:32:39+08:00", "production_send": false, "proof": "sha256:18177338c3669a13", "event_id": null, "asset_or_topic": "BTCUSDT", "quality_gate_allow": true, "send_readiness_allow": true, "tg_test_sent": true, "tg_status": "sent"}

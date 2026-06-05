@@ -1,0 +1,30 @@
+{
+  "version": "v115A",
+  "status": "passed",
+  "strategy_gate": "whale_delta_send_readiness",
+  "input_stage": "v114D",
+  "input_stage_conclusion": "local_delta_review_ready_not_send_ready",
+  "send_ready": false,
+  "tg_test_group_ready": false,
+  "local_review_ready": true,
+  "external_api_called": false,
+  "prod_state_write": false,
+  "tg_sent": false,
+  "credentials_read": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "eligible_for_real_send_count": 0,
+  "real_send_candidate_count": 0,
+  "tg_send_allowed_count": 0,
+  "blocker_count": 6,
+  "label_confidence_distribution": {
+    "high": 0,
+    "medium": 8,
+    "low": 2
+  },
+  "review_cards_total": 10,
+  "review_only_no_send_count": 10,
+  "next_step": "v115b_whale_label_confidence_upgrade_plan_local_only",
+  "generated_at": "2026-06-05T06:31:01.025887+08:00"
+}

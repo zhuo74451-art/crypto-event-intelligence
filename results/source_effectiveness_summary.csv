@@ -1,2 +1,2 @@
 ﻿status,generated_at_china,source_rows,ledger_rows,outcome_rows,decision_rows,shadow_or_no_live_data_count,insufficient_live_outcomes_count,likely_noise_or_digest_only_count,promising_needs_more_samples_count,output,markdown_output
-pass,2026-05-28 19:24:39 UTC+8,10,3,3,33,7,3,0,0,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_effectiveness_report.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_effectiveness_report.md
+pass,2026-06-01 13:29:49 UTC+8,10,3,3,48,7,3,0,0,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_effectiveness_report.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_effectiveness_report.md

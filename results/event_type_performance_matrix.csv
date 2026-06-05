@@ -32,10 +32,10 @@ institutional_flow,institutional_flow,news:decrypt,large_cap_alt,historical_unkn
 macro,macro,news:coinpaper,large_cap_alt,historical_unknown,1,1,-0.000761,-0.000761,0.0,1,0.004754,0.004754,1.0,1,-0.013665,-0.013665,0.0,1,-0.014503,-0.014503,0.0,insufficient_sample
 macro,macro,news:coinpedia,benchmark_asset,historical_unknown,1,1,0.000379,0.000379,1.0,1,0.003623,0.003623,1.0,1,0.003498,0.003498,1.0,1,0.003355,0.003355,1.0,insufficient_sample
 macro,macro,news:cryptonews,large_cap_alt,historical_unknown,1,1,0.001234,0.001234,1.0,1,-0.000104,-0.000104,0.0,1,-0.013683,-0.013683,0.0,1,-0.002107,-0.002107,0.0,insufficient_sample
-market_structure,long_short_crowding_extreme,long_short,large_cap_alt,downtrend,1,1,-0.000336,-0.000336,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,insufficient_sample
+market_structure,long_short_crowding_extreme,long_short,large_cap_alt,downtrend,1,1,-0.000336,-0.000336,0.0,1,-0.00608,-0.00608,0.0,1,0.009794,0.009794,1.0,1,0.014861,0.014861,1.0,insufficient_sample
 network_upgrade,network_upgrade,news:cryptonews,benchmark_asset,historical_unknown,1,1,0.0,0.0,0.0,1,0.0,0.0,0.0,1,0.0,0.0,0.0,1,0.0,0.0,0.0,insufficient_sample
 token_unlock,token_unlock,news:cryptonews,large_cap_alt,historical_unknown,1,1,0.00044,0.00044,1.0,1,0.001855,0.001855,1.0,1,-0.021927,-0.021927,0.0,1,-0.016717,-0.016717,0.0,insufficient_sample
 token_unlock,token_unlock,news:jin10,benchmark_asset,historical_unknown,1,1,0.0,0.0,0.0,1,0.0,0.0,0.0,1,0.0,0.0,0.0,1,0.0,0.0,0.0,insufficient_sample
-token_unlock,token_unlock_team_large,token_unlock,other_alt,downtrend,1,1,-0.004734,-0.004734,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,insufficient_sample
+token_unlock,token_unlock_team_large,token_unlock,other_alt,downtrend,1,1,-0.004734,-0.004734,0.0,1,0.060009,0.060009,1.0,1,0.109306,0.109306,1.0,1,0.219682,0.219682,1.0,insufficient_sample
 token_unlock,token_unlock,webhook,benchmark_asset,historical_unknown,1,1,0.0,0.0,0.0,1,0.0,0.0,0.0,1,0.0,0.0,0.0,1,0.0,0.0,0.0,insufficient_sample
-whale_position,whale_position_static_large,hyperliquid,other_alt,downtrend,1,1,-0.017535,-0.017535,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,insufficient_sample
+whale_position,whale_position_static_large,hyperliquid,other_alt,downtrend,1,1,-0.017535,-0.017535,0.0,1,-0.016238,-0.016238,0.0,1,0.084985,0.084985,1.0,1,0.190821,0.190821,1.0,insufficient_sample

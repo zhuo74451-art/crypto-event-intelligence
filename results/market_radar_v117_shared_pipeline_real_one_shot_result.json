@@ -1,0 +1,305 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_155249",
+  "generated_at": "2026-06-05T15:53:17+08:00",
+  "type": "real_free_api",
+  "results": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+      "signal": {
+        "source_type": "free_public_api",
+        "card_family": "multi_asset_market_sync",
+        "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+        "timestamp": "2026-06-05T15:53:04+08:00",
+        "metrics": {
+          "assets": [
+            {
+              "symbol": "BTCUSDT",
+              "price": 62924.38,
+              "price_change_pct": -1.354,
+              "volume_24h": 2290478982.8878345,
+              "high_24h": 64494.92,
+              "low_24h": 61126.01,
+              "trades_count": 9092759
+            },
+            {
+              "symbol": "ETHUSDT",
+              "price": 1675.98,
+              "price_change_pct": -5.852,
+              "volume_24h": 1311888867.104042,
+              "high_24h": 1794.43,
+              "low_24h": 1625.78,
+              "trades_count": 9344637
+            },
+            {
+              "symbol": "SOLUSDT",
+              "price": 66.08,
+              "price_change_pct": -5.057,
+              "volume_24h": 336838657.39801,
+              "high_24h": 70.64,
+              "low_24h": 63.87,
+              "trades_count": 1963223
+            }
+          ],
+          "asset_count": 3,
+          "correlation_score": 0.8,
+          "sync_observation": "All monitored assets showing bearish alignment (corr≈0.80)",
+          "api_success": true,
+          "fetch_error": null
+        },
+        "source_refs": [
+          "binance_public_api:/api/v3/ticker/24hr"
+        ],
+        "risk_notes": [],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": true,
+        "reason": "Multi-asset data available for 3 assets",
+        "card_family": "multi_asset_market_sync",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:53:04+08:00",
+        "metrics_snapshot": {
+          "asset_count": 3
+        }
+      },
+      "rendered_card": {
+        "title": "📊 Market Sync: BTCUSDT/ETHUSDT/SOLUSDT",
+        "body": "**Multi-Asset Market Sync**\n\n  📉 BTCUSDT: $62,924.38 (-1.35%) Vol: $2.3B\n  📉 ETHUSDT: $1,675.98 (-5.85%) Vol: $1.3B\n  📉 SOLUSDT: $66.08 (-5.06%) Vol: $0.3B\n\nCorrelation: 0.80\nObservation: All monitored assets showing bearish alignment (corr≈0.80)\n\nSource: Binance Public API (no key required)",
+        "card_family": "multi_asset_market_sync",
+        "risk_disclaimer": "⚠ 市场数据观察，不构成投资建议。数据源于 Binance 免费公开 API。Production Send = False。",
+        "evidence_summary": "Binance 24hr tickers for 3 assets",
+        "production_status": "test_group_only",
+        "observation_only": false,
+        "not_causal_proof": false,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:53:04+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": true,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:53:04+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "skipped",
+        "reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:53:04+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "multi_asset_market_sync",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:53:04+08:00",
+        "production_send": false,
+        "proof": "sha256:e0eb37a74dbe6e14",
+        "event_id": null,
+        "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+        "quality_gate_allow": true,
+        "send_readiness_allow": true,
+        "tg_test_sent": false,
+        "tg_status": "skipped"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:53:04+08:00",
+      "error": null,
+      "passed": true
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "asset_or_topic": "BTCUSDT",
+      "signal": {
+        "source_type": "free_public_api",
+        "card_family": "price_oi_volume_anomaly",
+        "asset_or_topic": "BTCUSDT",
+        "timestamp": "2026-06-05T15:53:17+08:00",
+        "metrics": {
+          "primary_asset": "BTCUSDT",
+          "signals": [
+            {
+              "symbol": "BTCUSDT",
+              "price": 62915.36,
+              "price_change_24h_pct": -1.293,
+              "quote_volume_24h": 2290626234.198547,
+              "open_interest_current": 98491.84,
+              "oi_history_missing": false,
+              "oi_error": null,
+              "anomaly_type": "normal",
+              "confirmation_factors": [],
+              "admission_passed": false
+            },
+            {
+              "symbol": "ETHUSDT",
+              "price": 1676.0,
+              "price_change_24h_pct": -5.791,
+              "quote_volume_24h": 1312223947.51338,
+              "open_interest_current": 2253667.918,
+              "oi_history_missing": false,
+              "oi_error": null,
+              "anomaly_type": "notable",
+              "confirmation_factors": [
+                "price_move_significant"
+              ],
+              "admission_passed": true
+            },
+            {
+              "symbol": "SOLUSDT",
+              "price": 66.09,
+              "price_change_24h_pct": -4.961,
+              "quote_volume_24h": 336850025.23218,
+              "open_interest_current": 9927701.77,
+              "oi_history_missing": false,
+              "oi_error": null,
+              "anomaly_type": "normal",
+              "confirmation_factors": [
+                "price_move_significant"
+              ],
+              "admission_passed": false
+            }
+          ],
+          "signal_count": 3,
+          "api_success": true,
+          "fetch_error": null
+        },
+        "source_refs": [
+          "binance_public_api:/api/v3/ticker/24hr",
+          "binance_public_api:openInterest(BTCUSDT)",
+          "binance_public_api:openInterest(ETHUSDT)",
+          "binance_public_api:openInterest(SOLUSDT)"
+        ],
+        "risk_notes": [],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": true,
+        "reason": "Anomaly detected: notable on ETHUSDT",
+        "card_family": "price_oi_volume_anomaly",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:53:17+08:00",
+        "metrics_snapshot": {
+          "anomaly_type": "notable"
+        }
+      },
+      "rendered_card": {
+        "title": "🔍 Anomaly Scan: BTCUSDT",
+        "body": "**Price / OI / Volume Anomaly Scan**\n\n  📉 BTCUSDT: -1.29% | OI: $0.0B | anomaly=normal | admit=❌ | factors=[none]\n  📉 ETHUSDT: -5.79% | OI: $0.0B | anomaly=notable | admit=✅ | factors=[price_move_significant]\n  📉 SOLUSDT: -4.96% | OI: $0.0B | anomaly=normal | admit=❌ | factors=[price_move_significant]\n\nAnomaly criteria: |price_chg| > 5% + ≥1 confirmation factor\nConfirmation factors: price_move_significant, volume_spike, oi_elevated\n\nData: Binance Public API (spot 24hr tickers + futures OI)",
+        "card_family": "price_oi_volume_anomaly",
+        "risk_disclaimer": "⚠ 异常检测信号，不构成投资建议。OI 历史数据可能缺失。Production Send = False。",
+        "evidence_summary": "Price/OI anomaly scan across 3 assets via Binance public API",
+        "production_status": "test_group_only",
+        "observation_only": false,
+        "not_causal_proof": false,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:53:17+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": true,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:53:17+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "skipped",
+        "reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:53:17+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "price_oi_volume_anomaly",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:53:17+08:00",
+        "production_send": false,
+        "proof": "sha256:f175a128e605c63d",
+        "event_id": null,
+        "asset_or_topic": "BTCUSDT",
+        "quality_gate_allow": true,
+        "send_readiness_allow": true,
+        "tg_test_sent": false,
+        "tg_status": "skipped"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:53:17+08:00",
+      "error": null,
+      "passed": true
+    }
+  ],
+  "summary": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "api_success": true,
+      "asset_count": 3,
+      "gate_allow": true,
+      "gate_reason": "Multi-asset data available for 3 assets",
+      "tg_attempted": false,
+      "tg_success": false,
+      "tg_status": "skipped",
+      "tg_reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+      "passed": true,
+      "error": null
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "api_success": true,
+      "signal_count": 3,
+      "gate_allow": true,
+      "gate_reason": "Anomaly detected: notable on ETHUSDT",
+      "tg_attempted": false,
+      "tg_success": false,
+      "tg_status": "skipped",
+      "tg_reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+      "passed": true,
+      "error": null
+    }
+  ],
+  "counts": {
+    "total": 2,
+    "api_success": 2,
+    "gate_passed": 2,
+    "tg_sent": 0,
+    "tg_skipped": 2,
+    "passed": 2
+  },
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": false,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false
+  }
+}

@@ -1,0 +1,526 @@
+{
+  "version": "v1.12-A",
+  "mode": "fixed_card_type_matrix",
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "paid_api_called": false,
+  "daemon_started": false,
+  "card_type_count": 5,
+  "ready_count": 1,
+  "partial_count": 2,
+  "missing_count": 2,
+  "card_types": [
+    {
+      "card_type": "liquidation_pressure",
+      "display_name": "清算压力预警卡",
+      "purpose": "检测并报告市场中的强平密集区、清算风险、杠杆拥挤度和关键 liquidation level。当特定价格区间出现大量待清算仓位时触发。",
+      "category": "risk_management",
+      "required_fields": [
+        "asset",
+        "liquidation_level",
+        "leverage_zone"
+      ],
+      "sample_count": 2,
+      "sample_results": [
+        {
+          "sample_id": "liq_fixture_001_btc",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_liq_001_has_level": true,
+            "adm_liq_002_significant_size": true,
+            "adm_liq_003_asset_required": true
+          },
+          "block_triggered": true,
+          "block_reason": "fixture 样本不得标记为 live data",
+          "block_result": {
+            "blk_liq_001_no_level_data": false,
+            "blk_liq_002_trivial_size": false,
+            "blk_liq_003_fixture_as_live": true
+          },
+          "all_checks_passed": false,
+          "public_preview": "🟠 清算压力预警｜BTC 多头拥挤\n\n一句话：BTC 多头杠杆拥挤，$62,800 附近清算密集区规模 $45M，预估连锁清算 $220M\n\n● 关键清算价：$62,800.00\n● 清算密集区：$62,850.00\n● 多头待清算：$85.00M\n● 空头待清算：$12.00M\n● 杠杆集中区间：高杠杆区 $62,000 - $63,500\n● 风险等级：HIGH\n⚠️ 如触发连锁清算，预估影响规模 $220.00M\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：BTC 多头杠杆拥挤，$62,800 附近清算密集区规模 $45M，预估连锁清算 $220M\n\n⚠️ 清算数据具有时效性，仅供观察，不构成交易建议。",
+          "preview_length": 412,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        },
+        {
+          "sample_id": "liq_fixture_002_eth",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_liq_001_has_level": true,
+            "adm_liq_002_significant_size": true,
+            "adm_liq_003_asset_required": true
+          },
+          "block_triggered": true,
+          "block_reason": "fixture 样本不得标记为 live data",
+          "block_result": {
+            "blk_liq_001_no_level_data": false,
+            "blk_liq_002_trivial_size": false,
+            "blk_liq_003_fixture_as_live": true
+          },
+          "all_checks_passed": false,
+          "public_preview": "🟡 清算压力预警｜ETH 多头拥挤\n\n一句话：ETH 清算压力聚集，$2,950 附近多空双方均有待清算仓位，可能引发双向波动\n\n● 关键清算价：$2,950.00\n● 清算密集区：$2,965.00\n● 多头待清算：$62.00M\n● 空头待清算：$35.00M\n● 杠杆集中区间：高杠杆区 $2,880 - $3,020\n● 风险等级：MEDIUM\n⚠️ 如触发连锁清算，预估影响规模 $150.00M\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=ETH) / [DexScreener](https://dexscreener.com/search?q=ETH)\n\n💡 触发原因：ETH 清算压力聚集，$2,950 附近多空双方均有待清算仓位，可能引发双向波动\n\n⚠️ 清算数据具有时效性，仅供观察，不构成交易建议。",
+          "preview_length": 398,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        }
+      ],
+      "readiness": {
+        "card_type": "liquidation_pressure",
+        "readiness_level": "missing",
+        "suitable_for_long_running_monitoring": false,
+        "missing_fields": [
+          "缺少杠杆率实时计算管道（OI / market cap ratio）",
+          "缺少连锁清算模拟模型",
+          "缺少历史清算事件对比基线"
+        ],
+        "missing_data_sources": [
+          "real_data_pipeline",
+          "缺少实时清算数据源（需要交易所 liquidation feed 或聚合 API）",
+          "缺少清算价位热力图数据（liquidation heatmap）"
+        ],
+        "missing_rules": [
+          "gate integration not tested"
+        ],
+        "next_gap": "real_data_pipeline"
+      },
+      "public_preview": "🟠 清算压力预警｜BTC 多头拥挤\n\n一句话：BTC 多头杠杆拥挤，$62,800 附近清算密集区规模 $45M，预估连锁清算 $220M\n\n● 关键清算价：$62,800.00\n● 清算密集区：$62,850.00\n● 多头待清算：$85.00M\n● 空头待清算：$12.00M\n● 杠杆集中区间：高杠杆区 $62,000 - $63,500\n● 风险等级：HIGH\n⚠️ 如触发连锁清算，预估影响规模 $220.00M\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：BTC 多头杠杆拥挤，$62,800 附近清算密集区规模 $45M，预估连锁清算 $220M\n\n⚠️ 清算数据具有时效性，仅供观察，不构成交易建议。",
+      "debug_leak_free": true,
+      "summary": {
+        "all_samples_schema_valid": true,
+        "all_samples_admission_passed": true,
+        "any_sample_block_triggered": true,
+        "any_debug_leak": false
+      }
+    },
+    {
+      "card_type": "multi_asset_market_sync",
+      "display_name": "多资产共振卡",
+      "purpose": "检测并报告多个资产（>= 3 个真实资产）在同一方向上的同步异动，包括板块轮动、相关资产共振、系统性走势。用于识别市场级别的结构性变化而非单一资产噪音。",
+      "category": "market_structure",
+      "required_fields": [
+        "assets",
+        "direction"
+      ],
+      "sample_count": 2,
+      "sample_results": [
+        {
+          "sample_id": "sync_fixture_001_l2_sector",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": false,
+          "admission_result": {
+            "adm_sync_001_min_assets": false,
+            "adm_sync_002_has_direction": true,
+            "adm_sync_003_backing": false
+          },
+          "block_triggered": true,
+          "block_reason": "同向真实资产 < 3 → block",
+          "block_result": {
+            "blk_sync_001_insufficient_assets": true,
+            "blk_sync_002_all_fixture": true,
+            "blk_sync_003_no_direction": false,
+            "blk_sync_004_fixture_as_live": false
+          },
+          "all_checks_passed": false,
+          "public_preview": "📉 多资产共振｜普跌 5个资产 · L2\n\n一句话：L2 板块 5 个资产同步下跌，ARB 领跌 -8.50%，板块整体偏弱\n\n● 领涨/领跌：ARB\n● 共振资产：ARB, OP, MATIC, IMX, METIS\n● 最大涨跌幅：-8.50%\n● 平均涨跌幅：-6.58%\n● 共振支撑：OI 待确认 / 成交量 待确认\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=ARB) / [DexScreener](https://dexscreener.com/search?q=ARB)\n\n💡 触发原因：L2 板块 5 个资产同步下跌，ARB 领跌 -8.50%，板块整体偏弱\n\n⚠️ 共振不代表趋势延续，可能为短期情绪驱动，不构成交易建议。",
+          "preview_length": 359,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        },
+        {
+          "sample_id": "sync_fixture_002_defi_sector",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": false,
+          "admission_result": {
+            "adm_sync_001_min_assets": false,
+            "adm_sync_002_has_direction": true,
+            "adm_sync_003_backing": false
+          },
+          "block_triggered": true,
+          "block_reason": "同向真实资产 < 3 → block",
+          "block_result": {
+            "blk_sync_001_insufficient_assets": true,
+            "blk_sync_002_all_fixture": true,
+            "blk_sync_003_no_direction": false,
+            "blk_sync_004_fixture_as_live": false
+          },
+          "all_checks_passed": false,
+          "public_preview": "📈 多资产共振｜普涨 4个资产 · DeFi\n\n一句话：DeFi 板块 4 个资产同步上涨，UNI 领涨 +5.30%\n\n● 领涨/领跌：UNI\n● 共振资产：UNI, AAVE, MKR, COMP\n● 最大涨跌幅：+5.30%\n● 平均涨跌幅：+4.23%\n● 共振支撑：OI 待确认 / 成交量 待确认\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=UNI) / [DexScreener](https://dexscreener.com/search?q=UNI)\n\n💡 触发原因：DeFi 板块 4 个资产同步上涨，UNI 领涨 +5.30%\n\n⚠️ 共振不代表趋势延续，可能为短期情绪驱动，不构成交易建议。",
+          "preview_length": 345,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        }
+      ],
+      "readiness": {
+        "card_type": "multi_asset_market_sync",
+        "readiness_level": "partial",
+        "suitable_for_long_running_monitoring": false,
+        "missing_fields": [
+          "需要跨资产实时相关性矩阵（自动检测共振，而非依赖 context 传入）",
+          "需要板块/赛道自动分类（L1/L2/DeFi/Meme/AI 等标签）",
+          "需要领涨/领跌资产自动识别",
+          "需要共振强度衰减追踪（信号发出后的持续性验证）",
+          "需要日内多次快照对比（区分日内波动 vs 趋势共振）"
+        ],
+        "missing_data_sources": [],
+        "missing_rules": [],
+        "next_gap": "需要跨资产实时相关性矩阵（自动检测共振，而非依赖 context 传入）"
+      },
+      "public_preview": "📉 多资产共振｜普跌 5个资产 · L2\n\n一句话：L2 板块 5 个资产同步下跌，ARB 领跌 -8.50%，板块整体偏弱\n\n● 领涨/领跌：ARB\n● 共振资产：ARB, OP, MATIC, IMX, METIS\n● 最大涨跌幅：-8.50%\n● 平均涨跌幅：-6.58%\n● 共振支撑：OI 待确认 / 成交量 待确认\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=ARB) / [DexScreener](https://dexscreener.com/search?q=ARB)\n\n💡 触发原因：L2 板块 5 个资产同步下跌，ARB 领跌 -8.50%，板块整体偏弱\n\n⚠️ 共振不代表趋势延续，可能为短期情绪驱动，不构成交易建议。",
+      "debug_leak_free": true,
+      "summary": {
+        "all_samples_schema_valid": true,
+        "all_samples_admission_passed": false,
+        "any_sample_block_triggered": true,
+        "any_debug_leak": false
+      }
+    },
+    {
+      "card_type": "news_event_market_impact",
+      "display_name": "新闻事件影响卡",
+      "purpose": "检测并报告新闻/事件驱动的市场影响，包括监管动态、项目事故、ETF 进展、宏观数据发布、交易所事件等。评估事件的交易相关性和市场定价程度。",
+      "category": "event_driven",
+      "required_fields": [
+        "event_title",
+        "affected_assets",
+        "event_type"
+      ],
+      "sample_count": 3,
+      "sample_results": [
+        {
+          "sample_id": "news_fixture_001_sec_btc_etf",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_news_001_has_title": true,
+            "adm_news_002_has_assets": true,
+            "adm_news_003_has_type": true,
+            "adm_news_004_relevance": true
+          },
+          "block_triggered": false,
+          "block_reason": null,
+          "block_result": {
+            "blk_news_001_no_title": false,
+            "blk_news_002_no_assets": false,
+            "blk_news_003_already_fully_priced": false,
+            "blk_news_004_no_relevance": false,
+            "blk_news_005_fixture_as_live": false
+          },
+          "all_checks_passed": true,
+          "public_preview": "🏛️ 新闻事件｜美 SEC 批准比特币现货 ETF 期权交易\n\n一句话：CoinDesk 报道 SEC 批准 BTC ETF 期权交易，属监管类重大事件\n\n● 影响币种：BTC, ETH\n● 事件类型：监管\n● 交易相关性：高\n● 摘要：SEC 正式批准多家交易所的现货 BTC ETF 期权交易，预计将增加机构参与度和市场流动性。\n● 是否已提前反应：部分已定价\n● 风险标签：监管, ETF, 机构\n● 观察窗口：2-4 小时\n● 来源：CoinDesk\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：CoinDesk 报道 SEC 批准 BTC ETF 期权交易，属监管类重大事件\n\n⚠️ 新闻事件可能已被市场定价，请独立判断，不构成交易建议。",
+          "preview_length": 428,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        },
+        {
+          "sample_id": "news_fixture_002_exchange_hack",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_news_001_has_title": true,
+            "adm_news_002_has_assets": true,
+            "adm_news_003_has_type": true,
+            "adm_news_004_relevance": true
+          },
+          "block_triggered": false,
+          "block_reason": null,
+          "block_result": {
+            "blk_news_001_no_title": false,
+            "blk_news_002_no_assets": false,
+            "blk_news_003_already_fully_priced": false,
+            "blk_news_004_no_relevance": false,
+            "blk_news_005_fixture_as_live": false
+          },
+          "all_checks_passed": true,
+          "public_preview": "🔒 新闻事件｜某交易所热钱包异常转出 $320M\n\n一句话：PeckShield 检测到交易所热钱包异常转出 $320M，疑似安全事件\n\n● 影响币种：BTC, ETH, USDT, 平台币\n● 事件类型：安全\n● 交易相关性：高\n● 摘要：某交易所热钱包出现异常大额转出，疑似安全事件，涉及 BTC/ETH/USDT 等多币种。\n● 是否已提前反应：未定价\n● 风险标签：安全事件, 交易所, 黑客\n● 观察窗口：1-2 小时\n● 来源：PeckShield Alert\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：PeckShield 检测到交易所热钱包异常转出 $320M，疑似安全事件\n\n⚠️ 新闻事件可能已被市场定价，请独立判断，不构成交易建议。",
+          "preview_length": 432,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        },
+        {
+          "sample_id": "news_fixture_003_macro_fomc",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_news_001_has_title": true,
+            "adm_news_002_has_assets": true,
+            "adm_news_003_has_type": true,
+            "adm_news_004_relevance": true
+          },
+          "block_triggered": false,
+          "block_reason": null,
+          "block_result": {
+            "blk_news_001_no_title": false,
+            "blk_news_002_no_assets": false,
+            "blk_news_003_already_fully_priced": false,
+            "blk_news_004_no_relevance": false,
+            "blk_news_005_fixture_as_live": false
+          },
+          "all_checks_passed": true,
+          "public_preview": "🌍 新闻事件｜美联储 FOMC 维持利率不变，点阵图暗示年内降息 2 次\n\n一句话：Reuters 报道 FOMC 决议，降息预期升温利好风险资产\n\n● 影响币种：BTC, ETH, SOL, 美股相关\n● 事件类型：宏观\n● 交易相关性：高\n● 摘要：美联储 6 月 FOMC 维持利率 5.25-5.50% 不变，点阵图显示年内可能降息 2 次共 50bp，风险资产短期偏多。\n● 是否已提前反应：未定价\n● 风险标签：宏观, 利率, FOMC\n● 观察窗口：4-8 小时\n● 来源：Reuters\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：Reuters 报道 FOMC 决议，降息预期升温利好风险资产\n\n⚠️ 新闻事件可能已被市场定价，请独立判断，不构成交易建议。",
+          "preview_length": 441,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        }
+      ],
+      "readiness": {
+        "card_type": "news_event_market_impact",
+        "readiness_level": "missing",
+        "suitable_for_long_running_monitoring": false,
+        "missing_fields": [
+          "缺少事件自动分类（NLP 识别监管/技术/安全/宏观等类型）",
+          "缺少 Affected Assets 自动提取（从新闻文本中识别受影响币种）",
+          "缺少已定价判断模型（事件发生 vs 市场价格反应的时间差分析）",
+          "缺少交易相关性自动评估（事件对价格的实际影响量化）"
+        ],
+        "missing_data_sources": [
+          "real_data_pipeline",
+          "缺少实时新闻 RSS/API 接入管道（CoinDesk / The Block / 官方博客等）",
+          "缺少事件去重/合并（同一事件多来源重复推送）"
+        ],
+        "missing_rules": [
+          "gate integration not tested"
+        ],
+        "next_gap": "real_data_pipeline"
+      },
+      "public_preview": "🏛️ 新闻事件｜美 SEC 批准比特币现货 ETF 期权交易\n\n一句话：CoinDesk 报道 SEC 批准 BTC ETF 期权交易，属监管类重大事件\n\n● 影响币种：BTC, ETH\n● 事件类型：监管\n● 交易相关性：高\n● 摘要：SEC 正式批准多家交易所的现货 BTC ETF 期权交易，预计将增加机构参与度和市场流动性。\n● 是否已提前反应：部分已定价\n● 风险标签：监管, ETF, 机构\n● 观察窗口：2-4 小时\n● 来源：CoinDesk\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：CoinDesk 报道 SEC 批准 BTC ETF 期权交易，属监管类重大事件\n\n⚠️ 新闻事件可能已被市场定价，请独立判断，不构成交易建议。",
+      "debug_leak_free": true,
+      "summary": {
+        "all_samples_schema_valid": true,
+        "all_samples_admission_passed": true,
+        "any_sample_block_triggered": false,
+        "any_debug_leak": false
+      }
+    },
+    {
+      "card_type": "price_oi_volume_anomaly",
+      "display_name": "多因子价格异动卡",
+      "purpose": "检测并报告单一资产的价格 + 未平仓合约(OI) + 成交量 + 资金费率(funding) 多因子同步异动。当价格显著变化且至少一个确认因子(OI/成交量/funding)同步异动时触发。",
+      "category": "market_structure",
+      "required_fields": [
+        "asset",
+        "price_change_pct"
+      ],
+      "sample_count": 2,
+      "sample_results": [
+        {
+          "sample_id": "pova_fixture_001_arb",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_pova_001_price_threshold": true,
+            "adm_pova_002_confirm_factor": true,
+            "adm_pova_003_asset_required": true
+          },
+          "block_triggered": true,
+          "block_reason": "fixture 样本不得标记为 live data 进入正式管道",
+          "block_result": {
+            "blk_pova_001_missing_asset": false,
+            "blk_pova_002_missing_price": false,
+            "blk_pova_003_insignificant_price": false,
+            "blk_pova_004_no_confirm_at_all": false,
+            "blk_pova_005_fixture_as_live": true
+          },
+          "all_checks_passed": false,
+          "public_preview": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 多因子同步异动（价格跌幅 + OI + 成交量 + 资金费率偏空），短时升级信号。\n\n● 币种：ARB\n● 涨跌幅：-8.50%\n● OI：$5.20M\n● 成交量：$6.10M\n● Funding：-1.80%（年化 -1971.0%）\n● 观察窗口：1-4 小时\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=ARB) / [DexScreener](https://dexscreener.com/search?q=ARB)\n\n💡 触发原因：ARB 多因子同步异动（价格跌幅 + OI + 成交量 + 资金费率偏空），短时升级信号。\n\n⚠️ 仅供观察，不构成交易建议。",
+          "preview_length": 346,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        },
+        {
+          "sample_id": "pova_fixture_002_eth",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_pova_001_price_threshold": true,
+            "adm_pova_002_confirm_factor": true,
+            "adm_pova_003_asset_required": true
+          },
+          "block_triggered": true,
+          "block_reason": "fixture 样本不得标记为 live data 进入正式管道",
+          "block_result": {
+            "blk_pova_001_missing_asset": false,
+            "blk_pova_002_missing_price": false,
+            "blk_pova_003_insignificant_price": false,
+            "blk_pova_004_no_confirm_at_all": false,
+            "blk_pova_005_fixture_as_live": true
+          },
+          "all_checks_passed": false,
+          "public_preview": "📉 行情异动｜ETH 急跌\n\n一句话：ETH 价格跌幅扩大，OI 与成交量同步放大，资金费率极端偏空，信号强度较前次明显升级。\n\n● 币种：ETH\n● 涨跌幅：-8.50%\n● OI：$12.50B\n● 成交量：$18.20B\n● Funding：-2.50%（年化 -2737.5%）\n● 观察窗口：1-4 小时\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=ETH) / [DexScreener](https://dexscreener.com/search?q=ETH)\n\n💡 触发原因：ETH 价格跌幅扩大，OI 与成交量同步放大，资金费率极端偏空，信号强度较前次明显升级。\n\n⚠️ 仅供观察，不构成交易建议。",
+          "preview_length": 346,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        }
+      ],
+      "readiness": {
+        "card_type": "price_oi_volume_anomaly",
+        "readiness_level": "ready",
+        "suitable_for_long_running_monitoring": true,
+        "missing_fields": [
+          "需要 OI/Volume delta 实时追踪（区分趋势性 vs 瞬时异动）",
+          "需要资金费率历史均值对比（判断当前是否真的极端）"
+        ],
+        "missing_data_sources": [
+          "需要跨交易所数据一致性校验（防单交易所数据异常）"
+        ],
+        "missing_rules": [],
+        "next_gap": "需要跨交易所数据一致性校验（防单交易所数据异常）"
+      },
+      "public_preview": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 多因子同步异动（价格跌幅 + OI + 成交量 + 资金费率偏空），短时升级信号。\n\n● 币种：ARB\n● 涨跌幅：-8.50%\n● OI：$5.20M\n● 成交量：$6.10M\n● Funding：-1.80%（年化 -1971.0%）\n● 观察窗口：1-4 小时\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=ARB) / [DexScreener](https://dexscreener.com/search?q=ARB)\n\n💡 触发原因：ARB 多因子同步异动（价格跌幅 + OI + 成交量 + 资金费率偏空），短时升级信号。\n\n⚠️ 仅供观察，不构成交易建议。",
+      "debug_leak_free": true,
+      "summary": {
+        "all_samples_schema_valid": true,
+        "all_samples_admission_passed": true,
+        "any_sample_block_triggered": true,
+        "any_debug_leak": false
+      }
+    },
+    {
+      "card_type": "whale_position_alert",
+      "display_name": "巨鲸仓位警报卡",
+      "purpose": "检测并报告巨鲸/大户的链上仓位变化，包括加仓、减仓、爆仓边缘、浮盈浮亏等关键状态。覆盖 Hyperliquid 等公开 DEX 的大额持仓。",
+      "category": "onchain_intelligence",
+      "required_fields": [
+        "asset",
+        "address",
+        "side",
+        "position_value_usd"
+      ],
+      "sample_count": 2,
+      "sample_results": [
+        {
+          "sample_id": "whale_fixture_001_hype",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_whale_001_value_threshold": true,
+            "adm_whale_002_has_direction": true,
+            "adm_whale_003_address_present": true,
+            "adm_whale_004_significant_pnl": true
+          },
+          "block_triggered": true,
+          "block_reason": "fixture 样本不得标记为 live data",
+          "block_result": {
+            "blk_whale_001_below_threshold": false,
+            "blk_whale_002_missing_address": false,
+            "blk_whale_003_missing_direction": false,
+            "blk_whale_004_dust_position": false,
+            "blk_whale_005_fixture_as_live": true
+          },
+          "all_checks_passed": false,
+          "public_preview": "🚀 主力仓位雷达｜HYPE 多头 大浮盈\n\n一句话：HYPE 多头大额持仓，Hyperliquid 公开 API 检测到链上仓位，浮盈超 100%\n\n● 持仓规模：$100.00M\n● 持仓数量：1,380,000.00 HYPE\n● 均价：$33.68\n● 当前价格：$72.51\n● 当前盈亏：+$46.98M（+116.0%）\n● 清算价：$54.93（距清算 24.2%）\n🏷️ 标签：Smart Money / 机构\n📌 地址：`0x082d...8e9f`\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=HYPE) / [DexScreener](https://dexscreener.com/search?q=HYPE)\n\n💡 触发原因：HYPE 多头大额持仓，Hyperliquid 公开 API 检测到链上仓位，浮盈超 100%\n\n⚠️ 仅供观察，不构成交易建议。",
+          "preview_length": 428,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        },
+        {
+          "sample_id": "whale_fixture_002_btc",
+          "data_mode": "fixture",
+          "is_fixture": true,
+          "fixture_marked_correctly": true,
+          "schema_valid": true,
+          "missing_required": [],
+          "admission_passed": true,
+          "admission_result": {
+            "adm_whale_001_value_threshold": true,
+            "adm_whale_002_has_direction": true,
+            "adm_whale_003_address_present": true,
+            "adm_whale_004_significant_pnl": true
+          },
+          "block_triggered": true,
+          "block_reason": "fixture 样本不得标记为 live data",
+          "block_result": {
+            "blk_whale_001_below_threshold": false,
+            "blk_whale_002_missing_address": false,
+            "blk_whale_003_missing_direction": false,
+            "blk_whale_004_dust_position": false,
+            "blk_whale_005_fixture_as_live": true
+          },
+          "all_checks_passed": false,
+          "public_preview": "🚀 主力仓位雷达｜BTC 空头 浮盈\n\n一句话：BTC 大额空头仓位监控，Hyperliquid 公开数据检测到 $25M 空头持仓\n\n● 持仓规模：$25.00M\n● 持仓数量：380.00 BTC\n● 均价：$65,800.00\n● 当前价格：$63,100.00\n● 当前盈亏：+$1.02M（+4.1%）\n● 清算价：$71,500.00（距清算 13.3%）\n🏷️ 标签：机构\n📌 地址：`0x1a2b...9a0b`\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=BTC) / [DexScreener](https://dexscreener.com/search?q=BTC)\n\n💡 触发原因：BTC 大额空头仓位监控，Hyperliquid 公开数据检测到 $25M 空头持仓\n\n⚠️ 仅供观察，不构成交易建议。",
+          "preview_length": 401,
+          "debug_leak_terms": [],
+          "debug_leak_free": true
+        }
+      ],
+      "readiness": {
+        "card_type": "whale_position_alert",
+        "readiness_level": "partial",
+        "suitable_for_long_running_monitoring": false,
+        "missing_fields": [
+          "需要地址标签自动标注（Smart Money / 机构 / 做市商 / 散户）",
+          "需要历史仓位变化追踪（同一地址的加减仓序列）",
+          "需要多地址聚合分析（关联地址群组检测）",
+          "需要爆仓预警实时推送（距清算价 < 5% 时触发）"
+        ],
+        "missing_data_sources": [],
+        "missing_rules": [],
+        "next_gap": "需要地址标签自动标注（Smart Money / 机构 / 做市商 / 散户）"
+      },
+      "public_preview": "🚀 主力仓位雷达｜HYPE 多头 大浮盈\n\n一句话：HYPE 多头大额持仓，Hyperliquid 公开 API 检测到链上仓位，浮盈超 100%\n\n● 持仓规模：$100.00M\n● 持仓数量：1,380,000.00 HYPE\n● 均价：$33.68\n● 当前价格：$72.51\n● 当前盈亏：+$46.98M（+116.0%）\n● 清算价：$54.93（距清算 24.2%）\n🏷️ 标签：Smart Money / 机构\n📌 地址：`0x082d...8e9f`\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/search?query=HYPE) / [DexScreener](https://dexscreener.com/search?q=HYPE)\n\n💡 触发原因：HYPE 多头大额持仓，Hyperliquid 公开 API 检测到链上仓位，浮盈超 100%\n\n⚠️ 仅供观察，不构成交易建议。",
+      "debug_leak_free": true,
+      "summary": {
+        "all_samples_schema_valid": true,
+        "all_samples_admission_passed": true,
+        "any_sample_block_triggered": true,
+        "any_debug_leak": false
+      }
+    }
+  ],
+  "highest_priority_gap": {
+    "card_type": "liquidation_pressure",
+    "gap": "real_data_pipeline",
+    "recommended_next_task": "Build real-time data ingestion pipeline for liquidation_pressure: real_data_pipeline"
+  },
+  "generated_at": "2026-06-04 23:26:11 UTC+8",
+  "fixture_source": "C:\\Users\\PC\\Desktop\\Projects\\事件情报系统\\data\\fixtures\\market_radar_v112a_card_type_samples.json",
+  "notes": [
+    "All samples are fixtures — no live market data was used.",
+    "TG send is disabled — real_tg_sent=false.",
+    "No external API calls were made.",
+    "No daemon/loop/cron was started.",
+    "No tokens/keys/cookies/passwords were read or saved."
+  ]
+}

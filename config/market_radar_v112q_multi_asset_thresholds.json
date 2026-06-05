@@ -1,0 +1,32 @@
+{
+  "version": "v1.12-q",
+  "description": "Stricter threshold configuration for multi_asset_market_sync noise-aware validation. These thresholds are stricter than v112G to filter false-positive signals identified in the v112P audit gap (missing signal quality / false positive risk scoring).",
+  "generated_at": "2026-06-05 02:29:52 UTC+8",
+  "small_basket_max_size": 3,
+  "small_basket_required_direction_agreement": 1.0,
+  "large_basket_required_direction_agreement": 0.8,
+  "min_per_asset_abs_price_change_pct": 2.0,
+  "min_assets_meeting_price_threshold_ratio": 0.8,
+  "require_price_and_one_secondary_metric": true,
+  "secondary_metric_options": [
+    "volume_change_pct",
+    "open_interest_change_pct"
+  ],
+  "max_timestamp_skew_seconds": 60,
+  "leader_driven_downgrade_enabled": true,
+  "leader_driven_follower_price_ratio_threshold": 0.25,
+  "historical_baseline_required_before_real_send": true,
+  "sector_concentration_min_ratio": 0.5,
+  "volume_outlier_median_ratio": 5.0,
+  "stricter_vs_v112g": {
+    "direction_agreement": "v112G used 0.66 for all baskets; v112Q uses 1.0 for small (<=3) and 0.8 for large (>3)",
+    "per_asset_price_filter": "v112G only checked average; v112Q requires >=80% of assets to individually meet min_abs_price_change",
+    "secondary_metric": "v112G used OR logic for volume/OI; v112Q requires price AND one secondary metric",
+    "timestamp_skew": "v112G had no timestamp check; v112Q enforces max 60s skew between earliest and latest observation",
+    "leader_driven": "v112G had no leader detection; v112Q detects single-asset dominance and downgrades/blocks",
+    "sector_concentration": "v112G did not penalize sector dispersion; v112Q lowers confidence for mixed baskets",
+    "volume_outlier": "v112G used raw average; v112Q uses median-ratio detection (asset vol >5x median → block)"
+  },
+  "dry_run_only": true,
+  "real_send_allowed": false
+}

@@ -1,0 +1,4 @@
+﻿address,asset,action,benchmark_score,hard_data_count,card_should_send,gate_passed,blocked_reason,cooldown_applied,sent,message_id
+0xebe837cd345469,BTC,,0,0,False,False,quiet_address,,False,
+0x6c8512516ce566,ETH,,0,0,False,False,quiet_address,,False,
+0x8def9f50456c6c,TON,连续买入,94,5,True,True,,False,True,1326

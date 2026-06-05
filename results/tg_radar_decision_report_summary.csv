@@ -1,2 +1,2 @@
 ﻿status,generated_at_china,lookback_hours,decision_rows,selected_count,filtered_digest_only_count,suppressed_cooldown_count,not_selected_capacity_count,unknown_decision_count,source_type_count,policy_action_count,top_source_type,top_policy_action,output,decision_log
-ok,2026-05-28 19:24:39 UTC+8,24.0,33,2,4,27,0,0,3,4,hyperliquid,collect_more,C:\Users\PC\Desktop\Projects\事件情报系统\results\tg_radar_decision_report.md,C:\Users\PC\Desktop\Projects\事件情报系统\data\tg_radar_decision_log.csv
+ok,2026-06-01 13:29:49 UTC+8,24.0,15,3,0,12,0,0,2,1,long_short,collect_more,C:\Users\PC\Desktop\Projects\事件情报系统\results\tg_radar_decision_report.md,C:\Users\PC\Desktop\Projects\事件情报系统\data\tg_radar_decision_log.csv

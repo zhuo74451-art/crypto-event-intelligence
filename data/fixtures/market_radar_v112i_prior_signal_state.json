@@ -1,0 +1,105 @@
+{
+  "version": "v1.12-I",
+  "description": "Prior signal state fixture for dedupe/cooldown gate testing. Provides existing entries that exercise dedupe hits, cooldown hits, expired cooldown, same-asset different direction, and same-asset different card_type scenarios.",
+  "generated_at": "2026-06-04 23:30:00 UTC+8",
+  "entries": [
+    {
+      "dedupe_key": "8b7c4239a2b7ee3d49c54e665305cc42c4891b9e9c7f64a2f706db2a40e38c02",
+      "cooldown_key": "df78e9c3875ea5c6547fcf4728b2cf37dc60f4d4905a17c1b308082c2ad96bfe",
+      "payload_hash": "28225b5c363df8f677e71dc519743f1e071f34e49d54edc90ffc3cb0b2dde9f3",
+      "card_type": "price_oi_volume_anomaly",
+      "primary_assets": ["BTC"],
+      "direction": "bullish",
+      "last_seen_at": "2026-06-04T20:00:00+08:00",
+      "cooldown_until": "2026-06-04T21:00:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T20:00:00+08:00", "reason": "initial signal"}
+      ],
+      "note": "dedupe_hit — matches envelope sig-pova-cf3a0c25 dedupe_key"
+    },
+    {
+      "dedupe_key": "c74e9e689d3257ec6750d849581a994411f35ce65dd3cb3a8f003f6ad51c50b9",
+      "cooldown_key": "5504df45b935813573e25861aa0c343500d2c13f91b6621ca1a8f124833bd13f",
+      "payload_hash": "1748799a89b7bdca8d947b6ab62f3866b8ae868d2edba28b8b382af8aaae46e6",
+      "card_type": "whale_position_alert",
+      "primary_assets": ["ETH"],
+      "direction": "bearish",
+      "last_seen_at": "2026-06-04T20:10:00+08:00",
+      "cooldown_until": "2026-06-04T21:40:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T20:10:00+08:00", "reason": "initial signal"}
+      ],
+      "note": "dedupe_hit — matches envelope sig-wpa-1ae7a01d dedupe_key"
+    },
+    {
+      "dedupe_key": "7705115efd5065c5e90b6b5a1e10b84a9a5c5d3b7a8f9e0d1c2b3a4e5f6d7c8a",
+      "cooldown_key": "2e7268b07cb27896cd758d02b2968080f8420dd4ddcfc33660c9971279a4a242",
+      "payload_hash": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b",
+      "card_type": "news_event_market_impact",
+      "primary_assets": ["BTC"],
+      "direction": "bullish",
+      "last_seen_at": "2026-06-04T22:00:00+08:00",
+      "cooldown_until": "2026-06-05T00:00:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T22:00:00+08:00", "reason": "prior news alert for BTC"}
+      ],
+      "note": "cooldown_hit — matches envelope sig-nemi-d3dbfd91 cooldown_key, within 120min window"
+    },
+    {
+      "dedupe_key": "8806226ec5f6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e",
+      "cooldown_key": "d62e85c889be446eae46ae5e2dff1b1287225c5d468d2bddc722e9f08eb030f3",
+      "payload_hash": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+      "card_type": "liquidation_pressure",
+      "primary_assets": ["BTC"],
+      "direction": "bearish",
+      "last_seen_at": "2026-06-04T23:15:00+08:00",
+      "cooldown_until": "2026-06-04T23:45:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T23:15:00+08:00", "reason": "prior liquidation alert for BTC"}
+      ],
+      "note": "cooldown_hit — matches envelope sig-lipr-a94980e2 cooldown_key, within 30min window"
+    },
+    {
+      "dedupe_key": "9917337fd6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2",
+      "cooldown_key": "0ee7143b11a0ce80eb66f120d69b9fa0be599bb16abe7bffb2fdf3a8678ac070",
+      "payload_hash": "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
+      "card_type": "multi_asset_market_sync",
+      "primary_assets": ["BNB", "OKB", "BGB"],
+      "direction": "bullish",
+      "last_seen_at": "2026-06-04T20:00:00+08:00",
+      "cooldown_until": "2026-06-04T20:45:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T20:00:00+08:00", "reason": "prior sync alert, cooldown now expired"}
+      ],
+      "note": "expired_cooldown — matches envelope sig-mams-b2ab4cdd cooldown_key, but cooldown_until expired (45min window passed)"
+    },
+    {
+      "dedupe_key": "aa28448fd6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2",
+      "cooldown_key": "bb39559f3273d1766b37e1a3dab3ea1a6d304033a23e8e07a2fe616b3e4d4efa",
+      "payload_hash": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4",
+      "card_type": "whale_position_alert",
+      "primary_assets": ["BTC"],
+      "direction": "bearish",
+      "last_seen_at": "2026-06-04T23:00:00+08:00",
+      "cooldown_until": "2026-06-05T00:30:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T23:00:00+08:00", "reason": "BTC bearish whale alert"}
+      ],
+      "note": "same_asset_different_direction — BTC whale bearish, should NOT block envelope sig-wpa-f71d2b1d (BTC whale bullish, different cooldown_key)"
+    },
+    {
+      "dedupe_key": "cc55066ae6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1f2",
+      "cooldown_key": "dd66177bf483e2877c48f2b4ebc4fb2c7e415144b34f9f18b3f727c4f5e6d7e8",
+      "payload_hash": "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5",
+      "card_type": "liquidation_pressure",
+      "primary_assets": ["BTC"],
+      "direction": "bearish",
+      "last_seen_at": "2026-06-04T23:10:00+08:00",
+      "cooldown_until": "2026-06-04T23:40:00+08:00",
+      "decision_history": [
+        {"status": "pass", "evaluated_at": "2026-06-04T23:10:00+08:00", "reason": "BTC liquidation alert"}
+      ],
+      "note": "different_card_type_same_asset — liquidation_pressure BTC, should NOT block envelope sig-wpa-f71d2b1d (whale_position_alert BTC, different card_type means different cooldown_key)"
+    }
+  ]
+}

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Radar 策略值班看板 v119B (B-lite)</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 2px solid #334155;
+            padding: 24px 32px;
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .header .subtitle {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .header .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .header .meta-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+        .header .meta-item .meta-key {
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+        .header .meta-item .meta-val {
+            color: #cbd5e1;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+        }
+
+        /* ── Chinese Guidance Layer (30-second) ── */
+        .guidance-layer {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0f172a 100%);
+            border: 2px solid #0284c7;
+            border-radius: 12px;
+            margin: 24px 32px;
+            padding: 24px 28px;
+        }
+        .guidance-layer h2 {
+            margin: 0 0 16px 0;
+            font-size: 1.3rem;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .guidance-layer h2 .icon { font-size: 1.5rem; }
+        .guidance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 14px;
+        }
+        .guidance-card {
+            background: #0f172acc;
+            border: 1px solid #1e3a5f;
+            border-radius: 10px;
+            padding: 16px 18px;
+        }
+        .guidance-card .gc-question {
+            font-size: 0.8rem;
+            color: #38bdf8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+        .guidance-card .gc-answer {
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .guidance-card .gc-answer strong {
+            color: #fbbf24;
+        }
+        .guidance-card .gc-answer .warn {
+            color: #f87171;
+            font-weight: 700;
+        }
+
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 32px;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin: 32px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #334155;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .kpi-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .kpi-card .kpi-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+        .kpi-card .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 8px 0;
+        }
+        .kpi-accept .kpi-value { color: #22c55e; }
+        .kpi-watch .kpi-value { color: #f59e0b; }
+        .kpi-reject .kpi-value { color: #ef4444; }
+        .kpi-manual .kpi-value { color: #8b5cf6; }
+        .kpi-active .kpi-value { color: #3b82f6; }
+        .kpi-blocked .kpi-value { color: #6b7280; }
+        .live-badge {
+            display: inline-block;
+            background: #166534;
+            color: #4ade80;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+        .blite-badge {
+            display: inline-block;
+            background: #0284c7;
+            color: #bae6fd;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid #334155;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th {
+            background: #1e293b;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid #475569;
+            white-space: nowrap;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #1e293b;
+            vertical-align: top;
+        }
+        tr:hover td { background: #1e293b33; }
+        code {
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            background: #1e293b;
+            padding: 1px 5px;
+            border-radius: 3px;
+            color: #e2e8f0;
+        }
+        .badge-accept {
+            display: inline-block;
+            background: #166534;
+            color: #bbf7d0;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-watch {
+            display: inline-block;
+            background: #78350f;
+            color: #fde68a;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-reject {
+            display: inline-block;
+            background: #7f1d1d;
+            color: #fecaca;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-manual {
+            display: inline-block;
+            background: #4c1d95;
+            color: #ddd6fe;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-unknown {
+            display: inline-block;
+            background: #334155;
+            color: #94a3b8;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .status-active { color: #22c55e; font-weight: 600; }
+        .status-blocked { color: #6b7280; font-weight: 600; }
+        .publishability { font-size: 0.78rem; color: #94a3b8; }
+        .evidence-cell, .reason-cell, .action-cell {
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+        .risk-panel {
+            background: #450a0a;
+            border: 2px solid #dc2626;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+        .risk-panel h3 {
+            color: #fca5a5;
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+        }
+        .risk-panel ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .risk-panel li {
+            color: #fecaca;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+        }
+        .nosend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .nosend-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nosend-item .ns-key {
+            color: #94a3b8;
+            font-size: 0.78rem;
+            font-family: 'Cascadia Code', monospace;
+            white-space: nowrap;
+        }
+        .nosend-item .ns-val {
+            font-weight: 700;
+            font-family: 'Cascadia Code', monospace;
+            font-size: 0.82rem;
+        }
+        .ns-false { color: #22c55e; }
+        .ns-true { color: #ef4444; }
+        .action-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .action-card {
+            border-radius: 10px;
+            border: 1px solid #334155;
+            padding: 16px 20px;
+        }
+        .action-card.accept { background: #052e16; border-color: #166534; }
+        .action-card.watch { background: #451a03; border-color: #78350f; }
+        .action-card.reject { background: #450a0a; border-color: #7f1d1d; }
+        .action-card.manual_required { background: #2e1065; border-color: #4c1d95; }
+        .action-card h4 { margin: 0 0 8px 0; font-size: 0.95rem; }
+        .action-card.accept h4 { color: #4ade80; }
+        .action-card.watch h4 { color: #fbbf24; }
+        .action-card.reject h4 { color: #f87171; }
+        .action-card.manual_required h4 { color: #a78bfa; }
+        .action-card p { margin: 0; font-size: 0.82rem; color: #cbd5e1; }
+        .criterion-met { color: #22c55e; font-weight: 600; }
+        .criterion-not-met { color: #ef4444; font-weight: 600; }
+        .check-passed td { color: #cbd5e1; }
+        .check-failed td { color: #fca5a5; }
+        .footer {
+            margin-top: 48px;
+            padding: 20px 32px;
+            border-top: 1px solid #334155;
+            color: #475569;
+            font-size: 0.78rem;
+            text-align: center;
+        }
+        .footer .no-prod {
+            display: inline-block;
+            background: #450a0a;
+            color: #fca5a5;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            border: 1px solid #7f1d1d;
+        }
+
+        /* ── B-lite tier badges ── */
+        .tier-accept { color: #4ade80; font-weight: 700; }
+        .tier-mild { color: #fbbf24; font-weight: 600; }
+        .tier-none { color: #9ca3af; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Market Radar 策略值班看板 v119B <span class="live-badge">LIVE DATA</span><span class="blite-badge">B-LITE</span></h1>
+        <div class="subtitle">
+            生成时间: 2026-06-05T18:48:37+08:00 &nbsp;|&nbsp;
+            Run ID: 20260605_184831 &nbsp;|&nbsp;
+            Pipeline: v1.19B &nbsp;|&nbsp;
+            模式: live one-shot / no-send / B-lite quality
+        </div>
+        <div class="meta-grid">
+            <div class="meta-item">
+                <div class="meta-key">Pipeline Version</div>
+                <div class="meta-val">v1.19B (B-lite quality)</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Run ID</div>
+                <div class="meta-val">20260605_184831</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">模式</div>
+                <div class="meta-val">live one-shot / no-send</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Production Readiness</div>
+                <div class="meta-val" style="color:#ef4444;">false / 0/5</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">Telegram Sent</div>
+                <div class="meta-val" style="color:#22c55e;">false</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-key">AI/Model Called</div>
+                <div class="meta-val" style="color:#22c55e;">false</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- CHINESE 30-SECOND GUIDANCE LAYER (B-lite 新增)            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="guidance-layer">
+        <h2><span class="icon">🧭</span> 30 秒中文引导 — 这是什么？怎么看？能不能发？</h2>
+        <div class="guidance-grid">
+            <div class="guidance-card">
+                <div class="gc-question">📌 这是什么？</div>
+                <div class="gc-answer">
+                    这是 <strong>Market Radar 本地策略值班看板</strong>，用于观察市场信号，
+                    不是自动交易系统，也不是自动发布系统。<br>
+                    <span style="color:#94a3b8; font-size:0.8rem;">版本: v119B (B-lite quality enhancement)</span>
+                </div>
+            </div>
+            <div class="guidance-card">
+                <div class="gc-question">👀 现在怎么看？</div>
+                <div class="gc-answer">
+                    <strong>优先看 accept/watch</strong>，再查看 reject/manual_required 的原因。<br>
+                    • <span style="color:#4ade80;">✅ Accept</span> = 强信号，可进入人工复盘<br>
+                    • <span style="color:#fbbf24;">👀 Watch</span> = 观察级别，<span class="warn">不代表可以发布</span><br>
+                    • <span style="color:#f87171;">❌ Reject</span> = 等待市场条件<br>
+                    • <span style="color:#a78bfa;">🔒 Manual</span> = 需要补充人工证据
+                </div>
+            </div>
+            <div class="guidance-card">
+                <div class="gc-question">🚫 现在能不能发？</div>
+                <div class="gc-answer">
+                    <span class="warn">当前 production readiness = false / 0/5，不能正式发布</span>，只能本地审查。<br>
+                    telegram_send = <strong>false</strong>（本轮不发送 TG）<br>
+                    x_twitter_send = <strong>false</strong>（永不发送 X/Twitter）<br>
+                    production_send = <strong>false</strong>（不是生产系统）
+                </div>
+            </div>
+            <div class="guidance-card">
+                <div class="gc-question">📡 数据从哪来？</div>
+                <div class="gc-answer">
+                    • <strong>Binance 公开 REST API</strong>（无需 API Key）<br>
+                    • <strong>免费 RSS 新闻源</strong>（CoinDesk / Cointelegraph / Decrypt / The Block）<br>
+                    • <strong>Binance 公告</strong>（公开 JSON API）<br>
+                    • <strong>本地 fixture</strong>（liquidation / whale）<br>
+                    • <strong>manual evidence required</strong>（whale 地址归属需人工验证）
+                </div>
+            </div>
+            <div class="guidance-card">
+                <div class="gc-question">📋 操作员下一步？</div>
+                <div class="gc-answer">
+                    <strong>accept</strong> → 进入人工复盘，核实信号强度<br>
+                    <strong>watch</strong> → 持续观察，不得因果化发布<br>
+                    <strong>reject</strong> → 等待市场条件变化后重跑<br>
+                    <strong>manual_required</strong> → 补充人工证据（v116N whale workbook）
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+
+    <div class="main">
+
+        <!-- Five-Card Pipeline Status -->
+        <h2 class="section-title">📋 五类信号管道状态 (Five-Card Pipeline Status)</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card kpi-active">
+                <div class="kpi-label">Active (Gate Passed)</div>
+                <div class="kpi-value">2</div>
+            </div>
+            <div class="kpi-card kpi-blocked">
+                <div class="kpi-label">Blocked (Gate)</div>
+                <div class="kpi-value">3</div>
+            </div>
+            <div class="kpi-card" style="background:#1e293b;">
+                <div class="kpi-label">Total Cards</div>
+                <div class="kpi-value" style="color:#f1f5f9;">5</div>
+            </div>
+            <div class="kpi-card" style="background:#1e293b;">
+                <div class="kpi-label">B-lite Enhancements</div>
+                <div class="kpi-value" style="color:#38bdf8;">2</div>
+            </div>
+        </div>
+
+        <!-- Operator Decision Overview -->
+        <h2 class="section-title">⚖️ 操作员决策总览 (Operator Decision Overview)</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card kpi-accept">
+                <div class="kpi-label">✅ Accept 可复盘</div>
+                <div class="kpi-value">1</div>
+            </div>
+            <div class="kpi-card kpi-watch">
+                <div class="kpi-label">👀 Watch 观察</div>
+                <div class="kpi-value">2</div>
+            </div>
+            <div class="kpi-card kpi-reject">
+                <div class="kpi-label">❌ Reject 拒绝</div>
+                <div class="kpi-value">1</div>
+            </div>
+            <div class="kpi-card kpi-manual">
+                <div class="kpi-label">🔒 Manual 需人工</div>
+                <div class="kpi-value">1</div>
+            </div>
+        </div>
+
+        <!-- Full Decision Table -->
+        <h2 class="section-title">🗂️ 操作员决策表 (Operator Decision Table)</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Card Family</th>
+                        <th>Source</th>
+                        <th>Pipeline</th>
+                        <th>Decision</th>
+                        <th>B-lite Tier</th>
+                        <th>Publishability</th>
+                        <th>Evidence</th>
+                        <th>Reason</th>
+                        <th>Next Action</th>
+                        <th>Obs Only</th>
+                        <th>Not Causal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><code>multi_asset_market_sync</code></td>
+                    <td>live_binance_public_api</td>
+                    <td><span class="status-active">active</span></td>
+                    <td><span class="badge-accept">✅ ACCEPT</span></td>
+                    <td><code></code></td>
+                    <td><span class="publishability">test_group_only</span></td>
+                    <td class="evidence-cell" title="Live Binance public API: 3 assets fetched. Gate: Multi-asset data available for 3 assets.">Live Binance public API: 3 assets fetched. Gate: Multi-asset data available for 3 assets.</td>
+                    <td class="reason-cell">Live Binance data available for 3 assets. Multi-asset sync card is active with real free public API data. Operator should review individual asset delt…</td>
+                    <td class="action-cell">Review individual asset deltas. Confirm no stale ticker data.</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><code>price_oi_volume_anomaly</code></td>
+                    <td>live_binance_public_api</td>
+                    <td><span class="status-blocked">blocked</span></td>
+                    <td><span class="badge-watch">👀 WATCH</span></td>
+                    <td><code>mild_watch</code></td>
+                    <td><span class="publishability">blocked</span></td>
+                    <td class="evidence-cell" title="Live Binance + OI: 3 signals. B-lite tier=mild_watch. Mild anomaly — observation only, NOT accept.">Live Binance + OI: 3 signals. B-lite tier=mild_watch. Mild anomaly — observation only, NOT accept.</td>
+                    <td class="reason-cell">Mild anomaly detected on ETHUSDT: price move near threshold or single-factor signal on large-cap asset. This is WATCH only — NOT accept, NOT publishab…</td>
+                    <td class="action-cell">WATCH only — do NOT publish. Monitor for threshold breach. Mild anomalies are observation-level, not actionable.</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><code>news_event_market_impact</code></td>
+                    <td>live_free_public_rss_and_binance</td>
+                    <td><span class="status-active">active</span></td>
+                    <td><span class="badge-watch">👀 WATCH</span></td>
+                    <td><code></code></td>
+                    <td><span class="publishability">test_group_only_with_caveat</span></td>
+                    <td class="evidence-cell" title="News: 51 events from 4 sources. Fresh=4, Stale=0. Entities: BINANCE, BTC. observation_only=true, not_causal_proof=true.">News: 51 events from 4 sources. Fresh=4, Stale=0. Entities: BINANCE, BTC. observation_only=true, not_causal_proof=true.</td>
+                    <td class="reason-cell">News events detected (51 events, 4 fresh). Fresh content with clear entity attribution. WATCH for contextual awareness. NOT causal proof. NOT actionab…</td>
+                    <td class="action-cell">Read full article at source URL before citing. Cross-reference with at least one other news source. Filter out stale/re-…</td>
+                    <td>True</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><code>liquidation_pressure</code></td>
+                    <td>fixture</td>
+                    <td><span class="status-blocked">blocked</span></td>
+                    <td><span class="badge-reject">❌ REJECT</span></td>
+                    <td><code></code></td>
+                    <td><span class="publishability">blocked</span></td>
+                    <td class="evidence-cell" title="Fixture: composite=0.35, threshold=0.60. Calm market. Threshold NOT lowered.">Fixture: composite=0.35, threshold=0.60. Calm market. Threshold NOT lowered.</td>
+                    <td class="reason-cell">Liquidation gate CORRECTLY blocked. Calm market (composite=0.35 &lt; threshold=0.60). Threshold NOT lowered.</td>
+                    <td class="action-cell">No action needed. DO NOT lower threshold.</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><code>whale_position_alert</code></td>
+                    <td>fixture</td>
+                    <td><span class="status-blocked">blocked</span></td>
+                    <td><span class="badge-manual">🔒 MANUAL REQUIRED</span></td>
+                    <td><code></code></td>
+                    <td><span class="publishability">blocked</span></td>
+                    <td class="evidence-cell" title="Fixture: 4 addresses tracked (~$135M). Manual evidence NOT provided. Manual evidence NOT bypassed.">Fixture: 4 addresses tracked (~$135M). Manual evidence NOT provided. Manual evidence NOT bypassed.</td>
+                    <td class="reason-cell">Whale position tracking requires manual on-chain address attribution. Manual evidence NOT provided — gate correctly blocking. Do NOT bypass manual evi…</td>
+                    <td class="action-cell">Complete v116N whale evidence workbook before this card can become active.</td>
+                    <td>False</td>
+                    <td>False</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- B-lite: OI Warnings -->
+        
+
+        <!-- B-lite: Stale Warnings -->
+        
+
+        <!-- Risk Panel -->
+        <h2 class="section-title">🚨 风险面板 (Risk Panel)</h2>
+        <div class="risk-panel">
+            <h3>⚠️ 操作风险警告</h3>
+            <ul>
+                <li><strong>Production Readiness: 0/5</strong> — 不可用于生产环境</li>
+                <li><strong>telegram_send=false</strong> — 本轮不发送 Telegram</li>
+                <li><strong>x_twitter_send=false</strong> — 永不发送 X/Twitter</li>
+                <li><strong>production_send=false</strong> — 这只是本地审查工具</li>
+                <li><strong>daemon_or_loop_started=false</strong> — 这是一次性手动运行</li>
+                <li><strong>Whale Position Alert:</strong> 仍为 manual_required — 地址归属未验证</li>
+                <li><strong>Liquidation Pressure:</strong> reject (blocked) — 阈值未降低</li>
+                <li><strong>News Event:</strong> observation_only=true, not_causal_proof=true</li>
+                <li><strong>B-lite WATCH ≠ ACCEPT:</strong> 轻度异常仅观察，不代表可以发布</li>
+            </ul>
+        </div>
+
+        <!-- No-Send Confirmation -->
+        <h2 class="section-title">🚫 未发送确认 (No-Send Confirmation)</h2>
+        <div class="nosend-grid">
+            <div class="nosend-item"><span class="ns-key">telegram_send</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">x_twitter_send</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">production_send</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">daemon_or_loop_started</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">ai_model_called</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">external_api_write</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">files_deleted</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">v116_history_modified</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">credentials_printed</span><span class="ns-val ns-false">= false</span></div>
+            <div class="nosend-item"><span class="ns-key">raw_secrets_stored</span><span class="ns-val ns-false">= false</span></div>
+        </div>
+
+        <!-- Adapter Diagnostics -->
+        <h2 class="section-title">🔌 适配器诊断 (Adapter Diagnostics)</h2>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>Adapter</th><th>Status</th><th>Details</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><code>MultiAssetMarketSyncFreeApiAdapter</code></td>
+                        <td>✅ ok</td>
+                        <td>True</td>
+                    </tr>
+                    <tr>
+                        <td><code>PriceOIVolumeAnomalyFreeApiAdapter</code></td>
+                        <td>✅ ok</td>
+                        <td>True</td>
+                    </tr>
+                    <tr>
+                        <td><code>NewsEventMarketImpactFreePublicSourceAdapter</code></td>
+                        <td>✅ ok</td>
+                        <td>True</td>
+                    </tr>
+                    <tr>
+                        <td><code>FixtureSignalAdapter(liquidation_pressure)</code></td>
+                        <td>✅ ok</td>
+                        <td>False</td>
+                    </tr>
+                    <tr>
+                        <td><code>FixtureSignalAdapter(whale_position_alert)</code></td>
+                        <td>✅ ok</td>
+                        <td>False</td>
+                    </tr></tbody>
+            </table>
+        </div>
+
+        <!-- Operator Next Action -->
+        <h2 class="section-title">📋 操作员下一步 (Operator Next Action Guide)</h2>
+        <div class="action-guide">
+            <div class="action-card accept"><h4>✅ Accept — 可复盘</h4><p>强信号通过 gate，进入人工复盘。核实信号强度和确认因子，确认无误后可进入测试群观察。不可用于生产发布。</p></div>
+            <div class="action-card watch"><h4>👀 Watch — 仅观察</h4><p>轻度异常或待确认信号。<strong>不可因果化发布，不可作为交易建议。</strong>持续观察，等待信号增强或市场条件变化。</p></div>
+            <div class="action-card reject"><h4>❌ Reject — 等待</h4><p>信号不满足阈值。不需操作。等待更高波动窗口重跑。<strong>不可降低阈值强行通过。</strong></p></div>
+            <div class="action-card manual_required"><h4>🔒 Manual Required — 补证据</h4><p>需人工补充链上证据。完成 v116N whale evidence workbook 后方可重新评估。</p></div>
+        </div>
+
+        <!-- Production Readiness -->
+        <h2 class="section-title">🏭 生产就绪评估 (Production Readiness)</h2>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>Criterion</th><th>Status</th><th>Reason</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><code>automated_multi_asset_sync</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Free public API only — no institutional-grade data feed</td>
+                    </tr>
+                    <tr>
+                        <td><code>automated_price_oi_volume</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Threshold-based anomaly detection only — no ML/statistical model. B-lite layered decision added but still experimental.</td>
+                    </tr>
+                    <tr>
+                        <td><code>news_event_processing</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Rule-based keyword matching — NO AI/model. B-lite freshness/stale tagging added but still not causal proof.</td>
+                    </tr>
+                    <tr>
+                        <td><code>liquidation_pressure_automation</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Calm market correctly blocks — requires high-volatility regime detection</td>
+                    </tr>
+                    <tr>
+                        <td><code>whale_position_attribution</code></td>
+                        <td class="criterion-not-met">not_met</td>
+                        <td>Manual address attribution evidence required — no automated solution</td>
+                    </tr></tbody>
+            </table>
+        </div>
+        <p style="color:#ef4444; font-weight:700; margin-top:12px;">⛔ Production Readiness: false / 0/5 — NOT FOR LIVE USE</p>
+        <p style="color:#94a3b8; font-size:0.85rem;">NOT FOR LIVE USE. All 5 production readiness criteria remain unmet. B-lite quality enhancements (layered anomaly decisions, news freshness) are rule-based improvements — they do not make the system production-grade. The system operates on free public data sources only. News event extraction is rule-based, not causal. Liquidation gate requires high-volatility detection. Whale tracking requires manual address attribution. No automated decision-making is production-grade.</p>
+
+        <!-- Contract Validation -->
+        <h2 class="section-title">🔍 合约验证 (Contract Validation)</h2>
+        <div class="table-container">
+            <table>
+                <thead><tr><th>Check</th><th>Passed</th><th>Detail</th></tr></thead>
+                <tbody>
+                    <tr class="check-passed">
+                        <td>five_card_families_present</td>
+                        <td>✅</td>
+                        <td>Present: [&#39;liquidation_pressure&#39;, &#39;multi_asset_market_sync&#39;, &#39;news_event_market_impact&#39;, &#39;price_oi_volume_anomaly&#39;, &#39;whale_position_alert&#39;]</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>decisions_in_allowed_set</td>
+                        <td>✅</td>
+                        <td>All valid</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>whale_position_alert_is_manual_required</td>
+                        <td>✅</td>
+                        <td>manual_required</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>liquidation_pressure_not_accepted</td>
+                        <td>✅</td>
+                        <td>reject</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>news_event_observation_only</td>
+                        <td>✅</td>
+                        <td>observation_only=True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>news_event_not_causal_proof</td>
+                        <td>✅</td>
+                        <td>not_causal_proof=True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>three_live_adapters_used</td>
+                        <td>✅</td>
+                        <td>3 live adapters used (need &gt;= 3)</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>production_readiness_false</td>
+                        <td>✅</td>
+                        <td>0/5 — NOT FOR LIVE USE</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>no_send_confirmed</td>
+                        <td>✅</td>
+                        <td>telegram_send=false, x_twitter_send=false, production_send=false</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>no_daemon_cron_loop</td>
+                        <td>✅</td>
+                        <td>daemon_or_loop_started=false</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>price_oi_volume_anomaly_has_blite_layered_decision</td>
+                        <td>✅</td>
+                        <td>blite_tier=mild_watch</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>blite_watch_is_observation_not_accept</td>
+                        <td>✅</td>
+                        <td>watch_is_observation=True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>news_has_blite_freshness_stale_fields</td>
+                        <td>✅</td>
+                        <td>freshness_info=present</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>liquidation_threshold_not_lowered</td>
+                        <td>✅</td>
+                        <td>threshold &gt;= 0.60 maintained: True</td>
+                    </tr>
+                    <tr class="check-passed">
+                        <td>whale_manual_evidence_not_bypassed</td>
+                        <td>✅</td>
+                        <td>manual_evidence_not_bypassed=True</td>
+                    </tr></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div style="margin-bottom:8px;"><span class="no-prod">⛔ NOT FOR PRODUCTION USE — 0/5</span></div>
+        Market Radar Operator Dashboard v119B (B-lite) &nbsp;|&nbsp;
+        Pipeline: v1.19B &nbsp;|&nbsp;
+        Run ID: 20260605_184831 &nbsp;|&nbsp;
+        模式: live one-shot / no-send &nbsp;|&nbsp;
+        telegram_send=false &nbsp;|&nbsp;
+        x_twitter_send=false &nbsp;|&nbsp;
+        production_send=false &nbsp;|&nbsp;
+        daemon_or_loop_started=false
+    </div>
+</body>
+</html>

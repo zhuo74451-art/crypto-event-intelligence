@@ -1,0 +1,165 @@
+{
+  "version": "v1.12-v",
+  "generated_at": "2026-06-05 05:11:53 UTC+8",
+  "upstream_v112u_stop_decision": "DEGRADE_TO_MOCK",
+  "summary": {
+    "primary_source": "coingecko_public_rest",
+    "primary_result": "success (200 OK)",
+    "fallback_source": "coincap_public_rest",
+    "fallback_result": "failure (SSL/TLS transport error)",
+    "retry_attempted_for_fallback": false,
+    "cross_validation_performed": false,
+    "cross_validation_possible": false,
+    "degradation_is_not_failure": true,
+    "degradation_is_correct_safety_behavior": true,
+    "data_was_preserved_for_audit": true,
+    "no_data_was_hardened_or_fabricated": true
+  },
+  "sources_requested": {
+    "coingecko_public_rest": {
+      "endpoint": "/api/v3/simple/price",
+      "url": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true",
+      "status": "success (HTTP 200)",
+      "assets_returned": 3,
+      "field_coverage": [
+        "price_usd",
+        "price_change_pct"
+      ],
+      "fields_missing_from_free_tier": [
+        "price_change_pct_1h",
+        "volume_change_pct",
+        "open_interest_change_pct"
+      ]
+    },
+    "coincap_public_rest": {
+      "endpoint": "/api/v2/assets",
+      "url": "https://api.coincap.io/v2/assets?limit=50",
+      "status": "failure (SSL/TLS transport error)",
+      "assets_returned": 0,
+      "retried": false,
+      "retry_blocked_by": "v112U safety boundary: retry_enabled=false"
+    }
+  },
+  "why_degraded_not_aborted": "ABORT would mean the data is completely unusable (e.g., all sources failed, required fields missing >20%, JSON unparseable). That did NOT happen. CoinGecko returned valid, parseable data with all 5 required fields present for all 3 assets. The system downgraded to DEGRADE_TO_MOCK because the data quality is insufficient for real send — not because the data is unusable. This is the correct middle ground: preserve the real data, replay via mock pipeline, flag what's missing, and require human/Gemini audit before any real send path.",
+  "why_degraded_not_continued": "CONTINUE would mean the data meets all quality thresholds for mock adapter processing without degradation flags. That did NOT happen because: (1) Only 1 of 2 attempted sources returned data — cross-validation is impossible. (2) 6 optional fields are missing across 3 assets (OI change % and volume change %). (3) v112Q thresholds require price AND one secondary metric (volume or OI) per asset. Without volume or OI data, the secondary metric check cannot pass. DEGRADE_TO_MOCK is the correct decision: preserve the data, but do not pretend it's ready for CONTINUE processing.",
+  "why_not_eligible_for_real_send": "Even if the data had been CONTINUE, v112T/v112U policy enforces eligible_for_real_send=false at ALL levels: (1) LiveSourceResponse.eligible_for_real_send = const: false in schema. (2) v112T adapter hard-codes eligible_for_real_send = false. (3) v112R adapter checks this flag before allowing real send path. (4) v112S gate blocks real send for any signal with eligible_for_real_send != true. (5) No TG send pipeline is connected. (6) No production state infrastructure is configured. (7) Historical baseline has not been established (required by v112Q).",
+  "oi_volume_field_assessment": {
+    "oi_change_pct": {
+      "available_from_free_sources": false,
+      "status": "missing for all 3 assets",
+      "free_source_capability": "No free public REST API provides OI data. CoinGecko and CoinCap do not have OI endpoints.",
+      "paid_alternatives": "Coinglass Open Interest API, Laevitas OI API, exchange-specific futures APIs",
+      "impact_on_v112q_thresholds": "require_price_and_one_secondary_metric cannot use OI as secondary metric",
+      "mitigation": "volume_change_pct could serve as the alternative secondary metric if available"
+    },
+    "volume_change_pct": {
+      "available_from_free_sources": "partial",
+      "status": "missing for all 3 assets from /simple/price endpoint",
+      "free_source_capability": "CoinGecko /simple/price does NOT provide volume data. CoinGecko /coins/markets provides total_volume but NOT volume_change_pct. Volume change % requires a prior observation (historical baseline) which has not been established.",
+      "paid_alternatives": "CoinGecko Pro API provides more fields; CoinMarketCap API provides volume_change_24h",
+      "impact_on_v112q_thresholds": "require_price_and_one_secondary_metric cannot use volume_change_pct as secondary metric",
+      "mitigation": "Historical baseline must be established before volume_change_pct can be computed"
+    }
+  },
+  "degradation_events": [
+    {
+      "event": "CoinGecko fetch succeeded",
+      "result": "success",
+      "detail": "Fetched price data for 3 assets (coingecko_public_rest) via free public REST API",
+      "contributes_to_degradation": false
+    },
+    {
+      "event": "CoinCap SSL/TLS error",
+      "result": "failure",
+      "detail": "CoinCap /v2/assets request failed with SSL/TLS connection error. This is a transport-layer failure, not an API rejection. The system correctly identified that the second source is unavailable.",
+      "contributes_to_degradation": true,
+      "degradation_rule": "DEGRADE_MULTI_SOURCE_UNCERTAIN"
+    },
+    {
+      "event": "No retry attempted for CoinCap",
+      "result": "blocked_by_policy",
+      "detail": "v112U safety boundary enforces retry_enabled=false. CoinCap failure was NOT retried — this is the correct safety behavior. A retry would risk hammering the endpoint or masking an underlying issue.",
+      "contributes_to_degradation": true
+    },
+    {
+      "event": "Cross-source validation impossible",
+      "result": "skipped",
+      "detail": "Only one source (CoinGecko) returned valid data. Multi-source cross-validation requires at least 2 sources. Without cross-validation, price data from a single source cannot be confirmed against an independent reference — hence degradation.",
+      "contributes_to_degradation": true,
+      "degradation_rule": "DEGRADE_MULTI_SOURCE_UNCERTAIN"
+    },
+    {
+      "event": "Open Interest (OI) data unavailable",
+      "result": "field_absent",
+      "detail": "open_interest_change_pct is null for all 3 requested assets. Free public REST APIs (CoinGecko /simple/price, CoinCap /v2/assets) do not provide OI data. This is a known limitation of the free source tier. OI data would require paid sources (Coinglass, Laevitas) or exchange-specific APIs.",
+      "contributes_to_degradation": true,
+      "degradation_rule": "DEGRADE_OPTIONAL_FIELDS_MISSING"
+    },
+    {
+      "event": "Volume change % data unavailable",
+      "result": "field_absent",
+      "detail": "volume_change_pct is null for all 3 requested assets. CoinGecko /simple/price endpoint provides price and 24h_change only — no volume delta. CoinCap provides raw 24h volume but not % change. Volume change % would require /coins/markets endpoint or a calculated value from a historical baseline (which is not yet established).",
+      "contributes_to_degradation": true,
+      "degradation_rule": "DEGRADE_OPTIONAL_FIELDS_MISSING"
+    },
+    {
+      "event": "Degradation → mock replay (NOT failure)",
+      "result": "degraded",
+      "detail": "DEGRADE_TO_MOCK is NOT a failure. It is the correct and expected outcome when the system detects that data quality is insufficient for real send. The v112T safety gate correctly identified: (1) missing optional fields, (2) single-source data without cross-validation. Both are by-design limitations of the free source tier. The system did NOT crash, did NOT retry, did NOT harden the data to CONTINUE. It correctly DEGRADEd to mock replay — preserving all real data for audit.",
+      "contributes_to_degradation": false,
+      "is_positive_outcome": true
+    }
+  ],
+  "asset_field_status": [
+    {
+      "asset_id": "bitcoin",
+      "symbol": "BTC",
+      "price_usd": 63345.0,
+      "price_change_pct": -3.282308820606044,
+      "price_change_pct_1h": null,
+      "volume_change_pct": null,
+      "open_interest_change_pct": null,
+      "price_available": true,
+      "price_change_available": true,
+      "volume_change_available": false,
+      "oi_available": false
+    },
+    {
+      "asset_id": "ethereum",
+      "symbol": "ETH",
+      "price_usd": 1767.01,
+      "price_change_pct": -2.3544916476773388,
+      "price_change_pct_1h": null,
+      "volume_change_pct": null,
+      "open_interest_change_pct": null,
+      "price_available": true,
+      "price_change_available": true,
+      "volume_change_available": false,
+      "oi_available": false
+    },
+    {
+      "asset_id": "solana",
+      "symbol": "SOL",
+      "price_usd": 68.53,
+      "price_change_pct": -4.799514994608399,
+      "price_change_pct_1h": null,
+      "volume_change_pct": null,
+      "open_interest_change_pct": null,
+      "price_available": true,
+      "price_change_available": true,
+      "volume_change_available": false,
+      "oi_available": false
+    }
+  ],
+  "safety_affirmation": {
+    "no_new_api_calls_made": true,
+    "no_coinbase_retry_attempted": true,
+    "no_real_tg_sent": true,
+    "no_production_state_written": true,
+    "no_daemon_started": true,
+    "no_api_key_used": true,
+    "no_authorization_header_used": true,
+    "data_fully_preserved_from_v112u": true,
+    "degradation_is_by_design": true
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "version": "v1.12-t",
+  "description": "Free-source field mapping for v112T one-shot plan. Maps candidate free API source fields to normalized radar fields, then to v112Q stricter threshold fields. No API keys required; endpoints are recorded as planned strings only — no live requests are made.",
+  "generated_at": "2026-06-05 03:44:00 UTC+8",
+  "candidate_card_type": "multi_asset_market_sync",
+  "dry_run_only": true,
+  "plan_only": true,
+  "sources": {
+    "primary": {
+      "source_name": "coingecko_public_rest",
+      "cost": "free",
+      "credential_required": false,
+      "base_url_planned": "https://api.coingecko.com/api/v3",
+      "endpoints_planned": [
+        "/simple/price?ids=<asset_ids>&vs_currencies=usd&include_24hr_change=true&include_24hr_vol_change=true",
+        "/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=1h,24h"
+      ],
+      "rate_limit_known": "~10-30 req/min (free tier, undocumented; varies by load)",
+      "timeout_planned_ms": 15000,
+      "retry_on_429": false,
+      "note": "Endpoints are recorded as planned API path strings only. No actual HTTP request is made by v112T."
+    },
+    "fallback": {
+      "source_name": "coincap_public_rest",
+      "cost": "free",
+      "credential_required": false,
+      "base_url_planned": "https://api.coincap.io/v2",
+      "endpoints_planned": [
+        "/assets?limit=50",
+        "/assets/<asset_id>"
+      ],
+      "rate_limit_known": "~200 req/min (free tier, no key)",
+      "timeout_planned_ms": 15000,
+      "retry_on_429": false,
+      "note": "Fallback source. CoinCap has looser rate limits but less asset coverage and slightly different price feeds."
+    },
+    "forbidden_sources": [
+      {
+        "source": "CoinGecko Pro",
+        "reason": "Requires paid API key"
+      },
+      {
+        "source": "CoinMarketCap",
+        "reason": "Requires API key (even free tier needs registration)"
+      },
+      {
+        "source": "Glassnode",
+        "reason": "Requires paid API key"
+      },
+      {
+        "source": "any source requiring API key",
+        "reason": "Out of scope for free-source plan"
+      },
+      {
+        "source": "WebSocket stream",
+        "reason": "Requires persistent connection (daemon); out of scope for one-shot"
+      }
+    ]
+  },
+  "field_mapping": {
+    "description": "Maps raw source fields → normalized v112T fields → v112Q threshold fields. Normalized fields feed into the LiveSourceResponse schema.",
+    "coingecko_to_normalized": {
+      "id": "asset_id",
+      "symbol": "symbol",
+      "current_price": "price_usd",
+      "price_change_percentage_1h_in_currency": "price_change_pct_1h",
+      "price_change_percentage_24h_in_currency": "price_change_pct_24h",
+      "total_volume": "volume_24h_usd",
+      "market_cap": "market_cap_usd",
+      "last_updated": "last_updated_at",
+      "note": "CoinGecko /simple/price returns flat object per asset; /coins/markets returns array of asset objects. Both are mapped to the same normalized fields."
+    },
+    "coincap_to_normalized": {
+      "id": "asset_id",
+      "symbol": "symbol",
+      "priceUsd": "price_usd",
+      "changePercent24Hr": "price_change_pct_24h",
+      "volumeUsd24Hr": "volume_24h_usd",
+      "marketCapUsd": "market_cap_usd",
+      "note": "CoinCap /v2/assets returns flat array with different field names. price_change_pct_1h is NOT available from CoinCap — this field will be null when CoinCap is the source."
+    },
+    "normalized_to_v112q_threshold": {
+      "price_usd": "v112Q min_per_asset_abs_price_change_pct check uses this as baseline",
+      "price_change_pct_1h": "v112Q direction agreement check (small_basket_required_direction_agreement / large_basket_required_direction_agreement)",
+      "price_change_pct_24h": "v112Q per-asset price change filter (min_per_asset_abs_price_change_pct >= 2.0)",
+      "volume_change_pct": "v112Q secondary metric option 1 (volume_change_pct)",
+      "open_interest_change_pct": "v112Q secondary metric option 2 (NOT available from CoinGecko/CoinCap free; will be null. v112Q require_price_and_one_secondary_metric may fail without this)",
+      "last_updated_at": "v112Q timestamp skew check (max_timestamp_skew_seconds <= 60)",
+      "note": "OI data is the main gap for free sources. v112Q require_price_and_one_secondary_metric = true means volume must be present for all assets, or the signal is DEGRADE_TO_MOCK."
+    },
+    "source_field_gaps": {
+      "coingecko_missing": [],
+      "coincap_missing": [
+        "price_change_pct_1h",
+        "volume_change_pct (CoinCap provides raw volume, not % change — must be computed from previous pull or marked as unavailable)"
+      ],
+      "both_missing": [
+        "open_interest_change_pct (neither free source provides OI; this field is always null from free REST)",
+        "funding_rate",
+        "basis_spread",
+        "liquidation data"
+      ],
+      "impact_on_v112q": "Without OI data, v112Q secondary metric check only has volume_change_pct available. If volume data is also missing, the signal cannot meet require_price_and_one_secondary_metric and must DEGRADE_TO_MOCK."
+    }
+  },
+  "multi_source_consistency": {
+    "description": "When both CoinGecko and CoinCap return data for the same asset, cross-validate prices.",
+    "price_divergence_abort_threshold_pct": 5.0,
+    "price_divergence_degrade_threshold_pct": 2.0,
+    "timestamp_divergence_abort_seconds": 120,
+    "timestamp_divergence_degrade_seconds": 60,
+    "cross_source_check_enabled": true,
+    "note": "Cross-source validation requires both sources to return data for the same asset. If only one source returns data, the check is skipped and the result is DEGRADE_TO_MOCK (multi-source consistency uncertain)."
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "version": "v1.11-K",
+  "mode": "content_value_review",
+  "real_tg_sent": false,
+  "external_ai_called": false,
+  "paid_api_called": false,
+  "reviewed_count": 3,
+  "summary": {
+    "keep": 1,
+    "revise": 2,
+    "observe": 0,
+    "drop": 0
+  },
+  "best_candidate": {
+    "mock_message_id": "mock_v111j_001",
+    "signal_id": "H6-07",
+    "asset": "ARB",
+    "grade": "A",
+    "recommendation": "keep",
+    "reason": "value_score=140; cooldown=upgrade_override; factors=4/4 (OI=True, Vol=True, Funding=True, MultiAsset=True); upgrade_override=yes; signal_value_score=95, risk_score=8, grade=A"
+  },
+  "records": [
+    {
+      "mock_message_id": "mock_v111j_001",
+      "signal_id": "H6-07",
+      "asset": "ARB",
+      "content_review": {
+        "is_price_only_noise": false,
+        "has_multi_factor_support": true,
+        "has_oi_support": true,
+        "has_volume_support": true,
+        "has_upgrade_signal": true,
+        "has_clear_trade_relevance": true,
+        "has_overclaiming_risk": false,
+        "has_ai_style_risk": false,
+        "has_duplicate_risk": false,
+        "readability_score": 95,
+        "signal_value_score": 95,
+        "risk_score": 8,
+        "final_grade": "A",
+        "recommendation": "keep",
+        "reason": "value_score=140; cooldown=upgrade_override; factors=4/4 (OI=True, Vol=True, Funding=True, MultiAsset=True); upgrade_override=yes; signal_value_score=95, risk_score=8, grade=A"
+      }
+    },
+    {
+      "mock_message_id": "mock_v111j_002",
+      "signal_id": "H5-01",
+      "asset": "ETH",
+      "content_review": {
+        "is_price_only_noise": false,
+        "has_multi_factor_support": true,
+        "has_oi_support": true,
+        "has_volume_support": true,
+        "has_upgrade_signal": true,
+        "has_clear_trade_relevance": true,
+        "has_overclaiming_risk": false,
+        "has_ai_style_risk": true,
+        "has_duplicate_risk": true,
+        "readability_score": 95,
+        "signal_value_score": 100,
+        "risk_score": 38,
+        "final_grade": "B",
+        "recommendation": "revise",
+        "reason": "value_score=115; cooldown=upgrade_override; factors=3/4 (OI=True, Vol=True, Funding=True, MultiAsset=False); upgrade_override=yes; duplicate_asset_with=mock_v111j_003; ai_style_detected; signal_value_score=100, risk_score=38, grade=B"
+      }
+    },
+    {
+      "mock_message_id": "mock_v111j_003",
+      "signal_id": "H1-01",
+      "asset": "ETH",
+      "content_review": {
+        "is_price_only_noise": false,
+        "has_multi_factor_support": true,
+        "has_oi_support": true,
+        "has_volume_support": true,
+        "has_upgrade_signal": false,
+        "has_clear_trade_relevance": true,
+        "has_overclaiming_risk": true,
+        "has_ai_style_risk": true,
+        "has_duplicate_risk": true,
+        "readability_score": 95,
+        "signal_value_score": 80,
+        "risk_score": 41,
+        "final_grade": "C",
+        "recommendation": "revise",
+        "reason": "value_score=120; cooldown=allow; factors=4/4 (OI=True, Vol=True, Funding=True, MultiAsset=True); duplicate_asset_with=mock_v111j_002; overclaiming_detected; ai_style_detected; signal_value_score=80, risk_score=41, grade=C"
+      }
+    }
+  ],
+  "mvp_judgement": {
+    "technical_loop_complete": true,
+    "content_loop_complete": true,
+    "ready_for_real_test_channel_send": true,
+    "ready_for_official_channel": false,
+    "reason": "Market Radar MVP 技术链路闭环完成 (v1.11-J verified)。内容审计发现至少 1 张 A 级卡可进入测试发送候选。不建议正式频道解冻：需要 (1) 真实 TG 测试群小规模发送验证, (2) sender 安全抽象 (token 注入、发送重试、失败降级), (3) cooldown 持久化 (跨进程/跨重启), (4) OI-volume delta 追踪 (以区分趋势性 vs 瞬时异动)。"
+  }
+}

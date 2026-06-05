@@ -1,0 +1,14 @@
+entities:
+- address: '0x8def9f50456c6c4e37fa5d3d57f108ed23992dae'
+  aliases:
+  - loraclexyz
+  - Laurent Zeimes
+  confidence: medium
+  entity_name: Loracle
+  labels:
+  - asset: HYPE
+    confidence: medium
+    label_text_cn: HYPE 空仓 TOP 1
+    source_type: hyperinsight
+  profile_summary: Hyperliquid 生态活跃交易员，曾多次被公开频道标记为 HYPE 大额空头。
+  source_ref: HyperInsight public channel sample

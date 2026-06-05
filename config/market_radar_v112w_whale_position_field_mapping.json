@@ -1,0 +1,135 @@
+{
+  "version": "v1.12-w",
+  "candidate_card_type": "whale_position_alert",
+  "planned_source": "hyperliquid_info_public",
+  "endpoint_plan": "POST https://api.hyperliquid.xyz/info",
+  "request_type": "clearinghouseState",
+  "request_payload_plan": {
+    "type": "clearinghouseState",
+    "user": "<tracked_address>"
+  },
+  "api_key_required": false,
+  "authorization_header_required": false,
+  "method_is_post_but_read_only": true,
+  "request_mode": "planned_one_shot_read_only",
+  "dry_run_only": true,
+  "generated_at": "2026-06-05 04:13:00 UTC+8",
+  "required_fields": [
+    "address",
+    "symbol",
+    "side",
+    "position_size",
+    "entry_price",
+    "mark_price",
+    "unrealized_pnl",
+    "leverage",
+    "liquidation_price",
+    "observed_at"
+  ],
+  "optional_fields": [
+    "address_label",
+    "entity_type",
+    "confidence_level",
+    "previous_position_size",
+    "position_delta",
+    "historical_sequence"
+  ],
+  "field_mapping": {
+    "hyperliquid_raw": {
+      "assetPositions[].position.coin": "symbol",
+      "assetPositions[].position.szi": "szi_raw",
+      "assetPositions[].position.leverage.type": "leverage_type_raw",
+      "assetPositions[].position.leverage.value": "leverage_raw",
+      "assetPositions[].position.entryPx": "entry_price",
+      "assetPositions[].position.liquidationPx": "liquidation_price",
+      "assetPositions[].position.unrealizedPnl": "unrealized_pnl_raw",
+      "assetPositions[].position.marginUsed": "margin_used_raw",
+      "assetPositions[].position.positionValue": "position_value_raw",
+      "assetPositions[].position.cumFunding": "cum_funding_raw",
+      "assetPositions[].type": "position_type_raw"
+    },
+    "v112f_whale_adapter": {
+      "address": "wallet",
+      "symbol": "asset",
+      "side": "side",
+      "position_size": "position_size_usd",
+      "entry_price": "entry_price",
+      "mark_price": "mark_price",
+      "unrealized_pnl": "unrealized_pnl_usd",
+      "leverage": "leverage",
+      "liquidation_price": "liquidation_price",
+      "observed_at": "observed_at",
+      "address_label": "label",
+      "entity_type": "entity_type",
+      "confidence_level": "label_confidence",
+      "previous_position_size": "previous_position_size_usd",
+      "position_delta": "position_delta_usd",
+      "historical_sequence": "historical_sequence"
+    },
+    "v112h_envelope_payload": {
+      "wallet": "wallet_address_short",
+      "asset": "asset_symbol",
+      "side": "position_direction",
+      "position_size_usd": "position_size_usd",
+      "leverage": "leverage",
+      "entry_price": "entry_price",
+      "mark_price": "current_price",
+      "unrealized_pnl_usd": "unrealized_pnl",
+      "unrealized_pnl_pct": "unrealized_pnl_pct",
+      "liquidation_price": "liquidation_price",
+      "liquidation_distance_pct": "liquidation_distance_pct",
+      "observed_at": "observation_timestamp",
+      "label": "address_label",
+      "entity_type": "entity_type",
+      "label_confidence": "label_confidence",
+      "previous_position_size_usd": "previous_position_size_usd",
+      "position_delta_usd": "position_delta_usd"
+    }
+  },
+  "normalization_rules": {
+    "side_determination": "positive szi -> long, negative szi -> short",
+    "position_size_usd": "abs(szi) * mark_price OR position_value_raw",
+    "leverage": "parse from leverage.value OR compute from margin_used",
+    "unrealized_pnl_usd": "unrealizedPnl field directly, no computation needed",
+    "liquidation_distance_pct": "compute: abs(mark_price - liquidation_price) / mark_price * 100",
+    "observed_at": "use server response timestamp, or generate safe local timestamp",
+    "address_label_priority": "1. local label DB, 2. HyperLiquid observer label, 3. 'Unknown Whale' fallback",
+    "label_confidence_rules": {
+      "high": "label from known source (Arkham/Nansen/onchain confirmed)",
+      "medium": "label from HyperLiquid observer or heuristic",
+      "low": "unknown_whale fallback or stale label"
+    }
+  },
+  "tracked_addresses_from_state_csv": [
+    "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+    "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+    "0x082e843a431aef031264dc232693dd710aedca88",
+    "0x50b309f78e774a756a2230e1769729094cac9f20"
+  ],
+  "tracked_address_labels": {
+    "0x6c8512516ce5669d35113a11ca8b8de322fd84f6": {
+      "label": "Matrixport Related",
+      "entity_type": "fund_wallet",
+      "confidence": "medium",
+      "source": "hyperliquid_observer"
+    },
+    "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae": {
+      "label": "loraclexyz",
+      "entity_type": "high_leverage_trader",
+      "confidence": "medium",
+      "source": "hyperliquid_observer"
+    },
+    "0x082e843a431aef031264dc232693dd710aedca88": {
+      "label": "Unknown HYPE Whale",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "source": "hyperliquid_observer"
+    },
+    "0x50b309f78e774a756a2230e1769729094cac9f20": {
+      "label": "Unknown Hyperliquid Whale",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "source": "hyperliquid_observer"
+    }
+  }
+}

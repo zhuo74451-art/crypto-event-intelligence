@@ -1,2 +1,2 @@
 ﻿status,generated_at_china,live_input_rows,historical_input_rows,input_rows,curve_rows,insufficient_sample_count,only_short_horizon_count,fast_decay_count,slow_burn_or_lagged_count,output,markdown_output
-pass,2026-05-28 19:24:39 UTC+8,3,200,203,36,32,0,0,3,C:\Users\PC\Desktop\Projects\事件情报系统\results\signal_decay_curve.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\signal_decay_curve.md
+pass,2026-06-01 13:29:50 UTC+8,3,200,203,36,32,0,0,3,C:\Users\PC\Desktop\Projects\事件情报系统\results\signal_decay_curve.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\signal_decay_curve.md

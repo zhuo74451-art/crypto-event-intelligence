@@ -1,0 +1,66 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_160558",
+  "task_id": "20260605_v117b_shared_pipeline_tg_test_group_one_shot_safe_config",
+  "generated_at": "2026-06-05T16:06:01+08:00",
+  "type": "real_free_api_tg_test_one_shot",
+  "card_family": "multi_asset_market_sync",
+  "assets": [
+    {
+      "symbol": "BTCUSDT",
+      "price_ok": true,
+      "price_change_pct_rounded": -1.52,
+      "volume_24h_ok": true
+    },
+    {
+      "symbol": "ETHUSDT",
+      "price_ok": true,
+      "price_change_pct_rounded": -6.07,
+      "volume_24h_ok": true
+    },
+    {
+      "symbol": "SOLUSDT",
+      "price_ok": true,
+      "price_change_pct_rounded": -5.09,
+      "volume_24h_ok": true
+    }
+  ],
+  "binance_api_success": true,
+  "binance_api_error": null,
+  "gate_allow": true,
+  "gate_reason": "Multi-asset data available for 3 assets",
+  "send_readiness_allow_test_group": true,
+  "send_readiness_reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+  "tg_result": {
+    "attempted": false,
+    "success": false,
+    "status": "skipped",
+    "reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": false,
+    "token_proof_present": false,
+    "chat_id_proof_present": false,
+    "credentials_printed": false
+  },
+  "pipeline_passed": true,
+  "pipeline_error": null,
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": false,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false
+  },
+  "preflight": {
+    "config_ready": false,
+    "bot_token_present": false,
+    "chat_id_present": false
+  }
+}

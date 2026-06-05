@@ -1,0 +1,283 @@
+{
+  "pipeline_version": "v1.18E",
+  "run_id": "20260605_182134",
+  "task_id": "20260605_v118e_operator_dashboard_from_v118d_no_send_local_html",
+  "generated_at": "2026-06-05T18:21:34+08:00",
+  "type": "operator_dashboard_from_v118d_no_send_local_html",
+  "mode": "local_only_no_send",
+  "source": "v118D operator acceptance gate result (read-only, local file)",
+  "source_run_id": "20260605_181203",
+  "source_pipeline": "v1.18D",
+  "cards": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "v118c_status": "active",
+      "operator_decision": "accept",
+      "evidence_summary": "v118C status=active, send_eligible=True. Signal: BTCUSDT: -0.44%; ETHUSDT: -4.52%; SOLUSDT: -3.09% (All monitored assets showing bearish alignment (corr≈0.80)). Data source: free_public_api. Gate reason: Multi-asset data available for 3 assets.",
+      "reason": "Multi-asset sync card is active with real Binance public API data. All monitored assets show coherent directional alignment. Evidence is sourced from free public REST endpoints. Operator should review asset-specific magnitudes before relying on correlation signal alone.",
+      "publishability": "test_group_only",
+      "next_operator_action": "Review individual asset deltas. Confirm no stale ticker data. If correlation > 0.7 persists, card is suitable for test-group snapshot inclusion.",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "v118c_send_eligible": true,
+      "v118c_evidence_status": "clean"
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "v118c_status": "blocked",
+      "operator_decision": "reject",
+      "evidence_summary": "v118C status=blocked. Gate: No asset passed admission threshold — insufficient anomaly signal strength. All monitored assets showed normal price movement within threshold.",
+      "reason": "No asset passed the admission threshold — insufficient anomaly signal strength. This is a correct gate block, not a failure. The threshold is designed to prevent noise from entering the operator feed.",
+      "publishability": "blocked",
+      "next_operator_action": "No action needed. Retry during higher-volatility windows. Do NOT lower threshold to force card generation.",
+      "observation_only": false,
+      "not_causal_proof": false,
+      "v118c_send_eligible": false,
+      "v118c_evidence_status": "clean"
+    },
+    {
+      "card_family": "news_event_market_impact",
+      "v118c_status": "active",
+      "operator_decision": "watch",
+      "evidence_summary": "v118C status=active, observation_only=True, not_causal_proof=True. Signal: [high] other: Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%. Source: free_public_source. Risk: event_extraction: rule_based_keyword_matching — NO AI/model; not_causal_proof: event observed alongside market data, not causal; sources: 4/5 succeeded, 165 articles, 50 events extracted.",
+      "reason": "News event detected with measurable market context. However, event-market correlation is NOT causal proof. Event extraction is rule-based keyword matching (NO AI/model). Operator is advised to treat this as contextual awareness, not actionable trading signal.",
+      "publishability": "test_group_only_with_caveat",
+      "next_operator_action": "Read the full article at source URL before citing. Cross-reference with at least one other news source. Do NOT present as causal market analysis. Always include observation-only disclaimer in any communication.",
+      "observation_only": true,
+      "not_causal_proof": true,
+      "v118c_send_eligible": true,
+      "v118c_evidence_status": "clean"
+    },
+    {
+      "card_family": "liquidation_pressure",
+      "v118c_status": "blocked",
+      "operator_decision": "reject",
+      "evidence_summary": "v118C status=blocked. Gate: Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Liquidation pressure is an event-triggered. Threshold maintained at 0.60 (NOT lowered). Calm market flag: True. No fake liquidation spike created.",
+      "reason": "Liquidation gate is CORRECTLY blocked. Calm market conditions (composite_score=0.35 < threshold=0.60). The liquidation threshold has NOT been lowered. This is a design-justified block — liquidation pressure is an event-triggered card type that only activates during high-volatility windows. Retry during volatile market conditions.",
+      "publishability": "blocked",
+      "next_operator_action": "No action needed. DO NOT lower threshold. Monitor for volatility regime change. When composite_score exceeds 0.60, re-evaluate.",
+      "observation_only": false,
+      "not_causal_proof": null,
+      "v118c_send_eligible": false,
+      "v118c_evidence_status": "blocked_by_gate_threshold"
+    },
+    {
+      "card_family": "whale_position_alert",
+      "v118c_status": "manual_required",
+      "operator_decision": "manual_required",
+      "evidence_summary": "v118C status=manual_required. 4 addresses tracked (total exposure ~$135M). Address attribution evidence: NOT PROVIDED. Manual evidence requirement: NOT BYPASSED. v116N checklist: APPLIED.",
+      "reason": "Whale position tracking requires manual on-chain address attribution evidence. No free public API can reliably identify wallet ownership. Automated signals without verified address labels are NOT actionable. Operator must complete the v116N whale evidence workbook with verified labels, sources, and position change evidence before this card can become active. Fake/fabricated evidence is worse than no evidence.",
+      "publishability": "blocked",
+      "next_operator_action": "Complete v116N whale evidence workbook: 1) Verify each address label against at least 2 on-chain sources. 2) Document evidence source URLs. 3) Record position change timestamps. 4) Have a second operator review the evidence. Do NOT publish this card until all 4 steps are complete.",
+      "observation_only": false,
+      "not_causal_proof": null,
+      "v118c_send_eligible": false,
+      "v118c_evidence_status": "manual_attribution_evidence_required"
+    }
+  ],
+  "dashboard_files": {
+    "html": "runs\\market_radar\\v118e_operator_dashboard.html",
+    "preview_md": "runs\\market_radar\\v118e_operator_dashboard_preview.md",
+    "handoff_md": "runs\\market_radar\\v118e_local_only_handoff.md"
+  },
+  "decision_table": {
+    "pipeline_version": "v1.18D",
+    "run_id": "20260605_181203",
+    "generated_at": "2026-06-05T18:12:03+08:00",
+    "source": "v118C five-card snapshot (read-only)",
+    "total_cards": 5,
+    "decision_counts": {
+      "accept": 1,
+      "reject": 2,
+      "watch": 1,
+      "manual_required": 1
+    },
+    "table": [
+      {
+        "card_family": "multi_asset_market_sync",
+        "v118c_status": "active",
+        "operator_decision": "accept",
+        "evidence_summary": "v118C status=active, send_eligible=True. Signal: BTCUSDT: -0.44%; ETHUSDT: -4.52%; SOLUSDT: -3.09% (All monitored assets showing bearish alignment (corr≈0.80)). Data source: free_public_api. Gate reas",
+        "reason": "Multi-asset sync card is active with real Binance public API data. All monitored assets show coherent directional alignment. Evidence is sourced from free public REST endpoints. Operator should review",
+        "publishability": "test_group_only",
+        "next_operator_action": "Review individual asset deltas. Confirm no stale ticker data. If correlation > 0.7 persists, card is suitable for test-group snapshot inclusion."
+      },
+      {
+        "card_family": "price_oi_volume_anomaly",
+        "v118c_status": "blocked",
+        "operator_decision": "reject",
+        "evidence_summary": "v118C status=blocked. Gate: No asset passed admission threshold — insufficient anomaly signal strength. All monitored assets showed normal price movement within threshold.",
+        "reason": "No asset passed the admission threshold — insufficient anomaly signal strength. This is a correct gate block, not a failure. The threshold is designed to prevent noise from entering the operator feed.",
+        "publishability": "blocked",
+        "next_operator_action": "No action needed. Retry during higher-volatility windows. Do NOT lower threshold to force card generation."
+      },
+      {
+        "card_family": "news_event_market_impact",
+        "v118c_status": "active",
+        "operator_decision": "watch",
+        "evidence_summary": "v118C status=active, observation_only=True, not_causal_proof=True. Signal: [high] other: Bitcoin plunges to near $62,000 as the AI trade unwinds, HYPE falls 14%. Source: free_public_source. Risk: even",
+        "reason": "News event detected with measurable market context. However, event-market correlation is NOT causal proof. Event extraction is rule-based keyword matching (NO AI/model). Operator is advised to treat t",
+        "publishability": "test_group_only_with_caveat",
+        "next_operator_action": "Read the full article at source URL before citing. Cross-reference with at least one other news source. Do NOT present as causal market analysis. Always include observation-only disclaimer in any comm"
+      },
+      {
+        "card_family": "liquidation_pressure",
+        "v118c_status": "blocked",
+        "operator_decision": "reject",
+        "evidence_summary": "v118C status=blocked. Gate: Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Liquidation pr",
+        "reason": "Liquidation gate is CORRECTLY blocked. Calm market conditions (composite_score=0.35 < threshold=0.60). The liquidation threshold has NOT been lowered. This is a design-justified block — liquidation pr",
+        "publishability": "blocked",
+        "next_operator_action": "No action needed. DO NOT lower threshold. Monitor for volatility regime change. When composite_score exceeds 0.60, re-evaluate."
+      },
+      {
+        "card_family": "whale_position_alert",
+        "v118c_status": "manual_required",
+        "operator_decision": "manual_required",
+        "evidence_summary": "v118C status=manual_required. 4 addresses tracked (total exposure ~$135M). Address attribution evidence: NOT PROVIDED. Manual evidence requirement: NOT BYPASSED. v116N checklist: APPLIED.",
+        "reason": "Whale position tracking requires manual on-chain address attribution evidence. No free public API can reliably identify wallet ownership. Automated signals without verified address labels are NOT acti",
+        "publishability": "blocked",
+        "next_operator_action": "Complete v116N whale evidence workbook: 1) Verify each address label against at least 2 on-chain sources. 2) Document evidence source URLs. 3) Record position change timestamps. 4) Have a second opera"
+      }
+    ]
+  },
+  "no_send_preview": {
+    "pipeline_version": "v1.18D",
+    "run_id": "20260605_181203",
+    "generated_at": "2026-06-05T18:12:03+08:00",
+    "telegram_send": false,
+    "x_twitter_send": false,
+    "production_send": false,
+    "daemon_or_loop_started": false,
+    "external_api_called": false,
+    "ai_model_called": false,
+    "binance_called": false,
+    "rss_called": false,
+    "tg_sent": false,
+    "files_deleted": false,
+    "v116_history_modified": false,
+    "credentials_printed": false,
+    "source_data": "v118C local result file only (no network)",
+    "cards_reviewed": 5,
+    "cards_sent": 0,
+    "message_count": 0,
+    "note": "This is a LOCAL-ONLY / NO-SEND review. No Telegram, Binance, RSS, AI/model, or any external service was called during this run. All decisions are derived from pre-existing v118C local results."
+  },
+  "production_readiness": {
+    "production_ready": false,
+    "production_readiness_score": "0/5",
+    "criteria": [
+      {
+        "criterion": "automated_multi_asset_sync",
+        "status": "not_met",
+        "reason": "Free public API only — no institutional-grade data feed"
+      },
+      {
+        "criterion": "automated_price_oi_volume",
+        "status": "not_met",
+        "reason": "Anomaly detection threshold-based only — no ML/statistical model"
+      },
+      {
+        "criterion": "news_event_processing",
+        "status": "not_met",
+        "reason": "Rule-based keyword matching — NO AI/model, not causal proof, observation only"
+      },
+      {
+        "criterion": "liquidation_pressure_automation",
+        "status": "not_met",
+        "reason": "Calm market correctly blocks — requires high-volatility regime detection"
+      },
+      {
+        "criterion": "whale_position_attribution",
+        "status": "not_met",
+        "reason": "Manual address attribution evidence required — no automated solution"
+      }
+    ],
+    "assessment": "NOT FOR LIVE USE. All 5 production readiness criteria remain unmet. The system operates on free public data sources only. News event extraction is rule-based, not causal. Liquidation gate requires high-volatility detection. Whale tracking requires manual address attribution. No automated decision-making is production-grade."
+  },
+  "contract_validation": {
+    "all_passed": true,
+    "checks": [
+      {
+        "check": "five_card_families_present",
+        "passed": true,
+        "detail": "Present: ['liquidation_pressure', 'multi_asset_market_sync', 'news_event_market_impact', 'price_oi_volume_anomaly', 'whale_position_alert']"
+      },
+      {
+        "check": "decisions_in_allowed_set",
+        "passed": true,
+        "detail": "All valid"
+      },
+      {
+        "check": "whale_position_alert_is_manual_required",
+        "passed": true,
+        "detail": "manual_required"
+      },
+      {
+        "check": "liquidation_pressure_is_reject",
+        "passed": true,
+        "detail": "reject"
+      },
+      {
+        "check": "news_event_observation_only",
+        "passed": true,
+        "detail": "observation_only=True"
+      },
+      {
+        "check": "news_event_not_causal_proof",
+        "passed": true,
+        "detail": "not_causal_proof=True"
+      },
+      {
+        "check": "production_readiness_false",
+        "passed": true,
+        "detail": "0/5 — NOT FOR LIVE USE"
+      },
+      {
+        "check": "html_has_five_card_families",
+        "passed": true,
+        "detail": "All 5 families found in HTML"
+      },
+      {
+        "check": "html_has_no_send_markers",
+        "passed": true,
+        "detail": "Markers found: ['telegram_send=false', 'x_twitter_send=false', 'production_send=false', 'daemon_or_loop_started=false']"
+      },
+      {
+        "check": "html_no_raw_secrets",
+        "passed": true,
+        "detail": "Clean"
+      },
+      {
+        "check": "html_has_four_decision_types",
+        "passed": true,
+        "detail": "accept=True, watch=True, reject=True, manual_required=True"
+      },
+      {
+        "check": "html_production_readiness_false_marker",
+        "passed": true,
+        "detail": "0/5 and NOT FOR PRODUCTION USE found in HTML"
+      },
+      {
+        "check": "html_well_formed",
+        "passed": true,
+        "detail": "HTML document structure valid"
+      }
+    ],
+    "validated_at": "2026-06-05T18:21:34+08:00"
+  },
+  "safety": {
+    "external_api_called": false,
+    "tg_sent_this_run": false,
+    "tg_message_count_this_run": 0,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "binance_called": false,
+    "rss_called": false,
+    "v116_history_modified": false
+  }
+}

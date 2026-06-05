@@ -1,0 +1,50 @@
+{
+  "version": "v1.12-J",
+  "schema_version": "1.0.0",
+  "run_id": "20260604_202718",
+  "generated_at": "2026-06-05 04:13:19 UTC+8",
+  "input_envelope_count": 13,
+  "input_decision_count": 13,
+  "eligible_signal_count": 9,
+  "blocked_signal_count": 4,
+  "proposed_state_entry_count": 9,
+  "top_ranked_signal_id": "sig-mams-018a768f-202606041430",
+  "top_ranked_card_type": "multi_asset_market_sync",
+  "card_type_summary": {
+    "multi_asset_market_sync": {
+      "total": 3,
+      "eligible": 3,
+      "blocked": 0
+    },
+    "news_event_market_impact": {
+      "total": 3,
+      "eligible": 2,
+      "blocked": 1
+    },
+    "liquidation_pressure": {
+      "total": 3,
+      "eligible": 2,
+      "blocked": 1
+    },
+    "whale_position_alert": {
+      "total": 3,
+      "eligible": 2,
+      "blocked": 1
+    },
+    "price_oi_volume_anomaly": {
+      "total": 1,
+      "eligible": 0,
+      "blocked": 1
+    }
+  },
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "full_wallet_leak": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "live_ready": false,
+  "dry_run_only": true,
+  "production_send_allowed": false
+}

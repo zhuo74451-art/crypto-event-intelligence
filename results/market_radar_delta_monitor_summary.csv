@@ -1,0 +1,18 @@
+﻿metric,value,note
+total_snapshots,65,
+distinct_times,10,
+has_size_field,True,szi_abs from HL position_state
+delta_basis_size,11,
+delta_basis_notional_fallback,0,
+delta_basis_unavailable,16,no prior snapshot
+triggered_count,2,
+price_drift_noise_count,6,"size=0, notional moved"
+cooldown_applied,0,30min cooldown
+profile_profile_enabled,True,
+profile_profile_reason,,
+profile_profile_snapshot_count,10,
+profile_profile_time_span_minutes,60.1,
+profile_watchlist_rank_label,HYPE 监控池 Top 3,
+profile_behavior_labels,['持仓新高'],
+profile_risk_labels,[],
+profile_profile_text,HYPE 监控池 Top 3；持仓新高。,

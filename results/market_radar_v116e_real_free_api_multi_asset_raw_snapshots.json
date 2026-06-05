@@ -1,0 +1,62 @@
+{
+  "event_id": "real_multi_asset_sync_20260605_115925",
+  "observed_at": "2026-06-05T11:59:25.707856+08:00",
+  "window_minutes": 30,
+  "assets": [
+    {
+      "asset": "BTC",
+      "symbol": "BTCUSDT",
+      "price": 62718.31,
+      "price_change_pct": -2.514,
+      "volume_quote_usd": 1952384788.0,
+      "volume_change_pct": -1.257,
+      "open_interest": 100071.72,
+      "oi_change_pct": 0.0,
+      "funding_rate": 1.315e-05,
+      "liquidation_usd": 0.0,
+      "high_24h": 64764.32,
+      "low_24h": 62205.0,
+      "is_fixture": false,
+      "data_source": "binance_public_api"
+    },
+    {
+      "asset": "ETH",
+      "symbol": "ETHUSDT",
+      "price": 1728.95,
+      "price_change_pct": -4.371,
+      "volume_quote_usd": 947096075.8,
+      "volume_change_pct": -2.1855,
+      "open_interest": 2275527.21,
+      "oi_change_pct": 0.0,
+      "funding_rate": 4.67e-05,
+      "liquidation_usd": 0.0,
+      "high_24h": 1818.0,
+      "low_24h": 1722.36,
+      "is_fixture": false,
+      "data_source": "binance_public_api"
+    },
+    {
+      "asset": "SOL",
+      "symbol": "SOLUSDT",
+      "price": 67.03,
+      "price_change_pct": -6.212,
+      "volume_quote_usd": 267264105.74,
+      "volume_change_pct": -3.106,
+      "open_interest": 10274870.63,
+      "oi_change_pct": 0.0,
+      "funding_rate": -9.673e-05,
+      "liquidation_usd": 0.0,
+      "high_24h": 71.8,
+      "low_24h": 66.94,
+      "is_fixture": false,
+      "data_source": "binance_public_api"
+    }
+  ],
+  "asset_count": 3,
+  "api_source": "Binance public REST endpoints (no API key)",
+  "api_key_required": false,
+  "is_fixture": false,
+  "data_mode": "real_external_api",
+  "real_external_api_called": true,
+  "fetch_timestamp_utc": "2026-06-05T03:59:25.708113+00:00"
+}

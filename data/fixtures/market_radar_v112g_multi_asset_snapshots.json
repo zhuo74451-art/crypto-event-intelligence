@@ -1,0 +1,318 @@
+{
+  "version": "v1.12-G",
+  "mode": "multi_asset_market_sync_local_correlation",
+  "description": "Multi-asset snapshot fixture for v112g local correlation adapter. 8 samples: 5 valid sync signals across various sync types, 3 blocked/invalid samples.",
+  "generated_at": "2026-06-04T20:27:18+08:00",
+  "total_snapshots": 8,
+  "valid_count": 5,
+  "blocked_count": 3,
+  "snapshots": [
+    {
+      "event_id": "multi_sync_v112g_001_btc_eth_risk_on",
+      "observed_at": "2026-06-04T14:30:00+08:00",
+      "window_minutes": 30,
+      "expected_sync_type": "market_wide_risk_on",
+      "expected_direction": "up",
+      "expected_primary_assets": ["BTC", "ETH"],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "note": "BTC and ETH synchronous rally with OI and volume surge — classic market-wide risk-on signal.",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 5.2,
+          "volume_change_pct": 95.0,
+          "oi_change_pct": 8.5,
+          "funding_rate": 0.012,
+          "liquidation_usd": 85000000
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 4.8,
+          "volume_change_pct": 88.0,
+          "oi_change_pct": 7.2,
+          "funding_rate": 0.010,
+          "liquidation_usd": 62000000
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": 6.1,
+          "volume_change_pct": 105.0,
+          "oi_change_pct": 9.8,
+          "funding_rate": 0.018,
+          "liquidation_usd": 18000000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_002_l2_beta_sync",
+      "observed_at": "2026-06-04T15:15:00+08:00",
+      "window_minutes": 45,
+      "expected_sync_type": "l2_beta_sync",
+      "expected_direction": "up",
+      "expected_primary_assets": ["ETH", "OP", "ARB"],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "note": "ETH, OP, ARB L2 ecosystem synchronous surge — high-beta L2 assets moving together on ETH catalyst.",
+      "assets": [
+        {
+          "asset": "ETH",
+          "price_change_pct": 3.8,
+          "volume_change_pct": 72.0,
+          "oi_change_pct": 5.5,
+          "funding_rate": 0.008,
+          "liquidation_usd": 35000000
+        },
+        {
+          "asset": "OP",
+          "price_change_pct": 8.5,
+          "volume_change_pct": 150.0,
+          "oi_change_pct": 18.0,
+          "funding_rate": 0.025,
+          "liquidation_usd": 4200000
+        },
+        {
+          "asset": "ARB",
+          "price_change_pct": 7.2,
+          "volume_change_pct": 135.0,
+          "oi_change_pct": 15.5,
+          "funding_rate": 0.022,
+          "liquidation_usd": 3800000
+        },
+        {
+          "asset": "MATIC",
+          "price_change_pct": 5.1,
+          "volume_change_pct": 92.0,
+          "oi_change_pct": 10.2,
+          "funding_rate": 0.015,
+          "liquidation_usd": 2500000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_003_exchange_token_sync",
+      "observed_at": "2026-06-04T16:00:00+08:00",
+      "window_minutes": 60,
+      "expected_sync_type": "exchange_token_sync",
+      "expected_direction": "up",
+      "expected_primary_assets": ["BNB", "OKB"],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "note": "BNB and OKB exchange tokens moving together — sector rotation into exchange tokens.",
+      "assets": [
+        {
+          "asset": "BNB",
+          "price_change_pct": 4.5,
+          "volume_change_pct": 85.0,
+          "oi_change_pct": 6.8,
+          "funding_rate": 0.009,
+          "liquidation_usd": 12000000
+        },
+        {
+          "asset": "OKB",
+          "price_change_pct": 3.9,
+          "volume_change_pct": 78.0,
+          "oi_change_pct": 5.5,
+          "funding_rate": 0.007,
+          "liquidation_usd": 3200000
+        },
+        {
+          "asset": "BGB",
+          "price_change_pct": 3.2,
+          "volume_change_pct": 65.0,
+          "oi_change_pct": 4.8,
+          "funding_rate": 0.006,
+          "liquidation_usd": 1800000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_004_stablecoin_stress",
+      "observed_at": "2026-06-04T17:30:00+08:00",
+      "window_minutes": 20,
+      "expected_sync_type": "stablecoin_liquidity_stress",
+      "expected_direction": "down",
+      "expected_primary_assets": ["USDT", "USDC", "DAI"],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "note": "Stablecoin deviation from peg with massive volume surge — liquidity stress event.",
+      "assets": [
+        {
+          "asset": "USDT",
+          "price_change_pct": -1.2,
+          "volume_change_pct": 350.0,
+          "oi_change_pct": 25.0,
+          "funding_rate": -0.050,
+          "liquidation_usd": 150000000
+        },
+        {
+          "asset": "USDC",
+          "price_change_pct": -0.9,
+          "volume_change_pct": 280.0,
+          "oi_change_pct": 22.0,
+          "funding_rate": -0.045,
+          "liquidation_usd": 95000000
+        },
+        {
+          "asset": "DAI",
+          "price_change_pct": -0.8,
+          "volume_change_pct": 220.0,
+          "oi_change_pct": 18.0,
+          "funding_rate": -0.040,
+          "liquidation_usd": 35000000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_005_market_wide_risk_off",
+      "observed_at": "2026-06-04T18:00:00+08:00",
+      "window_minutes": 30,
+      "expected_sync_type": "market_wide_risk_off",
+      "expected_direction": "down",
+      "expected_primary_assets": ["BTC", "ETH", "SOL"],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "note": "Broad market sell-off — BTC, ETH, SOL all down with OI declining and volume surging.",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": -6.5,
+          "volume_change_pct": 180.0,
+          "oi_change_pct": -12.0,
+          "funding_rate": -0.035,
+          "liquidation_usd": 320000000
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": -7.8,
+          "volume_change_pct": 210.0,
+          "oi_change_pct": -15.5,
+          "funding_rate": -0.042,
+          "liquidation_usd": 185000000
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": -9.2,
+          "volume_change_pct": 250.0,
+          "oi_change_pct": -18.0,
+          "funding_rate": -0.055,
+          "liquidation_usd": 45000000
+        },
+        {
+          "asset": "AVAX",
+          "price_change_pct": -5.8,
+          "volume_change_pct": 165.0,
+          "oi_change_pct": -10.5,
+          "funding_rate": -0.028,
+          "liquidation_usd": 8500000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_006_blocked_insufficient_assets",
+      "observed_at": "2026-06-04T18:45:00+08:00",
+      "window_minutes": 30,
+      "expected_sync_type": "unknown",
+      "expected_direction": "up",
+      "expected_primary_assets": [],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "block_reason": "insufficient_assets",
+      "note": "Blocked: only 1 asset moving — insufficient for multi-asset sync detection.",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 3.5,
+          "volume_change_pct": 45.0,
+          "oi_change_pct": 2.5,
+          "funding_rate": 0.005,
+          "liquidation_usd": 25000000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_007_blocked_direction_conflict",
+      "observed_at": "2026-06-04T19:15:00+08:00",
+      "window_minutes": 30,
+      "expected_sync_type": "unknown",
+      "expected_direction": "neutral",
+      "expected_primary_assets": [],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "block_reason": "direction_conflict",
+      "note": "Blocked: assets split 2 up / 2 down — no consensus direction, agreement=0.5 < 0.66.",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 4.2,
+          "volume_change_pct": 85.0,
+          "oi_change_pct": 7.5,
+          "funding_rate": 0.010,
+          "liquidation_usd": 55000000
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": -3.8,
+          "volume_change_pct": 78.0,
+          "oi_change_pct": -5.0,
+          "funding_rate": -0.008,
+          "liquidation_usd": 42000000
+        },
+        {
+          "asset": "SOL",
+          "price_change_pct": 5.1,
+          "volume_change_pct": 92.0,
+          "oi_change_pct": 8.0,
+          "funding_rate": 0.012,
+          "liquidation_usd": 18000000
+        },
+        {
+          "asset": "AVAX",
+          "price_change_pct": -4.5,
+          "volume_change_pct": 82.0,
+          "oi_change_pct": -6.0,
+          "funding_rate": -0.010,
+          "liquidation_usd": 9500000
+        }
+      ]
+    },
+    {
+      "event_id": "multi_sync_v112g_008_blocked_small_amplitude",
+      "observed_at": "2026-06-04T20:00:00+08:00",
+      "window_minutes": 30,
+      "expected_sync_type": "unknown",
+      "expected_direction": "up",
+      "expected_primary_assets": [],
+      "is_fixture": true,
+      "data_mode": "fixture",
+      "block_reason": "small_amplitude",
+      "note": "Blocked: assets moving together but amplitude too small to be meaningful.",
+      "assets": [
+        {
+          "asset": "BTC",
+          "price_change_pct": 1.5,
+          "volume_change_pct": 25.0,
+          "oi_change_pct": 1.8,
+          "funding_rate": 0.003,
+          "liquidation_usd": 8500000
+        },
+        {
+          "asset": "ETH",
+          "price_change_pct": 1.8,
+          "volume_change_pct": 30.0,
+          "oi_change_pct": 2.1,
+          "funding_rate": 0.004,
+          "liquidation_usd": 6200000
+        },
+        {
+          "asset": "BNB",
+          "price_change_pct": 1.2,
+          "volume_change_pct": 22.0,
+          "oi_change_pct": 1.5,
+          "funding_rate": 0.002,
+          "liquidation_usd": 3500000
+        }
+      ]
+    }
+  ]
+}

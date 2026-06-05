@@ -1,0 +1,88 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_164648",
+  "task_id": "20260605_v117e_news_event_market_impact_real_public_source_tg_one_shot",
+  "generated_at": "2026-06-05T16:47:17+08:00",
+  "type": "real_free_public_source_news_event_tg_one_shot",
+  "card_family": "news_event_market_impact",
+  "run_status": "pipeline_passed_but_tg_not_sent",
+  "source_summary": {
+    "sources_attempted": 5,
+    "sources_succeeded": 1,
+    "articles_fetched": 80,
+    "events_found": 14,
+    "event_extracted": true,
+    "all_public_sources_unavailable": false
+  },
+  "event_summary": {
+    "source_name": "Binance Announcements",
+    "title": "Introducing Genius Terminal (GENIUS) on Binance HODLer Airdrops! Earn GENIUS With Retroactive BNB Simple Earn Subscriptions",
+    "url_redacted": "sha256:db4841adb2c8",
+    "url_domain": "binanceannouncements.com",
+    "event_type": "airdrop",
+    "intensity": "medium",
+    "attribution_risk": "direct",
+    "assets_affected": [
+      "BNB"
+    ],
+    "observation_only": true,
+    "not_causal_proof": true
+  },
+  "market_data_summary": {
+    "market_api_success": false,
+    "assets_with_data": [],
+    "asset_count_with_data": 0
+  },
+  "gate_allow": true,
+  "gate_reason": "News event with medium intensity accepted",
+  "send_readiness_allow_test_group": true,
+  "send_readiness_production_send_ready": false,
+  "send_readiness_block_x_twitter": true,
+  "send_readiness_block_daemon_cron_loop": true,
+  "tg_result": {
+    "attempted": true,
+    "success": false,
+    "status": "failed",
+    "reason": "TG send failed: [NETWORK_TIMEOUT] TG API request timed out",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": false,
+    "token_proof_present": true,
+    "chat_id_proof_present": true,
+    "credentials_printed": false
+  },
+  "pipeline_passed": true,
+  "pipeline_error": null,
+  "card_observation_only": true,
+  "card_not_causal_proof": true,
+  "sources_detail": [
+    {
+      "source_name": "Binance Announcements",
+      "source_domain": "binanceannouncements.com",
+      "status": "ok",
+      "article_count": 80
+    }
+  ],
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": false,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false,
+    "observation_only": true,
+    "not_causal_proof": true
+  },
+  "preflight": {
+    "safe_loader_found": true,
+    "load_success": true,
+    "config_ready": true,
+    "bot_token_present": true,
+    "chat_id_present": true
+  }
+}

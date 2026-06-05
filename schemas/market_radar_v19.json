@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "market_radar_v19",
+  "title": "Market Radar v1.9A Manifest Schema Contract",
+  "description": "Single-source schema contract for Market Radar sender, generator, and history components. Defines two field tiers: Strict Core (missing → reject) and Flexible Payload (missing → warning only). v1.9A-S2 adds schema_version, Runtime Source constraints, type/value-range validation, PolicyReceipt, and Flexible Payload sanitization.",
+  "version": "v1.9A-s2",
+  "project_label": "market_radar",
+
+  "strict_core": {
+    "description": "Fields that MUST be present in every manifest. Missing any of these raises ValueError.",
+    "fields": {
+      "schema_version": {
+        "type": "string",
+        "description": "Schema version identifier for compatibility checking. Must match '1.9A-S2'.",
+        "required": true,
+        "example": "1.9A-S2"
+      },
+      "artifact_id": {
+        "type": "string",
+        "description": "Unique artifact identifier, e.g. 'market_radar::static_position_v18g'",
+        "required": true,
+        "example": "market_radar::static_position_v18g"
+      },
+      "project_label": {
+        "type": "string",
+        "description": "Project namespace label, always 'market_radar'",
+        "required": true,
+        "example": "market_radar"
+      },
+      "created_at": {
+        "type": "string",
+        "description": "ISO 8601 creation timestamp with timezone",
+        "required": true,
+        "example": "2026-06-04T10:54:25+08:00"
+      },
+      "candidate_md_path": {
+        "type": "string",
+        "description": "Relative path to the candidate markdown file from project root. Must be relative, no ../, allowed prefixes: results/, runs/, schemas/",
+        "required": true,
+        "example": "results/static_position_v18g_send_candidate.md"
+      },
+      "candidate_json_path": {
+        "type": "string",
+        "description": "Relative path to the candidate JSON metadata file from project root. Must be relative, no ../, allowed prefixes: results/, runs/, schemas/",
+        "required": true,
+        "example": "results/static_position_v18g_send_candidate.json"
+      },
+      "preview_report_path": {
+        "type": "string",
+        "description": "Relative path to the preview gate report markdown file from project root. Must be relative, no ../, allowed prefixes: results/, runs/, schemas/",
+        "required": true,
+        "example": "results/static_position_v18h_preview_report.md"
+      },
+      "parse_mode": {
+        "type": "string",
+        "description": "Telegram parse mode for message rendering. Normalized to canonical: HTML, MarkdownV2, PlainText.",
+        "required": true,
+        "enum": ["HTML", "MarkdownV2", "PlainText"],
+        "default": "HTML",
+        "example": "HTML"
+      },
+      "target_type": {
+        "type": "string",
+        "description": "Target delivery channel type. Canonical: group, supergroup, test_group, fake.",
+        "required": true,
+        "enum": ["group", "supergroup", "test_group", "fake"],
+        "default": "group",
+        "example": "group"
+      },
+      "max_send_count": {
+        "type": "integer",
+        "description": "Maximum number of times this artifact can be sent. Must be int >= 1. Lane 1 policy trims > 1 to 1.",
+        "required": true,
+        "minimum": 1,
+        "default": 1,
+        "example": 1
+      },
+      "blocked": {
+        "type": "boolean",
+        "description": "Whether this artifact is blocked from sending. Must be bool.",
+        "required": true,
+        "default": false,
+        "example": false
+      },
+      "leak_count": {
+        "type": "integer",
+        "description": "Number of sensitive information leaks detected. Must be int >= 0.",
+        "required": true,
+        "minimum": 0,
+        "default": 0,
+        "example": 0
+      },
+      "full_address_count": {
+        "type": "integer",
+        "description": "Number of full wallet addresses detected in the candidate. Must be int >= 0.",
+        "required": true,
+        "minimum": 0,
+        "default": 0,
+        "example": 0
+      }
+    }
+  },
+
+  "flexible_payload": {
+    "description": "Fields that are optional. Missing any of these logs a warning but does NOT block the manifest. S2 adds sanitization: truncation, control character removal, and parse-mode-specific escaping.",
+    "fields": {
+      "token_name": {
+        "type": ["string", "null"],
+        "description": "Token name, e.g. 'ETH', 'BTC'. Sanitized: max 32 chars, control chars removed.",
+        "required": false,
+        "example": "ETH"
+      },
+      "symbol": {
+        "type": ["string", "null"],
+        "description": "Trading symbol, e.g. '$ETH', 'BTCUSDT'. Sanitized: max 16 chars, control chars removed.",
+        "required": false,
+        "example": "$ETH"
+      },
+      "wallet_short": {
+        "type": ["string", "null"],
+        "description": "Shortened wallet address, e.g. '0x082e...ca88'. Sanitized: max 24 chars, control chars removed.",
+        "required": false,
+        "example": "0x082e...ca88"
+      },
+      "side": {
+        "type": ["string", "null"],
+        "description": "Trade direction: long / short / neutral",
+        "required": false,
+        "enum": ["long", "short", "neutral", null],
+        "example": "long"
+      },
+      "pnl": {
+        "type": ["number", "string", "null"],
+        "description": "Profit and loss value or percentage string",
+        "required": false,
+        "example": "+12.5%"
+      },
+      "entry_price": {
+        "type": ["number", "string", "null"],
+        "description": "Entry price of the position",
+        "required": false,
+        "example": "1850.50"
+      },
+      "liquidation_distance": {
+        "type": ["number", "string", "null"],
+        "description": "Distance to liquidation price, e.g. '-8.2%' or numeric",
+        "required": false,
+        "example": "-8.2%"
+      },
+      "extra_context": {
+        "type": ["object", "null"],
+        "description": "Arbitrary extra context as key-value pairs. Sanitized: max 280 chars when serialized.",
+        "required": false,
+        "example": {}
+      }
+    }
+  },
+
+  "strict_core_field_names": [
+    "schema_version",
+    "artifact_id",
+    "project_label",
+    "created_at",
+    "candidate_md_path",
+    "candidate_json_path",
+    "preview_report_path",
+    "parse_mode",
+    "target_type",
+    "max_send_count",
+    "blocked",
+    "leak_count",
+    "full_address_count"
+  ],
+
+  "flexible_payload_field_names": [
+    "token_name",
+    "symbol",
+    "wallet_short",
+    "side",
+    "pnl",
+    "entry_price",
+    "liquidation_distance",
+    "extra_context"
+  ],
+
+  "runtime_source_fields": [
+    "candidate_md_path",
+    "candidate_json_path",
+    "preview_report_path"
+  ],
+
+  "runtime_source_allowed_prefixes": [
+    "results/",
+    "runs/",
+    "schemas/"
+  ]
+}

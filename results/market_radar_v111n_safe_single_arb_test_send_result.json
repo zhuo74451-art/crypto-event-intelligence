@@ -1,0 +1,60 @@
+{
+  "version": "v1.11-N",
+  "mode": "safe_single_arb_test_send",
+  "status": "blocked",
+  "reason": "missing_runtime_test_channel_credentials",
+  "detail": "TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in runtime environment",
+  "real_tg_sent": false,
+  "attempted_count": 0,
+  "sent_count": 0,
+  "official_channel_touched": false,
+  "secret_printed": false,
+  "validation": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "public_card.text non-empty",
+        "passed": true,
+        "actual": "length=358"
+      },
+      {
+        "check": "redaction_check.passed",
+        "passed": true,
+        "actual": true
+      },
+      {
+        "check": "asset=ARB",
+        "passed": true,
+        "actual": "ARB"
+      },
+      {
+        "check": "signal_id=H6-07",
+        "passed": true,
+        "actual": "H6-07"
+      },
+      {
+        "check": "no debug/gate terms",
+        "passed": true,
+        "actual": "none"
+      },
+      {
+        "check": "no mock terms",
+        "passed": true,
+        "actual": "clean"
+      },
+      {
+        "check": "no token/chat_id in text",
+        "passed": true,
+        "actual": "clean"
+      }
+    ],
+    "reason": "All pre-send validations passed"
+  },
+  "candidate_source": {
+    "source_version": "v1.11-L",
+    "debug_leak_count": 0,
+    "best_candidate_asset": "ARB"
+  },
+  "sender_version": "v1.11-n",
+  "generated_at": "2026-06-04 21:25:19 UTC+8"
+}

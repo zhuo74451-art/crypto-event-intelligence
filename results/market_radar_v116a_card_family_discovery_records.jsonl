@@ -1,0 +1,5 @@
+{"card_family": "price_oi_volume_anomaly", "display_name": "多因子价格异动卡", "source": "market_radar_card_type_registry_v112a", "evidence_file_count": 28, "discovered_at": "2026-06-05T09:50:33.070144+08:00"}
+{"card_family": "whale_position_alert", "display_name": "巨鲸仓位警报卡", "source": "market_radar_card_type_registry_v112a", "evidence_file_count": 252, "discovered_at": "2026-06-05T09:50:33.070144+08:00"}
+{"card_family": "liquidation_pressure", "display_name": "清算压力预警卡", "source": "market_radar_card_type_registry_v112a", "evidence_file_count": 45, "discovered_at": "2026-06-05T09:50:33.070144+08:00"}
+{"card_family": "multi_asset_market_sync", "display_name": "多资产共振卡", "source": "market_radar_card_type_registry_v112a", "evidence_file_count": 18, "discovered_at": "2026-06-05T09:50:33.070144+08:00"}
+{"card_family": "news_event_market_impact", "display_name": "新闻事件影响卡", "source": "market_radar_card_type_registry_v112a", "evidence_file_count": 16, "discovered_at": "2026-06-05T09:50:33.070144+08:00"}

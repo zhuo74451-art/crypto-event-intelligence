@@ -1,0 +1,1222 @@
+{
+  "version": "v1.11-I",
+  "mode": "dry_run_pre_test_send_rehearsal",
+  "tg_sent": false,
+  "secrets_loaded": false,
+  "official_channel_touched": false,
+  "total_signals": 26,
+  "summary": {
+    "ready_to_test_send": 12,
+    "needs_editor_review": 0,
+    "observe_only": 2,
+    "blocked": 12
+  },
+  "top_ready_candidates": [
+    {
+      "rank": 1,
+      "signal_id": "H6-07",
+      "asset": "ARB",
+      "value_score": 140,
+      "composite_score": 225,
+      "recommendation_reasons": [
+        "multi-factor confirmation (price + OI + volume)",
+        "upgrade signal detected",
+        "OI/volume backed",
+        "not price-only noise",
+        "card text 411 chars (TG-safe)"
+      ],
+      "payload_preview": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 跌幅 8\\.50%，价值: allow, 冷却: upgrade\\_override \\(score↑\\), 安全: pass\n\n● 币种：ARB\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-1\\.80%（年化 \\-1971\\.0%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)"
+    },
+    {
+      "rank": 2,
+      "signal_id": "H5-01",
+      "asset": "ETH",
+      "value_score": 115,
+      "composite_score": 200,
+      "recommendation_reasons": [
+        "multi-factor confirmation (price + OI + volume)",
+        "upgrade signal detected",
+        "OI/volume backed",
+        "not price-only noise",
+        "card text 385 chars (TG-safe)"
+      ],
+      "payload_preview": "📉 行情异动｜ETH 急跌\n\n一句话：ETH 跌幅 8\\.50%，强信号: OI\\+Vol\\+Funding 全确认 \\(score\\~100\\)\n\n● 币种：ETH\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-2\\.50%（年化 \\-2737\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH "
+    },
+    {
+      "rank": 3,
+      "signal_id": "H1-01",
+      "asset": "ETH",
+      "value_score": 120,
+      "composite_score": 190,
+      "recommendation_reasons": [
+        "multi-factor confirmation (price + OI + volume)",
+        "OI/volume backed",
+        "not price-only noise",
+        "card text 359 chars (TG-safe)"
+      ],
+      "payload_preview": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 24h 跌幅 6\\.80%，OI\\+Vol\\+Funding 极端四重确认\n\n● 币种：ETH\n● 涨跌幅：\\-6\\.80%\n● Funding：\\-1\\.50%（年化 \\-1642\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 24h 跌幅 6\\.80%"
+    }
+  ],
+  "all_records": [
+    {
+      "scenario_id": "H1",
+      "signal_id": "H1-00",
+      "asset": "BTC",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-5.54%) >= 5%",
+          "oi_confirmation: open_interest=1826000000.0",
+          "volume_confirmation: volume=6345000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of BTC — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜BTC 下跌\n\n一句话：BTC 24h 跌幅 5\\.54%，OI $1\\.83B \\+ Vol $6\\.35B 三重确认\n\n● 币种：BTC\n● 涨跌幅：\\-5\\.54%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/bitcoin\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=BTC\\)\n\n💡 触发原因：BTC 24h 跌幅 5\\.54%，OI $1\\.83B \\+ Vol $6\\.35B 三",
+        "text_length": 338
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H1",
+      "signal_id": "H1-01",
+      "asset": "ETH",
+      "value_gate": {
+        "decision": "allow",
+        "score": 120,
+        "reasons": [
+          "price_move: abs(-6.80%) >= 5%",
+          "oi_confirmation: open_interest=12900000000.0",
+          "volume_confirmation: volume=16000000000.0",
+          "funding_extreme: abs(funding)=0.0150 >= 0.01",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of ETH — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 24h 跌幅 6\\.80%，OI\\+Vol\\+Funding 极端四重确认\n\n● 币种：ETH\n● 涨跌幅：\\-6\\.80%\n● Funding：\\-1\\.50%（年化 \\-1642\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 24h 跌幅 6\\.80%",
+        "text_length": 359
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=120 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H1",
+      "signal_id": "H1-02",
+      "asset": "SOL",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.24%) >= 5%",
+          "oi_confirmation: open_interest=278000000.0",
+          "volume_confirmation: volume=527000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of SOL — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜SOL 下跌\n\n一句话：SOL 24h 跌幅 7\\.24%，OI $278M \\+ Vol $527M 三重确认\n\n● 币种：SOL\n● 涨跌幅：\\-7\\.24%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/solana\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=SOL\\)\n\n💡 触发原因：SOL 24h 跌幅 7\\.24%，OI $278M \\+ Vol $527M 三重确认\n\n⚠️ 行",
+        "text_length": 329
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H1",
+      "signal_id": "H1-03",
+      "asset": "SUI",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-5.83%) >= 5%",
+          "oi_confirmation: open_interest=28000000.0",
+          "volume_confirmation: volume=21500000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of SUI — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜SUI 下跌\n\n一句话：SUI 24h 跌幅 5\\.83%，OI $28M \\+ Vol $21\\.5M 三重确认\n\n● 币种：SUI\n● 涨跌幅：\\-5\\.83%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/sui\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=SUI\\)\n\n💡 触发原因：SUI 24h 跌幅 5\\.83%，OI $28M \\+ Vol $21\\.5M 三重确认\n\n⚠️ 行情",
+        "text_length": 328
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H2",
+      "signal_id": "H2-00",
+      "asset": "DOT",
+      "value_gate": {
+        "decision": "block",
+        "score": 50,
+        "reasons": [
+          "oi_confirmation: open_interest=200000000.0",
+          "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+          "price_move not hit — no significant price change detected"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of DOT — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "SignalValueGate blocked: score=50, tier=medium",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": false,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H2",
+      "signal_id": "H2-01",
+      "asset": "LINK",
+      "value_gate": {
+        "decision": "block",
+        "score": 10,
+        "reasons": [
+          "multi_asset_sync: 4 real assets in same direction (down) — NO OI/volume backing (half score)",
+          "price_move not hit — no significant price change detected"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of LINK — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "SignalValueGate blocked: score=10, tier=low",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": false,
+        "has_multi_factor_support": false,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H2",
+      "signal_id": "H2-02",
+      "asset": "MATIC",
+      "value_gate": {
+        "decision": "block",
+        "score": 70,
+        "reasons": [
+          "oi_confirmation: open_interest=50000000.0",
+          "volume_confirmation: volume=120000000.0",
+          "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+          "price_move not hit — no significant price change detected"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of MATIC — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "SignalValueGate blocked: score=70, tier=high",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H3",
+      "signal_id": "H3-00",
+      "asset": "ARB",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.55%) >= 5%",
+          "oi_confirmation: open_interest=4656700.0",
+          "volume_confirmation: volume=4942400.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of ARB — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ARB 下跌\n\n一句话：ARB 24h 跌幅 7\\.55%，第 1 次触发 \\(T\\+0min\\)\n\n● 币种：ARB\n● 涨跌幅：\\-7\\.55%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)\n\n💡 触发原因：ARB 24h 跌幅 7\\.55%，第 1 次触发 \\(T\\+0min\\)\n\n⚠️ 行情异动不代表交易方向，请",
+        "text_length": 317
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H3",
+      "signal_id": "H3-01",
+      "asset": "ARB",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.82%) >= 5%",
+          "oi_confirmation: open_interest=4612000.0",
+          "volume_confirmation: volume=4955000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "cooldown_suppress",
+        "reason": "Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat."
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "CooldownGate suppressed: Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H3",
+      "signal_id": "H3-02",
+      "asset": "ARB",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.90%) >= 5%",
+          "oi_confirmation: open_interest=4588000.0",
+          "volume_confirmation: volume=4961000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "cooldown_suppress",
+        "reason": "Same-asset cooldown for ARB: last allowed 8.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat."
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "CooldownGate suppressed: Same-asset cooldown for ARB: last allowed 8.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H3",
+      "signal_id": "H3-03",
+      "asset": "SOL",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-6.80%) >= 5%",
+          "oi_confirmation: open_interest=278000000.0",
+          "volume_confirmation: volume=530000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of SOL — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜SOL 下跌\n\n一句话：SOL 24h 跌幅 6\\.80%，不同资产无冷却\n\n● 币种：SOL\n● 涨跌幅：\\-6\\.80%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/solana\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=SOL\\)\n\n💡 触发原因：SOL 24h 跌幅 6\\.80%，不同资产无冷却\n\n⚠️ 行情异动不代表交易方向，请结合其他信号判断，不构成交易建议。",
+        "text_length": 291
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H4",
+      "signal_id": "H4-00",
+      "asset": "AVAX",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-6.20%) >= 5%",
+          "oi_confirmation: open_interest=155000000.0",
+          "volume_confirmation: volume=220000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of AVAX — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "block",
+        "reasons": [
+          "source_type 'unknown' not allowed for test send"
+        ]
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜AVAX 下跌\n\n一句话：AVAX 跌幅 6\\.20%，source\\_type\\=unknown → trust block\n\n● 币种：AVAX\n● 涨跌幅：\\-6\\.20%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/avalanche\\-2\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=AVAX\\)\n\n💡 触发原因：AVAX 跌幅 6\\.20%，source\\_type\\=unknow",
+        "text_length": 350
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "Pre-send gate blocked: source_type 'unknown' not allowed for test send",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H4",
+      "signal_id": "H4-01",
+      "asset": "LTC",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-5.80%) >= 5%",
+          "oi_confirmation: open_interest=300000000.0",
+          "volume_confirmation: volume=450000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of LTC — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "block",
+        "reasons": [
+          "TTL expired: signal_type='market_anomaly' TTL=900s, age=7200s"
+        ]
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜LTC 下跌\n\n一句话：LTC 跌幅 5\\.80%，时间戳过期 \\(2h前\\) → TTL block\n\n● 币种：LTC\n● 涨跌幅：\\-5\\.80%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ltc\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=LTC\\)\n\n💡 触发原因：LTC 跌幅 5\\.80%，时间戳过期 \\(2h前\\) → TTL block\n\n⚠️ 行情异动不代表交易方向，请结",
+        "text_length": 316
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "Pre-send gate blocked: TTL expired: signal_type='market_anomaly' TTL=900s, age=7200s",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H4",
+      "signal_id": "H4-02",
+      "asset": "NEAR",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-5.50%) >= 5%",
+          "oi_confirmation: open_interest=80000000.0",
+          "volume_confirmation: volume=120000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of NEAR — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "block",
+        "reasons": [
+          "Payload text is empty or whitespace-only"
+        ]
+      },
+      "payload_render": {
+        "type": "mock",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "Markdown",
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "Pre-send gate blocked: Payload text is empty or whitespace-only",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H4",
+      "signal_id": "H4-03",
+      "asset": "OP",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.10%) >= 5%",
+          "oi_confirmation: open_interest=60000000.0",
+          "volume_confirmation: volume=90000000.0",
+          "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of OP — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "block",
+        "reasons": [
+          "Payload missing 'parse_mode' field"
+        ]
+      },
+      "payload_render": {
+        "type": "mock",
+        "success": true,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "Signal for OP",
+        "text_length": 13
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "Pre-send gate blocked: Payload missing 'parse_mode' field",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H5",
+      "signal_id": "H5-00",
+      "asset": "ETH",
+      "value_gate": {
+        "decision": "allow",
+        "score": 45,
+        "reasons": [
+          "price_move: abs(-5.50%) >= 5%",
+          "oi_confirmation: open_interest=12000000000.0",
+          "price_move + strong confirmation(s): oi_confirmation"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of ETH — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 跌幅 5\\.50%，中等信号: 价格\\+OI \\(score\\~55\\)\n\n● 币种：ETH\n● 涨跌幅：\\-5\\.50%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 跌幅 5\\.50%，中等信号: 价格\\+OI \\(score\\~55\\)\n\n⚠️ 行情异动不代表",
+        "text_length": 323
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=45 (tier=medium), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H5",
+      "signal_id": "H5-01",
+      "asset": "ETH",
+      "value_gate": {
+        "decision": "allow",
+        "score": 115,
+        "reasons": [
+          "price_move: abs(-8.50%) >= 5%",
+          "strong_price_move: abs(-8.50%) >= 8%",
+          "oi_confirmation: open_interest=12500000000.0",
+          "volume_confirmation: volume=18200000000.0",
+          "funding_extreme: abs(funding)=0.0250 >= 0.01",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "upgrade_override",
+        "reason": "Upgrade override for ETH: value_score improved from 45 → 115 (Δ+70 >= 15) within cooldown window — allow as upgrade"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ETH 急跌\n\n一句话：ETH 跌幅 8\\.50%，强信号: OI\\+Vol\\+Funding 全确认 \\(score\\~100\\)\n\n● 币种：ETH\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-2\\.50%（年化 \\-2737\\.5%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH ",
+        "text_length": 385
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=115 (tier=high), cooldown=upgrade_override, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, upgrade signal (score Δ ≥ 15), not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": true
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-00",
+      "asset": "BTC",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-5.54%) >= 5%",
+          "oi_confirmation: open_interest=1826000000.0",
+          "volume_confirmation: volume=6345000000.0",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of BTC — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜BTC 下跌\n\n一句话：BTC 24h 跌幅 5\\.54%，价值: allow, 冷却: allow, 安全: pass\n\n● 币种：BTC\n● 涨跌幅：\\-5\\.54%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/bitcoin\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=BTC\\)\n\n💡 触发原因：BTC 24h 跌幅 5\\.54%，价值: allow, 冷却: allow, 安全: p",
+        "text_length": 338
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-01",
+      "asset": "DOT",
+      "value_gate": {
+        "decision": "block",
+        "score": 50,
+        "reasons": [
+          "oi_confirmation: open_interest=120000000.0",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move not hit — no significant price change detected"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of DOT — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "SignalValueGate blocked: score=50, tier=medium",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": false,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-02",
+      "asset": "ARB",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.55%) >= 5%",
+          "oi_confirmation: open_interest=4656700.0",
+          "volume_confirmation: volume=4942400.0",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of ARB — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ARB 下跌\n\n一句话：ARB 24h 跌幅 7\\.55%，价值: allow, 冷却: allow \\(首次\\), 安全: pass\n\n● 币种：ARB\n● 涨跌幅：\\-7\\.55%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)\n\n💡 触发原因：ARB 24h 跌幅 7\\.55%，价值: allow, 冷却: allo",
+        "text_length": 353
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-03",
+      "asset": "LINK",
+      "value_gate": {
+        "decision": "observe",
+        "score": 20,
+        "reasons": [
+          "price_move: abs(-7.20%) >= 5%",
+          "multi_asset_sync: 10 real assets in same direction (down) — NO OI/volume backing (half score)",
+          "price_move hit but no strong confirmation factors present — observe only"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of LINK — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜LINK 下跌\n\n一句话：LINK 跌幅 7\\.20%，价值: observe \\(仅价格触发, 无确认因子\\)\n\n● 币种：LINK\n● 涨跌幅：\\-7\\.20%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/chainlink\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=LINK\\)\n\n💡 触发原因：LINK 跌幅 7\\.20%，价值: observe \\(仅价格触发, 无确认因子\\)\n\n",
+        "text_length": 333
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "observe_only",
+        "reason": "SignalValueGate=observe: score=20, insufficient confirmation factors",
+        "is_price_only_noise": true,
+        "has_oi_or_volume_support": false,
+        "has_multi_factor_support": false,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-04",
+      "asset": "ARB",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-7.70%) >= 5%",
+          "oi_confirmation: open_interest=4590000.0",
+          "volume_confirmation: volume=4960000.0",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "cooldown_suppress",
+        "reason": "Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat."
+      },
+      "pre_send_gate": {
+        "decision": "not_reached",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": false,
+        "fallback": false,
+        "parse_mode": null,
+        "text_preview": "",
+        "text_length": 0
+      },
+      "format_check": {
+        "markdown_or_html_safe": false,
+        "issues": [
+          "text is empty or whitespace-only"
+        ]
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "CooldownGate suppressed: Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-05",
+      "asset": "SUI",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-5.83%) >= 5%",
+          "oi_confirmation: open_interest=28000000.0",
+          "volume_confirmation: volume=21500000.0",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of SUI — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜SUI 下跌\n\n一句话：SUI 24h 跌幅 5\\.83%，价值: allow, 冷却: allow \\(首次\\), 安全: pass\n\n● 币种：SUI\n● 涨跌幅：\\-5\\.83%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/sui\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=SUI\\)\n\n💡 触发原因：SUI 24h 跌幅 5\\.83%，价值: allow, 冷却: allow \\(首",
+        "text_length": 348
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=100 (tier=high), cooldown=allow, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-06",
+      "asset": "ETH",
+      "value_gate": {
+        "decision": "allow",
+        "score": 100,
+        "reasons": [
+          "price_move: abs(-6.50%) >= 5%",
+          "oi_confirmation: open_interest=12800000000.0",
+          "volume_confirmation: volume=15800000000.0",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of ETH — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "block",
+        "reasons": [
+          "source_type 'unknown' not allowed for test send"
+        ]
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ETH 下跌\n\n一句话：ETH 跌幅 6\\.50%，价值: allow, 冷却: allow \\(首次\\), 安全: BLOCK \\(unknown source\\)\n\n● 币种：ETH\n● 涨跌幅：\\-6\\.50%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/ethereum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ETH\\)\n\n💡 触发原因：ETH 跌幅 6\\.50%，价值: all",
+        "text_length": 385
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "blocked",
+        "reason": "Pre-send gate blocked: source_type 'unknown' not allowed for test send",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": false
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-07",
+      "asset": "ARB",
+      "value_gate": {
+        "decision": "allow",
+        "score": 140,
+        "reasons": [
+          "price_move: abs(-8.50%) >= 5%",
+          "strong_price_move: abs(-8.50%) >= 8%",
+          "oi_confirmation: open_interest=5200000.0",
+          "volume_confirmation: volume=6100000.0",
+          "funding_extreme: abs(funding)=0.0180 >= 0.01",
+          "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+          "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme, multi_asset_sync (backed)"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "upgrade_override",
+        "reason": "Upgrade override for ARB: value_score improved from 100 → 140 (Δ+40 >= 15) within cooldown window — allow as upgrade"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜ARB 急跌\n\n一句话：ARB 跌幅 8\\.50%，价值: allow, 冷却: upgrade\\_override \\(score↑\\), 安全: pass\n\n● 币种：ARB\n● 涨跌幅：\\-8\\.50%\n● Funding：\\-1\\.80%（年化 \\-1971\\.0%）\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/arbitrum\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=ARB\\)",
+        "text_length": 411
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "ready_to_test_send",
+        "reason": "All gates pass. Value score=140 (tier=high), cooldown=upgrade_override, pre_send=pass. Supports: OI/volume support, multi-factor confirmation, upgrade signal (score Δ ≥ 15), not price-only noise.",
+        "is_price_only_noise": false,
+        "has_oi_or_volume_support": true,
+        "has_multi_factor_support": true,
+        "has_upgrade_signal": true
+      }
+    },
+    {
+      "scenario_id": "H6",
+      "signal_id": "H6-08",
+      "asset": "AVAX",
+      "value_gate": {
+        "decision": "observe",
+        "score": 20,
+        "reasons": [
+          "price_move: abs(-6.20%) >= 5%",
+          "multi_asset_sync: 10 real assets in same direction (down) — NO OI/volume backing (half score)",
+          "price_move hit but no strong confirmation factors present — observe only"
+        ]
+      },
+      "cooldown_gate": {
+        "decision": "allow",
+        "reason": "First occurrence of AVAX — no cooldown applied"
+      },
+      "pre_send_gate": {
+        "decision": "pass",
+        "reasons": []
+      },
+      "payload_render": {
+        "type": "real",
+        "success": true,
+        "fallback": false,
+        "parse_mode": "MarkdownV2",
+        "text_preview": "📉 行情异动｜AVAX 下跌\n\n一句话：AVAX 跌幅 6\\.20%，价值: observe \\(仅价格触发, 无确认\\)\n\n● 币种：AVAX\n● 涨跌幅：\\-6\\.20%\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://www\\.coingecko\\.com/en/coins/avalanche\\-2\\) / \\[DexScreener\\]\\(https://dexscreener\\.com/search?q\\=AVAX\\)\n\n💡 触发原因：AVAX 跌幅 6\\.20%，价值: observe \\(仅价格触发, 无确认\\)\n\n⚠",
+        "text_length": 332
+      },
+      "format_check": {
+        "markdown_or_html_safe": true,
+        "issues": []
+      },
+      "content_quality": {
+        "classification": "observe_only",
+        "reason": "SignalValueGate=observe: score=20, insufficient confirmation factors",
+        "is_price_only_noise": true,
+        "has_oi_or_volume_support": false,
+        "has_multi_factor_support": false,
+        "has_upgrade_signal": false
+      }
+    }
+  ]
+}

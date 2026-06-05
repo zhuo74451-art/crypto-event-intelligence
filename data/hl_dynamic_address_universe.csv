@@ -1,0 +1,13 @@
+﻿address,source_type,confidence,assets_active,largest_position_asset,largest_position_value_usd,last_validated_at
+0xebe837cd345469cbc5d6e1fd3d15ee5079ac885f,position_state,,,,,
+0x6c8512516ce5669d35113a11ca8b8de322fd84f6,position_state,,,,,
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae,position_state,,,,,
+0x082e843a431aef031264dc232693dd710aedca88,position_state,,,,,
+0x8def9f50456c6c,validated_hyperinsight,medium,"TON,HYPE,ASTER,ZEC",HYPE,53269864.37576,2026-06-01 17:27:27 UTC+8
+0x082e843a431aef,validated_hyperinsight,medium,HYPE,HYPE,100888018.6593,2026-06-01 17:27:27 UTC+8
+0x939f95036D2e7b,validated_hyperinsight,medium,"BTC,SOL,XRP,XLM,HYPE",BTC,24831086.2079,2026-06-01 17:27:27 UTC+8
+0xd47587702a9173,validated_hyperinsight,medium,"BTC,ETH,SOL,WLD,UNI,TON,NEAR,TAO,ENA,HYPE,FARTCOIN,PUMP,XPL,ASTER,ZEC,MON,XMR",HYPE,14505365.4352,2026-06-01 17:27:27 UTC+8
+0x92ea19eceb7a8d,validated_hyperinsight,medium,"BTC,ZEC",BTC,92658203.92785,2026-06-01 17:27:27 UTC+8
+0xcf67e4da9e9cd3,validated_hyperinsight,medium,"HYPE,VVV",HYPE,1169680.0,2026-06-01 17:27:27 UTC+8
+0x5b5d51203a0f90,validated_hyperinsight,medium,"BTC,ETH,SOL,AVAX,SUI,XRP,HYPE,FARTCOIN,PUMP",ETH,21506218.2955,2026-06-01 17:27:27 UTC+8
+0x020cA66C30beC2,validated_hyperinsight,medium,ETH,ETH,6760560.0,2026-06-01 17:27:27 UTC+8

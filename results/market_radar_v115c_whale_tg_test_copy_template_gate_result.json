@@ -1,0 +1,22 @@
+{
+  "stage": "v115c_whale_tg_test_copy_template_gate_local_only",
+  "version": "v115C",
+  "input_targets": 4,
+  "templates_generated": 4,
+  "gate_decisions": 4,
+  "templates_passed": 4,
+  "templates_failed": 0,
+  "send_ready": false,
+  "tg_test_group_ready": false,
+  "local_review_ready": true,
+  "external_api_called": false,
+  "ai_model_called": false,
+  "credentials_read": false,
+  "tg_sent": false,
+  "prod_state_write": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "real_send_candidate_generated": false,
+  "generated_at": "2026-06-05T06:58:58.558274+08:00"
+}

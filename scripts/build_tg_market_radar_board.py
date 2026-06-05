@@ -565,12 +565,12 @@ def hyperliquid_items(rows: list[dict], limit: int, min_usd: float) -> list[dict
         if not (is_near_liq or is_notable_change or known_large_unusual):
             continue
 
-        actor = f"{entity}" if entity else "已知地址"
+        actor = f"{entity}" if entity else "监控大户"
         claim_bits = [f"{asset}{side}{usd_short(amount)}"]
         if pnl:
             claim_bits.append(pnl)
         if is_near_liq:
-            claim_bits.append(f"距爆仓约{liq_dist:.1f}%")
+            claim_bits.append(f"距清算价{liq_dist:.1f}%")
             section = "priority"
             priority = 100 + amount / 1_000_000
         elif is_notable_change:
@@ -587,11 +587,11 @@ def hyperliquid_items(rows: list[dict], limit: int, min_usd: float) -> list[dict
             section = "context"
             priority = 65 + amount / 3_000_000
         if is_near_liq:
-            text = f"{actor}持有{asset}{side}{usd_short(amount)}\n  {pnl or '清算风险'}，距爆仓约{liq_dist:.1f}%"
+            text = f"{actor} {asset}{side} {usd_short(amount)}\n  {pnl or '有清算风险'}，距清算价{liq_dist:.1f}%"
         elif is_notable_change:
-            text = f"{actor}{asset}{side}仓位变化{usd_short(amount)}\n  {pnl or '变化较大'}，需看是否连续调整"
+            text = f"{actor} {asset}{side}仓位变化 {usd_short(amount)}\n  {pnl or '变化较大'}，需看是否连续调整"
         else:
-            text = f"{actor}持有{asset}{side}{usd_short(amount)}\n  {pnl or '大额敞口'}，静态大仓位"
+            text = f"{actor} {asset}{side} {usd_short(amount)}\n  {pnl or '大额敞口'}，静态大仓位"
         address = str(row.get("primary_address") or "").strip()
         key_entity = entity or address or "unknown"
         repeat_group = "static_position" if not is_near_liq and not is_notable_change else "position_change"
@@ -1019,33 +1019,254 @@ def source_observation_note(item: dict) -> str:
     group = str(item.get("repeat_group") or "")
     if source == "hyperliquid":
         if group == "position_change":
-            return "观察仓位是否继续变化、是否接近清算区，以及资金费率是否同步异常。"
-        return "静态大仓位只作背景，优先等待仓位变化、清算距离或资金费率共振。"
+            return "仓位是否继续变化、是否接近清算区，资金费率是否同步异常"
+        return "静态大仓位只作背景，优先等待仓位变化、清算距离或资金费率共振"
     if source == "token_unlock":
-        return "这是供给侧日历事件，适合放在早午晚报，盘中只保留临近或异常放大的项目。"
+        return "供给侧日历事件，盘中只保留临近或异常放大的项目"
     if source == "long_short":
-        return "多空比只说明拥挤结构，需结合价格、成交量和后续回看，不单独解释方向。"
+        return "多空比只说明拥挤结构，需结合价格、成交量判断，不单独解释方向"
     if source in {"cex_netflow", "stablecoin_flow"}:
-        return "资金流需要和滚动基线比较，单笔大额不等于异常，需要继续看后续流向。"
-    return "该来源样本仍少，先作为观察项，不做强结论。"
+        return "资金流需和滚动基线比较，单笔大额不等于异常"
+    return "该来源样本仍少，先作为观察项，不做强结论"
+
+
+# ── v1 admission rules (hardened per Claude/Gemini direction) ──
+
+# jin10 MUST hit one of these crypto risk factors to enter Market Radar
+JIN10_CRYPTO_RISK_FACTORS = [
+    "美联储", "CPI", "PCE", "非农", "降息", "加息",
+    "SEC", "CFTC", "ETF",
+    "比特币", "以太坊", "BTC", "ETH",
+    "币安", "Binance", "Coinbase",
+    "稳定币", "USDT", "USDC",
+    "交易所", "黑客", "攻击", "漏洞",
+    "监管", "执法", "冻结", "提现", "充值",
+]
+
+# Items that are always filtered (non-crypto-noise)
+NON_CRYPTO_NOISE_KEYWORDS = [
+    "航空燃油", "民航", "机票", "航运", "传统企业",
+    "餐饮", "零售", "房地产", "汽车销售", "保险",
+    "旅游", "酒店", "教育", "医疗", "天气",
+    "福利", "邀请码", "广告", "营销", "抽奖",
+    "印度", "伊朗", "地缘", "油价", "成品油",
+    "关税", "贸易战", "制造业", "供应链", "物流",
+    "策略公司", "宣布新比特币收购", "比特币收购",
+    "公司宣布", "收购计划", "企业收购",
+]
+
+
+def classify_admission(item: dict) -> tuple[str, str]:
+    """Classify item into: allow / digest / filter, with a reason."""
+    source = str(item.get("source_type") or item.get("source") or "").lower()
+    title = str(item.get("title") or item.get("text") or "").lower()
+    text = str(item.get("text") or "").lower()
+    combined = f"{title} {text}"
+    asset = str(item.get("asset") or "").upper()
+
+    # ── explicit noise → filter ──
+    for kw in NON_CRYPTO_NOISE_KEYWORDS:
+        if kw in combined:
+            return ("filter", f"非crypto行业/地区噪声: {kw}")
+
+    # ── jin10 special path ──
+    if "jin10" in source:
+        for kw in JIN10_CRYPTO_RISK_FACTORS:
+            if kw.lower() in combined:
+                return ("allow", f"jin10命中crypto风险因子: {kw}")
+        return ("filter", "jin10未命中crypto风险因子")
+
+    # ── core asset → allow ──
+    if asset in {"BTC", "ETH", "SOL", "BNB", "HYPE", "DOGE", "XRP", "LINK", "AVAX"}:
+        return ("allow", f"核心资产: {asset}")
+
+    # ── crypto structural keyword → allow ──
+    for kw in JIN10_CRYPTO_RISK_FACTORS:
+        if kw.lower() in combined:
+            return ("allow", f"命中crypto结构关键词: {kw}")
+
+    # ── no match → digest or filter based on event type ──
+    if source in {"hyperliquid", "token_unlock", "long_short", "cex_netflow", "stablecoin_flow"}:
+        return ("allow", "已知crypto数据源类型")
+    return ("filter", "无crypto资产/结构/数据源映射")
+
+
+def is_crypto_relevant(item: dict) -> bool:
+    return classify_admission(item)[0] == "allow"
+
+
+# ── v1 card template (hardened) ──────────────────────────────
+
+STRENGTH_LABELS = {1: "低", 2: "低", 3: "中", 4: "中", 5: "高"}
+
+
+def impact_reason(item: dict, label: str) -> str:
+    """Return a factual trigger reason — no prediction, no recommendation."""
+    source = str(item.get("source_type") or "")
+    dynamic = str(item.get("dynamic_boost_reason") or "")
+    policy = str(item.get("policy_reason_cn") or "")
+    priority = safe_float(item.get("priority") or 50)
+    asset = str(item.get("asset") or "").upper()
+
+    # Look up percentile data for this asset
+    pctl = _lookup_percentile_data()
+
+    if "hyperliquid" in source:
+        # v1.3b: try to show OI ratio + liq distance as impact evidence
+        text_str = str(item.get("text") or "")
+        liq_match2 = re.search(r"距清算价(\d+\.?\d*)%", text_str)
+        liq_dist = float(liq_match2.group(1)) if liq_match2 else 99.0
+        pv_match = re.search(r"\$([\d.]+)([MBK])", text_str)
+        pos_v = 0.0
+        if pv_match:
+            amt = float(pv_match.group(1)); unit = pv_match.group(2)
+            if unit == "B": pos_v = amt * 1e9
+            elif unit == "M": pos_v = amt * 1e6
+            elif unit == "K": pos_v = amt * 1e3
+            else: pos_v = amt
+        hl_oi2 = _get_hl_total_oi(asset)
+        if hl_oi2 > 0 and pos_v > 0:
+            ratio = pos_v / hl_oi2 * 100
+            return f"HL OI 占比 [{ratio:.1f}%] / 强平边际 {liq_dist:.1f}%"
+        return f"仓位规模巨大 / 强平边际 {liq_dist:.1f}%"
+
+    if "long_short" in source:
+        # Check if we have OI percentile as supplementary evidence
+        if asset in pctl and pctl[asset].get("oi_pctl", 0) >= 80:
+            return f"多空比极端分位 / OI {pctl[asset]['oi_pctl']:.0f}%分位"
+        return "多空比极端分位"
+
+    if source in {"cex_netflow", "stablecoin_flow"}:
+        if asset in pctl and pctl[asset].get("oi_pctl", 0) >= 80:
+            return "链上资金流异动 / OI高水位"
+        return "链上资金流异动"
+
+    if "token_unlock" in source:
+        return "供给侧解锁"
+
+    # Generic rules with percentile enrichment
+    if asset in pctl:
+        fp = pctl[asset].get("funding_pctl", 0)
+        op = pctl[asset].get("oi_pctl", 0)
+        max_p = max(fp, op)
+        if max_p >= 95:
+            return f"多信号共振（funding/OI 90d {max_p:.0f}%分位）"
+        if max_p >= 80:
+            return f"结构信号偏离（funding/OI 高于常态）"
+
+    if dynamic:
+        return dynamic[:30]
+    if policy:
+        return policy[:30]
+    if label == "高":
+        return "多信号共振 / 一手数据确认"
+    if label == "中":
+        return "单一结构信号 / 传导待确认"
+    return "弱结构信号"
 
 
 def format_board_item(item: dict) -> str:
     raw_lines = [line.strip() for line in str(item.get("text") or "").splitlines() if line.strip()]
-    source = readable_source_label(str(item.get("source_type") or ""))
+    source_label = readable_source_label(str(item.get("source_type") or ""))
+    asset_label = str(item.get("asset") or "").upper()
+    title = compact_for_card(raw_lines[0] if raw_lines else "未命名信号", 80)
+    priority = safe_float(item.get("priority") or 50)
+    impact_label = STRENGTH_LABELS.get(int(priority / 20) + 1, "低")
+    trigger = impact_reason(item, impact_label)
+
+    # v1.2a compact card (target ≤280 chars)
+    card_title = f"⚡️ [Market Radar] {h(source_label)} · {h(asset_label if asset_label != '-' else '全市场')}"
+    if len(card_title) > 60:
+        card_title = card_title[:57] + "..."
+
+    lines = [f"<b>{card_title}</b>"]
+    lines.append("━━━━━━━━━━━━━━━━━━━━")
+
+    time_str = item.get("observed_at_china") or item.get("published_at_china") or ""
+    time_short = _short_timestamp(time_str) if time_str else ""
+    src_name = str(item.get("source_name", "") or item.get("source", "") or "-")
+    lines.append(f"⏱ {h(time_short)}｜来源：{h(src_name[:30])}")
+    impact_display = {"低": "低度", "中": "中度", "高": "高度"}.get(impact_label, impact_label)
+    lines.append(f"🚨 冲击度：{h(impact_display)}（{h(trigger)}）")
+
+    lines.append("")
+    lines.append("📊 结构冲击事实：")
+    lines.append(h(title))
+    details = compact_for_card("；".join(raw_lines[1:]), 100) if len(raw_lines) > 1 else ""
+    if details and details != title:
+        lines.append(h(details[:100]))
+
+    # Quantitative anchor — only if we have real data
+    anchor = _quantitative_anchor(item)
+    if anchor:
+        lines.append("")
+        lines.append(f"📈 定量锚定：")
+        lines.append(h(anchor))
+
+    lines.append("")
+    lines.append("⚠️ 仅供市场结构观察；数据仅代表监控地址，不构成交易建议。")
+    return "\n".join(lines)
+
+
+def _short_timestamp(ts: str) -> str:
+    """Convert timestamps to 'MM-DD HH:MM (SGT)' format."""
+    raw = str(ts).replace("UTC+8", "").replace("T", " ").replace("Z", "").strip()
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%m-%d %H:%M"):
+        try:
+            from datetime import datetime
+            dt = datetime.strptime(raw[:19], fmt)
+            return dt.strftime("%m-%d %H:%M") + " (SGT)"
+        except ValueError:
+            continue
+    return raw[:16]
+
+
+def _quantitative_anchor(item: dict) -> str:
+    """Build a factual quantitative anchor line — no prediction."""
+    source = str(item.get("source_type") or "")
+    text = str(item.get("text") or "")
     asset = str(item.get("asset") or "").upper()
-    title = compact_for_card(raw_lines[0] if raw_lines else "未命名信号", 72)
-    details = compact_for_card("；".join(raw_lines[1:]), 112) if len(raw_lines) > 1 else ""
-    policy_reason = compact_for_card(item.get("policy_reason_cn", ""), 86)
-    dynamic_reason = compact_for_card(item.get("dynamic_boost_reason", ""), 60)
-    lines = [f"• <b>{h(source)}｜{h(asset or '-')}</b> {h(title)}"]
-    if details:
-        lines.append(f"  关键数据：{h(details)}")
-    if dynamic_reason:
-        lines.append(f"  为什么出现：{h(dynamic_reason)}")
-    elif policy_reason:
-        lines.append(f"  为什么出现：{h(policy_reason)}")
-    lines.append(f"  观察重点：{h(source_observation_note(item))}")
+    import re
+
+    # Extract position value from text for ratio calculation
+    pos_match = re.search(r"\$([\d.]+[MBK]?)", text)
+    pos_val = 0.0
+    if pos_match:
+        pv = pos_match.group(1)
+        if "B" in pv: pos_val = float(pv.replace("B","")) * 1e9
+        elif "M" in pv: pos_val = float(pv.replace("M","")) * 1e6
+        elif "K" in pv: pos_val = float(pv.replace("K","")) * 1e3
+        else: pos_val = float(pv)
+
+    # Hyperliquid position: liquidation distance + HL OI ratio
+    liq_match = re.search(r"距清算价(\d+\.?\d*)%", text)
+    if liq_match and "hyperliquid" in source:
+        dist = float(liq_match.group(1))
+        hl_oi = _get_hl_total_oi(asset)
+        parts = [f"强平安全边际 {dist:.1f}%"]
+        if hl_oi > 0 and pos_val > 0:
+            ratio = pos_val / hl_oi * 100
+            parts.append(f"约占 HL {asset} 总 OI [{ratio:.1f}%]")
+        return "；".join(parts) + "。"
+
+    # Percentile context for non-HL items
+    pctl = _lookup_percentile_data()
+    if asset in pctl:
+        parts = []
+        fp = pctl[asset].get("funding_pctl", 0)
+        op = pctl[asset].get("oi_pctl", 0)
+        if fp >= 95:
+            parts.append(f"funding 90d {fp:.1f}%分位")
+        if op >= 95:
+            parts.append(f"OI 90d {op:.1f}%分位")
+        if fp >= 80:
+            parts.append(f"funding 高于常态（{fp:.0f}%分位）")
+        if op >= 80:
+            parts.append(f"OI 高于常态（{op:.0f}%分位）")
+        if parts:
+            return "；".join(parts[:2]) + "。"
+    return ""
+    lines.append("⚠️ 仅作市场结构与链上情报观察，不构成任何交易建议。")
     return "\n".join(lines)
 
 
@@ -1089,6 +1310,12 @@ def build_board(args: argparse.Namespace) -> tuple[dict, dict, str, list[dict]]:
     long_short_items_rows = long_short_items(long_short_rows, args.max_long_short, args.min_crowding_score)
     flow_items_rows = flow_items(watcher_events, args.max_flows, args.min_flow_usd, args.min_stablecoin_flow_usd)
     all_candidate_items = [*hyper_items_rows, *unlock_items_rows, *long_short_items_rows, *flow_items_rows]
+    # v1 admission filter: remove non-crypto noise before policy processing
+    filtered_out = len(all_candidate_items)
+    all_candidate_items = [it for it in all_candidate_items if is_crypto_relevant(it)]
+    filtered_out -= len(all_candidate_items)
+    if filtered_out > 0:
+        print(f"  v1 admission filter: removed {filtered_out} non-crypto item(s)")
     policy_counts = apply_signal_policy(all_candidate_items, policies)
     dynamic_boosted = apply_dynamic_boost(all_candidate_items)
     decision_candidates = [dict(item) for item in all_candidate_items]
@@ -1243,3 +1470,62 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+def _usd_compact(v: float) -> str:
+    if v >= 1_000_000_000:
+        return f"${v/1_000_000_000:.1f}B"
+    if v >= 1_000_000:
+        return f"${v/1_000_000:.1f}M"
+    if v >= 1_000:
+        return f"${v/1_000:.0f}K"
+    return f"${v:.0f}"
+
+_PCTL_CACHE = None
+def _lookup_percentile_data() -> dict:
+    """Return {asset: {funding_pctl, oi_pctl}} from percentile alerts JSON."""
+    global _PCTL_CACHE
+    if _PCTL_CACHE is not None:
+        return _PCTL_CACHE
+    _PCTL_CACHE = {}
+    try:
+        import json
+        p = ROOT / "results" / "v15_percentile_alerts.json"
+        if p.exists():
+            data = json.loads(p.read_text(encoding="utf-8"))
+            for bucket in ("frontpage_alerts", "watchlist_alerts", "radar_triggers", "digest_context"):
+                for item in data.get(bucket, []):
+                    a = str(item.get("asset_symbol", "")).upper()
+                    if a not in _PCTL_CACHE:
+                        _PCTL_CACHE[a] = {"funding_pctl": 0.0, "oi_pctl": 0.0}
+                    atype = str(item.get("alert_type", ""))
+                    pv = safe_float(item.get("percentile", 0))
+                    if "funding" in atype and pv > _PCTL_CACHE[a]["funding_pctl"]:
+                        _PCTL_CACHE[a]["funding_pctl"] = pv
+                    if "oi" in atype:
+                        oi_pv = safe_float(item.get("oi_level_percentile_90d", pv))
+                        if oi_pv > _PCTL_CACHE[a]["oi_pctl"]:
+                            _PCTL_CACHE[a]["oi_pctl"] = oi_pv
+    except Exception:
+        pass
+    return _PCTL_CACHE
+
+_HL_OI_CACHE = {}
+def _get_hl_total_oi(asset: str) -> float:
+    """Get Hyperliquid total open interest for asset (USD). Returns 0 if unavailable."""
+    global _HL_OI_CACHE
+    asset = asset.upper()
+    if asset in _HL_OI_CACHE:
+        return _HL_OI_CACHE[asset]
+    try:
+        p = ROOT / "data" / "hyperliquid" / "market_meta_snapshot.csv"
+        if p.exists():
+            import csv
+            for row in csv.DictReader(open(p, encoding="utf-8-sig")):
+                if str(row.get("asset_symbol", "")).upper() == asset:
+                    v = safe_float(row.get("open_interest_usd", 0))
+                    _HL_OI_CACHE[asset] = v
+                    return v
+    except Exception:
+        pass
+    _HL_OI_CACHE[asset] = 0.0
+    return 0.0

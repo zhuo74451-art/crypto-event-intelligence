@@ -1,6 +1,6 @@
 # Signal Decay Curve
 
-- generated_at_china: 2026-05-28 19:24:39 UTC+8
+- generated_at_china: 2026-06-01 13:29:50 UTC+8
 - input_rows: 203
 - curve_rows: 36
 
@@ -37,6 +37,6 @@
 | institutional_flow | institutional_flow | news:cryptonews | 1 | 1 | 0.0 | 1 | 0.0 | 1 | 0.0 | 1 | 0.0 | insufficient_sample |
 | institutional_flow | institutional_flow | news:decrypt | 1 | 1 | 0.000213 | 1 | -0.000981 | 1 | -0.002342 | 1 | -0.010788 | insufficient_sample |
 | macro | macro | news:coinpedia | 1 | 1 | 0.000379 | 1 | 0.003623 | 1 | 0.003498 | 1 | 0.003355 | insufficient_sample |
-| market_structure | long_short_crowding_extreme | long_short | 1 | 1 | -0.000336 | 0 | 0.0 | 0 | 0.0 | 0 | 0.0 | insufficient_sample |
+| market_structure | long_short_crowding_extreme | long_short | 1 | 1 | -0.000336 | 1 | -0.00608 | 1 | 0.009794 | 1 | 0.014861 | insufficient_sample |
 
 This curve is for research QA and source routing. It does not provide trading advice.

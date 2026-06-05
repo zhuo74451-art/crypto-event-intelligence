@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Radar MVP v119C — 封版入口</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: #0f172a; color: #e2e8f0; margin: 0; padding: 0; line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 3px solid #7c3aed; padding: 32px 40px;
+        }
+        .header h1 { margin: 0 0 8px 0; font-size: 2rem; font-weight: 800; color: #f1f5f9; }
+        .header .subtitle { font-size: 0.95rem; color: #94a3b8; }
+        .header .badge-row { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .badge {
+            display: inline-block; padding: 4px 14px; border-radius: 14px;
+            font-size: 0.78rem; font-weight: 700;
+        }
+        .badge-mvp { background: #7c3aed; color: #ddd6fe; border: 1px solid #a78bfa; }
+        .badge-seal { background: #166534; color: #bbf7d0; border: 1px solid #22c55e; }
+        .badge-local { background: #1e293b; color: #94a3b8; border: 1px solid #475569; }
+        .badge-nosend { background: #450a0a; color: #fca5a5; border: 1px solid #dc2626; }
+        .main { max-width: 1200px; margin: 0 auto; padding: 32px 40px; }
+        .section-title {
+            font-size: 1.2rem; font-weight: 700; color: #f1f5f9;
+            margin: 36px 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid #334155;
+        }
+        .entry-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 14px; margin: 16px 0;
+        }
+        .entry-card {
+            background: #1e293b; border: 1px solid #334155; border-radius: 10px;
+            padding: 20px; transition: border-color 0.2s;
+        }
+        .entry-card:hover { border-color: #7c3aed; }
+        .entry-card h3 { margin: 0 0 8px 0; font-size: 1rem; color: #a78bfa; }
+        .entry-card p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
+        .entry-card .file-path {
+            display: block; margin-top: 8px; font-size: 0.75rem;
+            font-family: 'Cascadia Code', 'Fira Code', monospace; color: #64748b;
+        }
+        .capability-list { list-style: none; padding: 0; margin: 12px 0; }
+        .capability-list li {
+            padding: 6px 0; font-size: 0.88rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .capability-list li::before {
+            content: "✅ "; color: #22c55e; font-weight: 700;
+        }
+        .no-prod-list { list-style: none; padding: 0; margin: 12px 0; }
+        .no-prod-list li {
+            padding: 6px 0; font-size: 0.88rem;
+            border-bottom: 1px solid #1e293b;
+        }
+        .no-prod-list li::before {
+            content: "❌ "; color: #ef4444; font-weight: 700;
+        }
+        .flag-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 8px; margin: 16px 0;
+        }
+        .flag-item {
+            background: #1e293b; border: 1px solid #334155; border-radius: 6px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 8px;
+        }
+        .flag-key { color: #94a3b8; font-size: 0.78rem; font-family: 'Cascadia Code', monospace; }
+        .flag-val { font-weight: 700; font-family: 'Cascadia Code', monospace; font-size: 0.82rem; }
+        .flag-false { color: #22c55e; }
+        .flag-true { color: #ef4444; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th {
+            background: #1e293b; color: #94a3b8; font-weight: 600;
+            text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;
+            padding: 10px 12px; text-align: left; border-bottom: 2px solid #475569;
+        }
+        td { padding: 10px 12px; border-bottom: 1px solid #1e293b; }
+        tr:hover td { background: #1e293b33; }
+        code {
+            font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.82rem;
+            background: #1e293b; padding: 1px 5px; border-radius: 3px;
+        }
+        .footer {
+            margin-top: 48px; padding: 20px 40px; border-top: 1px solid #334155;
+            color: #475569; font-size: 0.78rem; text-align: center;
+        }
+        .footer .no-prod {
+            display: inline-block; background: #450a0a; color: #fca5a5;
+            padding: 4px 14px; border-radius: 20px; font-weight: 700;
+            font-size: 0.78rem; border: 1px solid #7f1d1d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Market Radar MVP v119C <span style="color:#a78bfa;">封版包</span></h1>
+        <div class="subtitle">
+            生成时间: 2026-06-05T19:00:16+08:00 &nbsp;|&nbsp;
+            Run ID: 20260605_190016 &nbsp;|&nbsp;
+            Pipeline: v1.19C &nbsp;|&nbsp;
+            基于: v119B (B-lite) &nbsp;|&nbsp;
+            模式: local-only / no-send / MVP seal
+        </div>
+        <div class="badge-row">
+            <span class="badge badge-mvp">MVP SEAL</span>
+            <span class="badge badge-seal">封版交付</span>
+            <span class="badge badge-local">LOCAL ONLY</span>
+            <span class="badge badge-nosend">NO SEND</span>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <!-- Entry Points -->
+        <h2 class="section-title">🔗 核心入口 (Entry Points)</h2>
+        <div class="entry-grid">
+            <div class="entry-card" style="border-color:#0284c7;">
+                <h3>📊 v119B 策略值班看板</h3>
+                <p>当前操作员主看板 — 五卡总览 + 中文引导 + B-lite 分层</p>
+                <span class="file-path">runs/market_radar/v119b_operator_dashboard.html</span>
+            </div>
+            <div class="entry-card">
+                <h3>⏱️ 3 分钟演示流程</h3>
+                <p>用户可直接照着演示当前全部成果</p>
+                <span class="file-path">runs/market_radar/v119c_user_demo_3min.md</span>
+            </div>
+            <div class="entry-card">
+                <h3>📋 操作员快速使用说明</h3>
+                <p>手动运行、查看、停止的完整流程</p>
+                <span class="file-path">runs/market_radar/v119c_operator_quickstart.md</span>
+            </div>
+            <div class="entry-card">
+                <h3>✅ MVP 验收报告</h3>
+                <p>当前 MVP 达成项和不满足的生产条件</p>
+                <span class="file-path">runs/market_radar/v119c_mvp_acceptance_report.md</span>
+            </div>
+            <div class="entry-card">
+                <h3>⚠️ 已知限制 & 下一阶段</h3>
+                <p>不能生产化的原因和后续候选方向</p>
+                <span class="file-path">runs/market_radar/v119c_known_limits_and_next_steps.md</span>
+            </div>
+            <div class="entry-card">
+                <h3>📦 最终交接说明</h3>
+                <p>local-only / no-send / not production-ready</p>
+                <span class="file-path">runs/market_radar/v119c_local_only_final_handoff.md</span>
+            </div>
+        </div>
+
+        <!-- Current Capability Summary -->
+        <h2 class="section-title">📋 当前能力摘要 (Capability Summary)</h2>
+        <ul class="capability-list">
+            <li><strong>live public data one-shot refresh</strong> 已跑通（Binance 公开 API + 免费 RSS）</li>
+            <li><strong>shared pipeline</strong> 已跑通（五卡统一管道）</li>
+            <li><strong>五类策略卡已覆盖：</strong>market_sync / price_oi_anomaly / news_event / liquidation / whale</li>
+            <li><strong>B-lite price/OI watch 分层</strong>已实现（reject → mild_watch → accept）</li>
+            <li><strong>news freshness / stale warning</strong> 已实现（启发式时效性标记）</li>
+            <li><strong>中文 30 秒引导层</strong>已实现（这是什么/怎么看/能不能发/数据来源/下一步）</li>
+        </ul>
+
+        <h2 class="section-title">🚫 生产状态 (Production Status)</h2>
+        <ul class="no-prod-list">
+            <li><strong>production readiness = false / 0/5</strong></li>
+            <li><strong>no-send</strong>（本轮不发送任何渠道）</li>
+            <li><strong>local-only</strong>（仅本地静态 HTML）</li>
+            <li><strong>not production-ready</strong>（不满足任何生产条件）</li>
+        </ul>
+
+        <!-- Send Flags -->
+        <h2 class="section-title">🔒 发送状态确认 (Send Status Confirmation)</h2>
+        <div class="flag-grid">
+            <div class="flag-item"><span class="flag-key">telegram_send</span><span class="flag-val flag-false">= false</span></div>
+            <div class="flag-item"><span class="flag-key">x_twitter_send</span><span class="flag-val flag-false">= false</span></div>
+            <div class="flag-item"><span class="flag-key">production_send</span><span class="flag-val flag-false">= false</span></div>
+            <div class="flag-item"><span class="flag-key">daemon_or_loop_started</span><span class="flag-val flag-false">= false</span></div>
+        </div>
+
+        <!-- Decision Summary from v119B -->
+        <h2 class="section-title">⚖️ 当前五卡决策分布 (Decision Distribution)</h2>
+        <div class="table-container" style="overflow-x:auto; margin:16px 0; border:1px solid #334155; border-radius:8px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Card Family</th>
+                        <th>Pipeline</th>
+                        <th>Decision</th>
+                        <th>B-lite Tier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><code>multi_asset_market_sync</code></td>
+                        <td>active</td>
+                        <td><strong>accept</strong></td>
+                        <td><code>N/A</code></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><code>price_oi_volume_anomaly</code></td>
+                        <td>blocked</td>
+                        <td><strong>watch</strong></td>
+                        <td><code>mild_watch</code></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><code>news_event_market_impact</code></td>
+                        <td>active</td>
+                        <td><strong>watch</strong></td>
+                        <td><code>N/A</code></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><code>liquidation_pressure</code></td>
+                        <td>blocked</td>
+                        <td><strong>reject</strong></td>
+                        <td><code>N/A</code></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><code>whale_position_alert</code></td>
+                        <td>blocked</td>
+                        <td><strong>manual_required</strong></td>
+                        <td><code>N/A</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- v119B Data -->
+        <h2 class="section-title">📡 基于 v119B 数据</h2>
+        <p style="color:#94a3b8; font-size:0.88rem;">
+            本封版包基于 v119B 运行结果:
+            Run ID <code>20260605_184831</code>,
+            生成于 <code>2026-06-05T18:48:37+08:00</code>,
+            包含 5 个 card family,
+            contract validation <strong>True</strong>.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        <div style="margin-bottom:8px;"><span class="no-prod">⛔ NOT FOR PRODUCTION USE — 0/5</span></div>
+        Market Radar MVP v119C 封版包 &nbsp;|&nbsp;
+        Pipeline: v1.19C &nbsp;|&nbsp;
+        Run ID: 20260605_190016 &nbsp;|&nbsp;
+        模式: local-only / no-send / MVP seal &nbsp;|&nbsp;
+        telegram_send=false &nbsp;|&nbsp;
+        x_twitter_send=false &nbsp;|&nbsp;
+        production_send=false &nbsp;|&nbsp;
+        daemon_or_loop_started=false
+    </div>
+</body>
+</html>

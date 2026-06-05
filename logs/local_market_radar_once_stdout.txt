@@ -1,0 +1,5 @@
+run first-hand watchers ok
+route TG items ok
+refresh Binance long-short board context ok
+build v11 signal policy ok
+build market radar board failed: exit=1

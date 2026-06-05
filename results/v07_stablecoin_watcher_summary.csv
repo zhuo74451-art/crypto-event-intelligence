@@ -1,2 +1,2 @@
-﻿watcher,mode,watchlist_rows,queried_tokens,raw_transfer_rows,alert_rows,skipped_rows,status,message
-stablecoin_mint_burn,live,0,0,0,0,0,missing_api_key,Set ETHERSCAN_API_KEY in the current terminal to query Etherscan.
+﻿watcher,mode,watchlist_rows,queried_tokens,raw_transfer_rows,alert_rows,skipped_rows,top_skip_reason,top_skip_count,status,message
+stablecoin_mint_burn,live,2,2,200,0,113,not_mint_or_burn,94,pass,ok

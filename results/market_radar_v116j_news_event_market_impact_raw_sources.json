@@ -1,0 +1,775 @@
+{
+  "fetch_id": "real_news_20260605_132511",
+  "fetched_at": "2026-06-05T13:25:11.995553+08:00",
+  "sources_attempted": 5,
+  "sources_succeeded": 1,
+  "total_articles": 80,
+  "all_public_sources_unavailable": false,
+  "api_key_required": false,
+  "news_full_text_saved": false,
+  "data_note": "Real public news titles + URLs + metadata only. NO full text scraped. NO AI/model used.",
+  "source_results": [
+    {
+      "source_name": "CoinDesk",
+      "source_type": "rss",
+      "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+      "status": "empty",
+      "article_count": 0,
+      "error": "No articles returned"
+    },
+    {
+      "source_name": "Cointelegraph",
+      "source_type": "rss",
+      "url": "https://cointelegraph.com/rss",
+      "status": "empty",
+      "article_count": 0,
+      "error": "No articles returned"
+    },
+    {
+      "source_name": "Decrypt",
+      "source_type": "rss",
+      "url": "https://decrypt.co/feed",
+      "status": "empty",
+      "article_count": 0,
+      "error": "No articles returned"
+    },
+    {
+      "source_name": "The Block",
+      "source_type": "rss",
+      "url": "https://www.theblock.co/rss",
+      "status": "empty",
+      "article_count": 0,
+      "error": "No articles returned"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "url": "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&pageNo=1&pageSize=10",
+      "status": "ok",
+      "article_count": 80,
+      "error": null
+    }
+  ],
+  "articles": [
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch USDⓈ-Margined ZESTUSDT and BTWUSDT Perpetual Contracts (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276229",
+      "published_at": "2026-06-04T12:44:22.460000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.993985+08:00",
+      "summary_snippet": "Binance Futures Will Launch USDⓈ-Margined ZESTUSDT and BTWUSDT Perpetual Contracts (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch Multiple USDⓈ-Margined TradFi Perpetual Contracts (2026-06-03)",
+      "url": "https://www.binance.com/en/support/announcement/275984",
+      "published_at": "2026-06-03T06:45:06.439000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.993998+08:00",
+      "summary_snippet": "Binance Futures Will Launch Multiple USDⓈ-Margined TradFi Perpetual Contracts (2026-06-03)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Adds USDT/AED Spot Trading Pair",
+      "url": "https://www.binance.com/en/support/announcement/275892",
+      "published_at": "2026-06-03T03:00:01.465000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994006+08:00",
+      "summary_snippet": "Binance Adds USDT/AED Spot Trading Pair"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch ANTHROPICUSDT USDⓈ-Margined Perpetual Contract Pre-IPO Trading (2026-06-02)",
+      "url": "https://www.binance.com/en/support/announcement/275737",
+      "published_at": "2026-06-02T03:01:28.377000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994012+08:00",
+      "summary_snippet": "Binance Futures Will Launch ANTHROPICUSDT USDⓈ-Margined Perpetual Contract Pre-IPO Trading (2026-06-02)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch Multiple USDⓈ-Margined TradFi Perpetual Contracts (2026-06-02)",
+      "url": "https://www.binance.com/en/support/announcement/275716",
+      "published_at": "2026-06-01T14:15:21.180000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994018+08:00",
+      "summary_snippet": "Binance Futures Will Launch Multiple USDⓈ-Margined TradFi Perpetual Contracts (2026-06-02)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch USDⓈ-Margined SLXUSDT Perpetual Contract (2026-06-01)",
+      "url": "https://www.binance.com/en/support/announcement/275647",
+      "published_at": "2026-06-01T06:15:08.711000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994023+08:00",
+      "summary_snippet": "Binance Futures Will Launch USDⓈ-Margined SLXUSDT Perpetual Contract (2026-06-01)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch Multiple USDⓈ-Margined TradFi Perpetual Contracts (2026-06-01)",
+      "url": "https://www.binance.com/en/support/announcement/275555",
+      "published_at": "2026-06-01T02:14:55.548000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994028+08:00",
+      "summary_snippet": "Binance Futures Will Launch Multiple USDⓈ-Margined TradFi Perpetual Contracts (2026-06-01)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Introducing Genius Terminal (GENIUS) on Binance HODLer Airdrops! Earn GENIUS With Retroactive BNB Simple Earn Subscriptions",
+      "url": "https://www.binance.com/en/support/announcement/275505",
+      "published_at": "2026-05-29T08:00:03.554000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994033+08:00",
+      "summary_snippet": "Introducing Genius Terminal (GENIUS) on Binance HODLer Airdrops! Earn GENIUS With Retroactive BNB Simple Earn Subscriptions"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch QNTXUSDT USDⓈ-Margined Perpetual Contract Pre-IPO Trading (2026-05-29)",
+      "url": "https://www.binance.com/en/support/announcement/275489",
+      "published_at": "2026-05-29T07:00:06.968000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994040+08:00",
+      "summary_snippet": "Binance Futures Will Launch QNTXUSDT USDⓈ-Margined Perpetual Contract Pre-IPO Trading (2026-05-29)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Launch USDⓈ-Margined CTRUSDT Perpetual Contract (2026-05-28)",
+      "url": "https://www.binance.com/en/support/announcement/275356",
+      "published_at": "2026-05-28T08:16:29.339000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994045+08:00",
+      "summary_snippet": "Binance Futures Will Launch USDⓈ-Margined CTRUSDT Perpetual Contract (2026-05-28)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures Will Convert QNTXUSDT Pre-IPO Perp to Standard USDⓈ-Margined TradFi Perp (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276246",
+      "published_at": "2026-06-04T17:39:10.211000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994053+08:00",
+      "summary_snippet": "Binance Futures Will Convert QNTXUSDT Pre-IPO Perp to Standard USDⓈ-Margined TradFi Perp (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Execution Services Launches Upgraded OTC Dashboard & Limited-Time Campaigns",
+      "url": "https://www.binance.com/en/support/announcement/276217",
+      "published_at": "2026-06-04T12:00:01.267000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994058+08:00",
+      "summary_snippet": "Binance Execution Services Launches Upgraded OTC Dashboard & Limited-Time Campaigns"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Updates Fiat Liquidity Provider Program (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276044",
+      "published_at": "2026-06-03T08:30:03.469000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994063+08:00",
+      "summary_snippet": "Binance Updates Fiat Liquidity Provider Program (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Earn Yield Arena: Earn Up to 200% APR With This Week’s New Limited-Time Offers! (2026-06-03)",
+      "url": "https://www.binance.com/en/support/announcement/275979",
+      "published_at": "2026-06-03T07:00:08.577000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994068+08:00",
+      "summary_snippet": "Binance Earn Yield Arena: Earn Up to 200% APR With This Week’s New Limited-Time Offers! (2026-06-03)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Important Update: Compliance and Eligibility Requirements of Binance Referral Program",
+      "url": "https://www.binance.com/en/support/announcement/275922",
+      "published_at": "2026-06-03T04:00:22.571000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994073+08:00",
+      "summary_snippet": "Important Update: Compliance and Eligibility Requirements of Binance Referral Program"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Updates on Tick Size for Multiple USDⓈ-M Perpetual Futures Contracts (2026-06-04 & 2026-06-08)",
+      "url": "https://www.binance.com/en/support/announcement/275886",
+      "published_at": "2026-06-03T02:30:30.480000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994078+08:00",
+      "summary_snippet": "Updates on Tick Size for Multiple USDⓈ-M Perpetual Futures Contracts (2026-06-04 & 2026-06-08)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance NFT Upgrade to Binance Wallet and Limited Time Withdrawal Fee Reimbursement",
+      "url": "https://www.binance.com/en/support/announcement/275867",
+      "published_at": "2026-06-03T00:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994085+08:00",
+      "summary_snippet": "Binance NFT Upgrade to Binance Wallet and Limited Time Withdrawal Fee Reimbursement"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Wallet Prediction Markets Integrates Predict Points (PP)",
+      "url": "https://www.binance.com/en/support/announcement/275866",
+      "published_at": "2026-06-02T12:00:02.616000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994091+08:00",
+      "summary_snippet": "Binance Wallet Prediction Markets Integrates Predict Points (PP)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice on Position Mode Upgrade for Binance COIN-M Futures (2026-06-15)",
+      "url": "https://www.binance.com/en/support/announcement/275821",
+      "published_at": "2026-06-02T10:15:04.694000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994097+08:00",
+      "summary_snippet": "Notice on Position Mode Upgrade for Binance COIN-M Futures (2026-06-15)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Ai Pro: Major Update — Your AI Trading Assistant Just Got Smarter",
+      "url": "https://www.binance.com/en/support/announcement/275811",
+      "published_at": "2026-06-02T08:00:01.285000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994102+08:00",
+      "summary_snippet": "Binance Ai Pro: Major Update — Your AI Trading Assistant Just Got Smarter"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Alpha Trading Competition: Trade Sealcoin (QAIT) and Share $200K Worth of Rewards (2026-06-05)",
+      "url": "https://www.binance.com/en/support/announcement/276265",
+      "published_at": "2026-06-05T05:00:01.789000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994110+08:00",
+      "summary_snippet": "Binance Alpha Trading Competition: Trade Sealcoin (QAIT) and Share $200K Worth of Rewards (2026-06-05)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Alpha Trading Competition: Trade Irys (IRYS) and Share $100K Worth of Rewards (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276211",
+      "published_at": "2026-06-04T11:00:01.807000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994115+08:00",
+      "summary_snippet": "Binance Alpha Trading Competition: Trade Irys (IRYS) and Share $100K Worth of Rewards (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Academy Bitcoin Page: Complete Quiz to Earn BTC Rewards This June 2026!",
+      "url": "https://www.binance.com/en/support/announcement/276212",
+      "published_at": "2026-06-04T10:00:09.302000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994125+08:00",
+      "summary_snippet": "Binance Academy Bitcoin Page: Complete Quiz to Earn BTC Rewards This June 2026!"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Square: Ask, Answer & Win with Stocks & ETFs Insights",
+      "url": "https://www.binance.com/en/support/announcement/276196",
+      "published_at": "2026-06-04T09:30:01.222000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994132+08:00",
+      "summary_snippet": "Binance Square: Ask, Answer & Win with Stocks & ETFs Insights"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "HOME Trading Tournament: Trade to Share Up to 10,000,000 HOME Token Vouchers",
+      "url": "https://www.binance.com/en/support/announcement/276191",
+      "published_at": "2026-06-04T09:00:07.904000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994137+08:00",
+      "summary_snippet": "HOME Trading Tournament: Trade to Share Up to 10,000,000 HOME Token Vouchers"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Earn: Enjoy Up to 6% APR with USDT Flexible Products (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276168",
+      "published_at": "2026-06-04T03:30:01.839000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994143+08:00",
+      "summary_snippet": "Binance Earn: Enjoy Up to 6% APR with USDT Flexible Products (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Wallet × Predict.fun: Exclusive Basketball Predict Points Campaign",
+      "url": "https://www.binance.com/en/support/announcement/276123",
+      "published_at": "2026-06-03T12:00:15.044000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994148+08:00",
+      "summary_snippet": "Binance Wallet × Predict.fun: Exclusive Basketball Predict Points Campaign"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Join the Spot Altcoin Trading Festival: Trade to Share Up to 400 BNB Token Vouchers",
+      "url": "https://www.binance.com/en/support/announcement/276049",
+      "published_at": "2026-06-03T09:00:11.789000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994153+08:00",
+      "summary_snippet": "Join the Spot Altcoin Trading Festival: Trade to Share Up to 400 BNB Token Vouchers"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Limited-Time: Trade Stocks & ETFs with up to 50% Lower Fees!",
+      "url": "https://www.binance.com/en/support/announcement/276047",
+      "published_at": "2026-06-03T08:05:17.590000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994158+08:00",
+      "summary_snippet": "Limited-Time: Trade Stocks & ETFs with up to 50% Lower Fees!"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Alpha Trading Competition: Trade Tokenized Securities on Binance Alpha and Share 300 MUon Tokenized Securities Rewards!",
+      "url": "https://www.binance.com/en/support/announcement/275950",
+      "published_at": "2026-06-03T07:45:01.768000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994163+08:00",
+      "summary_snippet": "Binance Alpha Trading Competition: Trade Tokenized Securities on Binance Alpha and Share 300 MUon Tokenized Securities Rewards!"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Buy ARB, ID, RDNT, TUSD & USDC Directly Using Credit/Debit Cards and Fiat Balances",
+      "url": "https://www.binance.com/en/support/announcement/157880",
+      "published_at": "2023-04-18T13:30:12.744000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994170+08:00",
+      "summary_snippet": "Buy ARB, ID, RDNT, TUSD & USDC Directly Using Credit/Debit Cards and Fiat Balances"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "BADGER Available via Credit/Debit Card",
+      "url": "https://www.binance.com/en/support/announcement/147462",
+      "published_at": "2023-01-20T06:15:07.030000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994175+08:00",
+      "summary_snippet": "BADGER Available via Credit/Debit Card"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "HOOK & MAGIC Available via Credit/Debit Card",
+      "url": "https://www.binance.com/en/support/announcement/145984",
+      "published_at": "2022-12-30T10:00:02.196000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994181+08:00",
+      "summary_snippet": "HOOK & MAGIC Available via Credit/Debit Card"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "HFT, OSMO & QKC Available via Credit/Debit Card",
+      "url": "https://www.binance.com/en/support/announcement/143752",
+      "published_at": "2022-12-02T13:04:46.235000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994187+08:00",
+      "summary_snippet": "HFT, OSMO & QKC Available via Credit/Debit Card"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "APT, POLYX & VIDT Available via Credit/Debit Card",
+      "url": "https://www.binance.com/en/support/announcement/142157",
+      "published_at": "2022-11-18T10:59:29.720000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994193+08:00",
+      "summary_snippet": "APT, POLYX & VIDT Available via Credit/Debit Card"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "PROS & VIB Available via Credit/Debit Card",
+      "url": "https://www.binance.com/en/support/announcement/125932",
+      "published_at": "2022-10-14T11:30:26.290000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994198+08:00",
+      "summary_snippet": "PROS & VIB Available via Credit/Debit Card"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "BETH, SNM, SSV & STG Available via Credit/Debit Card, and RIF on Recurring Buy",
+      "url": "https://www.binance.com/en/support/announcement/103352",
+      "published_at": "2022-09-09T10:50:24.555000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994203+08:00",
+      "summary_snippet": "BETH, SNM, SSV & STG Available via Credit/Debit Card, and RIF on Recurring Buy"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Adds South African Rand (ZAR) Fiat Gateway",
+      "url": "https://www.binance.com/en/support/announcement/100480",
+      "published_at": "2022-08-22T10:52:25.248000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994209+08:00",
+      "summary_snippet": "Binance Adds South African Rand (ZAR) Fiat Gateway"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "RIF Available via Credit/Debit Card",
+      "url": "https://www.binance.com/en/support/announcement/99956",
+      "published_at": "2022-08-12T08:57:02.204000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994214+08:00",
+      "summary_snippet": "RIF Available via Credit/Debit Card"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "WTC Available via Credit/Debit Card, and LEVER on Recurring Buy",
+      "url": "https://www.binance.com/en/support/announcement/99253",
+      "published_at": "2022-08-04T09:00:03.217000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994220+08:00",
+      "summary_snippet": "WTC Available via Credit/Debit Card, and LEVER on Recurring Buy"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Cease Support for Selected Stocks on 2026-06-05",
+      "url": "https://www.binance.com/en/support/announcement/276263",
+      "published_at": "2026-06-05T03:00:01.333000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994226+08:00",
+      "summary_snippet": "Binance Will Cease Support for Selected Stocks on 2026-06-05"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice of Removal of Spot Trading Pairs - 2026-06-05",
+      "url": "https://www.binance.com/en/support/announcement/275780",
+      "published_at": "2026-06-02T05:15:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994232+08:00",
+      "summary_snippet": "Notice of Removal of Spot Trading Pairs - 2026-06-05"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice of Removal of Margin Trading Pairs - 2026-06-05",
+      "url": "https://www.binance.com/en/support/announcement/275687",
+      "published_at": "2026-06-01T09:30:05.389000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994237+08:00",
+      "summary_snippet": "Notice of Removal of Margin Trading Pairs - 2026-06-05"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Alpha Will Remove DIGI, K, SKI, JOJO, PLAYSOLANA, 恶俗企鹅, PAL, TYCOON, HIPPO, LN, BNBXBT, BOOM  (2026-05-29)",
+      "url": "https://www.binance.com/en/support/announcement/275485",
+      "published_at": "2026-05-29T06:00:02.285000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994242+08:00",
+      "summary_snippet": "Binance Alpha Will Remove DIGI, K, SKI, JOJO, PLAYSOLANA, 恶俗企鹅, PAL, TYCOON, HIPPO, LN, BNBXBT, BOOM  (2026-05-29)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice of Removal of Spot Trading Pairs - 2026-05-29",
+      "url": "https://www.binance.com/en/support/announcement/275108",
+      "published_at": "2026-05-26T08:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994247+08:00",
+      "summary_snippet": "Notice of Removal of Spot Trading Pairs - 2026-05-29"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice of Removal of Margin Trading Pairs - 2026-05-29",
+      "url": "https://www.binance.com/en/support/announcement/275018",
+      "published_at": "2026-05-25T11:00:02.381000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994252+08:00",
+      "summary_snippet": "Notice of Removal of Margin Trading Pairs - 2026-05-29"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice of Removal of Spot Trading Pairs - 2026-05-22",
+      "url": "https://www.binance.com/en/support/announcement/274306",
+      "published_at": "2026-05-19T08:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994257+08:00",
+      "summary_snippet": "Notice of Removal of Spot Trading Pairs - 2026-05-22"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Margin And Binance Loans Will Delist AEUR and AI on 2026-05-22",
+      "url": "https://www.binance.com/en/support/announcement/274273",
+      "published_at": "2026-05-19T03:00:08.915000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994262+08:00",
+      "summary_snippet": "Binance Margin And Binance Loans Will Delist AEUR and AI on 2026-05-22"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Alpha Will Remove PRAI, COMMON, PINGPONG, TAKER, JANITOR, GATA, KLINK, CORL, SWTCH, ARIAIP, LONG, ZKWASM, GORILLA, ECHO, LITKEY, FIR, GM, DELABS, DONKEY, WHY (2026-05-14)",
+      "url": "https://www.binance.com/en/support/announcement/273972",
+      "published_at": "2026-05-14T06:00:02.917000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994268+08:00",
+      "summary_snippet": "Binance Alpha Will Remove PRAI, COMMON, PINGPONG, TAKER, JANITOR, GATA, KLINK, CORL, SWTCH, ARIAIP, LONG, ZKWASM, GORILLA, ECHO, LITKEY, FIR, GM, DELABS, DONKEY, WHY (2026-05-14)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Delist ATA, FARM, MLN, PHB, SYS on 2026-05-27",
+      "url": "https://www.binance.com/en/support/announcement/273798",
+      "published_at": "2026-05-13T08:00:04.681000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994273+08:00",
+      "summary_snippet": "Binance Will Delist ATA, FARM, MLN, PHB, SYS on 2026-05-27"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Wallet Prediction Markets Upgrade Completed (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276197",
+      "published_at": "2026-06-04T09:05:01.267000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994279+08:00",
+      "summary_snippet": "Binance Wallet Prediction Markets Upgrade Completed (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support Scheduled Upgrade for Stock Trading Services - 2026-06-06",
+      "url": "https://www.binance.com/en/support/announcement/276187",
+      "published_at": "2026-06-04T06:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994297+08:00",
+      "summary_snippet": "Binance Will Support Scheduled Upgrade for Stock Trading Services - 2026-06-06"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Wallet Prediction Markets Upgrade Notice (2026-06-04)",
+      "url": "https://www.binance.com/en/support/announcement/276165",
+      "published_at": "2026-06-03T14:00:02.204000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994302+08:00",
+      "summary_snippet": "Binance Wallet Prediction Markets Upgrade Notice (2026-06-04)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support the Base Network Upgrade & Hard Fork - 2026-05-28",
+      "url": "https://www.binance.com/en/support/announcement/275194",
+      "published_at": "2026-05-27T03:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994307+08:00",
+      "summary_snippet": "Binance Will Support the Base Network Upgrade & Hard Fork - 2026-05-28"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Cease Support for Deposits and Withdrawals of Tokens on Selected Networks - 2026-06-03",
+      "url": "https://www.binance.com/en/support/announcement/275191",
+      "published_at": "2026-05-27T01:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994312+08:00",
+      "summary_snippet": "Binance Will Cease Support for Deposits and Withdrawals of Tokens on Selected Networks - 2026-06-03"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Performs Wallet Maintenance - 2026-05-28",
+      "url": "https://www.binance.com/en/support/announcement/275133",
+      "published_at": "2026-05-26T09:30:01.577000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994317+08:00",
+      "summary_snippet": "Binance Performs Wallet Maintenance - 2026-05-28"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support the Sei (SEI) Network Migration",
+      "url": "https://www.binance.com/en/support/announcement/275045",
+      "published_at": "2026-05-26T03:00:12.180000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994322+08:00",
+      "summary_snippet": "Binance Will Support the Sei (SEI) Network Migration"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Wallet Maintenance for Ethereum Network (ETH) - 2026-05-21",
+      "url": "https://www.binance.com/en/support/announcement/274402",
+      "published_at": "2026-05-20T05:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994327+08:00",
+      "summary_snippet": "Wallet Maintenance for Ethereum Network (ETH) - 2026-05-21"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support the Polygon (POL) Network Upgrade & Hard Fork - 2026-05-21",
+      "url": "https://www.binance.com/en/support/announcement/274362",
+      "published_at": "2026-05-20T03:30:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994332+08:00",
+      "summary_snippet": "Binance Will Support the Polygon (POL) Network Upgrade & Hard Fork - 2026-05-21"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support the Moonbeam (GLMR) Network Upgrade - 2026-05-20",
+      "url": "https://www.binance.com/en/support/announcement/274214",
+      "published_at": "2026-05-19T03:30:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994337+08:00",
+      "summary_snippet": "Binance Will Support the Moonbeam (GLMR) Network Upgrade - 2026-05-20"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Notice on Binance Spot API Update (2025-11-18)",
+      "url": "https://www.binance.com/en/support/announcement/257054",
+      "published_at": "2025-11-18T07:30:01.226000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994343+08:00",
+      "summary_snippet": "Notice on Binance Spot API Update (2025-11-18)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures API Updates (2025-10-09)",
+      "url": "https://www.binance.com/en/support/announcement/252060",
+      "published_at": "2025-10-09T11:26:13.003000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994349+08:00",
+      "summary_snippet": "Binance Futures API Updates (2025-10-09)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Introducing Binance Announcements WebSocket: Subscribe to Get Real-Time Updates and Promotions",
+      "url": "https://www.binance.com/en/support/announcement/242625",
+      "published_at": "2025-07-28T01:00:01.603000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994355+08:00",
+      "summary_snippet": "Introducing Binance Announcements WebSocket: Subscribe to Get Real-Time Updates and Promotions"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures API Updates (2024-10-30)",
+      "url": "https://www.binance.com/en/support/announcement/215285",
+      "published_at": "2024-10-22T10:00:23.290000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994360+08:00",
+      "summary_snippet": "Binance Futures API Updates (2024-10-30)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Earn Enables API Functionality for SOL Staking",
+      "url": "https://www.binance.com/en/support/announcement/214867",
+      "published_at": "2024-10-18T02:00:07.163000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994365+08:00",
+      "summary_snippet": "Binance Earn Enables API Functionality for SOL Staking"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance USDⓈ-M Futures WebSocket System Upgrade Notice (2024-10-17)",
+      "url": "https://www.binance.com/en/support/announcement/214547",
+      "published_at": "2024-10-15T05:00:01.616000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994372+08:00",
+      "summary_snippet": "Binance USDⓈ-M Futures WebSocket System Upgrade Notice (2024-10-17)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance COIN-M Futures WebSocket System Upgrade Notice (2024-10-10)",
+      "url": "https://www.binance.com/en/support/announcement/214125",
+      "published_at": "2024-10-09T01:00:00+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994378+08:00",
+      "summary_snippet": "Binance COIN-M Futures WebSocket System Upgrade Notice (2024-10-10)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance COIN-M Futures WebSocket System Upgrade Notice (2024-09-26)",
+      "url": "https://www.binance.com/en/support/announcement/212461",
+      "published_at": "2024-09-24T04:00:40.184000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994383+08:00",
+      "summary_snippet": "Binance COIN-M Futures WebSocket System Upgrade Notice (2024-09-26)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Introducing TRADE_LITE for USDⓈ-M Futures Websocket (2024-09-03)",
+      "url": "https://www.binance.com/en/support/announcement/209364",
+      "published_at": "2024-08-28T08:00:01.222000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994388+08:00",
+      "summary_snippet": "Introducing TRADE_LITE for USDⓈ-M Futures Websocket (2024-09-03)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Futures API Service Upgrade (2024-08-21)",
+      "url": "https://www.binance.com/en/support/announcement/208133",
+      "published_at": "2024-08-16T07:15:05.216000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994393+08:00",
+      "summary_snippet": "Binance Futures API Service Upgrade (2024-08-21)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Solayer (LAYER) Airdrop Continues: Fourth Binance HODLer Airdrops Announced – Earn LAYER With Retroactive BNB Simple Earn Subscriptions (2025-09-19)",
+      "url": "https://www.binance.com/en/support/announcement/249268",
+      "published_at": "2025-09-19T04:00:03.368000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994398+08:00",
+      "summary_snippet": "Solayer (LAYER) Airdrop Continues: Fourth Binance HODLer Airdrops Announced – Earn LAYER With Retroactive BNB Simple Earn Subscriptions (2025-09-19)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Introducing Avantis (AVNT) on Binance HODLer Airdrops! Earn AVNT With Retroactive BNB Simple Earn Subscriptions",
+      "url": "https://www.binance.com/en/support/announcement/248527",
+      "published_at": "2025-09-16T09:30:02.559000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994403+08:00",
+      "summary_snippet": "Introducing Avantis (AVNT) on Binance HODLer Airdrops! Earn AVNT With Retroactive BNB Simple Earn Subscriptions"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "MyShell (SHELL) Airdrop Continues: Second Binance HODLer Airdrops Announced – Earn SHELL With Retroactive BNB Simple Earn Subscriptions and Enjoy Up to 29.9% APR with SHELL Locked Products (2025-08-27)",
+      "url": "https://www.binance.com/en/support/announcement/245906",
+      "published_at": "2025-08-27T06:30:10.587000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994408+08:00",
+      "summary_snippet": "MyShell (SHELL) Airdrop Continues: Second Binance HODLer Airdrops Announced – Earn SHELL With Retroactive BNB Simple Earn Subscriptions and Enjoy Up to 29.9% APR with SHELL Locked Products (2025-08-27)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Solayer (LAYER) Airdrop Continues: Third Binance HODLer Airdrops Announced – Earn LAYER With Retroactive BNB Simple Earn Subscriptions (2025-08-18)",
+      "url": "https://www.binance.com/en/support/announcement/245082",
+      "published_at": "2025-08-18T09:00:33.818000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994414+08:00",
+      "summary_snippet": "Solayer (LAYER) Airdrop Continues: Third Binance HODLer Airdrops Announced – Earn LAYER With Retroactive BNB Simple Earn Subscriptions (2025-08-18)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Solayer (LAYER) Airdrop Continues: Second Binance HODLer Airdrops Announced – Earn LAYER With Retroactive BNB Simple Earn Subscriptions (2025-06-16)",
+      "url": "https://www.binance.com/en/support/announcement/238891",
+      "published_at": "2025-06-16T06:30:01.345000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994419+08:00",
+      "summary_snippet": "Solayer (LAYER) Airdrop Continues: Second Binance HODLer Airdrops Announced – Earn LAYER With Retroactive BNB Simple Earn Subscriptions (2025-06-16)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support the Doodles (DOOD) Airdrop for MUBARAK, BROCCOLI714, TST, 1MBABYDOGE, and KOMA Holders",
+      "url": "https://www.binance.com/en/support/announcement/236019",
+      "published_at": "2025-05-09T03:00:01.247000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994425+08:00",
+      "summary_snippet": "Binance Will Support the Doodles (DOOD) Airdrop for MUBARAK, BROCCOLI714, TST, 1MBABYDOGE, and KOMA Holders"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Has Completed the Wise Monkey (MONKY) Airdrop Distribution to FLOKI (FLOKI) and ApeCoin (APE)",
+      "url": "https://www.binance.com/en/support/announcement/221366",
+      "published_at": "2024-12-20T09:00:02.043000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994430+08:00",
+      "summary_snippet": "Binance Has Completed the Wise Monkey (MONKY) Airdrop Distribution to FLOKI (FLOKI) and ApeCoin (APE)"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Will Support the Wise Monkey (MONKY) Airdrop for FLOKI and APE Holders",
+      "url": "https://www.binance.com/en/support/announcement/218791",
+      "published_at": "2024-12-02T07:00:01.641000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994436+08:00",
+      "summary_snippet": "Binance Will Support the Wise Monkey (MONKY) Airdrop for FLOKI and APE Holders"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Binance Has Completed the Pepper (1000PEPPER) Airdrop Distribution to Chiliz (CHZ) Holders",
+      "url": "https://www.binance.com/en/support/announcement/216337",
+      "published_at": "2024-11-01T10:00:21.411000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994441+08:00",
+      "summary_snippet": "Binance Has Completed the Pepper (1000PEPPER) Airdrop Distribution to Chiliz (CHZ) Holders"
+    },
+    {
+      "source_name": "Binance Announcements",
+      "source_type": "json_api",
+      "title": "Update on Pepper (1000PEPPER) Airdrop for Chiliz (CHZ) Holders",
+      "url": "https://www.binance.com/en/support/announcement/215983",
+      "published_at": "2024-10-30T02:00:01.740000+00:00",
+      "fetched_at": "2026-06-05T13:25:11.994447+08:00",
+      "summary_snippet": "Update on Pepper (1000PEPPER) Airdrop for Chiliz (CHZ) Holders"
+    }
+  ]
+}

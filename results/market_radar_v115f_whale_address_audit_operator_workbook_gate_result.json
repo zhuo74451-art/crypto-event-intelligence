@@ -1,0 +1,82 @@
+{
+  "gate_stage": "v115f_whale_address_audit_operator_workbook_local_only",
+  "gate_passed": true,
+  "checks": [
+    {
+      "check": "csv_row_count=4",
+      "result": true,
+      "detail": "got 4 rows"
+    },
+    {
+      "check": "4 addresses in markdown",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all manual fields empty",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all manual bool fields false",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all upgrade_ready=false",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all send_allowed=false",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all tg_test_group_allowed=false",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all public_send_allowed=false",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "all block_reasons non-empty",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "no external query results embedded",
+      "result": true,
+      "detail": ""
+    },
+    {
+      "check": "no label upgraded",
+      "result": true,
+      "detail": ""
+    }
+  ],
+  "failed_checks": [],
+  "csv_row_count": 4,
+  "addresses_in_markdown": true,
+  "all_manual_fields_empty": true,
+  "all_bool_fields_false": true,
+  "all_upgrade_ready_false": true,
+  "all_send_guards_false": true,
+  "all_block_reasons_nonempty": true,
+  "no_external_results_embedded": true,
+  "no_label_upgraded": true,
+  "safety_invariants": {
+    "external_api_called": false,
+    "ai_model_called": false,
+    "credentials_read": false,
+    "tg_sent": false,
+    "prod_state_write": false,
+    "daemon_started": false,
+    "watcher_started": false,
+    "files_deleted": false
+  },
+  "generated_at": "2026-06-05T07:18:29.331424+08:00"
+}

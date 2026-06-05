@@ -1,0 +1,4 @@
+﻿address,asset,entity,should_send,ai,mh,pool_avail,bh_label,liq_dist,liq_risk,lpct,spct
+0xebe837cd345469,BTC,Unknown Hyperliquid Whale,False,0,0,False,,,,,
+0x6c8512516ce566,ETH,Matrixport Related,False,0,0,False,,,,,
+0x8def9f50456c6c,TON,loraclexyz,True,0,0,True,顺势加仓,0,,100.0,0.0

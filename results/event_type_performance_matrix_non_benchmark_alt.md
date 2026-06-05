@@ -1,6 +1,6 @@
 # Event Type Performance Matrix
 
-- generated_at_china: 2026-05-28 19:24:39 UTC+8
+- generated_at_china: 2026-06-01 13:29:49 UTC+8
 - input_rows: 174
 - matrix_rows: 56
 

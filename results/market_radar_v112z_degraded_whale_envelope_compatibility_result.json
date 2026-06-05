@@ -1,0 +1,43 @@
+{
+  "version": "v112Z",
+  "status": "passed",
+  "input_records_loaded": 10,
+  "envelopes_written": 10,
+  "external_api_called": false,
+  "degraded_compatible": true,
+  "mock_replay_only": true,
+  "eligible_for_real_send_count": 0,
+  "real_send_candidate_count": 0,
+  "preview_allowed_count": 0,
+  "tg_send_allowed_count": 0,
+  "prod_state_write": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "credentials_read": false,
+  "files_deleted": false,
+  "quality_flags_preserved": true,
+  "label_confidence_preserved": true,
+  "liquidation_price_note_preserved": true,
+  "delta_status_preserved": true,
+  "timestamp_status_preserved": true,
+  "label_confidence_distribution": {
+    "medium": 8,
+    "low": 2
+  },
+  "quality_flags_distribution": {
+    "degraded_label_confidence": 10,
+    "delta_unavailable": 10,
+    "local_timestamp_only": 10,
+    "liquidation_price_missing": 7
+  },
+  "all_input_degraded": true,
+  "all_input_mock_replay_only": true,
+  "all_input_eligible_for_real_send_false": true,
+  "all_input_valid": true,
+  "all_envelopes_valid": true,
+  "input_validation_errors": 0,
+  "envelope_validation_errors": 0,
+  "unique_addresses": 4,
+  "next_step": "v113a_degraded_whale_preview_pack_local_only",
+  "generated_at": "2026-06-05 05:49:41 UTC+8"
+}

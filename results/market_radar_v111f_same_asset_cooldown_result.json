@@ -1,0 +1,442 @@
+{
+  "run_version": "v1.11-F",
+  "cooldown_gate_version": "v1.11-f",
+  "signal_value_gate_version": "v1.11-d",
+  "generated_at": "2026-06-04 19:11:19 UTC+8",
+  "cooldown_config": {
+    "cooldown_window_minutes": 10,
+    "upgrade_override_score_delta": 15
+  },
+  "total_scenarios": 5,
+  "total_signals": 18,
+  "aggregate": {
+    "cooldown_allow_count": 11,
+    "cooldown_suppress_count": 5,
+    "upgrade_override_count": 2,
+    "repeated_assets": [
+      "ARB",
+      "BTC",
+      "ETH",
+      "SOL",
+      "SUI"
+    ],
+    "repeated_asset_count": 5,
+    "suppression_rate_pct": 27.8,
+    "upgrade_override_rate_pct": 11.1
+  },
+  "value_gate_reference": {
+    "value_allow": 15,
+    "value_observe": 2,
+    "value_block": 1
+  },
+  "key_findings": [
+    "Cooldown gate successfully suppresses same-asset repeats within the 10-min window. 5 signals (27.8%) were suppressed that would have been sent without cooldown (all passed SignalValueGate as 'allow').",
+    "Upgrade override triggered 2 time(s) (11.1%), allowing a repeat because value_score improved by >= 15 points. This prevents cooldown from becoming a hard silence — important signals still get through.",
+    "Per-asset tracking confirmed: 5 asset(s) appeared multiple times across batches. Cooldown state correctly tracks each asset independently.",
+    "Integration with SignalValueGate: blocked signals skip cooldown check; observe signals still go through cooldown evaluation (but would not be sent regardless). cooldown_suppress + value_observe are independent concerns — observe means 'not valuable enough', suppress means 'too soon'."
+  ],
+  "pre_send_gate_readiness": {
+    "ready": true,
+    "blockers": [],
+    "conditions_met": [
+      "Cooldown gate successfully suppresses same-asset repeats — the only blocker identified in v1.11-E is now resolved.",
+      "Upgrade override works — important signal escalations are not silently dropped by cooldown.",
+      "Cooldown gate is a separate layer from SignalValueGate — separation of concerns is maintained. pre_send_gate can now consume both SignalValueGate (value check) and CooldownGate (rate limit) before sending."
+    ],
+    "recommendation": "Cooldown gate is ready for integration. Next step (v1.11-G): wire CooldownGate between SignalValueGate and pre_send_gate in a dry-run pipeline. Do NOT send to TG yet."
+  },
+  "final_cooldown_state": {
+    "SUI": {
+      "last_allowed_at": "2026-06-04T19:21:19.606652+08:00",
+      "last_value_score": 140,
+      "occurrence_count": 3,
+      "last_decision": "upgrade_override",
+      "suppression_count": 1
+    },
+    "ETH": {
+      "last_allowed_at": "2026-06-04T19:13:19.606652+08:00",
+      "last_value_score": 120,
+      "occurrence_count": 1,
+      "last_decision": "allow"
+    },
+    "DOT": {
+      "last_allowed_at": "2026-06-04T19:15:19.606652+08:00",
+      "last_value_score": 50,
+      "occurrence_count": 1,
+      "last_decision": "allow"
+    },
+    "LINK": {
+      "last_allowed_at": "2026-06-04T19:19:19.606652+08:00",
+      "last_value_score": 20,
+      "occurrence_count": 1,
+      "last_decision": "allow"
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "F1",
+      "scenario_name": "Same-Asset Repeat — Cooldown Suppression",
+      "objective": "Verify that same-asset repeats within 10 min cooldown window are correctly suppressed. ARB appears 3 times (T+0, T+4, T+8 min). First passes, second and third are cooldown_suppress. Different assets (BTC, SOL) pass independently.",
+      "batch_size": 3,
+      "cooldown_stats": {
+        "allow": 1,
+        "cooldown_suppress": 2,
+        "upgrade_override": 0,
+        "suppression_rate_pct": 66.7
+      },
+      "repeated_assets": [
+        "ARB"
+      ],
+      "signal_entries": [
+        {
+          "asset": "ARB",
+          "minutes_offset": 0,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ARB — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "ARB 24h 跌幅 7.55% — 第 1 次触发 (T+0min)"
+        },
+        {
+          "asset": "ARB",
+          "minutes_offset": 4,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "previous_value_score": 100,
+          "minutes_since_last": 4.0,
+          "occurrence_count": 2,
+          "final_status": "COOLDOWN SUPPRESS",
+          "trigger_reason": "ARB 24h 跌幅 7.82% — 第 2 次触发 (T+4min)"
+        },
+        {
+          "asset": "ARB",
+          "minutes_offset": 8,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for ARB: last allowed 8.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "previous_value_score": 100,
+          "minutes_since_last": 8.0,
+          "occurrence_count": 3,
+          "final_status": "COOLDOWN SUPPRESS",
+          "trigger_reason": "ARB 24h 跌幅 7.90% — 第 3 次触发 (T+8min)"
+        }
+      ]
+    },
+    {
+      "scenario_id": "F2",
+      "scenario_name": "Upgrade Override — Score Improvement Within Window",
+      "objective": "Verify that when the same asset reappears within the cooldown window but with a significantly higher value_score (Δ >= 15), the cooldown gate issues an upgrade_override (allowed). ETH: first at score=45 (price only), then at score=75 (price+OI+volume).",
+      "batch_size": 2,
+      "cooldown_stats": {
+        "allow": 1,
+        "cooldown_suppress": 0,
+        "upgrade_override": 1,
+        "suppression_rate_pct": 0.0
+      },
+      "repeated_assets": [
+        "ETH"
+      ],
+      "signal_entries": [
+        {
+          "asset": "ETH",
+          "minutes_offset": 0,
+          "signal_value_decision": "observe",
+          "signal_value_score": 10,
+          "signal_value_tier": "low",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ETH — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "OBSERVE (not sent)",
+          "trigger_reason": "ETH 跌幅 7.80% — 弱信号: 只有价格, 无确认因子"
+        },
+        {
+          "asset": "ETH",
+          "minutes_offset": 5,
+          "signal_value_decision": "allow",
+          "signal_value_score": 115,
+          "signal_value_tier": "high",
+          "cooldown_decision": "upgrade_override",
+          "cooldown_allowed": true,
+          "cooldown_reason": "Upgrade override for ETH: value_score improved from 10 → 115 (Δ+105 >= 15) within cooldown window — allow as upgrade",
+          "previous_value_score": 10,
+          "minutes_since_last": 5.0,
+          "occurrence_count": 2,
+          "final_status": "SEND (upgrade)",
+          "trigger_reason": "ETH 跌幅 8.50% — 强信号: 价格+OI+volume+funding extreme"
+        }
+      ]
+    },
+    {
+      "scenario_id": "F3",
+      "scenario_name": "Cooldown Window Expiry — Allow After Window",
+      "objective": "Verify that after the cooldown window (10 min) expires, the same asset can be sent again. SOL appears at T+0 and T+12 — the second should pass as a normal allow (not upgrade_override).",
+      "batch_size": 2,
+      "cooldown_stats": {
+        "allow": 2,
+        "cooldown_suppress": 0,
+        "upgrade_override": 0,
+        "suppression_rate_pct": 0.0
+      },
+      "repeated_assets": [
+        "SOL"
+      ],
+      "signal_entries": [
+        {
+          "asset": "SOL",
+          "minutes_offset": 0,
+          "signal_value_decision": "allow",
+          "signal_value_score": 75,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SOL — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "SOL 24h 跌幅 7.24% — 第 1 次 (T+0min)"
+        },
+        {
+          "asset": "SOL",
+          "minutes_offset": 12,
+          "signal_value_decision": "allow",
+          "signal_value_score": 75,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "Cooldown window expired for SOL (12.0 min since last > 10 min window) — allow",
+          "previous_value_score": 75,
+          "minutes_since_last": 12.0,
+          "occurrence_count": 2,
+          "final_status": "SEND",
+          "trigger_reason": "SOL 24h 跌幅 6.80% — 第 2 次 (T+12min)"
+        }
+      ]
+    },
+    {
+      "scenario_id": "F4",
+      "scenario_name": "Multi-Asset Interleaving — Independent Per-Asset Cooldown",
+      "objective": "Verify that cooldown tracking is per-asset. BTC and ETH each appear twice — their cooldown states are independent. BTC at T+5 should be suppressed; ETH at T+7 should be suppressed; SOL at T+9 is a first occurrence → allow.",
+      "batch_size": 5,
+      "cooldown_stats": {
+        "allow": 3,
+        "cooldown_suppress": 2,
+        "upgrade_override": 0,
+        "suppression_rate_pct": 40.0
+      },
+      "repeated_assets": [
+        "BTC",
+        "ETH"
+      ],
+      "signal_entries": [
+        {
+          "asset": "BTC",
+          "minutes_offset": 0,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of BTC — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "BTC 24h 跌幅 5.54% — (T+0min)"
+        },
+        {
+          "asset": "ETH",
+          "minutes_offset": 3,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ETH — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "ETH 24h 跌幅 6.20% — (T+3min)"
+        },
+        {
+          "asset": "BTC",
+          "minutes_offset": 5,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for BTC: last allowed 5.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "previous_value_score": 100,
+          "minutes_since_last": 5.0,
+          "occurrence_count": 2,
+          "final_status": "COOLDOWN SUPPRESS",
+          "trigger_reason": "BTC 24h 跌幅 5.80% — (T+5min)"
+        },
+        {
+          "asset": "ETH",
+          "minutes_offset": 7,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for ETH: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "previous_value_score": 100,
+          "minutes_since_last": 4.0,
+          "occurrence_count": 2,
+          "final_status": "COOLDOWN SUPPRESS",
+          "trigger_reason": "ETH 24h 跌幅 6.50% — (T+7min)"
+        },
+        {
+          "asset": "SOL",
+          "minutes_offset": 9,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SOL — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "SOL 24h 跌幅 7.50% — (T+9min)"
+        }
+      ]
+    },
+    {
+      "scenario_id": "F5",
+      "scenario_name": "Mixed Integration — Value Gate + Cooldown Gate Pipeline",
+      "objective": "Full pipeline integration test. Signals pass through SignalValueGate first, then CooldownGate. Tests: (a) blocked signal doesn't enter cooldown; (b) observe signal goes to cooldown check; (c) same-asset repeat is suppressed; (d) upgrade_override works in mixed context.",
+      "batch_size": 6,
+      "cooldown_stats": {
+        "allow": 4,
+        "cooldown_suppress": 1,
+        "upgrade_override": 1,
+        "suppression_rate_pct": 16.7
+      },
+      "repeated_assets": [
+        "SUI"
+      ],
+      "signal_entries": [
+        {
+          "asset": "SUI",
+          "minutes_offset": 0,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SUI — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "SUI 24h 跌幅 5.83% — (T+0min)"
+        },
+        {
+          "asset": "ETH",
+          "minutes_offset": 2,
+          "signal_value_decision": "allow",
+          "signal_value_score": 120,
+          "signal_value_tier": "high",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ETH — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "SEND",
+          "trigger_reason": "ETH 24h 跌幅 6.80% — (T+2min)"
+        },
+        {
+          "asset": "DOT",
+          "minutes_offset": 4,
+          "signal_value_decision": "block",
+          "signal_value_score": 50,
+          "signal_value_tier": "medium",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of DOT — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "BLOCKED (value gate)",
+          "trigger_reason": "DOT 仅跌 4.50% — 未达价格阈值 (T+4min)"
+        },
+        {
+          "asset": "SUI",
+          "minutes_offset": 6,
+          "signal_value_decision": "allow",
+          "signal_value_score": 100,
+          "signal_value_tier": "high",
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for SUI: last allowed 6.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "previous_value_score": 100,
+          "minutes_since_last": 6.0,
+          "occurrence_count": 2,
+          "final_status": "COOLDOWN SUPPRESS",
+          "trigger_reason": "SUI 24h 跌幅 6.10% — (T+6min)"
+        },
+        {
+          "asset": "LINK",
+          "minutes_offset": 8,
+          "signal_value_decision": "observe",
+          "signal_value_score": 20,
+          "signal_value_tier": "low",
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of LINK — no cooldown applied",
+          "previous_value_score": null,
+          "minutes_since_last": null,
+          "occurrence_count": 1,
+          "final_status": "OBSERVE (not sent)",
+          "trigger_reason": "LINK 跌幅 7.20% — 无确认因子 (T+8min)"
+        },
+        {
+          "asset": "SUI",
+          "minutes_offset": 10,
+          "signal_value_decision": "allow",
+          "signal_value_score": 140,
+          "signal_value_tier": "high",
+          "cooldown_decision": "upgrade_override",
+          "cooldown_allowed": true,
+          "cooldown_reason": "Upgrade override for SUI: value_score improved from 100 → 140 (Δ+40 >= 15) within cooldown window — allow as upgrade",
+          "previous_value_score": 100,
+          "minutes_since_last": 10.0,
+          "occurrence_count": 3,
+          "final_status": "SEND (upgrade)",
+          "trigger_reason": "SUI 持续下跌 9.20% — OI+volume+funding 三重确认 (T+10min)"
+        }
+      ]
+    }
+  ],
+  "security": {
+    "tg_send": "NONE",
+    "formal_channel": "NONE",
+    "secrets_loaded": "NONE",
+    "paid_apis": "NONE",
+    "loop_daemon_cron": "NONE",
+    "files_deleted": "NONE",
+    "pre_send_gate_connected": "NONE"
+  }
+}

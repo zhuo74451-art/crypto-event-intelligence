@@ -1,6 +1,6 @@
 # v11 历史优先雷达路由策略
 
-- 生成时间：2026-05-28 19:24:40 UTC+8
+- 生成时间：2026-06-03 19:40:41 UTC+8
 - 策略行数：62
 - boost：1，downrank：0，digest_only：3，collect_more：35
 
@@ -28,10 +28,10 @@
 | event_subtype | upgrade_or_fork | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
 | event_subtype | stablecoin_supply_or_flow | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
 | event_subtype | listing_delisting | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
-| event_subtype | long_short_crowding_extreme | collect_more | 1.50 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
+| event_subtype | long_short_crowding_extreme | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
 | event_subtype | rwa_tokenization | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
-| event_subtype | token_unlock_team_large | collect_more | 1.50 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
-| event_subtype | whale_position_static_large | collect_more | 1.50 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
+| event_subtype | token_unlock_team_large | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
+| event_subtype | whale_position_static_large | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
 | event_subtype | token_unlock | collect_more | 1.20 | 历史样本不足，先收集更多，不做强结论；盘中降低重复曝光。 |
 | event_subtype | whale_wallet_position | boost | 0.80 | 历史同类事件 24h 后续表现较好，允许提高观察优先级，但仍不代表方向建议。 |
 | source_type | news:cointelegraph | digest_only | 2.00 | 历史回测显示同类事件更像背景信息，优先进入早午晚报，不适合盘中反复刷。 |

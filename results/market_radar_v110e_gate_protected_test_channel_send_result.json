@@ -1,0 +1,114 @@
+{
+  "status": "done",
+  "sent_count": 1,
+  "max_send_count": 1,
+  "message_id": "2245",
+  "target_type": "supergroup",
+  "tg_api_called": true,
+  "sent_exceed_1": false,
+  "sent_channel": false,
+  "loop_started": false,
+  "sensitive_printed": false,
+  "remote_db_written": false,
+  "dry_run": false,
+  "gate_results": [],
+  "error": "",
+  "success": true,
+  "status_code": 200,
+  "error_type": "",
+  "error_message": "",
+  "retry_after": null,
+  "provider": "telegram",
+  "provider_metadata": {
+    "transport_name": "telegram",
+    "raw_api_response": {
+      "ok": true,
+      "result": {
+        "message_id": 2245,
+        "from": {
+          "id": 8848089028,
+          "is_bot": true,
+          "first_name": "币界快讯ai",
+          "username": "BjieNewsPushBot"
+        },
+        "chat": {
+          "id": -1003977074640,
+          "title": "币界网官方群",
+          "type": "supergroup"
+        },
+        "date": 1780560654,
+        "text": "📉 行情异动｜ARB 下跌\n\n一句话：ARB 24h 跌幅 6.96% 触发行情异动监测\n\n● 币种：ARB\n● 涨跌幅：-6.96%\n● Funding：+0.00%（年化 1.4%）\n● 清算情况：OI: 468.26 万美元，24h成交量: 493.21 万美元\n● 是否拥挤：否\n● 观察窗口：1-4 小时\n\n🔗 行情查看：[CoinGecko](https://www.coingecko.com/en/coins/arbitrum) / [DexScreener](https://dexscreener.com/search?q=ARB)\n📎 原始来源：[Hyperliquid](https://app.hyperliquid.xyz/)\n\n💡 触发原因：ARB 24h 跌幅 6.96% 触发行情异动监测\n\n⚠️ 行情异动不代表交易方向，请结合其他信号判断，不构成交易建议。",
+        "entities": [
+          {
+            "offset": 180,
+            "length": 43,
+            "type": "url"
+          },
+          {
+            "offset": 241,
+            "length": 36,
+            "type": "url"
+          },
+          {
+            "offset": 301,
+            "length": 28,
+            "type": "url"
+          }
+        ],
+        "link_preview_options": {
+          "is_disabled": true
+        }
+      }
+    },
+    "request_payload_preview": {
+      "chat_id": "-100XXXX_REDACTED",
+      "text_preview": "📉 行情异动｜ARB 下跌\n\n一句话：ARB 24h 跌幅 6\\.96% 触发行情异动监测\n\n● 币种：ARB\n● 涨跌幅：\\-6\\.96%\n● Funding：\\+0\\.00%（年化 1\\.4%）\n● 清算情况：OI: 468\\.26 万美元，24h成交量: 493\\.21 万美元\n● 是否拥挤：否\n● 观察窗口：1\\-4 小时\n\n🔗 行情查看：\\[CoinGecko\\]\\(https://ww",
+      "text_length": 424,
+      "parse_mode": "MarkdownV2",
+      "disable_web_page_preview": true,
+      "api_endpoint": "/bot[REDACTED]/sendMessage"
+    }
+  },
+  "generated_at": "2026-06-04 16:10:53 UTC+8",
+  "component_version": "v1.10-E",
+  "executor_lane": 1,
+  "project_label": "market_radar",
+  "task_id": "20260604_154132.r05",
+  "run_id": "20260604_154132",
+  "card_type": "market_anomaly",
+  "core_entity": "ARB",
+  "source_type": "api",
+  "signal_type": "market_anomaly",
+  "gate_version": "v1.10-c",
+  "gate_allowed": true,
+  "gate_result": {
+    "allowed": true,
+    "gate_version": "v1.10-c",
+    "target_env": "test",
+    "source_type": "api",
+    "signal_type": "market_anomaly",
+    "signal_id": "143bb04fcb2e5977",
+    "signal_hash": "143bb04fcb2e5977",
+    "generated_at": "2026-06-04T08:08:41Z",
+    "checked_at": "2026-06-04T08:10:53Z",
+    "ttl_seconds": 900,
+    "age_seconds": 132,
+    "blocked_reason": null
+  },
+  "target_env": "test",
+  "is_fixture": false,
+  "parse_mode_initial": "MarkdownV2",
+  "parse_mode_final": "MarkdownV2",
+  "fallback_used": false,
+  "warnings": [],
+  "attempts": 1,
+  "provider_metadata_redacted": true,
+  "component_chain": [
+    "run_market_radar_v110a_free_cards.py → signals JSON",
+    "Signal selection (priority: api market_anomaly > api risk_alert > real/external)",
+    "render_card_payload(signal)",
+    "SignalTrustGate.check(signal, target_env='test')",
+    "TGTransport + RealHttpClient → TG test channel",
+    "SendResult handoff"
+  ]
+}

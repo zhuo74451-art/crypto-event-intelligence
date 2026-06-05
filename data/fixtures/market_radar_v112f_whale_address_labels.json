@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "version": "v1.12-F",
+    "fixture_type": "whale_address_labels",
+    "description": "Address label fixture for whale position alert local enrichment. All addresses are synthetic — no real private keys, tokens, or API keys.",
+    "total_labels": 6,
+    "generated_at": "2026-06-04T20:27:18+08:00",
+    "note": "These are synthetic fixture addresses for local testing only. Do NOT use for production."
+  },
+  "labels": [
+    {
+      "wallet": "0x7a9f2c8d4e6b1a3f5c7d9e2b4a6f8c0d2e4a6b8c",
+      "label": "Smart Money Alpha",
+      "entity_type": "smart_money",
+      "confidence": "high",
+      "source_type": "onchain_analysis",
+      "first_seen": "2025-09-15T08:00:00Z",
+      "last_active": "2026-06-03T22:30:00Z",
+      "tags": ["high_win_rate", "early_entry", "large_cap_focus"],
+      "estimated_portfolio_usd": 45000000,
+      "note": "Historically high win-rate trader focusing on BTC/ETH large-cap pairs. Known for early entries before major moves."
+    },
+    {
+      "wallet": "0x3b6e9f1c8a5d2f4e7a1c5d8f2b4e6a8c0d2e4f6a",
+      "label": "Whale #HyperL-42",
+      "entity_type": "high_leverage_trader",
+      "confidence": "medium",
+      "source_type": "hyperliquid_observer",
+      "first_seen": "2026-01-20T12:00:00Z",
+      "last_active": "2026-06-04T18:15:00Z",
+      "tags": ["hyperliquid", "high_leverage", "aggressive", "short_bias"],
+      "estimated_portfolio_usd": 8200000,
+      "note": "Known Hyperliquid high-leverage trader. Frequently runs 15-25x leverage. Has been liquidated 3 times in past 6 months."
+    },
+    {
+      "wallet": "0x5c8d1f4a7e2b9f6c3a8d5e2f4b6a8c0d2e4f6a8b",
+      "label": "Binance Hot Wallet #17 (Related)",
+      "entity_type": "exchange_related",
+      "confidence": "high",
+      "source_type": "arkham_intelligence_label",
+      "first_seen": "2024-06-01T00:00:00Z",
+      "last_active": "2026-06-04T20:00:00Z",
+      "tags": ["exchange_related", "binance", "hot_wallet", "high_volume"],
+      "estimated_portfolio_usd": 320000000,
+      "note": "Address with known interaction patterns with Binance hot wallets. Large inflow/outflow activity indicates institutional movement."
+    },
+    {
+      "wallet": "0x9e2b4a6f8c0d2e4a6b8c0d2e4f6a8b0c2d4e6f8a",
+      "label": "Galaxy Digital OTC (Suspected)",
+      "entity_type": "fund_wallet",
+      "confidence": "medium",
+      "source_type": "nansen_ai_label",
+      "first_seen": "2025-03-10T14:00:00Z",
+      "last_active": "2026-06-03T16:45:00Z",
+      "tags": ["fund", "otc", "institutional", "large_block_trade"],
+      "estimated_portfolio_usd": 180000000,
+      "note": "Suspected institutional/fund wallet. Executes large OTC-style block trades. Low frequency, high conviction entries."
+    },
+    {
+      "wallet": "0x1f4a7e2b9c6d8f0a3c5e7b9d1f4a6c8e0b2d4f6a",
+      "label": "Unknown Mega Whale #3371",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "source_type": "onchain_heuristic",
+      "first_seen": "2025-11-05T06:00:00Z",
+      "last_active": "2026-06-04T14:00:00Z",
+      "tags": ["unknown", "mega_whale", "new_address", "high_capital"],
+      "estimated_portfolio_usd": 95000000,
+      "note": "Relatively new address with very large capital. No known label association. Possibly a new fund or whale consolidating from multiple addresses."
+    },
+    {
+      "wallet": "0x2d4e6f8a0b2c4e6f8a0d2c4e6f8a0b2c4d6e8f0a2",
+      "label": "Wintermute MM (Confirmed)",
+      "entity_type": "market_maker",
+      "confidence": "high",
+      "source_type": "arkham_intelligence_label",
+      "first_seen": "2024-01-15T00:00:00Z",
+      "last_active": "2026-06-04T21:00:00Z",
+      "tags": ["market_maker", "wintermute", "arbitrage", "high_frequency"],
+      "estimated_portfolio_usd": 210000000,
+      "note": "Confirmed Wintermute market-making address. High frequency activity across multiple DEXes and CEXes. Delta-neutral strategy."
+    }
+  ]
+}

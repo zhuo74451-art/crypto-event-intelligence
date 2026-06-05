@@ -1,0 +1,68 @@
+{
+  "version": "v1.12-w",
+  "status": "passed",
+  "dry_run_only": true,
+  "plan_only": true,
+  "live_ready": false,
+  "real_live_api_called": false,
+  "hyperliquid_api_called": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "files_deleted": false,
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "candidate_card_type": "whale_position_alert",
+  "previous_candidate_frozen": "multi_asset_market_sync",
+  "multi_asset_freeze_reason": "mock_ready_but_free_source_data_gap",
+  "whale_position_plan_ready": true,
+  "hyperliquid_stop_conditions_ready": true,
+  "field_mapping_ready": true,
+  "label_quality_audit_ready": true,
+  "hl_to_whale_adapter_spec_ready": true,
+  "decision_modes": [
+    "CONTINUE",
+    "ABORT",
+    "DEGRADE_TO_MOCK"
+  ],
+  "real_send_ready": false,
+  "production_state_write_ready": false,
+  "v112x_requires_user_confirmation": true,
+  "recommended_next_step": "v112x_hyperliquid_one_shot_read_only_dry_run_requires_user_confirmation",
+  "upstream_validation": {
+    "all_passed": true
+  },
+  "artifacts_generated": [
+    "config/market_radar_v112w_whale_position_field_mapping.json",
+    "config/market_radar_v112w_hyperliquid_stop_conditions.json",
+    "schemas/market_radar_v112w_hyperliquid_live_response_schema.json",
+    "schemas/market_radar_v112w_hl_to_whale_adapter_spec.md",
+    "docs/market_radar_v112w_whale_position_live_source_plan.md",
+    "results/market_radar_v112w_whale_label_quality_audit.json",
+    "results/market_radar_v112w_whale_position_live_source_plan_result.json",
+    "runs/market_radar/v112w_whale_position_live_source_plan.md",
+    "runs/market_radar/v112w_whale_position_live_source_plan_handoff.md"
+  ],
+  "artifacts_read": [
+    "results/market_radar_v112v_degraded_mock_replay_result.json",
+    "results/market_radar_v112f_whale_position_local_enrichment_result.json",
+    "results/market_radar_v112h_unified_signal_envelope_result.json",
+    "results/market_radar_v112o_send_preview_pack_result.json",
+    "results/market_radar_v112p_live_source_matrix.json",
+    "data/hyperliquid_position_state.csv"
+  ],
+  "security_invariants": {
+    "no_hyperliquid_api_called": true,
+    "no_external_api_called": true,
+    "no_external_ai_called": true,
+    "no_daemon_started": true,
+    "no_files_deleted": true,
+    "no_real_tg_sent": true,
+    "no_production_state_written": true,
+    "no_credentials_read": true,
+    "no_secrets_leaked": true,
+    "no_debug_terms_leaked": true
+  },
+  "generated_at": "2026-06-05T04:13:00+08:00"
+}

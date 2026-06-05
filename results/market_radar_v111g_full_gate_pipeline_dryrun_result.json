@@ -1,0 +1,1378 @@
+{
+  "run_version": "v1.11-G",
+  "pipeline_layers": {
+    "layer_1": "SignalValueGate (v1.11-d)",
+    "layer_2": "CooldownGate (v1.11-f)",
+    "layer_3": "pre_send_gate (SignalTrustGate + payload validation)"
+  },
+  "generated_at": "2026-06-04 19:40:32 UTC+8",
+  "cooldown_config": {
+    "cooldown_window_minutes": 10,
+    "upgrade_override_score_delta": 15
+  },
+  "total_scenarios": 6,
+  "total_signals": 26,
+  "aggregate": {
+    "final_send_candidate_count": 12,
+    "final_send_candidate_upgrade_count": 2,
+    "total_send_candidates": 14,
+    "send_rate_pct": 53.8,
+    "blocked_by_value_gate_count": 4,
+    "blocked_by_value_gate_rate_pct": 15.4,
+    "suppressed_by_cooldown_count": 3,
+    "suppressed_by_cooldown_rate_pct": 11.5,
+    "blocked_by_pre_send_gate_count": 5,
+    "blocked_by_pre_send_gate_rate_pct": 19.2,
+    "observe_count": 2,
+    "observe_rate_pct": 7.7
+  },
+  "layer_termination": {
+    "terminated_at_value_gate": 4,
+    "terminated_at_cooldown": 3,
+    "reached_pre_send_gate": 19,
+    "passed_all_gates": 14,
+    "observe_routed": 2
+  },
+  "decision_matrix": {
+    "G1": {
+      "name": "Full Happy Path — All Gates Pass",
+      "batch_size": 4,
+      "send_candidate": 4,
+      "send_candidate_upgrade": 0,
+      "blocked_by_value_gate": 0,
+      "suppressed_by_cooldown": 0,
+      "blocked_by_pre_send_gate": 0,
+      "observe": 0,
+      "expectation_mismatches": 0
+    },
+    "G2": {
+      "name": "Value Gate Blocks — First-Layer Rejection",
+      "batch_size": 3,
+      "send_candidate": 0,
+      "send_candidate_upgrade": 0,
+      "blocked_by_value_gate": 3,
+      "suppressed_by_cooldown": 0,
+      "blocked_by_pre_send_gate": 0,
+      "observe": 0,
+      "expectation_mismatches": 0
+    },
+    "G3": {
+      "name": "Cooldown Suppression — Second-Layer Rate Limiting",
+      "batch_size": 4,
+      "send_candidate": 2,
+      "send_candidate_upgrade": 0,
+      "blocked_by_value_gate": 0,
+      "suppressed_by_cooldown": 2,
+      "blocked_by_pre_send_gate": 0,
+      "observe": 0,
+      "expectation_mismatches": 0
+    },
+    "G4": {
+      "name": "Pre-Send Gate Blocks — Third-Layer Safety Rejection",
+      "batch_size": 4,
+      "send_candidate": 0,
+      "send_candidate_upgrade": 0,
+      "blocked_by_value_gate": 0,
+      "suppressed_by_cooldown": 0,
+      "blocked_by_pre_send_gate": 4,
+      "observe": 0,
+      "expectation_mismatches": 0
+    },
+    "G5": {
+      "name": "Upgrade Override — Score Improvement Bypasses Cooldown",
+      "batch_size": 2,
+      "send_candidate": 3,
+      "send_candidate_upgrade": 1,
+      "blocked_by_value_gate": 0,
+      "suppressed_by_cooldown": 0,
+      "blocked_by_pre_send_gate": 0,
+      "observe": 0,
+      "expectation_mismatches": 0
+    },
+    "G6": {
+      "name": "Full Mixed Pipeline — All Outcomes Stress Test",
+      "batch_size": 9,
+      "send_candidate": 5,
+      "send_candidate_upgrade": 1,
+      "blocked_by_value_gate": 1,
+      "suppressed_by_cooldown": 1,
+      "blocked_by_pre_send_gate": 1,
+      "observe": 2,
+      "expectation_mismatches": 0
+    }
+  },
+  "expectation_mismatches_total": 0,
+  "key_findings": [
+    "Full three-layer pipeline verification complete. 26 signals across 6 scenarios. Final distribution: send_candidate=14 (53.8%), blocked_by_value=4 (15.4%), suppressed_by_cooldown=3 (11.5%), blocked_by_pre_send=5 (19.2%), observe=2 (7.7%).",
+    "Cooldown gate successfully suppressed 3 signal(s) that passed the value gate — preventing same-asset spam in the send pipeline. This is the key v1.11-G validation: cooldown works correctly as the second layer between value gate and pre_send.",
+    "Upgrade override triggered 2 time(s) — assets with significantly improved value scores bypass cooldown. This prevents the cooldown gate from becoming a hard silence: important escalations still get through.",
+    "Pre-send gate caught 5 signal(s) that passed both value and cooldown checks — demonstrating the value of the third safety layer. Block reasons include source trust, TTL expiry, and payload validation failures.",
+    "Observe layer correctly captured 2 signal(s) — signals with price movement but insufficient confirmation factors. These would enter an observation pool rather than the send channel.",
+    "Pipeline layer separation confirmed: value gate, cooldown gate, and pre_send gate operate independently with clear pass/fail boundaries. Signals terminate at the first failing layer — no skip-around possible.",
+    "Compared to v1.11-F (which only tested value+cooldown, 18 signals): v1.11-G adds pre_send_gate as the third layer. The additional signals with pre_send blocking scenarios validate that the safety layer correctly rejects signals that would otherwise slip through a two-layer pipeline."
+  ],
+  "pipeline_readiness": {
+    "ready_for_test_channel": false,
+    "ready_for_prod_channel": false,
+    "conditions_met": [
+      "Cooldown gate correctly suppresses same-asset repeats — prevents spam in the send channel.",
+      "Pre-send gate correctly catches unsafe signals (source trust, TTL, payload validation) that pass value+cooldown.",
+      "Pipeline successfully identifies send_candidate signals — signals that pass all three gates are valid for test-channel delivery.",
+      "Observe layer is active and captures low-confidence signals for monitoring without sending."
+    ],
+    "blockers": [
+      "This is a dry-run only. No signals were actually delivered to TG. Real delivery requires: (a) card router/renderer integration, (b) actual TG send function, (c) production config."
+    ],
+    "recommendations": [
+      "Next step (v1.11-H): After verifying no expectation mismatches, run a test-channel live dry-run where: (a) signals that pass all three gates have mock cards rendered, (b) the rendered card is logged but NOT sent, (c) the full pipeline is validated end-to-end with real payload rendering.",
+      "Do NOT un-freeze the formal channel. The pipeline has not yet been validated with real TG delivery. Continue test-channel-only validation.",
+      "Consider adding a pipeline_dashboard that visualizes the three-layer flow: signals entering → value gate rejection → cooldown suppression → pre-send blocks → final send candidates."
+    ]
+  },
+  "scenarios": [
+    {
+      "scenario_id": "G1",
+      "scenario_name": "Full Happy Path — All Gates Pass",
+      "objective": "Verify that well-confirmed signals (price + OI + volume) from trusted sources with no asset repeats pass all three gates and become final_send_candidate.",
+      "batch_size": 4,
+      "pipeline_stats": {
+        "scenario_id": "G1",
+        "total_signals": 4,
+        "final_send_candidate_count": 4,
+        "final_send_candidate_upgrade_count": 0,
+        "send_candidate_total": 4,
+        "blocked_by_value_gate_count": 0,
+        "suppressed_by_cooldown_count": 0,
+        "blocked_by_pre_send_gate_count": 0,
+        "observe_count": 0,
+        "pre_send_block_reasons": [],
+        "expectation_mismatches": [],
+        "pipeline_layer_distribution": {
+          "terminated_at_value_gate": 0,
+          "terminated_at_cooldown": 0,
+          "terminated_at_pre_send": 4,
+          "bypassed_send": 0
+        }
+      },
+      "signal_entries": [
+        {
+          "index": 0,
+          "asset": "BTC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 0,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-5.54%) >= 5%",
+            "oi_confirmation: open_interest=1826000000.0",
+            "volume_confirmation: volume=6345000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of BTC — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "BTC 24h 跌幅 5.54% — 三重确认",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 1,
+          "asset": "ETH",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 2,
+          "value_decision": "allow",
+          "value_score": 120,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": true,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-6.80%) >= 5%",
+            "oi_confirmation: open_interest=12900000000.0",
+            "volume_confirmation: volume=16000000000.0",
+            "funding_extreme: abs(funding)=0.0150 >= 0.01",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ETH — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ETH 24h 跌幅 6.80% — 四重确认 (含 funding extreme)",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 2,
+          "asset": "SOL",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 4,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.24%) >= 5%",
+            "oi_confirmation: open_interest=278000000.0",
+            "volume_confirmation: volume=527000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SOL — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "SOL 24h 跌幅 7.24% — 三重确认",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 3,
+          "asset": "SUI",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 6,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-5.83%) >= 5%",
+            "oi_confirmation: open_interest=28000000.0",
+            "volume_confirmation: volume=21500000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SUI — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "SUI 24h 跌幅 5.83% — 三重确认",
+          "expect_final": "send_candidate"
+        }
+      ]
+    },
+    {
+      "scenario_id": "G2",
+      "scenario_name": "Value Gate Blocks — First-Layer Rejection",
+      "objective": "Verify that signals below the 5% price threshold are blocked by the value gate and never proceed to cooldown or pre_send.",
+      "batch_size": 3,
+      "pipeline_stats": {
+        "scenario_id": "G2",
+        "total_signals": 3,
+        "final_send_candidate_count": 0,
+        "final_send_candidate_upgrade_count": 0,
+        "send_candidate_total": 0,
+        "blocked_by_value_gate_count": 3,
+        "suppressed_by_cooldown_count": 0,
+        "blocked_by_pre_send_gate_count": 0,
+        "observe_count": 0,
+        "pre_send_block_reasons": [],
+        "expectation_mismatches": [],
+        "pipeline_layer_distribution": {
+          "terminated_at_value_gate": 3,
+          "terminated_at_cooldown": 0,
+          "terminated_at_pre_send": 0,
+          "bypassed_send": 0
+        }
+      },
+      "signal_entries": [
+        {
+          "index": 0,
+          "asset": "DOT",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 0,
+          "value_decision": "block",
+          "value_score": 50,
+          "value_tier": "medium",
+          "value_factor_hits": {
+            "price_move": false,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "oi_confirmation: open_interest=200000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move not hit — no significant price change detected"
+          ],
+          "value_warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of DOT — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "blocked_by_value_gate",
+          "pipeline_layer": "value_gate",
+          "trigger_reason": "DOT 仅跌 3.20% — 未达 5% 价格阈值",
+          "expect_final": "blocked_by_value_gate"
+        },
+        {
+          "index": 1,
+          "asset": "LINK",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 1,
+          "value_decision": "block",
+          "value_score": 10,
+          "value_tier": "low",
+          "value_factor_hits": {
+            "price_move": false,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "multi_asset_sync: 4 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move not hit — no significant price change detected"
+          ],
+          "value_warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of LINK — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "blocked_by_value_gate",
+          "pipeline_layer": "value_gate",
+          "trigger_reason": "LINK 仅跌 4.00% — 无价格触发",
+          "expect_final": "blocked_by_value_gate"
+        },
+        {
+          "index": 2,
+          "asset": "MATIC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 2,
+          "value_decision": "block",
+          "value_score": 70,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": false,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "oi_confirmation: open_interest=50000000.0",
+            "volume_confirmation: volume=120000000.0",
+            "multi_asset_sync: 4 real assets in same direction (down) — backed by OI/volume",
+            "price_move not hit — no significant price change detected"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of MATIC — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "blocked_by_value_gate",
+          "pipeline_layer": "value_gate",
+          "trigger_reason": "MATIC 仅跌 2.50% — 远低于阈值",
+          "expect_final": "blocked_by_value_gate"
+        }
+      ]
+    },
+    {
+      "scenario_id": "G3",
+      "scenario_name": "Cooldown Suppression — Second-Layer Rate Limiting",
+      "objective": "Verify that same-asset repeats (ARB x3 within 8 min) are correctly suppressed by the cooldown gate. The value gate lets them all through (they are well-confirmed), but cooldown blocks repeats 2 and 3.",
+      "batch_size": 4,
+      "pipeline_stats": {
+        "scenario_id": "G3",
+        "total_signals": 4,
+        "final_send_candidate_count": 2,
+        "final_send_candidate_upgrade_count": 0,
+        "send_candidate_total": 2,
+        "blocked_by_value_gate_count": 0,
+        "suppressed_by_cooldown_count": 2,
+        "blocked_by_pre_send_gate_count": 0,
+        "observe_count": 0,
+        "pre_send_block_reasons": [],
+        "expectation_mismatches": [],
+        "pipeline_layer_distribution": {
+          "terminated_at_value_gate": 0,
+          "terminated_at_cooldown": 2,
+          "terminated_at_pre_send": 2,
+          "bypassed_send": 0
+        }
+      },
+      "signal_entries": [
+        {
+          "index": 0,
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 0,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.55%) >= 5%",
+            "oi_confirmation: open_interest=4656700.0",
+            "volume_confirmation: volume=4942400.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ARB — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ARB 24h 跌幅 7.55% — 第 1 次触发 (T+0min)",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 1,
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 4,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.82%) >= 5%",
+            "oi_confirmation: open_interest=4612000.0",
+            "volume_confirmation: volume=4955000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "cooldown_previous_score": 100,
+          "cooldown_minutes_since_last": 4.0,
+          "cooldown_occurrence_count": 2,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "suppressed_by_cooldown",
+          "pipeline_layer": "cooldown_gate",
+          "trigger_reason": "ARB 24h 跌幅 7.82% — 第 2 次触发 (T+4min)",
+          "expect_final": "suppressed_by_cooldown"
+        },
+        {
+          "index": 2,
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 8,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.90%) >= 5%",
+            "oi_confirmation: open_interest=4588000.0",
+            "volume_confirmation: volume=4961000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for ARB: last allowed 8.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "cooldown_previous_score": 100,
+          "cooldown_minutes_since_last": 8.0,
+          "cooldown_occurrence_count": 3,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "suppressed_by_cooldown",
+          "pipeline_layer": "cooldown_gate",
+          "trigger_reason": "ARB 24h 跌幅 7.90% — 第 3 次触发 (T+8min)",
+          "expect_final": "suppressed_by_cooldown"
+        },
+        {
+          "index": 3,
+          "asset": "SOL",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 6,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-6.80%) >= 5%",
+            "oi_confirmation: open_interest=278000000.0",
+            "volume_confirmation: volume=530000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SOL — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "SOL 24h 跌幅 6.80% — 不同资产, 无冷却",
+          "expect_final": "send_candidate"
+        }
+      ]
+    },
+    {
+      "scenario_id": "G4",
+      "scenario_name": "Pre-Send Gate Blocks — Third-Layer Safety Rejection",
+      "objective": "Verify that pre_send_gate correctly blocks signals that pass value and cooldown checks but fail safety rules: (a) source_type='unknown' → trust gate block, (b) stale timestamp → TTL gate block, (c) empty payload text → payload validation block.",
+      "batch_size": 4,
+      "pipeline_stats": {
+        "scenario_id": "G4",
+        "total_signals": 4,
+        "final_send_candidate_count": 0,
+        "final_send_candidate_upgrade_count": 0,
+        "send_candidate_total": 0,
+        "blocked_by_value_gate_count": 0,
+        "suppressed_by_cooldown_count": 0,
+        "blocked_by_pre_send_gate_count": 4,
+        "observe_count": 0,
+        "pre_send_block_reasons": [
+          "AVAX: source_type 'unknown' not allowed for test send",
+          "LTC: TTL expired: signal_type='market_anomaly' TTL=900s, age=7200s",
+          "NEAR: Payload text is empty or whitespace-only",
+          "OP: Payload missing 'parse_mode' field"
+        ],
+        "expectation_mismatches": [],
+        "pipeline_layer_distribution": {
+          "terminated_at_value_gate": 0,
+          "terminated_at_cooldown": 0,
+          "terminated_at_pre_send": 4,
+          "bypassed_send": 0
+        }
+      },
+      "signal_entries": [
+        {
+          "index": 0,
+          "asset": "AVAX",
+          "signal_type": "market_anomaly",
+          "source_type": "unknown",
+          "minutes_offset": 0,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-6.20%) >= 5%",
+            "oi_confirmation: open_interest=155000000.0",
+            "volume_confirmation: volume=220000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of AVAX — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": false,
+          "pre_send_blocked_reason": "source_type 'unknown' not allowed for test send",
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "blocked_by_pre_send_gate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "AVAX 跌幅 6.20% — source_type=unknown",
+          "expect_final": "blocked_by_pre_send_gate"
+        },
+        {
+          "index": 1,
+          "asset": "LTC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 2,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-5.80%) >= 5%",
+            "oi_confirmation: open_interest=300000000.0",
+            "volume_confirmation: volume=450000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of LTC — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": false,
+          "pre_send_blocked_reason": "TTL expired: signal_type='market_anomaly' TTL=900s, age=7200s",
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "blocked_by_pre_send_gate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "LTC 跌幅 5.80% — 时间戳过期 (2h 前)",
+          "expect_final": "blocked_by_pre_send_gate"
+        },
+        {
+          "index": 2,
+          "asset": "NEAR",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 4,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-5.50%) >= 5%",
+            "oi_confirmation: open_interest=80000000.0",
+            "volume_confirmation: volume=120000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of NEAR — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": false,
+          "pre_send_blocked_reason": "Payload text is empty or whitespace-only",
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "blocked_by_pre_send_gate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "NEAR 跌幅 5.50% — 载荷 text 为空",
+          "expect_final": "blocked_by_pre_send_gate"
+        },
+        {
+          "index": 3,
+          "asset": "OP",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 6,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.10%) >= 5%",
+            "oi_confirmation: open_interest=60000000.0",
+            "volume_confirmation: volume=90000000.0",
+            "multi_asset_sync: 5 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of OP — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": false,
+          "pre_send_blocked_reason": "Payload missing 'parse_mode' field",
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "blocked_by_pre_send_gate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "OP 跌幅 7.10% — 载荷缺少 parse_mode",
+          "expect_final": "blocked_by_pre_send_gate"
+        }
+      ]
+    },
+    {
+      "scenario_id": "G5",
+      "scenario_name": "Upgrade Override — Score Improvement Bypasses Cooldown",
+      "objective": "Verify that when the same asset reappears within the cooldown window with a much higher value_score (Δ >= 15), the cooldown gate issues an upgrade_override, and the signal passes through to pre_send_gate.",
+      "batch_size": 2,
+      "pipeline_stats": {
+        "scenario_id": "G5",
+        "total_signals": 2,
+        "final_send_candidate_count": 2,
+        "final_send_candidate_upgrade_count": 1,
+        "send_candidate_total": 3,
+        "blocked_by_value_gate_count": 0,
+        "suppressed_by_cooldown_count": 0,
+        "blocked_by_pre_send_gate_count": 0,
+        "observe_count": 0,
+        "pre_send_block_reasons": [],
+        "expectation_mismatches": [],
+        "pipeline_layer_distribution": {
+          "terminated_at_value_gate": 0,
+          "terminated_at_cooldown": 0,
+          "terminated_at_pre_send": 3,
+          "bypassed_send": 0
+        }
+      },
+      "signal_entries": [
+        {
+          "index": 0,
+          "asset": "ETH",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 0,
+          "value_decision": "allow",
+          "value_score": 45,
+          "value_tier": "medium",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": false
+          },
+          "value_reasons": [
+            "price_move: abs(-5.50%) >= 5%",
+            "oi_confirmation: open_interest=12000000000.0",
+            "price_move + strong confirmation(s): oi_confirmation"
+          ],
+          "value_warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing volume: -10 score penalty"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ETH — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ETH 跌幅 5.50% — 中等信号: 价格+OI (score~55)",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 1,
+          "asset": "ETH",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 5,
+          "value_decision": "allow",
+          "value_score": 115,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": true,
+            "multi_asset_sync": false
+          },
+          "value_reasons": [
+            "price_move: abs(-8.50%) >= 5%",
+            "strong_price_move: abs(-8.50%) >= 8%",
+            "oi_confirmation: open_interest=12500000000.0",
+            "volume_confirmation: volume=18200000000.0",
+            "funding_extreme: abs(funding)=0.0250 >= 0.01",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme"
+          ],
+          "value_warnings": [],
+          "cooldown_decision": "upgrade_override",
+          "cooldown_allowed": true,
+          "cooldown_reason": "Upgrade override for ETH: value_score improved from 45 → 115 (Δ+70 >= 15) within cooldown window — allow as upgrade",
+          "cooldown_previous_score": 45,
+          "cooldown_minutes_since_last": 5.0,
+          "cooldown_occurrence_count": 2,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate_upgrade",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ETH 跌幅 8.50% — 强信号: OI+volume+funding 全确认 (score~100)",
+          "expect_final": "send_candidate_upgrade"
+        }
+      ]
+    },
+    {
+      "scenario_id": "G6",
+      "scenario_name": "Full Mixed Pipeline — All Outcomes Stress Test",
+      "objective": "The definitive three-layer integration test. Mixed signals produce all possible outcome combinations: value→allow/observe/block, cooldown→allow/suppress/upgrade, pre_send→pass/block. Verifies the complete decision matrix.",
+      "batch_size": 9,
+      "pipeline_stats": {
+        "scenario_id": "G6",
+        "total_signals": 9,
+        "final_send_candidate_count": 4,
+        "final_send_candidate_upgrade_count": 1,
+        "send_candidate_total": 5,
+        "blocked_by_value_gate_count": 1,
+        "suppressed_by_cooldown_count": 1,
+        "blocked_by_pre_send_gate_count": 1,
+        "observe_count": 2,
+        "pre_send_block_reasons": [
+          "ETH: source_type 'unknown' not allowed for test send"
+        ],
+        "expectation_mismatches": [],
+        "pipeline_layer_distribution": {
+          "terminated_at_value_gate": 1,
+          "terminated_at_cooldown": 1,
+          "terminated_at_pre_send": 6,
+          "bypassed_send": 2
+        }
+      },
+      "signal_entries": [
+        {
+          "index": 0,
+          "asset": "BTC",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 0,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-5.54%) >= 5%",
+            "oi_confirmation: open_interest=1826000000.0",
+            "volume_confirmation: volume=6345000000.0",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of BTC — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "BTC 24h 跌幅 5.54% — 价值: allow, 冷却: allow, 安全: pass",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 1,
+          "asset": "DOT",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 2,
+          "value_decision": "block",
+          "value_score": 50,
+          "value_tier": "medium",
+          "value_factor_hits": {
+            "price_move": false,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "oi_confirmation: open_interest=120000000.0",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move not hit — no significant price change detected"
+          ],
+          "value_warnings": [
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of DOT — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "blocked_by_value_gate",
+          "pipeline_layer": "value_gate",
+          "trigger_reason": "DOT 仅跌 3.50% — 价值: block, 管道终止于此",
+          "expect_final": "blocked_by_value_gate"
+        },
+        {
+          "index": 2,
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 4,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.55%) >= 5%",
+            "oi_confirmation: open_interest=4656700.0",
+            "volume_confirmation: volume=4942400.0",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ARB — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ARB 24h 跌幅 7.55% — 价值: allow, 冷却: allow (首次), 安全: pass",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 3,
+          "asset": "LINK",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 6,
+          "value_decision": "observe",
+          "value_score": 20,
+          "value_tier": "low",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.20%) >= 5%",
+            "multi_asset_sync: 10 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move hit but no strong confirmation factors present — observe only"
+          ],
+          "value_warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing open_interest: -10 score penalty",
+            "missing volume: -10 score penalty",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of LINK — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "observe",
+          "pipeline_layer": "cooldown_gate",
+          "trigger_reason": "LINK 跌幅 7.20% — 价值: observe, 冷却检查但不会发送",
+          "expect_final": "observe"
+        },
+        {
+          "index": 4,
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 8,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-7.70%) >= 5%",
+            "oi_confirmation: open_interest=4590000.0",
+            "volume_confirmation: volume=4960000.0",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "cooldown_suppress",
+          "cooldown_allowed": false,
+          "cooldown_reason": "Same-asset cooldown for ARB: last allowed 4.0 min ago (window=10 min). Value score 100 vs previous 100 (Δ+0 < 15 required for override). Suppressing repeat.",
+          "cooldown_previous_score": 100,
+          "cooldown_minutes_since_last": 4.0,
+          "cooldown_occurrence_count": 2,
+          "pre_send_checked": false,
+          "pre_send_allowed": null,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": null,
+          "final_status": "suppressed_by_cooldown",
+          "pipeline_layer": "cooldown_gate",
+          "trigger_reason": "ARB 24h 跌幅 7.70% — 价值: allow, 冷却: suppress (T+8, Δ<15)",
+          "expect_final": "suppressed_by_cooldown"
+        },
+        {
+          "index": 5,
+          "asset": "SUI",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 10,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-5.83%) >= 5%",
+            "oi_confirmation: open_interest=28000000.0",
+            "volume_confirmation: volume=21500000.0",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of SUI — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "SUI 24h 跌幅 5.83% — 价值: allow, 冷却: allow (首次), 安全: pass",
+          "expect_final": "send_candidate"
+        },
+        {
+          "index": 6,
+          "asset": "ETH",
+          "signal_type": "market_anomaly",
+          "source_type": "unknown",
+          "minutes_offset": 12,
+          "value_decision": "allow",
+          "value_score": 100,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-6.50%) >= 5%",
+            "oi_confirmation: open_interest=12800000000.0",
+            "volume_confirmation: volume=15800000000.0",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [
+            "funding field missing — funding extreme not available"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of ETH — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": false,
+          "pre_send_blocked_reason": "source_type 'unknown' not allowed for test send",
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "blocked_by_pre_send_gate",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ETH 跌幅 6.50% — 价值: allow, 冷却: allow (首次), 安全: BLOCK (unknown source)",
+          "expect_final": "blocked_by_pre_send_gate"
+        },
+        {
+          "index": 7,
+          "asset": "ARB",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 14,
+          "value_decision": "allow",
+          "value_score": 140,
+          "value_tier": "high",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": true,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-8.50%) >= 5%",
+            "strong_price_move: abs(-8.50%) >= 8%",
+            "oi_confirmation: open_interest=5200000.0",
+            "volume_confirmation: volume=6100000.0",
+            "funding_extreme: abs(funding)=0.0180 >= 0.01",
+            "multi_asset_sync: 10 real assets in same direction (down) — backed by OI/volume",
+            "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, funding_extreme, multi_asset_sync (backed)"
+          ],
+          "value_warnings": [],
+          "cooldown_decision": "upgrade_override",
+          "cooldown_allowed": true,
+          "cooldown_reason": "Upgrade override for ARB: value_score improved from 100 → 140 (Δ+40 >= 15) within cooldown window — allow as upgrade",
+          "cooldown_previous_score": 100,
+          "cooldown_minutes_since_last": 10.0,
+          "cooldown_occurrence_count": 3,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "send_candidate_upgrade",
+          "pipeline_layer": "pre_send_gate",
+          "trigger_reason": "ARB 跌幅 8.50% — 价值: allow, 冷却: upgrade_override (score↑), 安全: pass",
+          "expect_final": "send_candidate_upgrade"
+        },
+        {
+          "index": 8,
+          "asset": "AVAX",
+          "signal_type": "market_anomaly",
+          "source_type": "api",
+          "minutes_offset": 16,
+          "value_decision": "observe",
+          "value_score": 20,
+          "value_tier": "low",
+          "value_factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "value_reasons": [
+            "price_move: abs(-6.20%) >= 5%",
+            "multi_asset_sync: 10 real assets in same direction (down) — NO OI/volume backing (half score)",
+            "price_move hit but no strong confirmation factors present — observe only"
+          ],
+          "value_warnings": [
+            "open_interest field missing — OI confirmation not available",
+            "volume field missing — volume confirmation not available",
+            "funding field missing — funding extreme not available",
+            "missing open_interest: -10 score penalty",
+            "missing volume: -10 score penalty",
+            "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+          ],
+          "cooldown_decision": "allow",
+          "cooldown_allowed": true,
+          "cooldown_reason": "First occurrence of AVAX — no cooldown applied",
+          "cooldown_previous_score": null,
+          "cooldown_minutes_since_last": null,
+          "cooldown_occurrence_count": 1,
+          "pre_send_checked": true,
+          "pre_send_allowed": true,
+          "pre_send_blocked_reason": null,
+          "pre_send_gate_version": "v1.10-c",
+          "final_status": "observe",
+          "pipeline_layer": "cooldown_gate",
+          "trigger_reason": "AVAX 跌幅 6.20% — 价值: observe (仅价格触发, 无确认)",
+          "expect_final": "observe"
+        }
+      ]
+    }
+  ],
+  "security": {
+    "tg_send": "NONE",
+    "formal_channel": "NONE",
+    "secrets_loaded": "NONE",
+    "paid_apis": "NONE",
+    "loop_daemon_cron": "NONE",
+    "files_deleted": "NONE"
+  }
+}

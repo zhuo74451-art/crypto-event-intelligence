@@ -1,6 +1,6 @@
 # Source Registry Report
 
-- generated_at_china: 2026-05-28 19:24:39 UTC+8
+- generated_at_china: 2026-06-01 13:29:49 UTC+8
 - status: pass
 - registry_rows: 12
 - enabled_count: 12
@@ -12,14 +12,14 @@
 
 | source_id | type | enabled | shadow | route | watcher_rows | sent_rows | decision_rows | status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| hyperliquid_clearinghouse_state | hyperliquid | true | false | board | 5 | 1 | 11 | needs_more_outcomes |
-| token_unlock_calendar | token_unlock | true | false | digest | 3 | 1 | 11 | needs_more_outcomes |
-| long_short | long_short | true | false | board | 0 | 1 | 11 | needs_more_outcomes |
+| hyperliquid_clearinghouse_state | hyperliquid | true | false | board | 4 | 1 | 13 | needs_more_outcomes |
+| token_unlock_calendar | token_unlock | true | false | digest | 8 | 1 | 11 | needs_more_outcomes |
+| long_short | long_short | true | false | board | 0 | 1 | 24 | needs_more_outcomes |
 | cex_netflow | cex_netflow | true | false | board | 0 | 0 | 0 | needs_baseline |
-| stablecoin_flow | stablecoin_flow | true | false | board | 0 | 0 | 0 | needs_baseline |
+| stablecoin_flow | stablecoin_flow | true | false | board | 8 | 0 | 0 | needs_baseline |
 | address_transfer | address_transfer | true | true | archive | 0 | 0 | 0 | shadow_collect |
 | funding_rate | funding_rate | true | true | archive | 0 | 0 | 0 | shadow_collect |
-| cex_listing_announcement | exchange_listing | true | true | archive | 1 | 0 | 0 | shadow_collect |
+| cex_listing_announcement | exchange_listing | true | true | archive | 0 | 0 | 0 | shadow_collect |
 | lending_liquidation | lending_liquidation | true | true | archive | 0 | 0 | 0 | shadow_collect |
 | raw_news_real | news | true | true | archive | 0 | 0 | 0 | historical_only |
 | tg_hyperinsight | news | true | true | archive | 0 | 0 | 0 | historical_promising |

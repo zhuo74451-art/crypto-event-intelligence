@@ -1,0 +1,7 @@
+﻿run_time,asset,side_cn,rank,address,entity_name,position_value_usd,liquidation_price,liquidation_distance_pct,risk_label
+2026-06-01 17:22:58 UTC+8,BTC,多单,1,0xebe837cd345469,Unknown Hyperliquid Whale,34746959.11,62192.2400176636,14.7304,中等
+2026-06-01 17:22:58 UTC+8,HYPE,多单,2,0x082e843a431aef,Unknown HYPE Whale,100544388.04,52.8070303027,27.5186,低
+2026-06-01 17:22:58 UTC+8,ETH,多单,3,0x6c8512516ce566,Matrixport Related,79416000.0,1358.1864209563,31.5913,低
+2026-06-01 17:22:58 UTC+8,HYPE,空单,4,0x8def9f50456c6c,loraclexyz,53074629.93,120.057428644,64.7873,低
+2026-06-01 17:22:58 UTC+8,VVV,空单,5,0x8def9f50456c6c,loraclexyz,752767.44,1060.3036228196,66.226961,低
+2026-06-01 17:22:58 UTC+8,LIT,空单,6,0x8def9f50456c6c,loraclexyz,733856.98,84.3808865763,72.05072,低

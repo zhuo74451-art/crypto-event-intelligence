@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-05-29 12:52:28 UTC+8
+Last updated: 2026-06-01 10:07:32 UTC+8
 
 ## Current Version
 
@@ -356,8 +356,8 @@ report: results/secret_leak_report.md
 Project OS validation:
 
 ```text
-overall_status: pass
-blocking_or_fail_count: 0
+overall_status: fail
+blocking_or_fail_count: 8
 review_count: 2
 report: results/project_os_validation_report.md
 ```
@@ -396,8 +396,8 @@ Artifact manifest:
 artifact_count: 324
 required_artifact_count: 274
 missing_required_count: 0
-stale_required_count: 0
-status: pass
+stale_required_count: 103
+status: fail
 doc: docs/ARTIFACT_MANIFEST.md
 ```
 

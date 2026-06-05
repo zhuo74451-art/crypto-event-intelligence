@@ -1,2 +1,2 @@
 ﻿watcher,calendar_rows,alert_rows,skipped_rows,sample_skipped_rows,bad_time_rows,horizon_hours,min_unlock_pct,min_amount_usd,status,output
-token_unlock_calendar,500,3,497,0,0,72,2.0,10000000,pass,C:\Users\PC\Desktop\Projects\事件情报系统\data\watcher_alerts_token_unlocks.csv
+token_unlock_calendar,500,11,489,0,0,72,2.0,10000000,pass,C:\Users\PC\Desktop\Projects\事件情报系统\data\watcher_alerts_token_unlocks.csv

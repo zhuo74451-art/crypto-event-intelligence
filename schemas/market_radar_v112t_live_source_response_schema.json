@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/事件情报系统/schemas/market_radar_v112t_live_source_response_schema.json",
+  "title": "LiveSourceResponse v1.12-t",
+  "description": "Normalized response schema for v112T one-shot free-source plan. Defines the shape of data returned by a live source adapter (CoinGecko/CoinCap). This schema is used for validation and mock generation in v112T, and will be the contract for v112U live dry-run.",
+  "type": "object",
+  "required": [
+    "source_name",
+    "fetched_at",
+    "request_mode",
+    "assets",
+    "validation_status",
+    "stop_decision"
+  ],
+  "properties": {
+    "source_name": {
+      "type": "string",
+      "description": "Name of the data source that produced this response",
+      "enum": ["coingecko_public_rest", "coincap_public_rest"]
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of when the response was fetched (client-side time)"
+    },
+    "request_mode": {
+      "type": "string",
+      "description": "Execution mode. v112T always uses planned_one_shot (no actual request). v112U will use live_one_shot.",
+      "enum": ["planned_one_shot", "live_one_shot"]
+    },
+    "assets": {
+      "type": "array",
+      "description": "Array of asset data objects, one per asset in the response",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "asset_id",
+          "symbol",
+          "price_usd",
+          "price_change_pct",
+          "last_updated_at"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "description": "Source-specific asset identifier (e.g., 'bitcoin', 'ethereum' for CoinGecko; 'bitcoin', 'ethereum' for CoinCap)"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Ticker symbol, uppercase (e.g., 'BTC', 'ETH')"
+          },
+          "price_usd": {
+            "type": "number",
+            "description": "Current price in USD"
+          },
+          "price_change_pct": {
+            "type": "number",
+            "description": "Price change percentage. For CoinGecko primary: 24h change. For CoinCap fallback: 24h change. 1h change may be available from CoinGecko but is not required."
+          },
+          "price_change_pct_1h": {
+            "type": "number",
+            "description": "1-hour price change percentage. Available from CoinGecko, NOT from CoinCap. Null when unavailable.",
+            "nullable": true
+          },
+          "volume_change_pct": {
+            "type": "number",
+            "description": "24h volume change percentage. Available from CoinGecko. May be computed or null from CoinCap.",
+            "nullable": true
+          },
+          "open_interest_change_pct": {
+            "type": "number",
+            "description": "Open interest change percentage. NOT available from free CoinGecko/CoinCap REST APIs. Always null in v112T free-source plan. Required for full v112Q compliance.",
+            "nullable": true
+          },
+          "last_updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO-8601 timestamp of when the source last updated this asset's data (source-side time)"
+          },
+          "source_latency_ms": {
+            "type": "integer",
+            "description": "Estimated latency from source last_updated to client fetched_at, in milliseconds. Null if not computable.",
+            "nullable": true
+          },
+          "raw_source_fields": {
+            "type": "object",
+            "description": "The raw fields as returned by the source, preserved for lineage/debugging. Structure varies by source.",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "validation_status": {
+      "type": "string",
+      "description": "Overall validation status of this response",
+      "enum": ["valid", "degraded", "invalid"]
+    },
+    "stop_decision": {
+      "type": "string",
+      "description": "The stop condition decision for this response",
+      "enum": ["CONTINUE", "ABORT", "DEGRADE_TO_MOCK"]
+    },
+    "stop_decision_reasons": {
+      "type": "array",
+      "description": "List of reasons that contributed to the stop_decision",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cross_source_validation": {
+      "type": "object",
+      "description": "Results of cross-source validation when both CoinGecko and CoinCap returned data",
+      "properties": {
+        "performed": {
+          "type": "boolean",
+          "description": "Whether cross-source validation was performed (requires both sources to return data)"
+        },
+        "price_divergence_pct": {
+          "type": "number",
+          "description": "Maximum price divergence between sources, as percentage. Null if not performed."
+        },
+        "timestamp_divergence_seconds": {
+          "type": "integer",
+          "description": "Maximum timestamp divergence between sources, in seconds. Null if not performed."
+        },
+        "assets_compared": {
+          "type": "integer",
+          "description": "Number of assets present in both sources and available for comparison"
+        },
+        "verdict": {
+          "type": "string",
+          "description": "Cross-source consistency verdict",
+          "enum": ["consistent", "minor_divergence", "major_divergence", "single_source_only", "not_performed"]
+        }
+      }
+    },
+    "eligible_for_real_send": {
+      "type": "boolean",
+      "description": "Whether this response is eligible for real TG send. v112T policy: ALWAYS false, regardless of data quality.",
+      "const": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata about the response",
+      "properties": {
+        "plan_version": {
+          "type": "string",
+          "const": "v1.12-t"
+        },
+        "dry_run": {
+          "type": "boolean",
+          "const": true
+        },
+        "assets_requested": {
+          "type": "integer",
+          "description": "Number of assets requested from the source"
+        },
+        "assets_returned": {
+          "type": "integer",
+          "description": "Number of assets actually returned by the source"
+        },
+        "request_duration_ms": {
+          "type": "integer",
+          "description": "Actual request duration in milliseconds. 0 in planned_one_shot mode."
+        }
+      }
+    }
+  }
+}

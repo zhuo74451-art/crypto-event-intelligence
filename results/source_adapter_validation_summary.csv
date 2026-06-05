@@ -1,2 +1,2 @@
 ﻿status,generated_at_china,input,row_count,pass_count,warning_count,fail_count,output,markdown_output
-pass,2026-05-28 19:24:40 UTC+8,C:\Users\PC\Desktop\Projects\事件情报系统\data\watcher_events_raw.csv,9,9,0,0,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_adapter_validation_report.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_adapter_validation_report.md
+pass,2026-06-01 13:29:50 UTC+8,C:\Users\PC\Desktop\Projects\事件情报系统\data\watcher_events_raw.csv,20,20,0,0,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_adapter_validation_report.csv,C:\Users\PC\Desktop\Projects\事件情报系统\results\source_adapter_validation_report.md

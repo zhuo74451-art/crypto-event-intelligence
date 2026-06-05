@@ -1,0 +1,51 @@
+{
+  "version": "v115B",
+  "policy_name": "whale_label_confidence_routing_policy",
+  "description": "Defines routing rules based on label confidence levels. No position may be routed to TG test group or public send without meeting these thresholds.",
+  "send_ready_requires": {
+    "minimum_label_confidence": "high",
+    "unknown_whale_allowed_for_send": false,
+    "low_confidence_allowed_for_tg_test": false,
+    "medium_confidence_allowed_for_tg_test": "review_required_only",
+    "high_confidence_required_for_public_send": true
+  },
+  "routing_rules": {
+    "high": {
+      "operator_review_allowed": true,
+      "tg_test_group_allowed": true,
+      "public_send_allowed": false,
+      "requires_send_preview_gate": true,
+      "note": "High-confidence labels may enter TG test group with send preview gate, but NOT public production send. Public send requires explicit future gate."
+    },
+    "medium": {
+      "operator_review_allowed": true,
+      "tg_test_group_allowed": false,
+      "public_send_allowed": false,
+      "requires_label_upgrade": true,
+      "note": "Medium-confidence labels are review-only. TG test group entry requires label upgrade to high. Operator may review but may not route to TG."
+    },
+    "low": {
+      "operator_review_allowed": true,
+      "tg_test_group_allowed": false,
+      "public_send_allowed": false,
+      "requires_label_upgrade": true,
+      "must_show_unknown_warning": true,
+      "note": "Low-confidence labels are review-only with unknown warning. Must display 'Unknown Whale' only. No TG or public routing under any circumstance."
+    }
+  },
+  "current_state": {
+    "high_count": 0,
+    "medium_count": 8,
+    "low_count": 2,
+    "total_addresses": 4,
+    "any_eligible_for_tg_test_group": false,
+    "any_eligible_for_public_send": false,
+    "any_eligible_for_send": false
+  },
+  "label_confidence_distribution": {
+    "high": 0,
+    "medium": 8,
+    "low": 2
+  },
+  "generated_at": "2026-06-05T06:41:34.872550+08:00"
+}

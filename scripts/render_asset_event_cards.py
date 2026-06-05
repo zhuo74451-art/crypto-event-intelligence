@@ -67,13 +67,24 @@ def event_lines(event: dict) -> list[str]:
     end_ts = str(event.get("event_end_time", ""))
 
     # Card header
+    has_fh = str(event.get("has_first_hand_signal", "")) in ("True", "true", "1", True)
+    if not has_fh and first_hand == 0:
+        # Auto-detect from first_hand_count as fallback
+        has_fh = first_hand > 0
+
+    fh_badge = ""
+    if has_fh and urgency == "high":
+        fh_badge = " [👁 一手监控]"
+    elif has_fh:
+        fh_badge = " [👁 一手监控]"
+
     strength_tag = ""
     if urgency == "high":
         strength_tag = " ⚡ 高优先级"
     elif strength >= 60:
         strength_tag = " 🔶 值得关注"
 
-    lines.append(f"## {asset} 资产动态｜多信号共振{strength_tag}")
+    lines.append(f"## {asset} 资产动态｜多信号共振{strength_tag}{fh_badge}")
     lines.append("")
     lines.append(f"时间窗口：{start_ts} 至 {end_ts} UTC")
     lines.append(f"信号数量：{sig_count}（一手信号 {first_hand} 条）")
@@ -317,6 +328,44 @@ python scripts/aggregate_signals_to_events.py
 
     # Build summary csv
     build_summary_csv(events, raw_count, ROOT / "results")
+
+    # Build asset cards summary (standard filename)
+    build_asset_cards_summary(events, raw_count, ROOT / "results")
+
+
+def build_asset_cards_summary(events: list[dict], raw_signal_count: int, output_dir: Path) -> None:
+    """Build v16_asset_event_cards_summary.csv — standard asset-level cards summary."""
+    import csv
+
+    asset_events: dict[str, list[dict]] = defaultdict(list)
+    for ev in events:
+        asset = str(ev.get("asset", "UNKNOWN")).upper()
+        asset_events[asset].append(ev)
+
+    card_count = len(asset_events)
+    first_hand_events = sum(1 for e in events if int(safe_float(e.get("first_hand_count", 0))) > 0)
+    radar_count = sum(1 for e in events if str(e.get("card_type", "")) == "intraday_radar")
+    digest_count = sum(1 for e in events if str(e.get("card_type", "")) == "evening_digest")
+
+    rows = [{
+        "generated_at": NOW_CHINA,
+        "asset_count": str(card_count),
+        "event_count": str(len(events)),
+        "card_count": str(card_count),
+        "raw_signal_count": str(raw_signal_count),
+        "first_hand_event_count": str(first_hand_events),
+        "radar_card_count": str(radar_count),
+        "digest_card_count": str(digest_count),
+        "source_file": "data/aggregated_events.csv",
+        "output_markdown": "results/v16_asset_event_cards.md",
+    }]
+
+    path = output_dir / "v16_asset_event_cards_summary.csv"
+    with path.open("w", encoding="utf-8-sig", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
+    print(f"  Asset cards summary: {path}")
 
 
 if __name__ == "__main__":

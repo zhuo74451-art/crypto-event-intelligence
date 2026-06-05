@@ -1,0 +1,160 @@
+# v115K Whale Label Evidence Source Registry & Scoring Policy — Local Only
+
+**Generated:** 2026-06-05T08:04:08.042476+08:00
+**Stage:** v115k_whale_label_evidence_source_registry_and_scoring_policy_local_only
+**Lane:** 1
+
+---
+
+## ⚠️ IMPORTANT: Read Before Continuing
+
+1. **This is a LOCAL evidence source registry and scoring policy only.**
+2. **This file is NOT a trading signal, NOT a production send file, NOT a TG send candidate.**
+3. **No real workbook has been modified. No real labels have been upgraded.**
+4. **This registry and policy feed into v115F/v115G/v115H operator workflows for future manual evidence gathering.**
+5. **All safety invariants are enforced. No external communication is intended.**
+
+---
+
+## 1. Evidence Source Registry Summary
+
+| Category | Count |
+|----------|-------|
+| primary_source | **5** |
+| secondary_source | **5** |
+| activity_source | **4** |
+| rejected_source | **7** |
+| **Total categories** | **4** |
+
+### Primary Source Types
+
+- `primary_project_official_docs`
+- `primary_exchange_institution_label`
+- `primary_reputable_explorer_label`
+- `primary_signed_statement`
+- `primary_internal_verified_label`
+
+### Secondary Source Types
+
+- `secondary_analytics_dashboard`
+- `secondary_cross_source_clustering`
+- `secondary_tx_behavior_evidence`
+- `secondary_social_identity_linkage`
+- `secondary_operator_reviewed_note`
+
+### Activity Source Types
+
+- `activity_counterparty_pattern`
+- `activity_asset_venue_pattern`
+- `activity_position_consistency`
+- `activity_historical_entity_interaction`
+
+### Rejected Source Types (MUST NOT be used as core evidence)
+
+- `rejected_unsourced_social_post`
+- `rejected_single_anonymous_claim`
+- `rejected_ai_attribution`
+- `rejected_screenshot_without_url`
+- `rejected_stale_label_no_date`
+- `rejected_tg_chat_label`
+- `rejected_vague_whale_claim`
+
+---
+
+## 2. Scoring Policy Summary
+
+### High Confidence Requirements (9 requirements)
+
+- ✅ **HC_REQ_001**: At least one primary_source evidence with verifiable trusted source label must be present.
+- ✅ **HC_REQ_002**: At least one secondary_source evidence or cross-source consistency note must be present.
+- ✅ **HC_REQ_003**: Activity pattern note must be present documenting on-chain behavior.
+- ✅ **HC_REQ_004**: operator_confirmed_label must be non-empty.
+- ✅ **HC_REQ_005**: reviewer must be non-empty.
+- ✅ **HC_REQ_006**: reviewed_at must contain valid ISO-8601 timestamp.
+- ✅ **HC_REQ_007**: ready_for_upgrade must be explicitly true.
+- ✅ **HC_REQ_008**: Rejected source must not be used as core evidence for confidence upgrade.
+- ✅ **HC_REQ_009**: Low/unknown whale must not be upgraded to high from a single source.
+
+### Medium Confidence Rules
+
+- operator_review_allowed: **true**
+- tg_test_group_allowed: **false**
+- full_checklist_for_upgrade: **true**
+- no_partial_send_ready: **true**
+
+### Unknown Whale Upgrade Rules
+
+- manual_attribution_required_first: **true**
+- no_direct_send_candidate: **true**
+- full_evidence_pack_required_for_low_unknown: **true**
+- blocked_until_complete: **true**
+- **unknown_whale_direct_upgrade_allowed: false**
+
+### Automatic Reject Conditions
+
+- ❌ REJECTED_EVIDENCE_ONLY
+- ❌ NO_PRIMARY_SOURCE_EVIDENCE
+- ❌ OPERATOR_CONFIRMATION_MISSING
+- ❌ UNKNOWN_WHALE_UNATTRIBUTED
+
+---
+
+## 3. Cross-Validation Against Existing Gates
+
+| Check | Status |
+|-------|--------|
+| v115F workbook NOT modified | ✅ true |
+| v115G intake still blocked (intake_ready=0, blocked=4) | ✅ true |
+| v115H adjudication still blocked (adj_ready=0, blocked=4) | ✅ true |
+| v115J parity still passed | ✅ true |
+| No real label upgrade performed | ✅ true |
+| No real send candidate generated | ✅ true |
+
+---
+
+## 4. Safety Invariants
+
+| Invariant | Value |
+|-----------|-------|
+| external_api_called | [OK] False |
+| ai_model_called | [OK] False |
+| credentials_read | [OK] False |
+| tg_sent | [OK] False |
+| prod_state_write | [OK] False |
+| daemon_started | [OK] False |
+| watcher_started | [OK] False |
+| files_deleted | [OK] False |
+| real_workbook_modified | [OK] False |
+| real_label_upgrade_performed | [OK] False |
+| real_send_candidate_generated | [OK] False |
+| send_ready | [OK] False |
+| tg_test_group_ready | [OK] False |
+| local_review_ready | [OK] True |
+
+---
+
+## 5. Explicit NOT Declarations
+
+This stage is explicitly **NOT**:
+- [NO] A label upgrade execution
+- [NO] A TG send
+- [NO] A trading signal
+- [NO] Financial advice
+- [NO] A production send file
+- [NO] A public send candidate
+- [NO] AI-generated evidence
+- [NO] External API query results
+- [NO] A modification of any real workbook or gate result
+- [NO] A daemon, watcher, cron job, or background loop
+
+This stage **IS**:
+- [OK] A local evidence source registry definition
+- [OK] A local evidence scoring policy definition
+- [OK] Input to v115F/v115G/v115H future manual evidence workflows
+- [OK] Fully guarded — all send flags are false
+- [OK] Traceable, verifiable, reproducible
+- [OK] Policy-only — no data mutation, no state change
+
+---
+
+*Generated by v115K runner. Local only. No external communication intended.*

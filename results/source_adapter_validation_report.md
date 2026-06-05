@@ -1,9 +1,9 @@
 # Source Adapter Validation Report
 
-- generated_at_china: 2026-05-28 19:24:40 UTC+8
+- generated_at_china: 2026-06-01 13:29:50 UTC+8
 - status: pass
-- row_count: 9
-- pass_count: 9
+- row_count: 20
+- pass_count: 20
 - warning_count: 0
 - fail_count: 0
 

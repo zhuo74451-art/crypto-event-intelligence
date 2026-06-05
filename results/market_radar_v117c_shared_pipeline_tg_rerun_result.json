@@ -1,0 +1,69 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_162029",
+  "task_id": "20260605_v117c_safe_tg_config_loader_real_test_group_rerun",
+  "generated_at": "2026-06-05T16:20:47+08:00",
+  "type": "real_free_api_tg_test_rerun_with_safe_config_loader",
+  "card_family": "multi_asset_market_sync",
+  "assets": [
+    {
+      "symbol": "BTCUSDT",
+      "price_ok": true,
+      "price_change_pct_rounded": -1.17,
+      "volume_24h_ok": true
+    },
+    {
+      "symbol": "ETHUSDT",
+      "price_ok": true,
+      "price_change_pct_rounded": -5.79,
+      "volume_24h_ok": true
+    },
+    {
+      "symbol": "SOLUSDT",
+      "price_ok": true,
+      "price_change_pct_rounded": -4.43,
+      "volume_24h_ok": true
+    }
+  ],
+  "binance_api_success": true,
+  "binance_api_error": null,
+  "gate_allow": true,
+  "gate_reason": "Multi-asset data available for 3 assets",
+  "send_readiness_allow_test_group": true,
+  "send_readiness_reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+  "tg_result": {
+    "attempted": true,
+    "success": true,
+    "status": "sent",
+    "reason": "TG test group one-shot sent successfully",
+    "target_type": "test_group",
+    "one_shot": true,
+    "production_send": false,
+    "message_id_proof_present": true,
+    "token_proof_present": true,
+    "chat_id_proof_present": true,
+    "credentials_printed": false
+  },
+  "pipeline_passed": true,
+  "pipeline_error": null,
+  "safety": {
+    "external_api_called": true,
+    "tg_sent_this_run": true,
+    "production_send": false,
+    "prod_state_write": false,
+    "ai_model_called": false,
+    "daemon_or_loop_started": false,
+    "files_deleted": false,
+    "credentials_printed": false,
+    "x_twitter_send": false,
+    "v116_history_modified": false
+  },
+  "preflight": {
+    "safe_loader_found": true,
+    "load_success": true,
+    "config_ready": true,
+    "bot_token_present": true,
+    "chat_id_present": true
+  },
+  "v117b_skipped_why": "v117B did not attempt safe config loading — it only checked os.environ which was empty in a fresh Python process. v117C actively loads via PowerShell subprocess → scripts/load_local_secrets.ps1 → config/local_secrets.ps1"
+}

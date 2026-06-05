@@ -1,0 +1,283 @@
+{
+  "version": "v1.12-N",
+  "run_id": "20260605_022952",
+  "status": "passed",
+  "dry_run_only": true,
+  "live_ready": false,
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "external_ai_called": false,
+  "daemon_started": false,
+  "files_deleted": false,
+  "debug_leak_count": 0,
+  "secret_leak_count": 0,
+  "master_steps_total": 8,
+  "master_steps_passed": 8,
+  "master_steps_failed": 0,
+  "fixed_card_types_total": 5,
+  "signal_envelope_count": 13,
+  "gate_decision_count": 13,
+  "eligible_signal_count": 9,
+  "blocked_signal_count": 4,
+  "canonical_state_entry_count": 9,
+  "first_pass_eligible_reblocked": 9,
+  "unexpected_repass_signal_ids": [],
+  "idempotency_passed": true,
+  "deterministic_clock": true,
+  "evaluated_at": "2026-06-04T22:30:00+08:00",
+  "time_dependent_test_risk": false,
+  "expected_metric_checks": {},
+  "step_results": [
+    {
+      "step_name": "v112e_all_fixed_card_pipeline",
+      "display": "v1.12-E All Fixed Card Local Pipeline",
+      "script_path": "scripts/run_market_radar_v112e_all_fixed_card_local_pipeline.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:18+08:00",
+      "finished_at": "2026-06-05T04:13:18+08:00",
+      "duration_seconds": 0.11,
+      "expected_output_files": [
+        "results/market_radar_v112e_all_fixed_card_local_pipeline_result.json",
+        "runs/market_radar/v112e_all_fixed_card_local_pipeline.md",
+        "runs/market_radar/v112e_all_fixed_card_local_pipeline_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112e_all_fixed_card_local_pipeline_result.json",
+        "runs/market_radar/v112e_all_fixed_card_local_pipeline.md",
+        "runs/market_radar/v112e_all_fixed_card_local_pipeline_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "card_type_count": 5,
+        "ready_count": 1,
+        "partial_count": 4,
+        "missing_count": 0
+      }
+    },
+    {
+      "step_name": "v112f_whale_position_enrichment",
+      "display": "v1.12-F Whale Position Local Enrichment",
+      "script_path": "scripts/run_market_radar_v112f_whale_position_local_enrichment.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:18+08:00",
+      "finished_at": "2026-06-05T04:13:18+08:00",
+      "duration_seconds": 0.08,
+      "expected_output_files": [
+        "results/market_radar_v112f_whale_position_local_enrichment_result.json",
+        "runs/market_radar/v112f_whale_position_local_enrichment.md",
+        "runs/market_radar/v112f_whale_position_local_enrichment_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112f_whale_position_local_enrichment_result.json",
+        "runs/market_radar/v112f_whale_position_local_enrichment.md",
+        "runs/market_radar/v112f_whale_position_local_enrichment_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "valid_signal_count": 6,
+        "blocked_signal_count": 2,
+        "public_card_count": 6
+      }
+    },
+    {
+      "step_name": "v112g_multi_asset_sync",
+      "display": "v1.12-G Multi-Asset Sync Local Correlation",
+      "script_path": "scripts/run_market_radar_v112g_multi_asset_sync_local_correlation.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:18+08:00",
+      "finished_at": "2026-06-05T04:13:18+08:00",
+      "duration_seconds": 0.06,
+      "expected_output_files": [
+        "results/market_radar_v112g_multi_asset_sync_local_correlation_result.json",
+        "runs/market_radar/v112g_multi_asset_sync_local_correlation.md",
+        "runs/market_radar/v112g_multi_asset_sync_local_correlation_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112g_multi_asset_sync_local_correlation_result.json",
+        "runs/market_radar/v112g_multi_asset_sync_local_correlation.md",
+        "runs/market_radar/v112g_multi_asset_sync_local_correlation_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "valid_signal_count": 5,
+        "blocked_signal_count": 3,
+        "public_card_count": 5
+      }
+    },
+    {
+      "step_name": "v112h_unified_signal_envelope",
+      "display": "v1.12-H Unified Signal Envelope",
+      "script_path": "scripts/run_market_radar_v112h_unified_signal_envelope.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:18+08:00",
+      "finished_at": "2026-06-05T04:13:18+08:00",
+      "duration_seconds": 0.11,
+      "expected_output_files": [
+        "results/market_radar_v112h_unified_signal_envelope_result.json",
+        "results/market_radar_v112h_unified_signal_envelopes.jsonl",
+        "runs/market_radar/v112h_unified_signal_envelope.md",
+        "runs/market_radar/v112h_unified_signal_envelope_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112h_unified_signal_envelope_result.json",
+        "results/market_radar_v112h_unified_signal_envelopes.jsonl",
+        "runs/market_radar/v112h_unified_signal_envelope.md",
+        "runs/market_radar/v112h_unified_signal_envelope_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "total_envelopes": 13,
+        "unique_card_types": 5,
+        "all_envelopes_valid": true
+      }
+    },
+    {
+      "step_name": "v112i_dedupe_cooldown_gate",
+      "display": "v1.12-I Dedupe + Cooldown Gate (v112m deterministic clock)",
+      "script_path": "scripts/run_market_radar_v112i_dedupe_cooldown_gate.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:18+08:00",
+      "finished_at": "2026-06-05T04:13:19+08:00",
+      "duration_seconds": 0.08,
+      "expected_output_files": [
+        "results/market_radar_v112i_dedupe_cooldown_gate_result.json",
+        "results/market_radar_v112i_gate_decisions.jsonl",
+        "runs/market_radar/v112i_dedupe_cooldown_gate.md",
+        "runs/market_radar/v112i_dedupe_cooldown_gate_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112i_dedupe_cooldown_gate_result.json",
+        "results/market_radar_v112i_gate_decisions.jsonl",
+        "runs/market_radar/v112i_dedupe_cooldown_gate.md",
+        "runs/market_radar/v112i_dedupe_cooldown_gate_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "input_envelope_count": 13,
+        "decision_count": 13,
+        "passed_count": 9,
+        "blocked_dedupe_count": 2,
+        "blocked_cooldown_count": 2,
+        "deterministic_clock": true,
+        "evaluated_at": "2026-06-04T22:30:00+08:00",
+        "time_dependent_test_risk": false
+      }
+    },
+    {
+      "step_name": "v112j_eligible_signal_pack",
+      "display": "v1.12-J Eligible Signal Pack + State Dry-run",
+      "script_path": "scripts/run_market_radar_v112j_eligible_signal_pack_and_state_dryrun.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:19+08:00",
+      "finished_at": "2026-06-05T04:13:19+08:00",
+      "duration_seconds": 0.08,
+      "expected_output_files": [
+        "results/market_radar_v112j_eligible_signal_pack_result.json",
+        "results/market_radar_v112j_eligible_signals.jsonl",
+        "results/market_radar_v112j_blocked_signals.jsonl",
+        "results/market_radar_v112j_proposed_signal_state.json",
+        "runs/market_radar/v112j_eligible_signal_pack.md",
+        "runs/market_radar/v112j_eligible_signal_pack_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112j_eligible_signal_pack_result.json",
+        "results/market_radar_v112j_eligible_signals.jsonl",
+        "results/market_radar_v112j_blocked_signals.jsonl",
+        "results/market_radar_v112j_proposed_signal_state.json",
+        "runs/market_radar/v112j_eligible_signal_pack.md",
+        "runs/market_radar/v112j_eligible_signal_pack_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "eligible_signal_count": 9,
+        "blocked_signal_count": 4
+      }
+    },
+    {
+      "step_name": "v112l_canonical_state_key_hardening",
+      "display": "v1.12-L Canonical State Key Hardening",
+      "script_path": "scripts/run_market_radar_v112l_canonical_state_key_hardening.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:19+08:00",
+      "finished_at": "2026-06-05T04:13:19+08:00",
+      "duration_seconds": 0.09,
+      "expected_output_files": [
+        "results/market_radar_v112l_canonical_state_key_hardening_result.json",
+        "results/market_radar_v112l_canonical_prior_state.json",
+        "results/market_radar_v112l_state_key_audit.jsonl",
+        "runs/market_radar/v112l_canonical_state_key_hardening.md",
+        "runs/market_radar/v112l_canonical_state_key_hardening_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112l_canonical_state_key_hardening_result.json",
+        "results/market_radar_v112l_canonical_prior_state.json",
+        "results/market_radar_v112l_state_key_audit.jsonl",
+        "runs/market_radar/v112l_canonical_state_key_hardening.md",
+        "runs/market_radar/v112l_canonical_state_key_hardening_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "canonical_state_entry_count": 9,
+        "canonical_state_all_match": true
+      }
+    },
+    {
+      "step_name": "v112k_state_replay_idempotency",
+      "display": "v1.12-K State Replay + Idempotency (canonical path)",
+      "script_path": "scripts/run_market_radar_v112k_state_replay_idempotency.py",
+      "status": "passed",
+      "exit_code": 0,
+      "error": null,
+      "started_at": "2026-06-05T04:13:19+08:00",
+      "finished_at": "2026-06-05T04:13:19+08:00",
+      "duration_seconds": 0.09,
+      "expected_output_files": [
+        "results/market_radar_v112k_state_replay_idempotency_result.json",
+        "results/market_radar_v112k_replay_gate_decisions.jsonl",
+        "runs/market_radar/v112k_state_replay_idempotency.md",
+        "runs/market_radar/v112k_state_replay_idempotency_handoff.md"
+      ],
+      "observed_output_files": [
+        "results/market_radar_v112k_state_replay_idempotency_result.json",
+        "results/market_radar_v112k_replay_gate_decisions.jsonl",
+        "runs/market_radar/v112k_state_replay_idempotency.md",
+        "runs/market_radar/v112k_state_replay_idempotency_handoff.md"
+      ],
+      "missing_output_files": [],
+      "key_metrics": {
+        "first_pass_eligible_reblocked_count": 9,
+        "idempotency_passed": true,
+        "unexpected_repass_signal_ids": []
+      }
+    }
+  ],
+  "generated_at": "2026-06-05 04:13:19 UTC+8",
+  "notes": [
+    "Master dry-run orchestrator for v112N completed with status=passed.",
+    "8/8 steps passed.",
+    "Pipeline: E→F→G→H→I(J v112M deterministic clock)→J→L→K (canonical path).",
+    "Signal flow: 5 card types → 13 envelopes → 13 gate decisions → 9 eligible + 4 blocked.",
+    "State: 9 canonical entries, 9/9 reblocked on replay.",
+    "Idempotency: PASSED.",
+    "Deterministic clock: 2026-06-04T22:30:00+08:00 (v112m hardening confirmed).",
+    "Debug leaks: 0, Secret leaks: 0.",
+    "No real TG send, no external API/AI calls, no daemon.",
+    "No live source connected, no production state written.",
+    "All data from local fixtures and prior steps — fully reproducible dry-run."
+  ],
+  "master_duration_seconds": 0.76
+}

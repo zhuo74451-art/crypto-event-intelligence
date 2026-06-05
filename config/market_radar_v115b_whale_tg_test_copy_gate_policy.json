@@ -1,0 +1,68 @@
+{
+  "version": "v115B",
+  "policy_name": "whale_tg_test_copy_gate_policy",
+  "description": "Defines formatting and content rules for TG test group copy. TG test copy MUST NOT reuse operator review copy. It must be generated separately with explicit downgrade markers, test-only identifiers, and banned confident phrasing.",
+  "scope": "tg_test_group_only_not_production",
+  "rules": {
+    "copy_source": {
+      "must_not_reuse_operator_review_copy": true,
+      "must_be_generated_separately": true,
+      "source_base": "HyperLiquid public position data + local delta compare only"
+    },
+    "label_confidence_display": {
+      "must_preserve_label_confidence": true,
+      "medium_confidence_must_be_downgraded": true,
+      "low_confidence_must_be_downgraded": true,
+      "unknown_whale_must_not_be_presented_as_confirmed_entity": true,
+      "downgrade_display_rule": "If label_confidence != high, append '[label confidence: {level}]' to TG copy"
+    },
+    "banned_phrases": [
+      "确认",
+      "实锤",
+      "正式信号",
+      "强信号",
+      "可直接发布",
+      "立即发送",
+      "confirmed",
+      "verified",
+      "certain",
+      "guaranteed",
+      "正式",
+      "production signal",
+      "send immediately",
+      "publish now",
+      "strong signal"
+    ],
+    "required_elements": {
+      "test_only_marker": "[TEST-ONLY — NOT PRODUCTION]",
+      "source_disclaimer": "Source: HyperLiquid public position info, local delta compare only",
+      "not_financial_advice": "Not financial advice / not a trading signal",
+      "not_production_state": "Not production state — local review only",
+      "label_confidence_tag": "[label_confidence: {level}]",
+      "address_tag": "Address: {address_short}",
+      "asset_tag": "Asset: {asset}",
+      "delta_summary_tag": "Delta: {delta_type} ({delta_magnitude})"
+    },
+    "copy_structure": {
+      "header": "{test_only_marker}",
+      "body_line_1": "{address_tag} | {asset_tag} | {delta_summary_tag}",
+      "body_line_2": "{label_confidence_tag}",
+      "body_line_3": "{review_summary_rewritten_for_tg}",
+      "footer_line_1": "{source_disclaimer}",
+      "footer_line_2": "{not_financial_advice}",
+      "footer_line_3": "{not_production_state}"
+    }
+  },
+  "review_required": {
+    "before_tg_test_send": true,
+    "review_must_confirm": [
+      "copy_does_not_use_banned_phrases",
+      "copy_includes_all_required_elements",
+      "copy_has_test_only_marker",
+      "copy_preserves_label_confidence",
+      "copy_does_not_present_unknown_whale_as_confirmed",
+      "copy_is_not_operator_review_copy"
+    ]
+  },
+  "generated_at": "2026-06-05T06:41:34.872550+08:00"
+}

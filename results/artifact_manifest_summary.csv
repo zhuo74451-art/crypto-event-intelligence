@@ -1,2 +1,2 @@
 artifact_count,required_artifact_count,missing_required_count,stale_required_count,status
-324,274,0,0,pass
+324,274,0,103,fail

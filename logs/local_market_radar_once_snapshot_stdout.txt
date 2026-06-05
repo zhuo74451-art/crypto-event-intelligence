@@ -1,0 +1,6 @@
+Snapshot: 9 new | 27 total | 3 distinct times
+
+Delta: 27 comparisons | 0 triggered
+Delta basis: {'size': 0, 'notional_usd_fallback': 0, 'unavailable': 27}
+Price drift noise: 0 | Cooldown blocking: 0
+Has size field: True

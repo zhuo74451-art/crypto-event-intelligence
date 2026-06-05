@@ -1,0 +1,10 @@
+﻿address,source_type,source_ref,entity_name,asset_hint,confidence,can_query
+0x8def9f50456c6c4e37fa5d3d57f108ed23992dae,hyperinsight,HI_channel,Loracle,HYPE,medium,True
+0x082e843a431aef031264dc232693dd710aedca88,hyperinsight,HI_channel,,HYPE,medium,True
+0x939f95036D2e7b6d7419Ec072BF9d967352204d2,hyperinsight,HI_channel,,HYPE,medium,True
+0xd47587702a91731Dc1089B5DB0932cF820151A91,hyperinsight,HI_channel,,HYPE,medium,True
+0x92ea19eceb7a8de0f50978a1583a5d8b018050e9,hyperinsight,HI_channel,,,medium,True
+0xcf67e4da9e9cd38c0afd26338d0fbddb3036eb24,hyperinsight,HI_channel,,,medium,True
+0x4F83CaA457Ed330a1582B2E573451dc255e0b26b,hyperinsight,HI_channel,,,medium,True
+0x5b5d51203a0f9079f8aeb098a6523a13F298C060,hyperinsight,HI_channel,,HYPE,medium,True
+0x020cA66C30beC2c4Fe3861a94E4DB4A498A35872,hyperinsight,HI_channel,,ETH,medium,True

@@ -1,0 +1,4 @@
+﻿address,asset,entity,should_send,ai,mh,ne
+0xebe837cd345469,BTC,Unknown Hyperliquid Whale,False,0,0,0
+0x6c8512516ce566,ETH,Matrixport Related,False,0,0,0
+0x8def9f50456c6c,TON,loraclexyz,True,0,0,0

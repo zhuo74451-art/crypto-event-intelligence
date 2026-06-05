@@ -1,19 +1,18 @@
 # Shadow Source Evaluation
 
-- generated_at_china: 2026-05-28 19:24:40 UTC+8
-- watcher_event_rows: 9
-- shadow_event_rows: 1
-- shadow_source_count: 1
+- generated_at_china: 2026-06-01 13:29:50 UTC+8
+- watcher_event_rows: 20
+- shadow_event_rows: 0
+- shadow_source_count: 0
 
 ## Shadow Sources With Current Rows
 
 | source_id | source_type | shadow_events | tg_default_route | evaluation_status |
 | --- | --- | --- | --- | --- |
-| cex_listing_announcement | exchange_listing | 1 | archive | shadow_collect |
 
 ## Route Distribution
 
-- review: 1
+- none: 0
 
 ## Decision
 

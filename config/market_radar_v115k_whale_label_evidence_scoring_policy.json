@@ -1,0 +1,233 @@
+{
+  "version": "v115K",
+  "policy_name": "whale_label_evidence_scoring_policy",
+  "description": "Defines the minimum evidence requirements for label confidence upgrades, automatic rejection conditions, manual review triggers, and the rules governing unknown whale and medium-to-high label upgrade paths. This policy is binding for v115F/v115G/v115H operator workflows.",
+  "generated_at": "2026-06-05T08:00:00+08:00",
+  "applies_to_gates": ["v115F", "v115G", "v115H"],
+  "applies_to_manual_audit": true,
+  "minimum_for_high_confidence": {
+    "description": "Minimum evidence requirements that MUST ALL be satisfied before a label can reach high confidence.",
+    "requirements": [
+      {
+        "id": "HC_REQ_001",
+        "requirement": "trusted_source_label_present",
+        "description": "At least one primary_source evidence entry with a verifiable trusted source label must be present.",
+        "source_category": "primary_source",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_002",
+        "requirement": "second_source_or_cross_source_present",
+        "description": "At least one secondary_source evidence entry OR verified cross-source consistency note must be present, providing independent corroboration.",
+        "source_category": "secondary_source",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_003",
+        "requirement": "activity_pattern_note_present",
+        "description": "At least one activity_source observation note must be present, documenting on-chain behavior patterns consistent with the claimed identity.",
+        "source_category": "activity_source",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_004",
+        "requirement": "operator_confirmed_label_present",
+        "description": "The operator_confirmed_label field in the workbook must be non-empty and must match the claimed entity identity.",
+        "source_category": "manual_operator_input",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_005",
+        "requirement": "reviewer_present",
+        "description": "The reviewer field must contain a non-empty operator/auditor identifier.",
+        "source_category": "manual_operator_input",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_006",
+        "requirement": "reviewed_at_present",
+        "description": "The reviewed_at field must contain a valid ISO-8601 timestamp documenting when the review was completed.",
+        "source_category": "manual_operator_input",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_007",
+        "requirement": "ready_for_upgrade_true",
+        "description": "The ready_for_upgrade boolean flag must be explicitly set to true by the operator.",
+        "source_category": "manual_operator_input",
+        "mandatory": true
+      },
+      {
+        "id": "HC_REQ_008",
+        "requirement": "no_rejected_source_as_core_evidence",
+        "description": "No rejected_source entry must be used as core evidence. Rejected sources may appear as operator notes for awareness but must not be counted toward evidence requirements.",
+        "source_category": "rejected_source",
+        "mandatory": true,
+        "note": "Rejected source presence alone does not block if primary+secondary+activity evidence is complete and verified."
+      },
+      {
+        "id": "HC_REQ_009",
+        "requirement": "not_single_source_low_to_high",
+        "description": "A label at low confidence or marked as unknown whale must NOT be upgraded to high confidence based on a single evidence source alone. Multiple independent sources across primary+secondary+activity categories are required.",
+        "source_category": "all",
+        "mandatory": true
+      }
+    ],
+    "all_must_pass": true,
+    "total_requirements": 9,
+    "minimum_primary_sources_required": 1,
+    "minimum_secondary_sources_required": 1,
+    "minimum_activity_notes_required": 1
+  },
+  "minimum_for_medium_confidence": {
+    "description": "Minimum evidence requirements for medium confidence labels. Medium confidence labels MAY retain an operator review but MUST NOT enter TG test group.",
+    "requirements": [
+      {
+        "id": "MC_REQ_001",
+        "requirement": "operator_review_allowed",
+        "description": "Medium confidence labels may retain an operator review for further evidence gathering.",
+        "allowed": true
+      },
+      {
+        "id": "MC_REQ_002",
+        "requirement": "tg_test_group_forbidden",
+        "description": "Medium confidence labels MUST NOT be routed to TG test group. tg_test_group_allowed must remain false for any medium-confidence-only label.",
+        "allowed": false,
+        "enforcement": "tg_test_group_allowed must be false"
+      },
+      {
+        "id": "MC_REQ_003",
+        "requirement": "full_evidence_checklist_for_upgrade",
+        "description": "Any medium-to-high upgrade MUST pass the complete high_confidence requirements checklist before the upgrade takes effect.",
+        "allowed": true,
+        "enforcement": "all HC_REQ_001 through HC_REQ_009 must pass"
+      },
+      {
+        "id": "MC_REQ_004",
+        "requirement": "no_partial_send_ready_upgrade",
+        "description": "A medium label must NOT be partially upgraded to send-ready. The upgrade must be atomic: all high confidence requirements pass OR the label remains medium.",
+        "allowed": false,
+        "enforcement": "no partial upgrade; send_allowed remains false until full HC checklist passes"
+      }
+    ]
+  },
+  "unknown_whale_upgrade_rules": {
+    "description": "Special rules governing addresses labeled as 'Unknown Whale' or with unknown/low confidence. These addresses follow a stricter upgrade path because no entity identity has been established.",
+    "rules": [
+      {
+        "id": "UW_RULE_001",
+        "rule": "manual_attribution_required_first",
+        "description": "An unknown whale address MUST first complete manual attribution (establishing which entity it belongs to) before any confidence upgrade can be considered.",
+        "enforcement": "Block intake if current_label contains 'Unknown' and no operator_confirmed_label is provided."
+      },
+      {
+        "id": "UW_RULE_002",
+        "rule": "no_direct_send_candidate",
+        "description": "An unknown whale address MUST NOT be directly entered as a send candidate. It must go through the full intake → adjudication → label upgrade pipeline.",
+        "enforcement": "send_allowed must remain false for unknown whales; upgrade_candidate only after manual attribution complete."
+      },
+      {
+        "id": "UW_RULE_003",
+        "rule": "full_evidence_pack_required_for_low_unknown",
+        "description": "A low-confidence unknown whale MUST have at minimum: 1 primary_source + 1 secondary_source + 1 activity_source pattern note + operator confirmation before any upgrade can proceed.",
+        "enforcement": "All HC_REQ requirements apply; additionally, current_confidence='low' with current_label containing 'Unknown' blocks even medium upgrade until all 4 categories of evidence present."
+      },
+      {
+        "id": "UW_RULE_004",
+        "rule": "blocked_until_complete",
+        "description": "The address must remain blocked (intake_blocked or adjudication_blocked) until all required evidence and manual operator confirmation are complete.",
+        "enforcement": "intake_ready=false, upgrade_candidate=false, send_allowed=false while any evidence gap remains."
+      }
+    ]
+  },
+  "automatic_reject_conditions": {
+    "description": "Conditions under which a label confidence upgrade is automatically rejected without operator discretion.",
+    "conditions": [
+      {
+        "id": "AUTO_REJECT_001",
+        "condition": "rejected_source_only_evidence",
+        "description": "If ALL evidence provided for a label comes exclusively from rejected_source categories, the intake must be automatically rejected.",
+        "block_reason": "REJECTED_EVIDENCE_ONLY"
+      },
+      {
+        "id": "AUTO_REJECT_002",
+        "condition": "no_primary_source",
+        "description": "If no primary_source evidence is provided, the label cannot reach high confidence and the upgrade path is blocked.",
+        "block_reason": "NO_PRIMARY_SOURCE_EVIDENCE"
+      },
+      {
+        "id": "AUTO_REJECT_003",
+        "condition": "missing_operator_confirmation",
+        "description": "If operator_confirmed_label is empty or operator_confidence_assessment is empty, the intake is automatically blocked.",
+        "block_reason": "OPERATOR_CONFIRMATION_MISSING"
+      },
+      {
+        "id": "AUTO_REJECT_004",
+        "condition": "unknown_whale_no_attribution",
+        "description": "If the address is an unknown whale and no manual attribution (entity identity) has been established, the intake is automatically blocked.",
+        "block_reason": "UNKNOWN_WHALE_UNATTRIBUTED"
+      }
+    ]
+  },
+  "manual_review_required_conditions": {
+    "description": "Conditions that trigger mandatory manual review but do not automatically reject.",
+    "conditions": [
+      {
+        "id": "MANUAL_001",
+        "condition": "single_primary_source_only",
+        "description": "If only one primary source is provided without any secondary corroboration, manual review is required to assess sufficiency.",
+        "action": "Flag for operator review; do not auto-upgrade."
+      },
+      {
+        "id": "MANUAL_002",
+        "condition": "secondary_sources_but_no_primary",
+        "description": "If secondary sources exist but no primary source, manual review is required — the operator must locate at least one primary source.",
+        "action": "Block until operator adds primary source evidence."
+      },
+      {
+        "id": "MANUAL_003",
+        "condition": "activity_pattern_missing",
+        "description": "If primary and secondary evidence exist but no activity pattern note has been documented, manual review is required.",
+        "action": "Block until operator documents activity pattern observation."
+      },
+      {
+        "id": "MANUAL_004",
+        "condition": "confidence_mismatch",
+        "description": "If the operator_confidence_assessment differs from the evidence-based confidence level suggested by the scoring policy, manual review is required.",
+        "action": "Flag for reviewer audit; document discrepancy."
+      }
+    ]
+  },
+  "medium_to_high_upgrade_rules": {
+    "description": "Rules governing the upgrade path from medium confidence to high confidence.",
+    "rules": [
+      {
+        "id": "M2H_RULE_001",
+        "rule": "full_high_confidence_checklist",
+        "description": "All 9 high_confidence requirements (HC_REQ_001 through HC_REQ_009) must pass before medium can be upgraded to high.",
+        "enforcement": "Verify all HC_REQ conditions."
+      },
+      {
+        "id": "M2H_RULE_002",
+        "rule": "operator_review_required",
+        "description": "The upgrade must be explicitly reviewed and confirmed by a named operator (reviewer field non-empty, reviewed_at timestamp present).",
+        "enforcement": "reviewer and reviewed_at must both be non-empty."
+      },
+      {
+        "id": "M2H_RULE_003",
+        "rule": "no_partial_upgrade",
+        "description": "No partial upgrade from medium to send-ready is permitted. The medium label must first achieve high confidence through the full checklist, and only then may send readiness be evaluated.",
+        "enforcement": "ready_for_upgrade=true only after all HC_REQ pass; send_allowed evaluated separately by v115D send preview gate."
+      }
+    ]
+  },
+  "send_guard_dependency": {
+    "description": "The evidence scoring policy defines what is required for confidence levels; actual TG test group routing and public send are governed by separate policies.",
+    "depends_on": [
+      "market_radar_v115b_whale_label_confidence_routing_policy.json (v115B routing rules)",
+      "market_radar_v115b_whale_send_preview_gate_policy.json (v115D send preview gate)",
+      "market_radar_v115b_whale_tg_test_copy_gate_policy.json (v115C TG copy template gate)"
+    ],
+    "note": "Even when high_confidence is achieved, TG test group delivery and public send require separate gate approval per existing v115B routing policy."
+  }
+}

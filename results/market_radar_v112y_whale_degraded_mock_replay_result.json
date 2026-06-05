@@ -1,0 +1,49 @@
+{
+  "version": "v112Y",
+  "status": "passed",
+  "input_stop_decision": "DEGRADE_TO_MOCK",
+  "external_api_called": false,
+  "mock_replay_only": true,
+  "degraded_replay_built": true,
+  "positions_loaded": 10,
+  "replay_records_written": 10,
+  "eligible_for_real_send_count": 0,
+  "unique_addresses": 4,
+  "addresses": [
+    "0x082e843a431aef031264dc232693dd710aedca88",
+    "0x50b309f78e774a756a2230e1769729094cac9f20",
+    "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+    "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae"
+  ],
+  "tg_sent": false,
+  "prod_state_write": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "credentials_read": false,
+  "files_deleted": false,
+  "api_key_used": false,
+  "authorization_header_used": false,
+  "retry_count": 0,
+  "label_confidence_distribution": {
+    "high": 0,
+    "medium": 8,
+    "low": 2,
+    "unknown": 0
+  },
+  "null_liquidation_price_count": 7,
+  "delta_unavailable_count": 10,
+  "local_timestamp_only_count": 10,
+  "quality_flags_summary": {
+    "degraded_label_confidence": 10,
+    "delta_unavailable": 10,
+    "local_timestamp_only": 10,
+    "liquidation_price_missing": 7
+  },
+  "degraded_reasons_summary": {
+    "degraded_label_confidence_count": 10,
+    "liquidation_price_missing_count": 7,
+    "delta_unavailable_count": 10,
+    "local_timestamp_only_count": 10
+  },
+  "next_step": "v112Z_degraded_whale_envelope_compatibility"
+}

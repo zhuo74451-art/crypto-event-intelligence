@@ -1,0 +1,1 @@
+{"card_family": "news_event_market_impact", "pipeline_version": "v1.17", "timestamp": "2026-06-05T17:06:33+08:00", "production_send": false, "proof": "sha256:c344fdf40e328b78", "event_id": null, "asset_or_topic": "BTC, HYPE, NEAR", "quality_gate_allow": true, "send_readiness_allow": true, "tg_test_sent": true, "tg_status": "sent"}

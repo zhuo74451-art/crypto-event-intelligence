@@ -1,0 +1,150 @@
+{
+  "lane": "1",
+  "project": "事件情报系统",
+  "items": [
+    {
+      "at": "2026-06-04 17:57:38",
+      "run_id": "20260604_174143",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 8692
+    },
+    {
+      "at": "2026-06-04 18:36:07",
+      "run_id": "20260604_183455",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 9675
+    },
+    {
+      "at": "2026-06-04 18:41:35",
+      "run_id": "20260604_184028",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 9920
+    },
+    {
+      "at": "2026-06-04 18:52:51",
+      "run_id": "20260604_185143",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 9962
+    },
+    {
+      "at": "2026-06-04 19:02:33",
+      "run_id": "20260604_185143",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 11787
+    },
+    {
+      "at": "2026-06-04 19:16:22",
+      "run_id": "20260604_185143",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 13085
+    },
+    {
+      "at": "2026-06-04 19:32:46",
+      "run_id": "20260604_193108",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 12890
+    },
+    {
+      "at": "2026-06-04 19:46:23",
+      "run_id": "20260604_193108",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 14136
+    },
+    {
+      "at": "2026-06-04 20:14:41",
+      "run_id": "20260604_193108",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a212dd2-d248-83ec-8783-1c6f5c062edd",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 13310
+    },
+    {
+      "at": "2026-06-04 22:19:49",
+      "run_id": "20260604_202718",
+      "gpt_target": "chatgpt_1_next_3",
+      "gpt_url": "https://chatgpt.com/c/6a216c44-6f00-83ec-afb6-56b678ecf516",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 12498
+    },
+    {
+      "at": "2026-06-05 02:31:09",
+      "run_id": "20260605_022952",
+      "gpt_target": "chatgpt_1_next_4",
+      "gpt_url": "https://chatgpt.com/c/6a21898f-fa28-83ec-9e29-20708d3fdb8a",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 12776
+    },
+    {
+      "at": "2026-06-05 04:34:38",
+      "run_id": "20260605_022952",
+      "gpt_target": "chatgpt_1_next_5",
+      "gpt_url": "https://chatgpt.com/c/6a21c476-e164-83ec-b6eb-a1edc0b4bd0c",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 14198
+    },
+    {
+      "at": "2026-06-05 06:44:58",
+      "run_id": "20260605_022952",
+      "gpt_target": "chatgpt_1_next_6",
+      "gpt_url": "https://chatgpt.com/c/6a21c4c3-ac08-83ec-a3fd-da9224cbc18b",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 21041
+    },
+    {
+      "at": "2026-06-05 08:55:29",
+      "run_id": "20260605_084411",
+      "gpt_target": "chatgpt_1_next_7",
+      "gpt_url": "https://chatgpt.com/c/6a21e19c-e2a4-83ec-996d-b73be473928b",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 19564
+    },
+    {
+      "at": "2026-06-05 11:37:09",
+      "run_id": "20260605_113537",
+      "gpt_target": "chatgpt_1_next_8",
+      "gpt_url": "https://chatgpt.com/c/6a221e87-b9bc-83ec-9434-be028fbe5a39",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 16870
+    },
+    {
+      "at": "2026-06-05 13:43:51",
+      "run_id": "20260605_124925",
+      "gpt_target": "chatgpt_1_next_9",
+      "gpt_url": "https://chatgpt.com/c/6a22446f-ecc8-83ec-86ed-b9fee81f3883",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 11836
+    },
+    {
+      "at": "2026-06-05 15:59:22",
+      "run_id": "20260605_154236",
+      "gpt_target": "chatgpt_1_next_1",
+      "gpt_url": "https://chatgpt.com/c/6a22623a-2db0-83ec-ab15-e424c3c8f794",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 12997
+    },
+    {
+      "at": "2026-06-05 18:04:22",
+      "run_id": "20260605_154236",
+      "gpt_target": "chatgpt_1_next_2",
+      "gpt_url": "https://chatgpt.com/c/6a2281f1-1890-83ec-8212-346cd6f114e5",
+      "handoff_file": "latest_handoff.md",
+      "text_length": 15220
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"card_family": "multi_asset_market_sync", "pipeline_version": "v1.17", "timestamp": "2026-06-05T16:20:47+08:00", "production_send": false, "proof": "sha256:13990937ab8ca441", "event_id": null, "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT", "quality_gate_allow": true, "send_readiness_allow": true, "tg_test_sent": true, "tg_status": "sent"}

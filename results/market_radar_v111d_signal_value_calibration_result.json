@@ -1,0 +1,973 @@
+{
+  "gate_version": "v1.11-d",
+  "replay_version": "v1.11-D",
+  "generated_at": "2026-06-04 17:27:45 UTC+8",
+  "total_signals": 15,
+  "real_signal_count": 8,
+  "fixture_signal_count": 7,
+  "allow_count": 13,
+  "observe_count": 0,
+  "block_count": 2,
+  "decision_breakdown": {
+    "market_anomaly": {
+      "allow": 12,
+      "block": 2
+    },
+    "onchain_position": {
+      "allow": 1
+    }
+  },
+  "before_after_comparison": {
+    "v111c_allow_count": 13,
+    "v111c_observe_count": 0,
+    "v111c_block_count": 2,
+    "v111c_allow_rate_pct": 86.7,
+    "v111c_observe_rate_pct": 0.0,
+    "v111c_suspected_fp_count": 2,
+    "v111c_suspected_fn_count": 1,
+    "v111d_allow_count": 13,
+    "v111d_observe_count": 0,
+    "v111d_block_count": 2,
+    "v111d_allow_rate_pct": 86.7,
+    "v111d_observe_rate_pct": 0.0,
+    "v111d_suspected_fp_count": 2,
+    "v111d_suspected_fn_count": 1,
+    "allow_rate_delta": 0.0,
+    "observe_rate_delta": 0.0,
+    "allow_count_delta": 0,
+    "observe_count_delta": 0,
+    "suspected_fp_delta": 0,
+    "suspected_fn_delta": 0
+  },
+  "asset_results": {
+    "SOL": {
+      "total": 2,
+      "allow": 2,
+      "observe": 0,
+      "block": 0,
+      "signals": [
+        {
+          "is_fixture": false,
+          "price_change_pct": -7.24,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": true,
+          "price_change_pct": -11.5,
+          "gate_decision": "allow",
+          "value_score": 85,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": false,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct (minor concern)"
+        }
+      ]
+    },
+    "ARB": {
+      "total": 4,
+      "allow": 4,
+      "observe": 0,
+      "block": 0,
+      "signals": [
+        {
+          "is_fixture": false,
+          "price_change_pct": -6.96,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": false,
+          "price_change_pct": -7.55,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": false,
+          "price_change_pct": -6.75,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": true,
+          "price_change_pct": -7.55,
+          "gate_decision": "allow",
+          "value_score": 70,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct (minor concern)"
+        }
+      ]
+    },
+    "SUI": {
+      "total": 2,
+      "allow": 2,
+      "observe": 0,
+      "block": 0,
+      "signals": [
+        {
+          "is_fixture": false,
+          "price_change_pct": -6.73,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": false,
+          "price_change_pct": -5.96,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        }
+      ]
+    },
+    "BTC": {
+      "total": 3,
+      "allow": 3,
+      "observe": 0,
+      "block": 0,
+      "signals": [
+        {
+          "is_fixture": false,
+          "price_change_pct": -5.54,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": false,
+          "price_change_pct": -5.21,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        },
+        {
+          "is_fixture": true,
+          "price_change_pct": -5.54,
+          "gate_decision": "allow",
+          "value_score": 100,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        }
+      ]
+    },
+    "ETH": {
+      "total": 1,
+      "allow": 1,
+      "observe": 0,
+      "block": 0,
+      "signals": [
+        {
+          "is_fixture": true,
+          "price_change_pct": -8.2,
+          "gate_decision": "allow",
+          "value_score": 110,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": true,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        }
+      ]
+    },
+    "LINK": {
+      "total": 1,
+      "allow": 0,
+      "observe": 0,
+      "block": 1,
+      "signals": [
+        {
+          "is_fixture": true,
+          "price_change_pct": -3.2,
+          "gate_decision": "block",
+          "value_score": 50,
+          "factor_hits": {
+            "price_move": false,
+            "oi_confirmation": true,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "possibly_missed"
+        }
+      ]
+    },
+    "DOT": {
+      "total": 1,
+      "allow": 0,
+      "observe": 0,
+      "block": 1,
+      "signals": [
+        {
+          "is_fixture": true,
+          "price_change_pct": null,
+          "gate_decision": "block",
+          "value_score": 10,
+          "factor_hits": {
+            "price_move": false,
+            "oi_confirmation": false,
+            "volume_confirmation": false,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        }
+      ]
+    },
+    "HYPE": {
+      "total": 1,
+      "allow": 1,
+      "observe": 0,
+      "block": 0,
+      "signals": [
+        {
+          "is_fixture": true,
+          "price_change_pct": 15.0,
+          "gate_decision": "allow",
+          "value_score": 120,
+          "factor_hits": {
+            "price_move": true,
+            "oi_confirmation": true,
+            "volume_confirmation": true,
+            "funding_extreme": false,
+            "multi_asset_sync": true
+          },
+          "review_judgment": "likely_correct"
+        }
+      ]
+    }
+  },
+  "suspected_false_positive": [
+    {
+      "asset": "SOL",
+      "risk_level": "low",
+      "reasons": [
+        "allow with only 1 confirmation and 2 missing fields — limited evidence"
+      ],
+      "gate_decision": "allow",
+      "value_score": 85,
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": false,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "is_fixture": true
+    },
+    {
+      "asset": "ARB",
+      "risk_level": "low",
+      "reasons": [
+        "allow with only 1 confirmation and 2 missing fields — limited evidence",
+        "small-cap ARB with 7.5% move, only 1 confirmation(s)"
+      ],
+      "gate_decision": "allow",
+      "value_score": 70,
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": false,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "is_fixture": true
+    }
+  ],
+  "suspected_false_negative": [
+    {
+      "asset": "LINK",
+      "risk_level": "medium",
+      "reasons": [
+        "OI present but blocked — gate requires price_move first"
+      ],
+      "gate_decision": "block",
+      "value_score": 50,
+      "factor_hits": {
+        "price_move": false,
+        "oi_confirmation": true,
+        "volume_confirmation": false,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "is_fixture": true
+    }
+  ],
+  "threshold_notes": [
+    "v1.11-D allow rate is 87% (13/15) — lower than v1.11-C but still above 50%. Most allowed signals have price + OI + volume triple confirmation (real TG signals). Remaining allows are from strong confirmation combos.",
+    "observe layer still at 0 — all signals with price move have at least one strong confirmation. This suggests sample field quality is high; smaller production batches may yield more observe.",
+    "multi_asset_sync: triggered 15/15 times. v1.11-D calibration prevents multi_asset_sync from being a 'free pass' — it now requires OI or volume backing to count as strong confirmation.",
+    "funding_extreme: hit 1/15 times. Funding near zero remains the norm; this factor provides limited differentiation.",
+    "field availability: OI missing in 2/15 signals, volume missing in 4/15 signals."
+  ],
+  "warnings": [
+    "2 suspected false positive(s): SOL(low), ARB(low).",
+    "1 suspected false negative(s): LINK(medium)."
+  ],
+  "field_warnings": [
+    "funding field missing — funding extreme not available",
+    "volume field missing — volume confirmation not available",
+    "signal is a fixture — value assessment is synthetic",
+    "multi_asset_sync hit via real assets only — fixture target excluded from count",
+    "missing volume: -10 score penalty",
+    "open_interest field missing — OI confirmation not available",
+    "missing open_interest: -10 score penalty",
+    "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation",
+    "funding rate is near zero — no extreme funding signal in current market"
+  ],
+  "details": [
+    {
+      "asset": "SOL",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -7.24,
+      "open_interest": 278000000,
+      "volume": 527000000,
+      "funding": 0.0,
+      "message_id": "2239",
+      "send_stage": "v1.10-B",
+      "source_file": "results/market_radar_v110b_real_tg_send_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-7.24%) >= 5%",
+        "oi_confirmation: open_interest=278000000.0",
+        "volume_confirmation: volume=527000000.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "ARB",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -6.96,
+      "open_interest": 4682600,
+      "volume": 4932100,
+      "funding": 0.0,
+      "message_id": "2245",
+      "send_stage": "v1.10-E",
+      "source_file": "results/market_radar_v110e_gate_protected_test_channel_send_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-6.96%) >= 5%",
+        "oi_confirmation: open_interest=4682600.0",
+        "volume_confirmation: volume=4932100.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "ARB",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -7.55,
+      "open_interest": 4656700,
+      "volume": 4942400,
+      "funding": 0.0,
+      "message_id": "2250",
+      "send_stage": "v1.10-F",
+      "source_file": "results/market_radar_v110f_gate_protected_test_channel_matrix_send_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-7.55%) >= 5%",
+        "oi_confirmation: open_interest=4656700.0",
+        "volume_confirmation: volume=4942400.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "SUI",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -6.73,
+      "open_interest": 27997200,
+      "volume": 21182700,
+      "funding": 0.0,
+      "message_id": "2251",
+      "send_stage": "v1.10-F",
+      "source_file": "results/market_radar_v110f_gate_protected_test_channel_matrix_send_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-6.73%) >= 5%",
+        "oi_confirmation: open_interest=27997200.0",
+        "volume_confirmation: volume=21182700.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "BTC",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -5.54,
+      "open_interest": 1826000000,
+      "volume": 6345000000,
+      "funding": null,
+      "message_id": "2252",
+      "send_stage": "v1.10-F",
+      "source_file": "results/market_radar_v110f_gate_protected_test_channel_matrix_send_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-5.54%) >= 5%",
+        "oi_confirmation: open_interest=1826000000.0",
+        "volume_confirmation: volume=6345000000.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "ARB",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -6.75,
+      "open_interest": 4671000,
+      "volume": 4905700,
+      "funding": 0.0,
+      "message_id": "2257",
+      "send_stage": "v1.10-I",
+      "source_file": "results/market_radar_v110i_test_channel_stability_replay_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-6.75%) >= 5%",
+        "oi_confirmation: open_interest=4671000.0",
+        "volume_confirmation: volume=4905700.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "SUI",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -5.96,
+      "open_interest": 28182200,
+      "volume": 21344100,
+      "funding": 0.0,
+      "message_id": "2258",
+      "send_stage": "v1.10-I",
+      "source_file": "results/market_radar_v110i_test_channel_stability_replay_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-5.96%) >= 5%",
+        "oi_confirmation: open_interest=28182200.0",
+        "volume_confirmation: volume=21344100.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "BTC",
+      "signal_type": "market_anomaly",
+      "source_type": "api",
+      "is_fixture": false,
+      "price_change_pct": -5.21,
+      "open_interest": 1880000000,
+      "volume": 6409000000,
+      "funding": null,
+      "message_id": "2259",
+      "send_stage": "v1.10-I",
+      "source_file": "results/market_radar_v110i_test_channel_stability_replay_result.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-5.21%) >= 5%",
+        "oi_confirmation: open_interest=1880000000.0",
+        "volume_confirmation: volume=6409000000.0",
+        "multi_asset_sync: 9 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "ETH",
+      "signal_type": "market_anomaly",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": -8.2,
+      "open_interest": 890000000,
+      "volume": null,
+      "funding": -0.025,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "allow",
+      "value_score": 110,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": false,
+        "funding_extreme": true,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-8.20%) >= 5%",
+        "strong_price_move: abs(-8.20%) >= 8%",
+        "oi_confirmation: open_interest=890000000.0",
+        "funding_extreme: abs(funding)=0.0250 >= 0.01",
+        "multi_asset_sync: 8 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, funding_extreme, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "volume field missing — volume confirmation not available",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count",
+        "missing volume: -10 score penalty"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "SOL",
+      "signal_type": "market_anomaly",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": -11.5,
+      "open_interest": null,
+      "volume": 1200000000,
+      "funding": null,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "allow",
+      "value_score": 85,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": false,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-11.50%) >= 5%",
+        "strong_price_move: abs(-11.50%) >= 8%",
+        "volume_confirmation: volume=1200000000.0",
+        "multi_asset_sync: 8 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "open_interest field missing — OI confirmation not available",
+        "funding field missing — funding extreme not available",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count",
+        "missing open_interest: -10 score penalty"
+      ],
+      "review_judgment": "likely_correct (minor concern)",
+      "suspected_false_positive": {
+        "risk_level": "low",
+        "reasons": [
+          "allow with only 1 confirmation and 2 missing fields — limited evidence"
+        ]
+      },
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "LINK",
+      "signal_type": "market_anomaly",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": -3.2,
+      "open_interest": 150000000,
+      "volume": null,
+      "funding": null,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "block",
+      "value_score": 50,
+      "value_tier": "medium",
+      "factor_hits": {
+        "price_move": false,
+        "oi_confirmation": true,
+        "volume_confirmation": false,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "oi_confirmation: open_interest=150000000.0",
+        "multi_asset_sync: 8 real assets in same direction (down) — backed by OI/volume",
+        "price_move not hit — no significant price change detected"
+      ],
+      "warnings": [
+        "volume field missing — volume confirmation not available",
+        "funding field missing — funding extreme not available",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count"
+      ],
+      "review_judgment": "possibly_missed",
+      "suspected_false_positive": null,
+      "suspected_false_negative": {
+        "risk_level": "medium",
+        "reasons": [
+          "OI present but blocked — gate requires price_move first"
+        ]
+      }
+    },
+    {
+      "asset": "DOT",
+      "signal_type": "market_anomaly",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": null,
+      "open_interest": null,
+      "volume": null,
+      "funding": null,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "block",
+      "value_score": 10,
+      "value_tier": "low",
+      "factor_hits": {
+        "price_move": false,
+        "oi_confirmation": false,
+        "volume_confirmation": false,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "multi_asset_sync: 8 real assets in same direction (neutral) — NO OI/volume backing (half score)",
+        "price_move not hit — no significant price change detected"
+      ],
+      "warnings": [
+        "open_interest field missing — OI confirmation not available",
+        "volume field missing — volume confirmation not available",
+        "funding field missing — funding extreme not available",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count",
+        "multi_asset_sync hit but OI and volume both missing/zero — reduced to half score; field quality insufficient for full multi-asset confirmation"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "HYPE",
+      "signal_type": "onchain_position",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": 15.0,
+      "open_interest": 450000000,
+      "volume": 890000000,
+      "funding": null,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "allow",
+      "value_score": 120,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(15.00%) >= 5%",
+        "strong_price_move: abs(15.00%) >= 8%",
+        "oi_confirmation: open_interest=450000000.0",
+        "volume_confirmation: volume=890000000.0",
+        "multi_asset_sync: 8 real assets in same direction (up) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding field missing — funding extreme not available",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "ARB",
+      "signal_type": "market_anomaly",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": -7.55,
+      "open_interest": 4656700,
+      "volume": null,
+      "funding": null,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "allow",
+      "value_score": 70,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": false,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-7.55%) >= 5%",
+        "oi_confirmation: open_interest=4656700.0",
+        "multi_asset_sync: 8 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "volume field missing — volume confirmation not available",
+        "funding field missing — funding extreme not available",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count",
+        "missing volume: -10 score penalty"
+      ],
+      "review_judgment": "likely_correct (minor concern)",
+      "suspected_false_positive": {
+        "risk_level": "low",
+        "reasons": [
+          "allow with only 1 confirmation and 2 missing fields — limited evidence",
+          "small-cap ARB with 7.5% move, only 1 confirmation(s)"
+        ]
+      },
+      "suspected_false_negative": null
+    },
+    {
+      "asset": "BTC",
+      "signal_type": "market_anomaly",
+      "source_type": "fixture",
+      "is_fixture": true,
+      "price_change_pct": -5.54,
+      "open_interest": 1826000000,
+      "volume": 6345000000,
+      "funding": 4e-05,
+      "message_id": null,
+      "send_stage": null,
+      "source_file": "results/market_radar_v111b_signal_value_gate_dryrun.json",
+      "gate_decision": "allow",
+      "value_score": 100,
+      "value_tier": "high",
+      "factor_hits": {
+        "price_move": true,
+        "oi_confirmation": true,
+        "volume_confirmation": true,
+        "funding_extreme": false,
+        "multi_asset_sync": true
+      },
+      "reasons": [
+        "price_move: abs(-5.54%) >= 5%",
+        "oi_confirmation: open_interest=1826000000.0",
+        "volume_confirmation: volume=6345000000.0",
+        "multi_asset_sync: 8 real assets in same direction (down) — backed by OI/volume",
+        "price_move + strong confirmation(s): oi_confirmation, volume_confirmation, multi_asset_sync (backed)"
+      ],
+      "warnings": [
+        "funding rate is near zero — no extreme funding signal in current market",
+        "signal is a fixture — value assessment is synthetic",
+        "multi_asset_sync hit via real assets only — fixture target excluded from count"
+      ],
+      "review_judgment": "likely_correct",
+      "suspected_false_positive": null,
+      "suspected_false_negative": null
+    }
+  ]
+}

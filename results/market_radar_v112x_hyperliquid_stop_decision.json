@@ -1,0 +1,37 @@
+{
+  "version": "v112X",
+  "generated_at": "2026-06-05T06:01:58.135266+08:00",
+  "stop_decision": "DEGRADE_TO_MOCK",
+  "stop_decision_reasons": [
+    "DEGRADE_LABEL_MISSING: address 0x082e...dca88 has low label confidence",
+    "DEGRADE_LABEL_MISSING: address 0x50b3...c9f20 has low label confidence",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: WLD position missing liquidation_price",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: TON position missing liquidation_price",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: NEAR position missing liquidation_price",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: HYPE position missing liquidation_price",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: ASTER position missing liquidation_price",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: ZEC position missing liquidation_price",
+    "DEGRADE_LIQUIDATION_PRICE_MISSING: XMR position missing liquidation_price",
+    "DEGRADE_DELTA_CANNOT_COMPUTE: no previous position history available for delta computation",
+    "DEGRADE_TIMESTAMP_FRESHNESS: using locally generated timestamps",
+    "DEGRADE_PREVIOUS_SIZE_UNAVAILABLE: previous position size not available from live response"
+  ],
+  "addresses_total": 4,
+  "success_count": 4,
+  "failure_count": 0,
+  "total_positions_found": 9,
+  "active_positions_found": 9,
+  "api_key_used": false,
+  "authorization_header_used": false,
+  "retry_count": 0,
+  "daemon_started": false,
+  "tg_sent": false,
+  "production_state_written": false,
+  "eligible_for_real_send": false,
+  "notes": [
+    "v112Y suggestion: whale degraded mock replay with label explanation",
+    "Mark price derived from position_value / abs(szi); no external price API called.",
+    "No previous position history — position_delta cannot be computed.",
+    "All labels from v112W field mapping config — no live label lookup performed."
+  ]
+}

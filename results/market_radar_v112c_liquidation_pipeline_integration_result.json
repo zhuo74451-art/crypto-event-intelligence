@@ -1,0 +1,108 @@
+{
+  "version": "v1.12-C",
+  "mode": "liquidation_pipeline_integration",
+  "real_tg_sent": false,
+  "external_api_called": false,
+  "daemon_started": false,
+  "card_type": "liquidation_pressure",
+  "previous_readiness": "missing",
+  "new_readiness": "partial",
+  "snapshot_count": 5,
+  "valid_signal_count": 3,
+  "public_card_count": 3,
+  "mock_send_ready_count": 3,
+  "live_ready_count": 0,
+  "records": [
+    {
+      "card_type": "liquidation_pressure",
+      "signal_id": "liq_v112b_fixture_001_btc_long_pressure",
+      "asset": "BTC",
+      "pressure_type": "long_liquidation_pressure",
+      "data_mode": "fixture",
+      "schema_valid": true,
+      "admission_passed": true,
+      "block_passed": true,
+      "public_card_rendered": true,
+      "debug_leak_found": false,
+      "mock_send_ready": true,
+      "live_ready": false
+    },
+    {
+      "card_type": "liquidation_pressure",
+      "signal_id": "liq_v112b_fixture_002_eth_short_pressure",
+      "asset": "ETH",
+      "pressure_type": "short_liquidation_pressure",
+      "data_mode": "fixture",
+      "schema_valid": true,
+      "admission_passed": true,
+      "block_passed": true,
+      "public_card_rendered": true,
+      "debug_leak_found": false,
+      "mock_send_ready": true,
+      "live_ready": false
+    },
+    {
+      "card_type": "liquidation_pressure",
+      "signal_id": "liq_v112b_fixture_003_sol_two_sided",
+      "asset": "SOL",
+      "pressure_type": "two_sided_liquidation_pressure",
+      "data_mode": "fixture",
+      "schema_valid": true,
+      "admission_passed": true,
+      "block_passed": true,
+      "public_card_rendered": true,
+      "debug_leak_found": false,
+      "mock_send_ready": true,
+      "live_ready": false
+    }
+  ],
+  "fixed_card_matrix_update": {
+    "ready_count": 1,
+    "partial_count": 3,
+    "missing_count": 1,
+    "card_types": [
+      {
+        "card_type": "liquidation_pressure",
+        "display_name": "清算压力预警卡",
+        "readiness_level": "partial"
+      },
+      {
+        "card_type": "multi_asset_market_sync",
+        "display_name": "多资产共振卡",
+        "readiness_level": "partial"
+      },
+      {
+        "card_type": "news_event_market_impact",
+        "display_name": "新闻事件影响卡",
+        "readiness_level": "missing"
+      },
+      {
+        "card_type": "price_oi_volume_anomaly",
+        "display_name": "多因子价格异动卡",
+        "readiness_level": "ready"
+      },
+      {
+        "card_type": "whale_position_alert",
+        "display_name": "巨鲸仓位警报卡",
+        "readiness_level": "partial"
+      }
+    ]
+  },
+  "highest_priority_next_gap": {
+    "gap": "live_liquidation_data_source_or_multi_asset_sync_auto_detection",
+    "recommended_next_task": "接入免费的交易所 liquidation feed 或聚合 API，使 liquidation_pressure 从 fixture 升级为 live data source，从而实现 partial → ready。同时推进 multi_asset_market_sync 的自动检测能力。"
+  },
+  "generated_at": "2026-06-04 22:15:32 UTC+8",
+  "fixture_source": "C:\\Users\\PC\\Desktop\\Projects\\事件情报系统\\data\\fixtures\\market_radar_v112b_liquidation_snapshots.json",
+  "notes": [
+    "All snapshots are fixtures — no live market data was used.",
+    "TG send is disabled — real_tg_sent=false.",
+    "No external API calls were made.",
+    "No paid API calls were made.",
+    "No daemon/loop/cron was started.",
+    "No tokens/keys/cookies/passwords were read or saved.",
+    "liquidation_pressure readiness updated: missing → partial via v112c pipeline integration.",
+    "Mock send readiness is true for pipeline-validated signals, but no actual send occurred.",
+    "Live ready remains false for all fixture samples."
+  ]
+}

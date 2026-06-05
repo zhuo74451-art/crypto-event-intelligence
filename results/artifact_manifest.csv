@@ -1,325 +1,325 @@
 artifact_id,category,path,required,freshness_policy,exists,size_bytes,updated_at_china,age_hours,status,notes
-project_root_rules,project_os,AGENTS.md,yes,stable,yes,2058,2026-05-27 14:29:24,47.9951,pass,Local project rules.
-python_requirements,project_os,requirements.txt,yes,stable,yes,16,2026-05-27 16:08:36,46.3419,pass,Minimal local runtime dependencies.
-project_state,project_os,docs/PROJECT_STATE.md,yes,fresh_24h,yes,14639,2026-05-29 12:52:28,1.6108,pass,Current local project memory.
-project_dashboard,project_os,docs/PROJECT_DASHBOARD.md,yes,fresh_24h,yes,6623,2026-05-29 12:52:29,1.6106,pass,Current local dashboard.
-validation_checklist,project_os,docs/VALIDATION_CHECKLIST.md,yes,stable,yes,5115,2026-05-27 16:12:44,46.273,pass,Operator validation checklist.
-command_registry_doc,project_os,docs/COMMAND_REGISTRY.md,yes,fresh_24h,yes,74649,2026-05-29 14:29:06,0.0002,pass,Runnable command inventory.
-artifact_manifest_doc,project_os,docs/ARTIFACT_MANIFEST.md,no,fresh_24h,yes,62101,2026-05-29 14:18:41,0.1739,pass,This generated manifest.
-project_review_actions_doc,project_os,docs/PROJECT_REVIEW_ACTIONS.md,yes,fresh_24h,yes,3352,2026-05-29 12:52:24,1.6118,pass,Dashboard review action queue.
-decisions_doc,project_os,docs/DECISIONS.md,yes,stable,yes,33542,2026-05-28 21:21:51,17.1209,pass,Accepted direction decisions.
-mvp_timeline_doc,project_os,docs/MVP_TIMELINE.md,yes,stable,yes,2897,2026-05-27 16:52:39,45.6077,pass,Current MVP definition and timeline estimate.
-ai_cost_control_policy,project_os,docs/AI_COST_CONTROL_POLICY.md,yes,stable,yes,3929,2026-05-27 17:07:32,45.3596,pass,AI/Claude routing and spend-control policy.
-secret_setup_doc,project_os,docs/SECRET_SETUP.md,yes,stable,yes,1225,2026-05-27 17:55:40,44.5575,pass,Local secret setup instructions.
-gitignore,project_os,.gitignore,yes,stable,yes,268,2026-05-29 14:28:02,0.0179,pass,Ignore local secret files and runtime noise.
-secret_template,config,config/secrets.example.ps1,yes,stable,yes,408,2026-05-27 17:55:27,44.5611,pass,Local secret template with placeholders only.
-cursor_prompt,agent_handoff,docs/CURSOR_NEXT_PROMPT.md,yes,fresh_24h,yes,63905,2026-05-29 12:52:30,1.6104,pass,File-based Cursor handoff.
-cursor_backlog,agent_handoff,docs/CURSOR_TASK_BACKLOG.md,yes,stable,yes,5217,2026-05-27 15:51:15,46.6311,pass,Cursor task backlog.
-claude_prompt,agent_handoff,docs/CLAUDE_NEXT_PROMPT.md,yes,fresh_24h,yes,29900,2026-05-29 12:52:30,1.6103,pass,Current Claude consultation prompt.
-claude_question_backlog,agent_handoff,docs/CLAUDE_QUESTION_BACKLOG.md,yes,stable,yes,4975,2026-05-29 12:52:15,1.6145,pass,Architecture question backlog.
-claude_response_index_doc,agent_handoff,docs/CLAUDE_RESPONSE_INDEX.md,yes,fresh_24h,yes,2290,2026-05-29 12:52:19,1.6133,pass,Local Claude response index.
-claude_decision_review_doc,agent_handoff,docs/CLAUDE_DECISION_REVIEW.md,yes,fresh_24h,yes,4888,2026-05-29 12:52:20,1.6131,pass,Claude recommendation review queue.
-symbol_map,data,data/symbol_map.csv,yes,stable,yes,958,2026-05-27 17:36:15,44.881,pass,Asset to market symbol map.
-entity_dictionary,data,data/entity_dictionary.csv,yes,stable,yes,6050,2026-05-27 12:21:19,50.13,pass,Entity dictionary for intake rules.
-source_timezone_rules,data,data/source_timezone_rules.csv,yes,stable,yes,973,2026-05-27 14:04:51,48.4044,pass,Source time-zone assumptions.
-older500_raw_news,data,data/raw_news_real_500_older.csv,yes,stable,yes,604951,2026-05-26 10:43:18,75.7637,pass,Older real-news source export.
-older500_candidates,data,data/event_candidates_real_500_older_review.csv,yes,stable,yes,751900,2026-05-27 14:06:50,48.3713,pass,Older candidate import output.
-v06_relevance_scored,data,data/event_candidates_v06_relevance_scored.csv,yes,stable,yes,1151969,2026-05-27 16:21:12,46.1318,pass,v0.6 scored intake output.
-v06_manual_label_sheet,data,data/v06_manual_label_sheet.csv,yes,stable,yes,395166,2026-05-27 15:23:40,47.0907,pass,AI-first review sheet.
-v06_other_review_classified,data,data/event_candidates_v06_other_review_classified.csv,no,stable,yes,209059,2026-05-27 18:38:15,43.8476,pass,Rule-based split of the other_review bucket.
-project_review_action_queue,data,data/project_review_action_queue.csv,yes,fresh_24h,yes,3766,2026-05-29 12:52:24,1.6118,pass,Generated dashboard action queue.
-claude_decision_queue,data,data/claude_decision_review_queue.csv,yes,fresh_24h,yes,201517,2026-05-29 12:52:20,1.6131,pass,Generated Claude decision queue.
-tg_pilot_gate,results,results/v06_tg_pilot_gate_report.md,yes,fresh_24h,yes,794,2026-05-29 12:14:13,2.2483,pass,TG draft pilot safety gate.
-project_os_validation_report,results,results/project_os_validation_report.md,yes,stable,yes,4949,2026-05-29 14:29:05,0.0004,pass,Consolidated validation report.
-project_os_validation_summary,results,results/project_os_validation_summary.csv,yes,stable,yes,78,2026-05-29 14:29:05,0.0004,pass,Consolidated validation summary.
-local_environment_summary,results,results/local_environment_summary.csv,yes,fresh_24h,yes,103,2026-05-29 12:52:17,1.6138,pass,Local runtime check summary.
-secret_leak_summary,results,results/secret_leak_summary.csv,yes,fresh_24h,yes,88,2026-05-29 12:13:47,2.2556,pass,Secret scan summary.
-command_registry_summary,results,results/command_registry_summary.csv,yes,fresh_24h,yes,104,2026-05-29 14:29:06,0.0002,pass,Command registry summary.
-project_review_action_summary,results,results/project_review_action_summary.csv,yes,fresh_24h,yes,111,2026-05-29 12:52:24,1.6118,pass,Review action summary.
-project_dashboard_metrics,results,results/project_dashboard_metrics.csv,yes,fresh_24h,yes,4035,2026-05-29 12:52:29,1.6106,pass,Dashboard metrics CSV.
-v043_backfill,results,results/v043_older_mature50_event_price_backfill.csv,yes,stable,yes,110939,2026-05-27 14:06:55,48.3698,pass,Historical mature50 backfill.
-v043_quality,results,results/v043_older_mature50_event_quality_report.csv,yes,stable,yes,7541,2026-05-27 14:06:56,48.3696,pass,Historical mature50 quality report.
-time_provenance_summary,results,results/v043_time_provenance_summary.csv,yes,stable,yes,218,2026-05-27 14:06:59,48.369,pass,Time provenance summary.
-v043_selection_v06_summary,results,results/v043_selection_vs_v06_relevance_summary.csv,yes,fresh_24h,yes,283,2026-05-29 12:52:18,1.6136,pass,v043 versus v0.6 relevance audit summary.
-v043_selection_v06_breakdown,results,results/v043_selection_vs_v06_discard_breakdown.csv,yes,fresh_24h,yes,178,2026-05-29 12:52:18,1.6136,pass,Discard reason breakdown for historical v043 selection.
-v043_selection_v06_impact,results,results/v043_selection_vs_v06_event_type_impact.csv,yes,fresh_24h,yes,299,2026-05-29 12:52:18,1.6136,pass,Event-type impact of v0.6 discard decisions.
-v06_low_risk_preview_backfill,results,results/v06_clean_low_risk_preview_event_price_backfill.csv,no,stable,yes,62071,2026-05-27 16:27:45,46.0226,pass,Optional v0.6 low-risk preview sanity-check backfill.
-v06_low_risk_preview_quality,results,results/v06_clean_low_risk_preview_event_quality_report.csv,no,stable,yes,4625,2026-05-27 16:27:46,46.0225,pass,Optional v0.6 low-risk preview quality report.
-v06_low_risk_preview_findings,results,results/v06_clean_low_risk_preview_backtest_findings.md,no,stable,yes,5020,2026-05-27 16:27:47,46.0222,pass,Optional v0.6 low-risk preview findings.
-tg_drafts_private_pilot,data,data/tg_drafts_v06_private_pilot.csv,no,stable,yes,9252,2026-05-27 18:43:18,43.7634,pass,Local TG private-pilot draft queue; no auto-send.
-tg_drafts_private_pilot_ai_reviewed,data,data/tg_drafts_v06_private_pilot_ai_reviewed.csv,no,stable,yes,10729,2026-05-27 17:13:43,45.2566,pass,AI-reviewed local TG private-pilot draft queue.
-tg_prefilter_pass,data,data/event_candidates_v06_tg_prefilter_pass.csv,no,stable,yes,12872,2026-05-27 18:38:15,43.8478,pass,Local pre-Claude TG candidate prefilter pass set.
-tg_prefilter_rejects,data,data/event_candidates_v06_tg_prefilter_rejects.csv,no,stable,yes,31297,2026-05-27 18:38:15,43.8478,pass,Local pre-Claude TG candidate prefilter rejects.
-tg_approved_pool,data,data/tg_drafts_v06_approved_pool.csv,no,stable,yes,9284,2026-05-27 18:38:15,43.8476,pass,Approved-only local TG draft pool.
-tg_draft_review_packet,data,data/tg_draft_review_packet.csv,no,stable,yes,225,2026-05-27 18:38:15,43.8477,pass,Compact local draft review packet.
-tg_drafts_private_pilot_preview,results,results/tg_drafts_v06_private_pilot.md,no,stable,yes,6887,2026-05-27 18:43:18,43.7634,pass,Readable preview of local TG drafts.
-tg_draft_review_packet_md,results,results/tg_draft_review_packet.md,no,stable,yes,373,2026-05-27 18:38:15,43.8477,pass,Readable compact local draft review packet.
-tg_draft_feedback_summary,results,results/tg_draft_feedback_summary.csv,no,stable,yes,290,2026-05-27 18:38:15,43.8477,pass,Local private-pilot draft feedback summary.
-tg_draft_ai_review_summary,results,results/tg_draft_ai_review_summary.csv,no,stable,yes,243,2026-05-27 17:13:43,45.2566,pass,AI-review summary for local TG private-pilot drafts.
-tg_prefilter_summary,results,results/tg_draft_prefilter_summary.csv,no,stable,yes,145,2026-05-27 18:38:15,43.8478,pass,Local pre-Claude TG candidate prefilter summary.
-tg_approved_pool_summary,results,results/tg_draft_approved_pool_summary.csv,no,stable,yes,106,2026-05-27 18:38:15,43.8476,pass,Approved-only local TG draft pool summary.
-tg_draft_validation_summary,results,results/tg_draft_validation_summary.csv,no,stable,yes,100,2026-05-27 18:43:25,43.7616,pass,Local private-pilot draft safety validation summary.
-daily_private_pilot_summary,results,results/daily_private_pilot_summary.csv,no,stable,yes,548,2026-05-27 18:38:15,43.8476,pass,One-row daily private-pilot operational summary.
-daily_private_pilot_report,results,results/daily_private_pilot_report.md,no,stable,yes,2095,2026-05-27 18:38:15,43.8476,pass,One-page daily private-pilot operational report.
-tg_draft_rule_improvement_summary,results,results/tg_draft_rule_improvement_summary.csv,no,stable,yes,125,2026-05-27 18:38:15,43.8476,pass,Summary of AI-rejected draft rule improvement candidates.
-tg_draft_rule_improvement_report,results,results/tg_draft_rule_improvement_report.md,no,stable,yes,540,2026-05-27 18:38:15,43.8476,pass,AI-rejected draft rule improvement report.
-v07_watchlist_addresses,data,data/watchlist_addresses.csv,yes,stable,yes,2700,2026-05-28 09:48:08,28.6831,pass,v0.7 first-hand watcher address watchlist.
-v07_stablecoin_watchlist,data,data/stablecoin_watchlist.csv,yes,stable,yes,507,2026-05-27 17:33:09,44.9326,pass,v0.7 stablecoin mint/burn watchlist.
-v07_hyperliquid_watchlist,data,data/hyperliquid_watchlist.csv,yes,stable,yes,1192,2026-05-27 18:47:04,43.7009,pass,v0.7 Hyperliquid perp-position watchlist.
-v07_watcher_alerts_raw,data,data/watcher_alerts_raw.csv,no,stable,yes,9575,2026-05-28 19:23:36,19.0919,pass,Normalized first-hand watcher alerts.
-v07_hyperliquid_position_alerts,data,data/watcher_alerts_hyperliquid_positions.csv,no,stable,yes,6931,2026-05-29 12:18:12,2.1818,pass,Raw Hyperliquid large-position watcher alerts.
-v07_watcher_events_raw,data,data/watcher_events_raw.csv,no,stable,yes,13373,2026-05-28 19:23:36,19.0919,pass,Watcher alerts converted to event schema.
-v07_watcher_tg_drafts,data,data/tg_drafts_v07_watcher_private_pilot.csv,no,stable,yes,11050,2026-05-28 19:23:36,19.0918,pass,Local TG draft preview for first-hand watcher alerts.
-v07_watchlist_validation_summary,results,results/v07_watchlist_validation_summary.csv,yes,fresh_24h,yes,174,2026-05-28 19:23:27,19.0945,pass,v0.7 watchlist validation summary.
-v07_watcher_run_summary,results,results/v07_first_hand_watcher_run_summary.csv,no,stable,yes,482,2026-05-28 19:23:36,19.0918,pass,v0.7 first-hand watcher run summary.
-v07_watcher_daily_report,results,results/v07_watcher_daily_report.md,no,stable,yes,2985,2026-05-28 19:23:36,19.0918,pass,Readable daily report for first-hand watcher alerts.
-v07_watcher_tg_validation_summary,results,results/tg_drafts_v07_watcher_validation_summary.csv,no,stable,yes,100,2026-05-28 19:23:36,19.0918,pass,TG draft validation summary for watcher alerts.
-v07_tg_live_monitor_summary,results,results/v07_tg_live_monitor_summary.csv,no,fresh_24h,yes,146,2026-05-28 12:39:56,25.8197,warning,Live TG watcher monitor runtime summary.
-v08_tg_send_time_policy,data,config/tg_send_time_policy.csv,yes,stable,yes,621,2026-05-28 11:20:06,27.1501,pass,China-time flexible TG send timing policy.
-v08_tg_digest_sent_state,data,data/tg_digest_sent_state.csv,no,stable,yes,383,2026-05-29 12:32:48,1.9386,pass,Sent-state dedupe for scheduled TG digests.
-v08_cex_netflow_baseline_state,data,data/cex_netflow_baseline_state.csv,no,stable,yes,3870,2026-05-28 12:48:56,25.6697,pass,Rolling baseline samples for CEX netflow context.
-v08_hyperliquid_position_state_history,data,data/hyperliquid_position_state_history.csv,no,stable,yes,70977,2026-05-29 12:18:12,2.1818,pass,Append-only Hyperliquid watched-position state history.
-v081_raw_token_unlocks_template,data,data/raw_token_unlocks_template.csv,yes,stable,yes,569,2026-05-28 14:18:05,24.1838,pass,Template for raw token unlock CSV imports.
-v081_token_unlock_column_mapping,data,data/token_unlock_column_mapping.json,yes,stable,yes,817,2026-05-28 14:18:14,24.1814,pass,Column alias mapping for token unlock CSV imports.
-v081_token_unlock_calendar_imported,data,data/token_unlock_calendar_imported.csv,no,stable,yes,619,2026-05-28 14:18:50,24.1713,pass,Non-destructive imported token unlock calendar preview.
-v08_binance_long_short_snapshot,data,data/binance_long_short_snapshot.csv,no,fresh_24h,yes,5865,2026-05-29 12:32:37,1.9415,pass,Binance USD-M public long/short ratio snapshot.
-v08_binance_long_short_summary,results,results/v08_binance_long_short_summary.csv,no,fresh_24h,yes,239,2026-05-29 12:32:37,1.9415,pass,Summary of Binance USD-M long/short ratio snapshot.
-v08_tg_morning_digest,results,results/v08_tg_morning_digest.md,no,fresh_24h,yes,1258,2026-05-28 12:55:25,25.5616,warning,China-time morning TG intelligence digest.
-v08_tg_morning_digest_summary,results,results/v08_tg_morning_digest_summary.csv,no,fresh_24h,yes,224,2026-05-28 12:55:25,25.5616,warning,Morning digest run summary.
-v08_tg_noon_digest,results,results/v08_tg_noon_digest.md,no,fresh_24h,yes,1645,2026-05-28 12:55:44,25.5564,warning,China-time noon TG intelligence digest.
-v08_tg_noon_digest_summary,results,results/v08_tg_noon_digest_summary.csv,no,fresh_24h,yes,221,2026-05-28 12:55:44,25.5564,warning,Noon digest run summary.
-v08_tg_evening_digest,results,results/v08_tg_evening_digest.md,no,fresh_24h,yes,1346,2026-05-28 17:51:34,20.6258,pass,China-time evening TG intelligence digest.
-v08_tg_evening_digest_summary,results,results/v08_tg_evening_digest_summary.csv,no,fresh_24h,yes,243,2026-05-28 17:51:34,20.6258,pass,Evening digest run summary.
-backtest_readiness_summary,results,results/backtest_readiness_summary.csv,yes,fresh_24h,yes,195,2026-05-29 12:52:21,1.6127,pass,Conclusion-safety summary for current backtest outputs.
-backtest_readiness_report,results,results/backtest_readiness_report.md,yes,fresh_24h,yes,2181,2026-05-29 12:52:21,1.6127,pass,Conclusion-safety report for current backtest outputs.
-v06_other_review_reason_summary,results,results/v06_other_review_reason_summary.csv,no,stable,yes,196,2026-05-27 18:38:15,43.8476,pass,Summary of rule-based other_review split.
-quality_gate_script,script,scripts/run_v06_quality_gate.py,yes,stable,yes,3600,2026-05-27 16:29:44,45.9897,pass,Full local quality gate.
-project_os_validation_script,script,scripts/validate_project_os.py,yes,stable,yes,17347,2026-05-27 16:14:01,46.2516,pass,Project OS validator.
-artifact_manifest_script,script,scripts/build_artifact_manifest.py,yes,stable,yes,57050,2026-05-29 12:24:57,2.0695,pass,Artifact manifest generator.
-symbol_map_validation_script,script,scripts/validate_symbol_map.py,yes,stable,yes,4813,2026-05-27 16:22:14,46.1147,pass,Optional public Binance symbol map validator.
-v06_low_risk_preview_backtest_script,script,scripts/run_v06_clean_low_risk_preview_backtest.py,yes,stable,yes,4838,2026-05-27 16:26:56,46.0363,pass,Optional low-risk preview sanity-check backtest runner.
-tg_draft_generator_script,script,scripts/generate_tg_drafts.py,yes,stable,yes,19419,2026-05-27 18:42:47,43.7722,pass,Local TG-style draft generator; never sends messages.
-tg_draft_feedback_summary_script,script,scripts/summarize_tg_draft_feedback.py,yes,stable,yes,4122,2026-05-27 16:42:14,45.7814,pass,Local TG draft feedback summarizer.
-tg_draft_ai_review_script,script,scripts/ai_review_tg_drafts.py,yes,stable,yes,8963,2026-05-27 16:58:31,45.5099,pass,OpenRouter/Claude AI reviewer for local TG drafts.
-tg_draft_prefilter_script,script,scripts/prefilter_tg_draft_candidates.py,yes,stable,yes,6817,2026-05-27 17:16:35,45.2089,pass,Local pre-Claude TG candidate prefilter.
-tg_approved_pool_script,script,scripts/build_approved_tg_draft_pool.py,yes,stable,yes,3487,2026-05-27 17:10:14,45.3146,pass,Approved-only local TG draft pool builder.
-tg_draft_validation_script,script,scripts/validate_tg_drafts.py,yes,stable,yes,5553,2026-05-28 12:35:06,25.9004,pass,Local TG draft safety validator.
-tg_draft_review_packet_script,script,scripts/prepare_tg_draft_review_packet.py,yes,stable,yes,3573,2026-05-27 16:54:22,45.5792,pass,Compact local TG draft review packet builder.
-tg_draft_review_packet_apply_script,script,scripts/apply_tg_draft_review_packet.py,yes,stable,yes,3628,2026-05-27 16:55:51,45.5544,pass,Apply compact TG draft review packet back to the main draft queue.
-other_review_reason_script,script,scripts/classify_other_review_reasons.py,yes,stable,yes,7903,2026-05-27 16:53:51,45.5878,pass,Rule-based other_review reason splitter.
-daily_private_pilot_runner,script,scripts/run_daily_private_pilot.py,yes,stable,yes,7866,2026-05-27 17:13:17,45.2637,pass,One-command local private-pilot workflow runner.
-daily_private_pilot_report_script,script,scripts/build_daily_private_pilot_report.py,yes,stable,yes,9795,2026-05-27 17:10:49,45.3049,pass,One-page local private-pilot report builder.
-tg_draft_rule_improvement_script,script,scripts/build_tg_draft_rule_improvement_report.py,yes,stable,yes,6912,2026-05-27 17:02:44,45.4396,pass,Convert AI draft rejects into rule-improvement candidates.
-backtest_readiness_script,script,scripts/build_backtest_readiness_report.py,yes,stable,yes,11040,2026-05-27 16:32:32,45.943,pass,Backtest conclusion-safety report builder.
-v07_watchlist_validation_script,script,scripts/validate_v07_watchlists.py,yes,stable,yes,8659,2026-05-27 18:48:09,43.6827,pass,v0.7 watchlist validator.
-v07_first_hand_watcher_runner,script,scripts/run_v07_first_hand_watchers.py,yes,stable,yes,13992,2026-05-28 14:45:16,23.7309,pass,v0.7 first-hand watcher runner.
-v07_eth_address_watcher,script,scripts/watch_eth_address_transfers.py,yes,stable,yes,12696,2026-05-27 17:53:35,44.5922,pass,Ethereum watched address transfer watcher.
-v07_stablecoin_watcher,script,scripts/watch_stablecoin_mint_burn.py,yes,stable,yes,9676,2026-05-27 17:53:07,44.6,pass,Stablecoin mint/burn watcher.
-v07_hyperliquid_position_watcher,script,scripts/watch_hyperliquid_positions.py,yes,stable,yes,20554,2026-05-28 14:44:33,23.7426,pass,Hyperliquid watched account perp-position watcher.
-v07_watcher_normalizer,script,scripts/normalize_watcher_alerts_to_events.py,yes,stable,yes,11959,2026-05-28 12:29:17,25.9971,pass,Watcher alert to event normalizer.
-v07_watcher_tg_draft_generator,script,scripts/generate_watcher_tg_drafts.py,yes,stable,yes,28176,2026-05-28 15:44:35,22.7421,pass,Watcher TG draft preview generator.
-v07_tg_live_monitor,script,scripts/run_v07_tg_live_monitor.py,yes,stable,yes,32242,2026-05-28 14:49:08,23.6662,pass,Continuous watcher-to-TG live monitor with dedupe.
-v07_tg_live_monitor_stop,script,scripts/stop_v07_tg_live_monitor.ps1,yes,stable,yes,655,2026-05-27 19:02:20,43.4463,pass,Stop helper for continuous watcher-to-TG live monitor.
-v08_binance_long_short_watcher,script,scripts/watch_binance_long_short_ratios.py,yes,stable,yes,8016,2026-05-28 11:28:21,27.0127,pass,Binance USD-M public long/short ratio snapshot fetcher.
-v08_tg_morning_digest_builder,script,scripts/build_tg_morning_digest.py,yes,stable,yes,42961,2026-05-29 12:31:43,1.9565,pass,Morning TG digest builder and optional sender.
-v08_tg_sent_state_metadata_enrichment,script,scripts/enrich_tg_sent_state_metadata.py,yes,stable,yes,4273,2026-05-28 11:51:18,26.6302,pass,TG sent-state metadata backfill helper.
-v08_tg_source_usefulness_report,script,scripts/build_tg_source_usefulness_report.py,yes,stable,yes,11777,2026-05-28 12:13:08,26.2663,pass,TG source usefulness report builder.
-v08_tg_quality_loop,script,scripts/run_tg_quality_loop.py,yes,stable,yes,3381,2026-05-28 12:13:18,26.2635,pass,One-command TG quality loop runner.
-v08_historical_replay_sample_builder,script,scripts/build_historical_signal_replay_sample.py,yes,stable,yes,6120,2026-05-28 19:55:56,18.553,pass,Historical signal replay sample builder.
-v08_historical_replay_runner,script,scripts/run_v08_historical_signal_replay.py,yes,stable,yes,5039,2026-05-28 18:50:17,19.6471,pass,Historical signal replay pipeline runner.
-v08_historical_replay_summarizer,script,scripts/summarize_historical_signal_replay.py,yes,stable,yes,10145,2026-05-28 12:18:46,26.1723,pass,Historical signal replay findings summarizer.
-v081_historical_source_usefulness_builder,script,scripts/build_historical_source_usefulness_from_backtest.py,yes,stable,yes,10255,2026-05-28 14:06:02,24.3847,pass,Build historical source/event usefulness metrics from backtest rows.
-v081_source_readiness_builder,script,scripts/build_v08_source_readiness_report.py,yes,stable,yes,10356,2026-05-28 14:09:20,24.3296,pass,Build source-readiness report for first-hand expansion issues.
-v081_token_unlock_calendar_quality,script,scripts/build_token_unlock_calendar_quality_report.py,yes,stable,yes,8102,2026-05-28 14:32:27,23.9444,pass,Validate local token unlock calendar readiness.
-v081_token_unlock_importer,script,scripts/import_raw_token_unlocks_to_calendar.py,yes,stable,yes,9597,2026-05-28 14:18:43,24.1732,pass,Normalize raw token unlock CSV exports into calendar schema.
-v081_cex_netflow_baseline_report,script,scripts/build_cex_netflow_baseline_report.py,yes,stable,yes,6102,2026-05-28 14:14:04,24.2506,pass,Summarize CEX netflow rolling baseline readiness.
-v081_hyperliquid_state_history_report,script,scripts/build_hyperliquid_state_history_report.py,yes,stable,yes,6943,2026-05-28 14:14:25,24.2449,pass,Summarize Hyperliquid state history readiness.
-v081_source_quality_runner,script,scripts/run_v081_source_quality_reports.py,yes,stable,yes,4236,2026-05-28 14:33:43,23.9231,pass,Run all v0.8.1 source quality reports.
-v08_tg_sent_state_metadata_enrichment_summary,result,results/v08_tg_sent_state_metadata_enrichment_summary.csv,yes,stable,yes,191,2026-05-28 13:27:53,25.0204,pass,TG sent-state metadata enrichment summary.
-v08_tg_source_usefulness_report,result,results/v08_tg_source_usefulness_report.md,yes,stable,yes,1117,2026-05-28 13:28:41,25.0072,pass,TG source usefulness markdown report.
-v08_tg_source_usefulness_summary,result,results/v08_tg_source_usefulness_summary.csv,yes,stable,yes,319,2026-05-28 13:28:41,25.0072,pass,TG source usefulness summary.
-v08_tg_source_usefulness_by_source,result,results/v08_tg_source_usefulness_by_source.csv,yes,stable,yes,527,2026-05-28 13:28:41,25.0072,pass,TG source usefulness by-source metrics.
-v08_tg_quality_loop_summary,result,results/v08_tg_quality_loop_summary.csv,yes,stable,yes,772,2026-05-28 13:28:41,25.0072,pass,TG quality loop run summary.
-v08_historical_replay_broad_200_events,data,data/events_v08_historical_replay_broad_200.csv,yes,stable,yes,437354,2026-05-28 12:00:47,26.4721,pass,Broad historical replay event sample.
-v08_historical_replay_conservative_120_events,data,data/events_v08_historical_replay_conservative_120.csv,yes,stable,yes,145420,2026-05-28 14:07:43,24.3566,pass,Conservative historical replay event sample.
-v08_historical_replay_non_btc_single_asset_200_events,data,data/events_v08_historical_replay_non_btc_single_asset_200.csv,yes,stable,yes,2430,2026-05-28 12:15:29,26.2271,pass,Non-BTC single-asset historical replay event sample.
-v08_historical_replay_broad_200_backfill,result,results/v08_historical_replay_broad_200_price_backfill.csv,yes,stable,yes,736756,2026-05-28 12:03:46,26.4224,pass,Broad historical replay price backfill.
-v08_historical_replay_broad_200_findings,result,results/v08_historical_replay_broad_200_findings.md,yes,stable,yes,8089,2026-05-28 12:18:53,26.1705,pass,Broad historical replay findings.
-v08_historical_replay_conservative_120_backfill,result,results/v08_historical_replay_conservative_120_price_backfill.csv,yes,stable,yes,325746,2026-05-28 14:08:09,24.3494,pass,Conservative historical replay price backfill.
-v08_historical_replay_conservative_120_findings,result,results/v08_historical_replay_conservative_120_findings.md,yes,stable,yes,7578,2026-05-28 14:08:11,24.3489,pass,Conservative historical replay findings.
-v08_historical_replay_non_btc_single_asset_200_backfill,result,results/v08_historical_replay_non_btc_single_asset_200_price_backfill.csv,yes,stable,yes,5711,2026-05-28 12:15:30,26.2269,pass,Non-BTC single-asset historical replay price backfill.
-v08_historical_replay_non_btc_single_asset_200_findings,result,results/v08_historical_replay_non_btc_single_asset_200_findings.md,yes,stable,yes,2289,2026-05-28 12:18:56,26.1696,pass,Non-BTC single-asset historical replay findings.
-v081_historical_source_usefulness_report,result,results/v081_historical_source_usefulness_report.md,yes,stable,yes,2085,2026-05-28 14:33:57,23.9194,pass,Historical source usefulness report from v081 replay data.
-v081_source_readiness_report,result,results/v081_source_readiness_report.md,yes,stable,yes,2328,2026-05-28 14:33:57,23.9193,pass,"Source readiness report for token unlock, CEX listings, netflow, Hyperliquid, and usefulness."
-v081_token_unlock_calendar_quality_report,result,results/v081_token_unlock_calendar_quality_report.md,yes,stable,yes,771,2026-05-28 14:15:00,24.2352,pass,Token unlock calendar quality/readiness report.
-v081_token_unlock_import_report,result,results/v081_token_unlock_import_report.md,yes,stable,yes,913,2026-05-28 14:18:50,24.1713,pass,Token unlock import preview report.
-v081_cex_netflow_baseline_report,result,results/v081_cex_netflow_baseline_report.md,yes,stable,yes,1260,2026-05-28 22:24:32,16.0762,pass,CEX netflow baseline readiness report.
-v081_hyperliquid_state_history_report,result,results/v081_hyperliquid_state_history_report.md,yes,stable,yes,1171,2026-05-28 14:33:57,23.9194,pass,Hyperliquid state history readiness report.
-source_registry,data,data/source_registry.csv,yes,stable,yes,3638,2026-05-28 18:19:24,20.1619,pass,"Canonical registry of local intelligence sources, routes, shadow status, and evaluation status."
-shadow_events_raw,data,data/shadow_events_raw.csv,no,fresh_24h,yes,1539,2026-05-28 19:24:40,19.0741,pass,Shadow-mode events captured for evaluation before live routing.
-tg_evidence_snippets,data,data/tg_evidence_snippets.csv,no,fresh_24h,yes,960,2026-05-28 22:19:49,16.1548,pass,Evidence snippets generated from backtest/source effectiveness for TG copy.
-source_registry_report,result,results/source_registry_report.md,yes,fresh_24h,yes,1715,2026-05-28 19:24:39,19.0744,pass,Source registry coverage and consistency report.
-source_effectiveness_report,result,results/source_effectiveness_report.md,yes,fresh_24h,yes,2198,2026-05-28 19:24:39,19.0744,pass,Source-level outcome effectiveness report.
-event_type_performance_matrix,result,results/event_type_performance_matrix.md,yes,fresh_24h,yes,4555,2026-05-28 19:24:39,19.0743,pass,Event type/source subtype performance matrix from live and historical outcomes.
-event_type_performance_matrix_non_benchmark_alt,result,results/event_type_performance_matrix_non_benchmark_alt.md,yes,fresh_24h,yes,5002,2026-05-28 19:24:39,19.0743,pass,Non-BTC/ETH non-macro alt event performance matrix.
-signal_decay_curve,result,results/signal_decay_curve.md,yes,fresh_24h,yes,4301,2026-05-28 19:24:39,19.0743,pass,Signal horizon decay curve from live and historical outcomes.
-false_positive_analysis,result,results/false_positive_analysis.md,yes,fresh_24h,yes,842,2026-05-28 19:24:39,19.0743,pass,False-positive/noise analysis for live TG alert outcomes and radar decisions.
-v11_signal_policy,data,data/tg_signal_policy_v11.csv,yes,fresh_24h,yes,12443,2026-05-28 19:24:40,19.0741,pass,v11 machine-readable TG routing policy from historical matrix and false-positive analysis.
-v11_signal_policy_report,result,results/v11_signal_policy_report.md,yes,fresh_24h,yes,5855,2026-05-28 19:24:40,19.0741,pass,Readable v11 TG routing policy report.
-v12_signal_policy,data,data/tg_signal_policy_v12.csv,yes,fresh_24h,yes,2422,2026-05-28 19:50:07,18.6498,pass,v12 strict contamination-aware TG routing policy.
-v12_boost_criteria_report,result,results/v12_boost_criteria_report.csv,yes,fresh_24h,yes,2146,2026-05-28 19:50:07,18.6498,pass,Strict v12 boost/downrank/digest-only criteria report.
-v12_whale_position_contamination,result,results/v12_whale_position_contamination_report.md,yes,fresh_24h,yes,437,2026-05-28 19:24:39,19.0743,pass,Whale-position HYPE/single-asset/time-window contamination report.
-v12_hack_classification,result,results/v12_hack_classification_report.csv,yes,fresh_24h,yes,5879,2026-05-28 19:48:50,18.6714,pass,Hack-security subtype validation report.
-v12_other_reclassification,result,results/v12_other_reclassification_report.csv,no,stable,yes,253,2026-05-28 19:16:58,19.2025,pass,Other taxonomy reclassification report.
-v13_price_in_report,result,results/v13_price_in_report.md,yes,fresh_24h,yes,4304,2026-05-28 19:38:38,18.8414,pass,Pre-event price-in validation report for historical backfill rows.
-v13_other_quality_report,result,results/v13_other_quality_report.md,yes,fresh_24h,yes,2985,2026-05-28 19:40:27,18.8112,pass,Quality grading report for uncategorized/other historical candidates.
-v13_hype_contamination_detail,result,results/v13_hype_contamination_report.md,yes,fresh_24h,yes,518,2026-05-28 19:41:06,18.8001,pass,HYPE whale-position burst/source/return contamination detail report.
-v13_whale_asset_contamination,result,results/v13_whale_asset_contamination_report.md,yes,fresh_24h,yes,1294,2026-05-28 19:45:49,18.7217,pass,General whale-position asset concentration and burst contamination report.
-v13_source_identity_layers,data,data/source_identity_layers.csv,yes,fresh_24h,yes,3983,2026-05-28 19:45:49,18.7217,pass,"Three-layer source identity table for source family, channel, and reliability status."
-v13_regime_layer_report,result,results/v13_regime_layer_report.md,yes,fresh_24h,yes,1041,2026-05-28 19:47:10,18.6991,pass,BTC regime-layer event performance report.
-v13_active_exploit_urgent_candidates,result,results/v13_active_exploit_urgent_candidates.md,yes,fresh_24h,yes,938,2026-05-28 19:50:00,18.6518,pass,Rare urgent-candidate report for active exploit events.
-v13_extended_alt_backtest_clean,data,data/backtest_v13_extended_alt_history_clean.csv,yes,fresh_24h,yes,1682737,2026-05-28 20:05:55,18.3866,pass,Extended non-benchmark alt historical backtest with archive flags.
-v13_extended_post_hype_removal_report,result,results/v13_extended_post_hype_removal_report.md,yes,fresh_24h,yes,1308,2026-05-28 20:05:55,18.3866,pass,Extended post-HYPE-removal group statistics report.
-v13_rule_tightening_report,result,results/v13_rule_tightening_report.md,yes,fresh_24h,yes,605,2026-05-28 19:55:16,18.5641,pass,Strict candidate gate comparison report.
-v13_source_scores_extended,data,data/source_scores_v13_extended.csv,yes,fresh_24h,yes,3744,2026-05-28 20:06:10,18.3824,pass,Source scores and throttle recommendations from extended replay.
-v13_extended_source_throttle_report,result,results/v13_extended_source_throttle_report.md,yes,fresh_24h,yes,2881,2026-05-28 20:06:10,18.3824,pass,Source throttle report from extended replay.
-v13_extended_price_in_report,result,results/v13_extended_price_in_report.md,yes,fresh_24h,yes,4360,2026-05-28 20:11:00,18.3019,pass,Extended sample pre-event price-in report.
-v13_extended_regime_layer_report,result,results/v13_extended_regime_layer_report.md,yes,fresh_24h,yes,1453,2026-05-28 20:08:53,18.3372,pass,Extended sample BTC regime-layer report.
-v14_time_field_diagnosis,result,results/v14_time_field_diagnosis.md,yes,fresh_24h,yes,761,2026-05-28 20:15:52,18.2209,pass,Remote time-field diagnosis for historical export reliability.
-v14_webhook_split_source_scores,data,data/source_scores_v14_webhook_split.csv,yes,fresh_24h,yes,5682,2026-05-28 20:30:13,17.9816,pass,Webhook subsource split and source-score table.
-v14_webhook_split_report,result,results/v14_webhook_split_report.md,yes,fresh_24h,yes,2827,2026-05-28 20:30:13,17.9816,pass,Webhook subsource split report.
-v14_taxonomy_review_reclassified,data,data/taxonomy_review_reclassified.csv,yes,fresh_24h,yes,90811,2026-05-28 20:30:40,17.9741,pass,Rule-based split of needs_taxonomy_review rows.
-v14_needs_taxonomy_review_report,result,results/v14_needs_taxonomy_review_report.md,yes,fresh_24h,yes,4266,2026-05-28 20:30:40,17.9741,pass,Needs-taxonomy-review cleanup report.
-v14_etf_fund_flow_filtered,data,data/etf_fund_flow_filtered.csv,yes,fresh_24h,yes,378284,2026-05-28 21:04:42,17.4068,pass,"ETF/fund-flow rows filtered by amount, issuer, source, and context."
-v14_etf_fund_flow_filter_report,result,results/v14_etf_fund_flow_filter_report.md,yes,fresh_24h,yes,8516,2026-05-28 21:04:42,17.4068,pass,ETF/fund-flow quality filter report.
-v14_flow_event_subtypes,data,data/v14_flow_event_subtypes.csv,yes,fresh_24h,yes,376797,2026-05-28 21:04:42,17.4068,pass,"Split mixed fund-flow rows into ETF, CEX netflow, institutional, and unclear subtypes."
-v14_flow_event_subtypes_report,result,results/v14_flow_event_subtypes_report.md,yes,fresh_24h,yes,6038,2026-05-28 21:04:42,17.4068,pass,Readable flow subtype split report.
-v14_active_exploit_verified,data,data/active_exploit_verified.csv,yes,fresh_24h,yes,18927,2026-05-28 21:04:43,17.4067,pass,Active exploit candidates with amount/context verification.
-v14_active_exploit_amount_verification_report,result,results/v14_active_exploit_amount_verification_report.md,yes,fresh_24h,yes,4715,2026-05-28 21:04:43,17.4067,pass,Active exploit amount verification report.
-v14_short_price_in,data,data/v14_short_price_in.csv,yes,fresh_24h,yes,48811,2026-05-28 21:19:39,17.1577,pass,5m/15m/1h pre-event price-in checks.
-v14_upgrade_events,data,data/v14_upgrade_events.csv,yes,fresh_24h,yes,5362,2026-05-28 21:20:49,17.1381,pass,Upgrade/fork publishability classification.
-v14_publishable_criteria,config,config/publishable_criteria.yaml,yes,stable,yes,721,2026-05-28 21:59:49,16.4883,pass,Minimum publishable-event criteria for Telegram routing.
-v14_routing_rules,config,config/routing_rules.yaml,yes,stable,yes,429,2026-05-28 21:43:41,16.7572,pass,Configurable watcher routing thresholds and priorities.
-v14_asset_tiers,config,config/asset_tiers.yaml,yes,stable,yes,464,2026-05-28 22:36:35,15.8755,pass,Asset tiers and thresholds for digest focus asset selection.
-v14_term_translations,config,config/term_translations.yaml,yes,stable,yes,956,2026-05-28 22:36:35,15.8755,pass,Plain-Chinese market term translations for TG reports.
-v14_alert_routing,config,config/alert_routing.yaml,yes,stable,yes,2120,2026-05-28 22:53:14,15.5981,pass,Intraday radar versus scheduled digest routing thresholds.
-v14_publishable_criteria_eval,data,data/v14_publishable_criteria_eval.csv,yes,fresh_24h,yes,64643,2026-05-28 21:59:49,16.4883,pass,Per-event evaluation against minimum publishable criteria.
-v14_publishable_golden_events,data,data/v14_publishable_golden_events.csv,yes,stable,yes,8350,2026-05-28 21:42:36,16.7752,pass,Golden known publishable/non-publishable events for criteria validation.
-v14_security_events_normalized,data,data/security_events/security_events_normalized.csv,yes,fresh_24h,yes,22,2026-05-28 21:28:01,17.0182,pass,Normalized external security alert/address-risk events.
-v14_security_alert_ingest_summary,result,results/v14_security_alert_ingest_summary.csv,yes,fresh_24h,yes,261,2026-05-28 21:28:01,17.0181,pass,Security alert source ingest status summary.
-v14_etf_daily_flows_farside,data,data/etf_daily_flows_farside.csv,yes,fresh_24h,yes,98208,2026-05-28 21:44:43,16.7398,pass,Farside BTC ETF daily flow table normalized locally.
-v14_eth_etf_flows_farside,data,data/eth_etf_flows_farside.csv,no,fresh_24h,yes,9,2026-05-28 22:52:39,15.6076,pass,Optional Farside ETH ETF daily flow table; may be empty if blocked by Cloudflare.
-v14_etf_daily_digest,result,results/v14_etf_daily_digest.md,yes,fresh_24h,yes,620,2026-05-28 21:44:43,16.7398,pass,BTC ETF daily flow digest candidate.
-v14_eth_etf_daily_digest,result,results/v14_eth_etf_daily_digest.md,no,fresh_24h,yes,60,2026-05-28 22:52:39,15.6076,pass,Optional ETH ETF daily flow digest candidate.
-v14_first_hand_publish_candidates,data,data/v14_first_hand_publish_candidates.csv,yes,fresh_24h,yes,10776,2026-05-28 21:44:44,16.7398,pass,First-hand watcher publish route candidates.
-v14_first_hand_publish_candidates_report,result,results/v14_first_hand_publish_candidates.md,yes,fresh_24h,yes,607,2026-05-28 21:44:44,16.7398,pass,First-hand watcher routing report.
-v14_publishable_criteria_validation,result,results/v14_publishable_criteria_validation.csv,yes,fresh_24h,yes,9559,2026-05-28 21:59:49,16.4883,pass,Golden-event validation for publishable criteria.
-v14_e2e_publish_preview,result,results/v14_e2e_publish_preview.md,yes,fresh_24h,yes,1540,2026-05-28 21:44:44,16.7397,pass,Local end-to-end publish preview without Telegram send.
-v14_hyperliquid_snapshot_card,result,results/v14_hyperliquid_snapshot_card.md,yes,fresh_24h,yes,751,2026-05-28 21:44:44,16.7398,pass,Hyperliquid static market-structure background card.
-v14_market_state_snapshot,result,results/v14_market_state_snapshot.md,yes,fresh_24h,yes,1219,2026-05-29 12:32:41,1.9404,pass,"Public Binance price, volume, open-interest, funding, and crowding market-state snapshot."
-v14_focus_assets,result,results/v14_focus_assets.csv,yes,fresh_24h,yes,819,2026-05-29 12:32:44,1.9397,pass,Focus assets selected from tier rules and market-state thresholds.
-v14_price_oi_quadrant,result,results/v14_price_oi_quadrant.csv,yes,fresh_24h,yes,1329,2026-05-29 12:32:44,1.9397,pass,Plain-Chinese price/open-interest quadrant classification.
-v14_etf_plain_summary,result,results/v14_etf_plain_summary.md,yes,fresh_24h,yes,497,2026-05-29 12:32:46,1.939,pass,Plain-Chinese ETF flow first-screen summary.
-v14_etf_concentration_interpretation,result,results/v14_etf_concentration_interpretation.txt,yes,fresh_24h,yes,133,2026-05-29 12:32:46,1.939,pass,ETF concentration-change plain-Chinese interpretation.
-v14_market_alert_headline,result,results/v14_market_alert_headline.txt,yes,fresh_24h,yes,103,2026-05-29 12:32:44,1.9397,pass,One-line abnormality headline for TG market-state digest.
-v14_funding_rate_percentiles,data,data/funding_rate/funding_rate_percentiles.csv,yes,fresh_24h,yes,188302,2026-05-29 12:32:46,1.9391,pass,Binance USD-M funding-rate historical samples for percentile context.
-v14_oi_percentiles,data,data/oi/oi_percentiles.csv,yes,fresh_24h,yes,133496,2026-05-29 12:32:46,1.9391,pass,Binance USD-M open-interest historical samples for percentile context.
-v14_derivatives_history_percentiles,result,results/v14_derivatives_history_percentiles.md,yes,fresh_24h,yes,810,2026-05-29 12:32:46,1.9391,pass,Funding-rate and OI historical percentile report.
-v15_percentile_alerts_json,result,results/v15_percentile_alerts.json,yes,fresh_24h,yes,4506,2026-05-29 12:32:46,1.9391,pass,"Layered percentile alert buckets for TG first screen, today-watch, radar, and digest context."
-v15_percentile_alerts_report,result,results/v15_percentile_alerts.md,yes,fresh_24h,yes,1205,2026-05-29 12:32:46,1.9391,pass,Readable layered percentile alert report.
-v15_percentile_alerts_summary,result,results/v15_percentile_alerts_summary.csv,yes,fresh_24h,yes,143,2026-05-29 12:32:46,1.9391,pass,Layered percentile alert generation summary.
-v15_hyperliquid_market_meta_snapshot,data,data/hyperliquid/market_meta_snapshot.csv,yes,fresh_24h,yes,4199,2026-05-29 12:25:14,2.0645,pass,Hyperliquid official public perp market metadata snapshot.
-v15_hyperliquid_market_meta_history,data,data/hyperliquid/market_meta_history.csv,yes,fresh_24h,yes,8173,2026-05-29 12:25:14,2.0645,pass,Append-only Hyperliquid public market metadata history.
-v15_hyperliquid_market_meta_card,result,results/v15_hyperliquid_market_meta_card.md,yes,fresh_24h,yes,710,2026-05-29 12:25:19,2.0632,pass,Readable Hyperliquid official market-structure card.
-v15_hyperliquid_market_meta_summary,result,results/v15_hyperliquid_market_meta_summary.csv,yes,fresh_24h,yes,207,2026-05-29 12:25:14,2.0645,pass,Hyperliquid official market metadata fetch summary.
-v15_hyperliquid_liquidation_wall,result,results/v15_hyperliquid_liquidation_wall.md,yes,fresh_24h,yes,794,2026-05-29 14:16:05,0.217,pass,Monitored Hyperliquid large-position liquidation-wall context.
-v15_hyperliquid_liquidation_wall_summary,result,results/v15_hyperliquid_liquidation_wall_summary.csv,yes,fresh_24h,yes,109,2026-05-29 14:16:05,0.217,pass,Hyperliquid liquidation-wall route counts.
-v14_market_state_first_screen,result,results/v14_market_state_first_screen.md,yes,fresh_24h,yes,356,2026-05-29 12:32:46,1.939,pass,Concise first-screen TG market-state block.
-v14_prioritized_events,result,results/v14_prioritized_events.md,yes,fresh_24h,yes,580,2026-05-29 12:32:42,1.9404,pass,Auditable top-watch versus other-dynamic event priority report.
-v14_today_focus_events,result,results/v14_today_focus_events.csv,yes,fresh_24h,yes,357,2026-05-29 12:32:42,1.9404,pass,Events admitted into today's top-watch section after dynamic thresholds.
-v14_other_events,result,results/v14_other_events.csv,yes,fresh_24h,yes,548,2026-05-29 12:32:42,1.9404,pass,Events relegated to other-dynamic section after dynamic thresholds.
-v14_prefilter_results,data,data/v14_prefilter_results.csv,yes,fresh_24h,yes,60944,2026-05-28 21:19:49,17.155,pass,Hard PreFilter results before Composer and Publisher.
-v14_prefilter_report,result,results/v14_prefilter_report.md,yes,fresh_24h,yes,8780,2026-05-28 21:19:49,17.155,pass,Readable hard PreFilter block report.
-v14_composer_scores,data,data/v14_composer_scores.csv,yes,fresh_24h,yes,1778989,2026-05-28 21:19:49,17.155,pass,Auditable five-stage Composer scores for historical candidates.
-v14_composer_scores_report,result,results/v14_composer_scores_report.md,yes,fresh_24h,yes,5474,2026-05-28 21:19:49,17.155,pass,Readable Composer five-stage score report.
-v14_publish_policy_candidates,data,data/v14_publish_policy_candidates.csv,yes,fresh_24h,yes,1804266,2026-05-28 22:00:31,16.4766,pass,Claude-directed block/digest/interrupt publishing policy decisions.
-v14_publish_policy_report,result,results/v14_publish_policy_report.md,yes,fresh_24h,yes,808,2026-05-28 22:00:31,16.4766,pass,Readable v14 publishing policy report.
-v14_digest_preview,result,results/v14_digest_preview.md,yes,fresh_24h,yes,489,2026-05-28 22:00:31,16.4765,pass,Strict morning/evening digest preview using quality-gated rows only.
-v08_non_benchmark_alt_events,data,data/events_v08_historical_replay_non_benchmark_alt_50.csv,yes,stable,yes,115972,2026-05-28 18:50:26,19.6448,pass,Non-benchmark alt historical replay event sample.
-v08_non_benchmark_alt_backfill,result,results/v08_historical_replay_non_benchmark_alt_50_price_backfill.csv,yes,stable,yes,148449,2026-05-28 18:50:38,19.6412,pass,Non-benchmark alt historical replay price backfill.
-v08_non_benchmark_alt_quality,result,results/v08_historical_replay_non_benchmark_alt_50_quality_report.csv,yes,stable,yes,4346,2026-05-28 18:50:39,19.641,pass,Non-benchmark alt historical replay quality report.
-v08_non_benchmark_alt_findings,result,results/v08_historical_replay_non_benchmark_alt_50_findings.md,yes,stable,yes,7961,2026-05-28 18:50:40,19.6408,pass,Non-benchmark alt historical replay findings.
-source_adapter_validation_report,result,results/source_adapter_validation_report.md,yes,fresh_24h,yes,463,2026-05-28 19:24:40,19.0741,pass,Normalized source adapter output validation report.
-shadow_source_evaluation_report,result,results/shadow_source_evaluation_report.md,yes,fresh_24h,yes,645,2026-05-28 19:24:40,19.0741,pass,Shadow-mode source evaluation report.
-tg_evidence_snippets_preview,result,results/tg_evidence_snippets.md,no,fresh_24h,yes,1069,2026-05-28 22:19:49,16.1548,pass,Readable preview of evidence snippets for TG cards and digests.
-llm_usage_report,result,results/llm_usage_report.md,yes,fresh_24h,yes,469,2026-05-28 19:24:40,19.074,pass,LLM usage and cost-control report.
-v11_readiness_report,result,results/v11_readiness_report.md,yes,fresh_24h,yes,1781,2026-05-28 19:24:41,19.0739,pass,v11 source-quality-first readiness report.
-v11_digest_preview,result,results/v11_tg_custom_digest_preview.md,no,fresh_24h,yes,2872,2026-05-28 18:27:33,20.026,pass,Readable TG digest preview after evidence-snippet upgrade.
-source_adapter_schema,doc,docs/SOURCE_ADAPTER_SCHEMA.md,yes,stable,yes,3344,2026-05-28 18:18:24,20.1784,pass,Normalized source adapter schema used by watcher/news/calendar sources.
-v11_external_reference_upgrade_plan,doc,docs/V11_EXTERNAL_REFERENCE_UPGRADE_PLAN_CN.md,yes,stable,yes,9961,2026-05-28 18:09:03,20.3344,pass,Accepted v11 upgrade plan derived from external references and Claude review.
-source_registry_report_script,script,scripts/build_source_registry_report.py,yes,stable,yes,9807,2026-05-28 18:14:49,20.2381,pass,Build source registry coverage and consistency report.
-source_effectiveness_report_script,script,scripts/build_source_effectiveness_report.py,yes,stable,yes,12976,2026-05-28 18:15:29,20.2272,pass,Build source effectiveness report from ledger/outcomes/registry.
-event_type_performance_matrix_script,script,scripts/build_event_type_performance_matrix.py,yes,stable,yes,9725,2026-05-28 18:17:29,20.1938,pass,Build event type and source subtype performance matrix.
-signal_decay_curve_script,script,scripts/build_signal_decay_curve.py,yes,stable,yes,9326,2026-05-28 18:17:41,20.1905,pass,Build horizon-level signal decay curve.
-false_positive_analysis_script,script,scripts/build_false_positive_analysis.py,yes,stable,yes,10479,2026-05-28 18:33:11,19.932,pass,Build false-positive/noise analysis from TG outcomes and radar decision logs.
-v11_signal_policy_script,script,scripts/build_v11_signal_policy.py,yes,stable,yes,11511,2026-05-28 18:51:02,19.6346,pass,Build v11 machine-readable routing policy from historical matrix and false-positive analysis.
-validate_whale_position_contamination_script,script,scripts/validate_whale_position_contamination.py,yes,stable,yes,5751,2026-05-28 19:15:28,19.2274,pass,Validate contamination in whale-position samples.
-reclassify_other_with_new_taxonomy_script,script,scripts/reclassify_other_with_new_taxonomy.py,yes,stable,yes,5773,2026-05-28 19:15:51,19.221,pass,Reclassify candidate_event_type=other with v12 taxonomy rules.
-validate_hack_classification_script,script,scripts/validate_hack_classification.py,yes,stable,yes,6665,2026-05-28 19:48:33,18.676,pass,"Split hack_security rows into active exploit, disclosure, recovery, enforcement, pause, and unclear buckets."
-apply_boost_criteria_v12_script,script,scripts/apply_boost_criteria_v12.py,yes,stable,yes,12039,2026-05-28 19:18:49,19.1716,pass,Apply strict v12 contamination-aware routing policy.
-validate_price_in_effect_script,script,scripts/validate_price_in_effect.py,yes,stable,yes,11919,2026-05-28 19:35:46,18.889,pass,Validate pre-event price-in effects against post-event abnormal returns.
-grade_other_quality_script,script,scripts/grade_other_quality.py,yes,stable,yes,12309,2026-05-28 19:40:22,18.8125,pass,Grade uncategorized/other candidate quality before further taxonomy work.
-analyze_hype_contamination_detail_script,script,scripts/analyze_hype_contamination_detail.py,yes,stable,yes,7651,2026-05-28 19:41:00,18.8019,pass,Analyze HYPE-specific whale-position contamination patterns.
-analyze_whale_position_asset_contamination_script,script,scripts/analyze_whale_position_asset_contamination.py,yes,stable,yes,8251,2026-05-28 19:45:41,18.7239,pass,Analyze general whale-position single-asset and short-window contamination.
-build_source_identity_layers_script,script,scripts/build_source_identity_layers.py,yes,stable,yes,8559,2026-05-28 19:45:41,18.7239,pass,Build three-layer source identity and reliability table.
-build_regime_layer_report_script,script,scripts/build_regime_layer_report.py,yes,stable,yes,7910,2026-05-28 19:45:41,18.7239,pass,Build BTC regime-layer report for historical event performance.
-build_active_exploit_urgent_candidates_script,script,scripts/build_active_exploit_urgent_candidates.py,yes,stable,yes,7687,2026-05-28 19:49:54,18.6535,pass,Build rare urgent-candidate list for active exploit events.
-archive_hype_and_recompute_stats_script,script,scripts/archive_hype_and_recompute_stats.py,yes,stable,yes,6801,2026-05-28 19:55:10,18.5657,pass,Archive HYPE whale burst contamination and recompute group statistics.
-tighten_candidate_identification_rules_script,script,scripts/tighten_candidate_identification_rules.py,yes,stable,yes,7405,2026-05-28 19:55:10,18.5657,pass,Apply stricter candidate gates to reduce garbage candidates.
-score_and_throttle_sources_script,script,scripts/score_and_throttle_sources.py,yes,stable,yes,6892,2026-05-28 19:55:10,18.5657,pass,Score sources and derive source-level throttle rules.
-diagnose_remote_time_fields_script,script,scripts/diagnose_remote_time_fields.py,yes,stable,yes,7235,2026-05-28 20:15:37,18.225,pass,Diagnose remote historical time-field coverage.
-export_real_news_older_v2_script,script,scripts/export_real_news_older_v2.py,yes,stable,yes,7185,2026-05-28 20:21:22,18.1291,pass,Explicit-time-field older real-news exporter.
-split_webhook_subsources_script,script,scripts/split_webhook_subsources.py,yes,stable,yes,9233,2026-05-28 20:30:00,17.9853,pass,Split webhook into subsources and score them separately.
-analyze_needs_taxonomy_review_script,script,scripts/analyze_needs_taxonomy_review.py,yes,stable,yes,8178,2026-05-28 20:30:34,17.9757,pass,Rule-split needs_taxonomy_review rows into concrete buckets.
-filter_etf_fund_flow_script,script,scripts/filter_etf_fund_flow.py,yes,stable,yes,9054,2026-05-28 21:04:04,17.4176,pass,Filter ETF/fund-flow rows for digest eligibility.
-split_flow_event_subtypes_script,script,scripts/split_flow_event_subtypes.py,yes,stable,yes,8205,2026-05-28 21:02:37,17.4415,pass,Split ETF/fund-flow versus CEX netflow and institutional flow rows.
-verify_exploit_amounts_script,script,scripts/verify_exploit_amounts.py,yes,stable,yes,15630,2026-05-28 21:04:34,17.4092,pass,Verify active-exploit amount and context before urgent eligibility.
-build_v14_short_price_in_script,script,scripts/build_v14_short_price_in.py,yes,stable,yes,9146,2026-05-28 21:17:19,17.1967,pass,Build 5m/15m/1h pre-event price-in checks.
-classify_v14_upgrade_events_script,script,scripts/classify_v14_upgrade_events.py,yes,stable,yes,6597,2026-05-28 21:20:39,17.141,pass,Classify upgrade/fork events into digest/background/block.
-define_publishable_event_criteria_script,script,scripts/define_publishable_event_criteria.py,yes,stable,yes,9799,2026-05-28 21:59:43,16.49,pass,Write and evaluate minimum publishable event criteria.
-ingest_security_alerts_script,script,scripts/ingest_security_alerts.py,yes,stable,yes,5604,2026-05-28 21:27:52,17.0207,pass,Ingest external security alert sources into normalized local CSV.
-build_etf_daily_digest_script,script,scripts/build_etf_daily_digest.py,yes,stable,yes,9724,2026-05-28 22:52:47,15.6056,pass,Build daily BTC ETF flow digest from Farside public table.
-build_first_hand_publish_candidates_script,script,scripts/build_first_hand_publish_candidates.py,yes,stable,yes,10183,2026-05-28 21:43:59,16.7522,pass,Route first-hand watcher alerts into publish/archive channels.
-validate_publishable_criteria_script,script,scripts/validate_publishable_criteria.py,yes,stable,yes,4877,2026-05-28 21:42:56,16.7697,pass,Validate publishable criteria against golden known events.
-test_end_to_end_publish_script,script,scripts/test_end_to_end_publish.py,yes,stable,yes,6488,2026-05-28 21:44:34,16.7426,pass,Build local publish preview from current candidates without sending Telegram.
-aggregate_hyperliquid_snapshot_script,script,scripts/aggregate_hyperliquid_snapshot.py,yes,stable,yes,5072,2026-05-28 21:44:20,16.7464,pass,Aggregate Hyperliquid position snapshots into background digest card.
-build_market_state_snapshot_script,script,scripts/build_market_state_snapshot.py,yes,stable,yes,15931,2026-05-29 12:10:45,2.3062,pass,Build public Binance market-state snapshot for TG digests.
-select_focus_assets_script,script,scripts/market/select_focus_assets.py,yes,stable,yes,6958,2026-05-28 22:36:35,15.8755,pass,Select digest focus assets from asset tiers and market-state thresholds.
-classify_price_oi_quadrant_script,script,scripts/market/classify_price_oi_quadrant.py,yes,stable,yes,5016,2026-05-28 22:36:35,15.8755,pass,Classify price/open-interest quadrant explanations.
-generate_etf_summary_script,script,scripts/reporting/generate_etf_summary.py,yes,stable,yes,7989,2026-05-28 22:51:12,15.6318,pass,Render ETF flow context into a concise first-screen block.
-generate_alert_headline_script,script,scripts/reporting/generate_alert_headline.py,yes,stable,yes,4203,2026-05-28 22:46:30,15.7102,pass,Generate one-line abnormality headline for TG market-state digest.
-build_derivatives_history_percentiles_script,script,scripts/market/build_derivatives_history_percentiles.py,yes,stable,yes,13293,2026-05-28 22:55:40,15.5576,pass,Fetch Binance USD-M funding/OI history and compute percentile context.
-generate_percentile_alerts_script,script,scripts/market/generate_percentile_alerts.py,yes,stable,yes,10429,2026-05-29 12:21:11,2.1321,pass,Convert historical derivative percentiles into layered TG alert placement buckets.
-hyperliquid_market_meta_fetcher,script,scripts/hyperliquid/fetch_market_meta.py,yes,stable,yes,7118,2026-05-29 12:16:08,2.2164,pass,Fetch Hyperliquid official public perp market metadata via metaAndAssetCtxs.
-hyperliquid_market_meta_card,script,scripts/hyperliquid/generate_market_meta_card.py,yes,stable,yes,6303,2026-05-29 12:21:56,2.1198,pass,Render Hyperliquid official market metadata into a concise card.
-hyperliquid_liquidation_wall,script,scripts/hyperliquid/generate_liquidation_wall.py,yes,stable,yes,9075,2026-05-29 14:16:05,0.217,pass,Render monitored Hyperliquid large-position liquidation-wall context.
-generate_market_state_summary_script,script,scripts/reporting/generate_market_state_summary.py,yes,stable,yes,9952,2026-05-29 12:26:20,2.0463,pass,Render concise market-state first screen for TG digest.
-prioritize_events_script,script,scripts/events/prioritize_events.py,yes,stable,yes,9557,2026-05-28 22:46:55,15.7032,pass,Prioritize TG digest events into top-watch and other-dynamic buckets.
-build_v14_prefilter_script,script,scripts/build_v14_prefilter.py,yes,stable,yes,8705,2026-05-28 21:10:54,17.3035,pass,Build hard PreFilter output before Composer and Publisher.
-build_v14_composer_scores_script,script,scripts/build_v14_composer_scores.py,yes,stable,yes,20448,2026-05-28 21:05:24,17.3952,pass,Build auditable five-stage Composer scores.
-apply_v14_publish_policy_script,script,scripts/apply_v14_publish_policy.py,yes,stable,yes,14128,2026-05-28 21:25:12,17.0652,pass,Apply Claude-directed block/digest/interrupt publishing policy.
-build_v14_digest_preview_script,script,scripts/build_v14_digest_preview.py,yes,stable,yes,10055,2026-05-28 21:20:59,17.1356,pass,Build strict v14 morning/evening digest preview.
-source_adapter_validation_script,script,scripts/validate_source_adapter_outputs.py,yes,stable,yes,8060,2026-05-28 18:18:50,20.1715,pass,Validate normalized source adapter outputs against schema and registry.
-shadow_source_evaluation_script,script,scripts/run_shadow_source_evaluation.py,yes,stable,yes,6718,2026-05-28 18:20:09,20.1494,pass,Extract and summarize shadow-mode source events.
-tg_evidence_snippet_script,script,scripts/render_tg_evidence_snippet.py,yes,stable,yes,5767,2026-05-28 22:19:36,16.1585,pass,Render evidence snippets from source effectiveness and event performance data.
-llm_usage_report_script,script,scripts/build_llm_usage_report.py,yes,stable,yes,4801,2026-05-28 18:21:33,20.1261,pass,Build LLM usage and estimated cost reports.
-v11_readiness_report_script,script,scripts/build_v11_readiness_report.py,yes,stable,yes,8670,2026-05-28 18:51:19,19.63,pass,Build v11 source-quality-first readiness report.
-tg_test_sender_script,script,scripts/send_tg_draft_test.py,yes,stable,yes,5384,2026-05-27 18:43:10,43.7659,pass,Manual dry-run/send helper for TG draft testing.
-local_environment_script,script,scripts/check_local_environment.py,yes,stable,yes,6072,2026-05-27 16:08:43,46.3399,pass,Environment checker.
-secret_scan_script,script,scripts/check_secret_leaks.py,yes,stable,yes,6296,2026-05-27 17:55:45,44.5559,pass,Secret scanner.
-local_secret_loader,script,scripts/load_local_secrets.ps1,yes,stable,yes,946,2026-05-27 17:55:33,44.5594,pass,Loads ignored local secrets into the current PowerShell process.
-command_registry_script,script,scripts/build_command_registry.py,yes,stable,yes,77077,2026-05-29 12:24:49,2.0718,pass,Command registry builder.
-review_actions_script,script,scripts/build_project_review_actions.py,yes,stable,yes,10260,2026-05-27 17:19:04,45.1674,pass,Review action builder.
-cursor_prompt_script,script,scripts/generate_cursor_prompt.py,yes,stable,yes,8346,2026-05-27 16:30:29,45.9772,pass,Cursor prompt generator.
-claude_prompt_script,script,scripts/generate_claude_question_prompt.py,yes,stable,yes,4475,2026-05-27 15:45:16,46.7308,pass,Claude prompt generator.
-claude_query_script,script,scripts/query_claude_next.py,yes,stable,yes,9341,2026-05-28 18:21:13,20.1317,pass,Claude OpenRouter query wrapper.
+project_root_rules,project_os,AGENTS.md,yes,stable,yes,2058,2026-05-27 14:29:24,115.6338,pass,Local project rules.
+python_requirements,project_os,requirements.txt,yes,stable,yes,16,2026-05-27 16:08:36,113.9805,pass,Minimal local runtime dependencies.
+project_state,project_os,docs/PROJECT_STATE.md,yes,fresh_24h,yes,14639,2026-05-29 12:52:28,69.2495,fail,Current local project memory.
+project_dashboard,project_os,docs/PROJECT_DASHBOARD.md,yes,fresh_24h,yes,6623,2026-05-29 12:52:29,69.2492,fail,Current local dashboard.
+validation_checklist,project_os,docs/VALIDATION_CHECKLIST.md,yes,stable,yes,5115,2026-05-27 16:12:44,113.9117,pass,Operator validation checklist.
+command_registry_doc,project_os,docs/COMMAND_REGISTRY.md,yes,fresh_24h,yes,74649,2026-05-29 14:29:06,67.6389,fail,Runnable command inventory.
+artifact_manifest_doc,project_os,docs/ARTIFACT_MANIFEST.md,no,fresh_24h,yes,62101,2026-05-29 14:29:07,67.6387,warning,This generated manifest.
+project_review_actions_doc,project_os,docs/PROJECT_REVIEW_ACTIONS.md,yes,fresh_24h,yes,3352,2026-05-29 12:52:24,69.2505,fail,Dashboard review action queue.
+decisions_doc,project_os,docs/DECISIONS.md,yes,stable,yes,33542,2026-05-28 21:21:51,84.7596,pass,Accepted direction decisions.
+mvp_timeline_doc,project_os,docs/MVP_TIMELINE.md,yes,stable,yes,2897,2026-05-27 16:52:39,113.2464,pass,Current MVP definition and timeline estimate.
+ai_cost_control_policy,project_os,docs/AI_COST_CONTROL_POLICY.md,yes,stable,yes,3929,2026-05-27 17:07:32,112.9983,pass,AI/Claude routing and spend-control policy.
+secret_setup_doc,project_os,docs/SECRET_SETUP.md,yes,stable,yes,1225,2026-05-27 17:55:40,112.1962,pass,Local secret setup instructions.
+gitignore,project_os,.gitignore,yes,stable,yes,268,2026-05-29 14:28:02,67.6566,pass,Ignore local secret files and runtime noise.
+secret_template,config,config/secrets.example.ps1,yes,stable,yes,408,2026-05-27 17:55:27,112.1998,pass,Local secret template with placeholders only.
+cursor_prompt,agent_handoff,docs/CURSOR_NEXT_PROMPT.md,yes,fresh_24h,yes,63905,2026-05-29 12:52:30,69.249,fail,File-based Cursor handoff.
+cursor_backlog,agent_handoff,docs/CURSOR_TASK_BACKLOG.md,yes,stable,yes,5217,2026-05-27 15:51:15,114.2698,pass,Cursor task backlog.
+claude_prompt,agent_handoff,docs/CLAUDE_NEXT_PROMPT.md,yes,fresh_24h,yes,29900,2026-05-29 12:52:30,69.249,fail,Current Claude consultation prompt.
+claude_question_backlog,agent_handoff,docs/CLAUDE_QUESTION_BACKLOG.md,yes,stable,yes,4975,2026-05-29 12:52:15,69.2531,pass,Architecture question backlog.
+claude_response_index_doc,agent_handoff,docs/CLAUDE_RESPONSE_INDEX.md,yes,fresh_24h,yes,2290,2026-05-29 12:52:19,69.252,fail,Local Claude response index.
+claude_decision_review_doc,agent_handoff,docs/CLAUDE_DECISION_REVIEW.md,yes,fresh_24h,yes,4888,2026-05-29 12:52:20,69.2518,fail,Claude recommendation review queue.
+symbol_map,data,data/symbol_map.csv,yes,stable,yes,958,2026-05-27 17:36:15,112.5197,pass,Asset to market symbol map.
+entity_dictionary,data,data/entity_dictionary.csv,yes,stable,yes,6050,2026-05-27 12:21:19,117.7687,pass,Entity dictionary for intake rules.
+source_timezone_rules,data,data/source_timezone_rules.csv,yes,stable,yes,973,2026-05-27 14:04:51,116.043,pass,Source time-zone assumptions.
+older500_raw_news,data,data/raw_news_real_500_older.csv,yes,stable,yes,604951,2026-05-26 10:43:18,143.4024,pass,Older real-news source export.
+older500_candidates,data,data/event_candidates_real_500_older_review.csv,yes,stable,yes,751900,2026-05-27 14:06:50,116.01,pass,Older candidate import output.
+v06_relevance_scored,data,data/event_candidates_v06_relevance_scored.csv,yes,stable,yes,1151969,2026-05-27 16:21:12,113.7705,pass,v0.6 scored intake output.
+v06_manual_label_sheet,data,data/v06_manual_label_sheet.csv,yes,stable,yes,395166,2026-05-27 15:23:40,114.7294,pass,AI-first review sheet.
+v06_other_review_classified,data,data/event_candidates_v06_other_review_classified.csv,no,stable,yes,209059,2026-05-27 18:38:15,111.4863,pass,Rule-based split of the other_review bucket.
+project_review_action_queue,data,data/project_review_action_queue.csv,yes,fresh_24h,yes,3766,2026-05-29 12:52:24,69.2505,fail,Generated dashboard action queue.
+claude_decision_queue,data,data/claude_decision_review_queue.csv,yes,fresh_24h,yes,201517,2026-05-29 12:52:20,69.2518,fail,Generated Claude decision queue.
+tg_pilot_gate,results,results/v06_tg_pilot_gate_report.md,yes,fresh_24h,yes,794,2026-05-29 12:14:13,69.887,fail,TG draft pilot safety gate.
+project_os_validation_report,results,results/project_os_validation_report.md,yes,stable,yes,4956,2026-06-01 10:07:07,0.0054,pass,Consolidated validation report.
+project_os_validation_summary,results,results/project_os_validation_summary.csv,yes,stable,yes,78,2026-06-01 10:07:07,0.0054,pass,Consolidated validation summary.
+local_environment_summary,results,results/local_environment_summary.csv,yes,fresh_24h,yes,103,2026-05-29 12:52:17,69.2525,fail,Local runtime check summary.
+secret_leak_summary,results,results/secret_leak_summary.csv,yes,fresh_24h,yes,88,2026-06-01 10:07:04,0.006,pass,Secret scan summary.
+command_registry_summary,results,results/command_registry_summary.csv,yes,fresh_24h,yes,104,2026-05-29 14:29:06,67.6389,fail,Command registry summary.
+project_review_action_summary,results,results/project_review_action_summary.csv,yes,fresh_24h,yes,111,2026-05-29 12:52:24,69.2505,fail,Review action summary.
+project_dashboard_metrics,results,results/project_dashboard_metrics.csv,yes,fresh_24h,yes,4035,2026-05-29 12:52:29,69.2492,fail,Dashboard metrics CSV.
+v043_backfill,results,results/v043_older_mature50_event_price_backfill.csv,yes,stable,yes,110939,2026-05-27 14:06:55,116.0085,pass,Historical mature50 backfill.
+v043_quality,results,results/v043_older_mature50_event_quality_report.csv,yes,stable,yes,7541,2026-05-27 14:06:56,116.0083,pass,Historical mature50 quality report.
+time_provenance_summary,results,results/v043_time_provenance_summary.csv,yes,stable,yes,218,2026-05-27 14:06:59,116.0076,pass,Time provenance summary.
+v043_selection_v06_summary,results,results/v043_selection_vs_v06_relevance_summary.csv,yes,fresh_24h,yes,283,2026-05-29 12:52:18,69.2523,fail,v043 versus v0.6 relevance audit summary.
+v043_selection_v06_breakdown,results,results/v043_selection_vs_v06_discard_breakdown.csv,yes,fresh_24h,yes,178,2026-05-29 12:52:18,69.2523,fail,Discard reason breakdown for historical v043 selection.
+v043_selection_v06_impact,results,results/v043_selection_vs_v06_event_type_impact.csv,yes,fresh_24h,yes,299,2026-05-29 12:52:18,69.2523,fail,Event-type impact of v0.6 discard decisions.
+v06_low_risk_preview_backfill,results,results/v06_clean_low_risk_preview_event_price_backfill.csv,no,stable,yes,62071,2026-05-27 16:27:45,113.6613,pass,Optional v0.6 low-risk preview sanity-check backfill.
+v06_low_risk_preview_quality,results,results/v06_clean_low_risk_preview_event_quality_report.csv,no,stable,yes,4625,2026-05-27 16:27:46,113.6612,pass,Optional v0.6 low-risk preview quality report.
+v06_low_risk_preview_findings,results,results/v06_clean_low_risk_preview_backtest_findings.md,no,stable,yes,5020,2026-05-27 16:27:47,113.6608,pass,Optional v0.6 low-risk preview findings.
+tg_drafts_private_pilot,data,data/tg_drafts_v06_private_pilot.csv,no,stable,yes,9252,2026-05-27 18:43:18,111.4021,pass,Local TG private-pilot draft queue; no auto-send.
+tg_drafts_private_pilot_ai_reviewed,data,data/tg_drafts_v06_private_pilot_ai_reviewed.csv,no,stable,yes,10729,2026-05-27 17:13:43,112.8953,pass,AI-reviewed local TG private-pilot draft queue.
+tg_prefilter_pass,data,data/event_candidates_v06_tg_prefilter_pass.csv,no,stable,yes,12872,2026-05-27 18:38:15,111.4864,pass,Local pre-Claude TG candidate prefilter pass set.
+tg_prefilter_rejects,data,data/event_candidates_v06_tg_prefilter_rejects.csv,no,stable,yes,31297,2026-05-27 18:38:15,111.4864,pass,Local pre-Claude TG candidate prefilter rejects.
+tg_approved_pool,data,data/tg_drafts_v06_approved_pool.csv,no,stable,yes,9284,2026-05-27 18:38:15,111.4863,pass,Approved-only local TG draft pool.
+tg_draft_review_packet,data,data/tg_draft_review_packet.csv,no,stable,yes,225,2026-05-27 18:38:15,111.4864,pass,Compact local draft review packet.
+tg_drafts_private_pilot_preview,results,results/tg_drafts_v06_private_pilot.md,no,stable,yes,6887,2026-05-27 18:43:18,111.4021,pass,Readable preview of local TG drafts.
+tg_draft_review_packet_md,results,results/tg_draft_review_packet.md,no,stable,yes,373,2026-05-27 18:38:15,111.4864,pass,Readable compact local draft review packet.
+tg_draft_feedback_summary,results,results/tg_draft_feedback_summary.csv,no,stable,yes,290,2026-05-27 18:38:15,111.4864,pass,Local private-pilot draft feedback summary.
+tg_draft_ai_review_summary,results,results/tg_draft_ai_review_summary.csv,no,stable,yes,243,2026-05-27 17:13:43,112.8953,pass,AI-review summary for local TG private-pilot drafts.
+tg_prefilter_summary,results,results/tg_draft_prefilter_summary.csv,no,stable,yes,145,2026-05-27 18:38:15,111.4864,pass,Local pre-Claude TG candidate prefilter summary.
+tg_approved_pool_summary,results,results/tg_draft_approved_pool_summary.csv,no,stable,yes,106,2026-05-27 18:38:15,111.4863,pass,Approved-only local TG draft pool summary.
+tg_draft_validation_summary,results,results/tg_draft_validation_summary.csv,no,stable,yes,100,2026-05-27 18:43:25,111.4003,pass,Local private-pilot draft safety validation summary.
+daily_private_pilot_summary,results,results/daily_private_pilot_summary.csv,no,stable,yes,548,2026-05-27 18:38:15,111.4863,pass,One-row daily private-pilot operational summary.
+daily_private_pilot_report,results,results/daily_private_pilot_report.md,no,stable,yes,2095,2026-05-27 18:38:15,111.4863,pass,One-page daily private-pilot operational report.
+tg_draft_rule_improvement_summary,results,results/tg_draft_rule_improvement_summary.csv,no,stable,yes,125,2026-05-27 18:38:15,111.4863,pass,Summary of AI-rejected draft rule improvement candidates.
+tg_draft_rule_improvement_report,results,results/tg_draft_rule_improvement_report.md,no,stable,yes,540,2026-05-27 18:38:15,111.4863,pass,AI-rejected draft rule improvement report.
+v07_watchlist_addresses,data,data/watchlist_addresses.csv,yes,stable,yes,2700,2026-05-28 09:48:08,96.3218,pass,v0.7 first-hand watcher address watchlist.
+v07_stablecoin_watchlist,data,data/stablecoin_watchlist.csv,yes,stable,yes,507,2026-05-27 17:33:09,112.5713,pass,v0.7 stablecoin mint/burn watchlist.
+v07_hyperliquid_watchlist,data,data/hyperliquid_watchlist.csv,yes,stable,yes,1192,2026-05-27 18:47:04,111.3396,pass,v0.7 Hyperliquid perp-position watchlist.
+v07_watcher_alerts_raw,data,data/watcher_alerts_raw.csv,no,stable,yes,9575,2026-05-28 19:23:36,86.7305,pass,Normalized first-hand watcher alerts.
+v07_hyperliquid_position_alerts,data,data/watcher_alerts_hyperliquid_positions.csv,no,stable,yes,6931,2026-05-29 12:18:12,69.8205,pass,Raw Hyperliquid large-position watcher alerts.
+v07_watcher_events_raw,data,data/watcher_events_raw.csv,no,stable,yes,13373,2026-05-28 19:23:36,86.7305,pass,Watcher alerts converted to event schema.
+v07_watcher_tg_drafts,data,data/tg_drafts_v07_watcher_private_pilot.csv,no,stable,yes,11050,2026-05-28 19:23:36,86.7305,pass,Local TG draft preview for first-hand watcher alerts.
+v07_watchlist_validation_summary,results,results/v07_watchlist_validation_summary.csv,yes,fresh_24h,yes,174,2026-05-28 19:23:27,86.7332,fail,v0.7 watchlist validation summary.
+v07_watcher_run_summary,results,results/v07_first_hand_watcher_run_summary.csv,no,stable,yes,482,2026-05-28 19:23:36,86.7305,pass,v0.7 first-hand watcher run summary.
+v07_watcher_daily_report,results,results/v07_watcher_daily_report.md,no,stable,yes,2985,2026-05-28 19:23:36,86.7305,pass,Readable daily report for first-hand watcher alerts.
+v07_watcher_tg_validation_summary,results,results/tg_drafts_v07_watcher_validation_summary.csv,no,stable,yes,100,2026-05-28 19:23:36,86.7305,pass,TG draft validation summary for watcher alerts.
+v07_tg_live_monitor_summary,results,results/v07_tg_live_monitor_summary.csv,no,fresh_24h,yes,146,2026-05-28 12:39:56,93.4584,warning,Live TG watcher monitor runtime summary.
+v08_tg_send_time_policy,data,config/tg_send_time_policy.csv,yes,stable,yes,621,2026-05-28 11:20:06,94.7888,pass,China-time flexible TG send timing policy.
+v08_tg_digest_sent_state,data,data/tg_digest_sent_state.csv,no,stable,yes,383,2026-05-29 12:32:48,69.5773,pass,Sent-state dedupe for scheduled TG digests.
+v08_cex_netflow_baseline_state,data,data/cex_netflow_baseline_state.csv,no,stable,yes,3870,2026-05-28 12:48:56,93.3084,pass,Rolling baseline samples for CEX netflow context.
+v08_hyperliquid_position_state_history,data,data/hyperliquid_position_state_history.csv,no,stable,yes,70977,2026-05-29 12:18:12,69.8205,pass,Append-only Hyperliquid watched-position state history.
+v081_raw_token_unlocks_template,data,data/raw_token_unlocks_template.csv,yes,stable,yes,569,2026-05-28 14:18:05,91.8225,pass,Template for raw token unlock CSV imports.
+v081_token_unlock_column_mapping,data,data/token_unlock_column_mapping.json,yes,stable,yes,817,2026-05-28 14:18:14,91.8201,pass,Column alias mapping for token unlock CSV imports.
+v081_token_unlock_calendar_imported,data,data/token_unlock_calendar_imported.csv,no,stable,yes,619,2026-05-28 14:18:50,91.81,pass,Non-destructive imported token unlock calendar preview.
+v08_binance_long_short_snapshot,data,data/binance_long_short_snapshot.csv,no,fresh_24h,yes,5865,2026-05-29 12:32:37,69.5802,warning,Binance USD-M public long/short ratio snapshot.
+v08_binance_long_short_summary,results,results/v08_binance_long_short_summary.csv,no,fresh_24h,yes,239,2026-05-29 12:32:37,69.5802,warning,Summary of Binance USD-M long/short ratio snapshot.
+v08_tg_morning_digest,results,results/v08_tg_morning_digest.md,no,fresh_24h,yes,1258,2026-05-28 12:55:25,93.2003,warning,China-time morning TG intelligence digest.
+v08_tg_morning_digest_summary,results,results/v08_tg_morning_digest_summary.csv,no,fresh_24h,yes,224,2026-05-28 12:55:25,93.2003,warning,Morning digest run summary.
+v08_tg_noon_digest,results,results/v08_tg_noon_digest.md,no,fresh_24h,yes,1645,2026-05-28 12:55:44,93.1951,warning,China-time noon TG intelligence digest.
+v08_tg_noon_digest_summary,results,results/v08_tg_noon_digest_summary.csv,no,fresh_24h,yes,221,2026-05-28 12:55:44,93.1951,warning,Noon digest run summary.
+v08_tg_evening_digest,results,results/v08_tg_evening_digest.md,no,fresh_24h,yes,1346,2026-05-28 17:51:34,88.2645,warning,China-time evening TG intelligence digest.
+v08_tg_evening_digest_summary,results,results/v08_tg_evening_digest_summary.csv,no,fresh_24h,yes,243,2026-05-28 17:51:34,88.2645,warning,Evening digest run summary.
+backtest_readiness_summary,results,results/backtest_readiness_summary.csv,yes,fresh_24h,yes,195,2026-05-29 12:52:21,69.2514,fail,Conclusion-safety summary for current backtest outputs.
+backtest_readiness_report,results,results/backtest_readiness_report.md,yes,fresh_24h,yes,2181,2026-05-29 12:52:21,69.2514,fail,Conclusion-safety report for current backtest outputs.
+v06_other_review_reason_summary,results,results/v06_other_review_reason_summary.csv,no,stable,yes,196,2026-05-27 18:38:15,111.4863,pass,Summary of rule-based other_review split.
+quality_gate_script,script,scripts/run_v06_quality_gate.py,yes,stable,yes,3600,2026-05-27 16:29:44,113.6284,pass,Full local quality gate.
+project_os_validation_script,script,scripts/validate_project_os.py,yes,stable,yes,17347,2026-05-27 16:14:01,113.8903,pass,Project OS validator.
+artifact_manifest_script,script,scripts/build_artifact_manifest.py,yes,stable,yes,57050,2026-05-29 12:24:57,69.7082,pass,Artifact manifest generator.
+symbol_map_validation_script,script,scripts/validate_symbol_map.py,yes,stable,yes,4813,2026-05-27 16:22:14,113.7534,pass,Optional public Binance symbol map validator.
+v06_low_risk_preview_backtest_script,script,scripts/run_v06_clean_low_risk_preview_backtest.py,yes,stable,yes,4838,2026-05-27 16:26:56,113.675,pass,Optional low-risk preview sanity-check backtest runner.
+tg_draft_generator_script,script,scripts/generate_tg_drafts.py,yes,stable,yes,19419,2026-05-27 18:42:47,111.4108,pass,Local TG-style draft generator; never sends messages.
+tg_draft_feedback_summary_script,script,scripts/summarize_tg_draft_feedback.py,yes,stable,yes,4122,2026-05-27 16:42:14,113.4201,pass,Local TG draft feedback summarizer.
+tg_draft_ai_review_script,script,scripts/ai_review_tg_drafts.py,yes,stable,yes,8963,2026-05-27 16:58:31,113.1485,pass,OpenRouter/Claude AI reviewer for local TG drafts.
+tg_draft_prefilter_script,script,scripts/prefilter_tg_draft_candidates.py,yes,stable,yes,6817,2026-05-27 17:16:35,112.8476,pass,Local pre-Claude TG candidate prefilter.
+tg_approved_pool_script,script,scripts/build_approved_tg_draft_pool.py,yes,stable,yes,3487,2026-05-27 17:10:14,112.9533,pass,Approved-only local TG draft pool builder.
+tg_draft_validation_script,script,scripts/validate_tg_drafts.py,yes,stable,yes,5553,2026-05-28 12:35:06,93.539,pass,Local TG draft safety validator.
+tg_draft_review_packet_script,script,scripts/prepare_tg_draft_review_packet.py,yes,stable,yes,3573,2026-05-27 16:54:22,113.2178,pass,Compact local TG draft review packet builder.
+tg_draft_review_packet_apply_script,script,scripts/apply_tg_draft_review_packet.py,yes,stable,yes,3628,2026-05-27 16:55:51,113.1931,pass,Apply compact TG draft review packet back to the main draft queue.
+other_review_reason_script,script,scripts/classify_other_review_reasons.py,yes,stable,yes,7903,2026-05-27 16:53:51,113.2265,pass,Rule-based other_review reason splitter.
+daily_private_pilot_runner,script,scripts/run_daily_private_pilot.py,yes,stable,yes,7866,2026-05-27 17:13:17,112.9024,pass,One-command local private-pilot workflow runner.
+daily_private_pilot_report_script,script,scripts/build_daily_private_pilot_report.py,yes,stable,yes,9795,2026-05-27 17:10:49,112.9436,pass,One-page local private-pilot report builder.
+tg_draft_rule_improvement_script,script,scripts/build_tg_draft_rule_improvement_report.py,yes,stable,yes,6912,2026-05-27 17:02:44,113.0783,pass,Convert AI draft rejects into rule-improvement candidates.
+backtest_readiness_script,script,scripts/build_backtest_readiness_report.py,yes,stable,yes,11040,2026-05-27 16:32:32,113.5817,pass,Backtest conclusion-safety report builder.
+v07_watchlist_validation_script,script,scripts/validate_v07_watchlists.py,yes,stable,yes,8659,2026-05-27 18:48:09,111.3213,pass,v0.7 watchlist validator.
+v07_first_hand_watcher_runner,script,scripts/run_v07_first_hand_watchers.py,yes,stable,yes,13992,2026-05-28 14:45:16,91.3696,pass,v0.7 first-hand watcher runner.
+v07_eth_address_watcher,script,scripts/watch_eth_address_transfers.py,yes,stable,yes,12696,2026-05-27 17:53:35,112.2309,pass,Ethereum watched address transfer watcher.
+v07_stablecoin_watcher,script,scripts/watch_stablecoin_mint_burn.py,yes,stable,yes,9676,2026-05-27 17:53:07,112.2386,pass,Stablecoin mint/burn watcher.
+v07_hyperliquid_position_watcher,script,scripts/watch_hyperliquid_positions.py,yes,stable,yes,20554,2026-05-28 14:44:33,91.3813,pass,Hyperliquid watched account perp-position watcher.
+v07_watcher_normalizer,script,scripts/normalize_watcher_alerts_to_events.py,yes,stable,yes,11959,2026-05-28 12:29:17,93.6358,pass,Watcher alert to event normalizer.
+v07_watcher_tg_draft_generator,script,scripts/generate_watcher_tg_drafts.py,yes,stable,yes,28176,2026-05-28 15:44:35,90.3808,pass,Watcher TG draft preview generator.
+v07_tg_live_monitor,script,scripts/run_v07_tg_live_monitor.py,yes,stable,yes,32242,2026-05-28 14:49:08,91.3049,pass,Continuous watcher-to-TG live monitor with dedupe.
+v07_tg_live_monitor_stop,script,scripts/stop_v07_tg_live_monitor.ps1,yes,stable,yes,655,2026-05-27 19:02:20,111.085,pass,Stop helper for continuous watcher-to-TG live monitor.
+v08_binance_long_short_watcher,script,scripts/watch_binance_long_short_ratios.py,yes,stable,yes,8016,2026-05-28 11:28:21,94.6514,pass,Binance USD-M public long/short ratio snapshot fetcher.
+v08_tg_morning_digest_builder,script,scripts/build_tg_morning_digest.py,yes,stable,yes,42961,2026-05-29 12:31:43,69.5952,pass,Morning TG digest builder and optional sender.
+v08_tg_sent_state_metadata_enrichment,script,scripts/enrich_tg_sent_state_metadata.py,yes,stable,yes,4273,2026-05-28 11:51:18,94.2689,pass,TG sent-state metadata backfill helper.
+v08_tg_source_usefulness_report,script,scripts/build_tg_source_usefulness_report.py,yes,stable,yes,11777,2026-05-28 12:13:08,93.905,pass,TG source usefulness report builder.
+v08_tg_quality_loop,script,scripts/run_tg_quality_loop.py,yes,stable,yes,3381,2026-05-28 12:13:18,93.9022,pass,One-command TG quality loop runner.
+v08_historical_replay_sample_builder,script,scripts/build_historical_signal_replay_sample.py,yes,stable,yes,6120,2026-05-28 19:55:56,86.1917,pass,Historical signal replay sample builder.
+v08_historical_replay_runner,script,scripts/run_v08_historical_signal_replay.py,yes,stable,yes,5039,2026-05-28 18:50:17,87.2858,pass,Historical signal replay pipeline runner.
+v08_historical_replay_summarizer,script,scripts/summarize_historical_signal_replay.py,yes,stable,yes,10145,2026-05-28 12:18:46,93.811,pass,Historical signal replay findings summarizer.
+v081_historical_source_usefulness_builder,script,scripts/build_historical_source_usefulness_from_backtest.py,yes,stable,yes,10255,2026-05-28 14:06:02,92.0234,pass,Build historical source/event usefulness metrics from backtest rows.
+v081_source_readiness_builder,script,scripts/build_v08_source_readiness_report.py,yes,stable,yes,10356,2026-05-28 14:09:20,91.9683,pass,Build source-readiness report for first-hand expansion issues.
+v081_token_unlock_calendar_quality,script,scripts/build_token_unlock_calendar_quality_report.py,yes,stable,yes,8102,2026-05-28 14:32:27,91.5831,pass,Validate local token unlock calendar readiness.
+v081_token_unlock_importer,script,scripts/import_raw_token_unlocks_to_calendar.py,yes,stable,yes,9597,2026-05-28 14:18:43,91.8119,pass,Normalize raw token unlock CSV exports into calendar schema.
+v081_cex_netflow_baseline_report,script,scripts/build_cex_netflow_baseline_report.py,yes,stable,yes,6102,2026-05-28 14:14:04,91.8893,pass,Summarize CEX netflow rolling baseline readiness.
+v081_hyperliquid_state_history_report,script,scripts/build_hyperliquid_state_history_report.py,yes,stable,yes,6943,2026-05-28 14:14:25,91.8836,pass,Summarize Hyperliquid state history readiness.
+v081_source_quality_runner,script,scripts/run_v081_source_quality_reports.py,yes,stable,yes,4236,2026-05-28 14:33:43,91.5618,pass,Run all v0.8.1 source quality reports.
+v08_tg_sent_state_metadata_enrichment_summary,result,results/v08_tg_sent_state_metadata_enrichment_summary.csv,yes,stable,yes,191,2026-05-28 13:27:53,92.6591,pass,TG sent-state metadata enrichment summary.
+v08_tg_source_usefulness_report,result,results/v08_tg_source_usefulness_report.md,yes,stable,yes,1117,2026-05-28 13:28:41,92.6458,pass,TG source usefulness markdown report.
+v08_tg_source_usefulness_summary,result,results/v08_tg_source_usefulness_summary.csv,yes,stable,yes,319,2026-05-28 13:28:41,92.6458,pass,TG source usefulness summary.
+v08_tg_source_usefulness_by_source,result,results/v08_tg_source_usefulness_by_source.csv,yes,stable,yes,527,2026-05-28 13:28:41,92.6458,pass,TG source usefulness by-source metrics.
+v08_tg_quality_loop_summary,result,results/v08_tg_quality_loop_summary.csv,yes,stable,yes,772,2026-05-28 13:28:41,92.6458,pass,TG quality loop run summary.
+v08_historical_replay_broad_200_events,data,data/events_v08_historical_replay_broad_200.csv,yes,stable,yes,437354,2026-05-28 12:00:47,94.1108,pass,Broad historical replay event sample.
+v08_historical_replay_conservative_120_events,data,data/events_v08_historical_replay_conservative_120.csv,yes,stable,yes,145420,2026-05-28 14:07:43,91.9953,pass,Conservative historical replay event sample.
+v08_historical_replay_non_btc_single_asset_200_events,data,data/events_v08_historical_replay_non_btc_single_asset_200.csv,yes,stable,yes,2430,2026-05-28 12:15:29,93.8658,pass,Non-BTC single-asset historical replay event sample.
+v08_historical_replay_broad_200_backfill,result,results/v08_historical_replay_broad_200_price_backfill.csv,yes,stable,yes,736756,2026-05-28 12:03:46,94.0611,pass,Broad historical replay price backfill.
+v08_historical_replay_broad_200_findings,result,results/v08_historical_replay_broad_200_findings.md,yes,stable,yes,8089,2026-05-28 12:18:53,93.8092,pass,Broad historical replay findings.
+v08_historical_replay_conservative_120_backfill,result,results/v08_historical_replay_conservative_120_price_backfill.csv,yes,stable,yes,325746,2026-05-28 14:08:09,91.9881,pass,Conservative historical replay price backfill.
+v08_historical_replay_conservative_120_findings,result,results/v08_historical_replay_conservative_120_findings.md,yes,stable,yes,7578,2026-05-28 14:08:11,91.9876,pass,Conservative historical replay findings.
+v08_historical_replay_non_btc_single_asset_200_backfill,result,results/v08_historical_replay_non_btc_single_asset_200_price_backfill.csv,yes,stable,yes,5711,2026-05-28 12:15:30,93.8656,pass,Non-BTC single-asset historical replay price backfill.
+v08_historical_replay_non_btc_single_asset_200_findings,result,results/v08_historical_replay_non_btc_single_asset_200_findings.md,yes,stable,yes,2289,2026-05-28 12:18:56,93.8083,pass,Non-BTC single-asset historical replay findings.
+v081_historical_source_usefulness_report,result,results/v081_historical_source_usefulness_report.md,yes,stable,yes,2085,2026-05-28 14:33:57,91.5581,pass,Historical source usefulness report from v081 replay data.
+v081_source_readiness_report,result,results/v081_source_readiness_report.md,yes,stable,yes,2328,2026-05-28 14:33:57,91.558,pass,"Source readiness report for token unlock, CEX listings, netflow, Hyperliquid, and usefulness."
+v081_token_unlock_calendar_quality_report,result,results/v081_token_unlock_calendar_quality_report.md,yes,stable,yes,771,2026-05-28 14:15:00,91.8739,pass,Token unlock calendar quality/readiness report.
+v081_token_unlock_import_report,result,results/v081_token_unlock_import_report.md,yes,stable,yes,913,2026-05-28 14:18:50,91.81,pass,Token unlock import preview report.
+v081_cex_netflow_baseline_report,result,results/v081_cex_netflow_baseline_report.md,yes,stable,yes,1260,2026-05-28 22:24:32,83.7149,pass,CEX netflow baseline readiness report.
+v081_hyperliquid_state_history_report,result,results/v081_hyperliquid_state_history_report.md,yes,stable,yes,1171,2026-05-28 14:33:57,91.5581,pass,Hyperliquid state history readiness report.
+source_registry,data,data/source_registry.csv,yes,stable,yes,3638,2026-05-28 18:19:24,87.8005,pass,"Canonical registry of local intelligence sources, routes, shadow status, and evaluation status."
+shadow_events_raw,data,data/shadow_events_raw.csv,no,fresh_24h,yes,1539,2026-05-28 19:24:40,86.7127,warning,Shadow-mode events captured for evaluation before live routing.
+tg_evidence_snippets,data,data/tg_evidence_snippets.csv,no,fresh_24h,yes,960,2026-05-28 22:19:49,83.7935,warning,Evidence snippets generated from backtest/source effectiveness for TG copy.
+source_registry_report,result,results/source_registry_report.md,yes,fresh_24h,yes,1715,2026-05-28 19:24:39,86.7131,fail,Source registry coverage and consistency report.
+source_effectiveness_report,result,results/source_effectiveness_report.md,yes,fresh_24h,yes,2198,2026-05-28 19:24:39,86.7131,fail,Source-level outcome effectiveness report.
+event_type_performance_matrix,result,results/event_type_performance_matrix.md,yes,fresh_24h,yes,4555,2026-05-28 19:24:39,86.713,fail,Event type/source subtype performance matrix from live and historical outcomes.
+event_type_performance_matrix_non_benchmark_alt,result,results/event_type_performance_matrix_non_benchmark_alt.md,yes,fresh_24h,yes,5002,2026-05-28 19:24:39,86.713,fail,Non-BTC/ETH non-macro alt event performance matrix.
+signal_decay_curve,result,results/signal_decay_curve.md,yes,fresh_24h,yes,4301,2026-05-28 19:24:39,86.713,fail,Signal horizon decay curve from live and historical outcomes.
+false_positive_analysis,result,results/false_positive_analysis.md,yes,fresh_24h,yes,842,2026-05-28 19:24:39,86.713,fail,False-positive/noise analysis for live TG alert outcomes and radar decisions.
+v11_signal_policy,data,data/tg_signal_policy_v11.csv,yes,fresh_24h,yes,12443,2026-05-28 19:24:40,86.7128,fail,v11 machine-readable TG routing policy from historical matrix and false-positive analysis.
+v11_signal_policy_report,result,results/v11_signal_policy_report.md,yes,fresh_24h,yes,5855,2026-05-28 19:24:40,86.7128,fail,Readable v11 TG routing policy report.
+v12_signal_policy,data,data/tg_signal_policy_v12.csv,yes,fresh_24h,yes,2422,2026-05-28 19:50:07,86.2885,fail,v12 strict contamination-aware TG routing policy.
+v12_boost_criteria_report,result,results/v12_boost_criteria_report.csv,yes,fresh_24h,yes,2146,2026-05-28 19:50:07,86.2885,fail,Strict v12 boost/downrank/digest-only criteria report.
+v12_whale_position_contamination,result,results/v12_whale_position_contamination_report.md,yes,fresh_24h,yes,437,2026-05-28 19:24:39,86.7129,fail,Whale-position HYPE/single-asset/time-window contamination report.
+v12_hack_classification,result,results/v12_hack_classification_report.csv,yes,fresh_24h,yes,5879,2026-05-28 19:48:50,86.3101,fail,Hack-security subtype validation report.
+v12_other_reclassification,result,results/v12_other_reclassification_report.csv,no,stable,yes,253,2026-05-28 19:16:58,86.8412,pass,Other taxonomy reclassification report.
+v13_price_in_report,result,results/v13_price_in_report.md,yes,fresh_24h,yes,4304,2026-05-28 19:38:38,86.4801,fail,Pre-event price-in validation report for historical backfill rows.
+v13_other_quality_report,result,results/v13_other_quality_report.md,yes,fresh_24h,yes,2985,2026-05-28 19:40:27,86.4499,fail,Quality grading report for uncategorized/other historical candidates.
+v13_hype_contamination_detail,result,results/v13_hype_contamination_report.md,yes,fresh_24h,yes,518,2026-05-28 19:41:06,86.4388,fail,HYPE whale-position burst/source/return contamination detail report.
+v13_whale_asset_contamination,result,results/v13_whale_asset_contamination_report.md,yes,fresh_24h,yes,1294,2026-05-28 19:45:49,86.3604,fail,General whale-position asset concentration and burst contamination report.
+v13_source_identity_layers,data,data/source_identity_layers.csv,yes,fresh_24h,yes,3983,2026-05-28 19:45:49,86.3604,fail,"Three-layer source identity table for source family, channel, and reliability status."
+v13_regime_layer_report,result,results/v13_regime_layer_report.md,yes,fresh_24h,yes,1041,2026-05-28 19:47:10,86.3378,fail,BTC regime-layer event performance report.
+v13_active_exploit_urgent_candidates,result,results/v13_active_exploit_urgent_candidates.md,yes,fresh_24h,yes,938,2026-05-28 19:50:00,86.2905,fail,Rare urgent-candidate report for active exploit events.
+v13_extended_alt_backtest_clean,data,data/backtest_v13_extended_alt_history_clean.csv,yes,fresh_24h,yes,1682737,2026-05-28 20:05:55,86.0253,fail,Extended non-benchmark alt historical backtest with archive flags.
+v13_extended_post_hype_removal_report,result,results/v13_extended_post_hype_removal_report.md,yes,fresh_24h,yes,1308,2026-05-28 20:05:55,86.0253,fail,Extended post-HYPE-removal group statistics report.
+v13_rule_tightening_report,result,results/v13_rule_tightening_report.md,yes,fresh_24h,yes,605,2026-05-28 19:55:16,86.2028,fail,Strict candidate gate comparison report.
+v13_source_scores_extended,data,data/source_scores_v13_extended.csv,yes,fresh_24h,yes,3744,2026-05-28 20:06:10,86.0211,fail,Source scores and throttle recommendations from extended replay.
+v13_extended_source_throttle_report,result,results/v13_extended_source_throttle_report.md,yes,fresh_24h,yes,2881,2026-05-28 20:06:10,86.0211,fail,Source throttle report from extended replay.
+v13_extended_price_in_report,result,results/v13_extended_price_in_report.md,yes,fresh_24h,yes,4360,2026-05-28 20:11:00,85.9406,fail,Extended sample pre-event price-in report.
+v13_extended_regime_layer_report,result,results/v13_extended_regime_layer_report.md,yes,fresh_24h,yes,1453,2026-05-28 20:08:53,85.9759,fail,Extended sample BTC regime-layer report.
+v14_time_field_diagnosis,result,results/v14_time_field_diagnosis.md,yes,fresh_24h,yes,761,2026-05-28 20:15:52,85.8596,fail,Remote time-field diagnosis for historical export reliability.
+v14_webhook_split_source_scores,data,data/source_scores_v14_webhook_split.csv,yes,fresh_24h,yes,5682,2026-05-28 20:30:13,85.6202,fail,Webhook subsource split and source-score table.
+v14_webhook_split_report,result,results/v14_webhook_split_report.md,yes,fresh_24h,yes,2827,2026-05-28 20:30:13,85.6202,fail,Webhook subsource split report.
+v14_taxonomy_review_reclassified,data,data/taxonomy_review_reclassified.csv,yes,fresh_24h,yes,90811,2026-05-28 20:30:40,85.6128,fail,Rule-based split of needs_taxonomy_review rows.
+v14_needs_taxonomy_review_report,result,results/v14_needs_taxonomy_review_report.md,yes,fresh_24h,yes,4266,2026-05-28 20:30:40,85.6128,fail,Needs-taxonomy-review cleanup report.
+v14_etf_fund_flow_filtered,data,data/etf_fund_flow_filtered.csv,yes,fresh_24h,yes,378284,2026-05-28 21:04:42,85.0455,fail,"ETF/fund-flow rows filtered by amount, issuer, source, and context."
+v14_etf_fund_flow_filter_report,result,results/v14_etf_fund_flow_filter_report.md,yes,fresh_24h,yes,8516,2026-05-28 21:04:42,85.0455,fail,ETF/fund-flow quality filter report.
+v14_flow_event_subtypes,data,data/v14_flow_event_subtypes.csv,yes,fresh_24h,yes,376797,2026-05-28 21:04:42,85.0455,fail,"Split mixed fund-flow rows into ETF, CEX netflow, institutional, and unclear subtypes."
+v14_flow_event_subtypes_report,result,results/v14_flow_event_subtypes_report.md,yes,fresh_24h,yes,6038,2026-05-28 21:04:42,85.0455,fail,Readable flow subtype split report.
+v14_active_exploit_verified,data,data/active_exploit_verified.csv,yes,fresh_24h,yes,18927,2026-05-28 21:04:43,85.0454,fail,Active exploit candidates with amount/context verification.
+v14_active_exploit_amount_verification_report,result,results/v14_active_exploit_amount_verification_report.md,yes,fresh_24h,yes,4715,2026-05-28 21:04:43,85.0454,fail,Active exploit amount verification report.
+v14_short_price_in,data,data/v14_short_price_in.csv,yes,fresh_24h,yes,48811,2026-05-28 21:19:39,84.7964,fail,5m/15m/1h pre-event price-in checks.
+v14_upgrade_events,data,data/v14_upgrade_events.csv,yes,fresh_24h,yes,5362,2026-05-28 21:20:49,84.7768,fail,Upgrade/fork publishability classification.
+v14_publishable_criteria,config,config/publishable_criteria.yaml,yes,stable,yes,721,2026-05-28 21:59:49,84.127,pass,Minimum publishable-event criteria for Telegram routing.
+v14_routing_rules,config,config/routing_rules.yaml,yes,stable,yes,429,2026-05-28 21:43:41,84.3959,pass,Configurable watcher routing thresholds and priorities.
+v14_asset_tiers,config,config/asset_tiers.yaml,yes,stable,yes,464,2026-05-28 22:36:35,83.5141,pass,Asset tiers and thresholds for digest focus asset selection.
+v14_term_translations,config,config/term_translations.yaml,yes,stable,yes,956,2026-05-28 22:36:35,83.5141,pass,Plain-Chinese market term translations for TG reports.
+v14_alert_routing,config,config/alert_routing.yaml,yes,stable,yes,2120,2026-05-28 22:53:14,83.2368,pass,Intraday radar versus scheduled digest routing thresholds.
+v14_publishable_criteria_eval,data,data/v14_publishable_criteria_eval.csv,yes,fresh_24h,yes,64643,2026-05-28 21:59:49,84.127,fail,Per-event evaluation against minimum publishable criteria.
+v14_publishable_golden_events,data,data/v14_publishable_golden_events.csv,yes,stable,yes,8350,2026-05-28 21:42:36,84.4139,pass,Golden known publishable/non-publishable events for criteria validation.
+v14_security_events_normalized,data,data/security_events/security_events_normalized.csv,yes,fresh_24h,yes,22,2026-05-28 21:28:01,84.6568,fail,Normalized external security alert/address-risk events.
+v14_security_alert_ingest_summary,result,results/v14_security_alert_ingest_summary.csv,yes,fresh_24h,yes,261,2026-05-28 21:28:01,84.6568,fail,Security alert source ingest status summary.
+v14_etf_daily_flows_farside,data,data/etf_daily_flows_farside.csv,yes,fresh_24h,yes,98208,2026-05-28 21:44:43,84.3785,fail,Farside BTC ETF daily flow table normalized locally.
+v14_eth_etf_flows_farside,data,data/eth_etf_flows_farside.csv,no,fresh_24h,yes,9,2026-05-28 22:52:39,83.2463,warning,Optional Farside ETH ETF daily flow table; may be empty if blocked by Cloudflare.
+v14_etf_daily_digest,result,results/v14_etf_daily_digest.md,yes,fresh_24h,yes,620,2026-05-28 21:44:43,84.3785,fail,BTC ETF daily flow digest candidate.
+v14_eth_etf_daily_digest,result,results/v14_eth_etf_daily_digest.md,no,fresh_24h,yes,60,2026-05-28 22:52:39,83.2463,warning,Optional ETH ETF daily flow digest candidate.
+v14_first_hand_publish_candidates,data,data/v14_first_hand_publish_candidates.csv,yes,fresh_24h,yes,10776,2026-05-28 21:44:44,84.3785,fail,First-hand watcher publish route candidates.
+v14_first_hand_publish_candidates_report,result,results/v14_first_hand_publish_candidates.md,yes,fresh_24h,yes,607,2026-05-28 21:44:44,84.3785,fail,First-hand watcher routing report.
+v14_publishable_criteria_validation,result,results/v14_publishable_criteria_validation.csv,yes,fresh_24h,yes,9559,2026-05-28 21:59:49,84.127,fail,Golden-event validation for publishable criteria.
+v14_e2e_publish_preview,result,results/v14_e2e_publish_preview.md,yes,fresh_24h,yes,1540,2026-05-28 21:44:44,84.3784,fail,Local end-to-end publish preview without Telegram send.
+v14_hyperliquid_snapshot_card,result,results/v14_hyperliquid_snapshot_card.md,yes,fresh_24h,yes,751,2026-05-28 21:44:44,84.3784,fail,Hyperliquid static market-structure background card.
+v14_market_state_snapshot,result,results/v14_market_state_snapshot.md,yes,fresh_24h,yes,1219,2026-05-29 12:32:41,69.5791,fail,"Public Binance price, volume, open-interest, funding, and crowding market-state snapshot."
+v14_focus_assets,result,results/v14_focus_assets.csv,yes,fresh_24h,yes,819,2026-05-29 12:32:44,69.5784,fail,Focus assets selected from tier rules and market-state thresholds.
+v14_price_oi_quadrant,result,results/v14_price_oi_quadrant.csv,yes,fresh_24h,yes,1329,2026-05-29 12:32:44,69.5783,fail,Plain-Chinese price/open-interest quadrant classification.
+v14_etf_plain_summary,result,results/v14_etf_plain_summary.md,yes,fresh_24h,yes,497,2026-05-29 12:32:46,69.5777,fail,Plain-Chinese ETF flow first-screen summary.
+v14_etf_concentration_interpretation,result,results/v14_etf_concentration_interpretation.txt,yes,fresh_24h,yes,133,2026-05-29 12:32:46,69.5777,fail,ETF concentration-change plain-Chinese interpretation.
+v14_market_alert_headline,result,results/v14_market_alert_headline.txt,yes,fresh_24h,yes,103,2026-05-29 12:32:44,69.5784,fail,One-line abnormality headline for TG market-state digest.
+v14_funding_rate_percentiles,data,data/funding_rate/funding_rate_percentiles.csv,yes,fresh_24h,yes,188302,2026-05-29 12:32:46,69.5778,fail,Binance USD-M funding-rate historical samples for percentile context.
+v14_oi_percentiles,data,data/oi/oi_percentiles.csv,yes,fresh_24h,yes,133496,2026-05-29 12:32:46,69.5778,fail,Binance USD-M open-interest historical samples for percentile context.
+v14_derivatives_history_percentiles,result,results/v14_derivatives_history_percentiles.md,yes,fresh_24h,yes,810,2026-05-29 12:32:46,69.5778,fail,Funding-rate and OI historical percentile report.
+v15_percentile_alerts_json,result,results/v15_percentile_alerts.json,yes,fresh_24h,yes,4506,2026-05-29 12:32:46,69.5777,fail,"Layered percentile alert buckets for TG first screen, today-watch, radar, and digest context."
+v15_percentile_alerts_report,result,results/v15_percentile_alerts.md,yes,fresh_24h,yes,1205,2026-05-29 12:32:46,69.5777,fail,Readable layered percentile alert report.
+v15_percentile_alerts_summary,result,results/v15_percentile_alerts_summary.csv,yes,fresh_24h,yes,143,2026-05-29 12:32:46,69.5777,fail,Layered percentile alert generation summary.
+v15_hyperliquid_market_meta_snapshot,data,data/hyperliquid/market_meta_snapshot.csv,yes,fresh_24h,yes,4199,2026-05-29 12:25:14,69.7032,fail,Hyperliquid official public perp market metadata snapshot.
+v15_hyperliquid_market_meta_history,data,data/hyperliquid/market_meta_history.csv,yes,fresh_24h,yes,8173,2026-05-29 12:25:14,69.7032,fail,Append-only Hyperliquid public market metadata history.
+v15_hyperliquid_market_meta_card,result,results/v15_hyperliquid_market_meta_card.md,yes,fresh_24h,yes,710,2026-05-29 12:25:19,69.7019,fail,Readable Hyperliquid official market-structure card.
+v15_hyperliquid_market_meta_summary,result,results/v15_hyperliquid_market_meta_summary.csv,yes,fresh_24h,yes,207,2026-05-29 12:25:14,69.7032,fail,Hyperliquid official market metadata fetch summary.
+v15_hyperliquid_liquidation_wall,result,results/v15_hyperliquid_liquidation_wall.md,yes,fresh_24h,yes,794,2026-05-29 14:16:05,67.8557,fail,Monitored Hyperliquid large-position liquidation-wall context.
+v15_hyperliquid_liquidation_wall_summary,result,results/v15_hyperliquid_liquidation_wall_summary.csv,yes,fresh_24h,yes,109,2026-05-29 14:16:05,67.8557,fail,Hyperliquid liquidation-wall route counts.
+v14_market_state_first_screen,result,results/v14_market_state_first_screen.md,yes,fresh_24h,yes,356,2026-05-29 12:32:46,69.5777,fail,Concise first-screen TG market-state block.
+v14_prioritized_events,result,results/v14_prioritized_events.md,yes,fresh_24h,yes,580,2026-05-29 12:32:42,69.579,fail,Auditable top-watch versus other-dynamic event priority report.
+v14_today_focus_events,result,results/v14_today_focus_events.csv,yes,fresh_24h,yes,357,2026-05-29 12:32:42,69.579,fail,Events admitted into today's top-watch section after dynamic thresholds.
+v14_other_events,result,results/v14_other_events.csv,yes,fresh_24h,yes,548,2026-05-29 12:32:42,69.579,fail,Events relegated to other-dynamic section after dynamic thresholds.
+v14_prefilter_results,data,data/v14_prefilter_results.csv,yes,fresh_24h,yes,60944,2026-05-28 21:19:49,84.7937,fail,Hard PreFilter results before Composer and Publisher.
+v14_prefilter_report,result,results/v14_prefilter_report.md,yes,fresh_24h,yes,8780,2026-05-28 21:19:49,84.7937,fail,Readable hard PreFilter block report.
+v14_composer_scores,data,data/v14_composer_scores.csv,yes,fresh_24h,yes,1778989,2026-05-28 21:19:49,84.7937,fail,Auditable five-stage Composer scores for historical candidates.
+v14_composer_scores_report,result,results/v14_composer_scores_report.md,yes,fresh_24h,yes,5474,2026-05-28 21:19:49,84.7937,fail,Readable Composer five-stage score report.
+v14_publish_policy_candidates,data,data/v14_publish_policy_candidates.csv,yes,fresh_24h,yes,1804266,2026-05-28 22:00:31,84.1153,fail,Claude-directed block/digest/interrupt publishing policy decisions.
+v14_publish_policy_report,result,results/v14_publish_policy_report.md,yes,fresh_24h,yes,808,2026-05-28 22:00:31,84.1153,fail,Readable v14 publishing policy report.
+v14_digest_preview,result,results/v14_digest_preview.md,yes,fresh_24h,yes,489,2026-05-28 22:00:31,84.1152,fail,Strict morning/evening digest preview using quality-gated rows only.
+v08_non_benchmark_alt_events,data,data/events_v08_historical_replay_non_benchmark_alt_50.csv,yes,stable,yes,115972,2026-05-28 18:50:26,87.2834,pass,Non-benchmark alt historical replay event sample.
+v08_non_benchmark_alt_backfill,result,results/v08_historical_replay_non_benchmark_alt_50_price_backfill.csv,yes,stable,yes,148449,2026-05-28 18:50:38,87.2799,pass,Non-benchmark alt historical replay price backfill.
+v08_non_benchmark_alt_quality,result,results/v08_historical_replay_non_benchmark_alt_50_quality_report.csv,yes,stable,yes,4346,2026-05-28 18:50:39,87.2797,pass,Non-benchmark alt historical replay quality report.
+v08_non_benchmark_alt_findings,result,results/v08_historical_replay_non_benchmark_alt_50_findings.md,yes,stable,yes,7961,2026-05-28 18:50:40,87.2795,pass,Non-benchmark alt historical replay findings.
+source_adapter_validation_report,result,results/source_adapter_validation_report.md,yes,fresh_24h,yes,463,2026-05-28 19:24:40,86.7128,fail,Normalized source adapter output validation report.
+shadow_source_evaluation_report,result,results/shadow_source_evaluation_report.md,yes,fresh_24h,yes,645,2026-05-28 19:24:40,86.7128,fail,Shadow-mode source evaluation report.
+tg_evidence_snippets_preview,result,results/tg_evidence_snippets.md,no,fresh_24h,yes,1069,2026-05-28 22:19:49,83.7935,warning,Readable preview of evidence snippets for TG cards and digests.
+llm_usage_report,result,results/llm_usage_report.md,yes,fresh_24h,yes,469,2026-05-28 19:24:40,86.7127,fail,LLM usage and cost-control report.
+v11_readiness_report,result,results/v11_readiness_report.md,yes,fresh_24h,yes,1781,2026-05-28 19:24:41,86.7126,fail,v11 source-quality-first readiness report.
+v11_digest_preview,result,results/v11_tg_custom_digest_preview.md,no,fresh_24h,yes,2872,2026-05-28 18:27:33,87.6647,warning,Readable TG digest preview after evidence-snippet upgrade.
+source_adapter_schema,doc,docs/SOURCE_ADAPTER_SCHEMA.md,yes,stable,yes,3344,2026-05-28 18:18:24,87.8171,pass,Normalized source adapter schema used by watcher/news/calendar sources.
+v11_external_reference_upgrade_plan,doc,docs/V11_EXTERNAL_REFERENCE_UPGRADE_PLAN_CN.md,yes,stable,yes,9961,2026-05-28 18:09:03,87.9731,pass,Accepted v11 upgrade plan derived from external references and Claude review.
+source_registry_report_script,script,scripts/build_source_registry_report.py,yes,stable,yes,9807,2026-05-28 18:14:49,87.8768,pass,Build source registry coverage and consistency report.
+source_effectiveness_report_script,script,scripts/build_source_effectiveness_report.py,yes,stable,yes,12976,2026-05-28 18:15:29,87.8659,pass,Build source effectiveness report from ledger/outcomes/registry.
+event_type_performance_matrix_script,script,scripts/build_event_type_performance_matrix.py,yes,stable,yes,9725,2026-05-28 18:17:29,87.8325,pass,Build event type and source subtype performance matrix.
+signal_decay_curve_script,script,scripts/build_signal_decay_curve.py,yes,stable,yes,9326,2026-05-28 18:17:41,87.8292,pass,Build horizon-level signal decay curve.
+false_positive_analysis_script,script,scripts/build_false_positive_analysis.py,yes,stable,yes,10479,2026-05-28 18:33:11,87.5707,pass,Build false-positive/noise analysis from TG outcomes and radar decision logs.
+v11_signal_policy_script,script,scripts/build_v11_signal_policy.py,yes,stable,yes,11511,2026-05-28 18:51:02,87.2733,pass,Build v11 machine-readable routing policy from historical matrix and false-positive analysis.
+validate_whale_position_contamination_script,script,scripts/validate_whale_position_contamination.py,yes,stable,yes,5751,2026-05-28 19:15:28,86.8661,pass,Validate contamination in whale-position samples.
+reclassify_other_with_new_taxonomy_script,script,scripts/reclassify_other_with_new_taxonomy.py,yes,stable,yes,5773,2026-05-28 19:15:51,86.8597,pass,Reclassify candidate_event_type=other with v12 taxonomy rules.
+validate_hack_classification_script,script,scripts/validate_hack_classification.py,yes,stable,yes,6665,2026-05-28 19:48:33,86.3147,pass,"Split hack_security rows into active exploit, disclosure, recovery, enforcement, pause, and unclear buckets."
+apply_boost_criteria_v12_script,script,scripts/apply_boost_criteria_v12.py,yes,stable,yes,12039,2026-05-28 19:18:49,86.8103,pass,Apply strict v12 contamination-aware routing policy.
+validate_price_in_effect_script,script,scripts/validate_price_in_effect.py,yes,stable,yes,11919,2026-05-28 19:35:46,86.5277,pass,Validate pre-event price-in effects against post-event abnormal returns.
+grade_other_quality_script,script,scripts/grade_other_quality.py,yes,stable,yes,12309,2026-05-28 19:40:22,86.4512,pass,Grade uncategorized/other candidate quality before further taxonomy work.
+analyze_hype_contamination_detail_script,script,scripts/analyze_hype_contamination_detail.py,yes,stable,yes,7651,2026-05-28 19:41:00,86.4406,pass,Analyze HYPE-specific whale-position contamination patterns.
+analyze_whale_position_asset_contamination_script,script,scripts/analyze_whale_position_asset_contamination.py,yes,stable,yes,8251,2026-05-28 19:45:41,86.3626,pass,Analyze general whale-position single-asset and short-window contamination.
+build_source_identity_layers_script,script,scripts/build_source_identity_layers.py,yes,stable,yes,8559,2026-05-28 19:45:41,86.3626,pass,Build three-layer source identity and reliability table.
+build_regime_layer_report_script,script,scripts/build_regime_layer_report.py,yes,stable,yes,7910,2026-05-28 19:45:41,86.3626,pass,Build BTC regime-layer report for historical event performance.
+build_active_exploit_urgent_candidates_script,script,scripts/build_active_exploit_urgent_candidates.py,yes,stable,yes,7687,2026-05-28 19:49:54,86.2922,pass,Build rare urgent-candidate list for active exploit events.
+archive_hype_and_recompute_stats_script,script,scripts/archive_hype_and_recompute_stats.py,yes,stable,yes,6801,2026-05-28 19:55:10,86.2043,pass,Archive HYPE whale burst contamination and recompute group statistics.
+tighten_candidate_identification_rules_script,script,scripts/tighten_candidate_identification_rules.py,yes,stable,yes,7405,2026-05-28 19:55:10,86.2043,pass,Apply stricter candidate gates to reduce garbage candidates.
+score_and_throttle_sources_script,script,scripts/score_and_throttle_sources.py,yes,stable,yes,6892,2026-05-28 19:55:10,86.2043,pass,Score sources and derive source-level throttle rules.
+diagnose_remote_time_fields_script,script,scripts/diagnose_remote_time_fields.py,yes,stable,yes,7235,2026-05-28 20:15:37,85.8637,pass,Diagnose remote historical time-field coverage.
+export_real_news_older_v2_script,script,scripts/export_real_news_older_v2.py,yes,stable,yes,7185,2026-05-28 20:21:22,85.7678,pass,Explicit-time-field older real-news exporter.
+split_webhook_subsources_script,script,scripts/split_webhook_subsources.py,yes,stable,yes,9233,2026-05-28 20:30:00,85.624,pass,Split webhook into subsources and score them separately.
+analyze_needs_taxonomy_review_script,script,scripts/analyze_needs_taxonomy_review.py,yes,stable,yes,8178,2026-05-28 20:30:34,85.6144,pass,Rule-split needs_taxonomy_review rows into concrete buckets.
+filter_etf_fund_flow_script,script,scripts/filter_etf_fund_flow.py,yes,stable,yes,9054,2026-05-28 21:04:04,85.0563,pass,Filter ETF/fund-flow rows for digest eligibility.
+split_flow_event_subtypes_script,script,scripts/split_flow_event_subtypes.py,yes,stable,yes,8205,2026-05-28 21:02:37,85.0802,pass,Split ETF/fund-flow versus CEX netflow and institutional flow rows.
+verify_exploit_amounts_script,script,scripts/verify_exploit_amounts.py,yes,stable,yes,15630,2026-05-28 21:04:34,85.0478,pass,Verify active-exploit amount and context before urgent eligibility.
+build_v14_short_price_in_script,script,scripts/build_v14_short_price_in.py,yes,stable,yes,9146,2026-05-28 21:17:19,84.8354,pass,Build 5m/15m/1h pre-event price-in checks.
+classify_v14_upgrade_events_script,script,scripts/classify_v14_upgrade_events.py,yes,stable,yes,6597,2026-05-28 21:20:39,84.7797,pass,Classify upgrade/fork events into digest/background/block.
+define_publishable_event_criteria_script,script,scripts/define_publishable_event_criteria.py,yes,stable,yes,9799,2026-05-28 21:59:43,84.1287,pass,Write and evaluate minimum publishable event criteria.
+ingest_security_alerts_script,script,scripts/ingest_security_alerts.py,yes,stable,yes,5604,2026-05-28 21:27:52,84.6594,pass,Ingest external security alert sources into normalized local CSV.
+build_etf_daily_digest_script,script,scripts/build_etf_daily_digest.py,yes,stable,yes,9724,2026-05-28 22:52:47,83.2443,pass,Build daily BTC ETF flow digest from Farside public table.
+build_first_hand_publish_candidates_script,script,scripts/build_first_hand_publish_candidates.py,yes,stable,yes,10183,2026-05-28 21:43:59,84.3909,pass,Route first-hand watcher alerts into publish/archive channels.
+validate_publishable_criteria_script,script,scripts/validate_publishable_criteria.py,yes,stable,yes,4877,2026-05-28 21:42:56,84.4084,pass,Validate publishable criteria against golden known events.
+test_end_to_end_publish_script,script,scripts/test_end_to_end_publish.py,yes,stable,yes,6488,2026-05-28 21:44:34,84.3813,pass,Build local publish preview from current candidates without sending Telegram.
+aggregate_hyperliquid_snapshot_script,script,scripts/aggregate_hyperliquid_snapshot.py,yes,stable,yes,5072,2026-05-28 21:44:20,84.3851,pass,Aggregate Hyperliquid position snapshots into background digest card.
+build_market_state_snapshot_script,script,scripts/build_market_state_snapshot.py,yes,stable,yes,15931,2026-05-29 12:10:45,69.9448,pass,Build public Binance market-state snapshot for TG digests.
+select_focus_assets_script,script,scripts/market/select_focus_assets.py,yes,stable,yes,6958,2026-05-28 22:36:35,83.5142,pass,Select digest focus assets from asset tiers and market-state thresholds.
+classify_price_oi_quadrant_script,script,scripts/market/classify_price_oi_quadrant.py,yes,stable,yes,5016,2026-05-28 22:36:35,83.5142,pass,Classify price/open-interest quadrant explanations.
+generate_etf_summary_script,script,scripts/reporting/generate_etf_summary.py,yes,stable,yes,7989,2026-05-28 22:51:12,83.2705,pass,Render ETF flow context into a concise first-screen block.
+generate_alert_headline_script,script,scripts/reporting/generate_alert_headline.py,yes,stable,yes,4203,2026-05-28 22:46:30,83.3489,pass,Generate one-line abnormality headline for TG market-state digest.
+build_derivatives_history_percentiles_script,script,scripts/market/build_derivatives_history_percentiles.py,yes,stable,yes,13293,2026-05-28 22:55:40,83.1963,pass,Fetch Binance USD-M funding/OI history and compute percentile context.
+generate_percentile_alerts_script,script,scripts/market/generate_percentile_alerts.py,yes,stable,yes,10429,2026-05-29 12:21:11,69.7708,pass,Convert historical derivative percentiles into layered TG alert placement buckets.
+hyperliquid_market_meta_fetcher,script,scripts/hyperliquid/fetch_market_meta.py,yes,stable,yes,7118,2026-05-29 12:16:08,69.8551,pass,Fetch Hyperliquid official public perp market metadata via metaAndAssetCtxs.
+hyperliquid_market_meta_card,script,scripts/hyperliquid/generate_market_meta_card.py,yes,stable,yes,6303,2026-05-29 12:21:56,69.7584,pass,Render Hyperliquid official market metadata into a concise card.
+hyperliquid_liquidation_wall,script,scripts/hyperliquid/generate_liquidation_wall.py,yes,stable,yes,9075,2026-05-29 14:16:05,67.8557,pass,Render monitored Hyperliquid large-position liquidation-wall context.
+generate_market_state_summary_script,script,scripts/reporting/generate_market_state_summary.py,yes,stable,yes,9952,2026-05-29 12:26:20,69.685,pass,Render concise market-state first screen for TG digest.
+prioritize_events_script,script,scripts/events/prioritize_events.py,yes,stable,yes,9557,2026-05-28 22:46:55,83.3419,pass,Prioritize TG digest events into top-watch and other-dynamic buckets.
+build_v14_prefilter_script,script,scripts/build_v14_prefilter.py,yes,stable,yes,8705,2026-05-28 21:10:54,84.9422,pass,Build hard PreFilter output before Composer and Publisher.
+build_v14_composer_scores_script,script,scripts/build_v14_composer_scores.py,yes,stable,yes,20448,2026-05-28 21:05:24,85.0339,pass,Build auditable five-stage Composer scores.
+apply_v14_publish_policy_script,script,scripts/apply_v14_publish_policy.py,yes,stable,yes,14128,2026-05-28 21:25:12,84.7039,pass,Apply Claude-directed block/digest/interrupt publishing policy.
+build_v14_digest_preview_script,script,scripts/build_v14_digest_preview.py,yes,stable,yes,10055,2026-05-28 21:20:59,84.7743,pass,Build strict v14 morning/evening digest preview.
+source_adapter_validation_script,script,scripts/validate_source_adapter_outputs.py,yes,stable,yes,8060,2026-05-28 18:18:50,87.8101,pass,Validate normalized source adapter outputs against schema and registry.
+shadow_source_evaluation_script,script,scripts/run_shadow_source_evaluation.py,yes,stable,yes,6718,2026-05-28 18:20:09,87.7881,pass,Extract and summarize shadow-mode source events.
+tg_evidence_snippet_script,script,scripts/render_tg_evidence_snippet.py,yes,stable,yes,5767,2026-05-28 22:19:36,83.7972,pass,Render evidence snippets from source effectiveness and event performance data.
+llm_usage_report_script,script,scripts/build_llm_usage_report.py,yes,stable,yes,4801,2026-05-28 18:21:33,87.7647,pass,Build LLM usage and estimated cost reports.
+v11_readiness_report_script,script,scripts/build_v11_readiness_report.py,yes,stable,yes,8670,2026-05-28 18:51:19,87.2687,pass,Build v11 source-quality-first readiness report.
+tg_test_sender_script,script,scripts/send_tg_draft_test.py,yes,stable,yes,5384,2026-05-27 18:43:10,111.4046,pass,Manual dry-run/send helper for TG draft testing.
+local_environment_script,script,scripts/check_local_environment.py,yes,stable,yes,6072,2026-05-27 16:08:43,113.9786,pass,Environment checker.
+secret_scan_script,script,scripts/check_secret_leaks.py,yes,stable,yes,6296,2026-05-27 17:55:45,112.1946,pass,Secret scanner.
+local_secret_loader,script,scripts/load_local_secrets.ps1,yes,stable,yes,946,2026-05-27 17:55:33,112.1981,pass,Loads ignored local secrets into the current PowerShell process.
+command_registry_script,script,scripts/build_command_registry.py,yes,stable,yes,77077,2026-05-29 12:24:49,69.7104,pass,Command registry builder.
+review_actions_script,script,scripts/build_project_review_actions.py,yes,stable,yes,10260,2026-05-27 17:19:04,112.8061,pass,Review action builder.
+cursor_prompt_script,script,scripts/generate_cursor_prompt.py,yes,stable,yes,8346,2026-05-27 16:30:29,113.6159,pass,Cursor prompt generator.
+claude_prompt_script,script,scripts/generate_claude_question_prompt.py,yes,stable,yes,4475,2026-05-27 15:45:16,114.3695,pass,Claude prompt generator.
+claude_query_script,script,scripts/query_claude_next.py,yes,stable,yes,9341,2026-05-28 18:21:13,87.7704,pass,Claude OpenRouter query wrapper.

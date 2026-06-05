@@ -1,0 +1,88 @@
+{
+  "stage": "v115n_whale_manual_audit_operator_action_queue_local_only",
+  "version": "v115N",
+  "description": "Operator action queue generated from v115M blocked workflow results. NO real upgrade, NO send, NO TG. Actions only.",
+  "operator_actions": 4,
+  "high_priority_actions": 2,
+  "medium_priority_actions": 2,
+  "manual_attribution_required_count": 2,
+  "corroboration_required_count": 2,
+  "queue_csv_rows": 4,
+  "next_gate_command_order_enforced": true,
+  "next_gate_commands": [
+    "python scripts/run_market_radar_v115g_whale_manual_audit_workbook_intake_gate_local_only.py",
+    "python scripts/run_market_radar_v115l_whale_label_evidence_scoring_gate_local_only.py",
+    "python scripts/run_market_radar_v115h_whale_label_upgrade_adjudication_gate_local_only.py",
+    "python scripts/run_market_radar_v115m_whale_manual_audit_end_to_end_upgrade_workflow_gate_local_only.py"
+  ],
+  "real_workbook_modified": false,
+  "real_label_upgrade_performed": false,
+  "real_send_candidate_generated": false,
+  "send_ready": false,
+  "tg_test_group_ready": false,
+  "tg_sent": false,
+  "prod_state_write": false,
+  "external_api_called": false,
+  "ai_model_called": false,
+  "credentials_read": false,
+  "daemon_started": false,
+  "watcher_started": false,
+  "files_deleted": false,
+  "local_review_ready": true,
+  "generated_at": "2026-06-05T09:02:13.517868+08:00",
+  "action_type_rules": {
+    "manual_attribution_required": {
+      "applies_to": "low confidence / unknown whale",
+      "priority": "high",
+      "requirements": [
+        "Trusted primary source (mandatory)",
+        "Second source / cross-source (mandatory)",
+        "Activity pattern (mandatory)",
+        "Operator confirmation (mandatory)"
+      ],
+      "note": "Unknown whale must establish entity identity before any confidence upgrade."
+    },
+    "corroboration_required": {
+      "applies_to": "medium confidence",
+      "priority": "medium",
+      "requirements": [
+        "Verify existing label source",
+        "Add corroborating secondary source",
+        "Document activity pattern",
+        "Complete operator confirmation",
+        "Pass all HC_REQ_001 through HC_REQ_009"
+      ],
+      "note": "Medium labels cannot go directly to TG test group. Must complete full checklist first."
+    }
+  },
+  "address_summary": [
+    {
+      "address": "0x082e843a431aef031264dc232693dd710aedca88",
+      "display_label": "Unknown HYPE Whale",
+      "current_confidence": "low",
+      "action_type": "manual_attribution_required",
+      "priority": "high"
+    },
+    {
+      "address": "0x50b309f78e774a756a2230e1769729094cac9f20",
+      "display_label": "Unknown Hyperliquid Whale",
+      "current_confidence": "low",
+      "action_type": "manual_attribution_required",
+      "priority": "high"
+    },
+    {
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "display_label": "Matrixport Related",
+      "current_confidence": "medium",
+      "action_type": "corroboration_required",
+      "priority": "medium"
+    },
+    {
+      "address": "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+      "display_label": "loraclexyz",
+      "current_confidence": "medium",
+      "action_type": "corroboration_required",
+      "priority": "medium"
+    }
+  ]
+}

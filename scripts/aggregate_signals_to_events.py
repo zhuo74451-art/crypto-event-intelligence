@@ -24,7 +24,8 @@ WINDOW_MINUTES = 30
 
 EVENT_COLUMNS = [
     "event_id", "asset", "event_start_time", "event_end_time", "signal_ids",
-    "signal_count", "first_hand_count", "overall_strength", "overall_confidence",
+    "signal_count", "first_hand_count", "has_first_hand_signal",
+    "overall_strength", "overall_confidence",
     "novelty_score", "event_type", "urgency", "card_type",
     "sent_to_telegram", "title", "summary", "observation_points", "created_at",
 ]
@@ -239,6 +240,7 @@ def main() -> None:
 
             sig_ids = [s["signal_id"] for s in cluster]
             fh_count = sum(1 for s in cluster if s.get("is_first_hand") in (True, "True", "true", "1"))
+            has_fh = fh_count > 0
             mags = [safe_float(s["magnitude"]) for s in cluster]
             confs = [safe_float(s["confidence"]) for s in cluster]
 
@@ -261,9 +263,12 @@ def main() -> None:
             title = " | ".join(title_parts[:3]) if title_parts else f"{asset} 多信号事件"
 
             summary_cats = {s["signal_category"] for s in cluster}
+            # Distinguish first-hand vs data-only in summary
+            fh_tag = " [含一手监控信号]" if has_fh else " [纯数据信号]"
             summary = f"{asset} 在 {window_start.strftime('%H:%M')}-{window_end.strftime('%H:%M')} UTC 内 "
             summary += f"共收到 {len(cluster)} 条信号（一手 {fh_count} 条）"
             summary += f"，涉及类型：{', '.join(sorted(summary_cats))}"
+            summary += fh_tag
 
             event = {
                 "event_id": hash_ids(sig_ids),
@@ -273,6 +278,7 @@ def main() -> None:
                 "signal_ids": ";".join(sig_ids),
                 "signal_count": len(cluster),
                 "first_hand_count": fh_count,
+                "has_first_hand_signal": has_fh,
                 "overall_strength": round(strength, 1),
                 "overall_confidence": round(avg_conf, 3),
                 "novelty_score": round(min(1.0, fh_count * 0.3 + 0.2), 2),

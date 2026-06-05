@@ -1,0 +1,593 @@
+{
+  "pipeline_version": "v1.17",
+  "run_id": "20260605_155249",
+  "generated_at": "2026-06-05T15:53:17+08:00",
+  "type": "fixture",
+  "results": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "asset_or_topic": "BTC/ETH/SOL",
+      "signal": {
+        "source_type": "fixture",
+        "card_family": "multi_asset_market_sync",
+        "asset_or_topic": "BTC/ETH/SOL",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "metrics": {
+          "assets": [
+            {
+              "symbol": "BTCUSDT",
+              "price": 89000.0,
+              "price_change_pct": -1.23,
+              "volume_24h": 28500000000
+            },
+            {
+              "symbol": "ETHUSDT",
+              "price": 3200.0,
+              "price_change_pct": 2.45,
+              "volume_24h": 12300000000
+            },
+            {
+              "symbol": "SOLUSDT",
+              "price": 175.0,
+              "price_change_pct": 5.67,
+              "volume_24h": 3100000000
+            }
+          ],
+          "correlation_score": 0.72,
+          "sync_observation": "ETH and SOL outperforming BTC — risk-on rotation signal"
+        },
+        "source_refs": [
+          "fixture:binance_spot_24hr",
+          "fixture:cross_asset_correlation"
+        ],
+        "risk_notes": [
+          "Fixture data — not real market data",
+          "Correlation score is simulated"
+        ],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": true,
+        "reason": "Multi-asset data available for 3 assets",
+        "card_family": "multi_asset_market_sync",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00",
+        "metrics_snapshot": {
+          "asset_count": 3
+        }
+      },
+      "rendered_card": {
+        "title": "📊 Market Sync: BTC/ETH/SOL",
+        "body": "**Multi-Asset Market Sync**\n\n  📉 BTCUSDT: $89,000.00 (-1.23%) Vol: $28.5B\n  📈 ETHUSDT: $3,200.00 (+2.45%) Vol: $12.3B\n  📈 SOLUSDT: $175.00 (+5.67%) Vol: $3.1B\n\nCorrelation: 0.72\nObservation: ETH and SOL outperforming BTC — risk-on rotation signal\n\nSource: Binance Public API (no key required)",
+        "card_family": "multi_asset_market_sync",
+        "risk_disclaimer": "⚠ 市场数据观察，不构成投资建议。数据源于 Binance 免费公开 API。Production Send = False。",
+        "evidence_summary": "Binance 24hr tickers for 3 assets",
+        "production_status": "test_group_only",
+        "observation_only": false,
+        "not_causal_proof": false,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:52:49+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": true,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "skipped",
+        "reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:52:49+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "multi_asset_market_sync",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "production_send": false,
+        "proof": "sha256:6dbe46e85bcceb7d",
+        "event_id": null,
+        "asset_or_topic": "BTC/ETH/SOL",
+        "quality_gate_allow": true,
+        "send_readiness_allow": true,
+        "tg_test_sent": false,
+        "tg_status": "skipped"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:52:49+08:00",
+      "error": null,
+      "passed": true
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "asset_or_topic": "ETHUSDT",
+      "signal": {
+        "source_type": "fixture",
+        "card_family": "price_oi_volume_anomaly",
+        "asset_or_topic": "ETHUSDT",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "metrics": {
+          "symbol": "ETHUSDT",
+          "price": 3200.0,
+          "price_change_24h_pct": 2.45,
+          "quote_volume_24h": 12300000000,
+          "open_interest_current": 8200000000,
+          "oi_delta_pct": 8.5,
+          "anomaly_type": "price_oi_divergence",
+          "confirmation_factors": [
+            "price_up",
+            "oi_up",
+            "volume_spike",
+            "funding_positive"
+          ],
+          "admission_passed": true,
+          "oi_history_missing": false
+        },
+        "source_refs": [
+          "fixture:binance_spot_24hr",
+          "fixture:binance_open_interest"
+        ],
+        "risk_notes": [
+          "Fixture data — not real market data"
+        ],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": true,
+        "reason": "Admission passed for ETHUSDT",
+        "card_family": "price_oi_volume_anomaly",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00",
+        "metrics_snapshot": {}
+      },
+      "rendered_card": {
+        "title": "🔍 Anomaly Scan: ETHUSDT",
+        "body": "**Price / OI / Volume Anomaly Scan**\n\n\nAnomaly criteria: |price_chg| > 5% + ≥1 confirmation factor\nConfirmation factors: price_move_significant, volume_spike, oi_elevated\n\nData: Binance Public API (spot 24hr tickers + futures OI)",
+        "card_family": "price_oi_volume_anomaly",
+        "risk_disclaimer": "⚠ 异常检测信号，不构成投资建议。OI 历史数据可能缺失。Production Send = False。",
+        "evidence_summary": "Price/OI anomaly scan across 0 assets via Binance public API",
+        "production_status": "test_group_only",
+        "observation_only": false,
+        "not_causal_proof": false,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:52:49+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": true,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "skipped",
+        "reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:52:49+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "price_oi_volume_anomaly",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "production_send": false,
+        "proof": "sha256:0d2221916ad80520",
+        "event_id": null,
+        "asset_or_topic": "ETHUSDT",
+        "quality_gate_allow": true,
+        "send_readiness_allow": true,
+        "tg_test_sent": false,
+        "tg_status": "skipped"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:52:49+08:00",
+      "error": null,
+      "passed": true
+    },
+    {
+      "card_family": "news_event_market_impact",
+      "asset_or_topic": "BTC regulatory development",
+      "signal": {
+        "source_type": "fixture",
+        "card_family": "news_event_market_impact",
+        "asset_or_topic": "BTC regulatory development",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "metrics": {
+          "source_name": "CryptoNews",
+          "title": "SEC Approves Spot BTC ETF Options — Market Impact Analysis",
+          "url": "https://example.com/news/btc-etf-options",
+          "event_type": "ETF",
+          "intensity": "high",
+          "attribution_risk": "direct",
+          "extraction_method": "rule_based",
+          "assets_affected": [
+            "BTCUSDT"
+          ],
+          "market_snapshot": {
+            "BTCUSDT_price": 89000.0,
+            "BTCUSDT_price_change_pct": -1.23
+          }
+        },
+        "source_refs": [
+          "fixture:public_news_source",
+          "fixture:binance_market_snapshot"
+        ],
+        "risk_notes": [
+          "Fixture data — not real news",
+          "Observation only — not causal proof"
+        ],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": true,
+        "reason": "News event with high intensity accepted",
+        "card_family": "news_event_market_impact",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00",
+        "metrics_snapshot": {
+          "intensity": "high"
+        }
+      },
+      "rendered_card": {
+        "title": "📰 Event: SEC Approves Spot BTC ETF Options — Market Impact Analysis",
+        "body": "**SEC Approves Spot BTC ETF Options — Market Impact Analysis**\n\nSource: CryptoNews\nType: ETF | Intensity: 🔴 high\nAttribution: direct\nAssets: BTCUSDT\nURL: https://example.com/news/btc-etf-options\n\n⚠ **Observation Only — Not Causal Proof**\n本卡片仅记录事件影响观察，不构成因果证明。\nThe observed event may or may not cause the market move.\nMultiple confounding factors always present.",
+        "card_family": "news_event_market_impact",
+        "risk_disclaimer": "⚠ 事件影响观察，不构成因果证明，不构成投资建议。数据源于免费公开来源。Production Send = False。",
+        "evidence_summary": "News event from CryptoNews (ETF, high intensity)",
+        "production_status": "test_group_only",
+        "observation_only": true,
+        "not_causal_proof": true,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:52:49+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": true,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group_one_shot: allowed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "skipped",
+        "reason": "tg_test_send_skipped_missing_safe_config: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID not set",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:52:49+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "news_event_market_impact",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "production_send": false,
+        "proof": "sha256:a220a350c042ac89",
+        "event_id": null,
+        "asset_or_topic": "BTC regulatory development",
+        "quality_gate_allow": true,
+        "send_readiness_allow": true,
+        "tg_test_sent": false,
+        "tg_status": "skipped"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:52:49+08:00",
+      "error": null,
+      "passed": true
+    },
+    {
+      "card_family": "liquidation_pressure",
+      "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+      "signal": {
+        "source_type": "fixture",
+        "card_family": "liquidation_pressure",
+        "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "metrics": {
+          "assets": [
+            {
+              "symbol": "BTCUSDT",
+              "long_short_ratio": 1.8,
+              "long_liquidation_24h": 12500000,
+              "short_liquidation_24h": 8300000,
+              "funding_rate": 0.0001
+            },
+            {
+              "symbol": "ETHUSDT",
+              "long_short_ratio": 2.1,
+              "long_liquidation_24h": 5200000,
+              "short_liquidation_24h": 4100000,
+              "funding_rate": 0.0003
+            },
+            {
+              "symbol": "SOLUSDT",
+              "long_short_ratio": 2.5,
+              "long_liquidation_24h": 2800000,
+              "short_liquidation_24h": 1900000,
+              "funding_rate": 0.0005
+            }
+          ],
+          "composite_score": 0.35,
+          "admission_threshold": 0.6,
+          "calm_market": true
+        },
+        "source_refs": [
+          "fixture:binance_liquidation_data",
+          "fixture:binance_funding_rate"
+        ],
+        "risk_notes": [
+          "Fixture data — not real liquidation data",
+          "Liquidation gate NOT lowered — designed as event-triggered card"
+        ],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": false,
+        "reason": "Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Retry during high-volatility window.",
+        "card_family": "liquidation_pressure",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00",
+        "metrics_snapshot": {
+          "composite_score": 0.35,
+          "threshold": 0.6,
+          "calm_market": true
+        }
+      },
+      "rendered_card": {
+        "title": "💥 Liquidation: BTCUSDT/ETHUSDT/SOLUSDT",
+        "body": "**[BLOCKED] Liquidation Pressure**\n\nComposite Score: 0.35 / Threshold: 0.60\nGate Status: ⛔ BLOCKED — calm market conditions\n\nThis is a DESIGN-JUSTIFIED block, NOT a failure:\n- Liquidation pressure is an event-triggered card type\n- Gate correctly prevents card generation during quiet markets\n- Do NOT lower the threshold to force card generation\n- Retry during high-volatility window",
+        "card_family": "liquidation_pressure",
+        "risk_disclaimer": "⚠ Liquidation gate NOT lowered. Event-triggered card. Production Send = False。",
+        "evidence_summary": "Gate blocked: composite=0.35 < threshold=0.60 (calm market)",
+        "production_status": "test_group_only",
+        "observation_only": false,
+        "not_causal_proof": false,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:52:49+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": false,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group: blocked — quality gate not passed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "blocked",
+        "reason": "Send-readiness not passed: production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group: blocked — quality gate not passed",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:52:49+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "liquidation_pressure",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "production_send": false,
+        "proof": "sha256:5604c8c147a7cccd",
+        "event_id": null,
+        "asset_or_topic": "BTCUSDT/ETHUSDT/SOLUSDT",
+        "quality_gate_allow": false,
+        "send_readiness_allow": false,
+        "tg_test_sent": false,
+        "tg_status": "blocked"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:52:49+08:00",
+      "error": null,
+      "passed": false
+    },
+    {
+      "card_family": "whale_position_alert",
+      "asset_or_topic": "Hyperliquid whale address tracking",
+      "signal": {
+        "source_type": "fixture",
+        "card_family": "whale_position_alert",
+        "asset_or_topic": "Hyperliquid whale address tracking",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "metrics": {
+          "addresses_tracked": [
+            {
+              "address": "0x1111...aaaa",
+              "position_size_usd": 50000000,
+              "direction": "long"
+            },
+            {
+              "address": "0x2222...bbbb",
+              "position_size_usd": 35000000,
+              "direction": "short"
+            },
+            {
+              "address": "0x3333...cccc",
+              "position_size_usd": 28000000,
+              "direction": "long"
+            },
+            {
+              "address": "0x4444...dddd",
+              "position_size_usd": 22000000,
+              "direction": "short"
+            }
+          ],
+          "total_exposure_usd": 135000000,
+          "manual_evidence_provided": false,
+          "address_attribution_status": "empty — requires human verification"
+        },
+        "source_refs": [
+          "fixture:hyperliquid_positions",
+          "fixture:operator_workbook"
+        ],
+        "risk_notes": [
+          "Fixture data — not real whale positions",
+          "Manual evidence required — address attribution cannot be automated",
+          "Do NOT bypass manual evidence requirement"
+        ],
+        "pipeline_version": "v1.17",
+        "signal_id": null,
+        "tags": []
+      },
+      "gate_decision": {
+        "allow": false,
+        "reason": "Whale gate: blocked — manual evidence NOT provided. Address attribution requires human on-chain verification. Do NOT bypass manual evidence requirement. Gate correctly blocking automated-only signals.",
+        "card_family": "whale_position_alert",
+        "signal_id": null,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00",
+        "metrics_snapshot": {
+          "manual_evidence_provided": false
+        }
+      },
+      "rendered_card": {
+        "title": "🐋 Whale Alert: Hyperliquid whale address tracking",
+        "body": "**[BLOCKED] Whale Position Alert**\n\nTracked Addresses: 4\nTotal Exposure: $135.0M\n\n⛔ Gate Status: BLOCKED — manual evidence NOT provided\n\nThis is a DESIGN-JUSTIFIED block, NOT a failure:\n- Whale position alert requires human on-chain address attribution\n- No free public API can provide address ownership verification\n- Fake/fabricated evidence is worse than no evidence\n- Do NOT bypass manual evidence requirement\n\nNext step: Complete operator workbook with address verification\nThen rerun with manual_evidence_provided=true",
+        "card_family": "whale_position_alert",
+        "risk_disclaimer": "⚠ Whale tracking requires manual evidence. Do NOT bypass. Production Send = False。",
+        "evidence_summary": "Manual evidence required — blocked",
+        "production_status": "test_group_only",
+        "observation_only": false,
+        "not_causal_proof": false,
+        "renderer_version": "v1.17",
+        "rendered_at": "2026-06-05T15:52:49+08:00"
+      },
+      "send_readiness": {
+        "allow_test_group": false,
+        "reason": "production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group: blocked — quality gate not passed",
+        "production_send_ready": false,
+        "block_formal_channel": true,
+        "block_x_twitter": true,
+        "block_daemon_cron_loop": true,
+        "gate_version": "v1.17",
+        "reviewed_at": "2026-06-05T15:52:49+08:00"
+      },
+      "tg_result": {
+        "attempted": false,
+        "success": false,
+        "status": "blocked",
+        "reason": "Send-readiness not passed: production_send_ready=false (by design); blocked: formal_channel; blocked: x_twitter; blocked: daemon_cron_loop; test_group: blocked — quality gate not passed",
+        "target_type": "test_group",
+        "one_shot": true,
+        "production_send": false,
+        "message_id_proof": null,
+        "token_proof": null,
+        "chat_id_proof": null,
+        "credentials_printed": false,
+        "sent_at": "2026-06-05T15:52:49+08:00",
+        "sender_version": "v1.17"
+      },
+      "evidence": {
+        "card_family": "whale_position_alert",
+        "pipeline_version": "v1.17",
+        "timestamp": "2026-06-05T15:52:49+08:00",
+        "production_send": false,
+        "proof": "sha256:70b1f2b87f2a39ca",
+        "event_id": null,
+        "asset_or_topic": "Hyperliquid whale address tracking",
+        "quality_gate_allow": false,
+        "send_readiness_allow": false,
+        "tg_test_sent": false,
+        "tg_status": "blocked"
+      },
+      "pipeline_version": "v1.17",
+      "completed_at": "2026-06-05T15:52:49+08:00",
+      "error": null,
+      "passed": false
+    }
+  ],
+  "summary": [
+    {
+      "card_family": "multi_asset_market_sync",
+      "passed": true,
+      "gate_allow": true,
+      "gate_reason": "Multi-asset data available for 3 assets",
+      "tg_status": "skipped"
+    },
+    {
+      "card_family": "price_oi_volume_anomaly",
+      "passed": true,
+      "gate_allow": true,
+      "gate_reason": "Admission passed for ETHUSDT",
+      "tg_status": "skipped"
+    },
+    {
+      "card_family": "news_event_market_impact",
+      "passed": true,
+      "gate_allow": true,
+      "gate_reason": "News event with high intensity accepted",
+      "tg_status": "skipped"
+    },
+    {
+      "card_family": "liquidation_pressure",
+      "passed": false,
+      "gate_allow": false,
+      "gate_reason": "Liquidation gate: blocked — calm market conditions (composite_score=0.35, threshold=0.60). Gate NOT lowered. This is a design-justified block, not a failure. Retry during high-volatility window.",
+      "tg_status": "blocked"
+    },
+    {
+      "card_family": "whale_position_alert",
+      "passed": false,
+      "gate_allow": false,
+      "gate_reason": "Whale gate: blocked — manual evidence NOT provided. Address attribution requires human on-chain verification. Do NOT bypass manual evidence requirement. Gate correctly blocking automated-only signals.",
+      "tg_status": "blocked"
+    }
+  ],
+  "counts": {
+    "total": 5,
+    "passed": 3,
+    "blocked": 2,
+    "error": 0
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "stage": "v115o_whale_operator_evidence_collection_kit_and_workbook_preflight_local_only",
+  "version": "v115O",
+  "description": "Evidence collection kit and workbook preflight for 4 whale addresses from v115N operator action queue. LOCAL ONLY — no real upgrades, no sends, no TG.",
+  "evidence_collection_items": 4,
+  "high_priority_items": 2,
+  "medium_priority_items": 2,
+  "manual_attribution_required_count": 2,
+  "corroboration_required_count": 2,
+  "preflight_records": 4,
+  "preflight_ready_count": 0,
+  "preflight_blocked_count": 4,
+  "ready_for_gate_rerun_count": 0,
+  "rejected_source_hits_count": 0,
+  "workbook_modified": false,
+  "real_label_upgrade_performed": false,
+  "real_send_candidate_generated": false,
+  "send_ready": false,
+  "tg_test_group_ready": false,
+  "tg_sent": false,
+  "prod_state_write": false,
+  "external_api_called": false,
+  "credentials_read": false,
+  "next_gate_command_order_enforced": true,
+  "next_gate_commands": [
+    "python scripts/run_market_radar_v115g_whale_manual_audit_workbook_intake_gate_local_only.py",
+    "python scripts/run_market_radar_v115l_whale_label_evidence_scoring_gate_local_only.py",
+    "python scripts/run_market_radar_v115h_whale_label_upgrade_adjudication_gate_local_only.py",
+    "python scripts/run_market_radar_v115m_whale_manual_audit_end_to_end_upgrade_workflow_gate_local_only.py"
+  ],
+  "preflight_command": "python scripts/run_market_radar_v115o_whale_operator_evidence_collection_kit_and_workbook_preflight_local_only.py",
+  "generated_at": "2026-06-05T09:10:22.927479+08:00"
+}

@@ -192,6 +192,17 @@ def main() -> int:
 
     board = board_rows[-1]
     text = str(board.get("board_text", "") or "").strip()
+
+    # ── v1.3b HARD GATE: block legacy template keywords ──
+    LEGACY_KEYWORDS = ["📌 事件", "📝 详情", "🧠 解读", "🔥 强度", "★★★"]
+    for kw in LEGACY_KEYWORDS:
+        if kw in text:
+            summary = {"status": "blocked_legacy_template", "mode": "send" if args.send else "dry_run",
+                       "board_id": board.get("board_id", ""), "board_label": board.get("board_label", ""),
+                       "telegram_chat_id": "", "telegram_message_id": "", "error": f"legacy_template_keyword:{kw}"}
+            write_rows(normalize_path(args.summary), [summary], SUMMARY_COLUMNS)
+            print(f"BLOCKED: legacy_template_keyword={kw} — refusing to send old template")
+            return 1
     if not text:
         summary = {"status": "empty_board_text", "mode": "send" if args.send else "dry_run", "board_id": board.get("board_id", ""), "board_label": board.get("board_label", ""), "telegram_chat_id": "", "telegram_message_id": "", "error": ""}
         write_rows(normalize_path(args.summary), [summary], SUMMARY_COLUMNS)

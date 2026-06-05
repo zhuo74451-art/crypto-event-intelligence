@@ -1,0 +1,48 @@
+{
+  "version": "v112X-recovery",
+  "status": "partial_not_live",
+  "recovery_reason": "previous_executor_missing_result_file",
+  "live_probe_executed": false,
+  "external_api_called": false,
+  "api_key_used": false,
+  "authorization_header_used": false,
+  "retry_count": 0,
+  "daemon_started": false,
+  "tg_sent": false,
+  "production_state_written": false,
+  "eligible_for_real_send": false,
+  "stop_conditions_loaded": true,
+  "field_mapping_loaded": true,
+  "label_audit_loaded": true,
+  "plan_result_loaded": true,
+  "next_step": "v112X_hyperliquid_one_shot_readonly_dryrun",
+  "generated_at": "2026-06-05T04:59:04.397523+08:00",
+  "generated_by": "run_market_radar_v112x_recovery_local_contract.py",
+  "v112w_artifacts_referenced": {
+    "stop_conditions": "config/market_radar_v112w_hyperliquid_stop_conditions.json",
+    "field_mapping": "config/market_radar_v112w_whale_position_field_mapping.json",
+    "label_audit": "results/market_radar_v112w_whale_label_quality_audit.json",
+    "plan_result": "results/market_radar_v112w_whale_position_live_source_plan_result.json",
+    "live_response_schema": "schemas/market_radar_v112w_hyperliquid_live_response_schema.json",
+    "adapter_spec": "schemas/market_radar_v112w_hl_to_whale_adapter_spec.md"
+  },
+  "v112w_summary": {
+    "plan_status": "passed",
+    "label_quality_ready": true,
+    "hyperliquid_stop_conditions_ready": true,
+    "field_mapping_ready": true,
+    "whale_position_plan_ready": true,
+    "v112x_requires_user_confirmation": true
+  },
+  "safety_invariants": {
+    "no_external_api_called": true,
+    "no_hyperliquid_api_called": true,
+    "no_api_key_used": true,
+    "no_authorization_header_used": true,
+    "no_tg_sent": true,
+    "no_production_state_written": true,
+    "no_daemon_started": true,
+    "no_files_deleted": true,
+    "no_credentials_read": true
+  }
+}

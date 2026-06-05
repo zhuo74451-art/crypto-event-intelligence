@@ -1,0 +1,153 @@
+{
+  "version": "v114B",
+  "source": "hyperliquid_public_info",
+  "dry_run_only": true,
+  "one_shot": true,
+  "second_probe": true,
+  "local_delta_compare_only": true,
+  "external_api_called": true,
+  "api_key_used": false,
+  "authorization_header_used": false,
+  "retry_count": 0,
+  "daemon_started": false,
+  "watcher_started": false,
+  "tg_sent": false,
+  "production_state_written": false,
+  "eligible_for_real_send": false,
+  "addresses_requested": [
+    "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+    "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+    "0x082e843a431aef031264dc232693dd710aedca88",
+    "0x50b309f78e774a756a2230e1769729094cac9f20"
+  ],
+  "success_count": 4,
+  "failure_count": 0,
+  "total_requested": 4,
+  "responses": [
+    {
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "address_short": "0x6c851251...fd84f6",
+      "address_label": "Matrixport Related",
+      "label_confidence": "medium",
+      "http_status": 200,
+      "positions_count": 1,
+      "positions": [
+        {
+          "symbol": "ETH",
+          "side": "long",
+          "position_size": 70360000.0,
+          "entry_price": 2265.44,
+          "leverage": 20,
+          "liquidation_price": 1366.0136313559,
+          "position_value": 70360000.0
+        }
+      ],
+      "observed_at": "2026-06-05T06:09:20.002145+08:00"
+    },
+    {
+      "address": "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae",
+      "address_short": "0x8def9f50...992dae",
+      "address_label": "loraclexyz",
+      "label_confidence": "medium",
+      "http_status": 200,
+      "positions_count": 7,
+      "positions": [
+        {
+          "symbol": "WLD",
+          "side": "long",
+          "position_size": 4946543.250858,
+          "entry_price": 0.51465,
+          "leverage": 10,
+          "liquidation_price": null,
+          "position_value": 4946543.250858
+        },
+        {
+          "symbol": "TON",
+          "side": "long",
+          "position_size": 3117369.73284,
+          "entry_price": 1.86584,
+          "leverage": 5,
+          "liquidation_price": null,
+          "position_value": 3117369.73284
+        },
+        {
+          "symbol": "NEAR",
+          "side": "long",
+          "position_size": 2029861.38055,
+          "entry_price": 2.76534,
+          "leverage": 10,
+          "liquidation_price": null,
+          "position_value": 2029861.38055
+        },
+        {
+          "symbol": "HYPE",
+          "side": "long",
+          "position_size": 8878285.94184,
+          "entry_price": 70.5359,
+          "leverage": 2,
+          "liquidation_price": null,
+          "position_value": 8878285.94184
+        },
+        {
+          "symbol": "ASTER",
+          "side": "long",
+          "position_size": 2342259.41016,
+          "entry_price": 0.74332,
+          "leverage": 5,
+          "liquidation_price": null,
+          "position_value": 2342259.41016
+        },
+        {
+          "symbol": "ZEC",
+          "side": "long",
+          "position_size": 4290266.3991,
+          "entry_price": 543.6207,
+          "leverage": 10,
+          "liquidation_price": null,
+          "position_value": 4290266.3991
+        },
+        {
+          "symbol": "XMR",
+          "side": "long",
+          "position_size": 2421168.27258,
+          "entry_price": 336.877,
+          "leverage": 5,
+          "liquidation_price": null,
+          "position_value": 2421168.27258
+        }
+      ],
+      "observed_at": "2026-06-05T06:09:20.345162+08:00"
+    },
+    {
+      "address": "0x082e843a431aef031264dc232693dd710aedca88",
+      "address_short": "0x082e843a...edca88",
+      "address_label": "Unknown HYPE Whale",
+      "label_confidence": "low",
+      "http_status": 200,
+      "positions_count": 1,
+      "positions": [
+        {
+          "symbol": "HYPE",
+          "side": "long",
+          "position_size": 89683452.30276,
+          "entry_price": 38.6755,
+          "leverage": 5,
+          "liquidation_price": 55.0117035855,
+          "position_value": 89683452.30276
+        }
+      ],
+      "observed_at": "2026-06-05T06:09:20.653325+08:00"
+    },
+    {
+      "address": "0x50b309f78e774a756a2230e1769729094cac9f20",
+      "address_short": "0x50b309f7...ac9f20",
+      "address_label": "Unknown Hyperliquid Whale",
+      "label_confidence": "low",
+      "http_status": 200,
+      "positions_count": 0,
+      "positions": [],
+      "observed_at": "2026-06-05T06:09:20.969624+08:00"
+    }
+  ],
+  "generated_at": "2026-06-05T06:09:20.969624+08:00"
+}
