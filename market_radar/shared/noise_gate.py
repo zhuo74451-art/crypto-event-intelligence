@@ -60,32 +60,32 @@ def _eval_duplicate_event(
             rule_version=GATE_RULE_VERSION,
         )
 
-    if obs.dedup_key in known_dedup_keys:
+    if obs.event_dedup_key in known_dedup_keys:
         # Determine if this is truly a duplicate or new evidence
         return NoiseGateResult(
             rule_name="duplicate_event",
             verdict=GateVerdict.DOWNGRADE,
             reason_code="duplicate_detected",
             reason=(
-                f"Observation with dedup_key '{obs.dedup_key[:16]}...' "
+                f"Observation with dedup_key '{obs.event_dedup_key[:16]}...' "
                 f"matches a previously processed event. "
                 f"Treated as supplementary evidence, not a new event."
             ),
-            evidence_refs=[f"dedup:{obs.dedup_key}"],
+            evidence_refs=[f"dedup:{obs.event_dedup_key}"],
             evaluated_at=_now(),
             rule_version=GATE_RULE_VERSION,
-            metadata={"dedup_key": obs.dedup_key, "is_new_evidence": True},
+            metadata={"dedup_key": obs.event_dedup_key, "is_new_evidence": True},
         )
 
     return NoiseGateResult(
         rule_name="duplicate_event",
         verdict=GateVerdict.ACCEPT,
         reason_code="unique_event",
-        reason=f"Event with dedup_key '{obs.dedup_key[:16]}...' is unique.",
-        evidence_refs=[f"dedup:{obs.dedup_key}"],
+        reason=f"Event with dedup_key '{obs.event_dedup_key[:16]}...' is unique.",
+        evidence_refs=[f"dedup:{obs.event_dedup_key}"],
         evaluated_at=_now(),
         rule_version=GATE_RULE_VERSION,
-        metadata={"dedup_key": obs.dedup_key},
+        metadata={"dedup_key": obs.event_dedup_key},
     )
 
 
@@ -119,12 +119,12 @@ def _eval_stale_event(obs: Observation, max_age_hours: int = 48) -> NoiseGateRes
         age_hours = (observed_dt - event_dt).total_seconds() / 3600
 
         if age_hours < 0:
-            # Event_time in the future relative to observed_at — possible timezone issue
+            # Event_time in the future relative to observed_at — cannot trust
             return NoiseGateResult(
                 rule_name="stale_or_recycled_event",
-                verdict=GateVerdict.ACCEPT,
-                reason_code="future_event_time",
-                reason=f"Event time is after observation time ({age_hours:.1f}h) — possible TZ diff, accepted.",
+                verdict=GateVerdict.DOWNGRADE,
+                reason_code="timezone_or_future_timestamp",
+                reason=f"Event time is after observation time ({age_hours:.1f}h) — possible TZ mismatch or future timestamp.",
                 evidence_refs=[f"event_time:{obs.event_time}", f"observed_at:{obs.observed_at}"],
                 evaluated_at=_now(),
                 rule_version=GATE_RULE_VERSION,

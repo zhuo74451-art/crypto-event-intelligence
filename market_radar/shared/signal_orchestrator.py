@@ -28,6 +28,7 @@ from market_radar.shared.models import (
     NoiseGateResult,
     SignalSpineResult,
     ObservationStatus,
+    DataQuality,
     china_now,
     SIGNAL_SPINE_VERSION,
     CardFamily,
@@ -125,14 +126,14 @@ class SignalOrchestrator:
 
                 # Check if this observation already has a signal
                 existing_signal = None
-                if observation.dedup_key:
-                    existing_signal = self.registry.get_signal_by_dedup_key(observation.dedup_key)
+                if observation.event_dedup_key:
+                    existing_signal = self.registry.get_signal_by_dedup_key(observation.event_dedup_key)
                 if not existing_signal:
                     existing_signal = self.registry.get_signal_by_observation(observation.observation_id)
 
                 if existing_signal:
-                    # Duplicate observation — append evidence
-                    self.registry._append_observation_to_signal(
+                    # Duplicate observation — merge evidence
+                    self.registry.merge_observation(
                         existing_signal, observation, gate_results
                     )
                     registry_action = "merged_into_existing"
@@ -161,8 +162,7 @@ class SignalOrchestrator:
                         confidence=confidence,
                         observation=observation,
                         gate_results=gate_results,
-                        trading_relevance=interpretation.risk_notes[0]
-                        if interpretation.risk_notes else "medium",
+                        trading_relevance=self._assess_trading_relevance(observation, interpretation),
                         news_quality=news_quality,
                         card_family=card_family,
                     )
@@ -197,16 +197,44 @@ class SignalOrchestrator:
             )
 
     def _assess_news_quality(self, observation: Observation) -> str:
-        """Assess news quality from observation data."""
-        quality = observation.data_quality
-        if quality in ("verified_high", "verified_medium"):
-            return "verified"
-        if observation.source_type in (
-            DataSourceType.FREE_PUBLIC_API,
-            DataSourceType.FREE_PUBLIC_SOURCE,
-        ):
-            return "sourced"
-        return "unverified"
+        """Assess news quality from observation data.
+
+        Returns one of: "high", "medium", "low", "very_low"
+        (standard product vocabulary).
+        """
+        dq = observation.data_quality
+        if dq in (DataQuality.VERIFIED_HIGH,):
+            return "high"
+        if dq in (DataQuality.VERIFIED_MEDIUM,):
+            return "medium"
+        if dq is DataQuality.LOW_CREDIBILITY:
+            return "very_low"
+        if dq is DataQuality.UNVERIFIED:
+            return "low"
+        # UNKNOWN
+        return "low"
+
+    def _assess_trading_relevance(
+        self,
+        observation: Observation,
+        interpretation: InterpretationResult,
+    ) -> str:
+        """Assess trading relevance from observation and interpretation.
+
+        Returns one of: "high", "medium", "low", "none".
+        Never returns arbitrary text.
+        """
+        # Use asset count as a heuristic
+        asset_count = len(observation.affected_assets)
+        intensity = observation.normalized_payload.get("intensity", "")
+
+        if asset_count >= 3 and intensity in ("high", "critical"):
+            return "high"
+        if asset_count >= 1 and intensity in ("high", "medium"):
+            return "medium"
+        if asset_count >= 1:
+            return "low"
+        return "none"
 
     def process_batch(
         self,

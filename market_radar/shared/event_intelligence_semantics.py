@@ -37,8 +37,9 @@ class IntelligenceDecision(str, Enum):
     DISCARD = "丢弃"
 
 
-class DataQuality(str, Enum):
-    """Quality marker for data provenance."""
+class DataOrigin(str, Enum):
+    """Provenance marker for data origin (not to be confused with DataQuality
+    from models.py, which tracks source credibility)."""
     REAL = "real"
     FIXTURE = "fixture"
     DEGRADED = "degraded"
@@ -57,7 +58,7 @@ class EventIntelligenceResult:
     # Quality assessment
     news_quality: str  # "high" | "medium" | "low" | "very_low"
     trade_relevance: str  # "high" | "medium" | "low" | "none"
-    data_quality: DataQuality
+    data_origin: DataOrigin
 
     # Decision (one of the four categories)
     decision: IntelligenceDecision
@@ -85,7 +86,7 @@ class EventIntelligenceResult:
     def as_dict(self) -> dict[str, Any]:
         d = asdict(self)
         d["decision"] = self.decision.value
-        d["data_quality"] = self.data_quality.value if isinstance(self.data_quality, DataQuality) else self.data_quality
+        d["data_origin"] = self.data_origin.value if isinstance(self.data_origin, DataOrigin) else self.data_origin
         return d
 
     def validate_safety(self) -> list[str]:
@@ -164,7 +165,7 @@ def evaluate_event_semantics(
             assets=assets_affected if assets_affected else [asset_or_topic] if asset_or_topic else [],
             news_quality=news_quality,
             trade_relevance=trade_relevance,
-            data_quality=DataQuality.FIXTURE,
+            data_origin=DataOrigin.FIXTURE,
             decision=IntelligenceDecision.DISCARD,
             risk_tags=["dedup", "duplicate_content"],
             observation_window="N/A — discarded",
@@ -188,7 +189,7 @@ def evaluate_event_semantics(
             assets=assets_affected if assets_affected else [asset_or_topic] if asset_or_topic else ["unknown"],
             news_quality="low",
             trade_relevance="none",
-            data_quality=DataQuality.DEGRADED,
+            data_origin=DataOrigin.DEGRADED,
             decision=IntelligenceDecision.DISCARD,
             risk_tags=["missing_fields", "incomplete_data", "unusable"],
             observation_window="N/A — discarded",
@@ -205,7 +206,7 @@ def evaluate_event_semantics(
             assets=assets_affected if assets_affected else [asset_or_topic],
             news_quality=news_quality,
             trade_relevance=trade_relevance,
-            data_quality=DataQuality.DEGRADED,
+            data_origin=DataOrigin.DEGRADED,
             decision=IntelligenceDecision.DISCARD,
             risk_tags=["unverified_source", "insufficient_evidence"],
             observation_window="N/A — discarded",
@@ -227,7 +228,7 @@ def evaluate_event_semantics(
             assets=assets_affected if assets_affected else [asset_or_topic],
             news_quality=news_quality,
             trade_relevance=trade_relevance,
-            data_quality=DataQuality.FIXTURE if source_refs and "fixture" in str(source_refs) else DataQuality.REAL,
+            data_origin=DataOrigin.FIXTURE if source_refs and "fixture" in str(source_refs) else DataOrigin.REAL,
             decision=IntelligenceDecision.BLOCK,
             risk_tags=risk_tags,
             observation_window="N/A — blocked",
@@ -243,7 +244,7 @@ def evaluate_event_semantics(
             assets=assets_affected if assets_affected else [asset_or_topic],
             news_quality=news_quality,
             trade_relevance=trade_relevance,
-            data_quality=DataQuality.DEGRADED,
+            data_origin=DataOrigin.DEGRADED,
             decision=IntelligenceDecision.DISCARD,
             risk_tags=["very_low_quality", "insufficient_evidence"],
             observation_window="N/A — discarded",
@@ -262,7 +263,7 @@ def evaluate_event_semantics(
             assets=assets_affected if assets_affected else [asset_or_topic],
             news_quality=news_quality,
             trade_relevance=trade_relevance,
-            data_quality=DataQuality.DEGRADED,
+            data_origin=DataOrigin.DEGRADED,
             decision=IntelligenceDecision.RISK_TIP,
             risk_tags=["old_news", "rehash", "stale_information"],
             observation_window="N/A — stale information",
@@ -278,7 +279,7 @@ def evaluate_event_semantics(
             assets=[asset_or_topic] if asset_or_topic else ["broad_market"],
             news_quality=news_quality,
             trade_relevance=trade_relevance,
-            data_quality=DataQuality.REAL if "fixture" not in str(source_refs) else DataQuality.FIXTURE,
+            data_origin=DataOrigin.REAL if "fixture" not in str(source_refs) else DataOrigin.FIXTURE,
             decision=IntelligenceDecision.OBSERVE,
             risk_tags=["macro_event", "indirect_impact", "no_asset_attribution"],
             observation_window="48h",
@@ -303,7 +304,7 @@ def evaluate_event_semantics(
         assets=assets_affected if assets_affected else [asset_or_topic],
         news_quality=news_quality,
         trade_relevance=trade_relevance,
-        data_quality=DataQuality.REAL if "fixture" not in str(source_refs) else DataQuality.FIXTURE,
+        data_origin=DataOrigin.REAL if "fixture" not in str(source_refs) else DataOrigin.FIXTURE,
         decision=IntelligenceDecision.OBSERVE,
         risk_tags=risk_tags,
         observation_window="24h" if intensity == "high" else "48h",

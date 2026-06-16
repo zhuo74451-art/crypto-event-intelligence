@@ -109,7 +109,8 @@ def _make_observation(
             )
         ],
         data_quality=data_quality,
-        dedup_key=sha256_short(f"{source}:{title}:{','.join(sorted(assets))}", n=12),
+        observation_fingerprint=sha256_short(f"{source}:{title}:{','.join(sorted(assets))}", n=12),
+        event_dedup_key=Observation._compute_event_dedup_key(title, assets, event_type),
         ingestion_status=ObservationStatus.NORMALIZED,
         card_family=CardFamily.NEWS_EVENT_MARKET_IMPACT,
     )
@@ -152,7 +153,7 @@ class TestObservationConstruction:
         assert obs.source_type == DataSourceType.FREE_PUBLIC_SOURCE
         assert "BTC" in obs.affected_assets
         assert "ETH" in obs.affected_assets
-        assert obs.dedup_key is not None
+        assert obs.event_dedup_key is not None
         assert obs.ingestion_status == ObservationStatus.NORMALIZED
         assert len(obs.evidence) == 1
 
@@ -186,17 +187,23 @@ class TestObservationConstruction:
         assert len(obs.affected_assets) > 0, "Should extract from asset_or_topic"
         assert "BTC" in obs.affected_assets
 
-    def test_observation_dedup_key_deterministic(self):
-        """Same source+title+assets produces same dedup_key."""
+    def test_observation_event_dedup_key_deterministic(self):
+        """Same source+title+assets produces same event_dedup_key."""
         obs1 = _make_observation(title="Same Event", source="src1", affected_assets=["BTC"])
         obs2 = _make_observation(title="Same Event", source="src1", affected_assets=["BTC"])
-        assert obs1.dedup_key == obs2.dedup_key
+        assert obs1.event_dedup_key == obs2.event_dedup_key
 
-    def test_observation_dedup_key_different_source(self):
-        """Different source produces different dedup_key."""
+    def test_observation_event_dedup_key_same_across_sources(self):
+        """Same event from different sources → same event_dedup_key (source-agnostic)."""
         obs1 = _make_observation(title="Same Event", source="src1")
         obs2 = _make_observation(title="Same Event", source="src2")
-        assert obs1.dedup_key != obs2.dedup_key
+        assert obs1.event_dedup_key == obs2.event_dedup_key, "event_dedup_key must be source-agnostic"
+
+    def test_observation_fingerprint_different_per_source(self):
+        """Different sources → different observation_fingerprint (source-specific)."""
+        obs1 = _make_observation(title="Same Event", source="src1")
+        obs2 = _make_observation(title="Same Event", source="src2")
+        assert obs1.observation_fingerprint != obs2.observation_fingerprint
 
     def test_observation_as_dict(self):
         """as_dict() returns serializable representation."""
@@ -809,7 +816,7 @@ class TestRegistryPersistence:
         assert found.signal_id == signal.signal_id
 
     def test_registry_preserves_dedup_map(self, tmp_path):
-        """Registry persists dedup_key→signal mapping."""
+        """Registry persists event_dedup_key→signal mapping."""
         storage = tmp_path / "dedup_map.json"
         registry = SignalRegistry(storage_path=storage)
 
@@ -822,7 +829,7 @@ class TestRegistryPersistence:
         registry.save()
 
         registry2 = SignalRegistry(storage_path=storage)
-        found = registry2.get_signal_by_dedup_key(obs.dedup_key)
+        found = registry2.get_signal_by_dedup_key(obs.event_dedup_key)
         assert found is not None
         assert found.signal_id == signal.signal_id
 
@@ -862,7 +869,7 @@ class TestRegistryPersistence:
         assert registry.signal_count() == 0
 
     def test_registry_prevents_duplicate_signal(self, tmp_path):
-        """Same dedup_key doesn't create duplicate signal."""
+        """Same event_dedup_key doesn't create duplicate signal."""
         storage = tmp_path / "dedup_test.json"
         registry = SignalRegistry(storage_path=storage)
 
@@ -908,7 +915,7 @@ class TestOrchestratorDedup:
             assert result2.signal is not None
             assert result2.signal.signal_id == result1.signal.signal_id
 
-    def test_same_dedup_key_different_obs_merged(self, tmp_path):
+    def test_same_event_dedup_key_different_obs_merged(self, tmp_path):
         """Two observations with same dedup key get merged into one signal."""
         storage = tmp_path / "dedup_merge.json"
         orchestrator = create_orchestrator(storage_path=str(storage))
@@ -916,8 +923,8 @@ class TestOrchestratorDedup:
         obs1 = _make_observation(title="Merged Event", source="src_a")
         obs2 = _make_observation(title="Merged Event", source="src_a")
 
-        # Need to ensure obs2 has same dedup_key
-        assert obs1.dedup_key == obs2.dedup_key
+        # Need to ensure obs2 has same event_dedup_key
+        assert obs1.event_dedup_key == obs2.event_dedup_key
 
         result1 = orchestrator.process(obs1)
         result2 = orchestrator.process(obs2)

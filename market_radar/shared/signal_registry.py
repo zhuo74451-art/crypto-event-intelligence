@@ -79,15 +79,54 @@ class SignalRegistry:
                     self._observation_to_signal[obs_id] = signal.signal_id
             self._dedup_to_signal = dict(data.get("dedup_map", {}))
         except (json.JSONDecodeError, KeyError, ValueError) as e:
-            # If storage is corrupted, start fresh
+            # Try backup recovery first
+            backup_path = self._storage_path.with_suffix(".json.backup")
+            if backup_path.exists():
+                try:
+                    raw = backup_path.read_text(encoding="utf-8")
+                    data = json.loads(raw)
+                    for signal_dict in data.get("signals", []):
+                        signal = self._dict_to_signal(signal_dict)
+                        self._signals[signal.signal_id] = signal
+                        for obs_id in signal.observation_ids:
+                            self._observation_to_signal[obs_id] = signal.signal_id
+                    self._dedup_to_signal = dict(data.get("dedup_map", {}))
+                    import warnings
+                    warnings.warn(
+                        f"SignalRegistry: corrupted storage at {self._storage_path}, "
+                        f"recovered from backup ({len(self._signals)} signals). "
+                        f"Corrupted file moved to .corrupt: {e}"
+                    )
+                    # Rename corrupted file to .corrupt
+                    corrupt_path = self._storage_path.with_suffix(".json.corrupt")
+                    import shutil
+                    shutil.move(str(self._storage_path), str(corrupt_path))
+                    return
+                except (json.JSONDecodeError, KeyError, ValueError):
+                    pass  # Backup also corrupted, fall through to fresh start
+
+            # No viable backup — rename corrupted and start fresh
+            import warnings
+            corrupt_path = self._storage_path.with_suffix(".json.corrupt")
+            try:
+                import shutil
+                shutil.move(str(self._storage_path), str(corrupt_path))
+            except Exception:
+                pass
             self._signals = {}
             self._observation_to_signal = {}
             self._dedup_to_signal = {}
-            import warnings
-            warnings.warn(f"SignalRegistry: corrupted storage at {self._storage_path}, starting fresh: {e}")
+            warnings.warn(
+                f"SignalRegistry: corrupted storage at {self._storage_path}, "
+                f"moved to {corrupt_path.name}, starting fresh: {e}"
+            )
 
     def save(self) -> None:
-        """Persist signals to JSON storage."""
+        """Persist signals to JSON storage with atomic write.
+
+        Writes to a temp file first, then atomically renames over
+        the target. Preserves a .backup copy before overwriting.
+        """
         self._storage_path.parent.mkdir(parents=True, exist_ok=True)
         data = {
             "signals": [s.as_dict() for s in self._signals.values()],
@@ -96,10 +135,23 @@ class SignalRegistry:
             "updated_at": china_now(),
             "signal_count": len(self._signals),
         }
-        self._storage_path.write_text(
+
+        # Write to temporary file first
+        tmp_path = self._storage_path.with_suffix(".json.tmp")
+        tmp_path.write_text(
             json.dumps(data, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
+
+        # Preserve backup of existing file if it exists
+        if self._storage_path.exists():
+            backup_path = self._storage_path.with_suffix(".json.backup")
+            import shutil
+            shutil.copy2(str(self._storage_path), str(backup_path))
+
+        # Atomic rename
+        import os as _os
+        _os.replace(str(tmp_path), str(self._storage_path))
         self._dirty = False
 
     def _signal_to_dict(self, signal: Signal) -> dict:
@@ -179,8 +231,8 @@ class SignalRegistry:
         already maps to a signal, returns the existing signal instead.
         """
         # Check for existing signal by dedup_key
-        if observation.dedup_key in self._dedup_to_signal:
-            existing_id = self._dedup_to_signal[observation.dedup_key]
+        if observation.event_dedup_key in self._dedup_to_signal:
+            existing_id = self._dedup_to_signal[observation.event_dedup_key]
             existing = self._signals.get(existing_id)
             if existing:
                 # Append observation and evidence to existing signal
@@ -256,7 +308,7 @@ class SignalRegistry:
 
         self._signals[signal.signal_id] = signal
         self._observation_to_signal[observation.observation_id] = signal.signal_id
-        self._dedup_to_signal[observation.dedup_key] = signal.signal_id
+        self._dedup_to_signal[observation.event_dedup_key] = signal.signal_id
         self._dirty = True
 
         return signal
@@ -343,9 +395,25 @@ class SignalRegistry:
         observation: Observation,
         gate_results: Optional[list[NoiseGateResult]] = None,
     ) -> None:
-        """Append new observation data and evidence to an existing signal.
+        """[DEPRECATED] Use merge_observation() instead.
+
+        Appends new observation data and evidence to an existing signal.
+        """
+        self.merge_observation(signal, observation, gate_results)
+
+    def merge_observation(
+        self,
+        signal: Signal,
+        observation: Observation,
+        gate_results: Optional[list[NoiseGateResult]] = None,
+    ) -> None:
+        """Merge a new observation into an existing signal.
 
         This is the merge-observation path — does NOT create a new signal.
+        Updates evidence, observation IDs, dedup map, and timestamps.
+
+        Safe to call multiple times with same observation (idempotent
+        on evidence refs).
         """
         now = china_now()
 
@@ -378,8 +446,8 @@ class SignalRegistry:
         self._observation_to_signal[observation.observation_id] = signal.signal_id
 
         # Update dedup key if new
-        if observation.dedup_key not in self._dedup_to_signal:
-            self._dedup_to_signal[observation.dedup_key] = signal.signal_id
+        if observation.event_dedup_key not in self._dedup_to_signal:
+            self._dedup_to_signal[observation.event_dedup_key] = signal.signal_id
 
         signal.updated_at = now
         self._dirty = True

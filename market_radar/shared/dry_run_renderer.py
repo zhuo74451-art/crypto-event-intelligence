@@ -38,7 +38,7 @@ from market_radar.shared.renderer_contract import CardRenderer
 from market_radar.shared.event_intelligence_semantics import (
     EventIntelligenceResult,
     IntelligenceDecision,
-    DataQuality,
+    DataOrigin,
     evaluate_event_semantics,
 )
 
@@ -252,7 +252,7 @@ class DryRunRenderer:
 {ei.evidence_summary}
 
 ## 数据质量 (Data Quality)
-**{ei.data_quality.value}**
+**{ei.data_origin.value}**
 
 ---
 
@@ -324,7 +324,7 @@ class DryRunRenderer:
         lines.extend([
             f"⏱ **观察窗口**: {ei.observation_window}",
             f"📋 **证据摘要**: {ei.evidence_summary[:120]}{'…' if len(ei.evidence_summary) > 120 else ''}",
-            f"🔍 **数据质量**: {ei.data_quality.value.upper()}",
+            f"🔍 **数据质量**: {ei.data_origin.value.upper()}",
             "",
             "━━━━━━━━━━━━━━━━━━",
             "⚠ **免责声明**",

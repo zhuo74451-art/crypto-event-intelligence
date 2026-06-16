@@ -50,7 +50,7 @@ from market_radar.shared.dry_run_renderer import DryRunRenderer
 from market_radar.shared.event_intelligence_semantics import (
     EventIntelligenceResult,
     IntelligenceDecision,
-    DataQuality,
+    DataOrigin,
     evaluate_event_semantics,
 )
 

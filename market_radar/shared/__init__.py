@@ -22,6 +22,7 @@ from market_radar.shared.models import (
     Observation,
     ObservationStatus,
     DataQuality,
+    DataOrigin,
     Signal,
     SignalStatus,
     StatusTransition,
@@ -80,4 +81,21 @@ from market_radar.shared.ai_fallback import (
     InterpretationResult,
     generate_template_interpretation,
     create_ai_interpreter,
+)
+
+# Signal Spine v1 — IO lane
+from market_radar.shared.event_intelligence_semantics import (
+    IntelligenceDecision,
+    EventIntelligenceResult,
+    DataOrigin as IODataOrigin,
+    evaluate_event_semantics,
+)
+from market_radar.shared.dry_run_renderer import (
+    DryRunRenderer,
+    DryRunOutput,
+    create_dry_run_renderer,
+)
+from market_radar.shared.event_intelligence_mapper import (
+    EventIntelligenceMapper,
+    create_decision_mapper,
 )

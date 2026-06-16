@@ -60,6 +60,18 @@ class DataSourceType(str, Enum):
     LOCAL_SNAPSHOT = "local_snapshot"
 
 
+class DataOrigin(str, Enum):
+    """Provenance marker for data origin (not source credibility).
+
+    Separated from DataQuality to avoid semantic confusion:
+      DataOrigin = where the data came from (real / fixture / degraded)
+      DataQuality = how trustworthy the source is (verified / unverified / etc.)
+    """
+    REAL = "real"
+    FIXTURE = "fixture"
+    DEGRADED = "degraded"
+
+
 # ── Data Models ────────────────────────────────────────────────────────────
 
 
@@ -390,6 +402,14 @@ class Observation:
     a single observed event or data point from a source, normalized for
     deterministic processing.
 
+    Dual dedup fields:
+      - observation_fingerprint: source-specific (includes source name).
+        Identifies the exact observation from a specific source.
+      - event_dedup_key: source-agnostic (excludes source name).
+        Identifies the underlying event across sources.
+        Normalized via title trim, lowercase, whitespace collapse,
+        asset sort+uppercase, event_type casefold.
+
     Can be constructed from a NormalizedSignal or directly from raw data.
     """
     observation_id: str
@@ -402,7 +422,8 @@ class Observation:
     raw_provenance: dict[str, Any]
     evidence: list[EvidenceLink]
     data_quality: DataQuality
-    dedup_key: str
+    observation_fingerprint: str
+    event_dedup_key: str
     ingestion_status: ObservationStatus
     card_family: Optional[CardFamily] = None
     source_refs: list[str] = field(default_factory=list)
@@ -417,6 +438,43 @@ class Observation:
             self.ingestion_status = ObservationStatus(self.ingestion_status)
         if isinstance(self.card_family, str):
             self.card_family = CardFamily(self.card_family)
+
+    @staticmethod
+    def _normalize_title(title: str) -> str:
+        """Normalize title for event-level dedup.
+
+        1. Strip whitespace
+        2. Lowercase/casefold
+        3. Collapse consecutive whitespace
+        """
+        import re
+        return re.sub(r'\s+', ' ', title.strip().casefold())
+
+    @staticmethod
+    def _normalize_assets(assets: list[str]) -> str:
+        """Normalize asset list for event-level dedup.
+
+        Sort, uppercase, join.
+        """
+        return ','.join(sorted(set(a.upper().strip() for a in assets if a.strip())))
+
+    @classmethod
+    def _compute_event_dedup_key(
+        cls,
+        title: str,
+        assets: list[str],
+        event_type: str,
+    ) -> str:
+        """Compute source-agnostic event dedup key.
+
+        Does NOT include source — different sources reporting
+        the same event produce the same event_dedup_key.
+        """
+        norm_title = cls._normalize_title(title)
+        norm_assets = cls._normalize_assets(assets)
+        norm_type = event_type.strip().casefold()
+        raw = f"{norm_title}:{norm_assets}:{norm_type}"
+        return sha256_short(raw, n=12)
 
     @classmethod
     def from_normalized_signal(
@@ -452,10 +510,14 @@ class Observation:
             for ref in signal.source_refs
         ]
 
-        # Compute deterministic dedup key from normalized payload
+        # Compute observation_fingerprint (source-specific)
         title = signal.metrics.get("title", "") or signal.asset_or_topic
-        dedup_raw = f"{source}:{title}:{','.join(sorted(assets))}"
-        dedup_key = sha256_short(dedup_raw, n=12)
+        fp_raw = f"{source}:{title}:{','.join(sorted(assets))}"
+        observation_fingerprint = sha256_short(fp_raw, n=12)
+
+        # Compute event_dedup_key (source-agnostic)
+        event_type = signal.metrics.get("event_type", "")
+        event_dedup_key = cls._compute_event_dedup_key(title, assets, event_type)
 
         return cls(
             observation_id=obs_id,
@@ -473,7 +535,8 @@ class Observation:
             },
             evidence=evidence,
             data_quality=data_quality,
-            dedup_key=dedup_key,
+            observation_fingerprint=observation_fingerprint,
+            event_dedup_key=event_dedup_key,
             ingestion_status=ObservationStatus.NORMALIZED,
             card_family=signal.card_family,
             source_refs=list(signal.source_refs),
@@ -651,10 +714,15 @@ class SignalSpineResult:
     gate_results: list[NoiseGateResult]
     gate_passed: bool
     signal: Optional[Signal] = None
-    registry_action: Optional[str] = None
+    registry_action: Optional[str] = None  # created_new | merged_into_existing | rejected_by_gate | gate_not_passed
     error: Optional[str] = None
     processed_at: str = field(default_factory=china_now)
     pipeline_version: str = SIGNAL_SPINE_VERSION
+
+    # Unified decision output (populated by event intelligence mapper)
+    emit_card: bool = True  # Whether a card should be emitted for this observation
+    observation_decision: str = ""  # Final decision: "emit" | "suppress_duplicate" | "discard" | "block" | "risk_tip" | "observe"
+    data_origin: Optional[str] = None
 
     @property
     def gate_verdicts(self) -> dict[str, str]:
