@@ -1,3 +1,9 @@
+> ⚠ **Historical document.** This report reflects the project at commit `9c28c93` (signal-spine-v1-rc1).
+> Some conclusions and descriptions (e.g., "price module not connected", "Observation/Signal
+> do not exist" if present) have been superseded by subsequent implementations.
+> For current status refer to `README.md`, `docs/PROJECT_OVERVIEW.md`, and the
+> Week 1 release evidence.
+
 # Signal Spine v1 RC1 — Acceptance Document
 
 ## 唯一入口 (Single Entry Point)
