@@ -1,0 +1,26 @@
+{
+  "fixture_id": "kline_unsupported_symbol",
+  "description": "不支持交易对或缺失 Kline 场景",
+  "data_source": "fixture",
+  "scenarios": [
+    {
+      "asset": "UNKNOWN_TOKEN",
+      "expected_symbol": "UNKNOWN_TOKENUSDT",
+      "supported": false,
+      "expected_result": "failed with error_reason contains 'unsupported_symbol'"
+    },
+    {
+      "asset": "HYPE",
+      "mapped_symbol": "HYPEUSDT",
+      "not_in_fixture": true,
+      "note": "HYPE -> HYPEUSDT via map, but no kline fixture available -> fetch fails or missing_klines"
+    },
+    {
+      "asset": "BTCUSDT",
+      "mapped_symbol": "BTCUSDT",
+      "supported": true,
+      "description": "Standard BTC is always supported",
+      "note": "This case should succeed normally"
+    }
+  ]
+}
