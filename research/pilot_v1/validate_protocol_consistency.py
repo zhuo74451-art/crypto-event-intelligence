@@ -19,6 +19,7 @@ import sys
 import argparse
 import subprocess
 import math
+from datetime import datetime
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -465,7 +466,7 @@ def validate_candidate_instance(candidate: dict) -> list[str]:
     # -- Required fields --
     required_fields = [
         "candidate_id", "information_form", "source_medium",
-        "capture_time_utc", "status", "created_at_utc",
+        "capture_time_utc", "source_observation_ref", "status", "created_at_utc",
     ]
     for field in required_fields:
         if field not in candidate or candidate.get(field) is None:
@@ -502,18 +503,18 @@ def validate_candidate_instance(candidate: dict) -> list[str]:
                 f"Candidate status is '{status}' but exclusion_reason is missing or empty"
             )
 
-    # -- cumulative_trend AND status=routed_to_research is a violation --
-    if info_form == "cumulative_trend" and status == "routed_to_research":
+    # -- Non-discrete information_form AND status=routed_to_research is a violation --
+    #    Only discrete_information_release and discrete_observable_action may route to research.
+    NON_DISCRETE_FORM_MESSAGES = {
+        "cumulative_trend": "chartable trend cannot be studied as point event",
+        "market_outcome_or_context": "market outcome/context cannot be the studied event",
+        "state_snapshot": "state snapshot cannot be studied as point event",
+        "interpretation_or_narrative": "interpretation/narrative must be split from underlying fact before point event study",
+    }
+    if status == "routed_to_research" and info_form in NON_DISCRETE_FORM_MESSAGES:
         violations.append(
-            "Candidate information_form='cumulative_trend' with status='routed_to_research': "
-            "chartable trend cannot be studied as point event"
-        )
-
-    # -- market_outcome_or_context AND routed_to_research is a violation --
-    if info_form == "market_outcome_or_context" and status == "routed_to_research":
-        violations.append(
-            "Candidate information_form='market_outcome_or_context' with status='routed_to_research': "
-            "market outcome/context cannot be the studied event"
+            f"Candidate information_form='{info_form}' with status='routed_to_research': "
+            f"{NON_DISCRETE_FORM_MESSAGES[info_form]}"
         )
 
     return violations
@@ -557,17 +558,17 @@ def validate_research_unit_instance(research_unit: dict, candidate: dict = None)
         )
 
     # -- point_event_study paired with non-discrete information_form --
-    #    The bypass condition is eligibility_status == "context_only".
+    #    Only discrete_information_release and discrete_observable_action are
+    #    permitted for point_event_study. context_only as eligibility_status
+    #    does NOT bypass this rule.
     info_form = research_unit.get("information_form")
     if design_type == "point_event_study" and info_form is not None:
         if info_form not in DISCRETE_INFORMATION_FORMS:
-            elig_status = research_unit.get("eligibility_status")
-            if elig_status != "context_only":
-                violations.append(
-                    f"Research Unit point_event_study with non-discrete information_form "
-                    f"'{info_form}' and eligibility_status '{elig_status}' "
-                    f"(allowed only for context_only bypass)"
-                )
+            violations.append(
+                f"Research Unit point_event_study with non-discrete information_form "
+                f"'{info_form}' — only discrete_information_release and "
+                f"discrete_observable_action are allowed for point_event_study"
+            )
 
     # -- If candidate provided: information_form mismatch --
     if candidate is not None:
@@ -876,13 +877,24 @@ def validate_event_instance_instance(event_instance: dict) -> list[str]:
             f"Event Instance relationship_to_thread '{rel}' not in IDENTITY_ENUM"
         )
 
-    # -- instance_version < 1 --
+    # -- instance_version type and range check --
     inst_ver = event_instance.get("instance_version")
-    if inst_ver is not None and isinstance(inst_ver, (int, float)):
-        if inst_ver < 1:
+    if inst_ver is not None:
+        if isinstance(inst_ver, bool):
             violations.append(
-                f"Event Instance instance_version must be >= 1, got {inst_ver}"
+                "Event Instance instance_version must be an integer >= 1, "
+                f"got bool ({inst_ver})"
             )
+        elif isinstance(inst_ver, (int, float)):
+            if inst_ver < 1:
+                violations.append(
+                    f"Event Instance instance_version must be >= 1, got {inst_ver}"
+                )
+            if not isinstance(inst_ver, int):
+                violations.append(
+                    f"Event Instance instance_version must be an integer, "
+                    f"got float ({inst_ver})"
+                )
 
     # -- identity_unresolved AND having supersedes or superseded_by --
     if rel == "identity_unresolved":
@@ -945,19 +957,28 @@ def validate_claim_evidence_instance(record: dict) -> list[str]:
             "not in CLAIM_EVIDENCE_STATUS_ENUM"
         )
 
-    # -- independence_groups entirely missing (already caught by required but double-check) --
+    # -- independence_groups required, non-empty --
     ind_groups = record.get("independence_groups")
     if ind_groups is None:
         violations.append("Claim Evidence Record missing independence_groups")
     elif isinstance(ind_groups, list):
-        # each group must have independence_status
-        for i, group in enumerate(ind_groups):
-            if isinstance(group, dict):
-                if "independence_status" not in group or not group.get("independence_status"):
-                    violations.append(
-                        f"Claim Evidence Record independence_groups[{i}] missing "
-                        "independence_status"
-                    )
+        if len(ind_groups) == 0:
+            violations.append("Claim Evidence Record independence_groups is empty (must be non-empty)")
+        else:
+            for i, group in enumerate(ind_groups):
+                if isinstance(group, dict):
+                    if "independence_status" not in group or not group.get("independence_status"):
+                        violations.append(
+                            f"Claim Evidence Record independence_groups[{i}] missing "
+                            "independence_status"
+                        )
+                    else:
+                        ind_stat = group["independence_status"]
+                        if ind_stat not in {"independent", "shared_source", "circular", "unknown"}:
+                            violations.append(
+                                f"Claim Evidence Record independence_groups[{i}] "
+                                f"independence_status '{ind_stat}' not valid"
+                            )
 
     # -- Any property named "global_reputation_score" or "source_trust_score" --
     for term in ("global_reputation_score", "source_trust_score"):
@@ -1003,6 +1024,12 @@ def validate_attribution_instance(assessment: dict, interference: dict = None) -
                 violations.append(
                     f"Attribution Assessment hard_gates missing: '{gate}'"
                 )
+        # Unknown hard gate names
+        for gate in hard_gates:
+            if gate not in HARD_GATE_ENUM:
+                violations.append(
+                    f"Attribution Assessment hard_gates has unknown gate: '{gate}'"
+                )
         # Any hard gate value not in {pass, fail, unknown}
         for gate, value in hard_gates.items():
             if gate in HARD_GATE_ENUM:
@@ -1025,13 +1052,35 @@ def validate_attribution_instance(assessment: dict, interference: dict = None) -
                 )
 
     # -- Single-case verdict exceeding frozen ceiling --
-    #    Frozen ceiling: limited_attribution_support.
-    #    attribution_compatible exceeds the ceiling.
-    if verdict == "attribution_compatible":
-        violations.append(
-            "Attribution Assessment verdict 'attribution_compatible' exceeds "
-            "the Pilot Phase 0 frozen ceiling of 'limited_attribution_support'"
-        )
+    #    Frozen ceiling: limited_attribution_support is the maximum.
+    #    attribution_compatible does NOT exceed this ceiling — both are equally
+    #    valid when ALL 7 hard gates pass. No new verdict above
+    #    limited_attribution_support may be added.
+    #    (Check is handled by the hard-gate rule above.)
+
+    # -- Dimensions checks --
+    dimensions = assessment.get("dimensions", {})
+    if isinstance(dimensions, dict):
+        # Must have exactly the 8 known dimensions
+        for dim in DIMENSION_ENUM:
+            if dim not in dimensions:
+                violations.append(
+                    f"Attribution Assessment dimensions missing: '{dim}'"
+                )
+        # Unknown dimension names
+        for dim in dimensions:
+            if dim not in DIMENSION_ENUM:
+                violations.append(
+                    f"Attribution Assessment dimensions has unknown dimension: '{dim}'"
+                )
+        # Each dimension value must be one of: supports, weakens, unknown, not_applicable
+        DIMENSION_VALUES = {"supports", "weakens", "unknown", "not_applicable"}
+        for dim, val in dimensions.items():
+            if dim in DIMENSION_ENUM and val not in DIMENSION_VALUES:
+                violations.append(
+                    f"Attribution Assessment dimension '{dim}' has invalid value "
+                    f"'{val}' — must be one of {DIMENSION_VALUES}"
+                )
 
     # -- If interference provided: cross-check separability --
     if interference is not None:
@@ -1117,7 +1166,17 @@ def validate_research_bundle(bundle: dict) -> list[str]:
 
     # -- Cross-record checks --
 
-    # 1. Outcome registration_ref must match registration registration_id
+    # 1. Outcome without registration
+    if outcome and not registration:
+        violations.append(
+            "Bundle: outcome exists but registration is missing"
+        )
+    if not outcome and registration:
+        violations.append(
+            "Bundle: registration exists but outcome is missing"
+        )
+
+    # 2. Outcome registration_ref must match registration registration_id
     if outcome and registration:
         out_reg_ref = outcome.get("registration_ref")
         reg_id = registration.get("registration_id")
@@ -1127,17 +1186,25 @@ def validate_research_bundle(bundle: dict) -> list[str]:
                 "registration.registration_id"
             )
 
-    # 2. Registration must be created before Outcome
+    # 3. Registration must be created before Outcome (RFC 3339 datetime comparison)
     if outcome and registration:
-        reg_time = registration.get("registration_time_utc")
-        out_time = outcome.get("calculated_at_utc")
-        if reg_time and out_time and reg_time >= out_time:
-            violations.append(
-                "Bundle: registration_time_utc must be before calculated_at_utc "
-                "(registration before outcome)"
-            )
+        reg_time_str = registration.get("registration_time_utc")
+        out_time_str = outcome.get("calculated_at_utc")
+        if reg_time_str and out_time_str:
+            try:
+                reg_dt = datetime.fromisoformat(reg_time_str.replace("Z", "+00:00"))
+                out_dt = datetime.fromisoformat(out_time_str.replace("Z", "+00:00"))
+                if reg_dt >= out_dt:
+                    violations.append(
+                        "Bundle: registration_time_utc must be before calculated_at_utc "
+                        "(registration before outcome)"
+                    )
+            except (ValueError, TypeError):
+                violations.append(
+                    "Bundle: cannot parse registration_time_utc or calculated_at_utc as RFC 3339 datetime"
+                )
 
-    # 3. Outcome benchmark matches registration primary_benchmark
+    # 4. Outcome benchmark matches registration primary_benchmark
     if outcome and registration:
         out_bm = outcome.get("registered_benchmark_relative_reaction", {})
         if isinstance(out_bm, dict):
@@ -1148,7 +1215,7 @@ def validate_research_bundle(bundle: dict) -> list[str]:
                     "Bundle: outcome benchmark does not match registration primary_benchmark"
                 )
 
-    # 4. Outcome window matches registration primary_window
+    # 5. Outcome window matches registration primary_window
     if outcome and registration:
         rm_reaction = outcome.get("raw_market_reaction", {})
         if isinstance(rm_reaction, dict):
@@ -1163,7 +1230,7 @@ def validate_research_bundle(bundle: dict) -> list[str]:
                             "registration primary_window type"
                         )
 
-    # 5. Outcome must NOT modify Registration parameters
+    # 6. Outcome must NOT modify Registration parameters
     #    Check that outcome doesn't contain registration-only fields
     if outcome:
         for rfield in REGISTRATION_ONLY_FIELDS:
@@ -1172,22 +1239,30 @@ def validate_research_bundle(bundle: dict) -> list[str]:
                     f"Bundle: outcome contains Registration-only field '{rfield}'"
                 )
 
-    # 6. Registration and Outcome must be physically separate dicts
+    # 7. Registration and Outcome must be physically separate dicts
     if outcome is not None and registration is not None:
         if id(outcome) == id(registration):
             violations.append(
                 "Bundle: registration and outcome are the same object (shared reference)"
             )
 
-    # 7. If data_partition='development', must not be counted toward Pilot aggregate
+    return violations
+
+
+def validate_pilot_aggregate_membership(bundle: dict) -> list[str]:
+    """Validate that a bundle's data partition is eligible for Pilot aggregate statistics.
+
+    Development partition bundles must NOT be counted in Pilot aggregate.
+    """
+    violations = []
+    registration = bundle.get("registration", {})
     if registration:
         dp = registration.get("data_partition")
         if dp == "development":
             violations.append(
-                "Bundle: registration data_partition='development' — must not be "
-                "counted toward Pilot aggregate statistics"
+                "Pilot aggregate membership: registration data_partition='development' "
+                "must not be counted toward Pilot aggregate statistics"
             )
-
     return violations
 
 

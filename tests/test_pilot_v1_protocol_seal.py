@@ -241,9 +241,26 @@ class TestNegativeCandidate(unittest.TestCase):
         c = make_valid_candidate({"information_form": "market_outcome_or_context", "status": "routed_to_research"})
         v = vpc.validate_candidate_instance(c)
         self.assertTrue(len(v) > 0)
+        self.assertTrue(any("market_outcome_or_context" in vi.lower() for vi in v))
 
+    def test_state_snapshot_routed_to_research_rejected(self):
+        c = make_valid_candidate({"information_form": "state_snapshot", "status": "routed_to_research"})
+        v = vpc.validate_candidate_instance(c)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("state_snapshot" in vi.lower() for vi in v))
 
-class TestNegativeRegistration(unittest.TestCase):
+    def test_interpretation_routed_to_research_rejected(self):
+        c = make_valid_candidate({"information_form": "interpretation_or_narrative", "status": "routed_to_research"})
+        v = vpc.validate_candidate_instance(c)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("interpretation" in vi.lower() for vi in v))
+
+    def test_missing_source_observation_ref_rejected(self):
+        c = make_valid_candidate()
+        del c["source_observation_ref"]
+        v = vpc.validate_candidate_instance(c)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("source_observation_ref" in vi.lower() for vi in v))
     """Negative cases for validate_registration_instance."""
 
     def test_self_benchmark_rejected(self):
@@ -366,6 +383,33 @@ class TestNegativeEventIdentity(unittest.TestCase):
         v = vpc.validate_event_instance_instance(ei)
         self.assertTrue(len(v) > 0)
 
+    def test_float_instance_version_rejected(self):
+        """instance_version must be integer, not float."""
+        ei = make_valid_event_instance({"instance_version": 1.5})
+        v = vpc.validate_event_instance_instance(ei)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("integer" in vi.lower() for vi in v))
+
+
+class TestNegativeAttributionExtended(unittest.TestCase):
+    """Extended negative cases for attribution assessment."""
+
+    def test_missing_dimension_rejected(self):
+        dims = {d: "unknown" for d in vpc.DIMENSION_ENUM}
+        del dims["temporal_ordering"]
+        a = make_valid_attribution({"dimensions": dims})
+        v = vpc.validate_attribution_instance(a)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("temporal_ordering" in vi.lower() for vi in v))
+
+    def test_unknown_hard_gate_rejected(self):
+        gates = {g: "pass" for g in HARD_GATES}
+        gates["made_up_gate"] = "pass"
+        a = make_valid_attribution({"hard_gates": gates})
+        v = vpc.validate_attribution_instance(a)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("made_up_gate" in vi.lower() for vi in v))
+
 
 class TestNegativeClaimEvidence(unittest.TestCase):
     """Negative cases for validate_claim_evidence_instance."""
@@ -395,18 +439,34 @@ class TestNegativeNumericAttribution(unittest.TestCase):
 class TestNegativeResearchBundle(unittest.TestCase):
     """Bundle-level consistency checks."""
 
-    def test_outcome_without_registration(self):
+    def test_actual_outcome_without_registration(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"] = None
+        v = vpc.validate_research_bundle(bundle)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("registration is missing" in vi.lower() for vi in v))
+
+    def test_outcome_ref_mismatch(self):
         bundle = make_valid_research_bundle()
         bundle["outcome"]["registration_ref"] = "nonexistent"
         v = vpc.validate_research_bundle(bundle)
         self.assertTrue(len(v) > 0)
+        self.assertTrue(any("registration_ref" in vi.lower() for vi in v))
 
-    def test_dev_set_counts_toward_pilot(self):
+    def test_development_normal_validation_passes(self):
+        """Development bundle should pass normal bundle validation."""
         bundle = make_valid_research_bundle()
         bundle["registration"]["data_partition"] = "development"
         v = vpc.validate_research_bundle(bundle)
-        # Bundle should log a warning about dev not counting toward statistics
-        # This test checks the validator exists and runs
+        self.assertEqual(len(v), 0, "Development bundle must pass normal validation")
+
+    def test_development_aggregate_rejected(self):
+        """Development bundle must be rejected by aggregate membership check."""
+        bundle = make_valid_research_bundle()
+        bundle["registration"]["data_partition"] = "development"
+        v = vpc.validate_pilot_aggregate_membership(bundle)
+        self.assertTrue(len(v) > 0, "Development bundle must not count toward pilot aggregate")
+        self.assertTrue(any("development" in vi.lower() for vi in v))
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -434,6 +494,18 @@ class TestPositiveInstances(unittest.TestCase):
 
     def test_valid_attribution_passes(self):
         a = make_valid_attribution()
+        v = vpc.validate_attribution_instance(a)
+        self.assertEqual(len(v), 0)
+
+    def test_attribution_compatible_all_gates_pass(self):
+        """attribution_compatible is valid when all 7 hard gates pass."""
+        a = make_valid_attribution({"verdict": "attribution_compatible"})
+        v = vpc.validate_attribution_instance(a)
+        self.assertEqual(len(v), 0)
+
+    def test_limited_attribution_support_all_gates_pass(self):
+        """limited_attribution_support is valid when all 7 hard gates pass."""
+        a = make_valid_attribution({"verdict": "limited_attribution_support"})
         v = vpc.validate_attribution_instance(a)
         self.assertEqual(len(v), 0)
 
