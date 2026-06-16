@@ -28,7 +28,7 @@
     },
     "registration_time_utc": "2026-06-16T10:55:00Z",
     "git_commit": "7382738e8b0bf66fbc42ac8a0df2a8dd75f15513",
-    "file_sha256": "sha256:registration_w1_001_v1",
+    "file_sha256": "sha256:ee2aca167ccd1442fde66cf14b11be14083e004258a776962a386f290fa46c27",
     "data_partition": "development",
     "outcome_status": "not_revealed",
     "notes": "Development Set sample. HYPE is not on Binance — price data sourced from Hyperliquid candleSnapshot 15m. BTC benchmark is a weak proxy. Selected clock is information_clock because only broadcast_time is known; actual action time (whale position change) is unavailable."

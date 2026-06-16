@@ -1,0 +1,13 @@
+{
+  "algorithm": "SHA256",
+  "canonicalization": "UTF-8, sorted keys, compact JSON (no whitespace)",
+  "excluded_fields": [
+    "file_sha256",
+    "$schema",
+    "meta"
+  ],
+  "source_file": "objects/05_registration.json",
+  "extracted_object": "registration",
+  "current_file_sha256": "sha256:ee2aca167ccd1442fde66cf14b11be14083e004258a776962a386f290fa46c27",
+  "verification_script": "python -c \"import json,hashlib; o=json.load(open(\"objects/05_registration.json\"))[\"registration\"]; o.pop(\"file_sha256\"); d=hashlib.sha256(json.dumps(o,sort_keys=True,ensure_ascii=False,separators=(\",\",\":\")).encode()).hexdigest(); print(f\"sha256:{d}\")\""
+}

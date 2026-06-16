@@ -16,12 +16,12 @@
     "registration_ref": "reg_w1_001",
     "raw_market_reaction": {
       "window": "1h",
-      "absolute_change_pct": 1.1274,
+      "absolute_change_pct": 1.1276,
       "direction": "positive"
     },
     "registered_benchmark_relative_reaction": {
       "benchmark": "BTC",
-      "relative_change_pct": 1.1880
+      "relative_change_pct": 1.1892
     },
     "sensitivity_benchmark_reactions": [
       {
@@ -34,12 +34,12 @@
       "note": "HYPE historical volatility baseline not established. No 30-day or longer volatility history available through public API. Cannot determine whether 1.13% move exceeds expected volatility for this asset."
     },
     "pre_event_movement_check_result": {
-      "movement_detected": false,
-      "movement_pct": 0.0
+      "movement_detected": true,
+      "movement_pct": -1.2087
     },
     "event_time_uncertainty": {
       "estimated_uncertainty_seconds": 3600,
-      "note": "Only broadcast_time is known. The actual whale position change may have occurred hours before the broadcast. Estimated uncertainty is conservatively set to 1 hour."
+      "note": "Only broadcast_time is known. The actual whale position change may have occurred hours before the broadcast. HYPE showed -1.21% movement in the hour before broadcast (above 20bps threshold), but this cannot be causally linked to Loracle position without knowing actual action time."
     },
     "price_alignment_lag": {
       "t0_lag_seconds": 120,
@@ -48,7 +48,7 @@
     "price_precision": {
       "provider": "Hyperliquid candleSnapshot",
       "interval_seconds": 900,
-      "precision_note": "15m candle interval. t0 used 13:00 open (closest candle before t0=13:02, 120s lag). t1 used 14:00 open (closest candle before t0+1h=14:02, 120s lag). BTC prices from Binance 1m klines had 0s lag."
+      "precision_note": "15m candle interval. t0 used 13:00 open (closest candle before t0=13:02, 120s lag). t1 used 14:00 open (closest candle before t0+1h=14:02, 120s lag). Pre-window used 12:00 open (closest candle before t0-1h=12:02, 120s lag). BTC prices from Binance 1m klines had 0s lag."
     },
     "calculated_at_utc": "2026-06-16T11:05:00Z"
   }

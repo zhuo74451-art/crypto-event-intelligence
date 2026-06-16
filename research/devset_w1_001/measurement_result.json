@@ -1,0 +1,60 @@
+{
+  "computed_at_utc": "2026-06-16T11:20:18Z",
+  "raw_files": {
+    "hype": {
+      "sha256": "9c5c67279cc83f5a779bf557615c7fabc899ccf0870c5e0b3b59995bfd9ca8c5",
+      "candles": 15
+    },
+    "btc": {
+      "sha256": "1b7bfeb325015e5328fe94e705c94eada4a6fbd54f15692078261d1b72622487",
+      "klines": 151
+    },
+    "eth": {
+      "sha256": "c10dd643cd8d0089ebecf8dad6c26bb4577fa14e11f185d7018a072d1a15d4f2",
+      "klines": 151
+    }
+  },
+  "alignment_rules": {
+    "hype": "open of nearest 15m candle starting at or before target time",
+    "btc_eth": "open of first 1m kline at or after target time"
+  },
+  "hype": {
+    "pre_window": {
+      "anchor_time_utc": "2026-05-25T12:00:00Z",
+      "price": 63.376,
+      "target": "t0-1h"
+    },
+    "t0": {
+      "anchor_time_utc": "2026-05-25T13:00:00Z",
+      "price": 62.61,
+      "target": "t0",
+      "lag_seconds": 120
+    },
+    "t1": {
+      "anchor_time_utc": "2026-05-25T14:00:00Z",
+      "price": 63.316,
+      "target": "t0+1h",
+      "lag_seconds": 120
+    },
+    "pre_event_movement_pct": -1.2087,
+    "movement_detected": true,
+    "movement_threshold_bps": 20,
+    "raw_1h_change_pct": 1.1276,
+    "direction": "positive"
+  },
+  "btc_benchmark": {
+    "t0_price": 77376.64,
+    "t1_price": 77328.99,
+    "1h_change_pct": -0.0616
+  },
+  "eth_sensitivity": {
+    "t0_price": 2117.7,
+    "t1_price": 2116.48,
+    "1h_change_pct": -0.0576
+  },
+  "relative_reaction": {
+    "hype_vs_btc_pct": 1.1892,
+    "benchmark": "BTC"
+  },
+  "rounding": "4 decimal places"
+}
