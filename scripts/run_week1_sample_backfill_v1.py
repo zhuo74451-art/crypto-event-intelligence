@@ -95,6 +95,7 @@ def save_json(results, path, code_commit=None):
     completed = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status == "completed")
     unavail = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status == "unavailable")
     errors = [r.network_error for r in results if r.network_error]
+    unique_poks = list({r.price_observation_key for r in results}) if results else []
     data = {
         "run_mode": "network",
         "generated_at": utc_now(),
@@ -104,6 +105,10 @@ def save_json(results, path, code_commit=None):
         "calculation_version": "v1.18-week1-rc",
         "samples_expected": 5,
         "observations_expected": 6,
+        "sample_links_expected": 6,
+        "sample_links_actual": len(results),
+        "unique_price_observations": len(unique_poks),
+        "price_observation_keys": unique_poks,
         "observations_completed": completed,
         "observations_unavailable": unavail,
         "observations_partial": 0,

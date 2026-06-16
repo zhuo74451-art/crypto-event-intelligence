@@ -319,7 +319,7 @@ class SnapshotCache:
 
 @dataclass
 class PriceObservationBundle:
-    """All snapshots needed for one observation, fetched at most once per unique key."""
+    """All snapshots + selection info for one observation."""
     key: str
     price_observation_key: str
     asset_t0: Optional[PriceSnapshot] = None
@@ -334,40 +334,56 @@ class PriceObservationBundle:
     eth_1h: Optional[PriceSnapshot] = None
     eth_4h: Optional[PriceSnapshot] = None
     eth_24h: Optional[PriceSnapshot] = None
+    # Selection info preserved from cache (dicts with signed_lag, policy, precision, etc.)
+    asset_t0_info: Optional[dict] = None
+    asset_1h_info: Optional[dict] = None
+    asset_4h_info: Optional[dict] = None
+    asset_24h_info: Optional[dict] = None
+    btc_t0_info: Optional[dict] = None
+    btc_1h_info: Optional[dict] = None
+    btc_4h_info: Optional[dict] = None
+    btc_24h_info: Optional[dict] = None
+    eth_t0_info: Optional[dict] = None
+    eth_1h_info: Optional[dict] = None
+    eth_4h_info: Optional[dict] = None
+    eth_24h_info: Optional[dict] = None
+
+
+def _fetch_and_store(cache, bundle, field, info_field, asset, t_iso, is_benchmark=False):
+    """Fetch snapshot and store both snap and info."""
+    fn = cache.get_benchmark if is_benchmark else cache.get
+    snap, pname, interval, si, err = fn(asset, t_iso)
+    setattr(bundle, field, snap)
+    setattr(bundle, info_field, dict(si) if si else {})
 
 
 def fetch_bundle(cache: SnapshotCache, asset: str, bt_iso: str,
                  pname: str, interval: str, policy: str) -> PriceObservationBundle:
-    """Fetch all snapshots for an observation in a single pass.
-
-    Returns bundle with all 12 snapshots. Each may be completed or unavailable.
-    """
+    """Fetch all snapshots + selection info for one observation."""
     key = make_cache_key(pname, asset, bt_iso, interval, policy)
     pok = make_price_observation_key(pname, asset, bt_iso, interval, policy)
     bundle = PriceObservationBundle(key=key, price_observation_key=pok)
-
     bt_ms = iso_to_ms(bt_iso)
-    bundle.asset_t0, _, _, _, _ = cache.get(asset, bt_iso)
-    bundle.btc_t0, _, _, _, _ = cache.get_benchmark("BTC", bt_iso)
-    bundle.eth_t0, _, _, _, _ = cache.get_benchmark("ETH", bt_iso)
 
-    for wname, delta_ms in [("asset_1h", 3600000), ("asset_4h", 14400000), ("asset_24h", 86400000)]:
-        if bt_ms:
-            t_iso = ms_to_iso(bt_ms + delta_ms)
-            snap, _, _, _, _ = cache.get(asset, t_iso)
-            setattr(bundle, wname, snap)
+    _fetch_and_store(cache, bundle, "asset_t0", "asset_t0_info", asset, bt_iso)
+    _fetch_and_store(cache, bundle, "btc_t0", "btc_t0_info", "BTC", bt_iso, is_benchmark=True)
+    _fetch_and_store(cache, bundle, "eth_t0", "eth_t0_info", "ETH", bt_iso, is_benchmark=True)
 
-    for wname, delta_ms in [("btc_1h", 3600000), ("btc_4h", 14400000), ("btc_24h", 86400000)]:
-        if bt_ms:
-            t_iso = ms_to_iso(bt_ms + delta_ms)
-            snap, _, _, _, _ = cache.get_benchmark("BTC", t_iso)
-            setattr(bundle, wname, snap)
-
-    for wname, delta_ms in [("eth_1h", 3600000), ("eth_4h", 14400000), ("eth_24h", 86400000)]:
-        if bt_ms:
-            t_iso = ms_to_iso(bt_ms + delta_ms)
-            snap, _, _, _, _ = cache.get_benchmark("ETH", t_iso)
-            setattr(bundle, wname, snap)
+    if bt_ms:
+        for field, inf, sym, dm in [
+            ("asset_1h", "asset_1h_info", asset, 3600000),
+            ("asset_4h", "asset_4h_info", asset, 14400000),
+            ("asset_24h", "asset_24h_info", asset, 86400000),
+            ("btc_1h", "btc_1h_info", "BTC", 3600000),
+            ("btc_4h", "btc_4h_info", "BTC", 14400000),
+            ("btc_24h", "btc_24h_info", "BTC", 86400000),
+            ("eth_1h", "eth_1h_info", "ETH", 3600000),
+            ("eth_4h", "eth_4h_info", "ETH", 14400000),
+            ("eth_24h", "eth_24h_info", "ETH", 86400000),
+        ]:
+            t_iso = ms_to_iso(bt_ms + dm)
+            is_bm = sym in ("BTC", "ETH")
+            _fetch_and_store(cache, bundle, field, inf, sym, t_iso, is_benchmark=is_bm)
 
     return bundle
 
@@ -450,10 +466,13 @@ def _compute_windows(bundle: PriceObservationBundle, asset: str, now: datetime,
         return (None, None, None)
 
     windows: list[Optional[Week1WindowResult]] = []
-    for wname, delta_s, asset_snap, btc_snap, eth_snap in [
-        ("1h", 3600, bundle.asset_1h, bundle.btc_1h, bundle.eth_1h),
-        ("4h", 14400, bundle.asset_4h, bundle.btc_4h, bundle.eth_4h),
-        ("24h", 86400, bundle.asset_24h, bundle.btc_24h, bundle.eth_24h),
+    for wname, delta_s, asset_snap, btc_snap, eth_snap, a_info, b_info, e_info in [
+        ("1h", 3600, bundle.asset_1h, bundle.btc_1h, bundle.eth_1h,
+         bundle.asset_1h_info or {}, bundle.btc_1h_info or {}, bundle.eth_1h_info or {}),
+        ("4h", 14400, bundle.asset_4h, bundle.btc_4h, bundle.eth_4h,
+         bundle.asset_4h_info or {}, bundle.btc_4h_info or {}, bundle.eth_4h_info or {}),
+        ("24h", 86400, bundle.asset_24h, bundle.btc_24h, bundle.eth_24h,
+         bundle.asset_24h_info or {}, bundle.btc_24h_info or {}, bundle.eth_24h_info or {}),
     ]:
         target_ms = iso_to_ms(t0.requested_time)
         if target_ms:
@@ -472,8 +491,23 @@ def _compute_windows(bundle: PriceObservationBundle, asset: str, now: datetime,
             continue
 
         rd = (asset_snap.price / t0.price) - 1.0
-        wr = Week1WindowResult(window=wname, status="completed", target_snapshot=asset_snap,
-                               return_decimal=round(rd, 6), return_percent=round(rd * 100.0, 4))
+        # Extract selection metadata (handle 0 as valid value, not None)
+        sel_pol = a_info.get("selection_policy") or None
+        prec = a_info.get("precision_seconds")
+        prec = prec if prec is not None else None
+        s_lag = a_info.get("signed_lag_seconds")
+        s_lag = s_lag if s_lag is not None else None
+        a_lag = a_info.get("absolute_lag_seconds")
+        a_lag = a_lag if a_lag is not None else None
+
+        wr = Week1WindowResult(
+            window=wname, status="completed", target_snapshot=asset_snap,
+            selection_policy=sel_pol,
+            precision_seconds=prec,
+            signed_lag_seconds=s_lag,
+            absolute_lag_seconds=a_lag,
+            return_decimal=round(rd, 6), return_percent=round(rd * 100.0, 4),
+        )
 
         # Benchmark returns
         br = _safe_return(btc_snap, bundle.btc_t0) if btc_snap and bundle.btc_t0 else None
@@ -541,9 +575,10 @@ def run_week1(router=None, now_maturity=None) -> list[Week1ObservationResult]:
             sample_id=sid, result_id=rid, subject_asset=subj, observed_asset=obs,
             broadcast_time_utc=bt, t0_basis="broadcast_time",
             provider=pname, interval=interval,
-            precision_seconds=900 if pname == "hyperliquid" else 60 if pname == "binance" else None,
-            selection_policy=getattr(router.get_provider(obs)[0], "selection_policy", None),
-            signed_lag_seconds=None,
+            precision_seconds=(bundle.asset_t0_info or {}).get("precision_seconds")
+                             or (900 if pname == "hyperliquid" else 60),
+            selection_policy=(bundle.asset_t0_info or {}).get("selection_policy"),
+            signed_lag_seconds=(bundle.asset_t0_info or {}).get("signed_lag_seconds"),
             price_observation_key=bundle.price_observation_key,
             observation_reused=reused_from is not None,
             reused_from_result_id=reused_from,
