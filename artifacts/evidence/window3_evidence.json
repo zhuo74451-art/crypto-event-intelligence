@@ -1,0 +1,25 @@
+{
+  "run_id": "297b1adca375",
+  "started_at": "2026-06-16T13:44:51Z",
+  "completed_at": "2026-06-16T13:44:54Z",
+  "feed_truth": {
+    "flash_count": 64,
+    "news_count": 20,
+    "tg_count": 0,
+    "live_count": 84,
+    "cached_count": 0,
+    "fixture_count": 9,
+    "duplicate_count": 0,
+    "research_excluded": 262383
+  },
+  "market_succeeded": 4,
+  "market_failed": 0,
+  "feed_items": 84,
+  "workbench": "C:\\Users\\PC\\Desktop\\市场信号\\crypto-event-intelligence-worktrees\\feeds-ui-prod\\artifacts\\reports\\workbench.html",
+  "warnings": [
+    "L4: 1/3 sources failed"
+  ],
+  "degraded_paths": [
+    "L4:existing_feeds"
+  ]
+}

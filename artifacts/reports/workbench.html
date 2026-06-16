@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; img-src data:;">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Crypto Signal Intelligence — Workbench MVP+v2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;padding:16px;font-size:14px}
+h1{color:#58a6ff;font-size:22px}
+h2{color:#c9d1d9;font-size:16px;margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid #30363d}
+a{color:#58a6ff}
+table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:12px}
+th{background:#161b22;color:#8b949e;padding:6px 8px;text-align:left;font-weight:500;border-bottom:2px solid #30363d;white-space:nowrap}
+td{padding:4px 8px;border-bottom:1px solid #21262d;white-space:nowrap;font-size:12px}
+tr:hover td{background:#1c2128}
+.n{text-align:right;font-family:'SF Mono',Consolas,monospace}
+.a{font-family:'SF Mono',Consolas,monospace;font-size:11px}
+.feed-item{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:13px}
+.feed-hdr{display:flex;gap:6px;align-items:center;margin-bottom:2px;font-size:11px;color:#8b949e}
+.feed-ttl{font-size:13px;font-weight:500}
+.feed-body{color:#8b949e;font-size:12px;margin-top:2px}
+.feed-assets{color:#58a6ff;font-size:11px;margin-top:2px}
+.badge{padding:1px 5px;border-radius:3px;font-weight:600;font-size:10px}
+.badge-flash{background:#ff444433;color:#ff4444}
+.badge-news{background:#58a6ff33;color:#58a6ff}
+.badge-onchain{background:#44cc4433;color:#44cc44}
+.empty{color:#8b949e;font-style:italic;padding:16px;text-align:center}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px}
+.mcard{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px}
+.msym{font-size:12px;color:#8b949e}
+.mprc{font-size:24px;font-weight:bold;margin:2px 0}
+.mchg{font-size:14px;margin-bottom:4px}
+.mdet{font-size:11px;color:#8b949e;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.stat{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:10px;text-align:center}
+.stat-v{font-size:20px;font-weight:bold}
+.stat-l{font-size:11px;color:#8b949e}
+.warn{color:#fc0;font-size:12px;margin:2px 0}
+.disclaimer{color:#f80;font-size:11px;margin-top:4px;font-style:italic}
+.ftr{margin-top:24px;padding-top:8px;border-top:1px solid #30363d;font-size:10px;color:#8b949e}
+.jt{color:#58a6ff;font-family:monospace;font-size:11px}
+</style></head><body>
+<h1>Crypto Signal Intelligence - Internal Workbench</h1>
+<p style="color:#8b949e;font-size:13px;margin-bottom:12px">
+Run: 297b1adca375 | 2026-06-16T13:44:54Z UTC | mvp+v1.0</p><div class="stats">
+<div class="stat"><div class="stat-v">0</div><div class="stat-l">Whale</div></div>
+<div class="stat"><div class="stat-v">0</div><div class="stat-l">Changes</div></div>
+<div class="stat"><div class="stat-v">84</div><div class="stat-l">Feeds</div></div>
+<div class="stat"><div class="stat-v">4</div><div class="stat-l">Market</div></div>
+<div class="stat"><div class="stat-v" style="color:#f80">6/8</div><div class="stat-l">Health</div></div></div><div class="warn">W L4: 1/3 sources failed</div><div class="warn">Degraded: L4:existing_feeds</div><h2>1. Unified Intelligence Feed</h2><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">Unknown Hyperliquid Whale holds large Hyperliquid long position: $34.96M BTC</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">Matrixport Related holds large Hyperliquid long position: $79.52M ETH</div><div class="feed-assets">ETH</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">loraclexyz holds large Hyperliquid short position: $34.38M BTC</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">loraclexyz holds large Hyperliquid short position: $102.66M HYPE</div><div class="feed-assets">HYPE</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">Unknown HYPE Whale holds large Hyperliquid long position: $78.37M HYPE</div><div class="feed-assets">HYPE</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">UNKNOWN</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">Binance published listing announcement for CTR</div><div class="feed-assets">CTR</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">UNKNOWN</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">HAEDAL scheduled token unlock is approaching: $762.03K</div><div class="feed-assets">HAEDAL</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">UNKNOWN</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">HOME scheduled token unlock is approaching: $19.62M</div><div class="feed-assets">HOME</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">UNKNOWN</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">TBOT scheduled token unlock is approaching: $1.10K</div><div class="feed-assets">TBOT</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | Unknown Hyperliquid Whale BTC long 仓位 34,887,498USD 距清算15.1%</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | Matrixport Related ETH long 仓位 80,016,000USD 距清算32.2%</div><div class="feed-assets">ETH</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | loraclexyz BTC short 仓位 34,303,966USD 距清算167.5%</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | loraclexyz TON short 仓位 6,586USD 距清算804947.5%</div><div class="feed-assets">TON</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | loraclexyz HYPE short 仓位 106,131,021USD 距清算49.8%</div><div class="feed-assets">HYPE</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | loraclexyz VVV short 仓位 752,767USD 距清算6622.7%</div><div class="feed-assets">VVV</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | loraclexyz LIT short 仓位 733,857USD 距清算7205.1%</div><div class="feed-assets">LIT</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | Unknown HYPE Whale HYPE long 仓位 84,299,906USD 距清算19.6%</div><div class="feed-assets">HYPE</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">HYPERLIQUID_FEED</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">监控地址清算风险 | Unknown Hyperliquid Whale BTC short 仓位 11,890,058USD 距清算29.4%</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BTC funding_rate_percentile 分位 98.9% | 核心资产资金费率达到异常分位</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BTC funding_price_confirmation 分位 98.9% | 多头持仓成本偏高，需结合价格变化确认</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BNB funding_price_confirmation 分位 90.7% | 多头持仓成本偏高，需结合价格变化确认</div><div class="feed-assets">BNB</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">DOGE funding_price_confirmation 分位 92.6% | 多头持仓成本偏高，需结合价格变化确认</div><div class="feed-assets">DOGE</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BTC percentile_context 分位 98.9% | 分位偏离，进入早晚报观察</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">SOL percentile_context 分位 35.6% | 快速下降，市场降温</div><div class="feed-assets">SOL</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BNB percentile_context 分位 90.7% | 分位偏离，进入早晚报观察</div><div class="feed-assets">BNB</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">DOGE percentile_context 分位 92.6% | 快速下降，市场降温</div><div class="feed-assets">DOGE</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BTC price 24h变化 +0.44%</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BTC volume 24h变化 -23.63%</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">BTC open_interest 24h变化 +3.12%</div><div class="feed-assets">BTC</div></div><div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-flash">FLASH</span>
+<span style="color:#8b949e">BINANCE_ANNOUNCEMENTS</span><span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span>
+<span style="margin-left:auto;color:#8b949e">2026-06-16T13:44:54Z</span></div>
+<div class="feed-ttl">ETH price 24h变化 +1.14%</div><div class="feed-assets">ETH</div></div><h2>2. Whale Position Changes</h2><div class="empty">No changes</div><h2>3. Current Whale Positions</h2><div class="empty">No positions</div><h2>4. Liquidation Risk</h2><div class="empty">No liquidation risks</div><h2>5. Market Context</h2><div class="mgrid"><div class="mcard"><div class="msym">BTC <span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span></div><div class="mprc">$66.1K</div><div class="mchg" style="color:#f44">-0.68%</div><div class="mdet">Vol:$1.13B OI:N/A Fund:N/A Venue:BINANCE_SPOT</div></div><div class="mcard"><div class="msym">ETH <span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span></div><div class="mprc">$1.8K</div><div class="mchg" style="color:#f44">-0.48%</div><div class="mdet">Vol:$777.96M OI:N/A Fund:N/A Venue:BINANCE_SPOT</div></div><div class="mcard"><div class="msym">SOL <span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span></div><div class="mprc">$74.31</div><div class="mchg" style="color:#4c4">+0.85%</div><div class="mdet">Vol:$205.72M OI:N/A Fund:N/A Venue:BINANCE_SPOT</div></div><div class="mcard"><div class="msym">HYPE <span style="background:#4c4;color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">live</span></div><div class="mprc">$75.79</div><div class="mchg" style="color:#4c4">+12.86%</div><div class="mdet">Vol:$966.02M OI:$1.62B Fund:+0.00% Venue:HYPERLIQUID_PERP</div></div></div><h2>6. Source Health</h2><table><tr><th>Source</th><th>Group</th><th>Status</th><th>OK</th><th>Err</th></tr><tr title=""><td>ccxt:binance:BTC</td><td>market</td><td style="color:#4c4;font-weight:bold">OK</td><td class="n">1</td><td class="n">0</td></tr><tr title=""><td>ccxt:binance:ETH</td><td>market</td><td style="color:#4c4;font-weight:bold">OK</td><td class="n">1</td><td class="n">0</td></tr><tr title=""><td>ccxt:binance:SOL</td><td>market</td><td style="color:#4c4;font-weight:bold">OK</td><td class="n">1</td><td class="n">0</td></tr><tr title=""><td>hyperliquid:hype</td><td>hyperliquid</td><td style="color:#4c4;font-weight:bold">OK</td><td class="n">1</td><td class="n">0</td></tr><tr title=""><td>live:hl_watcher_signals</td><td>telegram</td><td style="color:#4c4;font-weight:bold">OK</td><td class="n">1</td><td class="n">0</td></tr><tr title="watcher_alerts_raw.csv: 20 raw rows, 0 parsed"><td>live:onchain_watcher_alerts</td><td>telegram</td><td style="color:#f80;font-weight:bold">DEGRADED</td><td class="n">0</td><td class="n">0</td></tr><tr title=""><td>live:news_live</td><td>news</td><td style="color:#4c4;font-weight:bold">OK</td><td class="n">1</td><td class="n">0</td></tr><tr title="Fixture data for testing only — not counted as live"><td>fixture:fixture_whale_positions</td><td>fixture</td><td style="color:#f80;font-weight:bold">DEGRADED</td><td class="n">0</td><td class="n">0</td></tr></table><h2>7. Watchlists</h2><div><b>priority_assets</b>: BTC | ETH | SOL | HYPE</div><div><b>priority_whales</b>: Matrixport Related | loraclexyz | Unknown HYPE Whale</div><div><b>priority_sources</b>: coindesk | cointelegraph | hyperliquid</div><div><b>priority_topics</b>: ETF | regulatory | whale | liquidation | listing</div><h2>8. Alert Candidates</h2><div class="empty">No candidates</div><h2>9. Event Journal</h2><div class="feed-item"><span class="jt">2026-06-16T13:44:54Z</span> Window 3 run: 84 feed items, 4 market contexts</div><h2>Downstream Candidates</h2><div class="empty">No downstream candidates</div><h2>Market Regime</h2><div><b>State:</b> mixed</div><div style="color:#8b949e;font-size:11px">- No regime signals detected from available data</div><div class="disclaimer">interpretation_type: rule_based_system_context - no trading advice</div><div class="ftr">Contracts: mvp+v1.0 | 2026-06-16T00:00:00Z</div></body></html>
