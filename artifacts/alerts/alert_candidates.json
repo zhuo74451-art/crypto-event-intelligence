@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-06-16T13:41:29Z",
+  "run_id": "ced1872c0bc3",
+  "alert_count": 4,
+  "alerts": [
+    {
+      "alert_type": "WHALE_REDUCE",
+      "severity": "ELEVATED",
+      "run_id": "ced1872c0bc3",
+      "generated_at": "2026-06-16T13:41:29Z",
+      "asset": "ETH",
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "title": "ETH position reduced",
+      "message": "Matrixport Related reduced ETH by $14,441,600",
+      "details": {
+        "delta_usd": -14441600.0
+      }
+    },
+    {
+      "alert_type": "WHALE_REDUCE",
+      "severity": "ELEVATED",
+      "run_id": "ced1872c0bc3",
+      "generated_at": "2026-06-16T13:41:29Z",
+      "asset": "BTC",
+      "address": "0x50b309f78e774a756a2230e1769729094cac9f20",
+      "title": "BTC position reduced",
+      "message": "Unknown Hyperliquid Whale reduced BTC by $10,007,845",
+      "details": {
+        "delta_usd": -10007845.339999996
+      }
+    },
+    {
+      "alert_type": "LARGE_EXPOSURE",
+      "severity": "ELEVATED",
+      "run_id": "ced1872c0bc3",
+      "generated_at": "2026-06-16T13:41:29Z",
+      "asset": "ETH",
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "title": "Large ETH exposure: $57,766,400",
+      "message": "Matrixport Related holds $57,766,400 ETH",
+      "details": {
+        "position_size_usd": 57766400.0,
+        "side": "LONG"
+      }
+    },
+    {
+      "alert_type": "LARGE_EXPOSURE",
+      "severity": "ELEVATED",
+      "run_id": "ced1872c0bc3",
+      "generated_at": "2026-06-16T13:41:29Z",
+      "asset": "HYPE",
+      "address": "0x082e843a431aef031264dc232693dd710aedca88",
+      "title": "Large HYPE exposure: $104,665,195",
+      "message": "Unknown HYPE Whale holds $104,665,195 HYPE",
+      "details": {
+        "position_size_usd": 104665195.42,
+        "side": "LONG"
+      }
+    }
+  ],
+  "sent": false,
+  "production_send_blocked": true
+}

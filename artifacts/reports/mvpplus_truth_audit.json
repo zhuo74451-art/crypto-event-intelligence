@@ -1,0 +1,89 @@
+{
+  "audit_id": "MVPPLUS_TRUTH_AUDIT_V1",
+  "audited_at": "2026-06-16T13:38:23Z",
+  "auditor": "Window 1 — Independent QA",
+  "baseline_commit": "480ab56",
+  "findings": [
+    {
+      "claim": "commit 480ab56 exists on branch workbench/mvpplus-integration-v1",
+      "reality": "git cat-file -t 480ab56 → commit; HEAD = 480ab56cc152eec3c0da46affaf38d42873f6147",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "branch is workbench/mvpplus-integration-v1, clean (untracked only)",
+      "reality": "Branch confirmed; dirty state: 4 untracked parallel-session files only (no modified tracked files)",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "All 7 claimed files exist as modified in commit 480ab56",
+      "reality": "All 7 present, total 2425 insertions; git diff --stat confirmed",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "scripts/mvpplus/lane1..lane6/ path set exists as claimed",
+      "reality": "scripts/mvpplus/ DOES NOT EXIST. Only market_radar/l1..l6/ path set exists.",
+      "verdict": "FALSE_CLAIM",
+      "evidence": ""
+    },
+    {
+      "claim": "119 + 30 tests = 39 total (contradictory arithmetic)",
+      "reality": "192 total pytest tests collected and passed. Contract file uses custom check() assertions (119 checks within 9 pytest functions). 30 integration tests. TOTAL pytest tests: 192. Previous report used misleading arithmetic.",
+      "verdict": "FALSE_CLAIM",
+      "evidence": ""
+    },
+    {
+      "claim": "Hyperliquid provider fully degraded (4/4 addresses failed)",
+      "reality": "11 live whale positions from latest run (run_id 281deec2ef43). L1 successfully fetched Hyperliquid clearinghouse data. Earlier runs were network-restricted.",
+      "verdict": "FALSE_CLAIM",
+      "evidence": ""
+    },
+    {
+      "claim": "HYPE degraded from Binance (L3); live HYPE data from Hyperliquid (L1)",
+      "reality": "L3 Binance: HYPE correctly shows DEGRADED ($0, symbol not found on Binance). L1 Hyperliquid: 2 live HYPE whale positions, mark price ~$75.84. HYPE is AVAILABLE from Hyperliquid L1, DEGRADED from Binance L3. Labels clear.",
+      "verdict": "DEGRADED",
+      "evidence": ""
+    },
+    {
+      "claim": "84 feed items from existing CSV sources",
+      "reality": "84 feed items confirmed in run_report. 84 total.",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "Branch has not been pushed to remote",
+      "reality": "git remote show origin; no push performed. Branch is local-only.",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "11 changes detected (1 POSITION_INCREASED, 10 NO_CHANGE)",
+      "reality": "11 changes. Change detection works: previous snapshot had positions, current has same +1 increase for WLD. First run would show all as POSITION_OPENED.",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "HTML workbench generated and locally openable",
+      "reality": "Workbench at C:\\Users\\PC\\Desktop\\市场信号\\crypto-event-intelligence-worktrees\\mvpplus-integration-v1\\artifacts\\reports\\workbench.html (24690 bytes, dark-mode CSS inline, no external deps)",
+      "verdict": "VERIFIED_LIVE",
+      "evidence": ""
+    },
+    {
+      "claim": "Previous run logs preserved (3 runs total)",
+      "reality": "logs/run_0e399b17ab36.json (first run, L1 failed), logs/run_3cbc034465ac.json (second run, still degraded), reports/run_report.json (third run, 11 live positions). State not yet persisted to SQLite.",
+      "verdict": "VERIFIED_CACHED",
+      "evidence": ""
+    }
+  ],
+  "summary": {
+    "verified_live": 7,
+    "verified_cached": 1,
+    "verified_fixture": 0,
+    "false_or_inconsistent_claims": 0,
+    "unverified": 0,
+    "degraded": 1,
+    "false_claim": 3
+  }
+}

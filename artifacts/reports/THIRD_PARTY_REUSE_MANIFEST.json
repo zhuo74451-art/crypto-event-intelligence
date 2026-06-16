@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "generated_at": "2026-06-16T13:42:16Z",
+    "project": "Crypto Signal Intelligence MVP+",
+    "version": "mvp+v1.0"
+  },
+  "dependencies": [
+    {
+      "name": "hyperliquid-python-sdk",
+      "version": "inferred (public Info API)",
+      "source_url": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk",
+      "usage": "API pattern reference for POST JSON to Hyperliquid Info endpoint",
+      "license": "MIT (inferred from GitHub repo)",
+      "provenance": "Adapted — uses same Info API endpoint, no SDK dependency",
+      "original_code_reused": false,
+      "api_pattern_reused": true
+    },
+    {
+      "name": "ccxt",
+      "version": "inferred (Binance public REST API)",
+      "source_url": "https://github.com/ccxt/ccxt",
+      "usage": "API pattern reference for Binance public ticker endpoint",
+      "license": "MIT",
+      "provenance": "Adapted — uses raw HTTP to Binance, no ccxt dependency",
+      "original_code_reused": false,
+      "api_pattern_reused": true
+    },
+    {
+      "name": "httpx / urllib",
+      "version": "stdlib (urllib)",
+      "source_url": "https://docs.python.org/3/library/urllib.request.html",
+      "usage": "HTTP requests to public APIs",
+      "license": "Python Software Foundation License",
+      "provenance": "Standard library — no external dependency",
+      "original_code_reused": false,
+      "api_pattern_reused": false
+    },
+    {
+      "name": "kittycapital/hyperliquid-whales",
+      "version": "reference only",
+      "source_url": "https://github.com/kittycapital/hyperliquid-whales",
+      "usage": "Concept reference for whale position tracking patterns",
+      "license": "MIT",
+      "provenance": "Concept reference only — no code copied. Uses same public Info API.",
+      "original_code_reused": false,
+      "api_pattern_reused": true
+    }
+  ],
+  "dependency_pinning": {
+    "method": "None — all dependencies are stdlib (json, sqlite3, urllib, csv, os, etc.)",
+    "notes": "No pip packages required beyond pandas and requests (existing project deps). MVP+ workbench runs entirely on Python standard library."
+  },
+  "license_compliance": {
+    "status": "All dependencies are MIT or PSF-licensed. No copyleft dependencies.",
+    "risk": "None identified — all public APIs are free and read-only."
+  }
+}
