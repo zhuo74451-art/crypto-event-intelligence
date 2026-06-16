@@ -1,0 +1,35 @@
+{
+  "fixture_id": "event_old_news_rehash",
+  "description": "旧消息重炒 — 一周前的 news re-packaged 为 'breaking'",
+  "card_family": "news_event_market_impact",
+  "data_source": "fixture",
+  "created_at": "2026-06-16T09:00:00+08:00",
+  "original_event_date": "2026-06-09T00:00:00+08:00",
+  "input_source": "fixture:public_news_source_old",
+  "dedup_key": "cei_dedup:old-news-rehash-btc-2026-06",
+  "dedup_fingerprint": "sha256:rehash789ghi",
+  "asset_or_topic": "BTC",
+  "metrics": {
+    "source_name": "ClickbaitCryptoNews",
+    "title": "BREAKING: SEC ETF Decision Still in Effect — What You Missed",
+    "url": "https://example.com/news/old-news-repackaged",
+    "event_type": "ETF",
+    "intensity": "high",
+    "attribution_risk": "indirect",
+    "extraction_method": "rule_based",
+    "assets_affected": ["BTC"],
+    "news_quality": "low",
+    "trade_relevance": "low",
+    "original_publish_date": "2026-06-09T00:00:00+08:00",
+    "days_since_original": 7,
+    "rehash_indicators": ["breaking_misuse", "no_new_information", "clickbait_title"]
+  },
+  "source_refs": ["fixture:public_news_source_old"],
+  "risk_notes": [
+    "Fixture data — old news rehash test",
+    "No new information — original event 7 days old",
+    "Clickbait framing of stale news"
+  ],
+  "expected_decision": "风险提示",
+  "expected_risk_tags": ["old_news", "rehash", "clickbait", "stale_information"]
+}

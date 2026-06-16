@@ -1,0 +1,35 @@
+{
+  "fixture_id": "event_high_quality",
+  "description": "应被接受的高质量事件 — SEC 批准 BTC ETF 期权",
+  "card_family": "news_event_market_impact",
+  "data_source": "fixture",
+  "created_at": "2026-06-16T10:00:00+08:00",
+  "input_source": "fixture:public_news_source",
+  "dedup_key": "cei_dedup:btc-etf-options-2026-06-16",
+  "dedup_fingerprint": "sha256:abc123def456",
+  "asset_or_topic": "BTC",
+  "metrics": {
+    "source_name": "CryptoNews",
+    "title": "SEC Approves Spot BTC ETF Options — Market Impact Analysis",
+    "url": "https://example.com/news/btc-etf-options",
+    "event_type": "ETF",
+    "intensity": "high",
+    "attribution_risk": "direct",
+    "extraction_method": "rule_based",
+    "assets_affected": ["BTC"],
+    "news_quality": "high",
+    "trade_relevance": "high",
+    "market_snapshot": {
+      "BTCUSDT_price": 89000.0,
+      "BTCUSDT_price_change_pct": -1.23
+    }
+  },
+  "source_refs": ["fixture:public_news_source", "fixture:binance_market_snapshot"],
+  "risk_notes": [
+    "Fixture data — not real news",
+    "Observation only — not causal proof"
+  ],
+  "expected_decision": "观察",
+  "expected_risk_tags": ["etf_approval", "regulatory", "high_volatility"],
+  "expected_observation_window": "24h"
+}

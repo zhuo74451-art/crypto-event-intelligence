@@ -1,0 +1,30 @@
+{
+  "golden_id": "multi_asset_market_sync",
+  "description": "Golden output for multi_asset_market_sync adapter from fixture",
+  "card_family": "multi_asset_market_sync",
+  "data_source": "fixture",
+  "version": "v1.0",
+  "generated_at": "2026-06-16T00:00:00+08:00",
+  "expected_signal": {
+    "source_type": "fixture",
+    "card_family": "multi_asset_market_sync",
+    "asset_or_topic": "BTC/ETH/SOL",
+    "metrics": {
+      "assets": [
+        {"symbol": "BTCUSDT", "price": 89000.0, "price_change_pct": -1.23, "volume_24h": 28500000000.0},
+        {"symbol": "ETHUSDT", "price": 3200.0, "price_change_pct": 2.45, "volume_24h": 12300000000.0},
+        {"symbol": "SOLUSDT", "price": 175.0, "price_change_pct": 5.67, "volume_24h": 3100000000.0}
+      ],
+      "correlation_score": 0.72,
+      "sync_observation": "ETH and SOL outperforming BTC — risk-on rotation signal"
+    },
+    "source_refs": ["fixture:binance_spot_24hr", "fixture:cross_asset_correlation"],
+    "risk_notes": ["Fixture data — not real market data", "Correlation score is simulated"],
+    "tags": []
+  },
+  "stability_rules": [
+    "timestamp field is dynamic and should be excluded from comparison",
+    "pipeline_version field is dynamic and should be excluded from comparison",
+    "signal_id field is dynamic and should be excluded from comparison"
+  ]
+}

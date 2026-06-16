@@ -1,0 +1,35 @@
+{
+  "fixture_id": "event_insufficient_source",
+  "description": "来源不足事件 — 单一不可验证来源，无市场数据佐证",
+  "card_family": "news_event_market_impact",
+  "data_source": "fixture",
+  "created_at": "2026-06-16T12:00:00+08:00",
+  "input_source": "fixture:unverified_source",
+  "dedup_key": "cei_dedup:insufficient-source-2026-06-16",
+  "dedup_fingerprint": "sha256:insuff654uvw",
+  "asset_or_topic": "SOL",
+  "metrics": {
+    "source_name": "UnverifiedTelegramChannel",
+    "title": "SOL to $1000 — Insider Confirms Massive Partnership Announcement",
+    "url": "https://example.com/news/sol-insider",
+    "event_type": "partnership",
+    "intensity": "high",
+    "attribution_risk": "indirect",
+    "extraction_method": "rule_based",
+    "assets_affected": ["SOL"],
+    "news_quality": "very_low",
+    "trade_relevance": "low",
+    "source_verification": "unverifiable — single anonymous source",
+    "corroborating_sources": 0,
+    "market_data_missing": true
+  },
+  "source_refs": ["fixture:unverified_source"],
+  "risk_notes": [
+    "Fixture data — insufficient source test",
+    "Single unverifiable source — cannot corroborate",
+    "Market data unavailable for cross-reference",
+    "Pump risk: no credible source backing"
+  ],
+  "expected_decision": "丢弃",
+  "expected_risk_tags": ["unverified_source", "pump_risk", "insufficient_evidence"]
+}
