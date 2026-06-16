@@ -1,0 +1,9 @@
+{
+  "run_id": "mvpplus_w2_2026-06-16_134517_engine",
+  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "addresses_in_universe": 6,
+  "positions_fetched": 11,
+  "changes_detected": 1,
+  "data_mode": "live",
+  "hyperliquid_api": "healthy"
+}

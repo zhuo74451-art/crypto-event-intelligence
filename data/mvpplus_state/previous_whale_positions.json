@@ -1,126 +1,127 @@
 {
-  "saved_at_utc": "2026-06-16T13:26:39Z",
+  "saved_at_utc": "2026-06-16T13:45:17Z",
+  "count": 11,
   "positions_by_key": {
     "0x6c8512516ce5669d35113a11ca8b8de322fd84f6:ETH": {
       "signed_size": 40000.0,
-      "position_value_usd": 72128000.0,
+      "position_value_usd": 72168000.0,
       "entry_price": 2265.44,
-      "mark_price": 1803.35,
-      "unrealized_pnl_usd": -18489764.97,
+      "mark_price": 1804.05,
+      "unrealized_pnl_usd": -18449764.97,
       "leverage": 20.0,
       "liquidation_price": 1164.02,
-      "liquidation_distance_pct": -35.4524,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "liquidation_distance_pct": -35.4774,
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:SOL": {
       "signed_size": 41533.71,
-      "position_value_usd": 3079558.46,
+      "position_value_usd": 3084874.78,
       "entry_price": 75.3,
-      "mark_price": 74.15,
-      "unrealized_pnl_usd": -48001.48,
+      "mark_price": 74.27,
+      "unrealized_pnl_usd": -42685.16,
       "leverage": 17.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:WLD": {
       "signed_size": 9737082.6,
-      "position_value_usd": 6198432.04,
+      "position_value_usd": 6266202.14,
       "entry_price": 0.51,
       "mark_price": 0.64,
-      "unrealized_pnl_usd": 1186977.3,
+      "unrealized_pnl_usd": 1254747.4,
       "leverage": 10.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:NEAR": {
       "signed_size": 4228103.3,
-      "position_value_usd": 10144488.25,
+      "position_value_usd": 10133495.18,
       "entry_price": 2.22,
       "mark_price": 2.4,
-      "unrealized_pnl_usd": 770323.0,
+      "unrealized_pnl_usd": 759329.93,
       "leverage": 10.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:HYPE": {
       "signed_size": 136619.44,
-      "position_value_usd": 10317636.73,
+      "position_value_usd": 10357529.6,
       "entry_price": 70.54,
-      "mark_price": 75.53,
-      "unrealized_pnl_usd": 681062.34,
+      "mark_price": 75.84,
+      "unrealized_pnl_usd": 720955.22,
       "leverage": 2.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:ASTER": {
       "signed_size": 3584396.0,
-      "position_value_usd": 2376060.26,
+      "position_value_usd": 2393838.87,
       "entry_price": 0.74,
-      "mark_price": 0.66,
-      "unrealized_pnl_usd": -288293.56,
+      "mark_price": 0.67,
+      "unrealized_pnl_usd": -270514.95,
       "leverage": 5.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:ZEC": {
       "signed_size": 37661.12,
-      "position_value_usd": 19077616.95,
+      "position_value_usd": 19019618.82,
       "entry_price": 351.39,
-      "mark_price": 506.54,
-      "unrealized_pnl_usd": 5844024.81,
+      "mark_price": 504.93,
+      "unrealized_pnl_usd": 5786026.68,
       "leverage": 10.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae:XMR": {
       "signed_size": 6421.686,
-      "position_value_usd": 2175410.35,
+      "position_value_usd": 2178428.54,
       "entry_price": 336.88,
-      "mark_price": 338.74,
-      "unrealized_pnl_usd": 12087.75,
+      "mark_price": 339.23,
+      "unrealized_pnl_usd": 15105.95,
       "leverage": 5.0,
       "liquidation_price": null,
       "liquidation_distance_pct": null,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x082e843a431aef031264dc232693dd710aedca88:HYPE": {
       "signed_size": 1380042.66,
-      "position_value_usd": 104222201.73,
+      "position_value_usd": 104625174.18,
       "entry_price": 38.68,
-      "mark_price": 75.53,
-      "unrealized_pnl_usd": 50848271.68,
+      "mark_price": 75.84,
+      "unrealized_pnl_usd": 51251244.14,
       "leverage": 5.0,
       "liquidation_price": 53.43,
-      "liquidation_distance_pct": -29.2679,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "liquidation_distance_pct": -29.5528,
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x50b309f78e774a756a2230e1769729094cac9f20:BTC": {
       "signed_size": 757.25222,
-      "position_value_usd": 50041498.45,
+      "position_value_usd": 50063458.77,
       "entry_price": 66647.8,
-      "mark_price": 66083.5,
-      "unrealized_pnl_usd": -427733.3,
+      "mark_price": 66104.5,
+      "unrealized_pnl_usd": -405772.98,
       "leverage": 20.0,
-      "liquidation_price": 58615.08,
-      "liquidation_distance_pct": -11.3015,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "liquidation_price": 58635.55,
+      "liquidation_distance_pct": -11.2987,
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     },
     "0x50b309f78e774a756a2230e1769729094cac9f20:ETH": {
       "signed_size": -13647.5611,
-      "position_value_usd": 24609282.18,
+      "position_value_usd": 24624294.49,
       "entry_price": 1790.01,
-      "mark_price": 1803.35,
-      "unrealized_pnl_usd": -179992.87,
+      "mark_price": 1804.05,
+      "unrealized_pnl_usd": -195005.18,
       "leverage": 23.0,
-      "liquidation_price": 2204.36,
-      "liquidation_distance_pct": 22.2372,
-      "snapshot_time_utc": "2026-06-16T13:26:34Z"
+      "liquidation_price": 2205.92,
+      "liquidation_distance_pct": 22.2761,
+      "snapshot_time_utc": "2026-06-16T13:45:07Z"
     }
   }
 }

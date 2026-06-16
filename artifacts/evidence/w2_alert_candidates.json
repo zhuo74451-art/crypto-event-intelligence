@@ -1,0 +1,239 @@
+{
+  "run_id": "mvpplus_w2_2026-06-16_134517_engine",
+  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "total_alerts": 15,
+  "alerts": [
+    {
+      "alert_id": "high_lev_0x6c851251_ETH",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "ETH",
+      "label": "Matrixport Related",
+      "address_short": "0x6c851251",
+      "leverage": 20.0,
+      "position_value_usd": 72168000.0,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x6c851251_ETH",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "ETH",
+      "label": "Matrixport Related",
+      "address_short": "0x6c851251",
+      "value_usd": 72168000.0,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "high_lev_0x8def9f50_SOL",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "SOL",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "leverage": 17.0,
+      "position_value_usd": 3084874.78,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "high_lev_0x8def9f50_WLD",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "WLD",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "leverage": 10.0,
+      "position_value_usd": 6266202.14,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x8def9f50_WLD",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "WLD",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "value_usd": 6266202.14,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "high_lev_0x8def9f50_NEAR",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "NEAR",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "leverage": 10.0,
+      "position_value_usd": 10133495.18,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x8def9f50_NEAR",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "NEAR",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "value_usd": 10133495.18,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x8def9f50_HYPE",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "HYPE",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "value_usd": 10357529.6,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "high_lev_0x8def9f50_ZEC",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "ZEC",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "leverage": 10.0,
+      "position_value_usd": 19019618.82,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x8def9f50_ZEC",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "ZEC",
+      "label": "loraclexyz",
+      "address_short": "0x8def9f50",
+      "value_usd": 19019618.82,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x082e843a_HYPE",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "HYPE",
+      "label": "Unknown HYPE Whale",
+      "address_short": "0x082e843a",
+      "value_usd": 104625174.18,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "high_lev_0x50b309f7_BTC",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "BTC",
+      "label": "Unknown Hyperliquid Whale",
+      "address_short": "0x50b309f7",
+      "leverage": 20.0,
+      "position_value_usd": 50063458.77,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x50b309f7_BTC",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "BTC",
+      "label": "Unknown Hyperliquid Whale",
+      "address_short": "0x50b309f7",
+      "value_usd": 50063458.77,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "high_lev_0x50b309f7_ETH",
+      "alert_type": "high_leverage",
+      "rule": {
+        "label": "High Leverage",
+        "min_leverage": 10.0,
+        "severity": "medium"
+      },
+      "coin": "ETH",
+      "label": "Unknown Hyperliquid Whale",
+      "address_short": "0x50b309f7",
+      "leverage": 23.0,
+      "position_value_usd": 24624294.49,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    },
+    {
+      "alert_id": "conc_ex_0x50b309f7_ETH",
+      "alert_type": "concentrated_exposure",
+      "rule": {
+        "label": "Concentrated Exposure",
+        "min_value_usd": 5000000,
+        "severity": "medium"
+      },
+      "coin": "ETH",
+      "label": "Unknown Hyperliquid Whale",
+      "address_short": "0x50b309f7",
+      "value_usd": 24624294.49,
+      "severity": "medium",
+      "generated_at_utc": "2026-06-16T13:45:17Z"
+    }
+  ]
+}
