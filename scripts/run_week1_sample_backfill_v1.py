@@ -1,204 +1,155 @@
 #!/usr/bin/env python3
-"""Week 1 — Sample Price Backfill Runner (Raw Output).
+"""Week 1 RC — Network Price Backfill Runner (Real API, no fixture).
 
-Produces raw price backfill results for 5 Week 1 samples:
-  - HYPE / 2026-05-25T13:02:00Z
-  - ETH  / 2026-05-25T15:19:00Z
-  - BTC  / 2026-05-25T16:12:00Z (two samples)
-  - MACRO-WTI (BTC) / 2026-05-25T11:34:00Z
-  - MACRO-WTI (ETH) / 2026-05-25T11:34:00Z
+Usage:
+    python -X utf8 scripts/run_week1_sample_backfill_v1.py --mode network
 
 Output:
-  research/results/week1_price_backfill_raw_v1.json
-  research/results/week1_price_backfill_raw_v1.md
-
-Design:
-  - WTI is the event topic; only BTC and ETH prices are backfilled
-  - NO attribution, causality, confidence, or trading advice
-  - Network failure marks unavailable (never fixture)
-  - Hyperliquid HYPE failure does not block other samples
+    research/week1_price_backfill_raw_v1.json
+    research/week1_price_backfill_raw_v1.md
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import sys
 from datetime import datetime, timezone
 
-_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, _PROJECT_ROOT)
+PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJ not in sys.path:
+    sys.path.insert(0, PROJ)
 
 from market_radar.shared.price_provider_protocol import (
-    ProviderRouter,
-    run_week1_samples,
-    Week1SampleResult,
-    WEEK1_SAMPLES,
-    utc_now,
+    ProviderRouter, run_week1, Week1ObservationResult,
+    W1_SAMPLES, W1_WTI, utc_now,
 )
 
-RESEARCH_DIR = os.path.join(_PROJECT_ROOT, "research", "results")
+
+OUTPUT_DIR = os.path.join(PROJ, "research")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-def print_header(text: str):
-    print(f"\n{'=' * 60}")
-    print(f"  {text}")
-    print(f"{'=' * 60}")
-
-
-def print_info(text: str, indent: int = 2):
-    print(f"{' ' * indent}[INFO] {text}")
-
-
-def fmt_price(snap) -> str:
+def fmt_px(snap) -> str:
     if snap is None:
         return "N/A"
     return f"{snap.price} ({snap.status}) src={snap.source} lag={snap.lag_seconds}s"
 
 
-def fmt_window(wr) -> str:
-    if wr is None:
+def fmt_win(w) -> str:
+    if w is None:
         return "N/A"
-    if wr.status == "pending":
+    if w.status == "pending":
         return "[PENDING]"
-    if wr.status != "completed":
-        return f"[{wr.status}]"
-    return (f"ret={wr.return_percent:+.4f}% "
-            f"btc_ab={wr.btc_abnormal_return_percent or 'self':>8} "
-            f"eth_ab={wr.eth_abnormal_return_percent or 'self':>8}")
+    if w.status != "completed":
+        return f"[{w.status}]"
+    return (f"ret={w.return_percent:+.4f}%  "
+            f"btc_ab={w.btc_abnormal_return_percent or 'self':>8}  "
+            f"eth_ab={w.eth_abnormal_return_percent or 'self':>8}")
 
 
-def print_results(results: list[Week1SampleResult]):
-    print_header("Week 1 Price Backfill — Results")
+def print_results(results: list[Week1ObservationResult]):
+    print(f"\n{'=' * 60}")
+    print(f"  Week 1 Price Backfill — {len(results)} Observations")
+    print(f"{'=' * 60}")
     for r in results:
-        t0 = r.t0_snapshot
-        print(f"\n  [{r.sample_id}] {r.subject_asset} -> {r.observed_asset}")
-        print(f"    broadcast: {r.broadcast_time}")
-        print(f"    provider:  {r.provider} / {r.interval} (precision={r.precision_seconds}s)")
-        print(f"    t0:        {fmt_price(t0)}")
+        print(f"\n  [{r.result_id}] {r.subject_asset} -> {r.observed_asset}")
+        print(f"    bt:       {r.broadcast_time_utc}")
+        print(f"    provider: {r.provider} / {r.interval}  sel={r.selection_policy}")
+        print(f"    signed_lag: {r.signed_lag_seconds}s")
+        print(f"    t0:       {fmt_px(r.t0_snapshot)}")
         if r.network_error:
-            print(f"    error:     {r.network_error[:120]}")
-        print(f"    1h:        {fmt_window(r.return_1h)}")
-        print(f"    4h:        {fmt_window(r.return_4h)}")
-        print(f"    24h:       {fmt_window(r.return_24h)}")
-        print(f"    btc_bench: {fmt_price(r.btc_benchmark)}")
-        print(f"    eth_bench: {fmt_price(r.eth_benchmark)}")
+            print(f"    error:    {r.network_error[:120]}")
+        print(f"    1h:       {fmt_win(r.return_1h)}")
+        print(f"    4h:       {fmt_win(r.return_4h)}")
+        print(f"    24h:      {fmt_win(r.return_24h)}")
 
 
-def save_json(results: list[Week1SampleResult], path: str) -> str:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+def save_json(results, path):
+    completed = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status == "completed")
+    unavail = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status == "unavailable")
+    partial = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status not in ("completed", "unavailable"))
+    errors = [r.network_error for r in results if r.network_error]
+
     data = {
-        "title": "Week 1 Price Backfill Raw Results",
+        "run_mode": "network",
         "generated_at": utc_now(),
-        "calculation_version": "v1.18-week1",
-        "sample_count": len(results),
-        "samples": [r.as_dict() for r in results],
+        "source_branch": "workbench/week1-price-providers-v1",
+        "source_commit": os.popen("git rev-parse HEAD 2>/dev/null").read().strip() or "unknown",
+        "calculation_version": "v1.18-week1-rc",
+        "samples_expected": 5,
+        "observations_expected": 6,
+        "observations_completed": completed,
+        "observations_unavailable": unavail,
+        "observations_partial": partial,
+        "network_errors": errors if errors else [],
+        "results": [r.as_dict() for r in results],
     }
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     return path
 
 
-def save_markdown(results: list[Week1SampleResult], path: str) -> str:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    lines = [
-        "# Week 1 Price Backfill — Raw Results",
-        "",
-        f"**Generated**: {utc_now()}",
-        f"**Version**: v1.18-week1",
-        f"**Samples**: {len(results)}",
-        "",
-        "---",
-        "",
-    ]
+def save_md(results, path):
+    lines = ["# Week 1 Price Backfill — Network Raw Results", "",
+             f"**Run mode**: network", f"**Generated**: {utc_now()}", f"**Observations**: {len(results)}", "",
+             "---", ""]
     for r in results:
         t0 = r.t0_snapshot
-        t0_line = f"{t0.price} ({t0.status}) src={t0.source}" if t0 else "N/A"
-        lines.extend([
-            f"## {r.sample_id}: {r.subject_asset} -> {r.observed_asset}",
-            "",
-            f"| Field | Value |",
-            f"|-------|-------|",
-            f"| broadcast_time | {r.broadcast_time} |",
-            f"| provider | {r.provider} |",
-            f"| interval | {r.interval} |",
-            f"| precision_seconds | {r.precision_seconds or 'N/A'} |",
-            f"| t0_price | {t0_line} |",
-            f"| t0_lag_seconds | {t0.lag_seconds if t0 else 'N/A'} |",
-        ])
+        t0l = f"{t0.price} ({t0.status}) src={t0.source}" if t0 else "N/A"
+        lines += [f"## {r.result_id}: {r.subject_asset} -> {r.observed_asset}", "",
+                  f"| Field | Value |", f"|-------|-------|",
+                  f"| broadcast_time_utc | {r.broadcast_time_utc} |",
+                  f"| provider | {r.provider} |", f"| interval | {r.interval} |",
+                  f"| precision_seconds | {r.precision_seconds or 'N/A'} |",
+                  f"| selection_policy | {r.selection_policy or 'N/A'} |",
+                  f"| signed_lag_seconds | {r.signed_lag_seconds or 'N/A'} |",
+                  f"| t0_price | {t0l} |"]
         if r.network_error:
             lines.append(f"| network_error | {r.network_error[:100]} |")
-
-        for wname in ["1h", "4h", "24h"]:
-            wr = getattr(r, f"return_{wname}")
-            if wr:
-                lines.append(f"| {wname}_status | {wr.status} |")
-                if wr.status == "completed":
-                    lines.append(f"| {wname}_return_decimal | {wr.return_decimal} |")
-                    lines.append(f"| {wname}_return_percent | {wr.return_percent}% |")
-                    lines.append(f"| {wname}_btc_abnormal | {wr.btc_abnormal_return_percent or 'self_benchmark'}% |")
-                    lines.append(f"| {wname}_eth_abnormal | {wr.eth_abnormal_return_percent or 'self_benchmark'}% |")
-            else:
-                lines.append(f"| {wname}_status | N/A |")
-
-        lines.append("")
-
-        btc = r.btc_benchmark
-        eth = r.eth_benchmark
-        if btc:
-            lines.append(f"| btc_benchmark_price | {btc.price} ({btc.status}) |")
-        if eth:
-            lines.append(f"| eth_benchmark_price | {eth.price} ({eth.status}) |")
-
-        lines.append(f"| data_origin | {r.data_origin} |")
-        lines.append(f"| calculation_version | {r.calculation_version} |")
-        lines.append("")
-        lines.append("---")
-        lines.append("")
-
+        for wn in ("1h", "4h", "24h"):
+            w = getattr(r, f"return_{wn}")
+            if w:
+                lines.append(f"| {wn}_status | {w.status} |")
+                if w.status == "completed":
+                    lines.append(f"| {wn}_return_percent | {w.return_percent}% |")
+                    lines.append(f"| {wn}_btc_abnormal | {w.btc_abnormal_return_percent or 'self_benchmark'}% |")
+                    lines.append(f"| {wn}_eth_abnormal | {w.eth_abnormal_return_percent or 'self_benchmark'}% |")
+        lines += [f"| data_origin | {r.data_origin} |",
+                  f"| calculation_version | {r.calculation_version} |", "", "---", ""]
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
     return path
 
 
 def main():
-    import argparse
-    parser = argparse.ArgumentParser(
-        description="Week 1 Sample Price Backfill Runner",
-    )
-    parser.add_argument("--output-dir", type=str, default=None,
-                        help=f"Output directory (default: {RESEARCH_DIR})")
+    parser = argparse.ArgumentParser(description="Week 1 RC — Network Price Backfill")
+    parser.add_argument("--mode", default="network", choices=["network"],
+                        help="Run mode (must be 'network' for real API)")
     args = parser.parse_args()
 
-    output_dir = args.output_dir or RESEARCH_DIR
-    os.makedirs(output_dir, exist_ok=True)
+    print(f"{'=' * 60}")
+    print(f"  Week 1 Price Backfill — mode={args.mode}")
+    print(f"  Samples: {len(W1_SAMPLES)} + {len(W1_WTI)} WTI = {len(W1_SAMPLES) + len(W1_WTI)} observations")
+    print(f"{'=' * 60}")
 
-    print_header("Week 1 Price Backfill — Raw Output")
-    print_info(f"Output: {output_dir}")
-    print_info(f"Samples: {len(WEEK1_SAMPLES)}")
-
-    # Run
     router = ProviderRouter()
-    results = run_week1_samples(router)
+    results = run_week1(router)
 
-    # Print
     print_results(results)
 
-    # Save
-    json_path = save_json(results, os.path.join(output_dir, "week1_price_backfill_raw_v1.json"))
-    md_path = save_markdown(results, os.path.join(output_dir, "week1_price_backfill_raw_v1.md"))
-    print(f"\n  JSON: {json_path}")
-    print(f"  MD:   {md_path}")
+    jp = save_json(results, os.path.join(OUTPUT_DIR, "week1_price_backfill_raw_v1.json"))
+    mp = save_md(results, os.path.join(OUTPUT_DIR, "week1_price_backfill_raw_v1.md"))
 
-    completed = sum(1 for r in results
-                    if r.t0_snapshot and r.t0_snapshot.status == "completed")
-    failed = sum(1 for r in results
-                 if r.t0_snapshot and r.t0_snapshot.status == "unavailable")
-    print(f"\n  Completed: {completed}/{len(results)}")
-    print(f"  Failed:    {failed}/{len(results)}")
-
-    print_header("Done — raw output only, no attribution")
+    comp = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status == "completed")
+    fail = sum(1 for r in results if r.t0_snapshot and r.t0_snapshot.status == "unavailable")
+    print(f"\n  JSON: {jp}")
+    print(f"  MD:   {mp}")
+    print(f"  Completed: {comp}/{len(results)} | Unavailable: {fail}/{len(results)}")
+    print(f"{'=' * 60}")
+    print(f"  Done — raw output only, no attribution")
+    print(f"{'=' * 60}")
 
 
 if __name__ == "__main__":
