@@ -8,7 +8,15 @@ Defines what constitutes a Research Unit in Pilot v1, how eligibility is determi
 
 ## Research Unit
 
-A Research Unit in v1 is a `point_event_study`: one event fact observed at a specific broadcast time, linked to one price observation for one asset.
+A Research Unit in v1 is a `point_event_study` defined by:
+- one discrete event fact;
+- one selected clock;
+- one pre-registered t0;
+- one target asset;
+- one primary window;
+- one registered benchmark.
+
+broadcast_time is NOT the default. It is only one possible value of actual_time_basis.
 
 ### information_form
 

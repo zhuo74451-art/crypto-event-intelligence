@@ -5,7 +5,7 @@
   "description": "A record linking a claim about an event to its supporting evidence artifacts, with precise evidence role and claim evidence status. No global source reputation scores.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["record_id", "claim", "evidence_artifacts", "evidence_relations", "evidence_role", "claim_evidence_status", "provenance_path", "created_at_utc"],
+  "required": ["record_id", "claim", "evidence_artifacts", "evidence_relations", "evidence_role", "claim_evidence_status", "independence_groups", "provenance_path", "created_at_utc"],
   "properties": {
     "record_id": {"type": "string"},
     "evidence_role": {

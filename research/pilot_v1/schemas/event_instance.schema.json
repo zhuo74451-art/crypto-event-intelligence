@@ -5,7 +5,7 @@
   "description": "A versioned event instance within an Event Thread. The identity model has three layers: Observation (raw capture) → Event Instance (versioned research entity) → Event Thread (grouping). The event_dedup_key from the Signal Spine pipeline is used only for candidate generation and presentation dedup, not as final research identity.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["canonical_event_instance_id", "event_thread_ref", "relationship_to_thread", "relationship_evidence", "created_at_utc"],
+  "required": ["canonical_event_instance_id", "event_thread_ref", "relationship_to_thread", "relationship_evidence", "observation_ref", "instance_version", "created_at_utc"],
   "properties": {
     "canonical_event_instance_id": {"type": "string", "description": "Stable identifier for this specific event instance version."},
     "event_thread_ref": {"type": "string", "description": "Reference to the Event Thread this instance belongs to."},

@@ -5,7 +5,7 @@
   "description": "A research unit representing one study design instance. V1 only supports point_event_study.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["research_unit_id", "design_type", "eligibility_status", "candidate_ref", "created_at_utc"],
+  "required": ["research_unit_id", "design_type", "eligibility_status", "candidate_ref", "information_form", "created_at_utc"],
   "properties": {
     "research_unit_id": {"type": "string", "description": "Unique identifier for this research unit."},
     "design_type": {

@@ -5,7 +5,7 @@
   "description": "Records concurrent events and assesses separability for a given observation window.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["record_id", "research_unit_ref", "observation_window", "separability_status", "collision_set", "created_at_utc"],
+  "required": ["record_id", "research_unit_ref", "observation_window", "separability_status", "collision_set", "alternative_explanations", "coverage_insufficiency", "created_at_utc"],
   "properties": {
     "record_id": {"type": "string"},
     "research_unit_ref": {"type": "string"},
@@ -20,6 +20,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
+        "required": ["event_id", "event_description"],
         "properties": {
           "event_id": {"type": "string"},
           "event_description": {"type": "string"},

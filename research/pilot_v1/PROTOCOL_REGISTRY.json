@@ -1,7 +1,8 @@
 {
   "protocol_version": "1.1.0",
   "phase_id": "PHASE_0_PROTOCOL_SEAL",
-  "sealed_base_commit": "0ed9c0e473c6015a5a747317630375b1c8e51a91",
+  "sealed_v1_base_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "phase0_initial_commit": "0ed9c0e473c6015a5a747317630375b1c8e51a91",
   "sealed_at_utc": null,
   "decision_mappings": [
     {"decision": 1,  "protocol": "01_RESEARCH_UNIT_AND_ELIGIBILITY.md",            "title": "Research Unit and Eligibility"},
