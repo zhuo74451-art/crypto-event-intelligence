@@ -1,3 +1,9 @@
+> ⚠ **Historical document.** This report reflects the project at a specific past commit.
+> Some conclusions may have been superseded by subsequent implementations (price backfill,
+> provider protocol, raw dataset integration).
+> For current status refer to `README.md`, `docs/PROJECT_OVERVIEW.md`, and the
+> Week 1 release evidence.
+
 # Signal Spine v1 — Repository Audit Report
 
 **Auditor:** Architecture Audit & Integration Lead  
