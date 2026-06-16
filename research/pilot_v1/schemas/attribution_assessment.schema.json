@@ -2,17 +2,42 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/attribution_assessment.schema.json",
   "title": "AttributionAssessment",
-  "description": "Eight-dimensional discrete attribution assessment for one research unit. No numeric scores, probabilities, or contribution percentages.",
+  "description": "Seven hard gates followed by eight-dimensional discrete attribution assessment. No numeric scores, probabilities, or contribution percentages. Attribution verdicts (attribution_compatible, limited_attribution_support) are only allowed when all seven hard gates pass.",
   "type": "object",
+  "additionalProperties": false,
   "required": [
-    "assessment_id", "research_unit_ref", "dimensions", "verdict", "created_at_utc"
+    "assessment_id", "research_unit_ref", "hard_gates", "dimensions", "verdict", "created_at_utc"
   ],
   "properties": {
     "assessment_id": {"type": "string"},
     "research_unit_ref": {"type": "string"},
+    "hard_gates": {
+      "type": "object",
+      "description": "Seven hard gates that must all be 'pass' before attribution_compatible or limited_attribution_support verdict can be given.",
+      "required": [
+        "research_eligibility",
+        "event_evidence",
+        "usable_t0",
+        "pre_outcome_registration",
+        "valid_outcome_measurement",
+        "benchmark_validity",
+        "separability"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "research_eligibility": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+        "event_evidence": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+        "usable_t0": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+        "pre_outcome_registration": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+        "valid_outcome_measurement": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+        "benchmark_validity": {"type": "string", "enum": ["pass", "fail", "unknown"]},
+        "separability": {"type": "string", "enum": ["pass", "fail", "unknown"]}
+      }
+    },
     "dimensions": {
       "type": "object",
       "description": "Eight-dimensional assessment matrix. Each dimension is one of: supports, weakens, unknown, not_applicable.",
+      "additionalProperties": false,
       "required": [
         "temporal_ordering",
         "temporal_proximity",
@@ -45,11 +70,15 @@
         "not_supported_in_registered_window",
         "cluster_level_association"
       ],
-      "description": "Final attribution verdict. Single-case verdict must not exceed 'limited_attribution_support'."
+      "description": "Final attribution verdict. Single-case verdict must not exceed 'limited_attribution_support'. Verdicts 'attribution_compatible' and 'limited_attribution_support' require all seven hard gates to be 'pass'."
     },
     "notes": {"type": "string"},
     "created_at_utc": {"type": "string", "format": "date-time"},
-    "updated_at_utc": {"type": "string", "format": "date-time"}
+    "updated_at_utc": {"type": "string", "format": "date-time"},
+    "btc_benchmark_weak_proxy_note": {
+      "type": "string",
+      "description": "Optional field to document that BTC benchmarks are weak proxies for BTC events. For events where target_asset is BTC, registered_benchmark_relative_reaction has limited interpretability."
+    }
   },
   "$defs": {
     "dimension_value": {

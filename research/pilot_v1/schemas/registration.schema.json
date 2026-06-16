@@ -2,42 +2,56 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/registration.schema.json",
   "title": "Registration",
-  "description": "Pre-registration of a research unit's study parameters. Must be created before outcome data is revealed or computed.",
+  "description": "Pre-registration of a research unit's study parameters. Must be created before outcome data is revealed or computed. Contains only pre-event definitions, never outcome results.",
   "type": "object",
+  "additionalProperties": false,
   "required": [
-    "registration_id", "research_unit_ref", "target_asset", "selected_clock", "primary_t0",
-    "t0_type", "primary_window", "primary_benchmark", "registration_time_utc",
+    "registration_id", "research_unit_ref", "target_asset", "selected_clock", "actual_time_basis",
+    "primary_t0", "primary_window", "primary_benchmark", "registration_time_utc",
     "git_commit", "file_sha256", "data_partition", "outcome_status"
   ],
   "properties": {
     "registration_id": {"type": "string"},
     "research_unit_ref": {"type": "string"},
     "target_asset": {"type": "string", "description": "The asset whose price movement is being studied."},
-    "selected_clock": {"type": "string", "enum": ["broadcast_time", "event_time", "block_time"]},
-    "primary_t0": {"type": "string", "format": "date-time", "description": "The primary t0 anchor time."},
-    "t0_type": {"type": "string", "enum": ["broadcast_time", "event_time", "block_time", "estimated"]},
-    "t0_uncertainty_seconds": {"type": "integer", "description": "Estimated uncertainty in t0 in seconds."},
+    "selected_clock": {
+      "type": "string",
+      "enum": ["action_clock", "information_clock"],
+      "description": "One of two clocks: action_clock (when the real-world action occurred) or information_clock (when information about it reached the market). NOT broadcast_time — broadcast_time is a proxy time, not a clock."
+    },
+    "actual_time_basis": {
+      "type": "string",
+      "enum": ["occurrence_time", "action_time", "onchain_confirmation_time", "official_publication_time", "first_reliable_public_time", "detection_time", "broadcast_time", "ingestion_time"],
+      "description": "The actual evidentiary basis for the t0 timestamp. Provides transparency about what the t0 value represents."
+    },
+    "primary_t0": {"type": "string", "format": "date-time", "description": "The primary t0 anchor time, locked before outcome reveal."},
     "primary_window": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["duration_seconds", "window_type"],
       "properties": {
         "duration_seconds": {"type": "integer"},
         "window_type": {"type": "string", "enum": ["t0_to_t_plus_1h", "t0_to_t_plus_4h", "t0_to_t_plus_24h", "custom"]}
       }
     },
-    "primary_benchmark": {"type": "string", "description": "Benchmark asset for relative reaction. Must differ from target_asset."},
+    "primary_benchmark": {
+      "type": "string",
+      "description": "Benchmark asset for relative reaction. Must differ from target_asset. For BTC events, only weak_proxy benchmarks are available."
+    },
     "sensitivity_benchmarks": {
       "type": "array",
       "items": {"type": "string"},
-      "description": "Additional benchmarks for sensitivity analysis."
+      "description": "Additional pre-registered benchmarks for sensitivity analysis. Must also differ from target_asset."
     },
-    "pre_event_movement_check": {
+    "pre_event_movement_check_definition": {
       "type": "object",
+      "additionalProperties": false,
+      "required": ["window_before_t0_seconds", "threshold_bps"],
       "properties": {
         "window_before_t0_seconds": {"type": "integer"},
-        "threshold_bps": {"type": "integer"},
-        "movement_detected": {"type": "boolean"}
-      }
+        "threshold_bps": {"type": "integer"}
+      },
+      "description": "Defines the pre-event movement check rules. Does NOT contain movement_detected results — those go in Outcome."
     },
     "registration_time_utc": {"type": "string", "format": "date-time"},
     "git_commit": {"type": "string"},
@@ -48,12 +62,7 @@
       "enum": ["not_revealed"],
       "description": "MUST be 'not_revealed' at registration time. Outcome data is a separate schema."
     },
+    "t0_uncertainty_seconds": {"type": "integer", "description": "Estimated uncertainty in t0 in seconds."},
     "notes": {"type": "string"}
-  },
-  "allOf": [
-    {
-      "if": {"properties": {"target_asset": {"const": "${primary_benchmark}"}}},
-      "then": {"description": "target_asset and primary_benchmark MUST differ. This registration would be rejected."}
-    }
-  ]
+  }
 }

@@ -4,7 +4,35 @@
 
 ## Temporal Anchor
 
-Primary t0 is `broadcast_time` — the verifiable UTC timestamp of when the event was first reported. `event_time_utc` is recorded when available but may be null.
+### selected_clock
+
+`selected_clock` is either:
+- **action_clock**: Real-world action time (when the event actually occurred)
+- **information_clock**: When information reached the market (when the market first learned of the event)
+
+`broadcast_time` is NOT a valid `selected_clock` value — it is only a proxy/`actual_time_basis`.
+
+### actual_time_basis
+
+The `actual_time_basis` field supports the following values:
+- `occurrence_time`
+- `action_time`
+- `onchain_confirmation_time`
+- `official_publication_time`
+- `first_reliable_public_time`
+- `detection_time`
+- `broadcast_time`
+- `ingestion_time`
+
+### Clock Selection Rules
+
+- The same underlying event can form TWO Study Cases if two different clocks are selected
+- A single Study Case MUST NOT mix two clocks
+- `primary_t0` is locked before Outcome reveal
+
+### Separate Concepts
+
+`event_time_uncertainty`, `price_alignment_lag`, and `price_precision` are separate concepts managed in the Outcome schema, not part of the Temporal Anchor definition.
 
 ## Registration Requirements
 

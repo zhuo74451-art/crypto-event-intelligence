@@ -4,6 +4,7 @@
   "title": "ResearchUnit",
   "description": "A research unit representing one study design instance. V1 only supports point_event_study.",
   "type": "object",
+  "additionalProperties": false,
   "required": ["research_unit_id", "design_type", "eligibility_status", "candidate_ref", "created_at_utc"],
   "properties": {
     "research_unit_id": {"type": "string", "description": "Unique identifier for this research unit."},
@@ -18,6 +19,11 @@
       "description": "Research eligibility status. NOT derived from Legacy Noise Gate pass/reject."
     },
     "candidate_ref": {"type": "string", "description": "Reference to the Candidate from which this unit was created."},
+    "information_form": {
+      "type": "string",
+      "enum": ["discrete_information_release", "discrete_observable_action", "state_snapshot", "cumulative_trend", "interpretation_or_narrative", "market_outcome_or_context"],
+      "description": "Copied from Candidate at creation time for routing traceability."
+    },
     "research_notes": {"type": "string"},
     "created_at_utc": {"type": "string", "format": "date-time"},
     "updated_at_utc": {"type": "string", "format": "date-time"}

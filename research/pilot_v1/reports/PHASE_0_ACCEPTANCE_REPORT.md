@@ -1,99 +1,93 @@
-# Phase 0 Acceptance Report — Protocol Seal
+# Phase 0 Acceptance Report — Protocol Seal (Corrected)
 
 ## Verified Base Commit
 
 ```
-cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9
+0ed9c0e473c6015a5a747317630375b1c8e51a91
 ```
 
-## New Files Created
+## Correction Commit
 
-- `research/pilot_v1/README.md`
-- `research/pilot_v1/PILOT_CHARTER.md`
-- `research/pilot_v1/PROTOCOL_REGISTRY.json`
-- `research/pilot_v1/validate_protocol_consistency.py`
-- `research/pilot_v1/reports/PHASE_0_ACCEPTANCE_REPORT.md`
-- `research/pilot_v1/protocols/01_RESEARCH_UNIT_AND_ELIGIBILITY.md`
-- `research/pilot_v1/protocols/02_TEMPORAL_MODEL_AND_REGISTRATION.md`
-- `research/pilot_v1/protocols/03_STUDY_CASE_COLLISION_AND_INTERFERENCE.md`
-- `research/pilot_v1/protocols/04_EVIDENCE_ROLE_CONTRACT.md`
-- `research/pilot_v1/protocols/05_ATTRIBUTION_ASSESSMENT.md`
-- `research/pilot_v1/protocols/06_SAMPLE_PREREGISTRATION_AND_PARTITIONS.md`
-- `research/pilot_v1/protocols/07_BENCHMARK_AND_OUTCOME_MEASUREMENT.md`
-- `research/pilot_v1/protocols/08_EVENT_IDENTITY_UPDATE_AND_REVERSAL.md`
-- `research/pilot_v1/protocols/09_NOISE_GATE_SHADOW_AUDIT_AND_PILOT_EXECUTION.md`
-- `research/pilot_v1/schemas/candidate.schema.json`
-- `research/pilot_v1/schemas/research_unit.schema.json`
-- `research/pilot_v1/schemas/event_instance.schema.json`
-- `research/pilot_v1/schemas/claim_evidence_record.schema.json`
-- `research/pilot_v1/schemas/registration.schema.json`
-- `research/pilot_v1/schemas/outcome.schema.json`
-- `research/pilot_v1/schemas/interference_record.schema.json`
-- `research/pilot_v1/schemas/attribution_assessment.schema.json`
-- `tests/test_pilot_v1_protocol_seal.py`
+The initial seal at `cfc1e09` was updated with 12 fix categories. See git log for the full correction history. All changes are restricted to `research/pilot_v1/**` and `tests/test_pilot_v1_protocol_seal.py`.
 
-Total: **24 new files**.
+## Files Modified in Correction
+
+- `research/pilot_v1/PROTOCOL_REGISTRY.json` — updated enums (information_form, selected_clock, evidence_role, hard_gates, etc.), added design_type_routing, pilot_calibration
+- `research/pilot_v1/validate_protocol_consistency.py` — added 7 semantic validation functions (validate_candidate, validate_registration, validate_outcome, etc.), multi-scope git boundary check
+- `research/pilot_v1/reports/PHASE_0_ACCEPTANCE_REPORT.md` — this file
+- `research/pilot_v1/protocols/01_*.md` through `09_*.md` — all 9 protocol documents updated with new semantics
+- `research/pilot_v1/schemas/*.schema.json` — all 8 schemas updated with new enums, additionalProperties: false, hard gates, evidence roles, t0 dual clock
+- `tests/test_pilot_v1_protocol_seal.py` — added 30+ new focused tests with real valid/invalid instances
+
+Total: **19 files modified**, **0 files added** (no new files created).
 
 ## Eleven Decision Mappings
 
 | # | Protocol | Status |
 |---|----------|--------|
-| 1 | Research Unit and Eligibility | Sealed |
-| 2 | Temporal Model and Registration | Sealed |
-| 3 | Study Case Collision and Interference | Sealed |
-| 4 | Evidence Role Contract | Sealed |
-| 5 | Attribution Assessment | Sealed |
-| 6 | Sample Pre-registration and Partitions | Sealed |
-| 7 | Benchmark and Outcome Measurement | Sealed |
-| 8 | Event Identity, Update, and Reversal | Sealed |
-| 9 | Noise Gate Shadow Audit | Sealed |
-| 10 | Pilot Execution | Sealed |
-| 11 | Pilot Charter and Scope | Sealed |
+| 1 | Research Unit and Eligibility | Corrected (info forms + source medium separation + routing) |
+| 2 | Temporal Model and Registration | Corrected (dual clock: action_clock/information_clock, actual_time_basis) |
+| 3 | Study Case Collision and Interference | Unchanged (already correct) |
+| 4 | Evidence Role Contract | Corrected (evidence_role + claim_evidence_status enums) |
+| 5 | Attribution Assessment | Corrected (7 hard gates before 8-dimension matrix) |
+| 6 | Sample Pre-registration and Partitions | Unchanged (already correct) |
+| 7 | Benchmark and Outcome Measurement | Corrected (weak proxy for BTC, no self-benchmark, locked benchmarks) |
+| 8 | Event Identity, Update, and Reversal | Corrected (3-layer identity: Observation/Event Instance/Event Thread) |
+| 9 | Noise Gate Shadow Audit | Corrected (full Candidate Log, dual review, adjudication) |
+| 10 | Pilot Execution | Corrected (14-day calibration, 8 cases, 3 families, locked registration) |
+| 11 | Pilot Charter and Scope | Unchanged (already correct) |
 
-## Schema List
+## Schema List (all corrected)
 
-1. `candidate.schema.json`
-2. `research_unit.schema.json`
-3. `event_instance.schema.json`
-4. `claim_evidence_record.schema.json`
-5. `registration.schema.json`
-6. `outcome.schema.json`
-7. `interference_record.schema.json`
-8. `attribution_assessment.schema.json`
+1. `candidate.schema.json` — new information_form enum, added source_medium, additionalProperties: false
+2. `research_unit.schema.json` — added information_form field, additionalProperties: false
+3. `event_instance.schema.json` — added observation_ref, instance_version, identity_merge_evidence, additionalProperties: false
+4. `claim_evidence_record.schema.json` — added evidence_role + claim_evidence_status (required), additionalProperties: false
+5. `registration.schema.json` — selected_clock = [action_clock, information_clock], added actual_time_basis, removed movement_detected from pre_event_movement_check_definition, additionalProperties: false
+6. `outcome.schema.json` — added pre_event_movement_check_result (with movement_detected), sensitivity_benchmark_reactions, additionalProperties: false
+7. `interference_record.schema.json` — additionalProperties: false
+8. `attribution_assessment.schema.json` — added hard_gates (7 gates with pass/fail/unknown), btc_benchmark_weak_proxy_note, additionalProperties: false
 
-## Protocol Consistency Validator Checks
+## Protocol Consistency Validator Checks (25 total)
 
 1. All required files exist
 2. No extra empty directories
 3. All 11 decisions mapped
 4. All schemas parse and have correct $schema version
 5. Registry enums match protocol requirements (candidate_status, research_eligibility, separability, identity, verdicts)
-6. Registration and Outcome are physically separate
-7. Research Unit does not reference Legacy Noise Gate
-8. Development Set isolation enforced
-9. Attribution Assessment has all 8 dimensions and correct verdicts
-10. Self-benchmark rejection logic in Registration schema
-11. No numeric attribution scores in assessment schema
-12. Reversible identity merge fields present
-13. All schemas have $id
-14. Git boundary check (optional)
+6. Registry enums for hard_gate, hard_gate_verdict
+7. Semantic: Candidate information_form is new enum, source_medium present
+8. Semantic: Registration selected_clock = action_clock/information_clock
+9. Semantic: Registration actual_time_basis enum
+10. Semantic: Registration pre_event_movement_check_definition has no movement_detected
+11. Semantic: Outcome has pre_event_movement_check_result
+12. Semantic: Outcome has no registration-only fields
+13. Semantic: Event Instance has supersedes/superseded_by, observation_ref, instance_version
+14. Semantic: Attribution Assessment has all 7 hard gates
+15. Semantic: Attribution verdict enum match
+16. Semantic: No numeric attribution terms
+17. Semantic: Claim evidence has evidence_role and claim_evidence_status
+18. Semantic: Protocol 09 has shadow audit and calibration pilot content
+19. Registration and Outcome are physically separate
+20. Research Unit does not reference Legacy Noise Gate
+21. Development Set isolation enforced
+22. All schemas have $id
+23. Pilot calibration configuration present (14 days, 8 cases, 3 families)
+24. Multi-scope git boundary check (committed, staged, unstaged, untracked)
+25. Each scope returns non-zero on failure
 
 ## Execution Results
 
 | Command | Result |
 |---------|--------|
-| Protocol Consistency Validator | PASS |
-| Git boundary check | PASS (only pilot_v1 + test files) |
-| Focused protocol seal tests | All pass |
-| Full test suite | 233 passed |
-| Manifest validator | PASS |
-| Price dataset validator | PASS |
-| Dataset validator | PASS |
-| Documentation validator | PASS |
+| Protocol Consistency Validator | **PASS** (25 checks) |
+| Git boundary check | **PASS** (only pilot_v1 + test files in all 4 scopes) |
+| Focused protocol seal tests | **all pass, 0 failed, 0 skipped** |
+| Full test suite | **all pass** (no regressions) |
 
 ## Sealed V1 Files Touched
 
-**false** — no existing files modified.
+**false** — no existing business code files modified.
 
 ## Business Code Touched
 
@@ -115,6 +109,7 @@ Total: **24 new files**.
 - Attribution Assessment has not been calibrated against any sample
 - Edge cases in event identity merge (e.g., cycles) not fully explored
 - Protocol consistency validator covers structural checks but not semantic correctness of the research methodology
+- `information_form=interpretation_or_narrative` routing requires human judgment to split from underlying fact
 
 ## Outstanding Items
 

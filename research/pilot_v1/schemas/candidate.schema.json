@@ -2,15 +2,21 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/candidate.schema.json",
   "title": "Candidate",
-  "description": "A raw event observation that is being considered for the Pilot research pipeline.",
+  "description": "A raw event observation being considered for the Pilot research pipeline. information_form encodes the epistemic nature; source_medium is the carrier channel (separate field, not masquerading as form).",
   "type": "object",
-  "required": ["candidate_id", "information_form", "capture_time_utc", "source_observation_ref", "status", "created_at_utc"],
+  "additionalProperties": false,
+  "required": ["candidate_id", "information_form", "source_medium", "capture_time_utc", "source_observation_ref", "status", "created_at_utc"],
   "properties": {
     "candidate_id": {"type": "string", "description": "Unique identifier for this candidate record."},
     "information_form": {
       "type": "string",
-      "enum": ["on_chain_tx", "news_article", "official_announcement", "analyst_report", "social_media", "whale_alert", "regulatory_filing", "market_data_anomaly", "other"],
-      "description": "The information form of the raw observation."
+      "enum": ["discrete_information_release", "discrete_observable_action", "state_snapshot", "cumulative_trend", "interpretation_or_narrative", "market_outcome_or_context"],
+      "description": "The epistemic form of the raw observation. Determines design type routing. NOT the source carrier."
+    },
+    "source_medium": {
+      "type": "string",
+      "enum": ["news_article", "official_announcement", "social_media_post", "onchain_data_feed", "analyst_report", "regulatory_filing", "market_data_feed", "messaging_or_alert", "other"],
+      "description": "The carrier channel through which the observation reached the system. Independent of information_form."
     },
     "capture_time_utc": {"type": "string", "format": "date-time", "description": "UTC timestamp when the raw observation was captured."},
     "source_observation_ref": {"type": "string", "description": "Reference back to the source Observation or raw event record."},
@@ -27,6 +33,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["timestamp_utc", "action", "actor"],
         "properties": {
           "timestamp_utc": {"type": "string", "format": "date-time"},
@@ -38,6 +45,11 @@
       "description": "Complete audit log of all actions taken on this candidate. No silent deletion allowed."
     },
     "created_at_utc": {"type": "string", "format": "date-time"},
-    "updated_at_utc": {"type": "string", "format": "date-time"}
+    "updated_at_utc": {"type": "string", "format": "date-time"},
+    "pilot_candidate_source": {
+      "type": "string",
+      "enum": ["observation", "legacy_noise_gate"],
+      "description": "How this candidate entered the Pilot pipeline."
+    }
   }
 }

@@ -2,13 +2,25 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/claim_evidence_record.schema.json",
   "title": "ClaimEvidenceRecord",
-  "description": "A record linking a claim about an event to its supporting evidence artifacts, provenance path, and independence groups.",
+  "description": "A record linking a claim about an event to its supporting evidence artifacts, with precise evidence role and claim evidence status. No global source reputation scores.",
   "type": "object",
-  "required": ["record_id", "claim", "evidence_artifacts", "evidence_relations", "provenance_path", "created_at_utc"],
+  "additionalProperties": false,
+  "required": ["record_id", "claim", "evidence_artifacts", "evidence_relations", "evidence_role", "claim_evidence_status", "provenance_path", "created_at_utc"],
   "properties": {
     "record_id": {"type": "string"},
+    "evidence_role": {
+      "type": "string",
+      "enum": ["primary_record", "originator_statement", "independent_verification", "carrier_or_relay", "interpretation", "derived_measurement", "anonymous_or_unverified_claim"],
+      "description": "The role this evidence record plays in the event intelligence pipeline."
+    },
+    "claim_evidence_status": {
+      "type": "string",
+      "enum": ["directly_verified", "supported", "single_source_supported", "self_reported", "derived", "disputed", "interpretation_only", "insufficient_evidence"],
+      "description": "The verifiability status of the claim supported by this evidence record."
+    },
     "claim": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["statement", "claimant", "claim_time_utc", "claim_type"],
       "properties": {
         "statement": {"type": "string"},
@@ -21,6 +33,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["artifact_id", "artifact_type", "content_hash", "source"],
         "properties": {
           "artifact_id": {"type": "string"},
@@ -34,6 +47,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["evidence_id", "relation_type"],
         "properties": {
           "evidence_id": {"type": "string"},
@@ -46,6 +60,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["hop", "from_source", "to_source", "timestamp_utc"],
         "properties": {
           "hop": {"type": "integer"},
@@ -60,6 +75,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["group_id", "members"],
         "properties": {
           "group_id": {"type": "string"},

@@ -2,8 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/event_instance.schema.json",
   "title": "EventInstance",
-  "description": "A versioned event instance within an Event Thread. Supports reversible and versioned identity relationships.",
+  "description": "A versioned event instance within an Event Thread. The identity model has three layers: Observation (raw capture) → Event Instance (versioned research entity) → Event Thread (grouping). The event_dedup_key from the Signal Spine pipeline is used only for candidate generation and presentation dedup, not as final research identity.",
   "type": "object",
+  "additionalProperties": false,
   "required": ["canonical_event_instance_id", "event_thread_ref", "relationship_to_thread", "relationship_evidence", "created_at_utc"],
   "properties": {
     "canonical_event_instance_id": {"type": "string", "description": "Stable identifier for this specific event instance version."},
@@ -19,15 +20,29 @@
     },
     "supersedes": {
       "type": "string",
-      "description": "Reference to an earlier event_instance_id that this instance supersedes, if applicable."
+      "description": "Reference to an earlier event_instance_id that this instance supersedes, if applicable. Enables reversible identity."
     },
     "superseded_by": {
       "type": "string",
-      "description": "Reference to a later event_instance_id that supersedes this instance, if applicable."
+      "description": "Reference to a later event_instance_id that supersedes this instance, if applicable. Enables reversible identity."
+    },
+    "observation_ref": {
+      "type": "string",
+      "description": "Reference back to the raw Observation that triggered this Event Instance. Links the Event Instance to the Observation layer."
+    },
+    "instance_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonic version number within the Event Thread. Updated on correction, update, or reversal."
     },
     "instance_data": {
       "type": "object",
+      "additionalProperties": false,
       "description": "The event data fields for this version."
+    },
+    "identity_merge_evidence": {
+      "type": "string",
+      "description": "Evidence supporting an identity merge decision. Required when relationship_to_thread changes to a more specific type. Identity decisions must be evidence-based and reversible."
     },
     "created_at_utc": {"type": "string", "format": "date-time"},
     "updated_at_utc": {"type": "string", "format": "date-time"}

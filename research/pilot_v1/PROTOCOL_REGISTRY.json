@@ -1,7 +1,7 @@
 {
-  "protocol_version": "1.0.0",
+  "protocol_version": "1.1.0",
   "phase_id": "PHASE_0_PROTOCOL_SEAL",
-  "sealed_base_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "sealed_base_commit": "0ed9c0e473c6015a5a747317630375b1c8e51a91",
   "sealed_at_utc": null,
   "decision_mappings": [
     {"decision": 1,  "protocol": "01_RESEARCH_UNIT_AND_ELIGIBILITY.md",            "title": "Research Unit and Eligibility"},
@@ -28,23 +28,47 @@
   },
   "frozen_enums": {
     "candidate_status": ["pending", "routed_to_research", "routed_to_other_design", "excluded", "insufficient_information"],
-    "information_form": ["on_chain_tx", "news_article", "official_announcement", "analyst_report", "social_media", "whale_alert", "regulatory_filing", "market_data_anomaly", "other"],
+    "information_form": [
+      "discrete_information_release",
+      "discrete_observable_action",
+      "state_snapshot",
+      "cumulative_trend",
+      "interpretation_or_narrative",
+      "market_outcome_or_context"
+    ],
+    "source_medium": ["news_article", "official_announcement", "social_media_post", "onchain_data_feed", "analyst_report", "regulatory_filing", "market_data_feed", "messaging_or_alert", "other"],
     "research_eligibility": ["eligible", "conditionally_eligible", "context_only", "routed_to_other_design", "ineligible", "insufficient_information"],
     "design_type_v1": ["point_event_study"],
     "identity_relationship": ["duplicate_report_of", "update_of", "correction_of", "reversal_of", "follow_up_to", "part_of_thread", "related_not_same", "identity_unresolved"],
     "claim_type": ["fact", "interpretation", "prediction", "rumor"],
     "evidence_relation": ["supports", "contradicts", "contextualizes", "unrelated"],
+    "evidence_role": ["primary_record", "originator_statement", "independent_verification", "carrier_or_relay", "interpretation", "derived_measurement", "anonymous_or_unverified_claim"],
+    "claim_evidence_status": ["directly_verified", "supported", "single_source_supported", "self_reported", "derived", "disputed", "interpretation_only", "insufficient_evidence"],
     "artifact_type": ["on_chain_tx", "screenshot", "api_response", "official_doc", "article", "social_post", "analyst_note"],
     "independence_status": ["independent", "shared_source", "circular", "unknown"],
     "separability_status": ["isolated", "minor_interference", "conditionally_separable", "cluster_only", "inseparable", "insufficient_inventory"],
+    "selected_clock": ["action_clock", "information_clock"],
+    "actual_time_basis": ["occurrence_time", "action_time", "onchain_confirmation_time", "official_publication_time", "first_reliable_public_time", "detection_time", "broadcast_time", "ingestion_time"],
     "t0_type": ["broadcast_time", "event_time", "block_time", "estimated"],
     "data_partition": ["development", "calibration", "holdout"],
     "outcome_window": ["1h", "4h", "24h"],
     "direction": ["positive", "negative", "flat"],
     "materiality_assessment": ["material", "not_material", "insufficient_data"],
+    "hard_gate": ["research_eligibility", "event_evidence", "usable_t0", "pre_outcome_registration", "valid_outcome_measurement", "benchmark_validity", "separability"],
+    "hard_gate_verdict": ["pass", "fail", "unknown"],
     "attribution_dimension": ["temporal_ordering", "temporal_proximity", "benchmark_relative_materiality", "asset_specificity", "mechanism_consistency", "interference_and_separability", "alternative_explanations", "robustness"],
     "dimension_value": ["supports", "weakens", "unknown", "not_applicable"],
-    "attribution_verdict": ["not_assessable", "descriptive_reaction_only", "insufficient_evidence", "attribution_compatible", "limited_attribution_support", "not_supported_in_registered_window", "cluster_level_association"]
+    "attribution_verdict": ["not_assessable", "descriptive_reaction_only", "insufficient_evidence", "attribution_compatible", "limited_attribution_support", "not_supported_in_registered_window", "cluster_level_association"],
+    "pilot_candidate_source": ["observation", "legacy_noise_gate"],
+    "shadow_reviewer_role": ["reviewer_a", "reviewer_b"]
+  },
+  "design_type_routing": {
+    "discrete_information_release": "point_event_study",
+    "discrete_observable_action": "point_event_study",
+    "state_snapshot": "context_monitoring",
+    "cumulative_trend": "other_design",
+    "interpretation_or_narrative": "split_from_underlying_fact",
+    "market_outcome_or_context": "interference_context"
   },
   "legacy_compatibility": {
     "week1_abnormal_return": "historical_field_only",
@@ -59,5 +83,12 @@
     "development_set": ["w1_001", "w1_002", "w1_003", "w1_004", "w1_005"],
     "counts_toward_pilot_statistics": false,
     "note": "Week 1 five samples are permanent Development Set members and are excluded from all Pilot aggregate statistics."
+  },
+  "pilot_calibration": {
+    "minimum_consecutive_days": 14,
+    "minimum_registered_cases": 8,
+    "minimum_event_families": 3,
+    "extension_days": 7,
+    "extension_allowed_once": true
   }
 }

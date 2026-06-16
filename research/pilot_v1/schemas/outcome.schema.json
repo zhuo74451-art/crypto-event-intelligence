@@ -2,17 +2,19 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/outcome.schema.json",
   "title": "Outcome",
-  "description": "Price reaction outcome for a registered research unit. Physically separate from Registration. No abnormal_return field.",
+  "description": "Price reaction outcome for a registered research unit. Physically separate from Registration. Contains computed results, never pre-registration definitions.",
   "type": "object",
+  "additionalProperties": false,
   "required": [
     "outcome_id", "registration_ref", "raw_market_reaction", "registered_benchmark_relative_reaction",
-    "historical_materiality", "event_time_uncertainty", "calculated_at_utc"
+    "historical_materiality", "event_time_uncertainty", "pre_event_movement_check_result", "calculated_at_utc"
   ],
   "properties": {
     "outcome_id": {"type": "string"},
     "registration_ref": {"type": "string", "description": "Reference to the Registration this outcome belongs to."},
     "raw_market_reaction": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["window", "absolute_change_pct", "direction"],
       "properties": {
         "window": {"type": "string", "enum": ["1h", "4h", "24h"]},
@@ -22,6 +24,7 @@
     },
     "registered_benchmark_relative_reaction": {
       "type": "object",
+      "additionalProperties": false,
       "description": "Reaction relative to the primary benchmark registered for this study. NOT called abnormal_return.",
       "required": ["benchmark", "relative_change_pct"],
       "properties": {
@@ -29,17 +32,41 @@
         "relative_change_pct": {"type": "number"}
       }
     },
+    "sensitivity_benchmark_reactions": {
+      "type": "array",
+      "description": "Reactions relative to each pre-registered sensitivity benchmark. Each entry must have benchmark != target_asset.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["benchmark", "relative_change_pct"],
+        "properties": {
+          "benchmark": {"type": "string"},
+          "relative_change_pct": {"type": "number"}
+        }
+      }
+    },
     "historical_materiality": {
       "type": "object",
-      "description": "Assessment of whether the reaction exceeds expected historical volatility.",
+      "additionalProperties": false,
       "required": ["assessment", "note"],
       "properties": {
         "assessment": {"type": "string", "enum": ["material", "not_material", "insufficient_data"]},
         "note": {"type": "string"}
       }
     },
+    "pre_event_movement_check_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["movement_detected", "movement_pct"],
+      "description": "Actual result of the pre-event movement check defined in Registration. NOT stored in Registration.",
+      "properties": {
+        "movement_detected": {"type": "boolean"},
+        "movement_pct": {"type": "number"}
+      }
+    },
     "event_time_uncertainty": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["estimated_uncertainty_seconds"],
       "properties": {
         "estimated_uncertainty_seconds": {"type": "integer"},
@@ -48,6 +75,7 @@
     },
     "price_alignment_lag": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "t0_lag_seconds": {"type": "integer"},
         "t1_lag_seconds": {"type": "integer"}
@@ -55,6 +83,7 @@
     },
     "price_precision": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "provider": {"type": "string"},
         "interval_seconds": {"type": "integer"},

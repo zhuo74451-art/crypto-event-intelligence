@@ -4,6 +4,34 @@
 
 ## Event Instance Model
 
+### Three-Layer Identity
+
+1. **Observation** (raw capture) — the initial raw detection of a signal
+2. **Event Instance** (versioned research entity) — the canonical research entity with versioning
+3. **Event Thread** (grouping) — a group of related Event Instances
+
+### event_dedup_key
+
+`event_dedup_key` from Signal Spine is ONLY for:
+- Candidate generation
+- Presentation dedup
+
+`event_dedup_key` MUST NOT be used as final research identity.
+
+### Identity Decision Rules
+
+Identity decisions must be:
+- **Reversible**: Decisions can be undone with proper documentation
+- **Versioned**: Each change creates a new version
+- **Evidence-based**: Decisions require supporting evidence
+- **Default to no-merge when uncertain**: When identity is unclear, do not merge
+
+Updates, corrections, and reversals MUST create a new Event Instance (new version).
+
+### observation_ref
+
+The `observation_ref` field links an Event Instance back to its originating Observation layer record.
+
 Each event fact is versioned as an Event Instance within an Event Thread. Instances carry:
 
 - `canonical_event_instance_id`: stable identifier

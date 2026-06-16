@@ -2,6 +2,31 @@
 
 **对应决策: 5**
 
+## Hard Gates
+
+Seven hard gates must ALL be `pass` before `attribution_compatible` or `limited_attribution_support` verdict can be given.
+
+| Gate | Description |
+|------|-------------|
+| research_eligibility | The Research Unit passed eligibility screening |
+| event_evidence | Sufficient evidence exists for the event |
+| usable_t0 | A usable t0 can be established |
+| pre_outcome_registration | Registration was completed before Outcome reveal |
+| valid_outcome_measurement | Outcome measurement is valid |
+| benchmark_validity | Benchmark selection is valid |
+| separability | The event effect can be separated from interference |
+
+Each gate supports: `pass`, `fail`, `unknown`.
+
+If any gate is not `pass`, the verdict MUST be one of:
+- `not_assessable`
+- `descriptive_reaction_only`
+- `insufficient_evidence`
+- `not_supported_in_registered_window`
+- `cluster_level_association`
+
+`attribution_compatible` and `limited_attribution_support` are ONLY permitted when ALL seven gates are `pass`.
+
 ## Eight Dimensions
 
 | Dimension | Evaluates |
