@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/interference_record.schema.json",
+  "title": "InterferenceRecord",
+  "description": "Records concurrent events and assesses separability for a given observation window.",
+  "type": "object",
+  "required": ["record_id", "research_unit_ref", "observation_window", "separability_status", "collision_set", "created_at_utc"],
+  "properties": {
+    "record_id": {"type": "string"},
+    "research_unit_ref": {"type": "string"},
+    "observation_window": {"type": "string"},
+    "separability_status": {
+      "type": "string",
+      "enum": ["isolated", "minor_interference", "conditionally_separable", "cluster_only", "inseparable", "insufficient_inventory"],
+      "description": "Precise separability assessment. 'insufficient_inventory' means we lack data to make a call."
+    },
+    "collision_set": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_id": {"type": "string"},
+          "event_description": {"type": "string"},
+          "time_proximity_seconds": {"type": "integer"},
+          "overlapping_asset": {"type": "boolean"}
+        }
+      },
+      "description": "List of concurrent events within the observation window. Empty list must be explicit (not absence)."
+    },
+    "alternative_explanations": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "At least one plausible alternative explanation for the observed price movement."
+    },
+    "coverage_insufficiency": {
+      "type": "boolean",
+      "description": "True if the collision set is likely incomplete due to monitoring gaps. Must not be represented as 'no other events'."
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

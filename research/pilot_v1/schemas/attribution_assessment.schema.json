@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/attribution_assessment.schema.json",
+  "title": "AttributionAssessment",
+  "description": "Eight-dimensional discrete attribution assessment for one research unit. No numeric scores, probabilities, or contribution percentages.",
+  "type": "object",
+  "required": [
+    "assessment_id", "research_unit_ref", "dimensions", "verdict", "created_at_utc"
+  ],
+  "properties": {
+    "assessment_id": {"type": "string"},
+    "research_unit_ref": {"type": "string"},
+    "dimensions": {
+      "type": "object",
+      "description": "Eight-dimensional assessment matrix. Each dimension is one of: supports, weakens, unknown, not_applicable.",
+      "required": [
+        "temporal_ordering",
+        "temporal_proximity",
+        "benchmark_relative_materiality",
+        "asset_specificity",
+        "mechanism_consistency",
+        "interference_and_separability",
+        "alternative_explanations",
+        "robustness"
+      ],
+      "properties": {
+        "temporal_ordering":             {"$ref": "#/$defs/dimension_value"},
+        "temporal_proximity":            {"$ref": "#/$defs/dimension_value"},
+        "benchmark_relative_materiality": {"$ref": "#/$defs/dimension_value"},
+        "asset_specificity":             {"$ref": "#/$defs/dimension_value"},
+        "mechanism_consistency":         {"$ref": "#/$defs/dimension_value"},
+        "interference_and_separability":  {"$ref": "#/$defs/dimension_value"},
+        "alternative_explanations":      {"$ref": "#/$defs/dimension_value"},
+        "robustness":                    {"$ref": "#/$defs/dimension_value"}
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "not_assessable",
+        "descriptive_reaction_only",
+        "insufficient_evidence",
+        "attribution_compatible",
+        "limited_attribution_support",
+        "not_supported_in_registered_window",
+        "cluster_level_association"
+      ],
+      "description": "Final attribution verdict. Single-case verdict must not exceed 'limited_attribution_support'."
+    },
+    "notes": {"type": "string"},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "dimension_value": {
+      "type": "string",
+      "enum": ["supports", "weakens", "unknown", "not_applicable"]
+    }
+  }
+}

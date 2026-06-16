@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/research_unit.schema.json",
+  "title": "ResearchUnit",
+  "description": "A research unit representing one study design instance. V1 only supports point_event_study.",
+  "type": "object",
+  "required": ["research_unit_id", "design_type", "eligibility_status", "candidate_ref", "created_at_utc"],
+  "properties": {
+    "research_unit_id": {"type": "string", "description": "Unique identifier for this research unit."},
+    "design_type": {
+      "type": "string",
+      "enum": ["point_event_study"],
+      "description": "V1 Pilot only supports point_event_study."
+    },
+    "eligibility_status": {
+      "type": "string",
+      "enum": ["eligible", "conditionally_eligible", "context_only", "routed_to_other_design", "ineligible", "insufficient_information"],
+      "description": "Research eligibility status. NOT derived from Legacy Noise Gate pass/reject."
+    },
+    "candidate_ref": {"type": "string", "description": "Reference to the Candidate from which this unit was created."},
+    "research_notes": {"type": "string"},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

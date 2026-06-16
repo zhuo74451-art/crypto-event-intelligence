@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/candidate.schema.json",
+  "title": "Candidate",
+  "description": "A raw event observation that is being considered for the Pilot research pipeline.",
+  "type": "object",
+  "required": ["candidate_id", "information_form", "capture_time_utc", "source_observation_ref", "status", "created_at_utc"],
+  "properties": {
+    "candidate_id": {"type": "string", "description": "Unique identifier for this candidate record."},
+    "information_form": {
+      "type": "string",
+      "enum": ["on_chain_tx", "news_article", "official_announcement", "analyst_report", "social_media", "whale_alert", "regulatory_filing", "market_data_anomaly", "other"],
+      "description": "The information form of the raw observation."
+    },
+    "capture_time_utc": {"type": "string", "format": "date-time", "description": "UTC timestamp when the raw observation was captured."},
+    "source_observation_ref": {"type": "string", "description": "Reference back to the source Observation or raw event record."},
+    "status": {
+      "type": "string",
+      "enum": ["pending", "routed_to_research", "routed_to_other_design", "excluded", "insufficient_information"],
+      "description": "Current routing or exclusion status of this candidate."
+    },
+    "exclusion_reason": {
+      "type": "string",
+      "description": "Required when status is 'excluded' or 'insufficient_information'. Explains why the candidate was not routed."
+    },
+    "candidate_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timestamp_utc", "action", "actor"],
+        "properties": {
+          "timestamp_utc": {"type": "string", "format": "date-time"},
+          "action": {"type": "string"},
+          "actor": {"type": "string"},
+          "detail": {"type": "string"}
+        }
+      },
+      "description": "Complete audit log of all actions taken on this candidate. No silent deletion allowed."
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

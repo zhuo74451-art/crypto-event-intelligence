@@ -1,0 +1,63 @@
+{
+  "protocol_version": "1.0.0",
+  "phase_id": "PHASE_0_PROTOCOL_SEAL",
+  "sealed_base_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "sealed_at_utc": null,
+  "decision_mappings": [
+    {"decision": 1,  "protocol": "01_RESEARCH_UNIT_AND_ELIGIBILITY.md",            "title": "Research Unit and Eligibility"},
+    {"decision": 2,  "protocol": "02_TEMPORAL_MODEL_AND_REGISTRATION.md",          "title": "Temporal Model and Registration"},
+    {"decision": 3,  "protocol": "03_STUDY_CASE_COLLISION_AND_INTERFERENCE.md",    "title": "Study Case Collision and Interference"},
+    {"decision": 4,  "protocol": "04_EVIDENCE_ROLE_CONTRACT.md",                   "title": "Evidence Role Contract"},
+    {"decision": 5,  "protocol": "05_ATTRIBUTION_ASSESSMENT.md",                   "title": "Attribution Assessment"},
+    {"decision": 6,  "protocol": "06_SAMPLE_PREREGISTRATION_AND_PARTITIONS.md",    "title": "Sample Pre-registration and Partitions"},
+    {"decision": 7,  "protocol": "07_BENCHMARK_AND_OUTCOME_MEASUREMENT.md",        "title": "Benchmark and Outcome Measurement"},
+    {"decision": 8,  "protocol": "08_EVENT_IDENTITY_UPDATE_AND_REVERSAL.md",       "title": "Event Identity, Update, and Reversal"},
+    {"decision": 9,  "protocol": "09_NOISE_GATE_SHADOW_AUDIT_AND_PILOT_EXECUTION.md", "title": "Noise Gate Shadow Audit"},
+    {"decision": 10, "protocol": "09_NOISE_GATE_SHADOW_AUDIT_AND_PILOT_EXECUTION.md", "title": "Pilot Execution"},
+    {"decision": 11, "file": "PILOT_CHARTER.md", "title": "Pilot Charter and Scope"}
+  ],
+  "schemas": {
+    "candidate":               "schemas/candidate.schema.json",
+    "research_unit":           "schemas/research_unit.schema.json",
+    "event_instance":          "schemas/event_instance.schema.json",
+    "claim_evidence_record":   "schemas/claim_evidence_record.schema.json",
+    "registration":            "schemas/registration.schema.json",
+    "outcome":                 "schemas/outcome.schema.json",
+    "interference_record":     "schemas/interference_record.schema.json",
+    "attribution_assessment":  "schemas/attribution_assessment.schema.json"
+  },
+  "frozen_enums": {
+    "candidate_status": ["pending", "routed_to_research", "routed_to_other_design", "excluded", "insufficient_information"],
+    "information_form": ["on_chain_tx", "news_article", "official_announcement", "analyst_report", "social_media", "whale_alert", "regulatory_filing", "market_data_anomaly", "other"],
+    "research_eligibility": ["eligible", "conditionally_eligible", "context_only", "routed_to_other_design", "ineligible", "insufficient_information"],
+    "design_type_v1": ["point_event_study"],
+    "identity_relationship": ["duplicate_report_of", "update_of", "correction_of", "reversal_of", "follow_up_to", "part_of_thread", "related_not_same", "identity_unresolved"],
+    "claim_type": ["fact", "interpretation", "prediction", "rumor"],
+    "evidence_relation": ["supports", "contradicts", "contextualizes", "unrelated"],
+    "artifact_type": ["on_chain_tx", "screenshot", "api_response", "official_doc", "article", "social_post", "analyst_note"],
+    "independence_status": ["independent", "shared_source", "circular", "unknown"],
+    "separability_status": ["isolated", "minor_interference", "conditionally_separable", "cluster_only", "inseparable", "insufficient_inventory"],
+    "t0_type": ["broadcast_time", "event_time", "block_time", "estimated"],
+    "data_partition": ["development", "calibration", "holdout"],
+    "outcome_window": ["1h", "4h", "24h"],
+    "direction": ["positive", "negative", "flat"],
+    "materiality_assessment": ["material", "not_material", "insufficient_data"],
+    "attribution_dimension": ["temporal_ordering", "temporal_proximity", "benchmark_relative_materiality", "asset_specificity", "mechanism_consistency", "interference_and_separability", "alternative_explanations", "robustness"],
+    "dimension_value": ["supports", "weakens", "unknown", "not_applicable"],
+    "attribution_verdict": ["not_assessable", "descriptive_reaction_only", "insufficient_evidence", "attribution_compatible", "limited_attribution_support", "not_supported_in_registered_window", "cluster_level_association"]
+  },
+  "legacy_compatibility": {
+    "week1_abnormal_return": "historical_field_only",
+    "new_pilot_field": "registered_benchmark_relative_reaction",
+    "legacy_noise_gate_semantics": "unchanged",
+    "shadow_audit_only": true
+  },
+  "allowed_paths": ["research/pilot_v1/**", "tests/test_pilot_v1_protocol_seal.py"],
+  "sealed_paths": ["README.md", "docs/**", "market_radar/shared/**", "research/week1_*", "research/validate_*", "research/build_*", "scripts/**", "tests/test_signal_spine_*", "tests/test_event_price_*", "tests/test_week1_*", ".github/**", "requirements.txt"],
+  "forbidden_schema_properties": ["abnormal_return", "attribution_score", "confidence_probability", "contribution_percentage", "win_rate", "buy_signal", "sell_signal", "long_signal", "short_signal", "action_recommendation"],
+  "development_set_isolation": {
+    "development_set": ["w1_001", "w1_002", "w1_003", "w1_004", "w1_005"],
+    "counts_toward_pilot_statistics": false,
+    "note": "Week 1 five samples are permanent Development Set members and are excluded from all Pilot aggregate statistics."
+  }
+}

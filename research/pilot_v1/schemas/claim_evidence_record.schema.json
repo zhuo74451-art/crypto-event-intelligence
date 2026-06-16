@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/claim_evidence_record.schema.json",
+  "title": "ClaimEvidenceRecord",
+  "description": "A record linking a claim about an event to its supporting evidence artifacts, provenance path, and independence groups.",
+  "type": "object",
+  "required": ["record_id", "claim", "evidence_artifacts", "evidence_relations", "provenance_path", "created_at_utc"],
+  "properties": {
+    "record_id": {"type": "string"},
+    "claim": {
+      "type": "object",
+      "required": ["statement", "claimant", "claim_time_utc", "claim_type"],
+      "properties": {
+        "statement": {"type": "string"},
+        "claimant": {"type": "string"},
+        "claim_time_utc": {"type": "string", "format": "date-time"},
+        "claim_type": {"type": "string", "enum": ["fact", "interpretation", "prediction", "rumor"]}
+      }
+    },
+    "evidence_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_id", "artifact_type", "content_hash", "source"],
+        "properties": {
+          "artifact_id": {"type": "string"},
+          "artifact_type": {"type": "string", "enum": ["on_chain_tx", "screenshot", "api_response", "official_doc", "article", "social_post", "analyst_note"]},
+          "content_hash": {"type": "string"},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "evidence_relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["evidence_id", "relation_type"],
+        "properties": {
+          "evidence_id": {"type": "string"},
+          "relation_type": {"type": "string", "enum": ["supports", "contradicts", "contextualizes", "unrelated"]},
+          "detail": {"type": "string"}
+        }
+      }
+    },
+    "provenance_path": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["hop", "from_source", "to_source", "timestamp_utc"],
+        "properties": {
+          "hop": {"type": "integer"},
+          "from_source": {"type": "string"},
+          "to_source": {"type": "string"},
+          "timestamp_utc": {"type": "string", "format": "date-time"},
+          "transformation": {"type": "string"}
+        }
+      }
+    },
+    "independence_groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["group_id", "members"],
+        "properties": {
+          "group_id": {"type": "string"},
+          "members": {"type": "array", "items": {"type": "string"}},
+          "independence_status": {"type": "string", "enum": ["independent", "shared_source", "circular", "unknown"]}
+        }
+      }
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

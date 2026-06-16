@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/event_instance.schema.json",
+  "title": "EventInstance",
+  "description": "A versioned event instance within an Event Thread. Supports reversible and versioned identity relationships.",
+  "type": "object",
+  "required": ["canonical_event_instance_id", "event_thread_ref", "relationship_to_thread", "relationship_evidence", "created_at_utc"],
+  "properties": {
+    "canonical_event_instance_id": {"type": "string", "description": "Stable identifier for this specific event instance version."},
+    "event_thread_ref": {"type": "string", "description": "Reference to the Event Thread this instance belongs to."},
+    "relationship_to_thread": {
+      "type": "string",
+      "enum": ["duplicate_report_of", "update_of", "correction_of", "reversal_of", "follow_up_to", "part_of_thread", "related_not_same", "identity_unresolved"],
+      "description": "How this instance relates to its thread. Unresolved identities must NOT be auto-merged."
+    },
+    "relationship_evidence": {
+      "type": "string",
+      "description": "Evidence supporting the relationship claim."
+    },
+    "supersedes": {
+      "type": "string",
+      "description": "Reference to an earlier event_instance_id that this instance supersedes, if applicable."
+    },
+    "superseded_by": {
+      "type": "string",
+      "description": "Reference to a later event_instance_id that supersedes this instance, if applicable."
+    },
+    "instance_data": {
+      "type": "object",
+      "description": "The event data fields for this version."
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}
