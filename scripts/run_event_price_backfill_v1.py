@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-"""Signal Spine IO v1 — Event Price Backfill Demo Runner.
+"""Signal Spine IO v1 — Event Price Backfill Demo Runner (RC).
 
 Usage:
-    # Fixture-only demo (default, no network required)
-    python scripts/run_event_price_backfill_v1.py --fixture
+    # Fixture mode (default, no network, deterministic)
+    python scripts/run_event_price_backfill_v1.py --mode fixture
 
-    # Real Binance API (network required)
-    python scripts/run_event_price_backfill_v1.py --network
+    # Network mode (real Binance, no fixture fallback)
+    python scripts/run_event_price_backfill_v1.py --mode network
 
-    # Output to specific directory
-    python scripts/run_event_price_backfill_v1.py --fixture --output-dir ./results/price_backfill
+    # With custom output directory
+    python scripts/run_event_price_backfill_v1.py --mode fixture --output-dir ./results/price_backfill
 
 Design:
-  - No API key required (Binance public REST)
+  - Three modes: fixture / network / network_with_cache
+  - fixture mode: deterministic, offline, uses pre-built data
+  - network mode: real Binance API; failure returns unavailable, NOT fixture
   - All times in UTC
-  - Observation windows: 1h / 4h / 24h
-  - Automatic fixture fallback on network failure
+  - No API key required (Binance public REST)
   - No write-back to Notion, database, or production
   - No trading decisions or recommendations
 """
@@ -36,7 +37,9 @@ if _PROJECT_ROOT not in sys.path:
 from market_radar.shared.event_price_backfill import (
     EventPriceBackfill,
     PriceBackfillResult,
+    BackfillMode,
     OBSERVATION_WINDOWS,
+    FIXTURE_REFERENCE_TIME_UTC,
     utc_now,
 )
 
@@ -59,78 +62,80 @@ def print_info(text: str, indent: int = 2):
     print(f"{' ' * indent}[INFO] {text}")
 
 
-def fmt_pct(val):
-    """Format a percentage value."""
+def fmt_dec(val):
     if val is None:
         return "N/A"
-    return f"{val * 100:+.4f}%"
+    return f"{val:+.6f}"
 
 
-# ── Demo Scenarios ──────────────────────────────────────────────────────────
+def fmt_pct(val):
+    if val is None:
+        return "N/A"
+    return f"{val:+.4f}%"
 
 
-def run_fixture_demo(output_dir: str) -> list[PriceBackfillResult]:
+def run_fixture_demo(output_dir: str, mode: str):
     """Run fixture-based price backfill demo."""
-    print_header("Fixture Demo: Complete 24h Data (BTC, ETH, SOL)")
+    print_header(f"Fixture Demo (mode={mode}) — Full 24h Data (BTC, ETH, SOL)")
 
-    backfill = EventPriceBackfill(use_fixture=True)
-    results = backfill.backfill(
+    bf = EventPriceBackfill(mode=mode)
+    results = bf.backfill(
         event_id="fixture_demo_001",
-        event_time="2026-06-15T12:00:00Z",
+        event_time=FIXTURE_REFERENCE_TIME_UTC,
         assets=["BTC", "ETH", "SOL"],
+        fixture_id="kline_full_24h",
     )
 
     for r in results:
-        print_info(f"Asset: {r.asset} -> {r.mapped_symbol} | t0: {r.t0_price} | Status: {r.backfill_status}")
+        t0 = r.t0_snapshot
+        print_info(f"[{r.asset} -> {r.mapped_symbol}] t0={t0.price} source={t0.source} lag={t0.lag_seconds}s | status={r.backfill_status} mode={r.mode}")
         for w in r.windows:
-            ret = fmt_pct(w.return_pct)
-            btc_ab = fmt_pct(w.btc_abnormal_return)
-            eth_ab = fmt_pct(w.eth_abnormal_return)
-            print_info(f"  {w.window}: price={w.target_price} ret={ret} btc_ab={btc_ab} eth_ab={eth_ab} [{w.status}]")
+            snap = w.target_price_snapshot
+            ret_d = fmt_dec(w.return_decimal)
+            ret_p = fmt_pct(w.return_percent)
+            btc_ab = fmt_dec(w.btc_abnormal_return_decimal)
+            eth_ab = fmt_dec(w.eth_abnormal_return_decimal)
+            print_info(f"  {w.window}: price={snap.price} ret={ret_d}({ret_p}) "
+                       f"btc_ab={btc_ab} eth_ab={eth_ab} "
+                       f"[{w.status}] lag={snap.lag_seconds}s src={snap.source}")
 
-    # BTC self-benchmark check
+    # Verify self-benchmark
     btc_result = next((r for r in results if r.asset == "BTC"), None)
     if btc_result:
         for w in btc_result.windows:
-            if w.btc_abnormal_return is not None:
-                print_fail("BTC self-benchmark: btc_abnormal_return should be None, got {w.btc_abnormal_return}")
+            if w.btc_abnormal_return_decimal is not None:
+                print_fail(f"BTC self-benchmark: btc_abnormal should be None, got {w.btc_abnormal_return_decimal}")
             else:
-                print_pass("BTC self-benchmark correctly: btc_abnormal_return = None")
+                print_pass(f"BTC {w.window}: self-benchmark correct (btc_abnormal=None)")
 
     return results
 
 
-def run_network_demo(output_dir: str) -> list[PriceBackfillResult]:
-    """Run price backfill with real Binance API (optional)."""
-    print_header("Network Demo: Real Binance API (requires internet)")
+def run_network_demo(output_dir: str):
+    """Run with real Binance API (may fail without network — that's OK)."""
+    print_header("Network Demo — Real Binance API")
 
-    backfill = EventPriceBackfill(use_fixture=False)
-    now = datetime.now(timezone.utc)
-    # Use an event 48h ago for full 24h window maturity
-    event_time = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    results = backfill.backfill(
+    bf = EventPriceBackfill(mode=BackfillMode.NETWORK)
+    results = bf.backfill(
         event_id="network_demo_001",
-        event_time=event_time,
+        event_time=utc_now(),
         assets=["BTC", "ETH"],
     )
 
     for r in results:
-        source_note = "fixture_fallback" if r.source == "fixture_fallback" else r.source
-        print_info(f"Asset: {r.asset} | t0: {r.t0_price} | source: {source_note} | status: {r.backfill_status}")
+        t0 = r.t0_snapshot
+        net_err = r.network_error or ""
+        print_info(f"[{r.asset}] t0={t0.price} src={t0.source} "
+                   f"status={r.backfill_status} err={net_err[:80] if net_err else 'none'}")
         for w in r.windows:
-            ret = fmt_pct(w.return_pct) if w.status == "completed" else "N/A"
-            btc_ab = fmt_pct(w.btc_abnormal_return) if w.btc_abnormal_return is not None else "N/A"
-            print_info(f"  {w.window}: ret={ret} btc_ab={btc_ab} [{w.status}]")
+            snap = w.target_price_snapshot
+            ret_d = fmt_dec(w.return_decimal) if w.status == "completed" else "N/A"
+            print_info(f"  {w.window}: price={snap.price} ret={ret_d} [{w.status}] src={snap.source}")
 
     return results
 
 
-# ── Output ──────────────────────────────────────────────────────────────────
-
-
 def save_json_output(results: list[PriceBackfillResult], output_dir: str) -> str:
-    """Save results as JSON."""
     os.makedirs(output_dir, exist_ok=True)
     path = os.path.join(output_dir, "price_backfill_results.json")
     data = {
@@ -144,104 +149,95 @@ def save_json_output(results: list[PriceBackfillResult], output_dir: str) -> str
 
 
 def save_csv_output(results: list[PriceBackfillResult], output_dir: str) -> str:
-    """Save results as CSV summary."""
     os.makedirs(output_dir, exist_ok=True)
     path = os.path.join(output_dir, "price_backfill_summary.csv")
-
     with open(path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([
-            "event_id", "asset", "mapped_symbol", "t0_price", "window",
-            "target_price", "return_pct", "btc_return_pct", "eth_return_pct",
-            "btc_abnormal_return", "eth_abnormal_return", "status", "source",
+            "event_id", "mode", "asset", "symbol", "t0_price", "t0_source", "t0_lag_s",
+            "window", "target_price", "return_decimal", "return_percent",
+            "btc_abnormal_dec", "eth_abnormal_dec", "status", "snapshot_source", "snapshot_lag_s",
         ])
         for r in results:
             for w in r.windows:
+                snap = w.target_price_snapshot
                 writer.writerow([
-                    r.event_id, r.asset, r.mapped_symbol, r.t0_price,
-                    w.window, w.target_price,
-                    f"{w.return_pct:.6f}" if w.return_pct is not None else "",
-                    f"{w.btc_return_pct:.6f}" if w.btc_return_pct is not None else "",
-                    f"{w.eth_return_pct:.6f}" if w.eth_return_pct is not None else "",
-                    f"{w.btc_abnormal_return:.6f}" if w.btc_abnormal_return is not None else "",
-                    f"{w.eth_abnormal_return:.6f}" if w.eth_abnormal_return is not None else "",
-                    w.status, r.source,
+                    r.event_id, r.mode, r.asset, r.mapped_symbol,
+                    r.t0_snapshot.price, r.t0_snapshot.source, r.t0_snapshot.lag_seconds,
+                    w.window, snap.price,
+                    f"{w.return_decimal:.6f}" if w.return_decimal is not None else "",
+                    f"{w.return_percent:.4f}" if w.return_percent is not None else "",
+                    f"{w.btc_abnormal_return_decimal:.6f}" if w.btc_abnormal_return_decimal is not None else "",
+                    f"{w.eth_abnormal_return_decimal:.6f}" if w.eth_abnormal_return_decimal is not None else "",
+                    w.status, snap.source, snap.lag_seconds,
                 ])
     return path
 
 
 def print_results_summary(results: list[PriceBackfillResult]):
-    """Print a human-readable summary of results."""
     print_header("Results Summary")
-    print(f"  Total assets: {len(results)}")
+    print(f"  Total assets: {len(results)} | Mode: {results[0].mode if results else '?'}")
     for r in results:
-        print(f"\n  [{r.asset} -> {r.mapped_symbol}] t0={r.t0_price} status={r.backfill_status}")
+        t0 = r.t0_snapshot
+        print(f"\n  [{r.asset} -> {r.mapped_symbol}] t0={t0.price}(src={t0.source}) "
+              f"status={r.backfill_status} calc_ver={r.calculation_version}")
         if r.error_reason:
             print(f"    ERROR: {r.error_reason}")
         for w in r.windows:
+            snap = w.target_price_snapshot
             if w.status == "completed":
-                print(f"    {w.window}: {fmt_pct(w.return_pct)} "
-                      f"(btc_ab: {fmt_pct(w.btc_abnormal_return)}) "
-                      f"(eth_ab: {fmt_pct(w.eth_abnormal_return)})")
+                print(f"    {w.window}: {fmt_dec(w.return_decimal)} ({fmt_pct(w.return_percent)}) "
+                      f"ab_btc={fmt_dec(w.btc_abnormal_return_decimal)} "
+                      f"ab_eth={fmt_dec(w.eth_abnormal_return_decimal)} "
+                      f"[price={snap.price} lag={snap.lag_seconds}s src={snap.source}]")
             elif w.status == "pending":
                 print(f"    {w.window}: [PENDING — event not yet mature]")
             else:
-                print(f"    {w.window}: [UNAVAILABLE]")
-
-
-# ── Main ────────────────────────────────────────────────────────────────────
+                print(f"    {w.window}: [{w.status}] {snap.error_reason or ''}")
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Event Price Backfill v1 — Demo Runner",
+        description="Event Price Backfill v1 (RC) — Demo Runner",
     )
-    parser.add_argument("--fixture", action="store_true", default=True,
-                        help="Run with fixture data (offline-safe, default)")
-    parser.add_argument("--network", action="store_true", default=False,
-                        help="Attempt real Binance API calls")
-    parser.add_argument("--output-dir", type=str, default=None,
-                        help="Output directory (default: ./results/price_backfill)")
+    parser.add_argument(
+        "--mode", type=str, default="fixture",
+        choices=["fixture", "network", "network_with_cache"],
+        help="Backfill mode (default: fixture)",
+    )
+    parser.add_argument(
+        "--output-dir", type=str, default=None,
+        help="Output directory (default: ./results/price_backfill)",
+    )
     args = parser.parse_args()
-
-    if args.network:
-        args.fixture = False
 
     output_dir = args.output_dir or os.path.join(_PROJECT_ROOT, "results", "price_backfill")
     os.makedirs(output_dir, exist_ok=True)
 
+    mode_label = {"fixture": "FIXTURE (offline, deterministic)",
+                  "network": "NETWORK (real Binance, no fixture fallback)",
+                  "network_with_cache": "NETWORK_WITH_CACHE"}.get(args.mode, args.mode)
+
     print(f"{'=' * 60}")
-    print(f"  Event Price Backfill v1 — Demo Runner")
-    print(f"  Mode: {'FIXTURE' if args.fixture else 'NETWORK'}")
+    print(f"  Event Price Backfill v1 (RC) — Demo Runner")
+    print(f"  Mode:   {mode_label}")
     print(f"  Output: {output_dir}")
     print(f"{'=' * 60}")
 
-    # Run demo
-    if args.fixture:
-        results = run_fixture_demo(output_dir)
+    if args.mode == "fixture":
+        results = run_fixture_demo(output_dir, args.mode)
     else:
         results = run_network_demo(output_dir)
 
-    # Print summary
     print_results_summary(results)
 
-    # Save outputs
     json_path = save_json_output(results, output_dir)
     csv_path = save_csv_output(results, output_dir)
     print(f"\n  JSON: {json_path}")
     print(f"  CSV:  {csv_path}")
 
-    # Verify safety
-    has_trading_instruction = False
-    for r in results:
-        if r.backfill_status == "failed" and "unsupported" in (r.error_reason or ""):
-            pass  # expected
-        for w in r.windows:
-            if w.status == "completed":
-                assert w.return_pct is not None or w.target_price is not None
-
     print(f"\n{'=' * 60}")
-    print(f"  Demo Complete — All checks passed")
+    print(f"  Demo Complete")
     print(f"{'=' * 60}")
 
 

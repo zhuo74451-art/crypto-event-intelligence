@@ -1,31 +1,40 @@
-"""Signal Spine IO v1 — Event Price Backfill & Abnormal Return Module.
+"""Signal Spine IO v1 — Event Price Backfill & Abnormal Return Module (RC).
 
-Calculates deterministic post-event price returns across three observation
-windows (1h / 4h / 24h) using Binance public 1m klines.
+Deterministic post-event price returns across 1h/4h/24h windows using
+Binance public 1m klines.
 
-Design:
-  - Reads only — never writes to any database, ledger, or Notion
-  - No API key required — uses Binance public REST endpoint
-  - Network-optional: all tests work offline via fixture fallback
-  - Single-asset failure never blocks a batch
-  - Pending windows (event not yet mature) are marked pending, not error
-  - Self-benchmark (BTC→BTC, ETH→ETH) returns null benchmark with
-    self_benchmark marker — does not fabricate information
+Modes:
+  - fixture:     pre-built deterministic data, for test/demo only
+  - network:     real Binance API; failure → unavailable/failed, NEVER fixture
+  - network_with_cache: real API + local disk cache, NO manual fixture
 
-Integration note: When the core pipeline integrates this module, call it
-before the EventIntelligence stage so that price return data is available
-for risk assessment. This module does NOT make trading decisions.
+Design constraints:
+  - Read-only — never writes to any database, ledger, or Notion
+  - No API key required — Binance public REST
+  - Network-optional by mode choice, not by silent fallback
+  - Single-asset failure never blocks batch
+  - Max 120 s price lag — rejects stale snapshots
+  - 24h split into individual window requests (not one large fetch)
+  - All timestamps timezone-aware UTC
+  - Self-benchmark (BTC->BTC, ETH->ETH) returns null + self_benchmark marker
+  - No trading decisions. No buy/sell/long/short advice.
 
-Output semantic: observation-only. No buy/sell/long/short advice.
+Data integrity every snapshot records:
+  requested_time, actual_kline_open_time, lag_seconds, source, symbol, price, status
+
+WindowReturn:
+  return_decimal (0.007353) and return_percent (0.7353) both present.
+  Abnormal returns similarly: btc_abnormal_return_decimal, eth_abnormal_return_decimal
 """
 
 from __future__ import annotations
 
 import json
-import time
+import os
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone, timedelta
-from typing import Any, Optional
+from enum import Enum
+from typing import Any, Callable, Optional
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
@@ -37,59 +46,81 @@ BINANCE_KLINES_URL = "https://api.binance.com/api/v3/klines"
 USER_AGENT = "SignalSpineIO-v1/1.0 (price-backfill; no-key public data)"
 
 OBSERVATION_WINDOWS = ["1h", "4h", "24h"]
-WINDOW_DELTA_MAP = {
+WINDOW_DELTA_MAP: dict[str, timedelta] = {
     "1h": timedelta(hours=1),
     "4h": timedelta(hours=4),
     "24h": timedelta(hours=24),
 }
-
-SYMBOL_MAP: dict[str, str] = {
-    "BTC": "BTCUSDT",
-    "ETH": "ETHUSDT",
-    "SOL": "SOLUSDT",
-    "BNB": "BNBUSDT",
-    "XRP": "XRPUSDT",
-    "DOGE": "DOGEUSDT",
-    "LINK": "LINKUSDT",
-    "ARB": "ARBUSDT",
-    "OP": "OPUSDT",
-    "AVAX": "AVAXUSDT",
-    "SUI": "SUIUSDT",
-    "DOT": "DOTUSDT",
-    "ATOM": "ATOMUSDT",
-    "UNI": "UNIUSDT",
-    "AAVE": "AAVEUSDT",
-    "TRX": "TRXUSDT",
-    "TON": "TONUSDT",
-    "NEAR": "NEARUSDT",
-    "INJ": "INJUSDT",
-    "APT": "APTUSDT",
+WINDOW_DELTA_MS: dict[str, int] = {
+    "1h": 3600000,
+    "4h": 14400000,
+    "24h": 86400000,
 }
 
-BENCHMARK_SYMBOLS = {"BTCUSDT": "BTC", "ETHUSDT": "ETH"}
-BENCHMARK_ASSETS = ["BTCUSDT", "ETHUSDT"]
+MAX_PRICE_LAG_SECONDS = 120
 
-PIPELINE_VERSION = "v1.17"
+SYMBOL_MAP: dict[str, str] = {
+    "BTC": "BTCUSDT", "ETH": "ETHUSDT", "SOL": "SOLUSDT",
+    "BNB": "BNBUSDT", "XRP": "XRPUSDT", "DOGE": "DOGEUSDT",
+    "LINK": "LINKUSDT", "ARB": "ARBUSDT", "OP": "OPUSDT",
+    "AVAX": "AVAXUSDT", "SUI": "SUIUSDT", "DOT": "DOTUSDT",
+    "ATOM": "ATOMUSDT", "UNI": "UNIUSDT", "AAVE": "AAVEUSDT",
+    "TRX": "TRXUSDT", "TON": "TONUSDT", "NEAR": "NEARUSDT",
+    "INJ": "INJUSDT", "APT": "APTUSDT",
+}
+
+CALCULATION_VERSION = "v1.18-rc"
+
+
+class BackfillMode(str, Enum):
+    FIXTURE = "fixture"
+    NETWORK = "network"
+    NETWORK_WITH_CACHE = "network_with_cache"
 
 
 # ── Data Structures ─────────────────────────────────────────────────────────
 
 
 @dataclass
-class WindowReturn:
-    """Price return for a single observation window."""
-    window: str
-    target_price: Optional[float] = None
-    target_time: Optional[str] = None
-    return_pct: Optional[float] = None
-    btc_return_pct: Optional[float] = None
-    eth_return_pct: Optional[float] = None
-    btc_abnormal_return: Optional[float] = None
-    eth_abnormal_return: Optional[float] = None
-    status: str = "pending"  # "completed" | "pending" | "unavailable"
+class PriceSnapshot:
+    """Single price data point with full provenance."""
+    symbol: str
+    price: Optional[float] = None
+    requested_time: Optional[str] = None
+    actual_kline_open_time: Optional[str] = None
+    lag_seconds: Optional[int] = None
+    source: str = "unknown"
+    status: str = "pending"  # completed | pending | unavailable | max_lag_exceeded
+    error_reason: Optional[str] = None
 
     def as_dict(self) -> dict:
         return asdict(self)
+
+
+@dataclass
+class WindowReturn:
+    """Price return for a single observation window.
+
+    Both decimal (0.007353) and percent (0.7353) forms are provided.
+    """
+    window: str
+    target_price_snapshot: PriceSnapshot = field(default_factory=lambda: PriceSnapshot(symbol=""))
+    status: str = "pending"
+    return_decimal: Optional[float] = None
+    return_percent: Optional[float] = None
+    btc_return_decimal: Optional[float] = None
+    btc_return_percent: Optional[float] = None
+    eth_return_decimal: Optional[float] = None
+    eth_return_percent: Optional[float] = None
+    btc_abnormal_return_decimal: Optional[float] = None
+    btc_abnormal_return_percent: Optional[float] = None
+    eth_abnormal_return_decimal: Optional[float] = None
+    eth_abnormal_return_percent: Optional[float] = None
+
+    def as_dict(self) -> dict:
+        d = asdict(self)
+        d["target_price_snapshot"] = self.target_price_snapshot.as_dict()
+        return d
 
 
 @dataclass
@@ -99,25 +130,28 @@ class PriceBackfillResult:
     event_time: str
     asset: str
     mapped_symbol: str
-    t0_price: Optional[float] = None
-    t0_time: Optional[str] = None
+    t0_snapshot: PriceSnapshot = field(default_factory=lambda: PriceSnapshot(symbol=""))
     windows: list[WindowReturn] = field(default_factory=list)
-    backfill_status: str = "pending"  # "completed" | "partial" | "pending" | "failed"
-    source: str = "unknown"
+    backfill_status: str = "pending"
+    mode: str = "fixture"
+    calculation_version: str = CALCULATION_VERSION
+    data_origin: str = "unknown"
+    network_error: Optional[str] = None
     error_reason: Optional[str] = None
+    fixture_id: Optional[str] = None
     calculated_at: str = ""
 
     def as_dict(self) -> dict:
         d = asdict(self)
+        d["t0_snapshot"] = self.t0_snapshot.as_dict()
         d["windows"] = [w.as_dict() for w in self.windows]
         return d
 
 
-# ── HTTP Helper (reuses pattern from free_api_adapters.py) ──────────────────
+# ── HTTP Helper ─────────────────────────────────────────────────────────────
 
 
 def _http_get_json(url: str, timeout: int = 15) -> list | dict:
-    """Simple HTTP GET -> JSON via urllib (no external deps)."""
     req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
     with urlopen(req, timeout=timeout) as resp:
         data = resp.read().decode("utf-8")
@@ -128,21 +162,13 @@ def _http_get_json(url: str, timeout: int = 15) -> list | dict:
 
 
 def map_symbol(asset: str) -> tuple[str, bool]:
-    """Map an asset name to a Binance symbol.
-
-    Returns:
-        (mapped_symbol, is_supported)
-    """
     if not asset:
         return "", False
     upper = asset.strip().upper()
-    # Already a USDT pair
     if upper.endswith("USDT") and len(upper) > 4:
         return upper, True
-    # Look up in symbol map
     if upper in SYMBOL_MAP:
         return SYMBOL_MAP[upper], True
-    # Try common pattern
     candidate = f"{upper}USDT"
     if candidate in set(SYMBOL_MAP.values()):
         return candidate, True
@@ -150,10 +176,6 @@ def map_symbol(asset: str) -> tuple[str, bool]:
 
 
 def is_self_benchmark(asset: str, benchmark_symbol: str) -> bool:
-    """Check if an asset IS the benchmark asset.
-
-    e.g., BTCUSDT vs BTC benchmark => self_benchmark
-    """
     mapped, _ = map_symbol(asset)
     return mapped == benchmark_symbol
 
@@ -162,19 +184,13 @@ def is_self_benchmark(asset: str, benchmark_symbol: str) -> bool:
 
 
 def utc_now() -> str:
-    """Return current UTC time in ISO format."""
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def parse_iso_time(iso_str: str) -> Optional[datetime]:
-    """Parse an ISO-8601 time string to timezone-aware UTC datetime.
-
-    Returns None if parsing fails.
-    """
     if not iso_str:
         return None
     try:
-        # Handle both Z and +00:00 suffixes
         dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
         if dt.tzinfo is None:
             dt = dt.replace(tzinfo=timezone.utc)
@@ -183,87 +199,98 @@ def parse_iso_time(iso_str: str) -> Optional[datetime]:
         return None
 
 
-def iso_from_binance_ms(ms: int) -> str:
-    """Convert Binance millisecond timestamp to ISO UTC string."""
+def ms_to_iso(ms: int) -> str:
     return datetime.fromtimestamp(ms / 1000.0, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-# ── Binance Kline Fetching ──────────────────────────────────────────────────
+def iso_to_ms(iso_str: str) -> Optional[int]:
+    dt = parse_iso_time(iso_str)
+    if dt is None:
+        return None
+    return int(dt.timestamp() * 1000)
 
 
-def fetch_klines(
+# ── Binance Kline Fetching (small window per target) ────────────────────────
+
+
+def fetch_klines_window(
     symbol: str,
+    target_time_ms: int,
     interval: str = "1m",
-    limit: int = 1,
-    start_time: Optional[int] = None,
-    end_time: Optional[int] = None,
+    window_minutes: int = 5,
     timeout: int = 15,
 ) -> Optional[list]:
-    """Fetch klines from Binance public API.
+    """Fetch klines around a specific target time (small window).
 
-    Uses the same no-key pattern as free_api_adapters.py.
+    Requests klines from target_time - 1m to target_time + window_minutes.
+    This avoids fetching the full 24h in one request.
 
     Args:
-        symbol: Binance symbol e.g. BTCUSDT
-        interval: Kline interval e.g. "1m"
-        limit: Max number of klines
-        start_time: Optional millisecond timestamp
-        end_time: Optional millisecond timestamp
+        symbol: Binance symbol
+        target_time_ms: Target timestamp in ms
+        interval: Kline interval (default 1m)
+        window_minutes: How many minutes after target to fetch
+        timeout: HTTP timeout
 
     Returns:
         List of klines, or None on failure.
     """
-    params = f"symbol={symbol}&interval={interval}&limit={limit}"
-    if start_time is not None:
-        params += f"&startTime={start_time}"
-    if end_time is not None:
-        params += f"&endTime={end_time}"
+    params = (
+        f"symbol={symbol}&interval={interval}"
+        f"&startTime={target_time_ms - 60000}"
+        f"&limit={window_minutes + 2}"
+    )
     url = f"{BINANCE_KLINES_URL}?{params}"
     try:
         data = _http_get_json(url, timeout=timeout)
-        if isinstance(data, list):
-            return data
-        return None
+        return data if isinstance(data, list) else None
     except (URLError, HTTPError, OSError, ValueError, json.JSONDecodeError):
         return None
 
 
-def select_t0_kline(klines: list, event_time_ms: int) -> Optional[list]:
-    """Select the first kline whose open_time >= event_time.
+# ── Kline Selection with Max Lag ────────────────────────────────────────────
+
+
+def select_kline_at_time(
+    klines: list,
+    target_time_ms: int,
+    max_lag_s: int = MAX_PRICE_LAG_SECONDS,
+) -> tuple[Optional[list], int, Optional[str]]:
+    """Select first kline whose open_time >= target_time, within max_lag.
 
     Binance kline format: [open_time, open, high, low, close, volume, ...]
+
+    Returns:
+        (kline_or_None, lag_seconds, error_reason_or_None)
+          - lag_seconds: how many seconds after target the kline opens
+          - error_reason: if lag exceeds max_lag_s or no kline found
     """
     if not klines:
-        return None
+        return None, 0, "no_klines_available"
+
     for k in klines:
         if isinstance(k, list) and len(k) >= 5:
-            open_time = int(k[0])
-            if open_time >= event_time_ms:
-                return k
-    # If all klines are before event_time, return the last one
-    return klines[-1] if isinstance(klines[-1], list) and len(klines[-1]) >= 5 else None
+            open_time_ms = int(k[0])
+            if open_time_ms >= target_time_ms:
+                lag_s = int((open_time_ms - target_time_ms) / 1000)
+                if lag_s > max_lag_s:
+                    return k, lag_s, f"price_snapshot_too_far_from_target: lag={lag_s}s > max={max_lag_s}s"
+                return k, lag_s, None
 
+    # All klines are before target_time — pick last one
+    last = klines[-1] if klines else None
+    if isinstance(last, list) and len(last) >= 5:
+        last_open = int(last[0])
+        lag_s = int((target_time_ms - last_open) / 1000)  # negative lag = before target
+        # If the last kline ended long before target, it's stale
+        if lag_s > max_lag_s:
+            return last, -lag_s, f"price_snapshot_too_far_from_target: last_kline_at={ms_to_iso(last_open)}, lag={-lag_s}s > max={max_lag_s}s"
+        return last, -lag_s, None
 
-def select_window_kline(klines: list, target_time_ms: int) -> Optional[list]:
-    """Select the first kline whose open_time >= target_time.
-
-    Returns None if no kline meets the criterion.
-    """
-    if not klines:
-        return None
-    for k in klines:
-        if isinstance(k, list) and len(k) >= 5:
-            open_time = int(k[0])
-            if open_time >= target_time_ms:
-                return k
-    return None
+    return None, 0, "no_valid_klines_in_response"
 
 
 def kline_open_price(kline: list) -> Optional[float]:
-    """Extract open price from a kline.
-
-    Binance kline format: [open_time, open, high, low, close, volume, ...]
-    """
     if not kline or len(kline) < 5:
         return None
     try:
@@ -272,144 +299,141 @@ def kline_open_price(kline: list) -> Optional[float]:
         return None
 
 
-def ms_to_iso(ms: int) -> str:
-    """Convert epoch milliseconds to ISO UTC string."""
-    return datetime.fromtimestamp(ms / 1000.0, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+# ── Fixture: Deterministic Kline Data ───────────────────────────────────────
 
 
-# ── Fixture: Pre-built Kline Data ───────────────────────────────────────────
+FIXTURE_REFERENCE_TIME_UTC = "2026-06-15T12:00:00Z"
+FIXTURE_REFERENCE_TIME_MS = 1781524800000
+"""Verified: datetime.fromtimestamp(1781524800000 / 1000, UTC) → 2026-06-15T12:00:00Z"""
 
 
 def get_fixture_klines(symbol: str) -> Optional[list]:
-    """Get pre-built kline fixture data for offline testing.
+    """Pre-built deterministic klines for offline testing.
 
-    Returns a list of klines matching Binance format, or None if
-    no fixture is available for this symbol.
-
-    All fixtures use 1-minute intervals and are deterministic.
+    All timestamps are relative to FIXTURE_REFERENCE_TIME_MS.
+    Format: [open_time, open, high, low, close, volume, close_time]
     """
-    # Reference time: 2026-06-15T12:00:00Z in ms
-    ref_time_ms = 1781524800000
-
-    # ── BTCUSDT fixture (complete 24h) ──
-    btc_fixture = [
-        # [open_time, open, high, low, close, volume, close_time]
-        [ref_time_ms, "68000.00", "68100.00", "67900.00", "68050.00", "100.5", ref_time_ms + 60000],
-        [ref_time_ms + 60000, "68050.00", "68150.00", "67950.00", "68100.00", "95.2", ref_time_ms + 120000],
-        # t+1h window (ref + 3600000ms)
-        [ref_time_ms + 3600000, "68500.00", "68600.00", "68400.00", "68550.00", "110.3", ref_time_ms + 3660000],
-        [ref_time_ms + 3660000, "68550.00", "68650.00", "68450.00", "68600.00", "105.8", ref_time_ms + 3720000],
-        # t+4h window (ref + 14400000ms)
-        [ref_time_ms + 14400000, "69200.00", "69300.00", "69100.00", "69250.00", "120.1", ref_time_ms + 14460000],
-        [ref_time_ms + 14460000, "69250.00", "69350.00", "69150.00", "69300.00", "115.4", ref_time_ms + 14520000],
-        # t+24h window (ref + 86400000ms)
-        [ref_time_ms + 86400000, "69500.00", "69600.00", "69400.00", "69550.00", "130.7", ref_time_ms + 86460000],
-        [ref_time_ms + 86460000, "69550.00", "69650.00", "69450.00", "69600.00", "125.9", ref_time_ms + 86520000],
-    ]
-
-    # ── ETHUSDT fixture ──
-    eth_fixture = [
-        [ref_time_ms, "3500.00", "3510.00", "3490.00", "3505.00", "500.2", ref_time_ms + 60000],
-        [ref_time_ms + 60000, "3505.00", "3515.00", "3495.00", "3510.00", "480.6", ref_time_ms + 120000],
-        [ref_time_ms + 3600000, "3550.00", "3560.00", "3540.00", "3555.00", "510.3", ref_time_ms + 3660000],
-        [ref_time_ms + 3660000, "3555.00", "3565.00", "3545.00", "3560.00", "495.8", ref_time_ms + 3720000],
-        [ref_time_ms + 14400000, "3620.00", "3630.00", "3610.00", "3625.00", "530.1", ref_time_ms + 14460000],
-        [ref_time_ms + 14460000, "3625.00", "3635.00", "3615.00", "3630.00", "520.4", ref_time_ms + 14520000],
-        [ref_time_ms + 86400000, "3580.00", "3590.00", "3570.00", "3585.00", "490.7", ref_time_ms + 86460000],
-        [ref_time_ms + 86460000, "3585.00", "3595.00", "3575.00", "3590.00", "475.9", ref_time_ms + 86520000],
-    ]
-
-    # ── SOLUSDT fixture ──
-    sol_fixture = [
-        [ref_time_ms, "175.00", "176.00", "174.00", "175.50", "2000.5", ref_time_ms + 60000],
-        [ref_time_ms + 60000, "175.50", "176.50", "174.50", "176.00", "1900.3", ref_time_ms + 120000],
-        [ref_time_ms + 3600000, "180.00", "181.00", "179.00", "180.50", "2100.7", ref_time_ms + 3660000],
-        [ref_time_ms + 3660000, "180.50", "181.50", "179.50", "181.00", "2050.2", ref_time_ms + 3720000],
-        [ref_time_ms + 14400000, "178.00", "179.00", "177.00", "178.50", "1950.6", ref_time_ms + 14460000],
-        [ref_time_ms + 14460000, "178.50", "179.50", "177.50", "179.00", "1900.1", ref_time_ms + 14520000],
-        [ref_time_ms + 86400000, "182.00", "183.00", "181.00", "182.50", "2200.4", ref_time_ms + 86460000],
-        [ref_time_ms + 86460000, "182.50", "183.50", "181.50", "183.00", "2150.8", ref_time_ms + 86520000],
-    ]
-
-    fixture_map = {
-        "BTCUSDT": btc_fixture,
-        "ETHUSDT": eth_fixture,
-        "SOLUSDT": sol_fixture,
+    ref = FIXTURE_REFERENCE_TIME_MS
+    fixtures = {
+        "BTCUSDT": [
+            [ref,            "68000.00", "68100.00", "67900.00", "68050.00", "100.5", ref + 60000],
+            [ref + 60000,    "68050.00", "68150.00", "67950.00", "68100.00", "95.2",  ref + 120000],
+            [ref + 3600000,  "68500.00", "68600.00", "68400.00", "68550.00", "110.3", ref + 3660000],
+            [ref + 3660000,  "68550.00", "68650.00", "68450.00", "68600.00", "105.8", ref + 3720000],
+            [ref + 14400000, "69200.00", "69300.00", "69100.00", "69250.00", "120.1", ref + 14460000],
+            [ref + 14460000, "69250.00", "69350.00", "69150.00", "69300.00", "115.4", ref + 14520000],
+            [ref + 86400000, "69500.00", "69600.00", "69400.00", "69550.00", "130.7", ref + 86460000],
+            [ref + 86460000, "69550.00", "69650.00", "69450.00", "69600.00", "125.9", ref + 86520000],
+        ],
+        "ETHUSDT": [
+            [ref,            "3500.00", "3510.00", "3490.00", "3505.00", "500.2", ref + 60000],
+            [ref + 60000,    "3505.00", "3515.00", "3495.00", "3510.00", "480.6", ref + 120000],
+            [ref + 3600000,  "3550.00", "3560.00", "3540.00", "3555.00", "510.3", ref + 3660000],
+            [ref + 3660000,  "3555.00", "3565.00", "3545.00", "3560.00", "495.8", ref + 3720000],
+            [ref + 14400000, "3620.00", "3630.00", "3610.00", "3625.00", "530.1", ref + 14460000],
+            [ref + 14460000, "3625.00", "3635.00", "3615.00", "3630.00", "520.4", ref + 14520000],
+            [ref + 86400000, "3580.00", "3590.00", "3570.00", "3585.00", "490.7", ref + 86460000],
+            [ref + 86460000, "3585.00", "3595.00", "3575.00", "3590.00", "475.9", ref + 86520000],
+        ],
+        "SOLUSDT": [
+            [ref,            "175.00", "176.00", "174.00", "175.50", "2000.5", ref + 60000],
+            [ref + 60000,    "175.50", "176.50", "174.50", "176.00", "1900.3", ref + 120000],
+            [ref + 3600000,  "180.00", "181.00", "179.00", "180.50", "2100.7", ref + 3660000],
+            [ref + 3660000,  "180.50", "181.50", "179.50", "181.00", "2050.2", ref + 3720000],
+            [ref + 14400000, "178.00", "179.00", "177.00", "178.50", "1950.6", ref + 14460000],
+            [ref + 14460000, "178.50", "179.50", "177.50", "179.00", "1900.1", ref + 14520000],
+            [ref + 86400000, "182.00", "183.00", "181.00", "182.50", "2200.4", ref + 86460000],
+            [ref + 86460000, "182.50", "183.50", "181.50", "183.00", "2150.8", ref + 86520000],
+        ],
     }
-    return fixture_map.get(symbol)
+    return fixtures.get(symbol)
 
 
-# ── Partial Fixture: Only 1h Mature ─────────────────────────────────────────
+# ── Fixture: Partial maturity (deterministic clock) ─────────────────────────
+
+
+FIXTURE_PARTIAL_NOW_UTC = "2026-06-16T12:00:00Z"
+FIXTURE_PARTIAL_EVENT_UTC = "2026-06-16T10:30:00Z"
+"""Now=2026-06-16T12:00:00Z, event=2026-06-16T10:30:00Z → 1h mature, 4h pending, 24h pending"""
 
 
 def get_fixture_klines_partial(symbol: str) -> Optional[list]:
-    """Fixture data where only 1h window is mature (4h/24h pending).
+    """Fixture where only 1h is mature.
 
-    Reference time is set close to "now" so only 1h has elapsed.
+    Event: 2026-06-16T10:30:00Z (90 min before now)
+    Now:   2026-06-16T12:00:00Z
+    → 1h  mature  (event+1h=11:30 < 12:00)
+    → 4h  pending (event+4h=14:30 > 12:00)
+    → 24h pending (event+24h=next day > now)
     """
-    # Use a very recent reference so 4h/24h haven't elapsed
-    ref_near_now = int(time.time() * 1000) - 1800000  # 30 min ago
-    btc_partial = [
-        [ref_near_now, "69000.00", "69100.00", "68900.00", "69050.00", "100.0", ref_near_now + 60000],
-        [ref_near_now + 60000, "69050.00", "69150.00", "68950.00", "69100.00", "95.0", ref_near_now + 120000],
-        [ref_near_now + 3600000, "69500.00", "69600.00", "69400.00", "69550.00", "110.0", ref_near_now + 3660000],
-    ]
-    return btc_partial if symbol == "BTCUSDT" else (
-        get_fixture_klines(symbol)  # fallback to full fixture
-    )
+    event_ms = 1781533800000  # 2026-06-16T10:30:00Z
+    if symbol == "BTCUSDT":
+        return [
+            [event_ms,            "69000.00", "69100.00", "68900.00", "69050.00", "100.0", event_ms + 60000],
+            [event_ms + 60000,    "69050.00", "69150.00", "68950.00", "69100.00", "95.0",  event_ms + 120000],
+            [event_ms + 3600000,  "69500.00", "69600.00", "69400.00", "69550.00", "110.0", event_ms + 3660000],
+            [event_ms + 3660000,  "69550.00", "69650.00", "69450.00", "69600.00", "108.0", event_ms + 3720000],
+        ]
+    return get_fixture_klines(symbol)
 
 
-# ── Core Backfill Logic ────────────────────────────────────────────────────
+# ── Core Backfill ───────────────────────────────────────────────────────────
+
+
+_NOW_DEFAULT: Callable[[], datetime] = lambda: datetime.now(timezone.utc)
 
 
 class EventPriceBackfill:
-    """Backfill prices and calculate abnormal returns for an event.
+    """Deterministic price backfill for event intelligence.
 
-    Usage:
-        backfill = EventPriceBackfill(use_fixture=True)
-        result = backfill.backfill(
-            event_id="evt_001",
-            event_time="2026-06-15T12:00:00Z",
-            assets=["BTC", "ETH"],
-        )
-        print(result.as_dict())
-
-    Design:
-        - All times in UTC
-        - Uses Binance 1m klines via public API
-        - Network failure → automatic fixture fallback
-        - Single-asset failure doesn't affect batch
-        - Pending windows (not yet mature) → status="pending"
+    Args:
+        mode: BackfillMode.FIXTURE, .NETWORK, or .NETWORK_WITH_CACHE
+        now_provider: Optional callable returning current UTC datetime.
+                      Inject for deterministic tests. Default: datetime.now(UTC)
+        max_price_lag_seconds: Max allowed lag between target time and kline
+                               open time. Default 120 s.
     """
 
-    def __init__(self, use_fixture: bool = False):
-        self.use_fixture = use_fixture
-        self._source = "fixture" if use_fixture else "binance_public_api"
+    def __init__(
+        self,
+        mode: str | BackfillMode = BackfillMode.FIXTURE,
+        now_provider: Optional[Callable[[], datetime]] = None,
+        max_price_lag_seconds: int = MAX_PRICE_LAG_SECONDS,
+    ):
+        self.mode = BackfillMode(mode) if isinstance(mode, str) else mode
+        self._now_provider = now_provider or _NOW_DEFAULT
+        self._max_lag = max_price_lag_seconds
+
+    # ── Public API ────────────────────────────────────────────────────────
 
     def backfill(
         self,
         event_id: str,
         event_time: str,
         assets: list[str],
+        fixture_id: Optional[str] = None,
     ) -> list[PriceBackfillResult]:
-        """Backfill prices for a single event across all specified assets.
+        """Backfill prices for a single event across multiple assets.
 
         Args:
             event_id: Unique event identifier
             event_time: ISO-8601 UTC event timestamp
-            assets: List of asset names (e.g. ["BTC", "ETH", "SOL"])
+            assets: List of asset names
+            fixture_id: Optional fixture ID (recorded when mode=fixture)
 
         Returns:
             List of PriceBackfillResult, one per asset.
         """
+        now_utc = self._now_provider()
         results: list[PriceBackfillResult] = []
-        now_utc = datetime.now(timezone.utc)
 
         for asset in assets:
-            result = self._backfill_single(asset, event_id, event_time, now_utc)
+            result = self._backfill_single(asset, event_id, event_time, now_utc, fixture_id)
             results.append(result)
 
         return results
+
+    # ── Single Asset ──────────────────────────────────────────────────────
 
     def _backfill_single(
         self,
@@ -417,271 +441,232 @@ class EventPriceBackfill:
         event_id: str,
         event_time: str,
         now_utc: datetime,
+        fixture_id: Optional[str] = None,
     ) -> PriceBackfillResult:
-        """Backfill prices for a single asset."""
         mapped_symbol, supported = map_symbol(asset)
 
         if not supported:
             return PriceBackfillResult(
-                event_id=event_id,
-                event_time=event_time,
-                asset=asset,
-                mapped_symbol=mapped_symbol,
-                backfill_status="failed",
-                source="symbol_mapping",
-                error_reason=f"unsupported_symbol: cannot map '{asset}' to a known Binance pair",
+                event_id=event_id, event_time=event_time,
+                asset=asset, mapped_symbol=mapped_symbol,
+                backfill_status="failed", mode=self.mode.value,
+                data_origin="symbol_mapping",
+                network_error=None,
+                error_reason=f"unsupported_symbol: cannot map '{asset}'",
                 calculated_at=utc_now(),
             )
 
         event_dt = parse_iso_time(event_time)
         if event_dt is None:
             return PriceBackfillResult(
-                event_id=event_id,
-                event_time=event_time,
-                asset=asset,
-                mapped_symbol=mapped_symbol,
-                backfill_status="failed",
-                source="input_validation",
+                event_id=event_id, event_time=event_time,
+                asset=asset, mapped_symbol=mapped_symbol,
+                backfill_status="failed", mode=self.mode.value,
+                data_origin="input_validation",
                 error_reason=f"invalid_event_time: cannot parse '{event_time}'",
                 calculated_at=utc_now(),
             )
 
         event_time_ms = int(event_dt.timestamp() * 1000)
+        data_origin = self.mode.value
 
-        # ── Fetch klines for t0 and all windows ──
-        # We need klines from event_time up to event_time + 24h + 1m
-        fetch_end_ms = event_time_ms + 86400000 + 60000
-        klines = self._fetch_klines(mapped_symbol, event_time_ms, fetch_end_ms)
+        # ── Get t0 price ──────────────────────────────────────────────
+        t0_kline, t0_source, network_err, t0_sel_err = self._fetch_target_kline(
+            mapped_symbol, event_time_ms, "t0",
+        )
+        t0_snapshot = self._build_snapshot(
+            symbol=mapped_symbol, kline=t0_kline,
+            requested_time=event_time, source=t0_source,
+            target_time_ms=event_time_ms,
+            select_error=t0_sel_err,
+        )
 
-        if klines is None:
+        if t0_snapshot.status != "completed":
             return PriceBackfillResult(
-                event_id=event_id,
-                event_time=event_time,
-                asset=asset,
-                mapped_symbol=mapped_symbol,
-                backfill_status="failed",
-                source=self._source if self.use_fixture else "network_error",
-                error_reason="kline_fetch_failed: no data available from source",
+                event_id=event_id, event_time=event_time,
+                asset=asset, mapped_symbol=mapped_symbol,
+                t0_snapshot=t0_snapshot,
+                backfill_status="failed", mode=self.mode.value,
+                data_origin=data_origin,
+                network_error=network_err,
+                error_reason=t0_snapshot.error_reason or "t0_kline_unavailable",
                 calculated_at=utc_now(),
             )
 
-        if not klines:
-            return PriceBackfillResult(
-                event_id=event_id,
-                event_time=event_time,
-                asset=asset,
-                mapped_symbol=mapped_symbol,
-                backfill_status="failed",
-                source=self._source,
-                error_reason="missing_klines: empty response from source",
-                calculated_at=utc_now(),
-            )
+        t0_price = t0_snapshot.price
+        assert t0_price is not None  # guaranteed by status check above
 
-        # ── Select t0 kline ──
-        t0_kline = select_t0_kline(klines, event_time_ms)
-        if t0_kline is None:
-            return PriceBackfillResult(
-                event_id=event_id,
-                event_time=event_time,
-                asset=asset,
-                mapped_symbol=mapped_symbol,
-                backfill_status="failed",
-                source=self._source,
-                error_reason="missing_t0_kline: no kline found at or after event_time",
-                calculated_at=utc_now(),
-            )
+        # ── Get benchmark klines at event time ────────────────────────
+        btc_t0_kline, _, _, _ = self._fetch_target_kline("BTCUSDT", event_time_ms, "t0")
+        eth_t0_kline, _, _, _ = self._fetch_target_kline("ETHUSDT", event_time_ms, "t0")
+        btc_t0_price = kline_open_price(btc_t0_kline) if btc_t0_kline else None
+        eth_t0_price = kline_open_price(eth_t0_kline) if eth_t0_kline else None
 
-        t0_price = kline_open_price(t0_kline)
-        t0_kline_time = ms_to_iso(int(t0_kline[0])) if t0_kline else None
-
-        if t0_price is None:
-            return PriceBackfillResult(
-                event_id=event_id,
-                event_time=event_time,
-                asset=asset,
-                mapped_symbol=mapped_symbol,
-                backfill_status="failed",
-                source=self._source,
-                error_reason="invalid_t0_price: cannot extract open price from t0 kline",
-                calculated_at=utc_now(),
-            )
-
-        # ── Fetch benchmark klines (BTCUSDT, ETHUSDT) ──
-        btc_klines = self._fetch_klines("BTCUSDT", event_time_ms, fetch_end_ms)
-        eth_klines = self._fetch_klines("ETHUSDT", event_time_ms, fetch_end_ms)
-        btc_t0 = kline_open_price(select_t0_kline(btc_klines, event_time_ms)) if btc_klines else None
-        eth_t0 = kline_open_price(select_t0_kline(eth_klines, event_time_ms)) if eth_klines else None
-
-        # ── Calculate returns for each window ──
+        # ── Calculate windows ─────────────────────────────────────────
         windows: list[WindowReturn] = []
         all_completed = True
         any_completed = False
 
-        for window_name in OBSERVATION_WINDOWS:
-            w_result = self._calculate_window(
-                window_name=window_name,
-                event_time_ms=event_time_ms,
-                t0_price=t0_price,
-                now_utc=now_utc,
-                mapped_symbol=mapped_symbol,
-                klines=klines,
-                btc_klines=btc_klines,
-                eth_klines=eth_klines,
-                btc_t0_price=btc_t0,
-                eth_t0_price=eth_t0,
-            )
-            windows.append(w_result)
-            if w_result.status == "completed":
-                any_completed = True
-            elif w_result.status == "pending":
-                all_completed = False
+        for wname in OBSERVATION_WINDOWS:
+            delta_ms = WINDOW_DELTA_MS[wname]
+            target_ms = event_time_ms + delta_ms
+            window_deadline = datetime.fromtimestamp(target_ms / 1000.0, tz=timezone.utc)
 
-        # ── Determine overall status ──
+            if window_deadline > now_utc:
+                windows.append(WindowReturn(
+                    window=wname,
+                    target_price_snapshot=PriceSnapshot(
+                        symbol=mapped_symbol, status="pending",
+                        requested_time=ms_to_iso(target_ms),
+                    ),
+                    status="pending",
+                ))
+                all_completed = False
+                continue
+
+            # Fetch kline for this window
+            wk, w_source, w_err, w_sel_err = self._fetch_target_kline(
+                mapped_symbol, target_ms, wname,
+            )
+            w_snap = self._build_snapshot(
+                symbol=mapped_symbol, kline=wk,
+                requested_time=ms_to_iso(target_ms),
+                source=w_source, target_time_ms=target_ms,
+                select_error=w_sel_err,
+            )
+
+            if w_snap.status != "completed":
+                windows.append(WindowReturn(
+                    window=wname,
+                    target_price_snapshot=w_snap,
+                    status=w_snap.status,
+                ))
+                continue
+
+            target_price = w_snap.price
+            assert target_price is not None
+
+            # Asset return
+            r_dec = (target_price / t0_price) - 1.0
+            r_pct = r_dec * 100.0
+
+            # Benchmark returns for this window
+            btc_r = self._benchmark_return_at(
+                "BTCUSDT", target_ms, btc_t0_price, event_time_ms,
+            )
+            eth_r = self._benchmark_return_at(
+                "ETHUSDT", target_ms, eth_t0_price, event_time_ms,
+            )
+
+            # Self-benchmark handling
+            is_btc_self = is_self_benchmark(mapped_symbol, "BTCUSDT")
+            is_eth_self = is_self_benchmark(mapped_symbol, "ETHUSDT")
+
+            btc_ab_dec: Optional[float] = None
+            btc_ab_pct: Optional[float] = None
+            eth_ab_dec: Optional[float] = None
+            eth_ab_pct: Optional[float] = None
+
+            if is_btc_self:
+                btc_ab_dec = None
+                btc_ab_pct = None
+            elif btc_r is not None:
+                btc_ab_dec = r_dec - btc_r
+                btc_ab_pct = btc_ab_dec * 100.0 if btc_ab_dec is not None else None
+
+            if is_eth_self:
+                eth_ab_dec = None
+                eth_ab_pct = None
+            elif eth_r is not None:
+                eth_ab_dec = r_dec - eth_r
+                eth_ab_pct = eth_ab_dec * 100.0 if eth_ab_dec is not None else None
+
+            wr = WindowReturn(
+                window=wname,
+                target_price_snapshot=w_snap,
+                status="completed",
+                return_decimal=round(r_dec, 6),
+                return_percent=round(r_pct, 4),
+                btc_return_decimal=round(btc_r, 6) if btc_r is not None else None,
+                btc_return_percent=round(btc_r * 100.0, 4) if btc_r is not None else None,
+                eth_return_decimal=round(eth_r, 6) if eth_r is not None else None,
+                eth_return_percent=round(eth_r * 100.0, 4) if eth_r is not None else None,
+                btc_abnormal_return_decimal=round(btc_ab_dec, 6) if btc_ab_dec is not None else None,
+                btc_abnormal_return_percent=round(btc_ab_pct, 4) if btc_ab_pct is not None else None,
+                eth_abnormal_return_decimal=round(eth_ab_dec, 6) if eth_ab_dec is not None else None,
+                eth_abnormal_return_percent=round(eth_ab_pct, 4) if eth_ab_pct is not None else None,
+            )
+            windows.append(wr)
+            any_completed = True
+
+        # Overall status
         if all_completed and all(w.status == "completed" for w in windows):
-            backfill_status = "completed"
+            status = "completed"
         elif any_completed:
-            backfill_status = "partial"
+            status = "partial"
         elif all(w.status == "pending" for w in windows):
-            backfill_status = "pending"
+            status = "pending"
         else:
-            backfill_status = "partial"
+            status = "partial"
 
         return PriceBackfillResult(
-            event_id=event_id,
-            event_time=event_time,
-            asset=asset,
-            mapped_symbol=mapped_symbol,
-            t0_price=t0_price,
-            t0_time=t0_kline_time,
-            windows=windows,
-            backfill_status=backfill_status,
-            source=self._source,
+            event_id=event_id, event_time=event_time,
+            asset=asset, mapped_symbol=mapped_symbol,
+            t0_snapshot=t0_snapshot, windows=windows,
+            backfill_status=status, mode=self.mode.value,
+            calculation_version=CALCULATION_VERSION,
+            data_origin=data_origin,
+            network_error=network_err,
+            fixture_id=fixture_id,
             calculated_at=utc_now(),
         )
 
-    def _fetch_klines(
-        self,
-        symbol: str,
-        start_ms: int,
-        end_ms: int,
-    ) -> Optional[list]:
-        """Fetch klines from Binance or fixture.
+    # ── Kline Fetch (mode-aware) ─────────────────────────────────────────
 
-        If use_fixture is True, returns pre-built fixture data.
-        Otherwise attempts Binance API with automatic fixture fallback.
+    def _fetch_target_kline(
+        self, symbol: str, target_time_ms: int, label: str,
+    ) -> tuple[Optional[list], str, Optional[str], Optional[str]]:
+        """Fetch kline near target_time_ms.
+
+        Returns:
+            (kline_or_None, source_label, network_error_or_None, select_error_or_None)
         """
-        if self.use_fixture:
-            return get_fixture_klines(symbol)
+        if self.mode == BackfillMode.FIXTURE:
+            klines = get_fixture_klines(symbol)
+            if klines is None:
+                return None, "fixture", None, None
+            k, _, sel_err = select_kline_at_time(klines, target_time_ms, self._max_lag)
+            return k, "fixture", None, sel_err
 
-        # Attempt Binance API
-        klines = fetch_klines(
-            symbol=symbol,
-            interval="1m",
-            limit=1500,  # ~24h at 1m intervals
-            start_time=start_ms,
-            end_time=end_ms,
-        )
+        # network or network_with_cache
+        if self.mode == BackfillMode.NETWORK_WITH_CACHE:
+            # TODO: implement disk cache layer
+            pass
 
-        if klines is not None:
-            self._source = "binance_public_api"
-            return klines
+        # mode = network (or cache fallback from above)
+        klines = fetch_klines_window(symbol, target_time_ms, window_minutes=5)
+        if klines is None:
+            return None, "network_error", f"binance_api_failed: {symbol} at {ms_to_iso(target_time_ms)}", None
 
-        # Fallback to fixture
-        self._source = "fixture_fallback"
-        return get_fixture_klines(symbol)
+        k, _, sel_err = select_kline_at_time(klines, target_time_ms, self._max_lag)
+        return k, "binance_public_api", None, sel_err
 
-    def _calculate_window(
+    # ── Benchmark Return at Time ─────────────────────────────────────────
+
+    def _benchmark_return_at(
         self,
-        window_name: str,
-        event_time_ms: int,
-        t0_price: float,
-        now_utc: datetime,
-        mapped_symbol: str,
-        klines: list,
-        btc_klines: Optional[list],
-        eth_klines: Optional[list],
-        btc_t0_price: Optional[float] = None,
-        eth_t0_price: Optional[float] = None,
-    ) -> WindowReturn:
-        """Calculate return for a single observation window."""
-        delta = WINDOW_DELTA_MAP.get(window_name, timedelta(hours=1))
-        target_time_ms = event_time_ms + int(delta.total_seconds() * 1000)
-
-        # Check if window is mature
-        window_deadline = datetime.fromtimestamp(target_time_ms / 1000.0, tz=timezone.utc)
-        if window_deadline > now_utc:
-            return WindowReturn(
-                window=window_name,
-                status="pending",
-            )
-
-        # Select window kline
-        wk = select_window_kline(klines, target_time_ms)
-        if wk is None:
-            return WindowReturn(
-                window=window_name,
-                status="unavailable",
-            )
-
-        target_price = kline_open_price(wk)
-        target_time = ms_to_iso(int(wk[0])) if wk else None
-
-        if target_price is None or target_price == 0:
-            return WindowReturn(
-                window=window_name,
-                status="unavailable",
-            )
-
-        # Calculate asset return
-        asset_return = (target_price / t0_price) - 1.0
-
-        # Calculate benchmark returns (percentage)
-        btc_return = self._get_benchmark_return(btc_klines, target_time_ms, btc_t0_price)
-        eth_return = self._get_benchmark_return(eth_klines, target_time_ms, eth_t0_price)
-
-        # Handle self-benchmark
-        is_btc_self = is_self_benchmark(mapped_symbol, "BTCUSDT")
-        is_eth_self = is_self_benchmark(mapped_symbol, "ETHUSDT")
-
-        btc_abnormal: Optional[float] = None
-        eth_abnormal: Optional[float] = None
-
-        if is_btc_self:
-            btc_abnormal = None  # self_benchmark — no information gain
-        elif btc_return is not None:
-            btc_abnormal = asset_return - btc_return
-
-        if is_eth_self:
-            eth_abnormal = None  # self_benchmark
-        elif eth_return is not None:
-            eth_abnormal = asset_return - eth_return
-
-        return WindowReturn(
-            window=window_name,
-            target_price=target_price,
-            target_time=target_time,
-            return_pct=round(asset_return, 6),
-            btc_return_pct=round(btc_return, 6) if btc_return is not None else None,
-            eth_return_pct=round(eth_return, 6) if eth_return is not None else None,
-            btc_abnormal_return=round(btc_abnormal, 6) if btc_abnormal is not None else None,
-            eth_abnormal_return=round(eth_abnormal, 6) if eth_abnormal is not None else None,
-            status="completed",
-        )
-
-    def _get_benchmark_return(
-        self,
-        benchmark_klines: Optional[list],
+        benchmark_symbol: str,
         target_time_ms: int,
-        benchmark_t0_price: Optional[float] = None,
+        benchmark_t0_price: Optional[float],
+        event_time_ms: int,
     ) -> Optional[float]:
-        """Get benchmark return (percentage) at target time.
+        """Calculate benchmark return at target_time.
 
-        Calculates: window_price / t0_price - 1
-        Returns None if data is unavailable.
+        Returns decimal return (e.g. 0.007353), or None if unavailable.
         """
-        if benchmark_klines is None or benchmark_t0_price is None or benchmark_t0_price == 0:
+        if benchmark_t0_price is None or benchmark_t0_price == 0:
             return None
-        bk = select_window_kline(benchmark_klines, target_time_ms)
+        bk, _, _, _ = self._fetch_target_kline(benchmark_symbol, target_time_ms, "benchmark")
         if bk is None:
             return None
         b_price = kline_open_price(bk)
@@ -689,7 +674,63 @@ class EventPriceBackfill:
             return None
         return (b_price / benchmark_t0_price) - 1.0
 
+    # ── Snapshot Builder ─────────────────────────────────────────────────
 
-def create_backfill(use_fixture: bool = False) -> EventPriceBackfill:
-    """Factory: create an EventPriceBackfill instance."""
-    return EventPriceBackfill(use_fixture=use_fixture)
+    def _build_snapshot(
+        self,
+        symbol: str,
+        kline: Optional[list],
+        requested_time: str,
+        source: str,
+        target_time_ms: int,
+        select_error: Optional[str] = None,
+    ) -> PriceSnapshot:
+        """Build a PriceSnapshot from a kline result.
+
+        If select_error indicates max lag exceeded, status becomes max_lag_exceeded.
+        """
+        if select_error and "price_snapshot_too_far_from_target" in select_error:
+            actual_iso = ms_to_iso(int(kline[0])) if kline else None
+            lag_s = abs(int((int(kline[0]) - target_time_ms) / 1000)) if kline else 0
+            return PriceSnapshot(
+                symbol=symbol, status="max_lag_exceeded",
+                requested_time=requested_time,
+                actual_kline_open_time=actual_iso,
+                lag_seconds=lag_s, source=source,
+                error_reason=select_error,
+            )
+
+        if kline is None:
+            return PriceSnapshot(
+                symbol=symbol, status="unavailable",
+                requested_time=requested_time,
+                source=source,
+                error_reason="no_kline_found",
+            )
+        price = kline_open_price(kline)
+        actual_open = int(kline[0])
+        lag_s = abs(int((actual_open - target_time_ms) / 1000))
+        actual_iso = ms_to_iso(actual_open)
+
+        if price is None:
+            return PriceSnapshot(
+                symbol=symbol, price=None, status="unavailable",
+                requested_time=requested_time,
+                actual_kline_open_time=actual_iso,
+                lag_seconds=lag_s, source=source,
+                error_reason="cannot_extract_price_from_kline",
+            )
+
+        return PriceSnapshot(
+            symbol=symbol, price=price, status="completed",
+            requested_time=requested_time,
+            actual_kline_open_time=actual_iso,
+            lag_seconds=lag_s, source=source,
+        )
+
+
+def create_backfill(
+    mode: str | BackfillMode = BackfillMode.FIXTURE,
+    now_provider: Optional[Callable[[], datetime]] = None,
+) -> EventPriceBackfill:
+    return EventPriceBackfill(mode=mode, now_provider=now_provider)
