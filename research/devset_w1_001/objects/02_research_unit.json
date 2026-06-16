@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_001",
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "created_by": "workbench/devset-w1-001-v1",
+    "retrospective_reconstruction": true
+  },
+  "research_unit": {
+    "research_unit_id": "ru_w1_001",
+    "design_type": "point_event_study",
+    "eligibility_status": "eligible",
+    "candidate_ref": "cand_w1_001",
+    "information_form": "discrete_observable_action",
+    "research_notes": "Development Set sample w1_001. Loracle HYPE short position marked-to-market loss widening. Single on-chain data feed source. No second verification source available. Pump risk rated medium by original analyst — position is large ($113M) but belongs to a known whale, not a coordinated pump. Human decision preserved: 观察 (observe). Direction marked as 不确定 (uncertain) by original analyst — reflected as uncertain in normalized value.",
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "updated_at_utc": "2026-06-16T14:00:00Z"
+  }
+}

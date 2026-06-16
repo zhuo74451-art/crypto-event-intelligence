@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_001",
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "created_by": "workbench/devset-w1-001-v1"
+  },
+  "claim_evidence_record": {
+    "record_id": "cer_w1_001",
+    "evidence_role": "carrier_or_relay",
+    "claim_evidence_status": "single_source_supported",
+    "claim": {
+      "statement": "知名交易员Loracle的HYPE空单浮亏扩大至约3146万美元，持仓规模约1.13亿美元，均价45.35美元，当前币价62.78美元，清算价89.17美元。",
+      "claimant": "币界快讯ai",
+      "claim_time_utc": "2026-05-25T13:02:00Z",
+      "claim_type": "fact"
+    },
+    "evidence_artifacts": [
+      {
+        "artifact_id": "art_w1_001_src",
+        "artifact_type": "api_response",
+        "content_hash": "sha256:not_computed_yet",
+        "source": "HyperLiquid 地址数据 via 币界快讯ai"
+      }
+    ],
+    "evidence_relations": [
+      {
+        "evidence_id": "art_w1_001_src",
+        "relation_type": "supports",
+        "detail": "On-chain position data shows Loracle address with 1.13亿美元 HYPE short position"
+      }
+    ],
+    "evidence_role": "carrier_or_relay",
+    "claim_evidence_status": "single_source_supported",
+    "provenance_path": [
+      {
+        "hop": 1,
+        "from_source": "HyperLiquid blockchain state",
+        "to_source": "币界快讯ai monitoring system",
+        "timestamp_utc": "2026-05-25T13:02:00Z",
+        "transformation": "On-chain address data query and format"
+      },
+      {
+        "hop": 2,
+        "from_source": "币界快讯ai",
+        "to_source": "Crypto Event Intelligence pipeline",
+        "timestamp_utc": "2026-05-25T13:02:00Z",
+        "transformation": "Event capture and normalization"
+      }
+    ],
+    "independence_groups": [
+      {
+        "group_id": "ig_w1_001",
+        "members": ["art_w1_001_src"],
+        "independence_status": "independent"
+      }
+    ],
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "updated_at_utc": "2026-06-16T14:00:00Z"
+  }
+}
