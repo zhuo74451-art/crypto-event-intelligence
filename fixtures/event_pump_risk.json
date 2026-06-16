@@ -1,0 +1,45 @@
+{
+  "fixture_id": "event_pump_risk",
+  "description": "高风险 Pump 事件 — 低市值代币群推、拉高出货特征",
+  "card_family": "news_event_market_impact",
+  "data_source": "fixture",
+  "created_at": "2026-06-16T14:00:00+08:00",
+  "input_source": "fixture:pump_risk_source",
+  "dedup_key": "cei_dedup:pump-risk-sol-2026-06-16",
+  "dedup_fingerprint": "sha256:pump987abc",
+  "asset_or_topic": "SOL/unknown_lowcap",
+  "metrics": {
+    "source_name": "PumpGroupDiscord",
+    "title": "SOL Killer Incoming — Dev Just Dropped 100% Supply — GET IN NOW!!!",
+    "url": "https://example.com/news/sol-killer-pump",
+    "event_type": "listing",
+    "intensity": "high",
+    "attribution_risk": "indirect",
+    "extraction_method": "rule_based",
+    "assets_affected": ["SOL"],
+    "news_quality": "very_low",
+    "trade_relevance": "low",
+    "pump_indicators": [
+      "all_caps_excessive_punctuation",
+      "urgency_fomo_language",
+      "anonymous_dev_team",
+      "no_audit",
+      "supply_manipulation_risk",
+      "coordinated_pump_group",
+      "low_liquidity_warning"
+    ],
+    "pump_risk_score": 0.92,
+    "market_snapshot": {}
+  },
+  "source_refs": ["fixture:pump_risk_source"],
+  "risk_notes": [
+    "Fixture data — high pump/FOMO risk event",
+    "Multiple pump indicators detected",
+    "High risk of coordinated pump-and-dump",
+    "No credible market data available",
+    "DO NOT act on this signal under any circumstances"
+  ],
+  "expected_decision": "禁止",
+  "expected_risk_tags": ["pump_and_dump", "fomo", "anonymous_dev", "high_risk", "coordinated_pump"],
+  "expected_action_block": true
+}
