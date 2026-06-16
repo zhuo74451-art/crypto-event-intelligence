@@ -1,0 +1,37 @@
+{
+  "run_id": "mvpplus_2026-06-16_df703fcb",
+  "started_at_utc": "2026-06-16T13:26:34Z",
+  "ended_at_utc": "2026-06-16T13:26:40Z",
+  "decision": "accept",
+  "record_counts": {
+    "whale_positions": 11,
+    "position_changes": 11,
+    "market_contexts": 4,
+    "feed_items": 139,
+    "claims": 0,
+    "event_clusters": 0
+  },
+  "lane_summary": {
+    "lane1_hyperliquid": {
+      "status": "success",
+      "records": 11
+    },
+    "lane3_market_context": {
+      "status": "success",
+      "records": 4
+    },
+    "lane4_existing_feeds": {
+      "status": "success",
+      "records": 139
+    },
+    "lane2_whale_engine": {
+      "status": "success",
+      "records": 11
+    },
+    "lane5_workbench_ui": {
+      "status": "success",
+      "records": 0
+    }
+  },
+  "total_duration_seconds": 5.53
+}
