@@ -57,10 +57,10 @@ from market_radar.shared.adapter_contract import (
 )
 from market_radar.shared.renderer_contract import CardRenderer
 from market_radar.shared.dry_run_renderer import DryRunRenderer
+from market_radar.shared.models import DataOrigin
 from market_radar.shared.event_intelligence_semantics import (
     EventIntelligenceResult,
     IntelligenceDecision,
-    DataQuality,
     evaluate_event_semantics,
 )
 
@@ -678,7 +678,7 @@ def main():
     print(f"  Real send: DISABLED")
 
     if checks_passed == checks_total:
-        print("\n🎉 All checks passed!")
+        print("\n[OK] All checks passed!")
         sys.exit(0)
     else:
         print(f"\n⚠️  {checks_total - checks_passed} check(s) failed")
