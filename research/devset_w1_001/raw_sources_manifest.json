@@ -1,0 +1,21 @@
+{
+  "manifest_version": "1",
+  "case_id": "w1_001",
+  "files": [
+    {
+      "file": "raw_hype_response.json",
+      "sha256": "ecbafd66c20307e61fcc14cd89188ba7ae362d389a1631e41c3e53b8cedea66b",
+      "size_bytes": 4144
+    },
+    {
+      "file": "raw_btc_response.json",
+      "sha256": "e578fd31c7faa3cc47609f73ffd38253a679fa047afb3f324de9da7b34c49e39",
+      "size_bytes": 16549
+    },
+    {
+      "file": "raw_eth_response.json",
+      "sha256": "0b1f34c667f0fe9f2c345d693a797e91bf9596489391ddf8c222b04628fe01a3",
+      "size_bytes": 16428
+    }
+  ]
+}
