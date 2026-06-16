@@ -1,0 +1,23 @@
+{
+  "asset": "BTC",
+  "venue": "binance",
+  "snapshot_time_utc": "2026-06-16T12:00:00Z",
+  "current_price": 67500.00,
+  "change_1h_pct": 0.35,
+  "change_24h_pct": -1.25,
+  "volume_24h_usd": 28500000000.00,
+  "open_interest_usd": 18500000000.00,
+  "funding_rate_pct": 0.008,
+  "mark_price": 67505.00,
+  "oracle_price": 67480.00,
+  "high_24h": 68800.00,
+  "low_24h": 66200.00,
+  "source_health": {
+    "status": "healthy",
+    "source": "binance_public",
+    "occurred_at_utc": "2026-06-16T12:00:00Z",
+    "error_type": null,
+    "retryable": null,
+    "message_summary": null
+  }
+}

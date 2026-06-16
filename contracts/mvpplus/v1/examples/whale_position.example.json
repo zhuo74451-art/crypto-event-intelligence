@@ -1,0 +1,28 @@
+{
+  "address": "0x1234567890abcdef1234567890abcdef12345678",
+  "label": "Smart Money Whale A",
+  "account_value_usd": 150000000.00,
+  "coin": "BTC",
+  "direction": "long",
+  "signed_size": 125.5,
+  "absolute_size": 125.5,
+  "position_value_usd": 8437500.00,
+  "entry_price": 67200.00,
+  "mark_price": 67500.00,
+  "leverage": 3.5,
+  "unrealized_pnl_usd": 37500.00,
+  "liquidation_price": 52100.00,
+  "liquidation_distance_pct": -22.8,
+  "funding_rate_pct": 0.012,
+  "margin_mode": "cross",
+  "snapshot_time_utc": "2026-06-16T12:00:00Z",
+  "data_source": "hyperliquid_info_public",
+  "source_health": {
+    "status": "healthy",
+    "source": "hyperliquid_info_public",
+    "occurred_at_utc": "2026-06-16T12:00:00Z",
+    "error_type": null,
+    "retryable": null,
+    "message_summary": null
+  }
+}

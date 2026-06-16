@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_claim.schema.json",
+  "title": "SourceClaim",
+  "description": "A claim extracted from a source about a market event, price movement, or on-chain activity. Represents the atomic unit of signal extraction. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "source_item_id",
+    "claim_type",
+    "statement",
+    "extracted_at_utc",
+    "extraction_status"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "description": "Unique identifier for this claim."
+    },
+    "source_item_id": {
+      "type": "string",
+      "description": "ID of the source UnifiedFeedItem this claim was extracted from."
+    },
+    "claim_type": {
+      "type": "string",
+      "enum": ["fact", "derived_data", "viewpoint", "prediction", "rumor"],
+      "description": "Type of claim: fact = verifiable factual statement; derived_data = computed from data; viewpoint = opinion/analysis; prediction = forecast; rumor = unverified/unattributed information."
+    },
+    "statement": {
+      "type": "string",
+      "description": "The extracted claim statement in concise text."
+    },
+    "confidence": {
+      "type": ["number", "null"],
+      "description": "Confidence score 0.0–1.0. null if not assessed.",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "assets": {
+      "type": "array",
+      "description": "List of asset symbols this claim pertains to. Empty array if none.",
+      "items": { "type": "string" }
+    },
+    "entities": {
+      "type": "array",
+      "description": "List of named entities (people, organizations, protocols) mentioned. Empty array if none.",
+      "items": { "type": "string" }
+    },
+    "extracted_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the claim was extracted."
+    },
+    "extraction_status": {
+      "type": "string",
+      "enum": ["complete", "partial", "unavailable"],
+      "description": "Status of extraction: complete = fully extracted; partial = incomplete extraction due to source issues; unavailable = extraction failed."
+    },
+    "extraction_note": {
+      "type": ["string", "null"],
+      "description": "Human-readable note about extraction quality or issues. null if extraction was clean."
+    }
+  }
+}

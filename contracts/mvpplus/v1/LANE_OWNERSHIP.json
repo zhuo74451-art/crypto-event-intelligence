@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "LANE_OWNERSHIP.json",
+  "title": "Lane Ownership Map — MVP+",
+  "description": "Defines which directories and file patterns each lane is authorized to create/modify. Lane 6 is the sole owner of shared/global paths. All paths are relative to project root.",
+  "version": "v1",
+  "sealed_at": null,
+  "lanes": {
+    "lane1_hyperliquid": {
+      "description": "Hyperliquid Provider — fetch whale positions from Hyperliquid public API",
+      "allowed_paths": [
+        "scripts/mvpplus/lane1_hyperliquid/**",
+        "contracts/mvpplus/v1/**"
+      ],
+      "read_only_paths": [
+        "contracts/mvpplus/v1/*.schema.json",
+        "contracts/mvpplus/v1/LANE_OWNERSHIP.json",
+        "fixtures/mvpplus/**"
+      ],
+      "forbidden_paths": [
+        "scripts/**",
+        "market_radar/**",
+        "docs/**",
+        "tests/test_mvpplus_contract_seal.py"
+      ]
+    },
+    "lane2_whale_engine": {
+      "description": "Whale Position Change & Risk Engine — detect position changes, risk flags",
+      "allowed_paths": [
+        "scripts/mvpplus/lane2_whale_engine/**"
+      ],
+      "read_only_paths": [
+        "contracts/mvpplus/v1/*.schema.json",
+        "contracts/mvpplus/v1/LANE_OWNERSHIP.json",
+        "fixtures/mvpplus/**"
+      ],
+      "forbidden_paths": [
+        "contracts/mvpplus/v1/**",
+        "docs/**",
+        "tests/test_mvpplus_contract_seal.py"
+      ]
+    },
+    "lane3_market_context": {
+      "description": "Market Context Provider — fetch BTC/ETH/SOL/HYPE market data from public APIs",
+      "allowed_paths": [
+        "scripts/mvpplus/lane3_market_context/**"
+      ],
+      "read_only_paths": [
+        "contracts/mvpplus/v1/*.schema.json",
+        "contracts/mvpplus/v1/LANE_OWNERSHIP.json",
+        "fixtures/mvpplus/**"
+      ],
+      "forbidden_paths": [
+        "contracts/mvpplus/v1/**",
+        "docs/**",
+        "tests/test_mvpplus_contract_seal.py"
+      ]
+    },
+    "lane4_existing_feeds": {
+      "description": "Existing Flash/News/TG Feeds — reuse server read-only entry points",
+      "allowed_paths": [
+        "scripts/mvpplus/lane4_existing_feeds/**"
+      ],
+      "read_only_paths": [
+        "contracts/mvpplus/v1/*.schema.json",
+        "contracts/mvpplus/v1/LANE_OWNERSHIP.json",
+        "data/**",
+        "runs/**",
+        "results/**"
+      ],
+      "forbidden_paths": [
+        "contracts/mvpplus/v1/**",
+        "docs/**",
+        "tests/test_mvpplus_contract_seal.py"
+      ]
+    },
+    "lane5_workbench_ui": {
+      "description": "Workbench UI — generate single-shot local HTML",
+      "allowed_paths": [
+        "scripts/mvpplus/lane5_workbench_ui/**",
+        "results/mvpplus/**"
+      ],
+      "read_only_paths": [
+        "contracts/mvpplus/v1/*.schema.json",
+        "contracts/mvpplus/v1/LANE_OWNERSHIP.json",
+        "fixtures/mvpplus/**"
+      ],
+      "forbidden_paths": [
+        "contracts/mvpplus/v1/**",
+        "docs/**",
+        "tests/test_mvpplus_contract_seal.py"
+      ]
+    },
+    "lane6_integration": {
+      "description": "Contract Seal / Integration / Independent QA — sole owner of shared paths",
+      "allowed_paths": [
+        "contracts/**",
+        "docs/mvpplus/**",
+        "tests/test_mvpplus_contract_seal.py",
+        "scripts/mvpplus/**",
+        "artifacts/**"
+      ],
+      "read_only_paths": [],
+      "forbidden_paths": [
+        "market_radar/**",
+        "config/**",
+        "data/**"
+      ],
+      "note": "Lane 6 may modify any path during integration/repair phase with explicit approval."
+    }
+  },
+  "shared_paths": {
+    "description": "These paths may only be modified by Lane 6 or via CONTRACT_CHANGE_REQUEST",
+    "paths": [
+      "contracts/mvpplus/v1/*.schema.json",
+      "contracts/mvpplus/v1/LANE_OWNERSHIP.json",
+      "contracts/mvpplus/v1/RESULT_SCHEMA.json",
+      "contracts/mvpplus/v1/THIRD_PARTY_REUSE_MANIFEST.json",
+      "contracts/mvpplus/v1/BASELINE_SEAL.json",
+      "docs/mvpplus/**",
+      "tests/test_mvpplus_contract_seal.py",
+      "requirements.txt"
+    ]
+  }
+}

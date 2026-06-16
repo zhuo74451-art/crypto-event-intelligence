@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "THIRD_PARTY_REUSE_MANIFEST.json",
+  "title": "Third-Party Reuse Manifest — MVP+",
+  "description": "Records all third-party code reused by MVP+ lanes. Only approved candidates listed; no new dependencies without contract review.",
+  "version": "v1",
+  "sealed_at_utc": "2026-06-16T13:12:00Z",
+  "approved_projects": [
+    {
+      "name": "hyperliquid-python-sdk",
+      "repository": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk",
+      "version": "0.23.0",
+      "license": "MIT",
+      "usage_mode": "direct_dependency",
+      "planned_lanes": ["lane1_hyperliquid"],
+      "description": "Official Hyperliquid Python SDK for public Info API access.",
+      "fallback": "fixture/mock data and degraded source_health",
+      "upgrade_risk": "low — pinned to 0.23.0 for MVP+"
+    },
+    {
+      "name": "ccxt",
+      "repository": "https://github.com/ccxt/ccxt",
+      "version": "latest (not yet installed)",
+      "license": "MIT",
+      "usage_mode": "direct_dependency",
+      "planned_lanes": ["lane3_market_context"],
+      "description": "Unified cryptocurrency exchange API. Used for BTC/ETH/SOL market data from Binance.",
+      "fallback": "httpx direct REST calls to Binance public API",
+      "upgrade_risk": "low — well-established, wide usage"
+    },
+    {
+      "name": "httpx",
+      "repository": "https://github.com/encode/httpx",
+      "version": "0.28.1",
+      "license": "BSD-3-Clause",
+      "usage_mode": "direct_dependency (already installed)",
+      "planned_lanes": ["lane1_hyperliquid", "lane3_market_context", "lane4_existing_feeds"],
+      "description": "Modern Python HTTP client. Used for all HTTP requests.",
+      "fallback": "urllib3 / standard library",
+      "upgrade_risk": "low"
+    },
+    {
+      "name": "hyperliquid-whales (reference only)",
+      "repository": "https://github.com/kittycapital/hyperliquid-whales",
+      "version": "MIT (reference logic)",
+      "license": "MIT",
+      "usage_mode": "reference_only_local_logic",
+      "planned_lanes": ["lane2_whale_engine"],
+      "description": "Reference implementation for whale position detection. Only local logic migration from MIT-licensed subset.",
+      "fallback": "self-implemented change detection logic",
+      "upgrade_risk": "n/a — reference only, not a dependency"
+    }
+  ],
+  "internal_phase_candidates": {
+    "description": "Candidates for internal production phase. NOT enabled in MVP+ (no scheduler/daemon).",
+    "apscheduler": {
+      "repository": "https://github.com/agronholm/apscheduler",
+      "version": "3.11.x",
+      "license": "MIT",
+      "planned_phase": "internal_production",
+      "note": "Not installed or used in MVP+. No scheduler/daemon in this phase."
+    },
+    "sqlite": {
+      "module": "sqlite3 (stdlib)",
+      "planned_phase": "internal_production",
+      "note": "Available via Python stdlib. Not used in MVP+ (one-shot only)."
+    }
+  },
+  "explicitly_forbidden": [
+    {
+      "name": "apscheduler",
+      "reason": "Scheduler/daemon not allowed in MVP+ (one-shot only)"
+    },
+    {
+      "name": "redis",
+      "reason": "No external data stores in MVP+"
+    },
+    {
+      "name": "kafka",
+      "reason": "No message broker in MVP+"
+    },
+    {
+      "name": "aiohttp",
+      "reason": "httpx already installed; no duplicate async HTTP"
+    }
+  ]
+}

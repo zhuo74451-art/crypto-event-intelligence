@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "market_context.schema.json",
+  "title": "MarketContext",
+  "description": "Market context snapshot for a single asset from a single venue. All monetary values in USD unless noted. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "asset",
+    "venue",
+    "snapshot_time_utc",
+    "current_price",
+    "source_health"
+  ],
+  "properties": {
+    "asset": {
+      "type": "string",
+      "description": "Asset symbol, e.g. BTC, ETH, SOL, HYPE. Uppercase."
+    },
+    "venue": {
+      "type": "string",
+      "description": "Exchange/venue identifier, e.g. binance, hyperliquid, bybit."
+    },
+    "snapshot_time_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the market data was sampled."
+    },
+    "current_price": {
+      "type": "number",
+      "description": "Current market price in USD.",
+      "exclusiveMinimum": 0
+    },
+    "change_1h_pct": {
+      "type": ["number", "null"],
+      "description": "Price change percentage over 1 hour. null if unavailable."
+    },
+    "change_24h_pct": {
+      "type": ["number", "null"],
+      "description": "Price change percentage over 24 hours. null if unavailable."
+    },
+    "volume_24h_usd": {
+      "type": ["number", "null"],
+      "description": "24-hour trading volume in USD. null if unavailable. Unit: USD.",
+      "minimum": 0
+    },
+    "open_interest_usd": {
+      "type": ["number", "null"],
+      "description": "Open interest in USD. null if unavailable or not applicable. Unit: USD.",
+      "minimum": 0
+    },
+    "funding_rate_pct": {
+      "type": ["number", "null"],
+      "description": "Current funding rate as percentage. null if unavailable."
+    },
+    "mark_price": {
+      "type": ["number", "null"],
+      "description": "Current mark price (futures) in USD. null if unavailable or spot market.",
+      "exclusiveMinimum": 0
+    },
+    "oracle_price": {
+      "type": ["number", "null"],
+      "description": "Oracle price in USD. null if unavailable.",
+      "exclusiveMinimum": 0
+    },
+    "high_24h": {
+      "type": ["number", "null"],
+      "description": "24-hour high price in USD. null if unavailable.",
+      "minimum": 0
+    },
+    "low_24h": {
+      "type": ["number", "null"],
+      "description": "24-hour low price in USD. null if unavailable.",
+      "minimum": 0
+    },
+    "source_health": {
+      "$ref": "source_health.schema.json",
+      "description": "Health status of the data source."
+    }
+  }
+}

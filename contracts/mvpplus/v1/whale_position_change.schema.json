@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "whale_position_change.schema.json",
+  "title": "WhalePositionChange",
+  "description": "Detected change in a whale position between consecutive snapshots. All monetary values in USD unless noted. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "address",
+    "label",
+    "coin",
+    "change_type",
+    "previous",
+    "current",
+    "detected_at_utc",
+    "data_source"
+  ],
+  "properties": {
+    "address": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Full wallet address."
+    },
+    "label": {
+      "type": ["string", "null"],
+      "description": "Human-readable label for the address. null if unknown."
+    },
+    "coin": {
+      "type": "string",
+      "description": "Asset symbol, e.g. BTC, ETH, SOL, HYPE. Uppercase."
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "open_long",
+        "open_short",
+        "increase_long",
+        "increase_short",
+        "reduce_long",
+        "reduce_short",
+        "close_long",
+        "close_short",
+        "flip_long_to_short",
+        "flip_short_to_long",
+        "liquidation_distance_narrowed"
+      ],
+      "description": "Type of position change detected."
+    },
+    "previous": {
+      "type": ["object", "null"],
+      "description": "Previous snapshot state. null if no previous position existed (open).",
+      "properties": {
+        "signed_size": { "type": "number" },
+        "position_value_usd": { "type": ["number", "null"] },
+        "entry_price": { "type": ["number", "null"] },
+        "mark_price": { "type": ["number", "null"] },
+        "unrealized_pnl_usd": { "type": ["number", "null"] },
+        "leverage": { "type": ["number", "null"] },
+        "liquidation_price": { "type": ["number", "null"] },
+        "liquidation_distance_pct": { "type": ["number", "null"] },
+        "snapshot_time_utc": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "current": {
+      "type": "object",
+      "description": "Current snapshot state after the change.",
+      "required": ["signed_size", "position_value_usd", "mark_price", "snapshot_time_utc"],
+      "properties": {
+        "signed_size": { "type": "number" },
+        "position_value_usd": { "type": "number" },
+        "entry_price": { "type": ["number", "null"] },
+        "mark_price": { "type": "number" },
+        "unrealized_pnl_usd": { "type": ["number", "null"] },
+        "leverage": { "type": ["number", "null"] },
+        "liquidation_price": { "type": ["number", "null"] },
+        "liquidation_distance_pct": { "type": ["number", "null"] },
+        "snapshot_time_utc": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "delta": {
+      "type": "object",
+      "description": "Computed delta between previous and current. All fields are optional — computed when both previous and current values are available.",
+      "properties": {
+        "size_delta": {
+          "type": ["number", "null"],
+          "description": "Change in signed size. Positive = increased size, negative = decreased."
+        },
+        "position_value_delta_usd": {
+          "type": ["number", "null"],
+          "description": "Change in position value in USD."
+        },
+        "entry_price_delta_usd": {
+          "type": ["number", "null"],
+          "description": "Change in entry price in USD."
+        },
+        "unrealized_pnl_delta_usd": {
+          "type": ["number", "null"],
+          "description": "Change in unrealized PnL in USD."
+        },
+        "liquidation_distance_delta_pct": {
+          "type": ["number", "null"],
+          "description": "Change in liquidation distance percentage."
+        }
+      },
+      "additionalProperties": false
+    },
+    "detected_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the change was detected."
+    },
+    "data_source": {
+      "type": "string",
+      "description": "Data source identifier."
+    },
+    "source_health": {
+      "$ref": "source_health.schema.json",
+      "description": "Health status of the data source at detection time."
+    },
+    "risk_flags": {
+      "type": "array",
+      "description": "Risk flags triggered by this change. Empty array if none.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "liquidation_distance_critical",
+          "high_leverage_increase",
+          "large_position_open",
+          "large_position_close",
+          "direction_flip",
+          "concentrated_asset_risk"
+        ]
+      },
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "description": "When previous is null, change_type MUST be an open_* type.",
+      "if": { "properties": { "previous": { "type": "null" } } },
+      "then": {
+        "properties": {
+          "change_type": {
+            "enum": ["open_long", "open_short"]
+          }
+        }
+      }
+    },
+    {
+      "description": "When change_type is flip_*, previous MUST exist.",
+      "if": {
+        "properties": {
+          "change_type": {
+            "enum": ["flip_long_to_short", "flip_short_to_long"]
+          }
+        }
+      },
+      "then": { "properties": { "previous": { "not": { "type": "null" } } } }
+    }
+  ]
+}
