@@ -5,6 +5,10 @@ Defines the minimum stable data models for the shared pipeline:
   SendReadinessDecision, RenderedCard, TGTestSendResult,
   EvidenceRecord, SharedPipelineResult
 
+Signal Spine v1 extensions:
+  Observation, Signal, SignalStatus, ObservationStatus,
+  NoiseGateResult, GateVerdict, DataQuality
+
 Covers all five card families:
   - multi_asset_market_sync
   - price_oi_volume_anomaly
@@ -16,6 +20,7 @@ Covers all five card families:
 from __future__ import annotations
 
 import hashlib
+import uuid
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -278,6 +283,386 @@ class SharedPipelineResult:
         d["completed_at"] = self.completed_at
         d["error"] = self.error
         d["passed"] = self.passed
+        return d
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Signal Spine v1 — Observation & Signal Models
+# ═══════════════════════════════════════════════════════════════════════════
+
+SIGNAL_SPINE_VERSION = "v1.0"
+
+
+class ObservationStatus(str, Enum):
+    """Status of an observation in the ingestion pipeline."""
+    RAW = "raw"
+    NORMALIZED = "normalized"
+    DEDUPLICATED = "deduplicated"
+    PENDING = "pending"
+    PROCESSED = "processed"
+    FAILED = "failed"
+
+
+class DataQuality(str, Enum):
+    """Quality assessment for an observation's source data."""
+    VERIFIED_HIGH = "verified_high"
+    VERIFIED_MEDIUM = "verified_medium"
+    UNVERIFIED = "unverified"
+    LOW_CREDIBILITY = "low_credibility"
+    UNKNOWN = "unknown"
+
+
+class SignalStatus(str, Enum):
+    """Lifecycle status for a Signal object.
+
+    Legal transitions:
+      candidate         → confirmed, monitoring, invalidated
+      confirmed         → monitoring, invalidated, expired, resolved
+      monitoring        → confirmed, invalidated, expired, resolved
+      invalidated       → (terminal)
+      expired           → (terminal)
+      resolved          → (terminal)
+    """
+    CANDIDATE = "candidate"
+    CONFIRMED = "confirmed"
+    MONITORING = "monitoring"
+    INVALIDATED = "invalidated"
+    EXPIRED = "expired"
+    RESOLVED = "resolved"
+
+
+# Legal lifecycle transitions
+VALID_SIGNAL_TRANSITIONS: dict[SignalStatus, set[SignalStatus]] = {
+    SignalStatus.CANDIDATE: {SignalStatus.CONFIRMED, SignalStatus.MONITORING, SignalStatus.INVALIDATED},
+    SignalStatus.CONFIRMED: {SignalStatus.MONITORING, SignalStatus.INVALIDATED, SignalStatus.EXPIRED, SignalStatus.RESOLVED},
+    SignalStatus.MONITORING: {SignalStatus.CONFIRMED, SignalStatus.INVALIDATED, SignalStatus.EXPIRED, SignalStatus.RESOLVED},
+    SignalStatus.INVALIDATED: set(),
+    SignalStatus.EXPIRED: set(),
+    SignalStatus.RESOLVED: set(),
+}
+
+
+def is_valid_transition(from_status: SignalStatus, to_status: SignalStatus) -> bool:
+    """Check if a lifecycle transition is legal."""
+    allowed = VALID_SIGNAL_TRANSITIONS.get(from_status, set())
+    return to_status in allowed
+
+
+class GateVerdict(str, Enum):
+    """Outcome of a deterministic noise gate rule evaluation.
+
+    Accept: signal passes this gate rule.
+    Reject: signal fails this gate rule (discard or block).
+    Downgrade: signal passes but with reduced confidence / observe-only.
+    NotEvaluated: rule had insufficient data to judge.
+    """
+    ACCEPT = "accept"
+    REJECT = "reject"
+    DOWNGRADE = "downgrade"
+    NOT_EVALUATED = "not_evaluated"
+
+
+class IngestionStatus(str, Enum):
+    """Tracking status for observation ingestion."""
+    NEW = "new"
+    SEEN = "seen"
+    MERGED = "merged"
+
+
+@dataclass
+class EvidenceLink:
+    """A reference to evidence supporting an observation or signal.
+
+    The 'ref' is a sha256-like redacted fingerprint or absolute ref.
+    """
+    ref: str
+    source: str
+    timestamp: str
+    description: str
+    ref_type: str = "observation"  # observation | signal | external
+
+
+@dataclass
+class Observation:
+    """A normalized observation from a data source.
+
+    This is the primary input to the Signal Spine pipeline. It represents
+    a single observed event or data point from a source, normalized for
+    deterministic processing.
+
+    Can be constructed from a NormalizedSignal or directly from raw data.
+    """
+    observation_id: str
+    source: str
+    source_type: DataSourceType
+    observed_at: str
+    event_time: Optional[str]
+    affected_assets: list[str]
+    normalized_payload: dict[str, Any]
+    raw_provenance: dict[str, Any]
+    evidence: list[EvidenceLink]
+    data_quality: DataQuality
+    dedup_key: str
+    ingestion_status: ObservationStatus
+    card_family: Optional[CardFamily] = None
+    source_refs: list[str] = field(default_factory=list)
+    risk_notes: list[str] = field(default_factory=list)
+
+    def __post_init__(self):
+        if isinstance(self.source_type, str):
+            self.source_type = DataSourceType(self.source_type)
+        if isinstance(self.data_quality, str):
+            self.data_quality = DataQuality(self.data_quality)
+        if isinstance(self.ingestion_status, str):
+            self.ingestion_status = ObservationStatus(self.ingestion_status)
+        if isinstance(self.card_family, str):
+            self.card_family = CardFamily(self.card_family)
+
+    @classmethod
+    def from_normalized_signal(
+        cls,
+        signal: NormalizedSignal,
+        source: str,
+        event_time: Optional[str] = None,
+        data_quality: DataQuality = DataQuality.UNKNOWN,
+    ) -> Observation:
+        """Construct an Observation from a NormalizedSignal.
+
+        This is the primary bridge between the existing adapter pipeline
+        and the Signal Spine.
+        """
+        obs_id = str(uuid.uuid4())
+        now = china_now()
+
+        # Build affected_assets from signal metrics
+        assets = list(signal.metrics.get("assets_affected", []))
+        if not assets and signal.asset_or_topic and signal.asset_or_topic != "N/A":
+            # Try to extract from asset_or_topic string (e.g. "BTC/ETH/SOL")
+            assets = [a.strip() for a in signal.asset_or_topic.split("/") if a.strip()]
+
+        # Build evidence links from existing source refs
+        evidence = [
+            EvidenceLink(
+                ref=sha256_short(ref),
+                source=source,
+                timestamp=now,
+                description=f"Source ref: {ref[:100]}" if len(ref) > 100 else f"Source ref: {ref}",
+                ref_type="observation",
+            )
+            for ref in signal.source_refs
+        ]
+
+        # Compute deterministic dedup key from normalized payload
+        title = signal.metrics.get("title", "") or signal.asset_or_topic
+        dedup_raw = f"{source}:{title}:{','.join(sorted(assets))}"
+        dedup_key = sha256_short(dedup_raw, n=12)
+
+        return cls(
+            observation_id=obs_id,
+            source=source,
+            source_type=signal.source_type,
+            observed_at=now,
+            event_time=event_time or signal.timestamp,
+            affected_assets=assets,
+            normalized_payload=signal.metrics,
+            raw_provenance={
+                "signal_id": signal.signal_id,
+                "source_refs": signal.source_refs,
+                "card_family": signal.card_family.value if signal.card_family else None,
+                "risk_notes": signal.risk_notes,
+            },
+            evidence=evidence,
+            data_quality=data_quality,
+            dedup_key=dedup_key,
+            ingestion_status=ObservationStatus.NORMALIZED,
+            card_family=signal.card_family,
+            source_refs=list(signal.source_refs),
+            risk_notes=list(signal.risk_notes),
+        )
+
+    def as_dict(self) -> dict:
+        d = asdict(self)
+        d["source_type"] = self.source_type.value if isinstance(self.source_type, Enum) else self.source_type
+        d["data_quality"] = self.data_quality.value if isinstance(self.data_quality, Enum) else self.data_quality
+        d["ingestion_status"] = self.ingestion_status.value if isinstance(self.ingestion_status, Enum) else self.ingestion_status
+        if self.card_family:
+            d["card_family"] = self.card_family.value if isinstance(self.card_family, Enum) else self.card_family
+        return d
+
+
+@dataclass
+class NoiseGateResult:
+    """Result of evaluating a single deterministic noise gate rule.
+
+    Each rule in the gate produces one of these. The overall gate decision
+    is the aggregation of all rule results.
+    """
+    rule_name: str
+    verdict: GateVerdict
+    reason_code: str
+    reason: str
+    evidence_refs: list[str]
+    evaluated_at: str
+    rule_version: str
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if isinstance(self.verdict, str):
+            self.verdict = GateVerdict(self.verdict)
+
+    @property
+    def passed(self) -> bool:
+        """Rule passed if verdict is ACCEPT or DOWNGRADE (not REJECT)."""
+        return self.verdict in (GateVerdict.ACCEPT, GateVerdict.DOWNGRADE)
+
+    @property
+    def is_unknown(self) -> bool:
+        return self.verdict == GateVerdict.NOT_EVALUATED
+
+    def as_dict(self) -> dict:
+        d = asdict(self)
+        d["verdict"] = self.verdict.value if isinstance(self.verdict, Enum) else self.verdict
+        return d
+
+
+@dataclass
+class StatusTransition:
+    """Record of a single lifecycle status change."""
+    from_status: SignalStatus
+    to_status: SignalStatus
+    reason: str
+    timestamp: str
+    actor: str = "noise_gate"  # noise_gate | orchestrator | manual
+
+    def __post_init__(self):
+        if isinstance(self.from_status, str):
+            self.from_status = SignalStatus(self.from_status)
+        if isinstance(self.to_status, str):
+            self.to_status = SignalStatus(self.to_status)
+
+    def as_dict(self) -> dict:
+        d = asdict(self)
+        d["from_status"] = self.from_status.value
+        d["to_status"] = self.to_status.value
+        return d
+
+
+@dataclass
+class Signal:
+    """A signal object — the core updatable artifact of the Signal Spine.
+
+    A Signal represents a market-relevant event that has passed the noise gate.
+    It is NOT a trading signal — only an intelligence observation that may be
+    relevant for monitoring.
+
+    Status lifecycle:
+      candidate → confirmed / monitoring → invalidated / expired / resolved
+    """
+    signal_id: str
+    title: str
+    affected_assets: list[str]
+    event_type: str
+    direction: str  # bullish | bearish | neutral
+    confidence: float  # 0.0-1.0
+    trading_relevance: str  # high | medium | low | none
+    news_quality: str  # verified | sourced | unverified
+    status: SignalStatus
+    first_seen_at: str
+    updated_at: str
+
+    # Optional detailed state
+    event_id: Optional[str] = None
+    price_in_state: Optional[dict[str, Any]] = None
+    confirmation_states: list[str] = field(default_factory=list)
+    pump_risk: Optional[str] = None  # high | medium | low | unknown
+    evidence: list[EvidenceLink] = field(default_factory=list)
+    observation_ids: list[str] = field(default_factory=list)
+    invalidation_reason: Optional[str] = None
+    watch_windows: list[str] = field(default_factory=list)
+    renderer_payload: Optional[dict[str, Any]] = None
+    transition_history: list[StatusTransition] = field(default_factory=list)
+
+    # Source tracking
+    card_family: Optional[CardFamily] = None
+    source_type: Optional[DataSourceType] = None
+
+    # Spine metadata
+    pipeline_version: str = SIGNAL_SPINE_VERSION
+
+    def __post_init__(self):
+        if isinstance(self.status, str):
+            self.status = SignalStatus(self.status)
+        if isinstance(self.card_family, str):
+            self.card_family = CardFamily(self.card_family)
+        if isinstance(self.source_type, str):
+            self.source_type = DataSourceType(self.source_type)
+
+    def transition_to(self, new_status: SignalStatus, reason: str, actor: str = "orchestrator") -> None:
+        """Transition this signal to a new status with validation.
+
+        Raises ValueError if the transition is illegal.
+        """
+        if isinstance(new_status, str):
+            new_status = SignalStatus(new_status)
+
+        if not is_valid_transition(self.status, new_status):
+            raise ValueError(
+                f"SignalStatus transition {self.status.value} → {new_status.value} is not allowed. "
+                f"Allowed from '{self.status.value}': "
+                f"{[s.value for s in VALID_SIGNAL_TRANSITIONS.get(self.status, set())]}"
+            )
+
+        transition = StatusTransition(
+            from_status=self.status,
+            to_status=new_status,
+            reason=reason,
+            timestamp=china_now(),
+            actor=actor,
+        )
+        self.transition_history.append(transition)
+        self.status = new_status
+        self.updated_at = china_now()
+
+    @property
+    def is_terminal(self) -> bool:
+        return self.status in (SignalStatus.INVALIDATED, SignalStatus.EXPIRED, SignalStatus.RESOLVED)
+
+    @property
+    def is_active(self) -> bool:
+        return self.status in (SignalStatus.CANDIDATE, SignalStatus.CONFIRMED, SignalStatus.MONITORING)
+
+    def as_dict(self) -> dict:
+        d = asdict(self)
+        d["status"] = self.status.value
+        if self.card_family:
+            d["card_family"] = self.card_family.value
+        if self.source_type:
+            d["source_type"] = self.source_type.value
+        return d
+
+
+@dataclass
+class SignalSpineResult:
+    """Result of processing a single observation through the Signal Spine.
+
+    This is the primary output record for the core orchestrator.
+    """
+    observation: Observation
+    gate_results: list[NoiseGateResult]
+    gate_passed: bool
+    signal: Optional[Signal] = None
+    registry_action: Optional[str] = None
+    error: Optional[str] = None
+    processed_at: str = field(default_factory=china_now)
+    pipeline_version: str = SIGNAL_SPINE_VERSION
+
+    @property
+    def gate_verdicts(self) -> dict[str, str]:
+        return {r.rule_name: r.verdict.value for r in self.gate_results}
+
+    def as_dict(self) -> dict:
+        d = asdict(self)
+        d["gate_verdicts"] = self.gate_verdicts
         return d
 
 
