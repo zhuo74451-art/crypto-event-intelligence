@@ -88,9 +88,7 @@ def parse_hl_candles(raw: Any) -> list[HLCandle]:
 
 
 def select_nearest_candle(
-    candles: list[HLCandle],
-    target_time_ms: int,
-    max_lag_s: int = HL_LAG_MAX_S,
+    candles: list[HLCandle], target_time_ms: int, max_lag_s: int = HL_LAG_MAX_S,
 ) -> tuple[Optional[HLCandle], dict]:
     info: dict = {
         "selection_policy": "nearest_candle_open",
@@ -102,10 +100,8 @@ def select_nearest_candle(
     if not candles:
         info["error_reason"] = "no_candles_available"
         return None, info
-
     best: Optional[HLCandle] = None
     best_abs: Optional[int] = None
-
     for c in candles:
         signed = c.open_time_ms - target_time_ms
         abs_lag = abs(signed)
@@ -114,10 +110,8 @@ def select_nearest_candle(
         if best is None or abs_lag < best_abs:
             best = c
             best_abs = abs_lag
-        elif abs_lag == best_abs:
-            if c.open_time_ms < best.open_time_ms:
-                best = c
-
+        elif abs_lag == best_abs and c.open_time_ms < best.open_time_ms:
+            best = c
     if best is None:
         nearest = min(candles, key=lambda c: abs(c.open_time_ms - target_time_ms))
         sl = int((nearest.open_time_ms - target_time_ms) / 1000)
@@ -128,7 +122,6 @@ def select_nearest_candle(
             f"abs_lag={abs(sl)}s > max={max_lag_s}s"
         )
         return None, info
-
     sl = int((best.open_time_ms - target_time_ms) / 1000)
     info["signed_lag_seconds"] = sl
     info["absolute_lag_seconds"] = abs(sl)
@@ -142,14 +135,11 @@ def get_hl_candle_fixture() -> list[dict]:
     b = 1779714000000  # 2026-05-25T13:00:00Z
     return [
         {"t": b, "T": b + 899999, "s": "HYPE", "i": "15m",
-         "o": "12.50", "c": "12.65", "h": "12.80", "l": "12.30",
-         "v": "500000", "n": "125"},
+         "o": "12.50", "c": "12.65", "h": "12.80", "l": "12.30", "v": "500000", "n": "125"},
         {"t": b + 900000, "T": b + 1799999, "s": "HYPE", "i": "15m",
-         "o": "12.65", "c": "12.75", "h": "12.90", "l": "12.40",
-         "v": "450000", "n": "110"},
+         "o": "12.65", "c": "12.75", "h": "12.90", "l": "12.40", "v": "450000", "n": "110"},
         {"t": b + 1800000, "T": b + 2699999, "s": "HYPE", "i": "15m",
-         "o": "12.75", "c": "12.95", "h": "13.10", "l": "12.60",
-         "v": "520000", "n": "135"},
+         "o": "12.75", "c": "12.95", "h": "13.10", "l": "12.60", "v": "520000", "n": "135"},
     ]
 
 
@@ -168,25 +158,25 @@ class BinanceProvider:
         self, symbol: str, requested_time_iso: str,
         interval: str = "1m", max_lag_seconds: int = BINANCE_LAG_MAX_S,
     ) -> tuple[PriceSnapshot, dict]:
-        info: dict = {"selection_policy": self.selection_policy, "precision_seconds": 60}
+        info: dict = {"selection_policy": self.selection_policy, "precision_seconds": 60,
+                      "signed_lag_seconds": None, "absolute_lag_seconds": None}
         mapped, supported = map_symbol(symbol)
         if not supported:
-            snap = PriceSnapshot(symbol=symbol, status="unavailable",
+            return PriceSnapshot(symbol=symbol, status="unavailable",
                                  requested_time=requested_time_iso, source=self.provider_name,
-                                 error_reason=f"unsupported: '{symbol}'")
-            return snap, info
+                                 error_reason=f"unsupported: '{symbol}'"), info
         event_ms = iso_to_ms(requested_time_iso)
         if event_ms is None:
-            snap = PriceSnapshot(symbol=mapped, status="unavailable",
+            return PriceSnapshot(symbol=mapped, status="unavailable",
                                  requested_time=requested_time_iso, source=self.provider_name,
-                                 error_reason=f"invalid_time: '{requested_time_iso}'")
-            return snap, info
+                                 error_reason=f"invalid_time: '{requested_time_iso}'"), info
         kline, source, net_err, sel_err = self._backfill._fetch_target_kline(mapped, event_ms, "snapshot")
         snap = self._kline_snapshot(mapped, kline, requested_time_iso, source, event_ms,
                                      max_lag_seconds, sel_err, net_err)
         if kline and len(kline) >= 2:
-            info["signed_lag_seconds"] = int((int(kline[0]) - event_ms) / 1000)
-            info["absolute_lag_seconds"] = abs(int((int(kline[0]) - event_ms) / 1000))
+            sl = int((int(kline[0]) - event_ms) / 1000)
+            info["signed_lag_seconds"] = sl
+            info["absolute_lag_seconds"] = abs(sl)
         return snap, info
 
     def _kline_snapshot(self, symbol, kline, rtime, source, t_ms, max_lag, sel_err, net_err):
@@ -312,31 +302,55 @@ class ProviderRouter:
 
 @dataclass
 class Week1WindowResult:
+    """One observation window: return + target snapshot + benchmark snapshots."""
     window: str
     status: str
     return_decimal: Optional[float] = None
     return_percent: Optional[float] = None
+
+    # Target snapshot at this window
+    target_snapshot: Optional[PriceSnapshot] = None
+    selection_policy: Optional[str] = None
+    precision_seconds: Optional[int] = None
+    signed_lag_seconds: Optional[int] = None
+    absolute_lag_seconds: Optional[int] = None
+
+    # Benchmark returns (decimal)
     btc_return_decimal: Optional[float] = None
     btc_return_percent: Optional[float] = None
     eth_return_decimal: Optional[float] = None
     eth_return_percent: Optional[float] = None
+
+    # Abnormal returns
     btc_abnormal_return_decimal: Optional[float] = None
     btc_abnormal_return_percent: Optional[float] = None
     eth_abnormal_return_decimal: Optional[float] = None
     eth_abnormal_return_percent: Optional[float] = None
 
+    # Benchmark snapshot provenance
+    btc_benchmark_t0_snapshot: Optional[PriceSnapshot] = None
+    btc_benchmark_target_snapshot: Optional[PriceSnapshot] = None
+    eth_benchmark_t0_snapshot: Optional[PriceSnapshot] = None
+    eth_benchmark_target_snapshot: Optional[PriceSnapshot] = None
+
     def as_dict(self) -> dict:
-        return asdict(self)
+        d = asdict(self)
+        for f in ("target_snapshot", "btc_benchmark_t0_snapshot", "btc_benchmark_target_snapshot",
+                   "eth_benchmark_t0_snapshot", "eth_benchmark_target_snapshot"):
+            v = getattr(self, f)
+            d[f] = v.as_dict() if v else None
+        return d
 
 
 @dataclass
 class Week1ObservationResult:
+    """One observed-asset price backfill result. No attribution or trading advice."""
     sample_id: str
     result_id: str
     subject_asset: str
     observed_asset: str
     broadcast_time_utc: str
-    t0_basis: str
+    t0_basis: str  # always "broadcast_time"
     provider: str
     interval: str
     precision_seconds: Optional[int] = None
@@ -359,6 +373,9 @@ class Week1ObservationResult:
         return d
 
 
+# ── Sample Definitions ──────────────────────────────────────────────────────
+
+
 W1_SAMPLES = [
     {"sid": "w1_001", "subj": "HYPE", "obs": "HYPE", "bt": "2026-05-25T13:02:00Z"},
     {"sid": "w1_002", "subj": "ETH",  "obs": "ETH",  "bt": "2026-05-25T15:19:00Z"},
@@ -371,12 +388,18 @@ W1_WTI = [
 ]
 
 
+# ── Main Runner ─────────────────────────────────────────────────────────────
+
+
 def run_week1(router=None, now_maturity=None) -> list[Week1ObservationResult]:
+    """Run all Week 1 observations. Never raises."""
     if router is None:
         router = ProviderRouter()
     now = now_maturity or datetime.now(timezone.utc)
-    entries = [{"sid": s["sid"], "subj": s["subj"], "obs": s["obs"], "bt": s["bt"]} for s in W1_SAMPLES] \
-            + [{"sid": w["sid"], "subj": w["subj"], "obs": w["obs"], "bt": w["bt"]} for w in W1_WTI]
+    entries = (
+        [{"sid": s["sid"], "subj": s["subj"], "obs": s["obs"], "bt": s["bt"]} for s in W1_SAMPLES]
+        + [{"sid": w["sid"], "subj": w["subj"], "obs": w["obs"], "bt": w["bt"]} for w in W1_WTI]
+    )
     results = []
     for e in entries:
         sid, subj, obs, bt = e["sid"], e["subj"], e["obs"], e["bt"]
@@ -384,50 +407,84 @@ def run_week1(router=None, now_maturity=None) -> list[Week1ObservationResult]:
         snap, pname, interval, si, err = router.get_snapshot(obs, bt)
         origin = "network"
         if snap.status != "completed":
-            origin = "network_error"
-            if snap.source and "fixture" in snap.source:
-                origin = "fixture"
+            origin = "network_error" if "fixture" not in (snap.source or "") else "fixture"
         prec = 900 if pname == "hyperliquid" else 60 if pname == "binance" else None
         sp = si.get("selection_policy") if isinstance(si, dict) else None
         sl = si.get("signed_lag_seconds") if isinstance(si, dict) else None
         bms = iso_to_ms(bt)
         results.append(Week1ObservationResult(
             sample_id=sid, result_id=rid, subject_asset=subj, observed_asset=obs,
-            broadcast_time_utc=bt, t0_basis=bt,
+            broadcast_time_utc=bt,
+            t0_basis="broadcast_time",  # always this literal string
             provider=pname, interval=interval, precision_seconds=prec,
             selection_policy=sp, signed_lag_seconds=sl,
             t0_snapshot=snap,
-            return_1h=_w(obs, bt, bms, 3600000, now, router),
-            return_4h=_w(obs, bt, bms, 14400000, now, router),
-            return_24h=_w(obs, bt, bms, 86400000, now, router),
+            return_1h=_build_window(obs, bt, bms, 3600000, now, router, pname),
+            return_4h=_build_window(obs, bt, bms, 14400000, now, router, pname),
+            return_24h=_build_window(obs, bt, bms, 86400000, now, router, pname),
             data_origin=origin, network_error=err if err else None,
             calculated_at=utc_now(),
         ))
     return results
 
 
-def _w(asset, bt_iso, bt_ms, delta_ms, now, router) -> Optional[Week1WindowResult]:
+# ── Window Builder ──────────────────────────────────────────────────────────
+
+
+WINDOW_NAMES = {3600000: "1h", 14400000: "4h", 86400000: "24h"}
+
+
+def _build_window(
+    asset: str, bt_iso: str, bt_ms: Optional[int],
+    delta_ms: int, now: datetime, router: ProviderRouter, pname_hint: str = "",
+) -> Optional[Week1WindowResult]:
     if bt_ms is None:
         return Week1WindowResult(window="?", status="unavailable")
     target_ms = bt_ms + delta_ms
-    wname = {3600000: "1h", 14400000: "4h", 86400000: "24h"}.get(delta_ms, "?")
-    if datetime.fromtimestamp(target_ms / 1000.0, tz=timezone.utc) > now:
+    wname = WINDOW_NAMES.get(delta_ms, "?")
+    deadline = datetime.fromtimestamp(target_ms / 1000.0, tz=timezone.utc)
+    if deadline > now:
         return Week1WindowResult(window=wname, status="pending")
-    ws, _, _, _, _ = router.get_snapshot(asset, ms_to_iso(target_ms))
-    if ws.status != "completed" or ws.price is None:
-        return Week1WindowResult(window=wname, status=ws.status)
+
+    # Get target snapshot
+    t_iso = ms_to_iso(target_ms)
+    tsnap, _, _, tinfo, _ = router.get_snapshot(asset, t_iso)
+
+    # Determine selection info for this window
+    sel_policy = tinfo.get("selection_policy") if isinstance(tinfo, dict) else None
+    prec = tinfo.get("precision_seconds") if isinstance(tinfo, dict) else (900 if pname_hint == "hyperliquid" else 60)
+    signed_lag = tinfo.get("signed_lag_seconds") if isinstance(tinfo, dict) else None
+    abs_lag = tinfo.get("absolute_lag_seconds") if isinstance(tinfo, dict) else None
+
+    if tsnap.status != "completed" or tsnap.price is None:
+        return Week1WindowResult(
+            window=wname, status=tsnap.status,
+            target_snapshot=tsnap, selection_policy=sel_policy,
+            precision_seconds=prec, signed_lag_seconds=signed_lag, absolute_lag_seconds=abs_lag,
+        )
+
+    # Get t0 snapshot for return calculation
     t0s, _, _, _, _ = router.get_snapshot(asset, bt_iso)
     if t0s.status != "completed" or t0s.price is None:
-        return Week1WindowResult(window=wname, status="unavailable")
-    rd = (ws.price / t0s.price) - 1.0
-    wr = Week1WindowResult(window=wname, status="completed",
-                           return_decimal=round(rd, 6), return_percent=round(rd * 100.0, 4))
-    br = _bm(router, "BTC", bt_iso, bt_ms, delta_ms)
-    er = _bm(router, "ETH", bt_iso, bt_ms, delta_ms)
+        return Week1WindowResult(window=wname, status="unavailable", target_snapshot=tsnap)
+
+    rd = (tsnap.price / t0s.price) - 1.0
+    wr = Week1WindowResult(
+        window=wname, status="completed",
+        return_decimal=round(rd, 6), return_percent=round(rd * 100.0, 4),
+        target_snapshot=tsnap, selection_policy=sel_policy,
+        precision_seconds=prec, signed_lag_seconds=signed_lag, absolute_lag_seconds=abs_lag,
+    )
+
+    # Benchmark returns + snapshots
+    wr.btc_benchmark_t0_snapshot, wr.btc_benchmark_target_snapshot, br = _bm_snapshots(router, "BTC", bt_iso, target_ms)
+    wr.eth_benchmark_t0_snapshot, wr.eth_benchmark_target_snapshot, er = _bm_snapshots(router, "ETH", bt_iso, target_ms)
+
     wr.btc_return_decimal = round(br, 6) if br is not None else None
     wr.btc_return_percent = round(br * 100.0, 4) if br is not None else None
     wr.eth_return_decimal = round(er, 6) if er is not None else None
     wr.eth_return_percent = round(er * 100.0, 4) if er is not None else None
+
     if is_self_benchmark(asset, "BTCUSDT"):
         wr.btc_abnormal_return_decimal = None
         wr.btc_abnormal_return_percent = None
@@ -435,6 +492,7 @@ def _w(asset, bt_iso, bt_ms, delta_ms, now, router) -> Optional[Week1WindowResul
         v = rd - br
         wr.btc_abnormal_return_decimal = round(v, 6)
         wr.btc_abnormal_return_percent = round(v * 100.0, 4)
+
     if is_self_benchmark(asset, "ETHUSDT"):
         wr.eth_abnormal_return_decimal = None
         wr.eth_abnormal_return_percent = None
@@ -442,15 +500,21 @@ def _w(asset, bt_iso, bt_ms, delta_ms, now, router) -> Optional[Week1WindowResul
         v = rd - er
         wr.eth_abnormal_return_decimal = round(v, 6)
         wr.eth_abnormal_return_percent = round(v * 100.0, 4)
+
     return wr
 
 
-def _bm(router, asset, bt_iso, bt_ms, delta_ms):
-    tms = bt_ms + delta_ms
+def _bm_snapshots(
+    router: ProviderRouter, asset: str, bt_iso: str, target_ms: int,
+) -> tuple[Optional[PriceSnapshot], Optional[PriceSnapshot], Optional[float]]:
+    """Get benchmark t0 + target snapshots and return.
+
+    Returns (t0_snapshot, target_snapshot, return_decimal).
+    """
     t0s, _, _, _, _ = router.get_snapshot(asset, bt_iso)
     if t0s.status != "completed" or t0s.price is None:
-        return None
-    ws, _, _, _, _ = router.get_snapshot(asset, ms_to_iso(tms))
-    if ws.status != "completed" or ws.price is None:
-        return None
-    return (ws.price / t0s.price) - 1.0
+        return t0s, None, None
+    ts, _, _, _, _ = router.get_snapshot(asset, ms_to_iso(target_ms))
+    if ts.status != "completed" or ts.price is None:
+        return t0s, ts, None
+    return t0s, ts, (ts.price / t0s.price) - 1.0
