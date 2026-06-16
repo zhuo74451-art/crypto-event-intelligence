@@ -2,33 +2,36 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "meta": {
     "case_id": "w1_001",
-    "created_at_utc": "2026-06-16T14:00:00Z",
+    "created_at_utc": "2026-06-16T11:05:00Z",
+    "computed_at_utc": "2026-06-16T11:05:00Z",
     "created_by": "workbench/devset-w1-001-v1",
-    "retrospective_reconstruction": true,
-    "reconstruction_note": "Outcome computed retrospectively using Hyperliquid candleSnapshot 15m data. Price data sentinel value 0.0 means unavailable — see historical_materiality note.",
-    "price_data_note": "HYPE price data from Hyperliquid candleSnapshot 15m was unavailable for 2026-05-25. All price fields use 0.0 as an unavailable-data sentinel, not a real value."
+    "correction_note": "REPLACES sentinel outcome from prior commit. Previous version had 0.0 sentinel values because Hyperliquid API was queried with wrong timestamps (2025 vs 2026 epoch). Corrected timestamps produced 9 real HYPE candles.",
+    "previous_outcome_commit": "d9ef697",
+    "t0_alignment_rule": "open price of nearest 15m candle starting at or before target time",
+    "t1_alignment_rule": "open price of nearest 15m candle starting at or before target time",
+    "minimum_lag_selection": true
   },
   "outcome": {
     "outcome_id": "out_w1_001",
     "registration_ref": "reg_w1_001",
     "raw_market_reaction": {
       "window": "1h",
-      "absolute_change_pct": 0.0,
-      "direction": "flat"
+      "absolute_change_pct": 1.1274,
+      "direction": "positive"
     },
     "registered_benchmark_relative_reaction": {
       "benchmark": "BTC",
-      "relative_change_pct": 0.0
+      "relative_change_pct": 1.1880
     },
     "sensitivity_benchmark_reactions": [
       {
         "benchmark": "ETH",
-        "relative_change_pct": 0.0
+        "relative_change_pct": -0.0576
       }
     ],
     "historical_materiality": {
       "assessment": "insufficient_data",
-      "note": "HYPE price data from Hyperliquid candleSnapshot for 2026-05-25 was not available. Historical volatility baseline for HYPE not established. Materiality cannot be assessed. All sentinel 0.0 values indicate unavailable data."
+      "note": "HYPE historical volatility baseline not established. No 30-day or longer volatility history available through public API. Cannot determine whether 1.13% move exceeds expected volatility for this asset."
     },
     "pre_event_movement_check_result": {
       "movement_detected": false,
@@ -38,6 +41,15 @@
       "estimated_uncertainty_seconds": 3600,
       "note": "Only broadcast_time is known. The actual whale position change may have occurred hours before the broadcast. Estimated uncertainty is conservatively set to 1 hour."
     },
-    "calculated_at_utc": "2026-06-16T14:00:00Z"
+    "price_alignment_lag": {
+      "t0_lag_seconds": 120,
+      "t1_lag_seconds": 120
+    },
+    "price_precision": {
+      "provider": "Hyperliquid candleSnapshot",
+      "interval_seconds": 900,
+      "precision_note": "15m candle interval. t0 used 13:00 open (closest candle before t0=13:02, 120s lag). t1 used 14:00 open (closest candle before t0+1h=14:02, 120s lag). BTC prices from Binance 1m klines had 0s lag."
+    },
+    "calculated_at_utc": "2026-06-16T11:05:00Z"
   }
 }

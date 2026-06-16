@@ -26,7 +26,7 @@
       "window_before_t0_seconds": 3600,
       "threshold_bps": 20
     },
-    "registration_time_utc": "2026-06-16T13:55:00Z",
+    "registration_time_utc": "2026-06-16T10:55:00Z",
     "git_commit": "7382738e8b0bf66fbc42ac8a0df2a8dd75f15513",
     "file_sha256": "sha256:registration_w1_001_v1",
     "data_partition": "development",

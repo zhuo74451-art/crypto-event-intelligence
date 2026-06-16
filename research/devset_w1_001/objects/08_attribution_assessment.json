@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "meta": {
     "case_id": "w1_001",
-    "created_at_utc": "2026-06-16T14:00:00Z",
+    "created_at_utc": "2026-06-16T11:05:00Z",
     "created_by": "workbench/devset-w1-001-v1",
-    "retrospective_reconstruction": true,
-    "hard_gate_order": "Seven hard gates evaluated first. Verdict restricted to non-positive tier because not all gates pass.",
-    "btc_benchmark_note": "BTC is a weak proxy benchmark for HYPE. HYPE is a non-Binance altcoin with different market microstructure. registered_benchmark_relative_reaction has limited interpretability."
+    "correction_note": "REVISED after real HYPE price data obtained. Valid_outcome_measurement upgraded from unknown to pass. Benchmark_validity remains unknown (BTC is weak proxy for HYPE). Verdict remains insufficient_evidence.",
+    "previous_attribution_commit": "d9ef697",
+    "btc_benchmark_note": "BTC is a weak proxy benchmark for HYPE. HYPE raw 1h change: +1.13%. BTC 1h change: -0.06%. HYPE relative to BTC: +1.19%. The relative reaction is positive but attribution to Loracle position specifically cannot be confirmed."
   },
   "attribution_assessment": {
     "assessment_id": "aa_w1_001",
@@ -16,7 +16,7 @@
       "event_evidence": "pass",
       "usable_t0": "unknown",
       "pre_outcome_registration": "unknown",
-      "valid_outcome_measurement": "unknown",
+      "valid_outcome_measurement": "pass",
       "benchmark_validity": "unknown",
       "separability": "unknown"
     },
@@ -31,9 +31,9 @@
       "robustness": "not_applicable"
     },
     "verdict": "insufficient_evidence",
-    "notes": "Development Set sample w1_001. Single on-chain data source. HYPE price data availability from Hyperliquid candleSnapshot for 2026-05-25 is uncertain. BTC benchmark is a weak proxy for HYPE. Pre-outcome registration was retrospective (not genuine pre-registration). Insufficient_inventory for interference coverage. Overall: cannot attribute HYPE price movement to Loracle position with available evidence.",
-    "btc_benchmark_weak_proxy_note": "BTC is a weak proxy for HYPE. BTC and HYPE have fundamentally different market microstructure, liquidity profiles, and investor bases. registered_benchmark_relative_reaction for HYPE vs BTC has limited interpretability.",
-    "created_at_utc": "2026-06-16T14:00:00Z",
-    "updated_at_utc": "2026-06-16T14:00:00Z"
+    "notes": "Development Set sample w1_001. Real HYPE price data obtained (9 candles from Hyperliquid). HYPE 1h raw return: +1.13%. BTC benchmark return: -0.06%. Relative return: +1.19%. However: (1) usable_t0 is unknown — action time vs broadcast time delta is unknown, (2) pre_outcome_registration was retrospective, (3) BTC is a weak proxy for HYPE, (4) interference/inventory is insufficient. Verdict remains insufficient_evidence — the price reaction is documented but cannot be attributed to the event.",
+    "btc_benchmark_weak_proxy_note": "BTC is a weak proxy for HYPE. HYPE 1h return of +1.13% vs BTC 1h return of -0.06% shows divergence, but without HYPE-specific benchmark or longer volatility history, relative materiality cannot be assessed.",
+    "created_at_utc": "2026-06-16T11:05:00Z",
+    "updated_at_utc": "2026-06-16T11:05:00Z"
   }
 }
