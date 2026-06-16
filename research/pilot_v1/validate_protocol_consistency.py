@@ -146,9 +146,17 @@ FORBIDDEN_SCHEMA_PROPERTIES = [
     "long_signal", "short_signal", "action_recommendation",
 ]
 
+ALL_PROHIBITED_TERMS = FORBIDDEN_SCHEMA_PROPERTIES + [
+    "global_reputation_score", "source_trust_score", "source_reputation_probability",
+]
+
 FORBIDDEN_NUMERIC_TERMS = {"score", "probability", "percentage", "contribution", "win_rate"}
 
 TRADING_ADVICE_TERMS = {"buy_signal", "sell_signal", "long_signal", "short_signal", "action_recommendation"}
+
+VALID_LIFECYCLE_STAGES = {"registered", "outcome_revealed"}
+
+VALID_AGGREGATE_PARTITIONS = {"calibration", "holdout"}
 
 # Registration-only fields that must not appear in Outcome
 REGISTRATION_ONLY_FIELDS = {
@@ -286,6 +294,143 @@ def _check_nested_forbidden_terms(
             violations.extend(
                 _check_nested_forbidden_terms(item, forbidden_terms, f"{path}[{i}]", check_strings)
             )
+    return violations
+
+
+# ---------------------------------------------------------------------------
+# Schema-lite instance shape validator (no jsonschema dependency)
+# ---------------------------------------------------------------------------
+
+
+def _get_json_type(value) -> str:
+    """Map a Python value to its JSON Schema type name."""
+    if isinstance(value, bool):
+        return "boolean"
+    if isinstance(value, int):
+        return "integer"
+    if isinstance(value, float):
+        return "number"
+    if isinstance(value, str):
+        return "string"
+    if isinstance(value, list):
+        return "array"
+    if isinstance(value, dict):
+        return "object"
+    if value is None:
+        return "null"
+    return "string"  # fallback
+
+
+def validate_instance_against_schema_shape(
+    instance, schema: dict, path: str = "",
+) -> list[str]:
+    """Validate a Python *instance* against the structural rules in *schema*
+    (a dict parsed from a JSON Schema file).  Supports:
+      - object.properties + object.required + additionalProperties
+      - array.items
+      - enum
+      - type (object / array / string / integer / number / boolean)
+      - nested objects and arrays.
+
+    Does NOT resolve $ref or $defs.  Does NOT import jsonschema.
+    """
+    violations = []
+
+    if not isinstance(schema, dict):
+        return violations
+
+    schema_type = schema.get("type")
+
+    # --- type check ---
+    if schema_type is not None:
+        actual_type = _get_json_type(instance)
+        if schema_type == "integer":
+            if actual_type == "boolean":
+                violations.append(
+                    f"{path or '<root>'}: expected integer, got boolean"
+                )
+            elif actual_type not in ("integer", "number"):
+                violations.append(
+                    f"{path or '<root>'}: expected {schema_type}, got {actual_type}"
+                )
+            elif actual_type == "number":
+                violations.append(
+                    f"{path or '<root>'}: expected integer, got float"
+                )
+        elif schema_type == "number":
+            if actual_type not in ("integer", "number"):
+                violations.append(
+                    f"{path or '<root>'}: expected {schema_type}, got {actual_type}"
+                )
+        elif schema_type == "boolean":
+            if actual_type != "boolean":
+                violations.append(
+                    f"{path or '<root>'}: expected {schema_type}, got {actual_type}"
+                )
+        elif schema_type == "string":
+            if actual_type != "string":
+                violations.append(
+                    f"{path or '<root>'}: expected {schema_type}, got {actual_type}"
+                )
+        elif schema_type == "array":
+            if actual_type != "array":
+                violations.append(
+                    f"{path or '<root>'}: expected {schema_type}, got {actual_type}"
+                )
+        elif schema_type == "object":
+            if actual_type != "object":
+                violations.append(
+                    f"{path or '<root>'}: expected {schema_type}, got {actual_type}"
+                )
+
+    # --- enum check ---
+    enum_values = schema.get("enum")
+    if enum_values is not None and isinstance(instance, str):
+        if instance not in enum_values:
+            violations.append(
+                f"{path or '<root>'}: value '{instance}' not in enum {enum_values}"
+            )
+
+    # --- object: properties / required / additionalProperties ---
+    if isinstance(instance, dict):
+        props_def = schema.get("properties", {})
+        required = set(schema.get("required", []))
+
+        # Required field presence
+        for req_field in required:
+            if req_field not in instance or instance.get(req_field) is None:
+                violations.append(
+                    f"{path or '<root>'}: missing required field '{req_field}'"
+                )
+
+        # additionalProperties = false
+        if schema.get("additionalProperties") is False:
+            allowed = set(props_def.keys())
+            for field in instance:
+                if field not in allowed:
+                    violations.append(
+                        f"{path or '<root>'}: unknown field '{field}'"
+                    )
+
+        # Recurse into declared properties
+        for field, value in instance.items():
+            field_path = f"{path}.{field}" if path else field
+            if field in props_def:
+                field_schema = props_def[field]
+                violations.extend(
+                    validate_instance_against_schema_shape(value, field_schema, field_path)
+                )
+
+    # --- array ---
+    if isinstance(instance, list):
+        items_schema = schema.get("items")
+        if isinstance(items_schema, dict):
+            for i, item in enumerate(instance):
+                item_path = f"{path}[{i}]"
+                violations.extend(
+                    validate_instance_against_schema_shape(item, items_schema, item_path)
+                )
+
     return violations
 
 
@@ -456,23 +601,23 @@ def validate_shadow_audit_protocol(protocol_path: str) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
+def _schema_lint(instance_type: str, instance: dict) -> list[str]:
+    """Run schema-lite shape validation against the corresponding schema file."""
+    schema_path = os.path.join(SCHEMA_DIR, f"{instance_type}.schema.json")
+    try:
+        schema = load_schema(schema_path)
+        return validate_instance_against_schema_shape(instance, schema)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return [f"Could not load schema for {instance_type}"]
+
+
 def validate_candidate_instance(candidate: dict) -> list[str]:
-    """Validate a Candidate dict instance for data integrity.
-
-    Checks required fields, information_form validity, status/form consistency.
-    """
+    """Validate a Candidate dict instance for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "candidate_id", "information_form", "source_medium",
-        "capture_time_utc", "source_observation_ref", "status", "created_at_utc",
-    ]
-    for field in required_fields:
-        if field not in candidate or candidate.get(field) is None:
-            violations.append(f"Candidate missing required field: '{field}'")
-        elif isinstance(candidate.get(field), str) and candidate[field].strip() == "":
-            violations.append(f"Candidate required field '{field}' is empty")
+    if not isinstance(candidate, dict):
+        violations.append("Candidate must be a dict")
+        return violations
+    violations.extend(_schema_lint("candidate", candidate))
 
     # -- information_form enum check --
     info_form = candidate.get("information_form")
@@ -521,22 +666,9 @@ def validate_candidate_instance(candidate: dict) -> list[str]:
 
 
 def validate_research_unit_instance(research_unit: dict, candidate: dict = None) -> list[str]:
-    """Validate a Research Unit dict instance for data integrity.
-
-    If *candidate* is provided, cross-checks information_form consistency.
-    """
+    """Validate a Research Unit dict instance for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "research_unit_id", "design_type", "eligibility_status",
-        "candidate_ref", "information_form",
-    ]
-    for field in required_fields:
-        if field not in research_unit or research_unit.get(field) is None:
-            violations.append(f"Research Unit missing required field: '{field}'")
-        elif isinstance(research_unit.get(field), str) and research_unit[field].strip() == "":
-            violations.append(f"Research Unit required field '{field}' is empty")
+    violations.extend(_schema_lint("research_unit", research_unit))
 
     # -- candidate_ref must be non-empty --
     cref = research_unit.get("candidate_ref")
@@ -583,25 +715,9 @@ def validate_research_unit_instance(research_unit: dict, candidate: dict = None)
 
 
 def validate_registration_instance(registration: dict) -> list[str]:
-    """Validate a Registration dict instance for data integrity.
-
-    Checks self-benchmark, broadcast_time prohibition, outcome field leakage,
-    required field presence, and temporal separation from outcome data.
-    """
+    """Validate a Registration dict instance for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "registration_id", "research_unit_ref", "target_asset",
-        "selected_clock", "actual_time_basis", "primary_t0",
-        "primary_window", "primary_benchmark", "registration_time_utc",
-        "git_commit", "file_sha256", "data_partition", "outcome_status",
-    ]
-    for field in required_fields:
-        if field not in registration or registration.get(field) is None:
-            violations.append(f"Registration missing required field: '{field}'")
-        elif isinstance(registration.get(field), str) and registration[field].strip() == "":
-            violations.append(f"Registration required field '{field}' is empty")
+    violations.extend(_schema_lint("registration", registration))
 
     # -- target_asset == primary_benchmark → self-benchmark --
     target = registration.get("target_asset")
@@ -684,24 +800,9 @@ def validate_registration_instance(registration: dict) -> list[str]:
 
 
 def validate_outcome_instance(outcome: dict, registration: dict = None) -> list[str]:
-    """Validate an Outcome dict instance for data integrity.
-
-    If *registration* is provided, cross-checks registration_ref match,
-    benchmark consistency, window consistency, and sensitivity benchmarks.
-    """
+    """Validate an Outcome dict instance for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "outcome_id", "registration_ref", "raw_market_reaction",
-        "registered_benchmark_relative_reaction", "historical_materiality",
-        "pre_event_movement_check_result", "calculated_at_utc",
-    ]
-    for field in required_fields:
-        if field not in outcome or outcome.get(field) is None:
-            violations.append(f"Outcome missing required field: '{field}'")
-        elif isinstance(outcome.get(field), str) and outcome[field].strip() == "":
-            violations.append(f"Outcome required field '{field}' is empty")
+    violations.extend(_schema_lint("outcome", outcome))
 
     # -- Contains registration-only fields --
     for rfield in REGISTRATION_ONLY_FIELDS:
@@ -764,23 +865,9 @@ def validate_outcome_instance(outcome: dict, registration: dict = None) -> list[
 
 
 def validate_interference_instance(interference: dict) -> list[str]:
-    """Validate an Interference Record dict instance.
-
-    Required fields, separability/coverage consistency, collision set integrity.
-    """
+    """Validate an Interference Record dict instance."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "record_id", "research_unit_ref", "observation_window",
-        "separability_status", "collision_set",
-        "alternative_explanations", "coverage_insufficiency",
-    ]
-    for field in required_fields:
-        if field not in interference or interference.get(field) is None:
-            violations.append(f"Interference record missing required field: '{field}'")
-        elif isinstance(interference.get(field), str) and interference[field].strip() == "":
-            violations.append(f"Interference record required field '{field}' is empty")
+    violations.extend(_schema_lint("interference_record", interference))
 
     # -- separability_status enum check --
     sep_status = interference.get("separability_status")
@@ -852,23 +939,9 @@ def validate_interference_instance(interference: dict) -> list[str]:
 
 
 def validate_event_instance_instance(event_instance: dict) -> list[str]:
-    """Validate an Event Instance dict for data integrity.
-
-    Identity relationships, versioning, and thread consistency.
-    """
+    """Validate an Event Instance dict for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "canonical_event_instance_id", "event_thread_ref",
-        "relationship_to_thread", "relationship_evidence",
-        "observation_ref", "instance_version", "created_at_utc",
-    ]
-    for field in required_fields:
-        if field not in event_instance or event_instance.get(field) is None:
-            violations.append(f"Event Instance missing required field: '{field}'")
-        elif isinstance(event_instance.get(field), str) and event_instance[field].strip() == "":
-            violations.append(f"Event Instance required field '{field}' is empty")
+    violations.extend(_schema_lint("event_instance", event_instance))
 
     # -- relationship_to_thread enum check --
     rel = event_instance.get("relationship_to_thread")
@@ -924,23 +997,9 @@ def validate_event_instance_instance(event_instance: dict) -> list[str]:
 
 
 def validate_claim_evidence_instance(record: dict) -> list[str]:
-    """Validate a Claim Evidence Record dict for data integrity.
-
-    Evidence role, claim evidence status, independence groups, and forbidden terms.
-    """
+    """Validate a Claim Evidence Record dict for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "record_id", "claim", "evidence_artifacts", "evidence_relations",
-        "evidence_role", "claim_evidence_status", "independence_groups",
-        "provenance_path", "created_at_utc",
-    ]
-    for field in required_fields:
-        if field not in record or record.get(field) is None:
-            violations.append(f"Claim Evidence Record missing required field: '{field}'")
-        elif isinstance(record.get(field), str) and record[field].strip() == "":
-            violations.append(f"Claim Evidence Record required field '{field}' is empty")
+    violations.extend(_schema_lint("claim_evidence_record", record))
 
     # -- evidence_role enum check --
     ev_role = record.get("evidence_role")
@@ -991,22 +1050,9 @@ def validate_claim_evidence_instance(record: dict) -> list[str]:
 
 
 def validate_attribution_instance(assessment: dict, interference: dict = None) -> list[str]:
-    """Validate an Attribution Assessment dict for data integrity.
-
-    Hard gates, verdict consistency, forbidden numeric terms, and interference cross-check.
-    """
+    """Validate an Attribution Assessment dict for data integrity."""
     violations = []
-
-    # -- Required fields --
-    required_fields = [
-        "assessment_id", "research_unit_ref", "hard_gates",
-        "dimensions", "verdict", "created_at_utc",
-    ]
-    for field in required_fields:
-        if field not in assessment or assessment.get(field) is None:
-            violations.append(f"Attribution Assessment missing required field: '{field}'")
-        elif isinstance(assessment.get(field), str) and assessment[field].strip() == "":
-            violations.append(f"Attribution Assessment required field '{field}' is empty")
+    violations.extend(_schema_lint("attribution_assessment", assessment))
 
     # -- verdict enum check --
     verdict = assessment.get("verdict")
@@ -1107,162 +1153,100 @@ def validate_attribution_instance(assessment: dict, interference: dict = None) -
     return violations
 
 
-def validate_research_bundle(bundle: dict) -> list[str]:
+def validate_research_bundle(bundle: dict, lifecycle_stage: str = "outcome_revealed") -> list[str]:
     """Validate a complete research bundle for cross-record consistency.
-
-    A bundle is a dict containing: candidate, research_unit, registration, outcome,
-    interference, event_instance, claim_evidence, attribution.
-
-    Runs individual instance validators for each sub-record, then checks
-    cross-record consistency.
-    """
+    *lifecycle_stage* controls which checks apply."""
     violations = []
+    if lifecycle_stage not in VALID_LIFECYCLE_STAGES:
+        violations.append(f"Bundle: unknown lifecycle_stage '{lifecycle_stage}'")
+        return violations
 
     # -- Extract instances --
-    candidate = bundle.get("candidate", {})
-    research_unit = bundle.get("research_unit", {})
-    registration = bundle.get("registration", {})
-    outcome = bundle.get("outcome", {})
-    interference = bundle.get("interference", {})
-    event_instance = bundle.get("event_instance", {})
-    claim_evidence = bundle.get("claim_evidence", {})
-    attribution = bundle.get("attribution", {})
+    candidate = bundle.get("candidate")
+    research_unit = bundle.get("research_unit")
+    registration = bundle.get("registration")
+    outcome = bundle.get("outcome")
+    interference = bundle.get("interference")
+    event_instance = bundle.get("event_instance")
+    claim_evidence = bundle.get("claim_evidence")
+    attribution = bundle.get("attribution")
 
-    # -- Run individual validators --
-    if candidate:
-        violations.extend(
-            f"[candidate] {v}" for v in validate_candidate_instance(candidate)
-        )
-    if research_unit:
-        violations.extend(
-            f"[research_unit] {v}"
-            for v in validate_research_unit_instance(research_unit, candidate or None)
-        )
-    if registration:
-        violations.extend(
-            f"[registration] {v}" for v in validate_registration_instance(registration)
-        )
-    if outcome:
-        violations.extend(
-            f"[outcome] {v}" for v in validate_outcome_instance(outcome, registration or None)
-        )
-    if interference:
-        violations.extend(
-            f"[interference] {v}" for v in validate_interference_instance(interference)
-        )
-    if event_instance:
-        violations.extend(
-            f"[event_instance] {v}" for v in validate_event_instance_instance(event_instance)
-        )
-    if claim_evidence:
-        violations.extend(
-            f"[claim_evidence] {v}" for v in validate_claim_evidence_instance(claim_evidence)
-        )
-    if attribution:
-        violations.extend(
-            f"[attribution] {v}"
-            for v in validate_attribution_instance(attribution, interference or None)
-        )
+    # -- Run individual validators for dicts --
+    for inst, name, validator, extra in (
+        (candidate, "candidate", validate_candidate_instance, None),
+        (research_unit, "research_unit", validate_research_unit_instance, candidate),
+        (registration, "registration", validate_registration_instance, None),
+        (outcome, "outcome", validate_outcome_instance, registration),
+        (interference, "interference", validate_interference_instance, None),
+        (event_instance, "event_instance", validate_event_instance_instance, None),
+        (claim_evidence, "claim_evidence", validate_claim_evidence_instance, None),
+        (attribution, "attribution", validate_attribution_instance, interference),
+    ):
+        if isinstance(inst, dict):
+            v = validator(inst) if extra is None else validator(inst, extra)
+            violations.extend(f"[{name}] {vi}" for vi in v)
 
-    # -- Cross-record checks --
+    # -- Cross-record checks by lifecycle stage --
+    if lifecycle_stage == "registered":
+        if not isinstance(registration, dict):
+            violations.append("Bundle: registration required for lifecycle_stage='registered'")
+            return violations
+        if registration.get("outcome_status") != "not_revealed":
+            violations.append("Bundle: registration outcome_status must be 'not_revealed' at lifecycle_stage='registered'")
+        if not registration.get("git_commit"):
+            violations.append("Bundle: registration missing git_commit at lifecycle_stage='registered'")
+        if not registration.get("file_sha256"):
+            violations.append("Bundle: registration missing file_sha256 at lifecycle_stage='registered'")
+        if isinstance(outcome, dict):
+            violations.append("Bundle: outcome must not exist at lifecycle_stage='registered'")
 
-    # 1. Outcome without registration
-    if outcome and not registration:
-        violations.append(
-            "Bundle: outcome exists but registration is missing"
-        )
-    if not outcome and registration:
-        violations.append(
-            "Bundle: registration exists but outcome is missing"
-        )
-
-    # 2. Outcome registration_ref must match registration registration_id
-    if outcome and registration:
-        out_reg_ref = outcome.get("registration_ref")
-        reg_id = registration.get("registration_id")
-        if out_reg_ref and reg_id and out_reg_ref != reg_id:
-            violations.append(
-                "Bundle: outcome.registration_ref does not match "
-                "registration.registration_id"
-            )
-
-    # 3. Registration must be created before Outcome (RFC 3339 datetime comparison)
-    if outcome and registration:
-        reg_time_str = registration.get("registration_time_utc")
-        out_time_str = outcome.get("calculated_at_utc")
-        if reg_time_str and out_time_str:
-            try:
-                reg_dt = datetime.fromisoformat(reg_time_str.replace("Z", "+00:00"))
-                out_dt = datetime.fromisoformat(out_time_str.replace("Z", "+00:00"))
-                if reg_dt >= out_dt:
-                    violations.append(
-                        "Bundle: registration_time_utc must be before calculated_at_utc "
-                        "(registration before outcome)"
-                    )
-            except (ValueError, TypeError):
-                violations.append(
-                    "Bundle: cannot parse registration_time_utc or calculated_at_utc as RFC 3339 datetime"
-                )
-
-    # 4. Outcome benchmark matches registration primary_benchmark
-    if outcome and registration:
-        out_bm = outcome.get("registered_benchmark_relative_reaction", {})
-        if isinstance(out_bm, dict):
-            out_benchmark = out_bm.get("benchmark")
-            reg_pb = registration.get("primary_benchmark")
-            if out_benchmark and reg_pb and out_benchmark != reg_pb:
-                violations.append(
-                    "Bundle: outcome benchmark does not match registration primary_benchmark"
-                )
-
-    # 5. Outcome window matches registration primary_window
-    if outcome and registration:
-        rm_reaction = outcome.get("raw_market_reaction", {})
-        if isinstance(rm_reaction, dict):
-            outcome_window = rm_reaction.get("window")
-            reg_window = registration.get("primary_window", {})
-            if isinstance(reg_window, dict):
-                reg_window_type = reg_window.get("window_type")
-                if outcome_window and reg_window_type:
-                    if not _window_type_matches_outcome_window(reg_window_type, outcome_window):
-                        violations.append(
-                            "Bundle: outcome raw_market_reaction window does not match "
-                            "registration primary_window type"
-                        )
-
-    # 6. Outcome must NOT modify Registration parameters
-    #    Check that outcome doesn't contain registration-only fields
-    if outcome:
-        for rfield in REGISTRATION_ONLY_FIELDS:
-            if rfield in outcome:
-                violations.append(
-                    f"Bundle: outcome contains Registration-only field '{rfield}'"
-                )
-
-    # 7. Registration and Outcome must be physically separate dicts
-    if outcome is not None and registration is not None:
-        if id(outcome) == id(registration):
-            violations.append(
-                "Bundle: registration and outcome are the same object (shared reference)"
-            )
+    elif lifecycle_stage == "outcome_revealed":
+        if not isinstance(registration, dict):
+            violations.append("Bundle: registration missing at lifecycle_stage='outcome_revealed'")
+        if not isinstance(outcome, dict):
+            violations.append("Bundle: outcome missing at lifecycle_stage='outcome_revealed'")
+        if isinstance(registration, dict) and isinstance(outcome, dict):
+            if outcome.get("registration_ref") != registration.get("registration_id"):
+                violations.append("Bundle: outcome.registration_ref does not match registration.registration_id")
+            rt, ot = registration.get("registration_time_utc"), outcome.get("calculated_at_utc")
+            if rt and ot:
+                try:
+                    rd = datetime.fromisoformat(rt.replace("Z", "+00:00"))
+                    od = datetime.fromisoformat(ot.replace("Z", "+00:00"))
+                    if rd >= od:
+                        violations.append("Bundle: registration_time_utc must be before calculated_at_utc")
+                except (ValueError, TypeError):
+                    violations.append("Bundle: cannot parse timestamps as RFC 3339 datetime")
+            ob = outcome.get("registered_benchmark_relative_reaction", {})
+            if isinstance(ob, dict) and ob.get("benchmark") and registration.get("primary_benchmark"):
+                if ob["benchmark"] != registration["primary_benchmark"]:
+                    violations.append("Bundle: outcome benchmark does not match registration primary_benchmark")
+            rr = outcome.get("raw_market_reaction", {})
+            if isinstance(rr, dict) and rr.get("window"):
+                rw = registration.get("primary_window", {})
+                if isinstance(rw, dict) and rw.get("window_type"):
+                    if not _window_type_matches_outcome_window(rw["window_type"], rr["window"]):
+                        violations.append("Bundle: outcome window does not match registration primary_window type")
+            for fld in REGISTRATION_ONLY_FIELDS:
+                if fld in outcome:
+                    violations.append(f"Bundle: outcome contains Registration-only field '{fld}'")
+            if id(outcome) == id(registration):
+                violations.append("Bundle: registration and outcome are the same object (shared reference)")
 
     return violations
 
 
-def validate_pilot_aggregate_membership(bundle: dict) -> list[str]:
-    """Validate that a bundle's data partition is eligible for Pilot aggregate statistics.
-
-    Development partition bundles must NOT be counted in Pilot aggregate.
-    """
+def validate_aggregate_membership(bundle: dict, aggregate_partition: str) -> list[str]:
+    """Validate bundle eligibility for a specific aggregate partition."""
     violations = []
-    registration = bundle.get("registration", {})
-    if registration:
-        dp = registration.get("data_partition")
-        if dp == "development":
-            violations.append(
-                "Pilot aggregate membership: registration data_partition='development' "
-                "must not be counted toward Pilot aggregate statistics"
-            )
+    if aggregate_partition not in VALID_AGGREGATE_PARTITIONS:
+        violations.append(f"Bundle: unknown aggregate_partition '{aggregate_partition}'")
+        return violations
+    dp = bundle.get("registration", {}).get("data_partition") if bundle.get("registration") else None
+    if dp == "development":
+        violations.append(f"Bundle: data_partition='development' cannot enter aggregate_partition='{aggregate_partition}'")
+    elif dp != aggregate_partition:
+        violations.append(f"Bundle: data_partition='{dp}' does not match aggregate_partition='{aggregate_partition}'")
     return violations
 
 

@@ -306,8 +306,42 @@ class TestNegativeCandidate(unittest.TestCase):
         self.assertTrue(any("outcome_status" in vi.lower() for vi in v))
 
 
-class TestNegativeOutcome(unittest.TestCase):
-    """Negative cases for validate_outcome_instance."""
+class TestNegativeSchemaShape(unittest.TestCase):
+    """Negative cases for schema-lite shape validation via validate_*_instance."""
+
+    def test_candidate_unknown_top_level_field(self):
+        c = make_valid_candidate({"unknown_field": "value"})
+        v = vpc.validate_candidate_instance(c)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("unknown" in vi.lower() for vi in v))
+
+    def test_registration_unknown_top_level_field(self):
+        r = make_valid_registration({"unknown_field": "value"})
+        v = vpc.validate_registration_instance(r)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("unknown" in vi.lower() for vi in v))
+
+    def test_registration_unknown_nested_field(self):
+        r = make_valid_registration({"primary_window": {"duration_seconds": 3600, "window_type": "t0_to_t_plus_1h", "unknown_nested": True}})
+        v = vpc.validate_registration_instance(r)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("unknown" in vi.lower() for vi in v))
+
+    def test_claim_evidence_nested_reputation(self):
+        ce = make_valid_claim_evidence({"evidence_artifacts": [{"artifact_id": "a1", "artifact_type": "article", "content_hash": "abc", "source": "A", "source_reputation_probability": 0.8}]})
+        v = vpc.validate_claim_evidence_instance(ce)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("reputation" in vi.lower() for vi in v))
+
+    def test_research_unit_missing_created_at(self):
+        ru = {"research_unit_id": "ru_t_001", "design_type": "point_event_study", "eligibility_status": "eligible", "candidate_ref": "t_c_001", "information_form": "discrete_information_release"}
+        v = vpc.validate_research_unit_instance(ru)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("created_at_utc" in vi.lower() for vi in v))
+
+
+class TestNegativeEventIdentity(unittest.TestCase):
+    """Negative cases for validate_event_instance_instance."""
 
     def test_outcome_without_registration_in_bundle(self):
         bundle = make_valid_research_bundle()
@@ -390,6 +424,13 @@ class TestNegativeEventIdentity(unittest.TestCase):
         self.assertTrue(len(v) > 0)
         self.assertTrue(any("integer" in vi.lower() for vi in v))
 
+    def test_bool_instance_version_rejected(self):
+        """instance_version must be integer, not bool."""
+        ei = make_valid_event_instance({"instance_version": True})
+        v = vpc.validate_event_instance_instance(ei)
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("boolean" in vi.lower() for vi in v))
+
 
 class TestNegativeAttributionExtended(unittest.TestCase):
     """Extended negative cases for attribution assessment."""
@@ -442,16 +483,43 @@ class TestNegativeResearchBundle(unittest.TestCase):
     def test_actual_outcome_without_registration(self):
         bundle = make_valid_research_bundle()
         bundle["registration"] = None
-        v = vpc.validate_research_bundle(bundle)
+        v = vpc.validate_research_bundle(bundle, lifecycle_stage="outcome_revealed")
         self.assertTrue(len(v) > 0)
-        self.assertTrue(any("registration is missing" in vi.lower() for vi in v))
+        self.assertTrue(any("registration missing" in vi.lower() for vi in v))
 
     def test_outcome_ref_mismatch(self):
         bundle = make_valid_research_bundle()
         bundle["outcome"]["registration_ref"] = "nonexistent"
-        v = vpc.validate_research_bundle(bundle)
+        v = vpc.validate_research_bundle(bundle, lifecycle_stage="outcome_revealed")
         self.assertTrue(len(v) > 0)
         self.assertTrue(any("registration_ref" in vi.lower() for vi in v))
+
+    def test_registered_lifecycle_no_outcome_passes(self):
+        """registered lifecycle must NOT have outcome, and that's correct."""
+        bundle = make_valid_research_bundle()
+        bundle["outcome"] = None
+        v = vpc.validate_research_bundle(bundle, lifecycle_stage="registered")
+        self.assertEqual(len(v), 0, "registered lifecycle without outcome must pass")
+
+    def test_outcome_revealed_lifecycle_missing_outcome_rejected(self):
+        bundle = make_valid_research_bundle()
+        bundle["outcome"] = None
+        v = vpc.validate_research_bundle(bundle, lifecycle_stage="outcome_revealed")
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("outcome missing" in vi.lower() for vi in v))
+
+    def test_outcome_revealed_lifecycle_missing_registration_rejected(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"] = None
+        v = vpc.validate_research_bundle(bundle, lifecycle_stage="outcome_revealed")
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("registration missing" in vi.lower() for vi in v))
+
+    def test_unknown_lifecycle_stage_rejected(self):
+        bundle = make_valid_research_bundle()
+        v = vpc.validate_research_bundle(bundle, lifecycle_stage="invalid_stage")
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("unknown" in vi.lower() for vi in v))
 
     def test_development_normal_validation_passes(self):
         """Development bundle should pass normal bundle validation."""
@@ -464,9 +532,40 @@ class TestNegativeResearchBundle(unittest.TestCase):
         """Development bundle must be rejected by aggregate membership check."""
         bundle = make_valid_research_bundle()
         bundle["registration"]["data_partition"] = "development"
-        v = vpc.validate_pilot_aggregate_membership(bundle)
+        v = vpc.validate_aggregate_membership(bundle, "calibration")
         self.assertTrue(len(v) > 0, "Development bundle must not count toward pilot aggregate")
         self.assertTrue(any("development" in vi.lower() for vi in v))
+
+    def test_development_to_holdout_rejected(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"]["data_partition"] = "development"
+        v = vpc.validate_aggregate_membership(bundle, "holdout")
+        self.assertTrue(len(v) > 0)
+        self.assertTrue(any("development" in vi.lower() for vi in v))
+
+    def test_holdout_to_calibration_rejected(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"]["data_partition"] = "holdout"
+        v = vpc.validate_aggregate_membership(bundle, "calibration")
+        self.assertTrue(len(v) > 0)
+
+    def test_calibration_to_holdout_rejected(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"]["data_partition"] = "calibration"
+        v = vpc.validate_aggregate_membership(bundle, "holdout")
+        self.assertTrue(len(v) > 0)
+
+    def test_calibration_to_calibration_passes(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"]["data_partition"] = "calibration"
+        v = vpc.validate_aggregate_membership(bundle, "calibration")
+        self.assertEqual(len(v), 0)
+
+    def test_holdout_to_holdout_passes(self):
+        bundle = make_valid_research_bundle()
+        bundle["registration"]["data_partition"] = "holdout"
+        v = vpc.validate_aggregate_membership(bundle, "holdout")
+        self.assertEqual(len(v), 0)
 
 
 # ═══════════════════════════════════════════════════════════════
