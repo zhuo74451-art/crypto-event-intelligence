@@ -1,0 +1,74 @@
+{
+  "sample_id": "w1_001",
+  "source": "research/week1_samples_v1.json",
+  "extracted_at_utc": "2026-06-16T15:30:00Z",
+  "fields": {
+    "sample_id": "w1_001",
+    "notion_page_id": "36b0246231d381ce899becc2bbb1ff7c",
+    "notion_page_url": "https://app.notion.com/p/36b0246231d381ce899becc2bbb1ff7c",
+    "title": "Loracle HYPE空单浮亏扩大，持仓规模达1.13亿美元",
+    "raw_summary": "知名交易员Loracle的HYPE空单浮亏扩大至约3146万美元，持仓规模约1.13亿美元，均价45.35美元，当前币价62.78美元，清算价89.17美元。",
+    "broadcast_time_utc": "2026-05-25T13:02:00Z",
+    "event_time_utc": null,
+    "event_time_status": "unavailable",
+    "t0_basis": "broadcast_time",
+    "event_type": "巨鲸/链上",
+    "subject_asset": "HYPE",
+    "observation_assets": [
+      "HYPE"
+    ],
+    "benchmark_assets": [
+      "BTC",
+      "ETH"
+    ],
+    "source_label": "币界快讯ai / HyperLiquid 地址数据",
+    "source_count": 1,
+    "source_quality_status": "单来源，无法交叉验证",
+    "existing_news_quality_raw": "B 注意力",
+    "existing_news_quality_normalized": "attention",
+    "existing_trade_relevance_raw": "高",
+    "existing_trade_relevance_normalized": "high",
+    "existing_decision_raw": "观察",
+    "existing_decision_normalized": "observe",
+    "existing_direction_raw": "不确定",
+    "existing_direction_normalized": "uncertain",
+    "existing_pump_risk_raw": "中",
+    "existing_pump_risk_normalized": "medium",
+    "existing_ai_confidence_raw": 78,
+    "existing_news_quality": {
+      "deprecated_alias": true,
+      "value": "attention",
+      "note": "use existing_news_quality_normalized instead"
+    },
+    "existing_trade_relevance": {
+      "deprecated_alias": true,
+      "value": "high",
+      "note": "use existing_trade_relevance_normalized instead"
+    },
+    "existing_decision": {
+      "deprecated_alias": true,
+      "value": "observe",
+      "note": "use existing_decision_normalized instead"
+    },
+    "existing_direction": {
+      "deprecated_alias": true,
+      "value": "uncertain",
+      "note": "use existing_direction_normalized instead"
+    },
+    "existing_pump_risk": {
+      "deprecated_alias": true,
+      "value": "medium",
+      "note": "use existing_pump_risk_normalized instead"
+    },
+    "price_provider_plan": "Hyperliquid candleSnapshot, 15m interval. HYPE is not listed on Binance — Hyperliquid's native API is the only viable source. Note: Hyperliquid supports both 1m and 15m candle intervals; 15m is chosen for retention range coverage of 2026-05-25 historical data, not because 1m is unavailable. candleSnapshot is limited to a recent window of candles.",
+    "price_interval_plan": "15m (retention-range choice for historical coverage — Hyperliquid does support 1m candles)",
+    "known_limitations": [
+      "Hyperliquid candleSnapshot only provides a limited recent window of candles — may not cover 2026-05-25",
+      "15m interval means t0 precision is ±7.5 minutes vs 1m kline precision of ±30 seconds",
+      "No cross-exchange price verification possible for HYPE",
+      "单一来源，缺乏交叉验证",
+      "播报时间代替事件发生时间——实际开仓时间可能早于播报数小时"
+    ],
+    "manual_review_notes": "Loracle 是已知巨鲸地址。需要确认 Hyperliquid candleSnapshot 在选定时间范围内是否返回数据。如果 snapshot 不可用，可考虑 DexScreener 或 Hyperliquid 的 REST API 作为备选。"
+  }
+}

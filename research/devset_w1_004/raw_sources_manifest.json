@@ -1,5 +1,23 @@
 {
-  "manifest_version": "1",
+  "manifest_version": "2",
   "case_id": "w1_004",
-  "files": []
+  "verified_at_utc": "2026-06-16T16:00:00Z",
+  "files": [
+    {
+      "relative_path": "raw_btc_response.json",
+      "byte_size": 16323,
+      "file_sha256": "472e55bb29c9843ea47c18861d38685516ef8091fa97b362bf4ca6c9636ec3b6",
+      "provider": "Binance",
+      "fetched_at_utc": "2026-06-16T11:32:40Z",
+      "returned_count": 151
+    },
+    {
+      "relative_path": "raw_eth_response.json",
+      "byte_size": 16197,
+      "file_sha256": "bddb3b1bd66ba57716b20de17cbc1f057574d9834be0bbe624e83bf4622a41bb",
+      "provider": "Binance",
+      "fetched_at_utc": "2026-06-16T11:32:40Z",
+      "returned_count": 151
+    }
+  ]
 }

@@ -19,7 +19,7 @@
       {
         "artifact_id": "art_w1_001_src",
         "artifact_type": "api_response",
-        "content_hash": "sha256:not_computed_yet",
+        "content_hash": "sha256:2ecf1a8b9c5d17adb6baeb2cccf622572132c1c070be712bac31f481798e96c3",
         "source": "HyperLiquid 地址数据 via 币界快讯ai"
       }
     ],
@@ -30,13 +30,11 @@
         "detail": "On-chain position data shows Loracle address with 1.13亿美元 HYPE short position"
       }
     ],
-    "evidence_role": "carrier_or_relay",
-    "claim_evidence_status": "single_source_supported",
     "provenance_path": [
       {
         "hop": 1,
         "from_source": "HyperLiquid blockchain state",
-        "to_source": "币界快讯ai monitoring system",
+        "to_source": "币界快讯ai / HyperLiquid 地址数据",
         "timestamp_utc": "2026-05-25T13:02:00Z",
         "transformation": "On-chain address data query and format"
       },
@@ -51,7 +49,9 @@
     "independence_groups": [
       {
         "group_id": "ig_w1_001",
-        "members": ["art_w1_001_src"],
+        "members": [
+          "art_w1_001_src"
+        ],
         "independence_status": "independent"
       }
     ],

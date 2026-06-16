@@ -1,0 +1,73 @@
+{
+  "sample_id": "w1_003",
+  "source": "research/week1_samples_v1.json",
+  "extracted_at_utc": "2026-06-16T15:30:00Z",
+  "fields": {
+    "sample_id": "w1_003",
+    "notion_page_id": "36b0246231d381d29130d2ff58f3efee",
+    "notion_page_url": "https://app.notion.com/p/36b0246231d381d29130d2ff58f3efee",
+    "title": "Binance近10天BTC流入显著增加，比特币面临卖出信号",
+    "raw_summary": "分析师称Binance近10天BTC强劲流入，周均流入从378 BTC升至1190 BTC，5月18日单日流入超3600 BTC，储备量增加16000 BTC。",
+    "broadcast_time_utc": "2026-05-25T16:12:00Z",
+    "event_time_utc": null,
+    "event_time_status": "unavailable",
+    "t0_basis": "broadcast_time",
+    "event_type": "巨鲸/链上",
+    "subject_asset": "BTC",
+    "observation_assets": [
+      "BTC"
+    ],
+    "benchmark_assets": [
+      "BTC",
+      "ETH"
+    ],
+    "source_label": "币界快讯ai / Darkfost分析",
+    "source_count": 1,
+    "source_quality_status": "单来源，分析类内容不可独立验证",
+    "existing_news_quality_raw": "A 结构性",
+    "existing_news_quality_normalized": "structural",
+    "existing_trade_relevance_raw": "高",
+    "existing_trade_relevance_normalized": "high",
+    "existing_decision_raw": "仅风险提示",
+    "existing_decision_normalized": "risk_tip",
+    "existing_direction_raw": "利空",
+    "existing_direction_normalized": "bearish",
+    "existing_pump_risk_raw": "低",
+    "existing_pump_risk_normalized": "low",
+    "existing_ai_confidence_raw": 78,
+    "existing_news_quality": {
+      "deprecated_alias": true,
+      "value": "structural",
+      "note": "use existing_news_quality_normalized instead"
+    },
+    "existing_trade_relevance": {
+      "deprecated_alias": true,
+      "value": "high",
+      "note": "use existing_trade_relevance_normalized instead"
+    },
+    "existing_decision": {
+      "deprecated_alias": true,
+      "value": "risk_tip",
+      "note": "use existing_decision_normalized instead"
+    },
+    "existing_direction": {
+      "deprecated_alias": true,
+      "value": "bearish",
+      "note": "use existing_direction_normalized instead"
+    },
+    "existing_pump_risk": {
+      "deprecated_alias": true,
+      "value": "low",
+      "note": "use existing_pump_risk_normalized instead"
+    },
+    "price_provider_plan": "Binance Kline, 1m interval (BTCUSDT). BTC is listed on Binance with ample liquidity.",
+    "price_interval_plan": "1m (standard Binance kline interval)",
+    "known_limitations": [
+      "这是分析类内容而非硬新闻——'卖出信号'是 Darkfost 的主观解读",
+      "BTC 流入交易所是持续 10 天的趋势，不是单点事件，t0 选择播报时间可能不反映趋势起点",
+      "单一来源，虽来源名称为分析机构但无独立第二来源",
+      "现有人工结论已将其评为 A 结构性，属于较高质量等级"
+    ],
+    "manual_review_notes": "此样本的 existing_news_quality_raw=A 结构性，属于较高质量分类。价格回填的 1h/4h/24h 窗口可能不足以捕捉 10 天趋势的完整影响。"
+  }
+}

@@ -16,8 +16,8 @@
     "evidence_artifacts": [
       {
         "artifact_id": "art_w1_004_src",
-        "artifact_type": "api_response",
-        "content_hash": "sha256:not_computed",
+        "artifact_type": "article",
+        "content_hash": "sha256:94fe2228439425e0dcc395c0e8e2bef839d7ebdfe571ebceada40b3d168bf1a9",
         "source": "币界快讯ai / Strategy相关消息"
       }
     ],

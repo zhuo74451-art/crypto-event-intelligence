@@ -1,21 +1,31 @@
 {
-  "manifest_version": "1",
+  "manifest_version": "2",
   "case_id": "w1_001",
+  "verified_at_utc": "2026-06-16T16:00:00Z",
   "files": [
     {
-      "file": "raw_hype_response.json",
-      "sha256": "ecbafd66c20307e61fcc14cd89188ba7ae362d389a1631e41c3e53b8cedea66b",
-      "size_bytes": 4144
+      "relative_path": "raw_btc_response.json",
+      "byte_size": 16549,
+      "file_sha256": "e578fd31c7faa3cc47609f73ffd38253a679fa047afb3f324de9da7b34c49e39",
+      "provider": "Binance",
+      "fetched_at_utc": "2026-06-16T11:17:28Z",
+      "returned_count": 151
     },
     {
-      "file": "raw_btc_response.json",
-      "sha256": "e578fd31c7faa3cc47609f73ffd38253a679fa047afb3f324de9da7b34c49e39",
-      "size_bytes": 16549
+      "relative_path": "raw_eth_response.json",
+      "byte_size": 16428,
+      "file_sha256": "0b1f34c667f0fe9f2c345d693a797e91bf9596489391ddf8c222b04628fe01a3",
+      "provider": "Binance",
+      "fetched_at_utc": "2026-06-16T11:17:28Z",
+      "returned_count": 151
     },
     {
-      "file": "raw_eth_response.json",
-      "sha256": "0b1f34c667f0fe9f2c345d693a797e91bf9596489391ddf8c222b04628fe01a3",
-      "size_bytes": 16428
+      "relative_path": "raw_hype_response.json",
+      "byte_size": 4144,
+      "file_sha256": "ecbafd66c20307e61fcc14cd89188ba7ae362d389a1631e41c3e53b8cedea66b",
+      "provider": "Hyperliquid",
+      "fetched_at_utc": "2026-06-16T11:17:28Z",
+      "returned_count": 15
     }
   ]
 }

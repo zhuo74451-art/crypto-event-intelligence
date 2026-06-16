@@ -1,0 +1,10 @@
+{
+  "candidate_ref": "cand_w1_005",
+  "information_form": "market_outcome_or_context",
+  "route": "interference_context",
+  "eligibility_disposition": "context_only",
+  "downstream_objects_prohibited": ["research_unit", "registration", "outcome", "interference_record", "attribution_assessment"],
+  "rationale": "WTI crude oil -6% is itself a market outcome. It cannot simultaneously serve as both the studied event and the outcome being measured. BTC/ETH subsequent performance can be observed as context but does not constitute an attributable event study. The event is retained as interference context for other cases whose windows overlap with this time period.",
+  "decision_time_utc": "2026-06-16T15:30:00Z",
+  "protocol_commit": "7382738e8b0bf66fbc42ac8a0df2a8dd75f15513"
+}

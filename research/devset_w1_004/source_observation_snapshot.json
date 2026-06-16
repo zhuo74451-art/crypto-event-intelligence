@@ -1,0 +1,72 @@
+{
+  "sample_id": "w1_004",
+  "source": "research/week1_samples_v1.json",
+  "extracted_at_utc": "2026-06-16T15:30:00Z",
+  "fields": {
+    "sample_id": "w1_004",
+    "notion_page_id": "36b0246231d3810cb1e2d5cf7dceeb90",
+    "notion_page_url": "https://app.notion.com/p/36b0246231d3810cb1e2d5cf7dceeb90",
+    "title": "Strategy本周暂停比特币购买，转而回购可转换债务",
+    "raw_summary": "Strategy本周暂停比特币购买，转而购入债券并计划回购近15亿美元可转换债务；Saylor提到未来可能小规模出售部分BTC。",
+    "broadcast_time_utc": "2026-05-25T16:12:00Z",
+    "event_time_utc": null,
+    "event_time_status": "unavailable",
+    "t0_basis": "broadcast_time",
+    "event_type": "ETF/机构",
+    "subject_asset": "BTC",
+    "observation_assets": [
+      "BTC"
+    ],
+    "benchmark_assets": [
+      "BTC",
+      "ETH"
+    ],
+    "source_label": "币界快讯ai / Strategy相关消息",
+    "source_count": 1,
+    "source_quality_status": "单来源，但公司公告可交叉验证",
+    "existing_news_quality_raw": "A 结构性",
+    "existing_news_quality_normalized": "structural",
+    "existing_trade_relevance_raw": "高",
+    "existing_trade_relevance_normalized": "high",
+    "existing_decision_raw": "观察",
+    "existing_decision_normalized": "observe",
+    "existing_direction_raw": "利空",
+    "existing_direction_normalized": "bearish",
+    "existing_pump_risk_raw": "低",
+    "existing_pump_risk_normalized": "low",
+    "existing_ai_confidence_raw": 75,
+    "existing_news_quality": {
+      "deprecated_alias": true,
+      "value": "structural",
+      "note": "use existing_news_quality_normalized instead"
+    },
+    "existing_trade_relevance": {
+      "deprecated_alias": true,
+      "value": "high",
+      "note": "use existing_trade_relevance_normalized instead"
+    },
+    "existing_decision": {
+      "deprecated_alias": true,
+      "value": "observe",
+      "note": "use existing_decision_normalized instead"
+    },
+    "existing_direction": {
+      "deprecated_alias": true,
+      "value": "bearish",
+      "note": "use existing_direction_normalized instead"
+    },
+    "existing_pump_risk": {
+      "deprecated_alias": true,
+      "value": "low",
+      "note": "use existing_pump_risk_normalized instead"
+    },
+    "price_provider_plan": "Binance Kline, 1m interval (BTCUSDT). Use BTCUSDT for target price and BTCUSDT/ETHUSDT benchmarks.",
+    "price_interval_plan": "1m (standard Binance kline interval)",
+    "known_limitations": [
+      "Strategy 暂停购买是公司财务决策，不直接等于 BTC 价格下跌——归因无法建立直接因果",
+      "播报时间代替公司公告实际发布时间——公司可能在美国盘前就已发布公告",
+      "单一信息源，但公司公告本身是可靠的一手来源"
+    ],
+    "manual_review_notes": "Strategy 的公司财务决策是可信的公开信息。此事件属于 ETF/机构类别，价格影响可能相对温和。如果后续能获取美国公司公告的官方发布时间，可提高 t0 精度。"
+  }
+}

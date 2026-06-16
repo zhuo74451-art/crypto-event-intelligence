@@ -1,0 +1,12 @@
+{
+  "candidate_ref": "cand_w1_003",
+  "information_form": "cumulative_trend",
+  "has_interpretation_narrative": true,
+  "interpretation_detail": "卖出信号 (sell signal) is an analyst interpretation, not a verifiable fact",
+  "route": "routed_to_other_design",
+  "eligibility_disposition": "context_only",
+  "downstream_objects_prohibited": ["research_unit", "registration", "outcome", "interference_record", "attribution_assessment"],
+  "rationale": "The event combines cumulative_trend (10-day BTC inflow data) with interpretation_or_narrative (analyst's 'sell signal' claim). Neither form qualifies for point_event_study. Underlying inflow data can be verified on-chain but the signal interpretation cannot be studied as a discrete event.",
+  "decision_time_utc": "2026-06-16T15:30:00Z",
+  "protocol_commit": "7382738e8b0bf66fbc42ac8a0df2a8dd75f15513"
+}
