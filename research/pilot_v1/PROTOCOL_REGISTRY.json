@@ -50,7 +50,6 @@
     "separability_status": ["isolated", "minor_interference", "conditionally_separable", "cluster_only", "inseparable", "insufficient_inventory"],
     "selected_clock": ["action_clock", "information_clock"],
     "actual_time_basis": ["occurrence_time", "action_time", "onchain_confirmation_time", "official_publication_time", "first_reliable_public_time", "detection_time", "broadcast_time", "ingestion_time"],
-    "t0_type": ["broadcast_time", "event_time", "block_time", "estimated"],
     "data_partition": ["development", "calibration", "holdout"],
     "outcome_window": ["1h", "4h", "24h"],
     "direction": ["positive", "negative", "flat"],
@@ -75,7 +74,12 @@
     "week1_abnormal_return": "historical_field_only",
     "new_pilot_field": "registered_benchmark_relative_reaction",
     "legacy_noise_gate_semantics": "unchanged",
-    "shadow_audit_only": true
+    "shadow_audit_only": true,
+    "t0_type": {
+      "status": "not_active_in_pilot_v1",
+      "superseded_by": "selected_clock + actual_time_basis",
+      "must_not_be_serialized_into_new_registration": true
+    }
   },
   "allowed_paths": ["research/pilot_v1/**", "tests/test_pilot_v1_protocol_seal.py"],
   "sealed_paths": ["README.md", "docs/**", "market_radar/shared/**", "research/week1_*", "research/validate_*", "research/build_*", "scripts/**", "tests/test_signal_spine_*", "tests/test_event_price_*", "tests/test_week1_*", ".github/**", "requirements.txt"],

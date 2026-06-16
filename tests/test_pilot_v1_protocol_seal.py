@@ -340,8 +340,8 @@ class TestNegativeSchemaShape(unittest.TestCase):
         self.assertTrue(any("created_at_utc" in vi.lower() for vi in v))
 
 
-class TestNegativeEventIdentity(unittest.TestCase):
-    """Negative cases for validate_event_instance_instance."""
+class TestNegativeOutcomeBundleConsistency(unittest.TestCase):
+    """Negative cases for outcome/registration bundle consistency."""
 
     def test_outcome_without_registration_in_bundle(self):
         bundle = make_valid_research_bundle()
@@ -650,7 +650,7 @@ class TestFilesExist(unittest.TestCase):
 
 class TestDecisionMapping(unittest.TestCase):
     def setUp(self):
-        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json")) as f:
+        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json"), encoding="utf-8") as f:
             self.registry = json.load(f)
 
     def test_all_11_decisions_present(self):
@@ -664,7 +664,7 @@ class TestDecisionMapping(unittest.TestCase):
 
 class TestRegistryEnums(unittest.TestCase):
     def setUp(self):
-        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json")) as f:
+        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json"), encoding="utf-8") as f:
             self.registry = json.load(f)
         self.enums = self.registry.get("frozen_enums", {})
 
@@ -683,7 +683,7 @@ class TestRegistryEnums(unittest.TestCase):
 
 class TestSchemaEnums(unittest.TestCase):
     def _load_schema(self, name):
-        with open(os.path.join(SCHEMA_DIR, name)) as f:
+        with open(os.path.join(SCHEMA_DIR, name), encoding="utf-8") as f:
             return json.load(f)
 
     def test_attribution_verdict_in_schema(self):
@@ -712,7 +712,7 @@ class TestSchemaEnums(unittest.TestCase):
 
 class TestForbiddenProperties(unittest.TestCase):
     def _check_forbidden(self, name):
-        with open(os.path.join(SCHEMA_DIR, name)) as f:
+        with open(os.path.join(SCHEMA_DIR, name), encoding="utf-8") as f:
             s = json.load(f)
         for prop in vpc.FORBIDDEN_SCHEMA_PROPERTIES:
             self.assertNotIn(prop, s.get("properties", {}))
@@ -726,7 +726,7 @@ class TestForbiddenProperties(unittest.TestCase):
 
 class TestDevelopmentSetIsolation(unittest.TestCase):
     def setUp(self):
-        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json")) as f:
+        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json"), encoding="utf-8") as f:
             self.registry = json.load(f)
 
     def test_dev_set_counts_false(self):
@@ -738,14 +738,14 @@ class TestDevelopmentSetIsolation(unittest.TestCase):
 
 class TestNoiseGateCoupling(unittest.TestCase):
     def test_research_unit_no_noise_gate(self):
-        with open(os.path.join(SCHEMA_DIR, "research_unit.schema.json")) as f:
+        with open(os.path.join(SCHEMA_DIR, "research_unit.schema.json"), encoding="utf-8") as f:
             text = f.read().lower()
         self.assertNotIn("noise_gate", text)
 
 
 class TestBaselineAnchors(unittest.TestCase):
     def setUp(self):
-        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json")) as f:
+        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json"), encoding="utf-8") as f:
             self.registry = json.load(f)
 
     def test_sealed_v1_base_commit_present(self):
@@ -759,7 +759,7 @@ class TestBaselineAnchors(unittest.TestCase):
 
 class TestCalibrationPilotConfig(unittest.TestCase):
     def setUp(self):
-        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json")) as f:
+        with open(os.path.join(PILOT_DIR, "PROTOCOL_REGISTRY.json"), encoding="utf-8") as f:
             self.registry = json.load(f)
 
     def test_pilot_calibration_exists(self):
