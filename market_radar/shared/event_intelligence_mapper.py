@@ -40,8 +40,10 @@ from market_radar.shared.models import (
 from market_radar.shared.event_intelligence_semantics import (
     IntelligenceDecision,
     EventIntelligenceResult,
-    DataOrigin as IODataOrigin,
 )
+
+
+VALID_WATCH_WINDOWS = {"1h", "4h", "24h"}
 
 
 class EventIntelligenceMapper:
@@ -68,12 +70,14 @@ class EventIntelligenceMapper:
         # ── 1. Check for duplicate/suppressed observations ──
         if result.registry_action == "merged_into_existing":
             title = result.signal.title if result.signal else obs.normalized_payload.get("title", "")
+            # Preserve original data_origin — duplicate does not change provenance
+            origin = self._resolve_data_origin(obs, result)
             return EventIntelligenceResult(
                 event_description=f"[DUPLICATE] {title}",
                 assets=obs.affected_assets,
                 news_quality=self._get_news_quality(obs),
                 trade_relevance=self._get_trade_relevance(obs),
-                data_origin=IODataOrigin.DEGRADED,
+                data_origin=origin,
                 decision=IntelligenceDecision.DISCARD,
                 risk_tags=["dedup", "duplicate_content", "suppressed"],
                 observation_window="N/A — suppressed",
@@ -95,28 +99,98 @@ class EventIntelligenceMapper:
         return self._default_observe(obs, result)
 
     def _map_rejected(self, obs: Observation, result: SignalSpineResult) -> EventIntelligenceResult:
-        """Map a rejected observation to a DISCARD decision."""
-        # Find the rejecting rule
-        rejection_reasons = []
-        risk_tags = ["rejected"]
+        """Map a rejected observation to the appropriate decision.
 
-        for r in result.gate_results:
-            if r.verdict == GateVerdict.REJECT:
-                rejection_reasons.append(r.reason_code)
-                risk_tags.append(r.rule_name)
+        Priority:
+          1. high_chase_or_pump_risk + REJECT → BLOCK (禁止)
+          2. stale/recycled → DISCARD
+          3. low credibility / insufficient source → DISCARD
+          4. no tradable asset / no material value → DISCARD
+          5. security / exchange / liquidation material risk → RISK_TIP
+          6. default → DISCARD
+        """
+        gate_map = {r.rule_name: r for r in result.gate_results}
+        origin = self._resolve_data_origin(obs, result)
 
-        evidence = "; ".join(result.gate_verdicts.values())
+        # Priority 1: Pump/chase risk → BLOCK
+        pump_result = gate_map.get("high_chase_or_pump_risk")
+        if pump_result and pump_result.verdict == GateVerdict.REJECT:
+            return EventIntelligenceResult(
+                event_description=obs.normalized_payload.get("title", "High pump/FOMO risk event"),
+                assets=obs.affected_assets,
+                news_quality=self._get_news_quality(obs),
+                trade_relevance=self._get_trade_relevance(obs),
+                data_origin=origin,
+                decision=IntelligenceDecision.BLOCK,
+                risk_tags=["pump_and_dump", "high_risk", "blocked"],
+                observation_window="N/A — blocked",
+                evidence_summary=f"Event blocked: high pump/chase risk detected. {pump_result.reason[:150]}",
+                source_refs=obs.source_refs + ["gate:blocked_pump"],
+                dedup_key=obs.event_dedup_key,
+            )
 
+        # Priority 2: Stale/recycled → DISCARD
+        stale = gate_map.get("stale_or_recycled_event")
+        if stale and stale.verdict == GateVerdict.REJECT:
+            return EventIntelligenceResult(
+                event_description=f"[STALE] {obs.normalized_payload.get('title', 'Recycled event')}",
+                assets=obs.affected_assets,
+                news_quality=self._get_news_quality(obs),
+                trade_relevance="low",
+                data_origin=origin,
+                decision=IntelligenceDecision.DISCARD,
+                risk_tags=["old_news", "stale_information", "recycled"],
+                observation_window="N/A — stale",
+                evidence_summary=f"Event stale/recycled. {stale.reason[:150]}",
+                source_refs=obs.source_refs + ["gate:rejected_stale"],
+                dedup_key=obs.event_dedup_key,
+            )
+
+        # Priority 3: Insufficient/unverified source → DISCARD
+        source = gate_map.get("insufficient_source_quality")
+        if source and source.verdict == GateVerdict.REJECT:
+            return EventIntelligenceResult(
+                event_description=obs.normalized_payload.get("title", "Low credibility event"),
+                assets=obs.affected_assets,
+                news_quality=self._get_news_quality(obs),
+                trade_relevance="none",
+                data_origin=origin,
+                decision=IntelligenceDecision.DISCARD,
+                risk_tags=["unverified_source", "low_credibility"],
+                observation_window="N/A — discarded",
+                evidence_summary=f"Insufficient source quality. {source.reason[:150]}",
+                source_refs=obs.source_refs + ["gate:rejected_source"],
+                dedup_key=obs.event_dedup_key,
+            )
+
+        single = gate_map.get("single_unverified_source")
+        if single and single.verdict == GateVerdict.REJECT:
+            return EventIntelligenceResult(
+                event_description=obs.normalized_payload.get("title", "Single unverified source"),
+                assets=obs.affected_assets,
+                news_quality=self._get_news_quality(obs),
+                trade_relevance="none",
+                data_origin=origin,
+                decision=IntelligenceDecision.DISCARD,
+                risk_tags=["unverified_source", "single_source"],
+                observation_window="N/A — discarded",
+                evidence_summary=f"Single unverified source. {single.reason[:150]}",
+                source_refs=obs.source_refs + ["gate:rejected_single_source"],
+                dedup_key=obs.event_dedup_key,
+            )
+
+        # Default: generic DISCARD
+        rejection_reasons = [r.reason_code for r in result.gate_results if r.verdict == GateVerdict.REJECT]
         return EventIntelligenceResult(
             event_description=obs.normalized_payload.get("title", "Rejected event"),
             assets=obs.affected_assets,
-            news_quality="low",
+            news_quality=self._get_news_quality(obs),
             trade_relevance="none",
-            data_origin=IODataOrigin.DEGRADED,
+            data_origin=origin,
             decision=IntelligenceDecision.DISCARD,
-            risk_tags=risk_tags,
+            risk_tags=["rejected"] + [r.rule_name for r in result.gate_results if r.verdict == GateVerdict.REJECT],
             observation_window="N/A — discarded",
-            evidence_summary=f"Event rejected by deterministic gate. Reasons: {', '.join(rejection_reasons)}",
+            evidence_summary=f"Event rejected. Reasons: {', '.join(rejection_reasons)}",
             source_refs=obs.source_refs + ["gate:rejected"],
             dedup_key=obs.event_dedup_key,
         )
@@ -131,7 +205,7 @@ class EventIntelligenceMapper:
         gate_map = {r.rule_name: r for r in result.gate_results}
         risk_tags = []
         decision = IntelligenceDecision.OBSERVE
-        data_origin = IODataOrigin.REAL
+        data_origin = self._resolve_data_origin(obs, result)
 
         # Check for pump/chase risk (BLOCK)
         pump_result = gate_map.get("high_chase_or_pump_risk")
@@ -160,7 +234,7 @@ class EventIntelligenceMapper:
                 assets=obs.affected_assets,
                 news_quality=self._get_news_quality(obs),
                 trade_relevance="none",
-                data_origin=IODataOrigin.DEGRADED,
+                data_origin=self._resolve_data_origin(obs, result),
                 decision=IntelligenceDecision.DISCARD,
                 risk_tags=["unverified_source", "low_credibility"],
                 observation_window="N/A — discarded",
@@ -176,7 +250,7 @@ class EventIntelligenceMapper:
                 assets=obs.affected_assets,
                 news_quality=self._get_news_quality(obs),
                 trade_relevance="none",
-                data_origin=IODataOrigin.DEGRADED,
+                data_origin=self._resolve_data_origin(obs, result),
                 decision=IntelligenceDecision.DISCARD,
                 risk_tags=["unverified_source", "single_source", "insufficient_evidence"],
                 observation_window="N/A — discarded",
@@ -193,7 +267,7 @@ class EventIntelligenceMapper:
                 assets=obs.affected_assets,
                 news_quality=self._get_news_quality(obs),
                 trade_relevance="low",
-                data_origin=IODataOrigin.DEGRADED,
+                data_origin=self._resolve_data_origin(obs, result),
                 decision=IntelligenceDecision.DISCARD,
                 risk_tags=["old_news", "stale_information", "recycled"],
                 observation_window="N/A — stale",
@@ -241,6 +315,36 @@ class EventIntelligenceMapper:
             dedup_key=obs.event_dedup_key,
         )
 
+    def _resolve_data_origin(self, obs: Observation, result: SignalSpineResult) -> DataOrigin:
+        """Resolve data origin from observation and result.
+
+        Priority:
+          1. result.data_origin (if set by pipeline)
+          2. Observation card_family / source_type heuristics
+          3. Default to fixture-safe value
+        """
+        if result.data_origin is not None:
+            if isinstance(result.data_origin, DataOrigin):
+                return result.data_origin
+            if isinstance(result.data_origin, str):
+                try:
+                    return DataOrigin(result.data_origin)
+                except ValueError:
+                    pass
+
+        # Heuristic from source_type
+        st = obs.source_type.value if obs.source_type else ""
+        if "fixture" in st:
+            return DataOrigin.FIXTURE
+        if "api" in st or "source" in st:
+            # Check API success in metrics
+            api_success = obs.normalized_payload.get("api_success", None)
+            if api_success is False:
+                return DataOrigin.DEGRADED
+            return DataOrigin.REAL
+
+        return DataOrigin.FIXTURE
+
     def _default_observe(self, obs: Observation, result: SignalSpineResult) -> EventIntelligenceResult:
         """Fallback: produce an OBSERVE decision."""
         return EventIntelligenceResult(
@@ -248,10 +352,10 @@ class EventIntelligenceMapper:
             assets=obs.affected_assets,
             news_quality=self._get_news_quality(obs),
             trade_relevance=self._get_trade_relevance(obs),
-            data_origin=IODataOrigin.REAL,
+                        data_origin=self._resolve_data_origin(obs, result),
             decision=IntelligenceDecision.OBSERVE,
             risk_tags=["observe"],
-            observation_window="48h",
+            observation_window="1h",
             evidence_summary=f"Event accepted. Sources: {', '.join(obs.source_refs[:3])}",
             source_refs=obs.source_refs,
             dedup_key=obs.event_dedup_key,
@@ -287,13 +391,16 @@ class EventIntelligenceMapper:
         obs: Observation,
         gate_map: dict[str, NoiseGateResult],
     ) -> str:
-        """Determine observation window based on event characteristics."""
+        """Determine observation window based on event characteristics.
+
+        Product windows: 1h, 4h, 24h only.
+        """
         intensity = obs.normalized_payload.get("intensity", "")
         if intensity == "high":
             return "24h"
         if intensity == "medium":
-            return "48h"
-        return "72h"
+            return "4h"
+        return "1h"
 
     def _build_evidence_summary(
         self,

@@ -458,22 +458,59 @@ class Observation:
         """
         return ','.join(sorted(set(a.upper().strip() for a in assets if a.strip())))
 
+    @staticmethod
+    def _compute_time_bucket(event_time: Optional[str], bucket_hours: int = 24) -> str:
+        """Compute a deterministic time bucket from an event timestamp.
+
+        Prevents different-dates-same-title from being permanently merged.
+
+        Args:
+            event_time: ISO 8601 timestamp or None.
+            bucket_hours: Bucket size in hours (24 for news, smaller for HF data).
+
+        Returns:
+            Bucket string like "2026-06-16T00" for 24h or "2026-06-16T04" for 4h.
+            Returns "no_time" if event_time cannot be parsed.
+        """
+        if not event_time:
+            return "no_time"
+        try:
+            ts = event_time.replace("Z", "+00:00")
+            dt = datetime.fromisoformat(ts)
+            bucket_index = (dt.hour // bucket_hours) * bucket_hours
+            return f"{dt.year:04d}-{dt.month:02d}-{dt.day:02d}T{bucket_index:02d}"
+        except (ValueError, TypeError):
+            return "no_time"
+
     @classmethod
     def _compute_event_dedup_key(
         cls,
         title: str,
         assets: list[str],
         event_type: str,
+        event_time: Optional[str] = None,
+        bucket_hours: int = 24,
     ) -> str:
         """Compute source-agnostic event dedup key.
 
         Does NOT include source — different sources reporting
         the same event produce the same event_dedup_key.
+
+        Includes a deterministic time bucket to prevent
+        different-dates-same-title from being merged forever.
+
+        Args:
+            title: Event title.
+            assets: Affected asset list.
+            event_type: Event type classification.
+            event_time: ISO timestamp for time bucketing (optional).
+            bucket_hours: Time bucket size in hours.
         """
         norm_title = cls._normalize_title(title)
         norm_assets = cls._normalize_assets(assets)
         norm_type = event_type.strip().casefold()
-        raw = f"{norm_title}:{norm_assets}:{norm_type}"
+        bucket = cls._compute_time_bucket(event_time, bucket_hours)
+        raw = f"{norm_title}:{norm_assets}:{norm_type}:tb:{bucket}"
         return sha256_short(raw, n=12)
 
     @classmethod
@@ -515,9 +552,10 @@ class Observation:
         fp_raw = f"{source}:{title}:{','.join(sorted(assets))}"
         observation_fingerprint = sha256_short(fp_raw, n=12)
 
-        # Compute event_dedup_key (source-agnostic)
+        # Compute event_dedup_key (source-agnostic, with time bucket)
         event_type = signal.metrics.get("event_type", "")
-        event_dedup_key = cls._compute_event_dedup_key(title, assets, event_type)
+        effective_time = event_time or signal.timestamp
+        event_dedup_key = cls._compute_event_dedup_key(title, assets, event_type, effective_time)
 
         return cls(
             observation_id=obs_id,

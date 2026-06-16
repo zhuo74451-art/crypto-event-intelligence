@@ -24,6 +24,8 @@ from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import Any, Optional
 
+from market_radar.shared.models import DataOrigin
+
 
 class IntelligenceDecision(str, Enum):
     """Event Intelligence semantic decision.
@@ -35,14 +37,6 @@ class IntelligenceDecision(str, Enum):
     RISK_TIP = "风险提示"
     BLOCK = "禁止"
     DISCARD = "丢弃"
-
-
-class DataOrigin(str, Enum):
-    """Provenance marker for data origin (not to be confused with DataQuality
-    from models.py, which tracks source credibility)."""
-    REAL = "real"
-    FIXTURE = "fixture"
-    DEGRADED = "degraded"
 
 
 @dataclass
@@ -282,7 +276,7 @@ def evaluate_event_semantics(
             data_origin=DataOrigin.REAL if "fixture" not in str(source_refs) else DataOrigin.FIXTURE,
             decision=IntelligenceDecision.OBSERVE,
             risk_tags=["macro_event", "indirect_impact", "no_asset_attribution"],
-            observation_window="48h",
+            observation_window="24h",
             evidence_summary=f"Macroeconomic event — no specific crypto asset attribution. Monitor broad market impact. Source: {source_name}",
             source_refs=source_refs + ["no_asset_attribution"],
             dedup_key=dedup_key,
@@ -307,7 +301,7 @@ def evaluate_event_semantics(
         data_origin=DataOrigin.REAL if "fixture" not in str(source_refs) else DataOrigin.FIXTURE,
         decision=IntelligenceDecision.OBSERVE,
         risk_tags=risk_tags,
-        observation_window="24h" if intensity == "high" else "48h",
+        observation_window="24h" if intensity == "high" else "4h",
         evidence_summary=f"Event accepted: {event_type} event from {source_name}. Attribution: {attribution_risk}. Intensity: {intensity}.",
         source_refs=source_refs,
         dedup_key=dedup_key,

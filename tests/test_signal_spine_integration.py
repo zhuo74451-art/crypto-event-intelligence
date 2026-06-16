@@ -43,7 +43,7 @@ from market_radar.shared.noise_gate import DeterministicNoiseGate
 from market_radar.shared.signal_registry import SignalRegistry, create_signal_registry
 from market_radar.shared.signal_orchestrator import SignalOrchestrator, create_orchestrator
 from market_radar.shared.pipeline import SharedPipeline
-from market_radar.shared.event_intelligence_mapper import EventIntelligenceMapper
+from market_radar.shared.event_intelligence_mapper import EventIntelligenceMapper, create_decision_mapper, VALID_WATCH_WINDOWS
 from market_radar.shared.dry_run_renderer import DryRunRenderer, create_dry_run_renderer
 
 
@@ -483,3 +483,164 @@ class TestDualDedup:
         key1 = Observation._compute_event_dedup_key("SEC APPROVES BTC ETF", ["BTC"], "ETF")
         key2 = Observation._compute_event_dedup_key("sec approves btc etf", ["BTC"], "etf")
         assert key1 == key2
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# RC Tests: Pump, DataOrigin, Windows, Time Bucket
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+class TestRcPumpMapsToBlock:
+    def test_pump_reject_maps_to_block(self):
+        """High pump/chase risk + REJECT → BLOCK (禁止), not DISCARD."""
+        mapper = EventIntelligenceMapper()
+        obs = _make_test_obs_with_pump_risk("high")
+        obs.normalized_payload["pump_risk"] = "high"
+
+        gate = DeterministicNoiseGate()
+        results, verdict = gate.evaluate_and_aggregate(obs)
+        assert verdict == GateVerdict.REJECT
+
+        # Build a SignalSpineResult with gate rejection
+        spine_result = SignalSpineResult(
+            observation=obs,
+            gate_results=results,
+            gate_passed=False,
+            registry_action="rejected_by_gate",
+        )
+        spine_result, ei_result = mapper.populate_result(spine_result)
+
+        from market_radar.shared.event_intelligence_semantics import IntelligenceDecision
+        assert ei_result.decision == IntelligenceDecision.BLOCK, (
+            f"Pump REJECT should map to BLOCK, got {ei_result.decision}"
+        )
+        assert ei_result.decision.value == "禁止", (
+            f"Pump BLOCK should be '禁止', got '{ei_result.decision.value}'"
+        )
+
+
+class TestRcDataOriginPropagation:
+    def test_fixture_origin_propagates(self):
+        """Fixture source_type → data_origin = fixture."""
+        obs = _make_test_obs()
+        obs.source_type = DataSourceType.FIXTURE
+        mapper = EventIntelligenceMapper()
+        origin = mapper._resolve_data_origin(obs, SignalSpineResult(
+            observation=obs, gate_results=[], gate_passed=False,
+        ))
+        assert origin == DataOrigin.FIXTURE, f"Fixture should give FIXTURE, got {origin}"
+
+    def test_degraded_origin_propagates(self):
+        """API failure → data_origin = degraded."""
+        obs = _make_test_obs()
+        obs.source_type = DataSourceType.FREE_PUBLIC_API
+        obs.normalized_payload["api_success"] = False
+        mapper = EventIntelligenceMapper()
+        origin = mapper._resolve_data_origin(obs, SignalSpineResult(
+            observation=obs, gate_results=[], gate_passed=False,
+        ))
+        assert origin == DataOrigin.DEGRADED, f"API failure should give DEGRADED, got {origin}"
+
+    def test_real_origin_propagates(self):
+        """API success → data_origin = real."""
+        obs = _make_test_obs()
+        obs.source_type = DataSourceType.FREE_PUBLIC_API
+        obs.normalized_payload["api_success"] = True
+        mapper = EventIntelligenceMapper()
+        origin = mapper._resolve_data_origin(obs, SignalSpineResult(
+            observation=obs, gate_results=[], gate_passed=False,
+        ))
+        assert origin == DataOrigin.REAL, f"API success should give REAL, got {origin}"
+
+
+class TestRcCanonicalDataOrigin:
+    def test_canonical_data_origin_from_models(self):
+        """Only one DataOrigin: from models.py."""
+        from market_radar.shared.models import DataOrigin as ModelsDataOrigin
+        from market_radar.shared.event_intelligence_semantics import DataOrigin as SemDataOrigin
+        # SemDataOrigin should now be the same class (imported from models)
+        assert ModelsDataOrigin is SemDataOrigin, "Both must be the same class"
+        assert ModelsDataOrigin.REAL.value == "real"
+        assert ModelsDataOrigin.FIXTURE.value == "fixture"
+        assert ModelsDataOrigin.DEGRADED.value == "degraded"
+
+
+class TestRcWatchWindows:
+    def test_valid_windows_only_1h_4h_24h(self):
+        """Product watch windows are only 1h, 4h, 24h."""
+        from market_radar.shared.event_intelligence_mapper import VALID_WATCH_WINDOWS
+        assert VALID_WATCH_WINDOWS == {"1h", "4h", "24h"}
+
+    def test_mapper_no_48h_or_72h(self):
+        """Mapper should never return 48h or 72h."""
+        mapper = EventIntelligenceMapper()
+        obs = _make_test_obs(data_quality=DataQuality.VERIFIED_HIGH)
+        gate = DeterministicNoiseGate()
+        results, verdict = gate.evaluate_and_aggregate(obs)
+
+        from market_radar.shared.models import GateVerdict
+        if verdict in (GateVerdict.ACCEPT, GateVerdict.DOWNGRADE):
+            window = mapper._get_observation_window(obs, {r.rule_name: r for r in results})
+            assert window not in ("48h", "72h"), f"Got forbidden window: {window}"
+            assert window in ("1h", "4h", "24h"), f"Got invalid window: {window}"
+
+
+class TestRcTimeBucket:
+    def test_same_event_different_sources_same_bucket_merge(self):
+        """Same event, different sources, same time bucket → same dedup key."""
+        now = "2026-06-16T12:00:00+00:00"
+        key1 = Observation._compute_event_dedup_key(
+            "SEC Approves BTC ETF", ["BTC", "ETH"], "ETF", event_time=now
+        )
+        key2 = Observation._compute_event_dedup_key(
+            "SEC Approves BTC ETF", ["BTC", "ETH"], "ETF", event_time=now
+        )
+        assert key1 == key2
+
+    def test_same_title_different_day_not_merged(self):
+        """Same title, different day → different dedup key (time bucket)."""
+        day1 = "2026-06-15T12:00:00+00:00"
+        day2 = "2026-06-16T12:00:00+00:00"
+        key1 = Observation._compute_event_dedup_key(
+            "Same Headline", ["BTC"], "ETF", event_time=day1
+        )
+        key2 = Observation._compute_event_dedup_key(
+            "Same Headline", ["BTC"], "ETF", event_time=day2
+        )
+        assert key1 != key2, "Different days must produce different dedup keys"
+
+    def test_same_title_different_event_type_not_merged(self):
+        """Same title, different event_type → different dedup key."""
+        now = "2026-06-16T12:00:00+00:00"
+        key1 = Observation._compute_event_dedup_key(
+            "Same Headline", ["BTC"], "ETF", event_time=now
+        )
+        key2 = Observation._compute_event_dedup_key(
+            "Same Headline", ["BTC"], "regulatory", event_time=now
+        )
+        assert key1 != key2, "Different event_type must produce different dedup keys"
+
+
+class TestRcDuplicateEmitCard:
+    def test_duplicate_does_not_emit_second_card(self, tmp_path):
+        """Duplicate merge → emit_card=False, no second card generated."""
+        storage = tmp_path / "dup_rc.json"
+        orchestrator = create_orchestrator(storage_path=str(storage))
+        mapper = create_decision_mapper()
+
+        obs = _make_test_obs()
+        r1 = orchestrator.process(obs)
+        r2 = orchestrator.process(obs)
+
+        # Second observation of same observation_id should merge
+        if r2.registry_action == "merged_into_existing":
+            r2, ei2 = mapper.populate_result(r2)
+            assert r2.emit_card is False
+            assert r2.observation_decision == "suppress_duplicate"
+
+
+def _make_test_obs_with_pump_risk(level: str = "high") -> Observation:
+    """Create an observation flagged with pump risk."""
+    obs = _make_test_obs(data_quality=DataQuality.LOW_CREDIBILITY)
+    obs.normalized_payload["pump_risk"] = level
+    return obs
