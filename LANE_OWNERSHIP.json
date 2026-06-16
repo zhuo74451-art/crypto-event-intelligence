@@ -1,0 +1,125 @@
+{
+  "version": "mvp+v1.0",
+  "sealed_at": "2026-06-16T00:00:00Z",
+  "description": "File ownership for MVP+ six-lane execution. Each lane may ONLY modify paths under its approved roots. All other paths require Lane 6 approval.",
+
+  "common_restrictions": {
+    "never_modify": [
+      "docs/**",
+      "data/**",
+      "runs/**",
+      "results/**",
+      "logs/**",
+      "memory/**",
+      "fixtures/**",
+      "schemas/**",
+      "scripts/_archive/**",
+      "scripts/market_radar_*.py",
+      "AGENTS.md",
+      "config/**",
+      "deploy/**",
+      "runtime/**"
+    ],
+    "lane_6_only": [
+      "LANE_OWNERSHIP.json",
+      "market_radar/shared/contracts.py",
+      "tests/test_contracts_mvpplus.py"
+    ]
+  },
+
+  "lanes": {
+    "L1": {
+      "name": "Hyperliquid Provider",
+      "branch": "workbench/mvpplus-l1-hyperliquid",
+      "approved_roots": [
+        "market_radar/l1_hyperliquid_provider/"
+      ],
+      "approved_global": [
+        "market_radar/shared/contracts.py"
+      ],
+      "read_only_access": [
+        "market_radar/shared/hyperliquid_info_adapter.py",
+        "market_radar/shared/models.py",
+        "config/market_radar_v112w_whale_position_field_mapping.json"
+      ]
+    },
+    "L2": {
+      "name": "Whale Position Change & Risk Engine",
+      "branch": "workbench/mvpplus-l2-whale-engine",
+      "approved_roots": [
+        "market_radar/l2_whale_engine/"
+      ],
+      "approved_global": [
+        "market_radar/shared/contracts.py"
+      ],
+      "read_only_access": [
+        "market_radar/shared/models.py",
+        "market_radar/shared/hyperliquid_info_adapter.py",
+        "config/market_radar_v112w_whale_position_field_mapping.json"
+      ]
+    },
+    "L3": {
+      "name": "Market Context Provider",
+      "branch": "workbench/mvpplus-l3-market-context",
+      "approved_roots": [
+        "market_radar/l3_market_context/"
+      ],
+      "approved_global": [
+        "market_radar/shared/contracts.py"
+      ],
+      "read_only_access": [
+        "market_radar/shared/free_api_adapters.py",
+        "market_radar/shared/hyperliquid_info_adapter.py",
+        "market_radar/shared/models.py"
+      ]
+    },
+    "L4": {
+      "name": "Existing Flash / News / TG Feeds",
+      "branch": "workbench/mvpplus-l4-existing-feeds",
+      "approved_roots": [
+        "market_radar/l4_existing_feeds/"
+      ],
+      "approved_global": [
+        "market_radar/shared/contracts.py"
+      ],
+      "read_only_access": [
+        "market_radar/shared/free_api_adapters.py",
+        "market_radar/shared/models.py",
+        "scripts/market_radar_news_event_feed_v112d.py",
+        "scripts/market_radar_free_sources.py"
+      ]
+    },
+    "L5": {
+      "name": "Workbench UI",
+      "branch": "workbench/mvpplus-l5-workbench-ui",
+      "approved_roots": [
+        "market_radar/l5_workbench_ui/"
+      ],
+      "approved_global": [
+        "market_radar/shared/contracts.py"
+      ],
+      "read_only_access": [
+        "market_radar/shared/models.py"
+      ]
+    },
+    "L6": {
+      "name": "Contract Seal / Integration / QA",
+      "branch": "workbench/mvpplus-integration-v1",
+      "approved_roots": [
+        "market_radar/l6_integration/"
+      ],
+      "approved_global": [
+        "market_radar/shared/**",
+        "tests/**",
+        "*.py",
+        "*.cfg",
+        "*.toml",
+        "*.ini",
+        "requirements.txt"
+      ],
+      "read_only_access": [
+        "**"
+      ]
+    }
+  }
+}
