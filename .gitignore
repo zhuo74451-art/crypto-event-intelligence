@@ -20,3 +20,6 @@ __pycache__/
 # IDE
 .vscode/settings.json
 .idea/
+results/
+data/signal_registry.json*
+data/signal_registry*.json

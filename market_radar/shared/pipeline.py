@@ -15,12 +15,16 @@ Requirements:
 
 from __future__ import annotations
 
+import os
 from typing import Any, Optional
 
 from market_radar.shared.models import (
     CardFamily,
     DataSourceType,
+    DataQuality,
+    Observation,
     SharedPipelineResult,
+    SignalSpineResult,
     china_now,
     PIPELINE_VERSION,
     FIVE_CARD_FAMILIES,
@@ -51,6 +55,12 @@ from market_radar.shared.evidence_ledger import (
     EvidenceLedger,
     create_evidence_ledger,
 )
+from market_radar.shared.noise_gate import DeterministicNoiseGate
+from market_radar.shared.signal_registry import SignalRegistry, create_signal_registry
+from market_radar.shared.signal_orchestrator import SignalOrchestrator, create_orchestrator
+from market_radar.shared.ai_fallback import create_ai_interpreter
+from market_radar.shared.event_intelligence_mapper import EventIntelligenceMapper, create_decision_mapper
+from market_radar.shared.dry_run_renderer import DryRunRenderer, create_dry_run_renderer
 
 
 class SharedPipeline:
@@ -63,12 +73,23 @@ class SharedPipeline:
         renderer: Optional[CardRenderer] = None,
         tg_sender: Optional[TGTestGroupSender] = None,
         evidence_ledger: Optional[EvidenceLedger] = None,
+        # Signal Spine v1 components
+        signal_orchestrator: Optional[SignalOrchestrator] = None,
+        decision_mapper: Optional[EventIntelligenceMapper] = None,
+        dry_run_renderer: Optional[DryRunRenderer] = None,
+        registry: Optional[SignalRegistry] = None,
     ):
         self.quality_gate = quality_gate or QualityGate()
         self.send_readiness_gate = send_readiness_gate or SendReadinessGate()
         self.renderer = renderer or create_renderer()
         self.tg_sender = tg_sender or create_tg_sender()
         self.evidence_ledger = evidence_ledger or create_evidence_ledger()
+
+        # Signal Spine v1 components
+        self.signal_orchestrator = signal_orchestrator
+        self.decision_mapper = decision_mapper
+        self.dry_run_renderer = dry_run_renderer
+        self.registry = registry
 
     def run(self, adapter: SignalAdapter) -> SharedPipelineResult:
         """Run the full pipeline for a single adapter.
@@ -134,6 +155,103 @@ class SharedPipeline:
                 asset_or_topic=adapter.card_family.value,
                 error=f"Pipeline exception: {type(e).__name__}: {e}",
             )
+
+    def run_signal_spine(
+        self,
+        adapter: SignalAdapter,
+        source_label: Optional[str] = None,
+        dry_run: bool = True,
+        storage_path: Optional[str] = None,
+    ) -> tuple[SignalSpineResult, Any]:
+        """Run the full Signal Spine v1 pipeline for a single adapter.
+
+        This is the unified end-to-end path:
+
+          SignalAdapter → NormalizedSignal → Observation →
+          DeterministicNoiseGate → SignalOrchestrator → SignalRegistry →
+          EventIntelligenceMapper → DryRunRenderer → Evidence record
+
+        Args:
+            adapter: SignalAdapter instance to fetch data from.
+            source_label: Optional human-readable source label.
+            dry_run: If True (default), produce dry-run output without real send.
+            storage_path: Optional registry storage path.
+
+        Returns:
+            (SignalSpineResult, DryRunOutput or None)
+        """
+        # Lazy-init spine components if not provided at construction
+        if self.signal_orchestrator is None:
+            reg = self.registry or create_signal_registry(storage_path=storage_path)
+            self.registry = reg
+            self.signal_orchestrator = create_orchestrator(storage_path=storage_path)
+        if self.decision_mapper is None:
+            self.decision_mapper = create_decision_mapper()
+        if self.dry_run_renderer is None:
+            self.dry_run_renderer = create_dry_run_renderer()
+
+        try:
+            # Stage 1: Adapter → NormalizedSignal
+            signal = adapter.fetch()
+
+            # Stage 2: NormalizedSignal → Observation
+            obs = Observation.from_normalized_signal(
+                signal=signal,
+                source=source_label or adapter.adapter_label,
+                data_quality=DataQuality.VERIFIED_MEDIUM
+                if signal.source_type in (DataSourceType.FREE_PUBLIC_API, DataSourceType.FREE_PUBLIC_SOURCE)
+                else DataQuality.UNVERIFIED,
+            )
+
+            # Stage 3: Observation → NoiseGate → SignalOrchestrator → Registry
+            spine_result = self.signal_orchestrator.process(obs)
+
+            # Stage 4: Event Intelligence Decision Mapper
+            spine_result, ei_result = self.decision_mapper.populate_result(spine_result)
+
+            # Stage 5: Dry-Run Renderer
+            dry_run_output = None
+            if dry_run:
+                # Build fixture-like dict for renderer compatibility
+                fixture_dict = {
+                    "fixture_id": obs.observation_id[:12],
+                    "card_family": signal.card_family.value if signal.card_family else "unknown",
+                    "asset_or_topic": signal.asset_or_topic,
+                    "dedup_key": obs.event_dedup_key,
+                    "source_refs": signal.source_refs,
+                    "risk_notes": signal.risk_notes,
+                    "metrics": {
+                        **signal.metrics,
+                        "news_quality": ei_result.news_quality,
+                        "trade_relevance": ei_result.trade_relevance,
+                    },
+                }
+                dry_run_output = self.dry_run_renderer.render(
+                    fixture_data=fixture_dict,
+                    is_duplicate=(spine_result.registry_action == "merged_into_existing"),
+                    signal=signal,
+                )
+
+            # Stage 6: Evidence Ledger
+            self.evidence_ledger.record(
+                card_family=signal.card_family,
+                asset_or_topic=signal.asset_or_topic,
+                quality_gate_allow=spine_result.gate_passed,
+                send_readiness_allow=False,
+                event_id=spine_result.signal.signal_id[:12] if spine_result.signal else None,
+            )
+
+            return spine_result, dry_run_output
+
+        except Exception as e:
+            from market_radar.shared.models import SignalSpineResult
+            error_result = SignalSpineResult(
+                observation=None,
+                gate_results=[],
+                gate_passed=False,
+                error=f"SignalSpine exception: {type(e).__name__}: {e}",
+            )
+            return error_result, None
 
     def run_all_fixtures(self) -> list[SharedPipelineResult]:
         """Run all 5 fixture card families through the pipeline."""

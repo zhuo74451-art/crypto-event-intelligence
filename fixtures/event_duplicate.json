@@ -1,0 +1,35 @@
+{
+  "fixture_id": "event_duplicate",
+  "description": "重复事件 — 与 high_quality 完全相同的内容，应被 dedup 识别",
+  "card_family": "news_event_market_impact",
+  "data_source": "fixture",
+  "created_at": "2026-06-16T11:30:00+08:00",
+  "input_source": "fixture:public_news_source_duplicate",
+  "dedup_key": "cei_dedup:btc-etf-options-2026-06-16",
+  "dedup_fingerprint": "sha256:abc123def456",
+  "asset_or_topic": "BTC",
+  "metrics": {
+    "source_name": "AnotherCryptoNews",
+    "title": "SEC Approves Spot BTC ETF Options — Market Impact Analysis",
+    "url": "https://example-dup.com/news/btc-etf-options",
+    "event_type": "ETF",
+    "intensity": "high",
+    "attribution_risk": "direct",
+    "extraction_method": "rule_based",
+    "assets_affected": ["BTC"],
+    "news_quality": "high",
+    "trade_relevance": "medium",
+    "market_snapshot": {
+      "BTCUSDT_price": 89100.0,
+      "BTCUSDT_price_change_pct": -1.10
+    }
+  },
+  "source_refs": ["fixture:public_news_source_duplicate"],
+  "risk_notes": [
+    "Fixture data — duplicate event for dedup testing",
+    "Same dedup_key as event_high_quality — should be discarded"
+  ],
+  "expected_decision": "丢弃",
+  "expected_risk_tags": ["dedup", "duplicate_content"],
+  "dedup_note": "Same dedup_key as event_high_quality → should be identified as duplicate"
+}

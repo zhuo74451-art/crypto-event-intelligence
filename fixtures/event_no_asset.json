@@ -1,0 +1,32 @@
+{
+  "fixture_id": "event_no_asset",
+  "description": "无明确资产事件 — 宏观经济新闻，无法归因到具体加密资产",
+  "card_family": "news_event_market_impact",
+  "data_source": "fixture",
+  "created_at": "2026-06-16T08:00:00+08:00",
+  "input_source": "fixture:macro_news_source",
+  "dedup_key": "cei_dedup:no-asset-event-2026-06-16",
+  "dedup_fingerprint": "sha256:noasset321xyz",
+  "asset_or_topic": "global_macro",
+  "metrics": {
+    "source_name": "MacroNewsWire",
+    "title": "Federal Reserve Signals Potential Rate Pause in September Meeting Minutes",
+    "url": "https://example.com/news/fed-rate-pause",
+    "event_type": "macro",
+    "intensity": "medium",
+    "attribution_risk": "indirect",
+    "extraction_method": "rule_based",
+    "assets_affected": [],
+    "news_quality": "medium",
+    "trade_relevance": "low"
+  },
+  "source_refs": ["fixture:macro_news_source"],
+  "risk_notes": [
+    "Fixture data — no clear asset event",
+    "Macroeconomic event — indirect market impact",
+    "No specific crypto asset attribution possible"
+  ],
+  "expected_decision": "观察",
+  "expected_risk_tags": ["macro_event", "indirect_impact", "no_asset_attribution"],
+  "expected_observation_window": "48h"
+}
