@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_004"
+  },
+  "claim_evidence_record": {
+    "record_id": "cer_w1_004",
+    "evidence_role": "carrier_or_relay",
+    "claim_evidence_status": "single_source_supported",
+    "claim": {
+      "statement": "Strategy本周暂停比特币购买，转而购入债券并计划回购近15亿美元可转换债务；Saylor提到未来可能小规模出售部分BTC。",
+      "claimant": "币界快讯ai",
+      "claim_time_utc": "2026-05-25T16:12:00Z",
+      "claim_type": "fact"
+    },
+    "evidence_artifacts": [
+      {
+        "artifact_id": "art_w1_004_src",
+        "artifact_type": "api_response",
+        "content_hash": "sha256:not_computed",
+        "source": "币界快讯ai / Strategy相关消息"
+      }
+    ],
+    "evidence_relations": [
+      {
+        "evidence_id": "art_w1_004_src",
+        "relation_type": "supports",
+        "detail": "Primary source"
+      }
+    ],
+    "provenance_path": [
+      {
+        "hop": 1,
+        "from_source": "Original",
+        "to_source": "币界快讯ai / Strategy相关消息",
+        "timestamp_utc": "2026-05-25T16:12:00Z",
+        "transformation": "Event capture"
+      }
+    ],
+    "independence_groups": [
+      {
+        "group_id": "ig_w1_004",
+        "members": [
+          "art_w1_004_src"
+        ],
+        "independence_status": "independent"
+      }
+    ],
+    "created_at_utc": "2026-06-16T15:00:00Z",
+    "updated_at_utc": "2026-06-16T15:00:00Z"
+  }
+}

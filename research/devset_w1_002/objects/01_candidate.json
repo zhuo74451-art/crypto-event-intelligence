@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_002",
+    "retrospective_reconstruction": true,
+    "protocol_commit": "7382738e8b0bf66fbc42ac8a0df2a8dd75f15513"
+  },
+  "candidate": {
+    "candidate_id": "cand_w1_002",
+    "information_form": "discrete_observable_action",
+    "source_medium": "onchain_data_feed",
+    "capture_time_utc": "2026-05-25T15:19:00Z",
+    "source_observation_ref": "obs_w1_002",
+    "status": "routed_to_research",
+    "candidate_log": [
+      {
+        "timestamp_utc": "2026-05-25T15:19:00Z",
+        "action": "candidate_created",
+        "actor": "system",
+        "detail": "From 币界快讯ai / HyperLiquid 地址数据"
+      }
+    ],
+    "created_at_utc": "2026-05-25T15:19:00Z",
+    "updated_at_utc": "2026-06-16T15:00:00Z",
+    "pilot_candidate_source": "observation"
+  }
+}

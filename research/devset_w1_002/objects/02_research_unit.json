@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_002"
+  },
+  "research_unit": {
+    "research_unit_id": "ru_w1_002",
+    "design_type": "point_event_study",
+    "eligibility_status": "eligible",
+    "candidate_ref": "cand_w1_002",
+    "information_form": "discrete_observable_action",
+    "research_notes": "Development Set sample w1_002. 麻吉黄立成增持ETH多单921.47枚，清算价接近现价",
+    "created_at_utc": "2026-06-16T15:00:00Z",
+    "updated_at_utc": "2026-06-16T15:00:00Z"
+  }
+}

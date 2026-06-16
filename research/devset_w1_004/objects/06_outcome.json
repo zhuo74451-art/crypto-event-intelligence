@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_004"
+  },
+  "outcome": {
+    "outcome_id": "out_w1_004",
+    "registration_ref": "reg_w1_004",
+    "raw_market_reaction": {
+      "window": "1h",
+      "absolute_change_pct": 0.181,
+      "direction": "positive"
+    },
+    "registered_benchmark_relative_reaction": {
+      "benchmark": "ETH",
+      "relative_change_pct": -0.1856
+    },
+    "sensitivity_benchmark_reactions": [],
+    "historical_materiality": {
+      "assessment": "insufficient_data",
+      "note": "No BTC volatility baseline available through public API."
+    },
+    "pre_event_movement_check_result": {
+      "movement_detected": true,
+      "movement_pct": -0.3474
+    },
+    "event_time_uncertainty": {
+      "estimated_uncertainty_seconds": 3600,
+      "note": "Only broadcast_time known."
+    },
+    "price_alignment_lag": {
+      "t0_lag_seconds": 0,
+      "t1_lag_seconds": 0
+    },
+    "price_precision": {
+      "provider": "Binance Kline",
+      "interval_seconds": 60,
+      "precision_note": "1m klines. 0 lag when aligned."
+    },
+    "calculated_at_utc": "2026-06-16T15:00:00Z"
+  }
+}

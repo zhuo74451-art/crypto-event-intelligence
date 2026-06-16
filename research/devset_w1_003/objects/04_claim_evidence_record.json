@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_003"
+  },
+  "claim_evidence_record": {
+    "record_id": "cer_w1_003",
+    "evidence_role": "carrier_or_relay",
+    "claim_evidence_status": "single_source_supported",
+    "claim": {
+      "statement": "分析师称Binance近10天BTC强劲流入，周均流入从378 BTC升至1190 BTC，5月18日单日流入超3600 BTC，储备量增加16000 BTC。",
+      "claimant": "币界快讯ai",
+      "claim_time_utc": "2026-05-25T16:12:00Z",
+      "claim_type": "fact"
+    },
+    "evidence_artifacts": [
+      {
+        "artifact_id": "art_w1_003_src",
+        "artifact_type": "api_response",
+        "content_hash": "sha256:not_computed_yet",
+        "source": "币界快讯ai / Darkfost分析"
+      }
+    ],
+    "evidence_relations": [
+      {
+        "evidence_id": "art_w1_003_src",
+        "relation_type": "supports",
+        "detail": "Primary source event"
+      }
+    ],
+    "provenance_path": [
+      {
+        "hop": 1,
+        "from_source": "Original",
+        "to_source": "币界快讯ai / Darkfost分析",
+        "timestamp_utc": "2026-05-25T16:12:00Z",
+        "transformation": "Event capture"
+      }
+    ],
+    "independence_groups": [
+      {
+        "group_id": "ig_w1_003",
+        "members": [
+          "art_w1_003_src"
+        ],
+        "independence_status": "independent"
+      }
+    ],
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "updated_at_utc": "2026-06-16T14:00:00Z"
+  }
+}

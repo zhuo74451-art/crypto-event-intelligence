@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_005"
+  },
+  "claim_evidence_record": {
+    "record_id": "cer_w1_005",
+    "evidence_role": "carrier_or_relay",
+    "claim_evidence_status": "single_source_supported",
+    "claim": {
+      "statement": "WTI原油期货日内暴跌6%，报90.80美元/桶。",
+      "claimant": "币界快讯ai",
+      "claim_time_utc": "2026-05-25T11:34:00Z",
+      "claim_type": "fact"
+    },
+    "evidence_artifacts": [
+      {
+        "artifact_id": "art_w1_005_src",
+        "artifact_type": "api_response",
+        "content_hash": "sha256:not_computed_yet",
+        "source": "币界快讯ai / odaily_exchange_gap"
+      }
+    ],
+    "evidence_relations": [
+      {
+        "evidence_id": "art_w1_005_src",
+        "relation_type": "supports",
+        "detail": "Primary source event"
+      }
+    ],
+    "provenance_path": [
+      {
+        "hop": 1,
+        "from_source": "Original",
+        "to_source": "币界快讯ai / odaily_exchange_gap",
+        "timestamp_utc": "2026-05-25T11:34:00Z",
+        "transformation": "Event capture"
+      }
+    ],
+    "independence_groups": [
+      {
+        "group_id": "ig_w1_005",
+        "members": [
+          "art_w1_005_src"
+        ],
+        "independence_status": "independent"
+      }
+    ],
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "updated_at_utc": "2026-06-16T14:00:00Z"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_002"
+  },
+  "interference_record": {
+    "record_id": "int_w1_002",
+    "research_unit_ref": "ru_w1_002",
+    "observation_window": "1h",
+    "separability_status": "insufficient_inventory",
+    "collision_set": [],
+    "alternative_explanations": [
+      "General market movement",
+      "Other asset-specific news during window"
+    ],
+    "coverage_insufficiency": true,
+    "created_at_utc": "2026-06-16T15:00:00Z"
+  }
+}

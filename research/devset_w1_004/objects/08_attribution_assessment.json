@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_004"
+  },
+  "attribution_assessment": {
+    "assessment_id": "aa_w1_004",
+    "research_unit_ref": "ru_w1_004",
+    "hard_gates": {
+      "research_eligibility": "pass",
+      "event_evidence": "pass",
+      "usable_t0": "unknown",
+      "pre_outcome_registration": "unknown",
+      "valid_outcome_measurement": "pass",
+      "benchmark_validity": "unknown",
+      "separability": "unknown"
+    },
+    "dimensions": {
+      "temporal_ordering": "unknown",
+      "temporal_proximity": "unknown",
+      "benchmark_relative_materiality": "unknown",
+      "asset_specificity": "unknown",
+      "mechanism_consistency": "unknown",
+      "interference_and_separability": "unknown",
+      "alternative_explanations": "unknown",
+      "robustness": "unknown"
+    },
+    "verdict": "insufficient_evidence",
+    "notes": "Development Set sample w1_004. BTC target, ETH benchmark. ETH is weak proxy for BTC. Real data obtained.",
+    "created_at_utc": "2026-06-16T15:00:00Z",
+    "updated_at_utc": "2026-06-16T15:00:00Z"
+  }
+}

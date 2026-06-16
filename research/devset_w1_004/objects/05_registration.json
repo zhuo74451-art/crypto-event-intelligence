@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_004"
+  },
+  "registration": {
+    "registration_id": "reg_w1_004",
+    "research_unit_ref": "ru_w1_004",
+    "target_asset": "BTC",
+    "selected_clock": "information_clock",
+    "actual_time_basis": "broadcast_time",
+    "primary_t0": "2026-05-25T16:12:00Z",
+    "t0_uncertainty_seconds": 3600,
+    "primary_window": {
+      "duration_seconds": 3600,
+      "window_type": "t0_to_t_plus_1h"
+    },
+    "primary_benchmark": "ETH",
+    "sensitivity_benchmarks": [],
+    "pre_event_movement_check_definition": {
+      "window_before_t0_seconds": 3600,
+      "threshold_bps": 20
+    },
+    "registration_time_utc": "2026-06-16T14:30:00Z",
+    "git_commit": "7382738e8b0bf66fbc42ac8a0df2a8dd75f15513",
+    "file_sha256": "sha256:48034f9673ed09cf002e4aee94db61c45d051237536ec19657a5be895cd431f1",
+    "data_partition": "development",
+    "outcome_status": "not_revealed",
+    "notes": "Development Set sample w1_004. Retrospective reconstruction. BTC target, ETH benchmark is weak proxy."
+  }
+}

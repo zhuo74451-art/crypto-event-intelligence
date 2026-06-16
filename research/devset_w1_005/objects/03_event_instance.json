@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_005"
+  },
+  "event_instance": {
+    "canonical_event_instance_id": "ei_w1_005",
+    "event_thread_ref": "th_w1_005",
+    "relationship_to_thread": "part_of_thread",
+    "relationship_evidence": "Initial report",
+    "observation_ref": "obs_w1_005",
+    "instance_version": 1,
+    "instance_data": {},
+    "created_at_utc": "2026-06-16T14:00:00Z",
+    "updated_at_utc": "2026-06-16T14:00:00Z"
+  }
+}

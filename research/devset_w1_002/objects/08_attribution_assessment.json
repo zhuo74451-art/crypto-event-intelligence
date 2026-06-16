@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_002"
+  },
+  "attribution_assessment": {
+    "assessment_id": "aa_w1_002",
+    "research_unit_ref": "ru_w1_002",
+    "hard_gates": {
+      "research_eligibility": "pass",
+      "event_evidence": "pass",
+      "usable_t0": "unknown",
+      "pre_outcome_registration": "unknown",
+      "valid_outcome_measurement": "pass",
+      "benchmark_validity": "unknown",
+      "separability": "unknown"
+    },
+    "dimensions": {
+      "temporal_ordering": "unknown",
+      "temporal_proximity": "unknown",
+      "benchmark_relative_materiality": "unknown",
+      "asset_specificity": "unknown",
+      "mechanism_consistency": "unknown",
+      "interference_and_separability": "unknown",
+      "alternative_explanations": "unknown",
+      "robustness": "unknown"
+    },
+    "verdict": "insufficient_evidence",
+    "notes": "Development Set sample w1_002. Real market data obtained. ETH 1h: -0.2028%. BTC 1h: -0.2279%. Relative: 0.0251%. Pre-event: 0.3779% (detected=True). Verdict: insufficient_evidence — t0 uncertainty, retrospective registration, weak proxy benchmark, insufficient interference inventory.",
+    "created_at_utc": "2026-06-16T15:00:00Z",
+    "updated_at_utc": "2026-06-16T15:00:00Z"
+  }
+}

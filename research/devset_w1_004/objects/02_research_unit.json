@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "case_id": "w1_004"
+  },
+  "research_unit": {
+    "research_unit_id": "ru_w1_004",
+    "design_type": "point_event_study",
+    "eligibility_status": "eligible",
+    "candidate_ref": "cand_w1_004",
+    "information_form": "discrete_information_release",
+    "research_notes": "Development Set sample w1_004. Strategy本周暂停比特币购买，转而回购可转换债务",
+    "created_at_utc": "2026-06-16T15:00:00Z",
+    "updated_at_utc": "2026-06-16T15:00:00Z"
+  }
+}
