@@ -14,10 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-# Workaround: hyperliquid has a `ccxt` submodule that shadows the real `ccxt`
-# package in sys.modules. We must save the real ccxt reference and re-register
-# it after any hyperliquid import, otherwise CcxtPublicMarketAdapter._get_exchange
-# will resolve `import ccxt` to hyperliquid.ccxt (no exchange classes).
+# Pre-import ccxt before hyperliquid to prevent hyperliquid.ccxt namespace shadowing.
 import ccxt as _real_ccxt
 _CCXT_ID = id(_real_ccxt)
 
@@ -30,11 +27,6 @@ import sys as _sys
 if id(_sys.modules.get("ccxt")) != _CCXT_ID:
     _sys.modules["ccxt"] = _real_ccxt
 
-# Helper: ensure sys.modules["ccxt"] is the real ccxt before any adapter call.
-# hyperliquid.ccxt submodule shadows it on every import of hyperliquid.
-def _ensure_real_ccxt() -> None:
-    if id(_sys.modules.get("ccxt")) != _CCXT_ID:
-        _sys.modules["ccxt"] = _real_ccxt
 from market_radar.external_adapters.ccxt_public_market_adapter import (
     CcxtPublicMarketAdapter,
 )
@@ -63,7 +55,12 @@ from market_radar.operations.source_health import record_health
 from market_radar.operations.sqlite_schema import initialize_sqlite
 from market_radar.operations.atomic_json import atomic_write_json
 from market_radar.operations.run_history import insert_run, update_run_finish
-from market_radar.operations.snapshot_index import insert_snapshot
+
+
+def _ensure_real_ccxt() -> None:
+    """Ensure sys.modules['ccxt'] is the real ccxt, not hyperliquid.ccxt shadow."""
+    if id(_sys.modules.get("ccxt")) != _CCXT_ID:
+        _sys.modules["ccxt"] = _real_ccxt
 
 
 def _ensure_dir(path: str) -> Path:
@@ -79,11 +76,7 @@ def _utc_now() -> str:
 # ── CCXT Preflight Diagnostics (Section 7) ────────────────────────────
 
 def run_ccxt_preflight(exchange_id: str = "binance") -> dict[str, Any]:
-    """Diagnose CCXT runtime environment.
-
-    Returns a diagnostic dict. Never raises.
-    Paths are sanitised — no local usernames or absolute paths.
-    """
+    """Diagnose CCXT runtime environment. Paths sanitised."""
     diag: dict[str, Any] = {
         "python_executable": "(sanitised)",
         "ccxt_version": None,
@@ -93,9 +86,7 @@ def run_ccxt_preflight(exchange_id: str = "binance") -> dict[str, Any]:
         "exchange_init_error": None,
         "adapter_import_smoke": False,
     }
-    import sys
-    # Sanitise path: keep only drive letter and last two segments
-    raw_exe = sys.executable
+    raw_exe = _sys.executable
     try:
         parts = raw_exe.replace("\\", "/").split("/")
         if len(parts) > 2:
@@ -125,7 +116,6 @@ def run_ccxt_preflight(exchange_id: str = "binance") -> dict[str, Any]:
     except Exception:
         pass
 
-    # Adapter import smoke
     try:
         from market_radar.external_adapters.ccxt_public_market_adapter import (
             CcxtPublicMarketAdapter,
@@ -139,6 +129,33 @@ def run_ccxt_preflight(exchange_id: str = "binance") -> dict[str, Any]:
 
 
 # ── Core Pipeline ──────────────────────────────────────────────────────
+
+def _compute_final_status(result: IntegrationRunResult) -> str:
+    """Compute final run status from source statuses.
+
+    Rules:
+    - Any critical internal exception → "failed"
+    - No internal exception, but degraded/unavailable sources → "degraded"
+    - All sources ok → "completed"
+    """
+    if any("unhandled pipeline" in e for e in result.errors):
+        return "failed"
+
+    if not result.sources:
+        return result.status  # fallback to stored status
+
+    has_unavailable = any(s.status in ("unavailable", "failed") for s in result.sources)
+    has_degraded = any(s.status == "degraded" for s in result.sources)
+    all_ok = all(s.ok for s in result.sources)
+
+    if all_ok and not has_degraded and not has_unavailable:
+        return "completed"
+    if has_unavailable:
+        return "degraded"
+    if has_degraded:
+        return "degraded"
+    return "failed"
+
 
 def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
     """Execute one integration one-shot. Returns run result, never raises."""
@@ -154,8 +171,18 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
     run_history_db = str(state_dir / "run_history.db")
     source_health_db = str(state_dir / "source_health.db")
 
+    # Pre-compute all output/state paths (Section 2)
+    output_base = str(output_dir)
+    state_base = str(state_dir)
+    report_json = os.path.join(output_base, f"run_{result.run_id}.json")
+    workbench_html = os.path.join(output_base, f"workbench_{result.run_id}.html")
+    whale_snapshot_json = os.path.join(output_base, f"whale_{result.run_id}.json")
+    market_snapshot_json = os.path.join(output_base, f"market_{result.run_id}.json")
+    whale_state_path = os.path.join(state_base, f"whale_state_{config.whale_address.lower()}.json") if config.whale_address else ""
+
     # ── CCXT preflight (live mode only) ──
     if config.mode == "live-public":
+        _ensure_real_ccxt()
         preflight = run_ccxt_preflight(config.exchange)
         result.ccxt_preflight = preflight
         if preflight.get("exchange_init_error") and "not install" in str(preflight.get("exchange_init_error", "")).lower():
@@ -173,8 +200,6 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
         return result
 
     # ── Acquire file lock ──
-    # FileLock.try_acquire() returns None on success (acquired) or
-    # an error string on denial (lock held by another process).
     try:
         lock = FileLock(lock_path)
         acquire_result = lock.try_acquire()
@@ -202,58 +227,72 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
         runner = InjectedRunner(label="one_shot", fn=lambda ctx: _run_pipeline(ctx, config, result))
         run_result = run_once(runner, config=config.as_dict(), run_id=result.run_id)
 
-        if run_result.status == "ok":
-            result.status = "completed"
-        elif run_result.status == "failed":
-            if "degraded" in str(run_result.summary):
-                result.status = "degraded"
-            else:
-                result.status = "failed"
-
-        if run_result.error:
+        if run_result.status == "failed" and run_result.error:
             result.errors.append(run_result.error)
+
+        # Always compute final status from source statuses, not from run_once status
+        # (Section 1: degraded sources must produce degraded final status)
+        result.status = _compute_final_status(result)
 
     except Exception as e:
         result.status = "failed"
         result.errors.append(f"unhandled pipeline error: {type(e).__name__}: {e}")
+
+    # Order (Section 2):
+    # 1. finished_at
+    # 2. output/state paths in result
+    # 3. source health
+    # 4. artifacts (whale/market/workbench)
+    # 5. run history update
+    # 6. run report last
     finally:
-        # 1. Source health recording
-        try:
-            _record_source_health(result, Path(source_health_db))
-        except Exception as e:
-            result.errors.append(f"source health recording failed: {e}")
-
-        # 2. Run history update
-        try:
-            update_run_finish(
-                run_history_db,
-                result.run_id,
-                status=result.status,
-                summary={"status": result.status, "mode": result.data_mode},
-                error="; ".join(result.errors) if result.errors else None,
-            )
-        except Exception as e:
-            result.errors.append(f"run history update failed: {e}")
-
-        # 3. Write artifacts (finished_at first, then outputs)
-        now_finished = _utc_now()
-        result.finished_at = now_finished
-        try:
-            paths = _write_artifacts(result, output_dir, state_dir)
-            result.output_paths = [
-                paths.report_json,
-                paths.workbench_html,
-                paths.whale_snapshot_json,
-                paths.market_snapshot_json,
-            ]
-        except Exception as e:
-            result.errors.append(f"artifact write failed: {e}")
-
-        # 4. Release lock
         try:
             lock.release()
-        except Exception as e:
-            result.errors.append(f"lock release failed: {e}")
+        except Exception:
+            pass
+
+    result.finished_at = _utc_now()
+
+    # Set output/state paths
+    result.output_paths = [report_json, workbench_html, whale_snapshot_json, market_snapshot_json]
+    result.state_db_paths = [run_history_db, source_health_db]
+
+    # Source health (Section 2 step 3)
+    try:
+        for src in result.sources:
+            record_health(
+                db_path=source_health_db,
+                source_name=src.source,
+                health_status=src.status,
+                response_ms=int(src.latency_ms) if src.latency_ms is not None else None,
+                error_message=src.error,
+            )
+    except Exception as e:
+        result.errors.append(f"source health recording failed: {e}")
+
+    # Artifacts (Section 2 step 4)
+    artifact_failed = False
+    try:
+        _write_artifacts(result, output_dir, state_dir,
+                        report_json, workbench_html, whale_snapshot_json, market_snapshot_json)
+    except Exception as e:
+        result.errors.append(f"artifact write failed: {e}")
+        artifact_failed = True
+
+    if artifact_failed and result.status == "completed":
+        result.status = "degraded"
+
+    # Run history update (Section 2 step 5)
+    try:
+        update_run_finish(
+            run_history_db,
+            result.run_id,
+            status=result.status,
+            summary={"status": result.status, "mode": result.data_mode},
+            error="; ".join(result.errors) if result.errors else None,
+        )
+    except Exception as e:
+        result.errors.append(f"run history update failed: {e}")
 
     return result
 
@@ -268,7 +307,6 @@ def _run_pipeline(
 
     # ── Adapters ──
     hl_adapter = HyperliquidPublicAdapter()
-    # Ensure real ccxt after hyperliquid import (namespace shadowing workaround)
     _ensure_real_ccxt()
     ccxt_adapter = CcxtPublicMarketAdapter(exchange_timeout=config.timeout)
 
@@ -354,7 +392,6 @@ def _build_workbench_bundle(
 
         # Section 6: NEVER create price=0 MarketSnapshot for unavailable source
         if not m.ok or m.last_price is None:
-            # Source unavailable — record health as failed, skip snapshot
             asset_name = m.symbol.replace("/USDT", "") if "/USDT" in m.symbol else m.symbol
             market_health.append(MarketHealth(
                 venue=venue,
@@ -381,7 +418,7 @@ def _build_workbench_bundle(
             message=m.error or "",
         ))
 
-    # ── Feed items (typed FeedItem objects) ──
+    # ── Feed items ──
     feed_items: list[FeedItem] = []
     if result.feed and result.feed.items:
         for item in result.feed.items:
@@ -407,20 +444,19 @@ def _build_workbench_bundle(
     # ── Build health / warnings ──
     warnings: list[str] = []
     degraded_reasons: list[str] = []
-    health_summary: dict[str, str] = {}
     for s in result.sources:
         if s.ok:
-            health_summary[s.source] = s.status
+            pass
         else:
-            health_summary[s.source] = s.error or s.status
             degraded_reasons.append(f"{s.source}: {s.detail or s.error or s.status}")
 
     if result.errors:
         warnings.extend(result.errors)
 
-    # Section 6: degraded AND unavailable must appear in degraded reasons
+    # All degraded/unavailable sources must appear in degraded reasons
     for s in result.sources:
-        if s.status in ("degraded", "unavailable") and s.source not in [r.split(":")[0] for r in degraded_reasons]:
+        if s.status in ("degraded", "unavailable") and \
+           s.source not in [r.split(":")[0] for r in degraded_reasons]:
             degraded_reasons.append(f"{s.source}: {s.error or s.status}")
 
     feed_truth = {
@@ -446,7 +482,6 @@ def _build_workbench_bundle(
         degraded_paths=degraded_reasons,
         feed_truth=feed_truth,
     )
-
     return bundle
 
 
@@ -454,18 +489,17 @@ def _write_artifacts(
     result: IntegrationRunResult,
     output_dir: Path,
     state_dir: Path,
-) -> OneShotArtifactPaths:
-    """Write all output artifacts after finished_at is set."""
-    paths = OneShotArtifactPaths()
-
-    # Run report JSON (with finished_at already set)
-    report_path = output_dir / f"run_{result.run_id}.json"
-    atomic_write_json(result.as_dict(), str(report_path))
-    paths.report_json = str(report_path)
+    report_json: str = "",
+    workbench_html: str = "",
+    whale_snapshot_json: str = "",
+    market_snapshot_json: str = "",
+) -> None:
+    """Write all output artifacts. Uses pre-computed paths."""
+    # Run report JSON
+    atomic_write_json(result.as_dict(), report_json)
 
     # Whale snapshot JSON
     if result.whale:
-        whale_path = output_dir / f"whale_{result.run_id}.json"
         atomic_write_json({
             "address": result.whale.address,
             "ok": result.whale.ok,
@@ -475,40 +509,14 @@ def _write_artifacts(
             "alert_candidates": result.whale.alert_candidates,
             "is_baseline": result.whale.is_baseline,
             "error": result.whale.error,
-        }, str(whale_path))
-        paths.whale_snapshot_json = str(whale_path)
+        }, whale_snapshot_json)
 
     # Market snapshot JSON
-    market_path = output_dir / f"market_{result.run_id}.json"
     atomic_write_json({
         "symbols": [m.as_dict() for m in result.markets],
-    }, str(market_path))
-    paths.market_snapshot_json = str(market_path)
+    }, market_snapshot_json)
 
-    # Workbench HTML via W3 render_workbench(bundle, output_path)
+    # Workbench HTML via W3 render_workbench(bundle, output_path) — Section 5: no open() fallback
     bundle = _build_workbench_bundle(result, result.config) if result.config else None
     if bundle:
-        html_path = output_dir / f"workbench_{result.run_id}.html"
-        try:
-            render_workbench(bundle, str(html_path))
-            paths.workbench_html = str(html_path)
-        except Exception:
-            # Fallback: render to string and write manually
-            html = render_workbench(bundle)
-            with open(str(html_path), "w", encoding="utf-8") as f:
-                f.write(html)
-            paths.workbench_html = str(html_path)
-
-    return paths
-
-
-def _record_source_health(result: IntegrationRunResult, db_path: Path) -> None:
-    """Record source health to SQLite via W5 record_health."""
-    for src in result.sources:
-        record_health(
-            db_path=str(db_path),
-            source_name=src.source,
-            health_status=src.status,
-            response_ms=int(src.latency_ms) if src.latency_ms is not None else None,
-            error_message=src.error,
-        )
+        render_workbench(bundle, workbench_html)

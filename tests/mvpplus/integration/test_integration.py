@@ -395,7 +395,9 @@ class TestWhalePositionInput(unittest.TestCase):
         # 1 valid position, 1 parse error -> degraded but has position
         self.assertFalse(result.ok)  # Parse errors set ok=False
         self.assertEqual(result.position_count, 1)  # Only valid BTC
-        self.assertEqual(src.status, "ok")  # Parse error on 1 of 2 positions, BTC still valid
+        # Section 4: errors > 0 but partial valid → degraded, ok=false
+        self.assertEqual(src.status, "degraded")
+        self.assertFalse(result.ok)
 
 
 # ═══════════════════════════════════════════════════════════════════

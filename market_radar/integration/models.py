@@ -116,6 +116,7 @@ class IntegrationRunResult:
     feed: Optional[FeedResult] = None
     alert_candidate_count: int = 0
     output_paths: list[str] = field(default_factory=list)
+    state_db_paths: list[str] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
     ccxt_preflight: Optional[dict] = None
 
@@ -133,6 +134,7 @@ class IntegrationRunResult:
             "markets": [m.as_dict() for m in self.markets],
             "alert_candidate_count": self.alert_candidate_count,
             "output_paths": self.output_paths,
+            "state_db_paths": self.state_db_paths,
             "errors": self.errors,
         }
         if self.config:
