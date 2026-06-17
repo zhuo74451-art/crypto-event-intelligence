@@ -89,10 +89,25 @@ class IntegrationConfig:
     exchange: str = "binance"
     timeout: float = 30.0
     no_send: bool = True
+    # Feed provider config
+    feed_enabled: bool = True
+    feed_limit: int = 100
+    feed_max_items: int = 500
+    feed_timeout_seconds: float = 10.0
+    feed_cursor_name: str = "published_at_backend"
+    feed_cursor_state_file: str = "feed_cursor.json"
 
     def __post_init__(self) -> None:
         if not self.no_send:
             raise ValueError("no_send must be True — sending is prohibited")
+        if not 1 <= self.feed_limit <= 500:
+            raise ValueError(f"feed_limit must be 1-500, got {self.feed_limit}")
+        if not 1 <= self.feed_max_items <= 5000:
+            raise ValueError(f"feed_max_items must be 1-5000, got {self.feed_max_items}")
+        if self.feed_timeout_seconds <= 0:
+            raise ValueError(f"feed_timeout_seconds must be > 0, got {self.feed_timeout_seconds}")
+        if not self.feed_cursor_name:
+            raise ValueError("feed_cursor_name must be non-empty")
 
     def as_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -119,6 +134,7 @@ class IntegrationRunResult:
     state_db_paths: list[str] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
     ccxt_preflight: Optional[dict] = None
+    feed_summary: Optional[dict] = None
 
     def as_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {
@@ -152,6 +168,8 @@ class IntegrationRunResult:
                 d["whale"]["error"] = self.whale.error
         if self.feed:
             d["feed"] = self.feed.as_dict()
+        if self.feed_summary:
+            d["feed_summary"] = self.feed_summary
         return d
 
 

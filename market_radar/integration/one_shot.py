@@ -38,7 +38,8 @@ from market_radar.integration.models import (
 )
 from market_radar.integration.whale_mapper import run_whale_mapper
 from market_radar.integration.market_mapper import run_market_snapshot
-from market_radar.integration.feed_handler import run_feed
+from market_radar.integration.feed_handler import run_feed, run_feed_with_provider, create_not_connected_feed
+from market_radar.integration.feed_provider_protocol import FeedProviderProtocol
 
 # W3 workbench — typed models
 from market_radar.workbench.bundle import WorkbenchBundle
@@ -157,8 +158,18 @@ def _compute_final_status(result: IntegrationRunResult) -> str:
     return "failed"
 
 
-def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
-    """Execute one integration one-shot. Returns run result, never raises."""
+def run_one_shot(
+    config: IntegrationConfig,
+    feed_provider: Optional[FeedProviderProtocol] = None,
+) -> IntegrationRunResult:
+    """Execute one integration one-shot. Returns run result, never raises.
+
+    Args:
+        config: Run configuration.
+        feed_provider: Optional FeedProvider for live feed data.
+            When None, feed reports degraded/not_connected.
+            When provided, called once per run (no loop, no retry).
+    """
     result = IntegrationRunResult(
         data_mode=config.mode,
         no_send=config.no_send,
@@ -224,7 +235,7 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
 
     try:
         # ── Run via W5 run_once for ops-wrapped execution ──
-        runner = InjectedRunner(label="one_shot", fn=lambda ctx: _run_pipeline(ctx, config, result))
+        runner = InjectedRunner(label="one_shot", fn=lambda ctx: _run_pipeline(ctx, config, result, feed_provider))
         run_result = run_once(runner, config=config.as_dict(), run_id=result.run_id)
 
         if run_result.status == "failed" and run_result.error:
@@ -317,6 +328,7 @@ def _run_pipeline(
     context: dict[str, Any],
     config: IntegrationConfig,
     result: IntegrationRunResult,
+    feed_provider: Optional[FeedProviderProtocol] = None,
 ) -> dict[str, Any]:
     """Core pipeline logic — extracted for W5 run_once wrapping."""
     statuses: list[str] = []
@@ -362,11 +374,29 @@ def _run_pipeline(
         result.sources.extend(market_sources)
         statuses.extend(s.status for s in market_sources)
 
-        # ── Feed handler ──
-        feed_result, feed_src = run_feed(config.mode)
-        result.feed = feed_result
-        result.sources.append(feed_src)
-        statuses.append(feed_src.status)
+        # ── Feed handler (via provider or not_connected) ──
+        feed_result: Optional[FeedResult] = None
+        feed_src: Optional[SourceRunStatus] = None
+        feed_sub_sources: list[SourceRunStatus] = []
+
+        if feed_provider is not None and config.feed_enabled:
+            feed_result, feed_src, raw_batch, cursor_err, feed_summary, feed_sub_sources = \
+                run_feed_with_provider(feed_provider, config, _ensure_dir(config.state_dir), result.run_id)
+            if feed_summary:
+                result.feed_summary = feed_summary
+            if cursor_err:
+                result.errors.append(cursor_err)
+        else:
+            feed_result, feed_src = create_not_connected_feed()
+
+        if feed_result is not None:
+            result.feed = feed_result
+        if feed_src is not None:
+            result.sources.append(feed_src)
+            statuses.append(feed_src.status)
+        # Sub-sources from provider
+        for sub in feed_sub_sources:
+            result.sources.append(sub)
 
         # ── Build workbench bundle ──
         bundle = _build_workbench_bundle(result, config)
@@ -435,18 +465,31 @@ def _build_workbench_bundle(
         ))
 
     # ── Feed items ──
+    # Feed items come from the feed_provider protocol result.
+    # Items are already FeedItem instances — use them directly.
+    # When no provider is configured, feed.items contains lightweight dicts.
     feed_items: list[FeedItem] = []
     if result.feed and result.feed.items:
         for item in result.feed.items:
-            title = item.get("title", "")
-            fid = make_feed_id(title, "integration_fixture")
-            feed_items.append(FeedItem(
-                feed_id=fid,
-                source_type=FeedSourceType.UNKNOWN,
-                source_label="integration_fixture",
-                data_mode=FeedDataMode.FIXTURE,
-                title=title,
-            ))
+            if isinstance(item, FeedItem):
+                feed_items.append(item)
+            elif isinstance(item, dict):
+                # Fallback: reconstruct from dict (pre-provider mode)
+                try:
+                    from market_radar.intelligence_feed.models import (
+                        FeedSourceType, FeedDataMode, make_feed_id,
+                    )
+                    title = item.get("title", "")
+                    fid = make_feed_id(title, "integration_fixture")
+                    feed_items.append(FeedItem(
+                        feed_id=item.get("feed_id", fid),
+                        source_type=FeedSourceType.UNKNOWN,
+                        source_label=item.get("source_label", "integration_fixture"),
+                        data_mode=FeedDataMode.FIXTURE,
+                        title=title,
+                    ))
+                except Exception:
+                    pass
 
     # ── Whale items ──
     whale_positions: list[dict] = []

@@ -499,8 +499,8 @@ class TestFeedLivePublic(unittest.TestCase):
         self.assertEqual(feed.fixture_count, 0)
         self.assertEqual(feed.status, "degraded")
         self.assertFalse(src.ok)
-        self.assertIn("not wired", feed.error or "")
-        self.assertIn("not wired", src.detail or "")
+        self.assertIn("not_wired", str(feed.error or "") or "")
+        self.assertIn("not_connected", str(src.error or "") or "")
 
 
 # ═══════════════════════════════════════════════════════════════════
