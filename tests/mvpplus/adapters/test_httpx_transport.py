@@ -23,16 +23,34 @@ class FakeResponse:
 
 
 class TestTransportTimeoutConfig(unittest.TestCase):
-    def test_default_timeout(self):
+    def test_default_timeouts(self):
         t = HttpxTransport()
-        self.assertEqual(t._timeout, 30.0)
+        self.assertEqual(t._connect_timeout, 10.0)
+        self.assertEqual(t._read_timeout, 30.0)
+        self.assertEqual(t._write_timeout, 10.0)
+        self.assertEqual(t._pool_timeout, 5.0)
         self.assertEqual(t._max_retries, 3)
         t.close()
 
-    def test_custom_timeout(self):
-        t = HttpxTransport(timeout=15.0, max_retries=5)
-        self.assertEqual(t._timeout, 15.0)
+    def test_custom_timeouts(self):
+        t = HttpxTransport(connect_timeout=5.0, read_timeout=15.0,
+                           write_timeout=8.0, pool_timeout=3.0, max_retries=5)
+        self.assertEqual(t._connect_timeout, 5.0)
+        self.assertEqual(t._read_timeout, 15.0)
+        self.assertEqual(t._write_timeout, 8.0)
+        self.assertEqual(t._pool_timeout, 3.0)
         self.assertEqual(t._max_retries, 5)
+        t.close()
+
+    def test_timeouts_clamped(self):
+        t = HttpxTransport(connect_timeout=0.1, read_timeout=999.0)
+        self.assertEqual(t._connect_timeout, 0.5)  # min clamp
+        self.assertEqual(t._read_timeout, 120.0)    # max clamp
+        t.close()
+
+    def test_max_retries_clamped(self):
+        t = HttpxTransport(max_retries=100)
+        self.assertEqual(t._max_retries, 10)
         t.close()
 
 

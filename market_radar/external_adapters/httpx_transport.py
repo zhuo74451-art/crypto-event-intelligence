@@ -2,6 +2,8 @@
 
 Provides bounded retry, deterministic error objects, JSON validation,
 HTTPS allowlist, and dependency injection for testability.
+
+Explicit connect / read / write / pool timeout configuration.
 """
 from __future__ import annotations
 
@@ -16,7 +18,10 @@ import httpx
 
 # ── Constants ──
 
-DEFAULT_TIMEOUT = 30.0
+DEFAULT_CONNECT_TIMEOUT = 10.0
+DEFAULT_READ_TIMEOUT = 30.0
+DEFAULT_WRITE_TIMEOUT = 10.0
+DEFAULT_POOL_TIMEOUT = 5.0
 DEFAULT_MAX_RETRIES = 3
 DEFAULT_BACKOFF_BASE = 1.5
 HTTPS_ALLOWLIST = {"api.hyperliquid.xyz", "api.binance.com", "www.okx.com", "api.bybit.com"}
@@ -86,17 +91,28 @@ class HttpxTransport:
     def __init__(
         self,
         client: Optional[httpx.Client] = None,
-        timeout: float = DEFAULT_TIMEOUT,
+        connect_timeout: float = DEFAULT_CONNECT_TIMEOUT,
+        read_timeout: float = DEFAULT_READ_TIMEOUT,
+        write_timeout: float = DEFAULT_WRITE_TIMEOUT,
+        pool_timeout: float = DEFAULT_POOL_TIMEOUT,
         max_retries: int = DEFAULT_MAX_RETRIES,
         backoff_base: float = DEFAULT_BACKOFF_BASE,
         https_allowlist: Optional[set[str]] = None,
     ):
-        self._timeout = timeout
-        self._max_retries = max_retries
+        self._connect_timeout = max(0.5, min(connect_timeout, 120.0))
+        self._read_timeout = max(1.0, min(read_timeout, 120.0))
+        self._write_timeout = max(0.5, min(write_timeout, 120.0))
+        self._pool_timeout = max(0.5, min(pool_timeout, 30.0))
+        self._max_retries = max(1, min(max_retries, 10))
         self._backoff_base = backoff_base
         self._https_allowlist = https_allowlist or HTTPS_ALLOWLIST
         self._client = client or httpx.Client(
-            timeout=httpx.Timeout(timeout, connect=timeout, read=timeout, write=timeout),
+            timeout=httpx.Timeout(
+                connect=self._connect_timeout,
+                read=self._read_timeout,
+                write=self._write_timeout,
+                pool=self._pool_timeout,
+            ),
             headers={"User-Agent": USER_AGENT},
         )
 

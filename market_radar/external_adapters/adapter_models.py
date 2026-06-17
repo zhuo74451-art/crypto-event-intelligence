@@ -47,11 +47,25 @@ class AdapterError:
 
 @dataclass
 class AdapterResult:
-    """Generic adapter result envelope."""
+    """Generic adapter result envelope with mandatory health object."""
     ok: bool
     data: Any = None
     provenance: Optional[AdapterProvenance] = None
     error: Optional[AdapterError] = None
+    health: Optional[AdapterHealth] = None
+
+    def __post_init__(self) -> None:
+        """Auto-populate health when not explicitly provided."""
+        if self.health is None:
+            source = self.provenance.source if self.provenance else "unknown"
+            latency = self.provenance.latency_ms if self.provenance else None
+            err_str = self.error.message if self.error else None
+            self.health = AdapterHealth(
+                source=source,
+                available=self.ok,
+                latency_ms=latency,
+                error=err_str,
+            )
 
     def as_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {"ok": self.ok}
@@ -61,4 +75,6 @@ class AdapterResult:
             d["provenance"] = self.provenance.as_dict()
         if self.error is not None:
             d["error"] = self.error.as_dict()
+        if self.health is not None:
+            d["health"] = self.health.as_dict()
         return d
