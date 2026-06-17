@@ -1,0 +1,45 @@
+{
+  "ticket": "W1_RESTORE_FINAL_ENTRYPOINT_TEST_INTEGRITY_R10",
+  "branch": "workbench/mvpplus-integration-v2",
+  "repair_base_commit": "5360ef323758fd23b9c73c2253c405877627e760",
+  "tested_commit": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+  "restored_from_commit": "33602458bc15a2239ee50bf97e0851a18410d09d",
+  "test_counts": {
+    "integration_old": 77,
+    "restored_r08": 7,
+    "link_existing_r09": 14,
+    "cli_injection": 6,
+    "new_total": 109,
+    "restored_behavioral_tests": true,
+    "behavioral_tests_added": 14
+  },
+  "combined_regression": {
+    "pytest": 557,
+    "adapters": 96,
+    "total": 653,
+    "failed": 0
+  },
+  "real_sqlite_link_test": "14 tests verifying parent shadow_parent, children shadow_child, ordinals [1,2], IDs match, summary preserved, no UNIQUE constraint",
+  "cli_main_injection": "6 tests: live-public provider, feed params, feed-since, fixture mode none, no-send-deny, no network",
+  "real_shadow": {
+    "run_id": "46f8e87f1008433da2f7ab98567d1e70",
+    "status": "completed",
+    "attempted_runs": 2,
+    "completed_runs": 2,
+    "errors": [],
+    "collision_found": false,
+    "parent_kind": "shadow_parent",
+    "children": 2,
+    "child_kind": "shadow_child",
+    "ordinals": [1, 2]
+  },
+  "business_code_modified": false,
+  "main_unchanged": true,
+  "runtime_hygiene": "temp dirs cleaned, no runtime data committed",
+  "modified_files": [
+    "tests/mvpplus/integration/test_final_entrypoints.py",
+    "tests/mvpplus/integration/test_run_history_link_existing.py",
+    "tests/mvpplus/integration/test_cli_injection.py"
+  ],
+  "files_outside_owned_paths": []
+}
