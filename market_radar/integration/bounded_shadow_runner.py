@@ -8,6 +8,7 @@ No daemon, no scheduler, no threads.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any, Optional, Callable
 
@@ -107,6 +108,12 @@ def run_integration_shadow(
                 error=f"{type(e).__name__}: {e}",
             )
 
+    # Verify shared DB path: Integration's run_history.db is the same file
+    integration_db = str(Path(state_dir_str) / "run_history.db")
+    shadow_db = str(BoundedShadowConfig(state_dir=state_dir_str).run_history_db)
+    assert os.path.normpath(integration_db) == os.path.normpath(shadow_db), \
+        f"DB path mismatch: integration={integration_db} shadow={shadow_db}"
+
     config = BoundedShadowConfig(
         max_runs=max_runs,
         interval_seconds=interval_seconds,
@@ -114,6 +121,7 @@ def run_integration_shadow(
         state_dir=state_dir_str,
         stop_on_failure=True,
         continue_on_degraded=True,
+        child_history_mode="link_existing",
     )
 
     return run_bounded_shadow(config, _shadow_callable)
