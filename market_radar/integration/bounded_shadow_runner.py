@@ -1,6 +1,9 @@
 """Bounded Shadow Runner — wraps W5 run_bounded_shadow for Integration one-shot.
 
-Wires run_one_shot with a fresh CuratedFeedProvider per round.
+Uses the real W5 API:
+  BoundedShadowConfig + ShadowCallable -> BoundedShadowResult
+
+Each round constructs a fresh CuratedFeedProvider and calls run_one_shot.
 No daemon, no scheduler, no threads.
 """
 from __future__ import annotations
@@ -10,7 +13,14 @@ from typing import Any, Optional, Callable
 
 from market_radar.integration.one_shot import run_one_shot
 from market_radar.integration.models import IntegrationConfig
-from market_radar.operations.bounded_shadow import run_bounded_shadow
+from market_radar.integration.curated_feed_provider import CuratedFeedProvider
+from market_radar.operations.bounded_shadow import (
+    run_bounded_shadow,
+    BoundedShadowConfig,
+    BoundedShadowResult,
+    ShadowCallable,
+    ShadowCallableResult,
+)
 
 
 def run_integration_shadow(
@@ -18,37 +28,92 @@ def run_integration_shadow(
     output_dir: str | Path,
     max_runs: int = 2,
     interval_seconds: float = 0.0,
-    feed_provider_factory: Optional[Callable] = None,
-    **config_kw: Any,
-) -> list[dict]:
-    """Execute a bounded shadow of run_one_shot using W5's run_bounded_shadow.
+    whale_address: str = "",
+    exchange: str = "binance",
+    timeout: float = 30.0,
+    curated_base_url: str = "http://43.98.174.247:8001/api/integration/curated",
+    feed_limit: int = 100,
+    feed_max_items: int = 500,
+    feed_max_pages: int = 5,
+    feed_timeout_seconds: float = 15.0,
+    feed_initial_since: Optional[str] = None,
+) -> BoundedShadowResult:
+    """Execute a bounded shadow of run_one_shot via W5's run_bounded_shadow.
 
-    Args:
-        state_dir: Shared state directory across runs.
-        output_dir: Output directory (each run gets its own subdir or shared).
-        max_runs: Number of one-shot runs (default 2).
-        interval_seconds: Delay between runs (0 = no delay).
-        feed_provider_factory: Callable that returns a FeedProviderProtocol.
-        **config_kw: Additional IntegrationConfig fields.
-
-    Returns:
-        List of run result dicts, one per execution.
+    Returns W5's BoundedShadowResult with per-child-run records.
     """
-    def runner_fn(run_index: int) -> dict:
+    state_dir_str = str(state_dir)
+    output_dir_str = str(output_dir)
+
+    def _make_provider() -> CuratedFeedProvider:
+        return CuratedFeedProvider(
+            base_url=curated_base_url,
+            limit=feed_limit,
+            max_items=feed_max_items,
+            max_pages=feed_max_pages,
+            timeout_seconds=feed_timeout_seconds,
+        )
+
+    def _shadow_callable(
+        ordinal: int,
+        shared_state_dir: str,
+        no_send: bool,
+        parent_shadow_run_id: str,
+    ) -> ShadowCallableResult:
+        if not no_send:
+            return ShadowCallableResult(
+                child_run_id="",
+                status="failed",
+                error="no_send is False — shadow refused",
+            )
+
         cfg = IntegrationConfig(
             mode="live-public",
+            state_dir=shared_state_dir,
+            output_dir=output_dir_str,
+            whale_address=whale_address,
+            exchange=exchange,
+            timeout=timeout,
             no_send=True,
-            state_dir=str(state_dir),
-            output_dir=str(output_dir),
-            **config_kw,
+            feed_enabled=True,
+            feed_limit=feed_limit,
+            feed_max_items=feed_max_items,
+            feed_timeout_seconds=feed_timeout_seconds,
+            feed_initial_since=feed_initial_since if ordinal == 1 else None,
         )
-        provider = feed_provider_factory() if feed_provider_factory else None
-        result = run_one_shot(cfg, feed_provider=provider)
-        return result.as_dict()
 
-    return run_bounded_shadow(
-        runner_fn=runner_fn,
+        provider = _make_provider()
+        try:
+            result = run_one_shot(cfg, feed_provider=provider)
+            return ShadowCallableResult(
+                child_run_id=result.run_id,
+                status=result.status,
+                summary={
+                    "mode": result.data_mode,
+                    "source_count": len(result.sources),
+                    "feed_status": result.feed.status if result.feed else None,
+                    "whale_ok": result.whale.ok if result.whale else None,
+                    "whale_positions": result.whale.position_count if result.whale else 0,
+                    "whale_changes": len(result.whale.changes) if result.whale else 0,
+                    "whale_alerts": len(result.whale.alert_candidates) if result.whale else 0,
+                    "whale_is_baseline": result.whale.is_baseline if result.whale else None,
+                    "output_paths": result.output_paths,
+                },
+            )
+        except Exception as e:
+            return ShadowCallableResult(
+                child_run_id="",
+                status="failed",
+                error=f"{type(e).__name__}: {e}",
+            )
+
+    config = BoundedShadowConfig(
         max_runs=max_runs,
         interval_seconds=interval_seconds,
-        state_dir=str(state_dir),
+        no_send=True,
+        state_dir=state_dir_str,
+        stop_on_failure=True,
+        continue_on_degraded=True,
     )
+
+    return run_bounded_shadow(config, _shadow_callable)
