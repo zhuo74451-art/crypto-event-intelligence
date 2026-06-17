@@ -11,6 +11,7 @@ import json
 import os
 import sys
 import tempfile
+import shutil
 import unittest
 
 PROJ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -29,11 +30,15 @@ from qa.mvpplus.qa_core import (
 
 
 def make_temp_py(content: str) -> str:
-    """Create a temp Python file and return its path."""
-    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False)
-    tmp.write(content)
-    tmp.close()
-    return tmp.name
+    """Create a temp Python file in an ISOLATED temp directory and return its path.
+
+    Uses a dedicated subdirectory so scanners don't walk the entire system temp dir.
+    """
+    tmpdir = tempfile.mkdtemp(prefix="qa_test_")
+    fpath = os.path.join(tmpdir, "test_file.py")
+    with open(fpath, "w", encoding="utf-8") as f:
+        f.write(content)
+    return fpath
 
 
 # ── Framework Self-Tests ────────────────────────────────────────────────────
@@ -73,7 +78,7 @@ class TestForbiddenImports(unittest.TestCase):
             r = scan_forbidden_imports(os.path.dirname(path), [os.path.dirname(path)], ["subprocess"])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
 
 class TestTradingCapability(unittest.TestCase):
@@ -84,7 +89,7 @@ class TestTradingCapability(unittest.TestCase):
             self.assertEqual(r.status, "FAIL")
             self.assertTrue(any("private_method" in v for v in r.violations))
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_detects_wallet_import(self):
         path = make_temp_py("from web3 import Web3\n")
@@ -93,7 +98,7 @@ class TestTradingCapability(unittest.TestCase):
             self.assertEqual(r.status, "FAIL")
             self.assertTrue(any("wallet" in v.lower() for v in r.violations))
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
 
 class TestCredentialScanner(unittest.TestCase):
@@ -103,7 +108,7 @@ class TestCredentialScanner(unittest.TestCase):
             r = scan_credentials(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_clean_file_passes(self):
         path = make_temp_py("x = 42\n")
@@ -111,7 +116,7 @@ class TestCredentialScanner(unittest.TestCase):
             r = scan_credentials(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
 
 class TestSchedulerDisabled(unittest.TestCase):
@@ -121,7 +126,7 @@ class TestSchedulerDisabled(unittest.TestCase):
             r = scan_scheduler_disabled(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
 
 class TestNoSend(unittest.TestCase):
@@ -131,7 +136,7 @@ class TestNoSend(unittest.TestCase):
             r = scan_no_send(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
 
 class TestArtifactBinding(unittest.TestCase):
@@ -610,14 +615,15 @@ class TestEvidenceSchema(unittest.TestCase):
 
 class TestHtmlSecurity(unittest.TestCase):
     def test_detects_inner_html(self):
-        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
-        tmp.write('<div id="x">.innerHTML = userInput</div>\n')
-        tmp.close()
+        tmpdir = tempfile.mkdtemp(prefix="qa_test_")
+        fpath = os.path.join(tmpdir, "test.html")
+        with open(fpath, "w", encoding="utf-8") as f:
+            f.write('<div id="x">.innerHTML = userInput</div>\n')
         try:
-            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
+            r = scan_html_security(tmpdir, [tmpdir])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(tmp.name)
+            shutil.rmtree(tmpdir, ignore_errors=True)
 
 
 class TestMalformedFixtureCorpus(unittest.TestCase):
@@ -681,7 +687,7 @@ class TestSyntheticVulnerableTargetDetection(unittest.TestCase):
             r = scan_credentials(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_detects_fake_trading_capability(self):
         """A file with fake trading method is detected."""
@@ -690,7 +696,7 @@ class TestSyntheticVulnerableTargetDetection(unittest.TestCase):
             r = scan_trading_capability(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_detects_fake_scheduler(self):
         """A file with enabled scheduler is detected."""
@@ -699,7 +705,7 @@ class TestSyntheticVulnerableTargetDetection(unittest.TestCase):
             r = scan_scheduler_disabled(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_detects_fake_send(self):
         """A file with bot.send_message is detected."""
@@ -708,18 +714,19 @@ class TestSyntheticVulnerableTargetDetection(unittest.TestCase):
             r = scan_no_send(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_detects_unsafe_html(self):
         """A file with innerHTML without sanitization is detected."""
-        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
-        tmp.write('<div id="x">.innerHTML = userInput</div>\n')
-        tmp.close()
+        tmpdir = tempfile.mkdtemp(prefix="qa_test_")
+        fpath = os.path.join(tmpdir, "test.html")
+        with open(fpath, "w", encoding="utf-8") as f:
+            f.write('<div id="x">.innerHTML = userInput</div>\n')
         try:
-            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
+            r = scan_html_security(tmpdir, [tmpdir])
             self.assertEqual(r.status, "FAIL")
         finally:
-            os.unlink(tmp.name)
+            shutil.rmtree(tmpdir, ignore_errors=True)
 
 
 class TestSyntheticSafeTargetPass(unittest.TestCase):
@@ -732,7 +739,7 @@ class TestSyntheticSafeTargetPass(unittest.TestCase):
             r = scan_credentials(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_clean_file_no_trading(self):
         """A clean file passes trading scan."""
@@ -741,7 +748,7 @@ class TestSyntheticSafeTargetPass(unittest.TestCase):
             r = scan_trading_capability(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_clean_file_no_forbidden_import(self):
         """A clean import passes forbidden scan."""
@@ -750,7 +757,7 @@ class TestSyntheticSafeTargetPass(unittest.TestCase):
             r = scan_forbidden_imports(os.path.dirname(path), [os.path.dirname(path)], ["subprocess"])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_clean_file_no_scheduler(self):
         """No scheduler pattern passes."""
@@ -759,7 +766,7 @@ class TestSyntheticSafeTargetPass(unittest.TestCase):
             r = scan_scheduler_disabled(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_clean_file_no_send(self):
         """No send pattern passes."""
@@ -768,18 +775,19 @@ class TestSyntheticSafeTargetPass(unittest.TestCase):
             r = scan_no_send(os.path.dirname(path), [os.path.dirname(path)])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(path)
+            shutil.rmtree(os.path.dirname(path), ignore_errors=True)
 
     def test_clean_html_passes(self):
         """Safe HTML file passes."""
-        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
-        tmp.write("<html><body><p>Safe content</p></body></html>\n")
-        tmp.close()
+        tmpdir = tempfile.mkdtemp(prefix="qa_test_")
+        fpath = os.path.join(tmpdir, "test.html")
+        with open(fpath, "w", encoding="utf-8") as f:
+            f.write("<html><body><p>Safe content</p></body></html>\n")
         try:
-            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
+            r = scan_html_security(tmpdir, [tmpdir])
             self.assertEqual(r.status, "PASS")
         finally:
-            os.unlink(tmp.name)
+            shutil.rmtree(tmpdir, ignore_errors=True)
 
     def test_safe_liquidation_oracle_passes(self):
         """Correct liquidation formula passes."""

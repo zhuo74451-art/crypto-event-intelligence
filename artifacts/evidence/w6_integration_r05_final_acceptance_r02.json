@@ -1,0 +1,315 @@
+{
+  "document": "w6_integration_r05_final_acceptance_r02",
+  "ticket": "W6_INTEGRATION_R05_FINAL_ACCEPTANCE_R02",
+  "w6_branch": "workbench/mvpplus-independent-qa-v1",
+  "w6_repair_base_commit": "a3e06ab3629504434a60b15e19899dab5c6ec79e",
+  "w6_tested_commit": "a3e06ab3629504434a60b15e19899dab5c6ec79e",
+  "target_branch": "workbench/mvpplus-integration-v2",
+  "target_exact_sha": "beae9d0619b36f90948a42f1a41a303dc642228d",
+  "target_tested_commit": "beae9d0619b36f90948a42f1a41a303dc642228d",
+  "target_evidence_commit": "beae9d0619b36f90948a42f1a41a303dc642228d",
+  "evidence_binding": {
+    "repair_base_commit_expected": "aeb67deb89faf5624e43097d86dfdc9a1e55dc6c",
+    "repair_base_commit_actual": "aeb67deb89faf5624e43097d86dfdc9a1e55dc6c",
+    "repair_base_correct": true,
+    "tested_commit_40_char": true,
+    "tested_commit_resolvable": true,
+    "tested_commit_is_ancestor": true,
+    "tested_commit_is_code_commit": true,
+    "no_bad_placeholders": true,
+    "r04_superseded": true,
+    "evidence_after_tested": true,
+    "note": "W1 R05 evidence tested_commit is R04 evidence commit (aeb67deb) not R05 fix (beae9d06)"
+  },
+  "owned_paths_hygiene": {
+    "data_integration_files": [
+      "data/integration/.gitignore"
+    ],
+    "data_integration_clean": true,
+    "no_runtime_data_committed": true
+  },
+  "regression_tests": {
+    "integration_tests": {
+      "ran": "52 passed"
+    },
+    "whale_domain_ops": {
+      "ran": "145 passed, 1 skipped"
+    },
+    "adapters": {
+      "ran": "86 passed"
+    },
+    "feeds_ui": {
+      "ran": "44 passed"
+    },
+    "all_regression_pass": true
+  },
+  "report_order": {
+    "overall": "PASS",
+    "events": [
+      "whale_artifact",
+      "market_artifact",
+      "run_history_finish",
+      "run_report"
+    ],
+    "last_event": "run_report",
+    "run_report_last": true,
+    "_write_artifacts_atomic_write_count": 2,
+    "report_has_finished_at": true,
+    "report_output_paths_non_empty": true,
+    "report_state_paths_non_empty": true,
+    "report_status": "completed"
+  },
+  "whale_field_truth": {
+    "overall": "PASS",
+    "tests": [
+      {
+        "name": "signed_size_none",
+        "pass": true
+      },
+      {
+        "name": "signed_size_nan",
+        "pass": true
+      },
+      {
+        "name": "signed_size_inf",
+        "pass": true
+      },
+      {
+        "name": "signed_size_neg_inf",
+        "pass": true
+      },
+      {
+        "name": "signed_size_zero",
+        "pass": true
+      },
+      {
+        "name": "signed_size_pos",
+        "pass": true
+      },
+      {
+        "name": "signed_size_neg",
+        "pass": true
+      },
+      {
+        "name": "entry_price_none",
+        "pass": true
+      },
+      {
+        "name": "entry_price_zero",
+        "pass": true
+      },
+      {
+        "name": "entry_price_neg",
+        "pass": true
+      },
+      {
+        "name": "entry_price_nan",
+        "pass": true
+      },
+      {
+        "name": "entry_price_inf",
+        "pass": true
+      },
+      {
+        "name": "entry_price_pos",
+        "pass": true
+      },
+      {
+        "name": "mark_price_zero",
+        "pass": true
+      },
+      {
+        "name": "mark_price_pos",
+        "pass": true
+      },
+      {
+        "name": "leverage_none",
+        "pass": true
+      },
+      {
+        "name": "leverage_zero",
+        "pass": true
+      },
+      {
+        "name": "leverage_neg",
+        "pass": true
+      },
+      {
+        "name": "leverage_nan",
+        "pass": true
+      },
+      {
+        "name": "leverage_pos",
+        "pass": true
+      },
+      {
+        "name": "pv_none",
+        "pass": true
+      },
+      {
+        "name": "pv_neg",
+        "pass": true
+      },
+      {
+        "name": "pv_nan",
+        "pass": true
+      },
+      {
+        "name": "pv_zero_zero_size",
+        "pass": true
+      },
+      {
+        "name": "pv_zero_nonzero_size",
+        "pass": true
+      },
+      {
+        "name": "pv_pos",
+        "pass": true
+      },
+      {
+        "name": "parser_no_leverage_default",
+        "pass": true
+      },
+      {
+        "name": "build_w2_on_error_none",
+        "pass": true
+      }
+    ],
+    "total": 28,
+    "passed": 28
+  },
+  "status_truth": {
+    "overall": "PASS",
+    "tests": [
+      {
+        "name": "all_ok_completed",
+        "pass": true
+      },
+      {
+        "name": "feed_degraded",
+        "pass": true
+      },
+      {
+        "name": "market_unavailable",
+        "pass": true
+      },
+      {
+        "name": "whale_degraded",
+        "pass": true
+      },
+      {
+        "name": "internal_error_failed",
+        "pass": true
+      },
+      {
+        "name": "feed_not_connected_not_completed",
+        "pass": true
+      }
+    ]
+  },
+  "safety": {
+    "overall": "PASS",
+    "notes": [
+      "no_send=False correctly rejected"
+    ],
+    "patterns_found": []
+  },
+  "live_run": {
+    "overall": "PASS",
+    "status": "degraded",
+    "run_id": "os-089faba64001",
+    "no_send": true,
+    "scheduler_started": false,
+    "credentials_used": false,
+    "errors": [],
+    "output_paths": [
+      "C:\\Users\\PC\\AppData\\Local\\Temp\\w6_final_1_8jvwbl\\output\\run_os-089faba64001.json",
+      "C:\\Users\\PC\\AppData\\Local\\Temp\\w6_final_1_8jvwbl\\output\\workbench_os-089faba64001.html",
+      "C:\\Users\\PC\\AppData\\Local\\Temp\\w6_final_1_8jvwbl\\output\\whale_os-089faba64001.json",
+      "C:\\Users\\PC\\AppData\\Local\\Temp\\w6_final_1_8jvwbl\\output\\market_os-089faba64001.json"
+    ],
+    "state_db_paths": [
+      "C:\\Users\\PC\\AppData\\Local\\Temp\\w6_final_1_8jvwbl\\state\\run_history.db",
+      "C:\\Users\\PC\\AppData\\Local\\Temp\\w6_final_1_8jvwbl\\state\\source_health.db"
+    ],
+    "sources": [
+      {
+        "source": "whale:0x6c851251",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "ccxt:BTC/USDT",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "ccxt:ETH/USDT",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "ccxt:SOL/USDT",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "hyperliquid:HYPE",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "feed",
+        "status": "degraded",
+        "ok": false
+      }
+    ],
+    "whale_ok": true,
+    "whale_positions": 1,
+    "whale_is_baseline": true,
+    "output_hashes": [
+      {
+        "basename": "run_os-089faba64001.json",
+        "sha256": "d324ad4f6a880e51e9f4ec3d3c9751816495ed5f0adf3cdc1b41f1e78b5ef3df",
+        "size_bytes": 3660
+      },
+      {
+        "basename": "workbench_os-089faba64001.html",
+        "sha256": "09ff95d764087496fad1e2b49f8fdff755924111863730427560889a362472c3",
+        "size_bytes": 7370
+      },
+      {
+        "basename": "whale_os-089faba64001.json",
+        "sha256": "6803b57a8c692064a0cffeea268e73a797060a8abbac09fb465957f3064d1b4b",
+        "size_bytes": 2672
+      },
+      {
+        "basename": "market_os-089faba64001.json",
+        "sha256": "11f95e77f78999a6b925ca7f165ae2d71df3a84c936b06fb2ac5a4eb45338a5a",
+        "size_bytes": 870
+      }
+    ],
+    "markets_ok": true,
+    "whale_exists_ok": true,
+    "feed_only_degraded": true,
+    "overall_degraded": true,
+    "outputs_exist": true
+  },
+  "no_send": true,
+  "credentials_used": false,
+  "scheduler_started": false,
+  "daemon_started": false,
+  "target_modified": false,
+  "main_modified": false,
+  "temporary_data_deleted": true,
+  "verdict_checks": {
+    "report_order": "PASS",
+    "whale_field_truth": "PASS",
+    "status_truth": "PASS",
+    "safety": "PASS",
+    "live_acceptance": "PASS"
+  },
+  "final_decision": "INTEGRATION_R05_INDEPENDENTLY_ACCEPTED",
+  "mvpplus_ready": false,
+  "internal_production_ready": false
+}
