@@ -2,6 +2,8 @@
 
 Wires W2 (whale domain), W3 (feeds, workbench), W4 (adapters), W5 (ops).
 Never sends, never signs, never trades.
+
+NOTE: import ccxt before hyperliquid to prevent hyperliquid.ccxt shadowing.
 """
 from __future__ import annotations
 
@@ -12,9 +14,27 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
+# Workaround: hyperliquid has a `ccxt` submodule that shadows the real `ccxt`
+# package in sys.modules. We must save the real ccxt reference and re-register
+# it after any hyperliquid import, otherwise CcxtPublicMarketAdapter._get_exchange
+# will resolve `import ccxt` to hyperliquid.ccxt (no exchange classes).
+import ccxt as _real_ccxt
+_CCXT_ID = id(_real_ccxt)
+
 from market_radar.external_adapters.hyperliquid_public_adapter import (
     HyperliquidPublicAdapter,
 )
+
+# Restore real ccxt in sys.modules if hyperliquid shadowed it
+import sys as _sys
+if id(_sys.modules.get("ccxt")) != _CCXT_ID:
+    _sys.modules["ccxt"] = _real_ccxt
+
+# Helper: ensure sys.modules["ccxt"] is the real ccxt before any adapter call.
+# hyperliquid.ccxt submodule shadows it on every import of hyperliquid.
+def _ensure_real_ccxt() -> None:
+    if id(_sys.modules.get("ccxt")) != _CCXT_ID:
+        _sys.modules["ccxt"] = _real_ccxt
 from market_radar.external_adapters.ccxt_public_market_adapter import (
     CcxtPublicMarketAdapter,
 )
@@ -248,6 +268,8 @@ def _run_pipeline(
 
     # ── Adapters ──
     hl_adapter = HyperliquidPublicAdapter()
+    # Ensure real ccxt after hyperliquid import (namespace shadowing workaround)
+    _ensure_real_ccxt()
     ccxt_adapter = CcxtPublicMarketAdapter(exchange_timeout=config.timeout)
 
     try:
@@ -274,6 +296,9 @@ def _run_pipeline(
                 error="no whale address configured",
             ))
             statuses.append("skipped")
+
+        # Ensure real ccxt before market mapper (HL methods re-shadow it)
+        _ensure_real_ccxt()
 
         # ── Market mapper ──
         market_snapshots, market_sources = run_market_snapshot(

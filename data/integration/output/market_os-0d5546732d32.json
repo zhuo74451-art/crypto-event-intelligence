@@ -1,0 +1,30 @@
+{
+  "symbols": [
+    {
+      "symbol": "BTC/USDT",
+      "source": "binance",
+      "ok": false,
+      "error": "could not initialize 'binance'"
+    },
+    {
+      "symbol": "ETH/USDT",
+      "source": "binance",
+      "ok": false,
+      "error": "could not initialize 'binance'"
+    },
+    {
+      "symbol": "SOL/USDT",
+      "source": "binance",
+      "ok": false,
+      "error": "could not initialize 'binance'"
+    },
+    {
+      "symbol": "HYPE/USDT",
+      "source": "hyperliquid",
+      "ok": true,
+      "last_price": 73.6285,
+      "provenance": "sdk",
+      "latency_ms": 203.0
+    }
+  ]
+}

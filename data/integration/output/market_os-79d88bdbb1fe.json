@@ -1,0 +1,42 @@
+{
+  "symbols": [
+    {
+      "symbol": "BTC/USDT",
+      "source": "binance",
+      "ok": true,
+      "last_price": 65650.0,
+      "bid": 65650.0,
+      "ask": 65650.01,
+      "provenance": "ccxt",
+      "latency_ms": 2953.0
+    },
+    {
+      "symbol": "ETH/USDT",
+      "source": "binance",
+      "ok": true,
+      "last_price": 1789.46,
+      "bid": 1789.46,
+      "ask": 1789.47,
+      "provenance": "ccxt",
+      "latency_ms": 188.0
+    },
+    {
+      "symbol": "SOL/USDT",
+      "source": "binance",
+      "ok": true,
+      "last_price": 73.49,
+      "bid": 73.49,
+      "ask": 73.5,
+      "provenance": "ccxt",
+      "latency_ms": 187.0
+    },
+    {
+      "symbol": "HYPE/USDT",
+      "source": "hyperliquid",
+      "ok": true,
+      "last_price": 73.6135,
+      "provenance": "sdk",
+      "latency_ms": 266.0
+    }
+  ]
+}

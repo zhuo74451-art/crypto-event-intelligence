@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; img-src data:;">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CEI Workbench W3v2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;padding:16px;font-size:14px;line-height:1.5}
+h1{color:#58a6ff;font-size:22px;margin-bottom:4px}
+h2{color:#c9d1d9;font-size:16px;margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid #30363d}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+.sc{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;text-align:center}
+.sv{font-size:22px;font-weight:bold}
+.sl{font-size:11px;color:#8b949e;margin-top:2px}
+table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:12px}
+th{background:#161b22;color:#8b949e;padding:6px 8px;text-align:left;font-weight:500;border-bottom:2px solid #30363d;white-space:nowrap}
+td{padding:4px 8px;border-bottom:1px solid #21262d;white-space:nowrap;font-size:12px}
+tr:hover td{background:#1c2128}
+.n{text-align:right;font-family:'SF Mono',Consolas,monospace}
+.empty{color:#8b949e;font-style:italic;padding:20px;text-align:center}
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin-bottom:12px}
+.mc{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px}
+.ms{font-size:12px;color:#8b949e;display:flex;gap:4px;align-items:center}
+.mp{font-size:24px;font-weight:bold;margin:4px 0}
+.mch{font-size:14px;margin-bottom:4px}
+.md{font-size:11px;color:#8b949e;display:flex;flex-direction:column;gap:1px;margin-top:4px}
+.mv{font-size:10px;color:#6e7681;margin-top:4px}
+.fi{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:13px}
+.fh{display:flex;gap:4px;align-items:center;margin-bottom:2px;font-size:11px;flex-wrap:wrap}
+.ft{padding:1px 5px;border-radius:3px;font-weight:600;font-size:10px}
+.ft-flash{background:#ff444433;color:#ff4444}
+.ft-news{background:#58a6ff33;color:#58a6ff}
+.ft-telegram{background:#3fb95033;color:#3fb950}
+.fs{color:#8b949e}
+.fp{color:#6e7681;margin-left:auto}
+.ftl{font-size:13px;font-weight:500}
+.fb{color:#8b949e;font-size:12px;margin-top:2px}
+.fa{color:#58a6ff;font-size:11px;margin-top:2px}
+.rb{font-size:18px;font-weight:bold;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:inline-block;margin-bottom:4px}
+.rr{color:#8b949e;font-size:11px;padding:2px 0}
+.disc{color:#d29922;font-size:11px;margin-top:4px;font-style:italic}
+.ac,.je{background:#161b22;border:1px solid #30363d;border-radius:4px;padding:6px 10px;margin-bottom:4px;font-size:12px}
+.jt{color:#58a6ff;font-family:monospace;font-size:11px}
+.warn{color:#d29922;font-size:12px;margin:2px 0}
+.err{color:#f85149;font-size:12px}
+.ftr{margin-top:24px;padding-top:8px;border-top:1px solid #30363d;font-size:10px;color:#6e7681}
+</style>
+</head>
+<body>
+<h1>CEI Workbench W3v2</h1>
+<p style="color:#8b949e;font-size:13px;margin-bottom:8px">
+Run: os-e0264971c0bc | 2026-06-17T07:13:00Z | vw3-v2.0</p><div class="warn">Degraded: ccxt:BTC/USDT: could not initialize &#x27;binance&#x27;</div><div class="warn">Degraded: ccxt:ETH/USDT: could not initialize &#x27;binance&#x27;</div><div class="warn">Degraded: ccxt:SOL/USDT: could not initialize &#x27;binance&#x27;</div><div class="warn">Degraded: feed: feed readers not wired</div><div class="warn">Degraded: ccxt:BTC/USDT: could not initialize &#x27;binance&#x27;</div><div class="warn">Degraded: ccxt:ETH/USDT: could not initialize &#x27;binance&#x27;</div><div class="warn">Degraded: ccxt:SOL/USDT: could not initialize &#x27;binance&#x27;</div><div class="stats">
+<div class="sc"><div class="sv">1</div><div class="sl">Market Assets</div></div>
+<div class="sc"><div class="sv">0</div><div class="sl">Feed Items (0 live)</div></div>
+<div class="sc"><div class="sv">1</div><div class="sl">Whale Positions</div></div>
+<div class="sc"><div class="sv">1</div><div class="sl">Changes</div></div>
+</div><h2>1. Intelligence Feed</h2><div class="empty">No feed items</div><h2>2. Whale Position Changes</h2><table><tr><th>Label</th><th>Asset</th><th>Change</th><th>Delta</th></tr><tr><td>0x6c851251</td><td></td><td>baseline_open_position</td><td class='n'></td></tr></table><h2>3. Current Whale Positions</h2><table><tr><th>Label</th><th>Asset</th><th>Side</th><th>Size</th><th>LiqDist</th></tr><tr><td></td><td></td><td></td><td class='n'></td><td class='n'></td></tr></table><h2>4. Market Context</h2><div class="mg"><div class="mc">
+<div class="ms">HYPE <span style="background:#6e7681;color:#fff;padding:1px 4px;border-radius:3px;font-size:9px">unknown</span></div>
+<div class="mp">$73.63</div>
+<div class="mch" style="color:#3fb950"></div>
+<div class="md">
+<span>OI:</span>
+<span>Fund:</span>
+<span>Vol:</span>
+<span>Mark:</span>
+<span>Oracle:</span>
+</div>
+<div class="mv">hyperliquid_perp | 2026-06-17T07:13:00Z</div>
+</div></div><h2>5. Source Health</h2><table><tr><th>Asset</th><th>Venue</th><th>Status</th><th>Message</th></tr><tr><td>BTC</td><td>binance_spot</td><td style="color:#f85149;font-weight:bold">failed</td><td>could not initialize &#x27;binance&#x27;</td></tr><tr><td>ETH</td><td>binance_spot</td><td style="color:#f85149;font-weight:bold">failed</td><td>could not initialize &#x27;binance&#x27;</td></tr><tr><td>SOL</td><td>binance_spot</td><td style="color:#f85149;font-weight:bold">failed</td><td>could not initialize &#x27;binance&#x27;</td></tr><tr><td>HYPE</td><td>hyperliquid_perp</td><td style="color:#3fb950;font-weight:bold">ok</td><td></td></tr></table><h2>6. Market Regime</h2><div class="empty">Market regime placeholder — requires derived inputs</div><h2>7. Watchlists</h2><div class="empty">No watchlists configured</div><h2>8. Alert Candidates</h2><div class="ac"><b></b> —  []</div><div class="ac"><b></b> —  []</div><h2>9. Event Journal</h2><div class="empty">No journal entries</div><h2>Feed Truth</h2>
+<table><tr><th>Category</th><th class='n'>Count</th></tr>
+<tr><td>Flash (live)</td><td class='n'>0</td></tr>
+<tr><td>News (live)</td><td class='n'>0</td></tr>
+<tr><td>Telegram (live)</td><td class='n'>0</td></tr>
+<tr><td>Cached</td><td class='n'>0</td></tr>
+<tr><td>Fixture</td><td class='n'>0</td></tr>
+<tr><td>Research Samples</td><td class='n'>0</td></tr>
+<tr><td>Duplicates Removed</td><td class='n'>0</td></tr>
+</table><div class="ftr">Generated 2026-06-17T07:13:00Z | W3v2 | no network | all data fixture</div></body></html>

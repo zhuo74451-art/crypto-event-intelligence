@@ -83,10 +83,30 @@
     {
       "id": 13,
       "title": "Regression + Live Run",
-      "status": "NOT_STARTED",
-      "detail": "Regression tests: 52/52 integration PASS, 54/54 adapters+file_lock PASS. Live run pending."
+      "status": "COMPLETED",
+      "detail": "Regression tests: 52/52 integration PASS, 54/54 adapters+file_lock PASS. Live-public no-send run: status=completed, BTC $65650 OK, ETH $1789 OK, SOL $73.49 OK, HYPE $73.61 OK, whale 1 position 2 alerts (non-baseline). Feed degraded expected (not wired). 0 errors. no_send=true."
     }
   ],
+  "live_run_result": {
+    "run_id": "os-79d88bdbb1fe",
+    "status": "completed",
+    "data_mode": "live-public",
+    "no_send": true,
+    "errors": 0,
+    "sources": {
+      "whale": "ok (1 position, 2 alerts)",
+      "BTC/USDT": "ok ($65650.0)",
+      "ETH/USDT": "ok ($1789.46)",
+      "SOL/USDT": "ok ($73.49)",
+      "HYPE": "ok ($73.6135)",
+      "feed": "degraded (not wired, expected)"
+    },
+    "whale_parse_error_count": 0,
+    "whale_real_position_count": 1,
+    "whale_baseline": false,
+    "whale_changes": 0,
+    "whale_alert_count": 2
+  },
   "test_results": {
     "integration_tests": {
       "total": 52,

@@ -1,0 +1,48 @@
+{
+  "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+  "ok": true,
+  "position_count": 1,
+  "positions": [
+    {
+      "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "coin": "ETH",
+      "signed_size": 40000.0,
+      "entry_price": 2265.44,
+      "mark_price": 1791.45,
+      "position_value_usd": 71656000.0,
+      "leverage": 20.0,
+      "unrealized_pnl_usd": -18961764.973209,
+      "liquidation_price": 1164.43111856,
+      "margin_mode": null,
+      "snapshot_time_utc": "2026-06-17T07:16:40Z",
+      "mark_price_source": "all_mids"
+    }
+  ],
+  "changes": [],
+  "alert_candidates": [
+    {
+      "alert_id": "w2:62ff91e6187c3d87",
+      "alert_type": "high_leverage",
+      "severity": "medium",
+      "coin": "ETH",
+      "label": "0x6c851251",
+      "address_short": "0x6c851251",
+      "message": "0x6c851251 HIGH LEVERAGE ETH: 20.0x",
+      "observed_value": 20.0,
+      "generated_at_utc": "2026-06-17T07:16:40Z"
+    },
+    {
+      "alert_id": "w2:c10bc44887a1312c",
+      "alert_type": "concentrated_exposure",
+      "severity": "medium",
+      "coin": "ETH",
+      "label": "0x6c851251",
+      "address_short": "0x6c851251",
+      "message": "0x6c851251 CONCENTRATED ETH: $71,656,000",
+      "observed_value": 71656000.0,
+      "generated_at_utc": "2026-06-17T07:16:40Z"
+    }
+  ],
+  "is_baseline": false,
+  "error": null
+}
