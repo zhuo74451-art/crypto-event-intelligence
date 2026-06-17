@@ -1,0 +1,40 @@
+{
+  "ticket": "W3_CURATED_READER_STATUS_CONSISTENCY_R04",
+  "branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "repair_base_commit": "6ec43b421dfc8b8798948d96855ac7a4ccb7dec8",
+  "tested_commit": "6dff1aff5c83d43c830ca935db3a51015dff782b",
+  "source_status_matrix": {
+    "ok": {"ok": true},
+    "degraded": {"ok": false},
+    "unavailable": {"ok": false}
+  },
+  "empty_batch": "status=ok, ok=true when HTTP 200 + zero items",
+  "http_unavailable": "status=unavailable, ok=false",
+  "stage_missing": "status=degraded, ok=false",
+  "non_json": "status=degraded, ok=false",
+  "partial_failure": "successful sources keep ok=true, aggregate curated_api degraded/ok=false",
+  "finite_validation": {
+    "nan_rejected": true,
+    "infinity_rejected": true,
+    "neg_infinity_rejected": true,
+    "zero_rejected": true,
+    "negative_rejected": true,
+    "bool_limit_rejected": true,
+    "bool_max_pages_rejected": true,
+    "bool_max_items_rejected": true,
+    "bool_max_response_bytes_rejected": true
+  },
+  "invalid_cursor_audit": "invalid cursor timestamp sets cursor_safe=false and records count in metadata.invalid_cursor_timestamp_count",
+  "test_results": {
+    "old": 150,
+    "new": 20,
+    "total": 170,
+    "passed": 170,
+    "failed": 0
+  },
+  "no_network_regression": true,
+  "no_runtime_data_committed": true,
+  "no_send": true,
+  "files_outside_owned_paths": [],
+  "w1_compatibility": "ss.get('ok', False) returns True for normal sources"
+}
