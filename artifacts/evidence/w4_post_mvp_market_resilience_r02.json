@@ -1,9 +1,9 @@
-{
+﻿{
   "ticket": "W4_MULTI_EXCHANGE_MARKET_RESILIENCE_R02",
   "branch": "workbench/post-mvp-market-resilience-v1",
   "source_branch": "workbench/mvpplus-open-source-adapters-v1",
   "source_sha": "b7672f87c5726d7c2312f94e23b8fd0994cb785f",
-  "tested_commit": "PLACEHOLDER_REPLACED_BY_COMMIT",
+  "tested_commit": "f9cf57290d0d707760180406dfc68c346c003a78",
   "capability_matrix": {
     "supported_venues": ["binance", "okx", "bybit", "hyperliquid"],
     "capability_keys": ["spot_ticker", "perp_ticker", "volume_24h", "open_interest",
