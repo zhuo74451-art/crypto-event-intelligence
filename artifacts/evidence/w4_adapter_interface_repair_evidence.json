@@ -1,7 +1,7 @@
 {
   "ticket": "W4_DELTA_ADAPTER_INTERFACE_REPAIR_R02",
-  "baseline_commit": "85df823a199d2e0ca9bde354687930cce5e7c497",
-  "previous_remote_head": "0125fe6674565bc9478213ff081ccf0ff17cac41",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "0125fe6674565bc9478213ff081ccf0ff17cac41",
   "tested_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516",
   "branch": "workbench/mvpplus-open-source-adapters-v1",
   "mode": "Delta Repair Only",
