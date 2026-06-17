@@ -1,0 +1,1543 @@
+{
+  "corpus_meta": {
+    "name": "Whale Replay Corpus V1",
+    "ticket": "W2_WHALE_REPLAY_CORPUS_R01",
+    "branch": "workbench/mvpplus-whale-prod-v2",
+    "repair_base_commit": "dba3460ce7d4f8a4b79290deaf4615407917246a",
+    "tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+    "domain_rules_version": "v2",
+    "generated_at_utc": "2026-06-17T10:00:00Z",
+    "description": "Machine-executable replay corpus for W2 Whale Domain. Each case injects deterministic previous state and current inputs, then asserts expected change types, directions, alerts, and risk flags. No network, no random, no system clock.",
+    "no_network": true,
+    "no_random": true,
+    "no_system_clock": true,
+    "size_change_threshold": 0.001,
+    "liq_distance_critical_pct": 5.0,
+    "high_leverage_min_x": 10.0,
+    "large_position_min_usd": 1000000,
+    "massive_position_min_usd": 5000000,
+    "large_increase_min_delta_usd": 500000,
+    "liquidation_narrowed_delta_threshold_pct": 0.5
+  },
+  "cases": [
+    {
+      "case_id": "C001",
+      "category": "baseline",
+      "description": "Fresh baseline long — existing position on first run must be baseline_open_position, not open_long",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "label": "Baseline Long Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": true,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "baseline_open_position"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position",
+        "open_long",
+        "open_short"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "First run with existing position. Must be baseline, not open_long. Position value 650K below large threshold, leverage exactly 10 (not >10)."
+    },
+    {
+      "case_id": "C002",
+      "category": "baseline",
+      "description": "Fresh baseline short — existing short on first run, direction=short",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "label": "Baseline Short Whale",
+          "coin": "ETH",
+          "signed_size": -10.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 18000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 103.6,
+          "liquidation_price": 2100.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": true,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "baseline_open_position"
+      ],
+      "expected_directions": [
+        "short"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position",
+        "open_long",
+        "open_short"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "First run short position. Short direction must be preserved through baseline. Small position value, no risk flags."
+    },
+    {
+      "case_id": "C003",
+      "category": "baseline_suppression",
+      "description": "Baseline large position must NOT produce large_new_position or R3_LARGE_POSITION_OPEN",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xcccccccccccccccccccccccccccccccccccccccc",
+          "label": "Baseline Large Whale",
+          "coin": "BTC",
+          "signed_size": 50.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 3250000.0,
+          "leverage": 8.0,
+          "unrealized_pnl_usd": 50000.0,
+          "liquidation_price": 55000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": true,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "baseline_open_position"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "3.25M position on baseline. Must not trigger R3 or large_new_position alert. Position-level alerts like concentrated_exposure do not apply (3.25M < 5M)."
+    },
+    {
+      "case_id": "C004",
+      "category": "increase",
+      "description": "Long increase — prev 5 BTC, curr 10 BTC",
+      "previous_snapshots": {
+        "0xdddddddddddddddddddddddddddddddddddddddd:BTC": {
+          "address": "0xdddddddddddddddddddddddddddddddddddddddd",
+          "label": "Increase Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 325000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 5000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xdddddddddddddddddddddddddddddddddddddddd",
+          "label": "Increase Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "increase_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position",
+        "large_increase",
+        "large_decrease"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Size increase from 5 to 10. Delta position value = 325K, below 500K large_increase threshold. No alerts expected."
+    },
+    {
+      "case_id": "C005",
+      "category": "reduce",
+      "description": "Long reduce — prev 15 BTC, curr 10 BTC",
+      "previous_snapshots": {
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:BTC": {
+          "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "label": "Reduce Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 15.0,
+          "absolute_size": 15.0,
+          "position_value_usd": 975000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 15000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "label": "Reduce Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "reduce_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_increase",
+        "large_decrease",
+        "large_new_position"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Size reduce from 15 to 10. Delta = 325K, below 500K threshold. No alerts."
+    },
+    {
+      "case_id": "C006",
+      "category": "increase",
+      "description": "Short increase — prev -5 ETH, curr -10 ETH",
+      "previous_snapshots": {
+        "0xffffffffffffffffffffffffffffffffffffffff:ETH": {
+          "address": "0xffffffffffffffffffffffffffffffffffffffff",
+          "label": "Short Increase Whale",
+          "coin": "ETH",
+          "direction": "short",
+          "signed_size": -5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 9000.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 51.8,
+          "liquidation_price": 2100.0,
+          "liquidation_distance_pct": 17.33,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xffffffffffffffffffffffffffffffffffffffff",
+          "label": "Short Increase Whale",
+          "coin": "ETH",
+          "signed_size": -10.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 18000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 103.6,
+          "liquidation_price": 2100.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "increase_short"
+      ],
+      "expected_directions": [
+        "short"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position",
+        "large_increase"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Short increase from -5 to -10. Direction must be short. Small position values."
+    },
+    {
+      "case_id": "C007",
+      "category": "reduce",
+      "description": "Short reduce — prev -15 ETH, curr -10 ETH",
+      "previous_snapshots": {
+        "0x1111111111111111111111111111111111111111:ETH": {
+          "address": "0x1111111111111111111111111111111111111111",
+          "label": "Short Reduce Whale",
+          "coin": "ETH",
+          "direction": "short",
+          "signed_size": -15.0,
+          "absolute_size": 15.0,
+          "position_value_usd": 27000.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 155.4,
+          "liquidation_price": 2100.0,
+          "liquidation_distance_pct": 17.33,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x1111111111111111111111111111111111111111",
+          "label": "Short Reduce Whale",
+          "coin": "ETH",
+          "signed_size": -10.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 18000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 103.6,
+          "liquidation_price": 2100.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "reduce_short"
+      ],
+      "expected_directions": [
+        "short"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_decrease",
+        "large_increase"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Short reduce from -15 to -10. Direction must be short."
+    },
+    {
+      "case_id": "C008",
+      "category": "exact_zero_close",
+      "description": "Exact-zero close long — prev 10 BTC, curr signed_size=0, must produce close_long with direction=long",
+      "previous_snapshots": {
+        "0x2222222222222222222222222222222222222222:BTC": {
+          "address": "0x2222222222222222222222222222222222222222",
+          "label": "Zero Close Long",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x2222222222222222222222222222222222222222",
+          "label": "Zero Close Long",
+          "coin": "BTC",
+          "signed_size": 0.0,
+          "entry_price": 0.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 0.0,
+          "leverage": 0.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": null,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "close_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "open_short",
+        "open_long",
+        "flip_long_to_short",
+        "flip_short_to_long"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Critical: signed_size=0 must use previous direction (long). extract_snapshot with signed_size=0 produces direction='short', but close direction must come from previous. Must NOT produce close_short."
+    },
+    {
+      "case_id": "C009",
+      "category": "exact_zero_close",
+      "description": "Exact-zero close short — prev -10 ETH, curr signed_size=0, must produce close_short with direction=short",
+      "previous_snapshots": {
+        "0x3333333333333333333333333333333333333333:ETH": {
+          "address": "0x3333333333333333333333333333333333333333",
+          "label": "Zero Close Short",
+          "coin": "ETH",
+          "direction": "short",
+          "signed_size": -10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 18000.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 103.6,
+          "liquidation_price": 2100.0,
+          "liquidation_distance_pct": 17.33,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x3333333333333333333333333333333333333333",
+          "label": "Zero Close Short",
+          "coin": "ETH",
+          "signed_size": 0.0,
+          "entry_price": 0.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 0.0,
+          "leverage": 0.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": null,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "close_short"
+      ],
+      "expected_directions": [
+        "short"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "open_long",
+        "flip_short_to_long"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Critical: signed_size=0, previous was short. Current direction would be 'long' (from signed_size=0>0? No, signed_size>0 is false, so current direction='short'). Must use previous direction, producing close_short."
+    },
+    {
+      "case_id": "C010",
+      "category": "disappeared",
+      "description": "Disappeared position — previous snapshot exists but key absent in current inputs must produce close",
+      "previous_snapshots": {
+        "0x4444444444444444444444444444444444444444:BTC": {
+          "address": "0x4444444444444444444444444444444444444444",
+          "label": "Disappeared Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "close_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Position exists in previous but not in current. Must produce close_long. current=None, previous retains full snapshot."
+    },
+    {
+      "case_id": "C011",
+      "category": "flip",
+      "description": "Long to short flip — prev 10 BTC, curr -5 BTC",
+      "previous_snapshots": {
+        "0x5555555555555555555555555555555555555555:BTC": {
+          "address": "0x5555555555555555555555555555555555555555",
+          "label": "Flip Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x5555555555555555555555555555555555555555",
+          "label": "Flip Whale",
+          "coin": "BTC",
+          "signed_size": -5.0,
+          "entry_price": 66000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 330000.0,
+          "leverage": 12.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": 68000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "flip_long_to_short"
+      ],
+      "expected_directions": [
+        "short"
+      ],
+      "expected_alert_types": [
+        "direction_flip",
+        "high_leverage",
+        "liquidation_critical"
+      ],
+      "forbidden_alert_types": [
+        "large_new_position"
+      ],
+      "expected_risk_flags": [
+        "R1_LIQ_DISTANCE_CRITICAL",
+        "R2_HIGH_LEVERAGE",
+        "R5_DIRECTION_FLIP"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 3,
+      "notes": "Flip from long 10 to short -5. Direction must be 'short'. High leverage (12x) and direction flip both triggered."
+    },
+    {
+      "case_id": "C012",
+      "category": "flip",
+      "description": "Short to long flip — prev -10 ETH, curr 5 ETH",
+      "previous_snapshots": {
+        "0x6666666666666666666666666666666666666666:ETH": {
+          "address": "0x6666666666666666666666666666666666666666",
+          "label": "Flip Short Whale",
+          "coin": "ETH",
+          "direction": "short",
+          "signed_size": -10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 18000.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 103.6,
+          "liquidation_price": 2100.0,
+          "liquidation_distance_pct": 17.33,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x6666666666666666666666666666666666666666",
+          "label": "Flip Short Whale",
+          "coin": "ETH",
+          "signed_size": 5.0,
+          "entry_price": 1790.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 8950.0,
+          "leverage": 3.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": 1700.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "flip_short_to_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [
+        "direction_flip"
+      ],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [
+        "R5_DIRECTION_FLIP"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 1,
+      "notes": "Flip from short -10 to long 5. Direction must be 'long'."
+    },
+    {
+      "case_id": "C013",
+      "category": "liquidation_narrowed",
+      "description": "Liquidation distance narrowed — same size, current closer to liq than prev, delta >0.5",
+      "previous_snapshots": {
+        "0x7777777777777777777777777777777777777777:BTC": {
+          "address": "0x7777777777777777777777777777777777777777",
+          "label": "Liq Narrow Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 58000.0,
+          "liquidation_distance_pct": 12.12,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x7777777777777777777777777777777777777777",
+          "label": "Liq Narrow Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 62000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "liquidation_distance_narrowed"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Prev liq=58000 → dist=12.12%. Curr liq=62000 → dist=6.06%. Delta=6.06-12.12=-6.06 < -0.5. Narrowed. Same size (10 BTC), no size change."
+    },
+    {
+      "case_id": "C014",
+      "category": "liquidation_widened",
+      "description": "Liquidation distance widened — must NOT trigger narrowed, must be NO_CHANGE (excluded from changes)",
+      "previous_snapshots": {
+        "0x8888888888888888888888888888888888888888:BTC": {
+          "address": "0x8888888888888888888888888888888888888888",
+          "label": "Liq Widen Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 62000.0,
+          "liquidation_distance_pct": 6.06,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x8888888888888888888888888888888888888888",
+          "label": "Liq Widen Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [],
+      "expected_directions": [],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [],
+      "expected_change_count": 0,
+      "expected_alert_count": 0,
+      "notes": "Prev liq=62000 → dist=6.06%. Curr liq=60000 → dist=9.09%. Distance widened (safer). Must NOT produce liquidation_distance_narrowed. No size change either. Change count must be 0 (no_change excluded by detect_all_changes)."
+    },
+    {
+      "case_id": "C015",
+      "category": "stale_snapshot",
+      "description": "Stale snapshot rejected — current timestamp older than previous",
+      "previous_snapshots": {
+        "0x9999999999999999999999999999999999999999:BTC": {
+          "address": "0x9999999999999999999999999999999999999999",
+          "label": "Stale Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 325000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 5000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-18T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x9999999999999999999999999999999999999999",
+          "label": "Stale Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "stale_snapshot_rejected"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Previous has snapshot_time=2026-06-18, current has 2026-06-17. Since current < previous, stale detection triggers. Current should be rejected."
+    },
+    {
+      "case_id": "C016",
+      "category": "missing_liquidation",
+      "description": "Missing liquidation price — both snapshots have null liq, normal increase_long still works",
+      "previous_snapshots": {
+        "0xaaaa111111111111111111111111111111111111:BTC": {
+          "address": "0xaaaa111111111111111111111111111111111111",
+          "label": "No Liq Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 325000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 5000.0,
+          "liquidation_price": null,
+          "liquidation_distance_pct": null,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xaaaa111111111111111111111111111111111111",
+          "label": "No Liq Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": null,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "increase_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "liquidation_critical"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Both snapshots have liquidation_price=null. Distance is None. Must not trigger liquidation_critical. Normal increase_long still detected."
+    },
+    {
+      "case_id": "C017",
+      "category": "high_leverage",
+      "description": "High leverage position — 15x > 10.0 threshold, must produce R2 and high_leverage alert",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xbbbb111111111111111111111111111111111111",
+          "label": "High Lev Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 15.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "open_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [
+        "high_leverage"
+      ],
+      "forbidden_alert_types": [
+        "large_new_position"
+      ],
+      "expected_risk_flags": [
+        "R2_HIGH_LEVERAGE"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 1,
+      "notes": "Open long with 15x leverage. Must trigger R2_HIGH_LEVERAGE flag and high_leverage alert. Position value 650K < 1M, no large_new_position."
+    },
+    {
+      "case_id": "C018",
+      "category": "concentrated_exposure",
+      "description": "Concentrated exposure — 10M USD single position, must produce R6 and alert",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xcccc111111111111111111111111111111111111",
+          "label": "Conc Exp Whale",
+          "coin": "BTC",
+          "signed_size": 150.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 10000000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 150000.0,
+          "liquidation_price": 50000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "open_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [
+        "concentrated_exposure",
+        "large_new_position"
+      ],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [
+        "R3_LARGE_POSITION_OPEN",
+        "R6_CONCENTRATED_ASSET"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 2,
+      "notes": "10M USD single BTC position. 10M >= 5M (MASSIVE_POSITION_USD). Must trigger R6 and concentrated_exposure alert."
+    },
+    {
+      "case_id": "C019",
+      "category": "jitter",
+      "description": "Size jitter below threshold — change 0.0005 <= 0.001 must be NO_CHANGE (excluded from list)",
+      "previous_snapshots": {
+        "0xdddd111111111111111111111111111111111111:BTC": {
+          "address": "0xdddd111111111111111111111111111111111111",
+          "label": "Jitter Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xdddd111111111111111111111111111111111111",
+          "label": "Jitter Whale",
+          "coin": "BTC",
+          "signed_size": 10.0005,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650032.5,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [],
+      "expected_directions": [],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_increase",
+        "large_decrease"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 0,
+      "expected_alert_count": 0,
+      "notes": "Size delta = 0.0005 <= SIZE_CHANGE_THRESHOLD (0.001). Same liquidation distance (both 60000 liq). Must produce NO_CHANGE, excluded from changes list."
+    },
+    {
+      "case_id": "C020",
+      "category": "multi_address_multi_coin",
+      "description": "Multi-address, multi-coin — 2 addresses, 2 coins, all open_long",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xeeee111111111111111111111111111111111111",
+          "label": "Multi AA",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        },
+        {
+          "address": "0xffff111111111111111111111111111111111111",
+          "label": "Multi BB",
+          "coin": "ETH",
+          "signed_size": -5.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 9000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 51.8,
+          "liquidation_price": 2100.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "open_long",
+        "open_short"
+      ],
+      "expected_directions": [
+        "long",
+        "short"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [],
+      "expected_change_count": 2,
+      "expected_alert_count": 0,
+      "notes": "Two different addresses with different coins. Address A opens BTC long, address B opens ETH short. Both detected independently."
+    },
+    {
+      "case_id": "C021",
+      "category": "same_address_multi_coin",
+      "description": "Same address, multiple coins — one address holds BTC long and ETH short",
+      "previous_snapshots": {
+        "0xabcd111111111111111111111111111111111111:BTC": {
+          "address": "0xabcd111111111111111111111111111111111111",
+          "label": "Multi Coin Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 325000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 5000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        },
+        "0xabcd111111111111111111111111111111111111:ETH": {
+          "address": "0xabcd111111111111111111111111111111111111",
+          "label": "Multi Coin Whale",
+          "coin": "ETH",
+          "direction": "short",
+          "signed_size": -3.0,
+          "absolute_size": 3.0,
+          "position_value_usd": 5400.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 31.08,
+          "liquidation_price": 2100.0,
+          "liquidation_distance_pct": 17.33,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xabcd111111111111111111111111111111111111",
+          "label": "Multi Coin Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        },
+        {
+          "address": "0xabcd111111111111111111111111111111111111",
+          "label": "Multi Coin Whale",
+          "coin": "ETH",
+          "signed_size": -5.0,
+          "entry_price": 1800.0,
+          "mark_price": 1789.64,
+          "position_value_usd": 9000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 51.8,
+          "liquidation_price": 2100.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "increase_long",
+        "increase_short"
+      ],
+      "expected_directions": [
+        "long",
+        "short"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [],
+      "expected_change_count": 2,
+      "expected_alert_count": 0,
+      "notes": "Same address with BTC long (5→10) and ETH short (-3→-5). Two independent position keys. Both increases."
+    },
+    {
+      "case_id": "C022",
+      "category": "same_coin_multi_address",
+      "description": "Same coin, multiple addresses — 2 addresses both hold BTC",
+      "previous_snapshots": {
+        "0xaaaa222222222222222222222222222222222222:BTC": {
+          "address": "0xaaaa222222222222222222222222222222222222",
+          "label": "BTC Holder A",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 325000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 5000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        },
+        "0xbbbb222222222222222222222222222222222222:BTC": {
+          "address": "0xbbbb222222222222222222222222222222222222",
+          "label": "BTC Holder B",
+          "coin": "BTC",
+          "direction": "short",
+          "signed_size": -5.0,
+          "absolute_size": 5.0,
+          "position_value_usd": 325000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 8.0,
+          "unrealized_pnl_usd": -5000.0,
+          "liquidation_price": 68000.0,
+          "liquidation_distance_pct": 3.03,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0xaaaa222222222222222222222222222222222222",
+          "label": "BTC Holder A",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        },
+        {
+          "address": "0xbbbb222222222222222222222222222222222222",
+          "label": "BTC Holder B",
+          "coin": "BTC",
+          "signed_size": -3.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 195000.0,
+          "leverage": 8.0,
+          "unrealized_pnl_usd": -3000.0,
+          "liquidation_price": 68000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "increase_long",
+        "reduce_short"
+      ],
+      "expected_directions": [
+        "long",
+        "short"
+      ],
+      "expected_alert_types": [
+        "high_leverage",
+        "liquidation_critical"
+      ],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [
+        "R1_LIQ_DISTANCE_CRITICAL"
+      ],
+      "expected_change_count": 2,
+      "expected_alert_count": 2,
+      "notes": "Two addresses both holding BTC. Address A increases long 5→10. Address B reduces short (-5→-3). Address B has liq_dist=3.03% <= 5%, so R1 liq critical triggers. That alert comes from snapshot, not change."
+    },
+    {
+      "case_id": "C023",
+      "category": "no_previous_not_baseline",
+      "description": "No previous snapshot, not a baseline run — must produce open_long/open_short",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xcccc222222222222222222222222222222222222",
+          "label": "Fresh Open",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "open_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "baseline_open_position"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "No previous snapshot and not a baseline run. Must produce open_long, not baseline_open_position."
+    },
+    {
+      "case_id": "C024",
+      "category": "zero_size_baseline",
+      "description": "Zero-size input on baseline — must produce NO_CHANGE, skipped from changes",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xdddd222222222222222222222222222222222222",
+          "label": "Zero Baseline",
+          "coin": "BTC",
+          "signed_size": 0.0,
+          "entry_price": 0.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 0.0,
+          "leverage": 0.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": null,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": true,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [],
+      "expected_directions": [],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "baseline_open_position",
+        "open_long",
+        "open_short"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 0,
+      "expected_alert_count": 0,
+      "notes": "Zero-size position on baseline. Must NOT produce baseline_open_position. detect_change returns NO_CHANGE, which is excluded from changes list."
+    },
+    {
+      "case_id": "C025",
+      "category": "position_value_boundary",
+      "description": "Position value just below LARGE_POSITION_USD — no R3, no large_new_position",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xeeee222222222222222222222222222222222222",
+          "label": "Boundary Whale",
+          "coin": "BTC",
+          "signed_size": 15.38,
+          "entry_price": 64999.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 999999.99,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 5000.0,
+          "liquidation_price": 55000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "open_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position",
+        "concentrated_exposure"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Position value 999,999.99 < 1,000,000. Just below LARGE_POSITION_USD threshold. Must NOT trigger R3 or large_new_position."
+    },
+    {
+      "case_id": "C026",
+      "category": "large_open",
+      "description": "Large new position — prev=None, position_value=2M >= 1M, must trigger R3 and large_new_position",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0xffff222222222222222222222222222222222222",
+          "label": "Large Open Whale",
+          "coin": "BTC",
+          "signed_size": 30.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 2000000.0,
+          "leverage": 8.0,
+          "unrealized_pnl_usd": 30000.0,
+          "liquidation_price": 55000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "open_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [
+        "large_new_position"
+      ],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [
+        "R3_LARGE_POSITION_OPEN"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 1,
+      "notes": "2M >= 1M threshold. open_long with sufficient value triggers R3 and large_new_position alert."
+    },
+    {
+      "case_id": "C027",
+      "category": "baseline_suppression",
+      "description": "Baseline large position must NOT trigger R3 or large_new_position alert",
+      "previous_snapshots": {},
+      "current_inputs": [
+        {
+          "address": "0x1111333333333333333333333333333333333333",
+          "label": "Baseline Large Again",
+          "coin": "BTC",
+          "signed_size": 30.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 2000000.0,
+          "leverage": 8.0,
+          "unrealized_pnl_usd": 30000.0,
+          "liquidation_price": 55000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": true,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "baseline_open_position"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "2M position on baseline. Must produce baseline_open_position, NOT open_long. Must NOT trigger R3 or large_new_position."
+    },
+    {
+      "case_id": "C028",
+      "category": "post_close",
+      "description": "Close a large position — close_long with prev value >= 1M, R4 triggers",
+      "previous_snapshots": {
+        "0x2222333333333333333333333333333333333333:BTC": {
+          "address": "0x2222333333333333333333333333333333333333",
+          "label": "Close Large",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 20.0,
+          "absolute_size": 20.0,
+          "position_value_usd": 1300000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 20000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x2222333333333333333333333333333333333333",
+          "label": "Close Large",
+          "coin": "BTC",
+          "signed_size": 0.0,
+          "entry_price": 0.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 0.0,
+          "leverage": 0.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": null,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "close_long"
+      ],
+      "expected_directions": [
+        "long"
+      ],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "large_new_position",
+        "open_long",
+        "open_short"
+      ],
+      "expected_risk_flags": [
+        "R4_LARGE_POSITION_CLOSE"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 0,
+      "notes": "Close 20 BTC position valued at 1.3M. Must produce close_long with direction=long. R4 triggers because prev value >= 1M. No specific alert type for close (alert system has no 'large_close' alert)."
+    },
+    {
+      "case_id": "C029",
+      "category": "flip_high_leverage",
+      "description": "Flip with concurrent high leverage — flip_long_to_short with 15x leverage",
+      "previous_snapshots": {
+        "0x3333333333333333333333333333333333333333:BTC": {
+          "address": "0x3333333333333333333333333333333333333333",
+          "label": "Flip HiLev",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 60000.0,
+          "liquidation_distance_pct": 9.09,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x3333333333333333333333333333333333333333",
+          "label": "Flip HiLev",
+          "coin": "BTC",
+          "signed_size": -8.0,
+          "entry_price": 66000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 528000.0,
+          "leverage": 15.0,
+          "unrealized_pnl_usd": 0.0,
+          "liquidation_price": 68000.0,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [
+        "flip_long_to_short"
+      ],
+      "expected_directions": [
+        "short"
+      ],
+      "expected_alert_types": [
+        "direction_flip",
+        "high_leverage",
+        "liquidation_critical"
+      ],
+      "forbidden_alert_types": [],
+      "expected_risk_flags": [
+        "R1_LIQ_DISTANCE_CRITICAL",
+        "R2_HIGH_LEVERAGE",
+        "R5_DIRECTION_FLIP"
+      ],
+      "expected_change_count": 1,
+      "expected_alert_count": 3,
+      "notes": "Flip long→short with 15x leverage. Both direction_flip and high_leverage alerts must fire. Two risk flags."
+    },
+    {
+      "case_id": "C030",
+      "category": "invalid_liquidation",
+      "description": "Negative/invalid liquidation distance must NOT trigger liquidation_critical",
+      "previous_snapshots": {
+        "0x4444333333333333333333333333333333333333:BTC": {
+          "address": "0x4444333333333333333333333333333333333333",
+          "label": "Bad Liq Whale",
+          "coin": "BTC",
+          "direction": "long",
+          "signed_size": 10.0,
+          "absolute_size": 10.0,
+          "position_value_usd": 650000.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": 68000.0,
+          "liquidation_distance_pct": -3.03,
+          "snapshot_time_utc": "2026-06-16T00:00:00Z"
+        }
+      },
+      "current_inputs": [
+        {
+          "address": "0x4444333333333333333333333333333333333333",
+          "label": "Bad Liq Whale",
+          "coin": "BTC",
+          "signed_size": 10.0,
+          "entry_price": 65000.0,
+          "mark_price": 66000.0,
+          "position_value_usd": 650000.0,
+          "leverage": 9.9,
+          "unrealized_pnl_usd": 10000.0,
+          "liquidation_price": null,
+          "snapshot_time_utc": "2026-06-17T00:00:00Z"
+        }
+      ],
+      "is_baseline_run": false,
+      "detected_at_utc": "2026-06-17T00:00:00Z",
+      "expected_change_types": [],
+      "expected_directions": [],
+      "expected_alert_types": [],
+      "forbidden_alert_types": [
+        "liquidation_critical"
+      ],
+      "expected_risk_flags": [],
+      "expected_change_count": 0,
+      "expected_alert_count": 0,
+      "notes": "Previous has negative liq dist (-3.03%, liq > mark for long). Current has None liq. Same size (10 BTC). Liq delta would be None - (-3.03) = None (cannot compute). Must NOT trigger narrowed or critical. NO_CHANGE expected."
+    }
+  ]
+}

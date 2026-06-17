@@ -1,0 +1,86 @@
+{
+  "ticket": "W2_WHALE_REPLAY_CORPUS_R01",
+  "branch": "workbench/mvpplus-whale-prod-v2",
+  "repair_base_commit": "dba3460ce7d4f8a4b79290deaf4615407917246a",
+  "tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+  "corpus_path": "tests/mvpplus/whale_domain/fixtures/whale_replay_corpus_v1.json",
+  "corpus_case_count": 30,
+  "case_ids": [
+    "C001", "C002", "C003", "C004", "C005", "C006", "C007", "C008", "C009", "C010",
+    "C011", "C012", "C013", "C014", "C015", "C016", "C017", "C018", "C019", "C020",
+    "C021", "C022", "C023", "C024", "C025", "C026", "C027", "C028", "C029", "C030"
+  ],
+  "case_categories": {
+    "baseline": ["C001", "C002"],
+    "baseline_suppression": ["C003", "C027"],
+    "increase": ["C004", "C006"],
+    "reduce": ["C005", "C007"],
+    "exact_zero_close": ["C008", "C009"],
+    "disappeared": ["C010"],
+    "flip": ["C011", "C012", "C029"],
+    "liquidation_narrowed": ["C013"],
+    "liquidation_widened": ["C014"],
+    "stale_snapshot": ["C015"],
+    "missing_liquidation": ["C016"],
+    "high_leverage": ["C017"],
+    "concentrated_exposure": ["C018"],
+    "jitter": ["C019"],
+    "multi_address_multi_coin": ["C020"],
+    "same_address_multi_coin": ["C021"],
+    "same_coin_multi_address": ["C022"],
+    "no_previous_not_baseline": ["C023"],
+    "zero_size_baseline": ["C024"],
+    "position_value_boundary": ["C025"],
+    "large_open": ["C026"],
+    "post_close": ["C028"],
+    "invalid_liquidation": ["C030"]
+  },
+  "test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/whale_domain/test_whale_domain.py tests/mvpplus/whale_domain/test_whale_replay_corpus.py -v",
+    "python -X utf8 -m pytest tests/mvpplus/whale_domain -v"
+  ],
+  "tests": {
+    "total": 128,
+    "collected": 128,
+    "passed": 127,
+    "failed": 0,
+    "skipped": 1
+  },
+  "original_tests_preserved": {
+    "total": 85,
+    "passed": 84,
+    "skipped": 1,
+    "unchanged": true
+  },
+  "corpus_tests": {
+    "runner_total": 43,
+    "schema_tests": 3,
+    "corpus_case_tests": 30,
+    "edge_case_tests": 10,
+    "passed": 43
+  },
+  "domain_source_modified": false,
+  "domain_bugs_found": null,
+  "fix_summary": "No domain bugs were discovered. All corpus expectation mismatches were data errors in the corpus itself (leverage threshold confusion between R2 strict >10.0 and alert >=10.0; missing liquidation_critical expectation for flip cases with <5% liq distance; missing R3 for large open; missing high_leverage for leverage=10.0).",
+  "forbidden_capability_scan": {
+    "no_network": true,
+    "no_credentials": true,
+    "no_send": true,
+    "no_wallet": true
+  },
+  "files_outside_owned_paths": [],
+  "modified_files": [
+    "tests/mvpplus/whale_domain/fixtures/whale_replay_corpus_v1.json",
+    "tests/mvpplus/whale_domain/test_whale_replay_corpus.py",
+    "docs/whale_domain/WHALE_REPLAY_CORPUS_V1.md",
+    "artifacts/evidence/w2_whale_replay_corpus_r01.json"
+  ],
+  "limitations": [
+    "Corpus data is synthetic — may not reflect all real market edge cases",
+    "No Integration or Provider layers exercised",
+    "Alert threshold mismatch between R2 (>10.0) and high_leverage (>=10.0) is known but not fixed (separate ticket needed)",
+    "Corpus does not test Telegram feed behavior (fixture is empty by design)",
+    "Entity profile resolution not covered (uses static KNOWN_ENTITIES list)"
+  ],
+  "git_status": "clean"
+}
