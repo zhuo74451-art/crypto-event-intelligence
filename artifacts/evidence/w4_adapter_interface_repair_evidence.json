@@ -1,0 +1,163 @@
+{
+  "ticket": "W4_DELTA_ADAPTER_INTERFACE_REPAIR_R02",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "a703c49ad348224c2a7f29731523bbb6bb13aaea",
+  "tested_commit": "a1370c86deeb5942af9b7612a64441fc58026859",
+  "branch": "workbench/mvpplus-open-source-adapters-v1",
+  "mode": "Delta Repair Only",
+  "package_versions": {
+    "httpx": "0.28.1",
+    "hyperliquid": "0.4.66",
+    "ccxt": "4.5.59"
+  },
+  "license_checks": "docs/adapters/THIRD_PARTY_ADAPTER_MANIFEST.json",
+  "repair_summary": "Replaced generic hardcoded Hyperliquid fetch API with five parameterized read-only methods; added Ethereum address/coin/time-range validation; separated SDK vs raw HTTP provenance reporting; embedded AdapterHealth in every AdapterResult; added CCXT bounded timeout/kwargs/normalized dicts; separated HTTPX connect/read/write/pool timeouts; fixed CCXT capability mapping (camelCase has key vs snake_case method name).",
+  "unit_test_command": "python -m unittest discover -s tests/mvpplus/adapters -v",
+  "unit_test_count": 86,
+  "unit_test_passed": 86,
+  "unit_test_failed": 0,
+  "unit_test_skipped": 0,
+  "import_smoke_result": "PASS",
+  "forbidden_capability_scan": "PASS (verified no wallet/exchange/signing/order imports in adapter code)",
+  "probe_generated_at_utc": "2026-06-17T06:13:20Z",
+  "data_mode": "live",
+  "no_credentials": true,
+  "timeout_seconds": 30.0,
+  "max_attempts": 3,
+  "ccxt_live_probe": {
+    "exchange": "binance",
+    "operation": "ticker",
+    "symbol": "BTC/USDT",
+    "ok": true,
+    "latency_ms": 4465.9,
+    "health_available": true,
+    "provenance_source": "ccxt",
+    "last": 65831.99,
+    "bid": 65831.99,
+    "ask": 65832.0,
+    "has_bid_field": true,
+    "has_ask_field": true
+  },
+  "hyperliquid_sdk_probe": {
+    "operation": "fetch_all_mids",
+    "ok": true,
+    "latency_ms": 1431.5,
+    "asset_count": 866,
+    "provenance_source": "sdk",
+    "health_available": true
+  },
+  "previous_live_probes": {
+    "note": "R03/R04 earlier probes preserved for reference. R04 used SYNTHETIC_KEYS address incorrectly labeled as public watchlist — corrected in R05 with real whitelist address from get_whitelist().",
+    "meta_probe": {
+      "operation": "fetch_meta",
+      "method": "sdk",
+      "status": "OK",
+      "latency_ms": 219.4,
+      "health_available": true
+    },
+    "raw_http_probe": {
+      "operation": "fetch_all_mids",
+      "method": "raw_http_fallback",
+      "status": "OK",
+      "latency_ms": 517.9,
+      "asset_count": 866,
+      "health_available": true
+    },
+    "funding_history_probe": {
+      "operation": "fetch_funding_history",
+      "coin": "BTC",
+      "status": "OK",
+      "latency_ms": 213.8,
+      "funding_count": 1
+    },
+    "r04_synthetic_keys_correction": "watchlist_clearinghouse_probe from R04 removed — address was SYNTHETIC_KEYS, not public watchlist"
+  },
+  "validation_coverage": {
+    "ethereum_address_format": "tested — valid hex, mixed-case, empty, short, no-prefix, non-string cases",
+    "non_empty_coin": "tested — valid, empty, non-string cases",
+    "integer_time_range": "tested — valid range, negative start/end, start>end, equal, non-integer",
+    "start_less_equal_end": "tested — start>end rejected, equal accepted"
+  },
+  "mocked_test_coverage": {
+    "fetch_all_mids": true,
+    "fetch_meta": true,
+    "fetch_clearinghouse_state": "valid address + invalid address + SDK fallback tests",
+    "fetch_spot_clearinghouse_state": "invalid address rejection",
+    "fetch_funding_history": "empty coin, negative start, start>end, valid with/without end, SDK fallback"
+  },
+  "ccxt_improvements": {
+    "bounded_timeout": "clamped to [1.0, 60.0]s, default 15.0s",
+    "operation_kwargs": "kwargs passed to ticker/OI/funding_rate; OHLCV uses positional timeframe/limit",
+    "normalized_dicts": "ticker, OHLCV, OI, funding rate each normalized to stable adapter-owned dicts",
+    "raw_preserved": "raw CCXT data preserved as _raw key inside each normalized record",
+    "capability_mapping": "explicit OPERATION_MAP separates method_name (snake_case) from capability_key (camelCase); _check_capability validates method exists AND has[key] is true/'emulated'; false/None/missing → unsupported_capability"
+  },
+  "capability_mapping": {
+    "fetchTicker": {
+      "method": "fetch_ticker",
+      "capability": "fetchTicker"
+    },
+    "fetchOHLCV": {
+      "method": "fetch_ohlcv",
+      "capability": "fetchOHLCV"
+    },
+    "fetchOpenInterest": {
+      "method": "fetch_open_interest",
+      "capability": "fetchOpenInterest"
+    },
+    "fetchFundingRate": {
+      "method": "fetch_funding_rate",
+      "capability": "fetchFundingRate"
+    },
+    "policy": "true or 'emulated' → allowed; false/None/missing → unsupported_capability"
+  },
+  "httpx_improvements": {
+    "connect_timeout": "10.0s (clamped [0.5, 120.0])",
+    "read_timeout": "30.0s (clamped [1.0, 120.0])",
+    "write_timeout": "10.0s (clamped [0.5, 120.0])",
+    "pool_timeout": "5.0s (clamped [0.5, 30.0])",
+    "max_retries": "3 (clamped [1, 10])",
+    "host_allowlist_preserved": true
+  },
+  "modified_files": [
+    "market_radar/external_adapters/adapter_models.py",
+    "market_radar/external_adapters/ccxt_public_market_adapter.py",
+    "market_radar/external_adapters/httpx_transport.py",
+    "market_radar/external_adapters/hyperliquid_public_adapter.py",
+    "tests/mvpplus/adapters/test_ccxt_adapter.py",
+    "tests/mvpplus/adapters/test_httpx_transport.py",
+    "tests/mvpplus/adapters/test_hyperliquid_adapter.py",
+    "artifacts/evidence/w4_adapter_interface_repair_evidence.json"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "Hyperliquid SDK Info(skip_ws=True) requires websocket dependency — may fail in minimal environments (unchanged from baseline)",
+    "CCXT 4.5.59 shadows import when ccxt subpackage exists in project (unchanged from baseline)",
+    "Only 3 exchanges in allowlist (binance, okx, bybit) (unchanged from baseline)",
+    "AdapterHealth uses __post_init__ auto-population — health is present on all AdapterResult instances"
+  ],
+  "clean_status": "All 86 unit tests pass (0 failed, 0 skipped). Live probes: CCXT Binance BTC/USDT ticker OK (last=65831.99, provenance=ccxt, health_available=true); whitelist clearinghouseState OK (1 real position found, address from get_whitelist()); Hyperliquid SDK allMids OK (866 assets). data_mode=live. No wallet/exchange/signing/order imports. No zero-address or BTC hardcoding.",
+  "generated_at_utc": "2026-06-17T06:13:20Z",
+  "whitelist_clearinghouse_probe": {
+    "operation": "fetch_clearinghouse_state",
+    "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+    "address_source": "market_radar/l1_hyperliquid_provider/address_universe.py :: get_whitelist()",
+    "source_classification": "legacy_project_whitelist",
+    "ok": true,
+    "latency_ms": 3541.4,
+    "health_available": true,
+    "provenance_source": "raw_http_fallback",
+    "has_asset_positions": true,
+    "position_count": 1,
+    "response_keys": [
+      "marginSummary",
+      "crossMarginSummary",
+      "crossMaintenanceMarginUsed",
+      "withdrawable",
+      "assetPositions",
+      "time"
+    ],
+    "zero_positions": false,
+    "no_credentials": true
+  }
+}

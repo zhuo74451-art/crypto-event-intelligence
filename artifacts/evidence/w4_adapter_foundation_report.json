@@ -1,0 +1,70 @@
+{
+  "ticket": "W4_DELTA_MISSING_ADAPTER_LANE_R01",
+  "baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "implementation_commit": "85df823a199d2e0ca9bde354687930cce5e7c497",
+  "final_commit": "85df823a199d2e0ca9bde354687930cce5e7c497",
+  "branch": "workbench/mvpplus-open-source-adapters-v1",
+  "package_versions": {
+    "httpx": "0.28.1",
+    "hyperliquid": "0.4.66",
+    "ccxt": "4.5.59"
+  },
+  "license_checks": "docs/adapters/THIRD_PARTY_ADAPTER_MANIFEST.json",
+  "unit_test_command": "python -m pytest tests/mvpplus/adapters/ -v",
+  "unit_test_count": 32,
+  "unit_test_passed": 32,
+  "unit_test_failed": 0,
+  "import_smoke_result": "PASS",
+  "forbidden_capability_scan": "PASS (script at scripts/mvpplus/adapters/scan_forbidden_capabilities.py)",
+  "live_probe_mode": "one-shot bounded public data only",
+  "hyperliquid_sdk_result": {
+    "operation": "allMids",
+    "status": "OK",
+    "latency_ms": 297
+  },
+  "hyperliquid_raw_fallback_result": {
+    "operation": "allMids",
+    "status": "OK",
+    "latency_ms": 985
+  },
+  "ccxt_result": {
+    "exchange": "binance",
+    "symbol": "BTC/USDT",
+    "operation": "ticker",
+    "status": "OK",
+    "latency_ms": 4860
+  },
+  "timeout_seconds": 30,
+  "max_retries": 3,
+  "retriable_statuses": [
+    429,
+    500,
+    502,
+    503,
+    504
+  ],
+  "modified_files": [
+    "docs/adapters/THIRD_PARTY_ADAPTER_MANIFEST.json",
+    "market_radar/external_adapters/__init__.py",
+    "market_radar/external_adapters/adapter_models.py",
+    "market_radar/external_adapters/ccxt_public_market_adapter.py",
+    "market_radar/external_adapters/httpx_transport.py",
+    "market_radar/external_adapters/hyperliquid_public_adapter.py",
+    "requirements/mvpplus-adapters.txt",
+    "scripts/mvpplus/adapters/scan_forbidden_capabilities.py",
+    "tests/mvpplus/adapters/__init__.py",
+    "tests/mvpplus/adapters/test_ccxt_adapter.py",
+    "tests/mvpplus/adapters/test_httpx_transport.py",
+    "tests/mvpplus/adapters/test_hyperliquid_adapter.py",
+    "tests/mvpplus/adapters/test_import_smoke.py"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "Hyperliquid SDK Info(skip_ws=True) requires websocket dependency \u2014 may fail in minimal environments",
+    "CCXT 4.5.59 shadows import when ccxt subpackage exists in project \u2014 resolved via importlib.import_module",
+    "CCXT Binance ticker latency (~4.9s) includes rate limiting delay",
+    "Only 3 exchanges in allowlist (binance, okx, bybit)",
+    "No HYPE venue routing \u2014 out of scope for this Lane"
+  ],
+  "generated_at_utc": "2026-06-17T03:06:45Z"
+}
