@@ -9,7 +9,7 @@
   },
   "baseline_commit": "dba3460ce7d4f8a4b79290deaf4615407917246a",
   "previous_remote_head": "dba3460ce7d4f8a4b79290deaf4615407917246a",
-  "tested_commit": "4d433405eb9b92b6b5d048a79a54a6a6c6073b7e",
+  "tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
   "branch": "workbench/mvpplus-whale-prod-v2",
   "source_legacy_references": [
     "dc426b1 market_radar/l2_whale_engine/change_detector.py",
