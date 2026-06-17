@@ -16,6 +16,14 @@ from typing import Any, Optional
 
 from market_radar.external_adapters.adapter_models import AdapterResult, AdapterError, AdapterProvenance
 
+# Use Adapter-owned import resolver instead of bare ``import ccxt``.
+# This protects against hyperliquid.ccxt shadowing ``sys.modules['ccxt']``.
+from market_radar.external_adapters.import_resolver import (
+    resolve_real_ccxt,
+    ccxt_resolution_error,
+    CcxtResolutionError,
+)
+
 ALLOWLISTED_EXCHANGES = {"binance", "okx", "bybit"}
 
 SUPPORTED_OPERATIONS = {"ticker", "ohlcv", "open_interest", "funding_rate"}
@@ -130,30 +138,42 @@ class CcxtPublicMarketAdapter:
     def __init__(self, exchange_timeout: float = DEFAULT_EXCHANGE_TIMEOUT):
         self._exchange_timeout = max(1.0, min(exchange_timeout, 60.0))
         self._ccxt_available: Optional[bool] = None
+        self._ccxt_resolution_error: Optional[str] = None
         self._exchanges: dict[str, Any] = {}
 
     def _check_ccxt(self) -> bool:
+        """Check real CCXT availability via Adapter-owned resolver.
+
+        Never uses bare ``import ccxt`` — always goes through
+        ``resolve_real_ccxt()`` which is immune to ``hyperliquid.ccxt``
+        shadowing.
+        """
         if self._ccxt_available is not None:
             return self._ccxt_available
         try:
-            import ccxt  # noqa: F401
+            resolve_real_ccxt()
             self._ccxt_available = True
-        except ImportError:
+        except CcxtResolutionError as e:
             self._ccxt_available = False
+            self._ccxt_resolution_error = str(e)
         return self._ccxt_available
 
     def _get_exchange(self, exchange_id: str) -> Any:
         if exchange_id in self._exchanges:
             return self._exchanges[exchange_id]
         try:
-            import ccxt
-            ex_class = getattr(ccxt, exchange_id)
+            ccxt_mod = resolve_real_ccxt()
+            ex_class = getattr(ccxt_mod, exchange_id)
             ex = ex_class({
                 "enableRateLimit": True,
                 "timeout": int(self._exchange_timeout * 1000),  # ccxt expects ms
             })
             self._exchanges[exchange_id] = ex
             return ex
+        except CcxtResolutionError as e:
+            self._ccxt_available = False
+            self._ccxt_resolution_error = str(e)
+            return None
         except (AttributeError, ImportError) as e:
             return None
 
@@ -193,9 +213,11 @@ class CcxtPublicMarketAdapter:
         """
 
         if not self._check_ccxt():
+            err_code = "ccxt_import_resolution_failed" if self._ccxt_resolution_error else "dependency_missing"
+            err_msg = self._ccxt_resolution_error or "ccxt package not installed"
             return AdapterResult(
                 ok=False,
-                error=AdapterError("dependency_missing", "ccxt package not installed"),
+                error=AdapterError(err_code, err_msg),
                 provenance=AdapterProvenance(source="unavailable", method=operation, healthy=False),
             )
 

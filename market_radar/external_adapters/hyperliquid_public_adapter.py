@@ -82,6 +82,38 @@ class HyperliquidPublicAdapter:
         self._transport = transport or HttpxTransport()
         self._sdk_available: Optional[bool] = None
         self._sdk_info: Optional[Any] = None
+        self._saved_ccxt: Any = None
+
+    # ── Import isolation helpers ──
+
+    def _save_ccxt(self) -> None:
+        """Snapshot current sys.modules['ccxt'] if it's the real third-party CCXT.
+
+        The hyperliquid SDK's ``__init__.py`` overrides ``sys.modules['ccxt']``
+        with its own ``hyperliquid.ccxt`` shim.  We snapshot the real module
+        before importing hyperliquid so we can restore it after.
+        """
+        import sys as _sys
+        existing = _sys.modules.get("ccxt")
+        if existing is not None:
+            name = getattr(existing, "__name__", "")
+            fpath = getattr(existing, "__file__", "")
+            if "hyperliquid" not in fpath.replace("\\", "/").split("/") and name == "ccxt":
+                self._saved_ccxt = existing
+
+    def _restore_ccxt(self) -> None:
+        """Restore the real ccxt in sys.modules if hyperliquid shadowed it.
+
+        Called right after any operation that imports hyperliquid.
+        The restoration is scoped to this adapter instance and leaves no
+        global order dependency for callers.
+        """
+        import sys as _sys
+        if self._saved_ccxt is not None:
+            current = _sys.modules.get("ccxt")
+            current_name = getattr(current, "__name__", "") if current else ""
+            if current_name != "ccxt" or "hyperliquid" in str(getattr(current, "__file__", "")):
+                _sys.modules["ccxt"] = self._saved_ccxt
 
     # ── Internal helpers ──
 
@@ -89,12 +121,15 @@ class HyperliquidPublicAdapter:
         """Check whether the hyperliquid SDK is installed and importable."""
         if self._sdk_available is not None:
             return self._sdk_available
+        self._save_ccxt()
         try:
             import hyperliquid  # noqa: F401
             from hyperliquid.info import Info  # noqa: F401
             self._sdk_available = True
         except ImportError:
             self._sdk_available = False
+        finally:
+            self._restore_ccxt()
         return self._sdk_available
 
     def _get_info(self) -> Optional[Any]:
@@ -103,6 +138,7 @@ class HyperliquidPublicAdapter:
             return None
         if self._sdk_info is not None:
             return self._sdk_info
+        self._save_ccxt()
         try:
             from hyperliquid.info import Info
             self._sdk_info = Info(skip_ws=True)
@@ -110,6 +146,8 @@ class HyperliquidPublicAdapter:
         except Exception:
             self._sdk_available = False
             return None
+        finally:
+            self._restore_ccxt()
 
     def _sdk_call(self, method_name: str, *args: Any) -> Optional[dict]:
         """Call *method_name* on the Info SDK, returning a result dict or None."""
