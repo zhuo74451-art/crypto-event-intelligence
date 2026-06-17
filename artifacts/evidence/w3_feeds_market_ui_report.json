@@ -1,0 +1,95 @@
+{
+  "report_type": "w3_feeds_market_ui_evidence",
+  "version": "v2",
+  "generated_at_utc": "2026-06-17T03:00:46Z",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+  "branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "modified_files": [
+    "market_radar/intelligence_feed/models.py",
+    "market_radar/intelligence_feed/feed_loader.py",
+    "market_radar/intelligence_feed/truth_audit.py",
+    "market_radar/market_view/models.py",
+    "market_radar/market_view/loader.py",
+    "market_radar/workbench/bundle.py",
+    "market_radar/workbench/renderer.py",
+    "tests/mvpplus/feeds_market_ui/test_all.py",
+    "artifacts/evidence/w3_feeds_market_ui_report.json"
+  ],
+  "outside_owned_path_files": [],
+  "deleted_files": [
+    "artifacts/reports/workbench.html"
+  ],
+  "tests": {
+    "total": 44,
+    "collected": 44,
+    "passed": 44,
+    "failed": 0,
+    "skipped": 0,
+    "xfailed": 0
+  },
+  "test_command": "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v",
+  "fixture_truth": {
+    "flash_fixture": 4,
+    "news_fixture": 4,
+    "fixture_items": 1,
+    "research_sample": 2,
+    "telegram": 0,
+    "flash_live": 0,
+    "news_live": 0,
+    "live_total": 0,
+    "live_sources": 0
+  },
+  "market_provenance": {
+    "data_mode": "fixture",
+    "provenance": "fixture",
+    "venue_real": "yes_for_HYPE_hyperliquid_perp",
+    "not_live_data": true
+  },
+  "freshness_rules": [
+    "make_freshness accepts reference_time parameter (deterministic)",
+    "Future timestamps → UNKNOWN (not FRESH)",
+    "Fixture hardcoded freshness not trusted — computed from observed_at vs reference_time",
+    "Tests use deterministic reference_time, never machine clock"
+  ],
+  "fixes_applied": [
+    "FLASH_FIXTURES data_mode changed from live to fixture",
+    "NEWS_FIXTURES data_mode changed from live to fixture",
+    "sources_ok now counts only genuinely live items",
+    "market_view loader: health status=fixture, live_sources=0",
+    "MarketSnapshot: added data_mode, provenance fields",
+    "make_freshness: accepts reference_time, future → UNKNOWN",
+    "Deleted artifacts/reports/workbench.html from branch tracking",
+    "All tests use deterministic reference_time"
+  ],
+  "regression_tests": [
+    "test_fixture_only_no_live — fixture-only run has 0 live",
+    "test_source_counts_truth — flash_live/news_live=0, fixture=8, live_total=0",
+    "test_future_is_unknown — future timestamp → UNKNOWN",
+    "test_none_is_unknown — None published_at → UNKNOWN",
+    "test_market_health_fixture — health status=fixture, live_sources=0",
+    "test_required_fields — data_mode=fixture, provenance=fixture",
+    "test_hype_from_hyperliquid — venue preserved with data_mode=fixture",
+    "test_fixture_provenance_badge — fixture badge rendered"
+  ],
+  "security_renderer": {
+    "csp_present": true,
+    "script-src_none": true,
+    "no_script_tags": true,
+    "html_escaping": true,
+    "javascript_url_rejected": true,
+    "data_url_rejected": true,
+    "path_traversal_rejected": true,
+    "null_safe": true,
+    "atomic_write": true,
+    "all_original_tests_retained": true
+  },
+  "known_limitations": [
+    "No network I/O in domain layer (by design)",
+    "All current data is fixture — no live feed sources connected",
+    "Telegram fixtures remain empty (honest reporting)",
+    "Market snapshots are fixture data, not live Hyperliquid API"
+  ],
+  "git_status": "clean"
+}
