@@ -7,7 +7,9 @@
     "branch": "workbench/mvpplus-feeds-market-ui-v2",
     "commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04"
   },
-  "tested_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "baseline_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "previous_remote_head": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "tested_commit": "1a995119fad8de45e6374f658af946c52a5e9044",
   "branch": "workbench/mvpplus-feeds-market-ui-v2",
   "modified_files": [
     "market_radar/intelligence_feed/models.py",
