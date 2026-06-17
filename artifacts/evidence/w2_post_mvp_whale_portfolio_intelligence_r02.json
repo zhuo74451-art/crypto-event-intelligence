@@ -55,6 +55,9 @@
     "no_investment_advice": true,
     "no_llm_core_judgment": true
   },
+  "corpus_v1_cases": 30,
+  "corpus_v2_cases": 71,
+  "total_corpus_cases": 101,
   "test_counts": {
     "original_w2_tests": {"total": 128, "passed": 127, "skipped": 1, "failed": 0},
     "new_portfolio_tests": {"total": 85, "passed": 85, "failed": 0},
@@ -93,7 +96,7 @@
     "Coordinated behavior detection uses fixed 6h window — not configurable at runtime",
     "Entity resolution uses static KNOWN_ENTITIES list — no dynamic entity clustering",
     "No integration with W3 feeds or market context layer",
-    "Corpus V2 not yet created (70+ cases) — current corpus remains at V1 (30 cases)",
+    "Corpus V2 runner not yet created — corpus JSON exists (71 cases) but no automated test runner",
     "Risk rule thresholds are hardcoded constants — no admin override API",
     "Stale snapshot detection only by timestamp — no block height comparison"
   ],
