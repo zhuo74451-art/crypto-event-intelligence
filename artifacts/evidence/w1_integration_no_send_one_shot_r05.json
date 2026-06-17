@@ -1,0 +1,73 @@
+{
+  "document": "w1_integration_no_send_one_shot_r05",
+  "ticket": "W1_INTEGRATION_FINAL_TWO_DEFECT_CLOSURE_R05",
+  "branch": "workbench/mvpplus-integration-v2",
+  "repair_base_commit": "aeb67deb89faf5624e43097d86dfdc9a1e55dc6c",
+  "tested_commit": "aeb67deb89faf5624e43097d86dfdc9a1e55dc6c",
+  "supersedes": "W1_INTEGRATION_R04",
+  "r04_superseded_by_r05": true,
+  "defect1_report_ordering": {
+    "status": "RESOLVED",
+    "fix": "run report written LAST after all artifacts and update_run_finish",
+    "files_modified": [
+      "market_radar/integration/one_shot.py"
+    ]
+  },
+  "defect2_whale_validation": {
+    "status": "RESOLVED",
+    "fix": "removed leverage=1.0 default; NaN/Inf rejection; entry/mark/lev>0; non-zero size needs value>0",
+    "files_modified": [
+      "market_radar/integration/whale_mapper.py"
+    ]
+  },
+  "live_run_result": {
+    "overall_status": "degraded",
+    "whale_ok": true,
+    "whale_positions": 1,
+    "whale_is_baseline": true,
+    "alert_candidates": 2,
+    "required_field_errors": 0,
+    "large_new_position": 0,
+    "errors": [],
+    "output_paths_non_empty": true,
+    "sources": [
+      {
+        "source": "whale:0x6c851251",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "ccxt:BTC/USDT",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "ccxt:ETH/USDT",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "ccxt:SOL/USDT",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "hyperliquid:HYPE",
+        "status": "ok",
+        "ok": true
+      },
+      {
+        "source": "feed",
+        "status": "degraded",
+        "ok": false
+      }
+    ]
+  },
+  "test_results": {
+    "integration_tests": "52 passed",
+    "w3_feeds_ui_tests": "44 passed",
+    "w4_adapter_tests": "86 passed",
+    "combined": "182 passed"
+  },
+  "no_runtime_data_in_git": true
+}

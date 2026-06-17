@@ -93,12 +93,12 @@ def _parse_hl_position(pos: dict, use_legacy_fixture: bool = False) -> Optional[
     unrealized_pnl = _safe_float(data.get("unrealizedPnl"))
     liquidation_px = _safe_float(data.get("liquidationPx"))
 
-    # Extract leverage
+    # Extract leverage — missing leverage must remain None, never default to 1.0
     lev_data = data.get("leverage", {})
     if isinstance(lev_data, dict):
-        leverage = _safe_float(lev_data.get("value")) or 1.0
+        leverage = _safe_float(lev_data.get("value"))
     else:
-        leverage = _safe_float(lev_data) or 1.0
+        leverage = _safe_float(lev_data)
 
     return {
         "coin": coin,
@@ -211,17 +211,52 @@ _REQUIRED_POSITION_FIELDS = ["signed_size", "entry_price", "mark_price",
 
 
 def _validate_required_fields(position: dict) -> Optional[str]:
-    """Validate whale position required fields. Returns None if valid, error reason if invalid.
+    """Validate whale position required fields.
 
-    Section 3: entry_price=0.0, mark_price=0.0, position_value_usd=0.0, leverage=1.0
-    are not valid substitutes for missing data.
+    Rules:
+    - signed_size: must be finite number, allows 0
+    - entry_price: must be finite AND > 0
+    - mark_price: must be finite AND > 0
+    - leverage: must be finite AND > 0
+    - position_value_usd: must be finite AND >= 0
+    - non-zero signed_size must have position_value_usd > 0
+    - NaN and ±Infinity all rejected
+    - missing leverage stays None, NOT defaulted to 1.0
     """
+    import math
+
     for field in _REQUIRED_POSITION_FIELDS:
         val = position.get(field)
         if val is None:
-            return f"missing required field: {field}"
-        if field == "signed_size" and val == 0.0:
-            return None  # 0.0 size is valid (edge case for closed positions)
+            invalid_default_msg = ""
+            if field == "leverage":
+                invalid_default_msg = " (must not substitute 1.0)"
+            return f"missing required field: {field}{invalid_default_msg}"
+
+        # Reject non-finite values (NaN, ±Infinity)
+        if not isinstance(val, (int, float)) or math.isnan(val) or math.isinf(val):
+            return f"{field}: non-finite value rejected: {val!r}"
+
+        # signed_size: allows 0 but must be finite
+        if field == "signed_size":
+            continue  # 0.0 is valid, checked position_value constraint below
+
+        # entry_price, mark_price, leverage: must be > 0
+        if field in ("entry_price", "mark_price", "leverage"):
+            if val <= 0:
+                return f"{field}: must be > 0, got {val}"
+
+        # position_value_usd: must be >= 0
+        if field == "position_value_usd":
+            if val < 0:
+                return f"position_value_usd: must be >= 0, got {val}"
+
+    # Non-zero signed_size must have position_value_usd > 0
+    signed_size = position.get("signed_size")
+    pv = position.get("position_value_usd")
+    if signed_size != 0 and (pv is None or pv <= 0):
+        return f"non-zero signed_size ({signed_size}) requires position_value_usd > 0, got {pv!r}"
+
     return None
 
 

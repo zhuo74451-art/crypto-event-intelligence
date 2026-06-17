@@ -242,9 +242,9 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
     # 1. finished_at
     # 2. output/state paths in result
     # 3. source health
-    # 4. artifacts (whale/market/workbench)
+    # 4. artifacts (whale/market/workbench) — NO run report
     # 5. run history update
-    # 6. run report last
+    # 6. run report LAST — captures all final values and errors
     finally:
         try:
             lock.release()
@@ -270,19 +270,23 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
     except Exception as e:
         result.errors.append(f"source health recording failed: {e}")
 
-    # Artifacts (Section 2 step 4)
-    artifact_failed = False
+    # Artifacts (Section 2 step 4) — run report is NOT written here
+    artifact_errors: list[str] = []
     try:
-        _write_artifacts(result, output_dir, state_dir,
-                        report_json, workbench_html, whale_snapshot_json, market_snapshot_json)
+        artifact_errors = _write_artifacts(result, output_dir, state_dir,
+                                           report_json, workbench_html,
+                                           whale_snapshot_json, market_snapshot_json)
     except Exception as e:
-        result.errors.append(f"artifact write failed: {e}")
-        artifact_failed = True
+        artifact_errors.append(f"artifact write failed: {e}")
 
-    if artifact_failed and result.status == "completed":
+    for err in artifact_errors:
+        result.errors.append(err)
+
+    if artifact_errors and result.status == "completed":
         result.status = "degraded"
 
     # Run history update (Section 2 step 5)
+    history_failed = False
     try:
         update_run_finish(
             run_history_db,
@@ -293,6 +297,18 @@ def run_one_shot(config: IntegrationConfig) -> IntegrationRunResult:
         )
     except Exception as e:
         result.errors.append(f"run history update failed: {e}")
+        history_failed = True
+
+    if history_failed and result.status == "completed":
+        result.status = "degraded"
+
+    # Run report LAST (Section 2 step 6) — written after all other artifacts
+    # and update_run_finish, so it captures final finished_at, output_paths,
+    # state_db_paths, status, and all errors including artifact/history failures
+    try:
+        atomic_write_json(result.as_dict(), report_json)
+    except Exception as e:
+        result.errors.append(f"run report write failed: {e}")
 
     return result
 
@@ -493,30 +509,48 @@ def _write_artifacts(
     workbench_html: str = "",
     whale_snapshot_json: str = "",
     market_snapshot_json: str = "",
-) -> None:
-    """Write all output artifacts. Uses pre-computed paths."""
-    # Run report JSON
-    atomic_write_json(result.as_dict(), report_json)
+) -> list[str]:
+    """Write all output artifacts EXCEPT the run report.
+
+    Run report is written LAST by the caller after update_run_finish(),
+    so that it captures final finished_at, output_paths, state_db_paths,
+    status, and all errors including artifact and run-history failures.
+
+    Returns a list of error messages from individual artifact writes.
+    The caller appends these to result.errors so they appear in the final report.
+    """
+    errors: list[str] = []
 
     # Whale snapshot JSON
     if result.whale:
-        atomic_write_json({
-            "address": result.whale.address,
-            "ok": result.whale.ok,
-            "position_count": result.whale.position_count,
-            "positions": result.whale.positions,
-            "changes": result.whale.changes,
-            "alert_candidates": result.whale.alert_candidates,
-            "is_baseline": result.whale.is_baseline,
-            "error": result.whale.error,
-        }, whale_snapshot_json)
+        try:
+            atomic_write_json({
+                "address": result.whale.address,
+                "ok": result.whale.ok,
+                "position_count": result.whale.position_count,
+                "positions": result.whale.positions,
+                "changes": result.whale.changes,
+                "alert_candidates": result.whale.alert_candidates,
+                "is_baseline": result.whale.is_baseline,
+                "error": result.whale.error,
+            }, whale_snapshot_json)
+        except Exception as e:
+            errors.append(f"whale snapshot write failed: {e}")
 
     # Market snapshot JSON
-    atomic_write_json({
-        "symbols": [m.as_dict() for m in result.markets],
-    }, market_snapshot_json)
+    try:
+        atomic_write_json({
+            "symbols": [m.as_dict() for m in result.markets],
+        }, market_snapshot_json)
+    except Exception as e:
+        errors.append(f"market snapshot write failed: {e}")
 
-    # Workbench HTML via W3 render_workbench(bundle, output_path) — Section 5: no open() fallback
+    # Workbench HTML via W3 render_workbench(bundle, output_path)
     bundle = _build_workbench_bundle(result, result.config) if result.config else None
     if bundle:
-        render_workbench(bundle, workbench_html)
+        try:
+            render_workbench(bundle, workbench_html)
+        except Exception as e:
+            errors.append(f"workbench render failed: {e}")
+
+    return errors
