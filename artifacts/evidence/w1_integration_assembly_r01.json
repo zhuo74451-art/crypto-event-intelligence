@@ -1,0 +1,116 @@
+{
+  "ticket": "W1_INTEGRATION_ASSEMBLY_R01",
+  "role": "Integration Owner",
+  "repository": "zhuo74451-art/crypto-event-intelligence",
+  "authoritative_business_baseline": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "observed_remote_main_sha": "a8fd827e0d4b7426326238e9d8e0be456e2474bd",
+  "main_baseline_drift": true,
+  "main_modified_by_this_task": false,
+  "integration_branch": "workbench/mvpplus-integration-v2",
+  "branch_creation_base": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "branch_creation_base_verify": "merge-base HEAD == cfc1e09 (confirmed)",
+  "merge_order": [
+    "W4 Adapters",
+    "W2 Whale Domain",
+    "W3 Feed/Market/Workbench",
+    "W5 Operations",
+    "W6 Independent QA"
+  ],
+  "merge_commits": {
+    "W4_adapters": {
+      "lane_sha": "660fcc56b2812b06bef58b9632caa5a5f7431ae7",
+      "merge_commit_sha": "745fa779b26c6f124c8bb12b6f8b808e83ae8f11",
+      "conflicts": "none"
+    },
+    "W2_whale_domain": {
+      "lane_sha": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a",
+      "merge_commit_sha": "ae6f856afc8a28f211d7d81675817b7008a1dfaf",
+      "conflicts": "none"
+    },
+    "W3_feeds_market_ui": {
+      "lane_sha": "241e9a981c74de81d7898531dfbf5f777cde9ae4",
+      "merge_commit_sha": "d31cb55a52c3f2f99f5d5b9b4757bfac017e77f0",
+      "conflicts": "none"
+    },
+    "W5_operations": {
+      "lane_sha": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+      "merge_commit_sha": "9a016c2bac6b28bf61cbbd8aad3863ea0a1c67df",
+      "conflicts": "none"
+    },
+    "W6_independent_qa": {
+      "lane_sha": "a3e06ab3629504434a60b15e19899dab5c6ec79e",
+      "merge_commit_sha": "29d8dbfa19f28a7a15a25df2a0223717e3c3b560",
+      "conflicts": "none"
+    }
+  },
+  "per_merge_tests": {
+    "W4_adapters": {
+      "command": "python -m unittest discover -s tests/mvpplus/adapters -v",
+      "collected": 86,
+      "passed": 86,
+      "failed": 0,
+      "skipped": 0
+    },
+    "W2_whale_domain": {
+      "command": "python -X utf8 -m pytest tests/mvpplus/whale_domain/test_whale_domain.py -v",
+      "collected": 85,
+      "passed": 84,
+      "failed": 0,
+      "skipped": 1
+    },
+    "W3_feeds_market_ui": {
+      "command": "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v",
+      "collected": 44,
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0
+    },
+    "W5_operations": {
+      "command": "python -X utf8 -m pytest tests/mvpplus/operations -v",
+      "collected": 61,
+      "passed": 61,
+      "failed": 0,
+      "skipped": 0
+    },
+    "W6_independent_qa": {
+      "command": "python -X utf8 -m pytest tests/mvpplus/independent_qa/test_qa_foundation.py -v",
+      "collected": 90,
+      "passed": 90,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "combined_tests": {
+    "pytest_suites": {
+      "command": "python -X utf8 -m pytest tests/mvpplus/whale_domain tests/mvpplus/operations tests/mvpplus/independent_qa -v",
+      "passed": 235,
+      "skipped": 1
+    },
+    "adapter_suite": {
+      "command": "python -m unittest discover -s tests/mvpplus/adapters -v",
+      "passed": 86,
+      "skipped": 0
+    },
+    "feeds_market_ui_suite": {
+      "command": "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v",
+      "passed": 44,
+      "skipped": 0
+    },
+    "total_collected": 366,
+    "total_passed": 365,
+    "total_failed": 0,
+    "total_skipped": 1
+  },
+  "merge_conflicts": [],
+  "modified_files_beyond_merged_content": [],
+  "git_status": "clean",
+  "main_unchanged": true,
+  "limitations": [
+    "Integration v2 is a pure code composition baseline — no adapter→domain wiring, no one-shot runner, no signal pipeline",
+    "W1/W6 evidence repos included as-is from their respective Lane commits",
+    "Some W4 tests (CCXT live ticker, Hyperliquid SDK) require network access — skipped in offline test runs",
+    "Main branch has 3 unauthorized W1 control document commits (SHA: a8fd827) — not merged, not reverted",
+    "Tests executed serially — no parallel test execution used"
+  ],
+  "generated_at_utc": "2026-06-17T07:00:00Z"
+}
