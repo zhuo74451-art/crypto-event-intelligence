@@ -1,0 +1,98 @@
+{
+  "report_type": "w2_whale_domain_evidence",
+  "version": "v2",
+  "generated_at_utc": "2026-06-17T03:00:46Z",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "dba3460ce7d4f8a4b79290deaf4615407917246a",
+  "tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+  "branch": "workbench/mvpplus-whale-prod-v2",
+  "source_legacy_references": [
+    "dc426b1 market_radar/l2_whale_engine/change_detector.py",
+    "dc426b1 market_radar/l2_whale_engine/alert_candidates.py",
+    "dc426b1 market_radar/l2_whale_engine/entity_profile.py",
+    "dc426b1 market_radar/l2_whale_engine/exposure_aggregator.py",
+    "dc426b1 market_radar/l2_whale_engine/state_manager.py",
+    "dc426b1 market_radar/l2_whale_engine/watchlist.py"
+  ],
+  "modified_files": [
+    "market_radar/whale_domain/__init__.py",
+    "market_radar/whale_domain/models.py",
+    "market_radar/whale_domain/change_detector.py",
+    "market_radar/whale_domain/exposure.py",
+    "market_radar/whale_domain/watchlist.py",
+    "market_radar/whale_domain/entity_profile.py",
+    "market_radar/whale_domain/alert_candidate.py",
+    "tests/mvpplus/whale_domain/__init__.py",
+    "tests/mvpplus/whale_domain/test_whale_domain.py",
+    "artifacts/evidence/w2_whale_domain_report.json"
+  ],
+  "outside_owned_path_files": [],
+  "tests": {
+    "total": 85,
+    "collected": 85,
+    "passed": 84,
+    "failed": 0,
+    "skipped": 1,
+    "xfailed": 0
+  },
+  "test_command": "python -m pytest tests/mvpplus/whale_domain/test_whale_domain.py -v",
+  "formula_test_results": {
+    "long_mark100_liq80": "20.0",
+    "short_mark100_liq120": "20.0",
+    "null_mark_or_liq": "null",
+    "zero_mark": "null",
+    "negative_preserved": true
+  },
+  "first_snapshot_results": {
+    "existing_long": "baseline_open_position",
+    "existing_short": "baseline_open_position",
+    "zero_size_baseline": "no_change"
+  },
+  "change_types_implemented": [
+    "baseline_open_position",
+    "open_long",
+    "open_short",
+    "increase_long",
+    "increase_short",
+    "reduce_long",
+    "reduce_short",
+    "close_long",
+    "close_short",
+    "flip_long_to_short",
+    "flip_short_to_long",
+    "liquidation_distance_narrowed",
+    "no_change",
+    "stale_snapshot_rejected"
+  ],
+  "regression_tests": [
+    "test_liquidation_narrowed — long narrowed",
+    "test_liquidation_widened_is_no_change — widened must not be narrowed",
+    "test_liquidation_narrowed_short — short narrowed",
+    "test_liquidation_widened_short_is_no_change — short widened",
+    "test_close_long_exact_zero — signed_size=0 uses prev direction",
+    "test_close_short_exact_zero — signed_size=0 uses prev direction",
+    "test_baseline_zero_position_no_open — zero baseline is no_change",
+    "test_baseline_run_skips_zero_positions — integration zero skip",
+    "test_baseline_does_not_trigger_R3 — baseline suppresses R3",
+    "test_baseline_does_not_trigger_large_new_position — baseline suppresses large_new_position"
+  ],
+  "no_network_scan": {
+    "forbidden_imports": [
+      "urllib",
+      "requests",
+      "httpx",
+      "aiohttp",
+      "websocket",
+      "grpc"
+    ],
+    "modules_scanned": 6,
+    "violations": 0
+  },
+  "known_limitations": [
+    "No network I/O in domain layer (by design)",
+    "Entity profiles manually curated",
+    "Alert candidates: generated only, no send",
+    "Liquidation distance threshold 0.5% is hardcoded, not configurable"
+  ],
+  "merge_readiness": "LANE_MERGE_READY"
+}
