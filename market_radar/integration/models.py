@@ -117,6 +117,7 @@ class IntegrationRunResult:
     alert_candidate_count: int = 0
     output_paths: list[str] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
+    ccxt_preflight: Optional[dict] = None
 
     def as_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {

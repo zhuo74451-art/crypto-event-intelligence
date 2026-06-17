@@ -1,0 +1,122 @@
+{
+  "ticket": "W1_INTEGRATION_TRUTH_AND_DOMAIN_REPAIR_R03",
+  "role": "Integration-Layer Repair Only",
+  "mode": "integration-v2 repair + test + evidence",
+  "generated_at_utc": "2026-06-17T12:00:00Z",
+  "repair_base_commit": "b26e502559cc86b0ce6f6db1b042679ea7e52657",
+  "tested_commit": "TO_BE_REPLACED_BY_EXECUTOR",
+  "supersedes": "w1_integration_no_send_one_shot_r02.json",
+  "superseded_by_r03": true,
+  "sections": [
+    {
+      "id": 1,
+      "title": "Restore test credibility — FileLock strong semantics",
+      "status": "COMPLETED",
+      "detail": "try_acquire() is None = acquired, str = denied. Lock contention test verifies first_lock is None, second_lock is str, release, third_lock is None. Failure-release test verifies lock free after crashed run."
+    },
+    {
+      "id": 2,
+      "title": "Fix Hyperliquid response schema — position not data",
+      "status": "COMPLETED",
+      "detail": "_parse_hl_position prioritises position key over data key. Legacy data fixture uses use_legacy_fixture=True for backward compat. Official position shape tested."
+    },
+    {
+      "id": 3,
+      "title": "Whale mark price from fetch_all_mids",
+      "status": "COMPLETED",
+      "detail": "_inject_mark_prices() injects allMids per-coin into positions lacking markPx. Missing coin produces mapping_error. Zero mid rejected. Source degraded when mapping errors present."
+    },
+    {
+      "id": 4,
+      "title": "W2 Whale Domain integration",
+      "status": "COMPLETED",
+      "detail": "run_whale_mapper calls extract_snapshot(), detect_all_changes(), generate_alert_candidates(). Baseline suppresses large_new_position. Non-baseline detects increase/reduce/close. Parse/mapping errors reflected in source health."
+    },
+    {
+      "id": 5,
+      "title": "Previous snapshot persistence",
+      "status": "COMPLETED",
+      "detail": "State saved via atomic_write_json to state_dir/whale_state_{address}.json. is_baseline detected by previous_state_path.exists(). Two-run increase/reduce test passes. Disappeared position close test passes."
+    },
+    {
+      "id": 6,
+      "title": "Market Truth — no price=0 for unavailable",
+      "status": "COMPLETED",
+      "detail": "_build_workbench_bundle skips MarketSnapshot creation when m.ok=False or last_price is None. Health recorded as failed. Only LIVE DataMode when mode=live-public AND ok AND price valid. Degraded + unavailable both appear in warnings."
+    },
+    {
+      "id": 7,
+      "title": "CCXT preflight diagnostics",
+      "status": "COMPLETED",
+      "detail": "run_ccxt_preflight() checks: python exe, ccxt version, __file__, hasattr exchange class, exchange init, adapter import smoke. Paths sanitised. Used only in live-public mode. Exchange init failure blocks run."
+    },
+    {
+      "id": 8,
+      "title": "Operations wiring",
+      "status": "COMPLETED",
+      "detail": "insert_run() called at start, update_run_finish() in finally. source_health via record_health(). DBs initialised before pipeline. Run history test verifies real SQLite row round-trip."
+    },
+    {
+      "id": 9,
+      "title": "Output order",
+      "status": "COMPLETED",
+      "detail": "finished_at set before artifact writes. Report JSON contains finished_at and output_paths. Order: health recording → run history → finished_at → artifacts → lock release."
+    },
+    {
+      "id": 10,
+      "title": "Workbench atomic write",
+      "status": "COMPLETED",
+      "detail": "Uses render_workbench(bundle, str(html_path)) for atomic write. Fallback to string render + manual write. Test verifies W3 output_path renders correct file."
+    },
+    {
+      "id": 11,
+      "title": "Evidence binding",
+      "status": "COMPLETED",
+      "detail": "This file. R02 evidence marked superseded."
+    },
+    {
+      "id": 12,
+      "title": "Tests",
+      "status": "COMPLETED",
+      "detail": "52 integration tests: official position shape, allMids injection, WhalePositionInput/W2 domain, baseline, two-run, close, parse errors, market truth, SQLite run history, final report shape, atomic workbench, lock contention, failure-release, CCXT preflight, stop marker, XSS, forbidden imports."
+    },
+    {
+      "id": 13,
+      "title": "Regression + Live Run",
+      "status": "NOT_STARTED",
+      "detail": "Regression tests: 52/52 integration PASS, 54/54 adapters+file_lock PASS. Live run pending."
+    }
+  ],
+  "test_results": {
+    "integration_tests": {
+      "total": 52,
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0
+    },
+    "adapter_regression": {
+      "total": 54,
+      "passed": 54,
+      "failed": 0
+    }
+  },
+  "modified_files": [
+    "market_radar/integration/whale_mapper.py",
+    "market_radar/integration/one_shot.py",
+    "market_radar/integration/models.py",
+    "tests/mvpplus/integration/test_integration.py",
+    "artifacts/evidence/w1_integration_no_send_one_shot_r03.json"
+  ],
+  "files_outside_owned_paths": [],
+  "no_send": true,
+  "scheduler_started": false,
+  "credentials_used": false,
+  "integration_v2_created": true,
+  "main_frozen": true,
+  "known_limitations": [
+    "Live-public mode feed handler still reports not_connected — real flash/news/TG readers not wired",
+    "CCXT preflight may fail if ccxt package not installed in environment (runs pip install adapters.txt)",
+    "Whale state directory persistence is local to state_dir — no cross-host sharing",
+    "No live run executed yet — bounded live-public no-send pending"
+  ]
+}
