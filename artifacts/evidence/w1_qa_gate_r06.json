@@ -1,0 +1,73 @@
+{
+  "ticket": "W1_QA_GATE_CONTROL_R06",
+  "role": "Read-Only Controller",
+  "generated_at_utc": "2026-06-17T12:00:00Z",
+  "fetch_result": "ok fetched (no new refs)",
+  "main_frozen_at": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "integration_v2_created": false,
+  "any_lane_merged": false,
+  "business_code_modified": false,
+  "conditions": [
+    {
+      "id": 1,
+      "condition": "W2 independent QA = PASS",
+      "status": "NOT_YET",
+      "detail": "W6 has not scanned W2. No acceptance evidence on W6 remote."
+    },
+    {
+      "id": 2,
+      "condition": "W3 independent QA = PASS",
+      "status": "NOT_YET",
+      "detail": "W6 has not scanned W3. No acceptance evidence on W6 remote."
+    },
+    {
+      "id": 3,
+      "condition": "W4 static QA = PASS",
+      "status": "NOT_YET",
+      "detail": "W6 has not scanned W4. No acceptance evidence on W6 remote."
+    },
+    {
+      "id": 4,
+      "condition": "W4 live probe = PASS or acceptable DEGRADED",
+      "status": "NOT_YET",
+      "detail": "W4 remote unchanged since R06. No W4_FINAL_PUBLIC_LIVE_PROBE_R03 evidence found."
+    },
+    {
+      "id": 5,
+      "condition": "W5 independent QA = PASS",
+      "status": "NOT_YET",
+      "detail": "W6 has not scanned W5. No acceptance evidence on W6 remote."
+    },
+    {
+      "id": 6,
+      "condition": "W6 QA framework evidence binding correct",
+      "status": "PASS",
+      "detail": "W6 evidence tested_commit=bad1d26ab765721585f80c354cd07d4b1aa680f6 matches actual fix commit. 90/90 tests, 18/18 scans PASS."
+    },
+    {
+      "id": 7,
+      "condition": "All remote SHAs verified via ls-remote",
+      "status": "PASS",
+      "detail": "W2=bb0b71d W3=241e9a9 W4=7eaeaad W5=e1d5d5c W6=06374a9 — all independently confirmed."
+    },
+    {
+      "id": 8,
+      "condition": "No owned-path violation",
+      "status": "PASS",
+      "detail": "Verified R05 audit: all lanes modify only owned paths. Zero cross-lane contamination."
+    }
+  ],
+  "conditions_met": 3,
+  "conditions_total": 8,
+  "integration_v2_gate": "BLOCKED",
+  "blocking_reason": "Conditions 1-5 not met: W4 live probe (R03) and W6 lane acceptance scans (R04) have not been pushed.",
+  "remote_shas_last_verified": {
+    "main": "3bd2ce2dec2e66541f4fafeb3bc4a3a9eb00c63d",
+    "W2": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a",
+    "W3": "241e9a981c74de81d7898531dfbf5f777cde9ae4",
+    "W4": "7eaeaaddd70e30b081bdf57bec70326065674152",
+    "W5": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+    "W6": "06374a98799aee02701959aac494605463572c65"
+  },
+  "observed_delta": "No new pushes on any lane since last controller check. W4 and W6 executors have not yet pushed their R03/R04 results."
+}
