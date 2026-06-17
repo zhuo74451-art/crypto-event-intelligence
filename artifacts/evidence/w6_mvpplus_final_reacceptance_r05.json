@@ -1,0 +1,73 @@
+{
+  "document": "w6_mvpplus_final_reacceptance_r05",
+  "ticket": "W6_MVPPLUS_FINAL_REACCEPTANCE_R05",
+  "w6_branch": "workbench/mvpplus-independent-qa-v1",
+  "w6_repair_base_commit": "9960f16a726a31b4beb272a85fc1524acb247e39",
+  "w1_exact_head": "0cf9edfad3402cc18542d57634b01586e03224d4",
+  "w1_tested_commit": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+  "main_head": "a8fd827e0d4b7426326238e9d8e0be456e2474bd",
+  "independent_tests": {
+    "integration": "109 passed",
+    "operations": "151 passed",
+    "combined": "557 passed, 1 skipped",
+    "adapters": "96 passed",
+    "all_pass": true
+  },
+  "cli_live_oneshot": {
+    "status": "completed",
+    "whale_ok": true,
+    "markets": "4 assets",
+    "feed": "57 live, 0 fixture",
+    "errors": 0,
+    "no_send": true
+  },
+  "shadow": {
+    "status": "completed",
+    "attempted": 2,
+    "completed": 2,
+    "errors": [],
+    "collision_found": false
+  },
+  "run_history_audit": {
+    "parent_count": 1,
+    "child_count": 2,
+    "no_collision_errors": true,
+    "all_children_have_parent": true
+  },
+  "cursor_truth": {
+    "cursors": [
+      {
+        "file": "run_os-cb03b48e2660.json",
+        "status": "completed",
+        "cursor_before": "2026-06-17T10:54:43Z",
+        "cursor_after": "2026-06-17T12:52:58Z",
+        "cursor_advanced": true,
+        "initial_since": "2026-06-17T10:54:43Z",
+        "live_count": 55,
+        "provider_name": "curated_api",
+        "records_seen": 55,
+        "errors": []
+      },
+      {
+        "file": "run_os-b05119221631.json",
+        "status": "completed",
+        "cursor_before": "2026-06-17T12:52:58Z",
+        "cursor_after": "2026-06-17T12:52:58Z",
+        "cursor_advanced": false,
+        "initial_since": null,
+        "live_count": 1,
+        "provider_name": "curated_api",
+        "records_seen": 1,
+        "errors": []
+      }
+    ],
+    "cursor_forward": true,
+    "child2_not_overridden": true,
+    "child2_empty_ok": true
+  },
+  "final_decision": "MVPPLUS_READY",
+  "final_decision_scope": "\u5185\u90e8\u4f7f\u7528, read-only, no-send, one-shot, bounded shadow, \u975e\u81ea\u52a8\u4ea4\u6613, \u975e\u6b63\u5f0f\u53d1\u5e03\u7cfb\u7edf, \u975e\u516c\u5f00\u751f\u4ea7SaaS",
+  "mvpplus_ready": true,
+  "internal_production_ready": false,
+  "git_status": "clean"
+}
