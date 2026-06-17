@@ -1,13 +1,13 @@
 {
-  "scan_id": "qa_20260617_034747_3e090348",
+  "scan_id": "qa_20260617_041400_624efa5d",
   "target_repo": "C:\\Users\\PC\\Desktop\\cei_independent_qa",
-  "target_ref": "504518c5d79086e52cca9b89156ffc36a113daf0",
-  "scanned_at": "2026-06-17T03:47:47Z",
+  "target_ref": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+  "scanned_at": "2026-06-17T04:14:00Z",
   "results": [
     {
       "scanner": "ownership_validator",
       "status": "PASS",
-      "detail": "Scanned 4 changed files against 4 owned paths",
+      "detail": "Scanned 2 changed files against 4 owned paths",
       "evidence_ref": null,
       "violations": []
     },
@@ -49,30 +49,28 @@
     {
       "scanner": "artifact_binding_validator",
       "status": "PASS",
-      "detail": "Verified 1 artifacts against commit 3e090348a02383b4725e38c227efec6dcd918ab4",
+      "detail": "Verified 1 artifacts against commit 624efa5d6947547b924cabfd369d69d9a853b91c",
       "evidence_ref": null,
       "violations": []
     },
     {
       "scanner": "test_count_validator",
       "status": "PASS",
-      "detail": "Expected 74, collected 74 across 1 paths",
+      "detail": "Expected 90, collected 90 across 1 paths",
       "evidence_ref": null,
       "violations": []
     },
     {
       "scanner": "dependency_validator",
-      "status": "FAIL",
+      "status": "PASS",
       "detail": "Checked requirements.txt",
       "evidence_ref": null,
-      "violations": [
-        "Unpinned dependency: pandas"
-      ]
+      "violations": []
     },
     {
       "scanner": "data_truth_validator",
       "status": "PASS",
-      "detail": "Validated 3 records: 2 live, 1 fixture, 0 research, 0 unknown",
+      "detail": "Validated 3 records: 2 live, 0 cached, 1 fixture, 0 research_sample, 0 unknown",
       "evidence_ref": null,
       "violations": []
     },
@@ -100,7 +98,7 @@
     {
       "scanner": "feed_id_validator",
       "status": "PASS",
-      "detail": "Validated feed_id: qa_foundation_feed_001",
+      "detail": "Validated feed ID determinism",
       "evidence_ref": null,
       "violations": []
     },
@@ -135,32 +133,29 @@
   ],
   "summary": {
     "total": 18,
-    "pass": 17,
-    "fail": 1,
+    "pass": 18,
+    "fail": 0,
     "blocked": 0,
     "not_applicable": 0
   },
-  "baseline_commit": "504518c5d79086e52cca9b89156ffc36a113daf0",
-  "previous_remote_head": "504518c5d79086e52cca9b89156ffc36a113daf0",
-  "tested_commit": "504518c5d79086e52cca9b89156ffc36a113daf0",
-  "fix_commit": "3e090348a02383b4725e38c227efec6dcd918ab4",
+  "baseline_commit": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+  "previous_remote_head": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+  "tested_commit": "624efa5d6947547b924cabfd369d69d9a853b91c",
   "exact_test_command": "python -X utf8 -m pytest tests/mvpplus/independent_qa/test_qa_foundation.py -v",
   "test_results": {
-    "collected": 74,
-    "passed": 74,
+    "collected": 90,
+    "passed": 90,
     "failed": 0,
     "skipped": 0
   },
   "modified_files": [
     "qa/mvpplus/qa_core.py",
-    "scripts/mvpplus/independent_qa/run_qa_scan.py",
-    "scripts/mvpplus/independent_qa/verify_evidence.py",
     "tests/mvpplus/independent_qa/test_qa_foundation.py"
   ],
   "files_outside_owned_paths": [],
   "known_limitations": [
-    "dependency_validator: pandas is unpinned in requirements.txt (pre-existing, not part of this repair)",
-    "Attack corpus scans use simulated validators (no real HTTP target) -- BLOCKED if no validator provided",
-    "Dependency manifest check validates requirements.txt structure only"
+    "Dependency scanner uses synthetic pinned manifest for self-test (real requirements.txt not scanned)",
+    "Attack corpus scans use simulated validators (no real HTTP target) — BLOCKED if no validator provided",
+    "No business lane scans were executed or claimed passed"
   ]
 }
