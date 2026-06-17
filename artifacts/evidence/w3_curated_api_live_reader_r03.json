@@ -1,0 +1,104 @@
+{
+  "ticket": "W3_CURATED_READER_PUBLIC_CONTRACT_R03",
+  "branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "f7761cf14d4a1c0ff0100d22d1471b48abe0b168",
+  "tested_commit": "d85ac142d53755facb97d2f654932c314d279ed4",
+  "public_contract_fields": [
+    "ReaderBatchResult.next_cursor (Optional[str])",
+    "ReaderBatchResult.cursor_safe (bool)",
+    "ReaderBatchResult.cached_count (int)",
+    "ReaderBatchResult.source_statuses (list[dict])",
+    "ReaderBatchResult.provider_name (Optional[str])",
+    "ReaderBatchResult.metadata (dict)"
+  ],
+  "empty_batch_truth": "HTTP 200 + stage=published + items=[] → status=ok, records_seen=0, records_accepted=0, cursor_safe=true, next_cursor=None",
+  "pagination_truth": {
+    "offset>=total": "normal completion, ok, cursor_safe=true",
+    "empty_page": "normal completion, ok, cursor_safe=true",
+    "max_pages_with_remaining_data": "degraded, cursor_safe=false, truncated=true",
+    "max_items_with_remaining_data": "degraded, cursor_safe=false, truncated=true",
+    "fully_read_within_bounds": "ok, cursor_safe=true, not truncated"
+  },
+  "cursor_normalization": "published_at_backend parsed via datetime.fromisoformat + astimezone(utc); output formatted as YYYY-MM-DDTHH:MM:SSZ; supports Z, +00:00, +08:00, fractional seconds",
+  "cursor_safe_matrix": {
+    "normal_completion": true,
+    "truncated_max_pages": false,
+    "truncated_max_items": false,
+    "partial_page_failure": false,
+    "invalid_backend_time": false,
+    "empty_batch": true
+  },
+  "source_statuses_summary": "Grouped by source_label; each entry has source, source_type, status, accepted_count, rejected_count, detail; degraded overall propagates to per-source status",
+  "config_validation": {
+    "limit": "1-500",
+    "max_pages": "1-10",
+    "max_items": "1-5000",
+    "timeout_seconds": ">0",
+    "max_response_bytes": ">0",
+    "base_url": "http/https only",
+    "include_special_line": "None/True/False",
+    "include_raw_json": "bool"
+  },
+  "status_truth_rules": {
+    "stage_must_equal_published": true,
+    "missing_stage_is_degraded": true,
+    "backend_error_nonempty_rejected": true,
+    "backend_upload_status_failed_rejected": true,
+    "pipeline_stage_not_published_rejected": true,
+    "db_path_never_output": true
+  },
+  "test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/feeds_market_ui/test_curated_api_reader.py -v",
+    "python -X utf8 -m pytest tests/mvpplus/feeds_market_ui -v"
+  ],
+  "old_tests_pre_r03": {
+    "total": 132,
+    "passed": 132,
+    "failed": 0
+  },
+  "new_tests_added_r03": 18,
+  "full_regression": {
+    "total": 150,
+    "passed": 150,
+    "failed": 0
+  },
+  "live_probe_summary": {
+    "since": "2026-06-17T08:00:00Z",
+    "status": "ok",
+    "records_seen": 23,
+    "accepted": 23,
+    "rejected": 0,
+    "pages_fetched": 1,
+    "response_seconds": 1.11,
+    "source_kind_distribution": {"news": 13, "webhook": 1, "telegram": 7, "exchange": 2},
+    "content_type_distribution": {"news_article": 13, "unknown": 1, "telegram_message": 7, "exchange_announcement": 2},
+    "is_featured_true": 2,
+    "is_featured_false": 21,
+    "next_cursor": "2026-06-17T08:55:35Z",
+    "cursor_safe": true,
+    "no_filters": true,
+    "no_raw_json": true
+  },
+  "no_filters_on_default": true,
+  "no_raw_json_default": true,
+  "db_path_recorded": false,
+  "full_content_committed": false,
+  "no_send": true,
+  "no_daemon": true,
+  "modified_files": [
+    "market_radar/intelligence_feed/live_readers/protocol.py",
+    "market_radar/intelligence_feed/live_readers/curated_api_reader.py",
+    "tests/mvpplus/feeds_market_ui/test_curated_api_reader.py"
+  ],
+  "files_outside_owned_paths": [],
+  "limitations": [
+    "CACHED data_mode not in FeedDataMode enum — use LIVE + health metadata",
+    "No streaming or long-polling — one-shot synchronous only",
+    "Pagination is offset-based, not cursor-based",
+    "exchange and webhook source_kinds map to UNKNOWN FeedSourceType",
+    "unknown content_type falls via source_kind or UNKNOWN",
+    "source_statuses grouped by source_label — items without source_label default to 'unknown'"
+  ],
+  "git_status": "clean"
+}
