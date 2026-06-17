@@ -1,0 +1,143 @@
+{
+  "feed_truth": {
+    "flash_live": 64,
+    "news_live": 20,
+    "tg_live": 0,
+    "cached": 0,
+    "fixture": 9,
+    "research_excluded": 262383,
+    "duplicates": 0,
+    "live_total": 84,
+    "sources_checked": 3,
+    "sources_ok": 2,
+    "sources_failed": 1,
+    "items_skipped": 20
+  },
+  "market_context": {
+    "BTC": {
+      "price": 65729.99,
+      "price_change_24h_pct": -1.012,
+      "volume_24h": 947193972.3752217,
+      "open_interest": null,
+      "funding_rate": null,
+      "source": "BINANCE_SPOT",
+      "data_origin": "live"
+    },
+    "ETH": {
+      "price": 1789.77,
+      "price_change_24h_pct": -0.366,
+      "volume_24h": 626891059.088463,
+      "open_interest": null,
+      "funding_rate": null,
+      "source": "BINANCE_SPOT",
+      "data_origin": "live"
+    },
+    "SOL": {
+      "price": 73.58,
+      "price_change_24h_pct": -0.862,
+      "volume_24h": 159487889.25865,
+      "open_interest": null,
+      "funding_rate": null,
+      "source": "BINANCE_SPOT",
+      "data_origin": "live"
+    },
+    "HYPE": {
+      "price": 74.12,
+      "price_change_24h_pct": 9.886142943975797,
+      "volume_24h": 1243639430.00243,
+      "open_interest": 1492395167.23,
+      "funding_rate": 1.25e-05,
+      "source": "HYPERLIQUID_PERP",
+      "data_origin": "live"
+    },
+    "live_sources": 4,
+    "degraded_sources": 0,
+    "hype_verified_on_hyperliquid": true,
+    "hype_price_valid": true
+  },
+  "security_checks": {
+    "csp_present": true,
+    "script_src_none": true,
+    "html_escaping": true,
+    "javascript_url_rejected": true,
+    "no_script_tags": true,
+    "null_safe_render": true,
+    "full_bundle_renders": true,
+    "provenance_badges": true,
+    "timestamp_in_footer": true,
+    "degraded_bundle_renders": true
+  },
+  "contracts_version": "mvp+v1.0",
+  "source_health": [
+    {
+      "source": "live:hl_watcher_signals",
+      "group": "telegram",
+      "status": "OK",
+      "ok": 1,
+      "err": 0
+    },
+    {
+      "source": "live:onchain_watcher_alerts",
+      "group": "telegram",
+      "status": "DEGRADED",
+      "ok": 0,
+      "err": 0,
+      "degraded": "watcher_alerts_raw.csv: 20 raw rows, 0 parsed"
+    },
+    {
+      "source": "live:news_live",
+      "group": "news",
+      "status": "OK",
+      "ok": 1,
+      "err": 0
+    },
+    {
+      "source": "fixture:fixture_whale_positions",
+      "group": "fixture",
+      "status": "DEGRADED",
+      "ok": 0,
+      "err": 0,
+      "degraded": "Fixture data for testing only — not counted as live"
+    },
+    {
+      "source": "ccxt:binance:BTC",
+      "group": "market",
+      "status": "OK",
+      "ok": 1,
+      "err": 0
+    },
+    {
+      "source": "ccxt:binance:ETH",
+      "group": "market",
+      "status": "OK",
+      "ok": 1,
+      "err": 0
+    },
+    {
+      "source": "ccxt:binance:SOL",
+      "group": "market",
+      "status": "OK",
+      "ok": 1,
+      "err": 0
+    },
+    {
+      "source": "hyperliquid:hype",
+      "group": "hyperliquid",
+      "status": "OK",
+      "ok": 1,
+      "err": 0
+    }
+  ],
+  "tests": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0
+  },
+  "known_limitations": [
+    "watcher_alerts_raw.csv: 20 rows exist but generic parser extracts 0 — format has no title field",
+    "No dedicated Telegram feed CSV found in data/",
+    "Whale positions require Window 1 integration of Window 2 output",
+    "CCXT pip dependency — falls back to urllib Binance REST if unavailable",
+    "One-shot scan only — no persistent state for historical comparisons"
+  ]
+}
