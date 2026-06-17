@@ -133,21 +133,21 @@ class TestProvenance:
 class TestLiquidationDistance:
     """Verify liquidation distance formulas.
 
-    Long:  (liq - mark) / mark * 100   → negative means below mark
-    Short: (mark - liq) / mark * 100   → positive means above mark
+    Long:  (mark - liq) / mark * 100   → positive means liq below mark (normal)
+    Short: (liq - mark) / mark * 100   → positive means liq above mark (normal)
     """
 
     def test_long_normal(self):
-        """Long position, mark=$100, liq=$80 → distance = (80-100)/100*100 = -20%"""
+        """Long position, mark=$100, liq=$80 → distance = (100-80)/100*100 = +20%"""
         d = compute_liquidation_distance("long", 100.0, 80.0)
         assert d is not None
-        assert d == pytest.approx(-20.0, abs=0.01)
+        assert d == pytest.approx(20.0, abs=0.01)
 
     def test_long_above_mark(self):
-        """Liq above mark is unusual but formula should still compute."""
+        """Liq above mark is crossed (negative distance)."""
         d = compute_liquidation_distance("long", 80.0, 100.0)
         assert d is not None
-        assert d == pytest.approx(25.0, abs=0.01)
+        assert d == pytest.approx(-25.0, abs=0.01)
 
     def test_short_normal(self):
         """Short position, mark=$100, liq=$120 → (120-100)/100*100 = +20%"""
@@ -179,10 +179,11 @@ class TestLiquidationDistance:
         assert compute_liquidation_distance("short", -10.0, 80.0) is None
 
     def test_critical_threshold(self):
-        """Liq distance < -5% should be flagged as critical."""
+        """Liq within 10% of mark — normal positive distance for LONG."""
         d = compute_liquidation_distance("long", 100.0, 94.0)
         assert d is not None
-        assert d < -5.0
+        assert d > 0
+        assert d == pytest.approx(6.0, abs=0.01)
 
 
 # ═══════════════════════════════════════════════════════════════════════

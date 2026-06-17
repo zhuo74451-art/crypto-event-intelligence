@@ -36,8 +36,10 @@ def compute_liquidation_distance(
         return None
 
     if direction == "long":
-        return (liquidation_price - mark_price) / mark_price * 100
+        # Long: (mark - liq) / mark * 100 → positive when liq is below mark (normal)
+        return (mark_price - liquidation_price) / mark_price * 100
     elif direction == "short":
+        # Short: (liq - mark) / mark * 100 → positive when liq is above mark (normal)
         return (liquidation_price - mark_price) / mark_price * 100
 
 
