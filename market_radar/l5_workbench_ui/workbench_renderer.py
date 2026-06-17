@@ -1,354 +1,318 @@
-"""MVP+ L5 — Workbench HTML Renderer.
+"""MVP+ L5v2 — Secure Workbench HTML Renderer.
 
-Generates a self-contained local HTML dashboard from a RunReport contract.
+9-section dashboard from a WorkbenchBundle:
+  1. Unified Intelligence Feed
+  2. Whale Position Changes
+  3. Current Whale Positions
+  4. Liquidation Risk
+  5. Market Context
+  6. Source Health
+  7. Alert Candidates
+  8. Watchlists
+  9. Event Journal
 
-Features:
-  - Whale positions table (address, asset, side, size, entry, mark, PnL, liq distance)
-  - Position changes with color-coded risk indicators
-  - Market context cards (price, change, OI, funding rate)
-  - Feed items list
-  - Source health status
-  - Dark theme, no external dependencies
+Security: HTML escaping, URL validation, CSP meta tag, no external scripts.
 """
 
 from __future__ import annotations
 
+import html as html_lib
 import json
 import os
-import uuid
+import re
 from datetime import datetime, timezone
+from dataclasses import dataclass, field, asdict
 from typing import Any, Optional
 
 from market_radar.shared.contracts import (
-    RunReport,
-    WhalePosition,
-    WhalePositionChange,
-    MarketContext,
-    UnifiedFeedItem,
-    SourceHealth,
-    SourceStatus,
-    ChangeType,
-    RiskLevel,
+    WhalePosition, WhalePositionChange, MarketContext,
+    UnifiedFeedItem, SourceHealth, SourceStatus,
+    ChangeType, RiskLevel,
 )
+
+_SAFE_URL_RE = re.compile(r"^https?://", re.IGNORECASE)
+_CSP = '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'none\'; style-src \'unsafe-inline\'; img-src data:;">'
+
+
+def _e(s: Any) -> str:
+    if s is None: return ""
+    return html_lib.escape(str(s), quote=True)
+
+
+def _safe_url(url: Optional[str]) -> str:
+    if url and _SAFE_URL_RE.match(url): return _e(url)
+    return ""
 
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _risk_color(risk: str) -> str:
-    return {"CRITICAL": "#ff4444", "ELEVATED": "#ff8800", "NORMAL": "#ffcc00",
-            "LOW": "#44cc44", "UNKNOWN": "#888888"}.get(risk, "#888888")
-
-
-def _change_icon(ct: str) -> str:
-    icons = {
-        "POSITION_OPENED": "\U0001f7e2",      # green circle
-        "POSITION_INCREASED": "\U0001f7e1",   # yellow circle
-        "POSITION_REDUCED": "\U0001f535",     # blue circle
-        "POSITION_CLOSED": "⚫",          # black circle
-        "DIRECTION_FLIPPED": "\U0001f504",    # refresh arrows
-        "NO_CHANGE": "⬜",               # white circle
-    }
-    return icons.get(ct, "❓")
-
-
-def _fmt_usd(val: Any) -> str:
-    if val is None:
-        return "N/A"
+def _usd(v: Any) -> str:
+    if v is None: return "N/A"
     try:
-        v = float(val)
-        if abs(v) >= 1_000_000_000:
-            return f"${v/1_000_000_000:.2f}B"
-        if abs(v) >= 1_000_000:
-            return f"${v/1_000_000:.2f}M"
-        if abs(v) >= 1_000:
-            return f"${v/1_000:.1f}K"
-        return f"${v:.2f}"
-    except (ValueError, TypeError):
-        return str(val)
+        val = float(v)
+        if abs(val) >= 1e9: return f"${val/1e9:.2f}B"
+        if abs(val) >= 1e6: return f"${val/1e6:.2f}M"
+        if abs(val) >= 1e3: return f"${val/1e3:.1f}K"
+        return f"${val:.2f}"
+    except (ValueError, TypeError): return str(v)
 
 
-def _fmt_pct(val: Any) -> str:
-    if val is None:
-        return "N/A"
+def _pct(v: Any) -> str:
+    if v is None: return "N/A"
     try:
-        v = float(val)
-        sign = "+" if v > 0 else ""
-        return f"{sign}{v:.2f}%"
-    except (ValueError, TypeError):
-        return str(val)
+        val = float(v)
+        return f"{'+' if val>0 else ''}{val:.2f}%"
+    except (ValueError, TypeError): return str(v)
 
 
-def _fmt_addr(addr: str) -> str:
-    if len(addr) > 14:
-        return f"{addr[:6]}...{addr[-4:]}"
-    return addr
+def _rc(r: str) -> str:
+    return {"CRITICAL":"#f44","ELEVATED":"#f80","NORMAL":"#fc0","LOW":"#4c4","UNKNOWN":"#888"}.get(r,"#888")
 
 
-def _render_positions_table(positions: list[WhalePosition]) -> str:
-    if not positions:
-        return '<div class="empty">No whale positions tracked</div>'
-
-    rows = ""
-    for p in sorted(positions, key=lambda x: x.position_size_usd, reverse=True):
-        pnl_color = "#44cc44" if (p.unrealized_pnl_usd or 0) >= 0 else "#ff4444"
-        liq_dist = p.liquidation_distance_pct
-        liq_color = "#ff4444" if (liq_dist is not None and liq_dist < 10) else "#888888"
-        side_color = "#44cc44" if p.side.value == "LONG" else "#ff4444"
-
-        rows += f"""<tr>
-            <td class="addr">{_fmt_addr(p.address)}</td>
-            <td>{p.label or ""}</td>
-            <td class="symbol">{p.asset}</td>
-            <td style="color:{side_color};font-weight:bold">{p.side.value}</td>
-            <td class="num">{_fmt_usd(p.position_size_usd)}</td>
-            <td class="num">{_fmt_usd(p.entry_price)}</td>
-            <td class="num">{_fmt_usd(p.mark_price)}</td>
-            <td class="num">{f"{p.leverage}x" if p.leverage else "N/A"}</td>
-            <td class="num" style="color:{pnl_color}">{_fmt_usd(p.unrealized_pnl_usd)}</td>
-            <td class="num" style="color:{liq_color}">{_fmt_pct(liq_dist)}</td>
-        </tr>"""
-
-    return f"""<table>
-        <tr><th>Address</th><th>Label</th><th>Asset</th><th>Side</th><th>Size</th>
-            <th>Entry</th><th>Mark</th><th>Leverage</th><th>Unreal. PnL</th><th>Liq Dist</th></tr>
-        {rows}
-    </table>"""
+def _badge(mode: str) -> str:
+    c = {"live":"#4c4","cached":"#58a6ff","fixture":"#f80","degraded":"#f44"}.get(mode,"#888")
+    return f'<span style="background:{c};color:#000;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:bold">{_e(mode)}</span>'
 
 
-def _render_changes_table(changes: list[WhalePositionChange]) -> str:
-    if not changes:
-        return '<div class="empty">No position changes detected</div>'
+@dataclass
+class WorkbenchBundle:
+    run_id: str = ""
+    generated_at: str = ""
+    positions: list[WhalePosition] = field(default_factory=list)
+    changes: list[WhalePositionChange] = field(default_factory=list)
+    market_contexts: list[MarketContext] = field(default_factory=list)
+    feed_items: list[UnifiedFeedItem] = field(default_factory=list)
+    source_health: list[SourceHealth] = field(default_factory=list)
+    alert_candidates: list[dict] = field(default_factory=list)
+    watchlists: dict = field(default_factory=dict)
+    event_journal: list[dict] = field(default_factory=list)
+    market_regime: dict = field(default_factory=dict)
+    downstream_candidates: list[dict] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+    degraded_paths: list[str] = field(default_factory=list)
+    contracts_version: str = ""
+    contracts_sealed_at: str = ""
 
-    # Filter to meaningful changes
-    meaningful = [c for c in changes if c.change_type != ChangeType.NO_CHANGE]
-    if not meaningful:
-        return '<div class="empty">No meaningful position changes (all NO_CHANGE)</div>'
-
-    rows = ""
-    for c in meaningful:
-        rcolor = _risk_color(c.risk_level.value)
-        icon = _change_icon(c.change_type.value)
-        delta_str = _fmt_usd(c.position_delta_usd) if c.position_delta_usd is not None else "N/A"
-        side_color = "#44cc44" if c.side.value == "LONG" else "#ff4444"
-
-        rows += f"""<tr>
-            <td class="addr">{_fmt_addr(c.address)}</td>
-            <td>{c.label or ""}</td>
-            <td class="symbol">{c.asset}</td>
-            <td style="color:{side_color}">{c.side.value}</td>
-            <td>{icon} {c.change_type.value}</td>
-            <td class="num">{_fmt_usd(c.current_position_size_usd)}</td>
-            <td class="num">{delta_str}</td>
-            <td class="num">{_fmt_pct(c.change_pct)}</td>
-            <td style="color:{rcolor};font-weight:bold">{c.risk_level.value}</td>
-        </tr>"""
-
-    return f"""<table>
-        <tr><th>Address</th><th>Label</th><th>Asset</th><th>Side</th><th>Change</th>
-            <th>Size</th><th>Delta $</th><th>Delta %</th><th>Risk</th></tr>
-        {rows}
-    </table>"""
+    def as_dict(self) -> dict:
+        return asdict(self)
 
 
-def _render_market_cards(contexts: list[MarketContext]) -> str:
-    if not contexts:
-        return '<div class="empty">No market data</div>'
-
-    cards = ""
-    for ctx in contexts:
-        chg = ctx.price_change_24h_pct
-        chg_color = "#44cc44" if (chg or 0) >= 0 else "#ff4444"
-        chg_str = _fmt_pct(chg) if chg is not None else "N/A"
-
-        cards += f"""<div class="market-card">
-            <div class="market-symbol">{ctx.symbol}</div>
-            <div class="market-price">{_fmt_usd(ctx.price)}</div>
-            <div class="market-change" style="color:{chg_color}">{chg_str}</div>
-            <div class="market-detail">
-                <span>Vol: {_fmt_usd(ctx.volume_24h)}</span>
-                <span>OI: {_fmt_usd(ctx.open_interest)}</span>
-                <span>Funding: {_fmt_pct(ctx.funding_rate * 100) if ctx.funding_rate is not None else "N/A"}</span>
-                <span>L/S: {ctx.long_short_ratio or "N/A"}</span>
-            </div>
-        </div>"""
-
-    return f"""<div class="market-grid">{cards}</div>"""
+def _sec(s: str) -> str:
+    return f"<h2>{s}</h2>"
 
 
-def _render_feed_items(items: list[UnifiedFeedItem], max_items: int = 20) -> str:
-    if not items:
-        return '<div class="empty">No feed items</div>'
-
-    items_sorted = sorted(items, key=lambda x: x.published_at or x.ingested_at, reverse=True)[:max_items]
-    entries = ""
-    for item in items_sorted:
-        assets = ", ".join(item.assets_affected[:5]) if item.assets_affected else ""
-        entries += f"""<div class="feed-item">
-            <div class="feed-header">
-                <span class="feed-type-badge badge-{item.feed_type.value.lower()}">{item.feed_type.value}</span>
-                <span class="feed-source">{item.source_name.value}</span>
-                <span class="feed-time">{item.published_at or item.ingested_at}</span>
-            </div>
-            <div class="feed-title">{item.title}</div>
-            {f'<div class="feed-assets">{assets}</div>' if assets else ""}
-        </div>"""
-
-    return entries
-
-
-def _render_source_health(health_list: list[SourceHealth]) -> str:
-    if not health_list:
-        return '<div class="empty">No source health data</div>'
-
-    rows = ""
-    for h in health_list:
-        status_color = {"OK": "#44cc44", "DEGRADED": "#ff8800", "FAILED": "#ff4444", "UNKNOWN": "#888888"}
-        color = status_color.get(h.status.value, "#888888")
-        diag = h.degraded_info
-        diag_str = f"title=\"{diag.message_summary}\"" if diag else ""
-
-        rows += f"""<tr {diag_str}>
-            <td>{h.source_name}</td>
-            <td>{h.source_group}</td>
-            <td style="color:{color};font-weight:bold">{h.status.value}</td>
-            <td class="num">{h.success_count}</td>
-            <td class="num">{h.error_count}</td>
-            <td class="num">{h.latency_ms or "N/A"}{"ms" if h.latency_ms else ""}</td>
-        </tr>"""
-
-    return f"""<table>
-        <tr><th>Source</th><th>Group</th><th>Status</th><th>OK</th><th>Errors</th><th>Latency</th></tr>
-        {rows}
-    </table>"""
-
-
-def render_workbench(report: RunReport, output_path: str | None = None) -> str:
-    """Generate self-contained HTML workbench from a RunReport.
-
-    Args:
-        report: RunReport contract with all lane outputs.
-        output_path: If provided, write HTML to this path.
-
-    Returns:
-        HTML string.
-    """
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crypto Signal Intelligence — Workbench MVP+</title>
+def render_workbench(bundle: WorkbenchBundle, output_path: Optional[str] = None) -> str:
+    gen = _utc_now()
+    html = f'''<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">{_CSP}
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Crypto Signal Intelligence — Workbench MVP+v2</title>
 <style>
-* {{ margin: 0; padding: 0; box-sizing: border-box; }}
-body {{ font-family: -apple-system, 'Segoe UI', 'Roboto', sans-serif; background: #0d1117; color: #e6edf3; padding: 20px; }}
-h1 {{ color: #58a6ff; font-size: 24px; margin-bottom: 4px; }}
-h2 {{ color: #c9d1d9; font-size: 18px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #30363d; }}
-.subtitle {{ color: #8b949e; font-size: 14px; margin-bottom: 20px; }}
-.run-meta {{ background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #8b949e; }}
-table {{ width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }}
-th {{ background: #161b22; color: #8b949e; padding: 8px 10px; text-align: left; font-weight: 500; border-bottom: 2px solid #30363d; white-space: nowrap; }}
-td {{ padding: 6px 10px; border-bottom: 1px solid #21262d; white-space: nowrap; }}
-tr:hover td {{ background: #1c2128; }}
-.num {{ text-align: right; font-family: 'SF Mono', 'Consolas', monospace; }}
-.addr {{ font-family: 'SF Mono', 'Consolas', monospace; font-size: 12px; }}
-.symbol {{ font-weight: bold; color: #58a6ff; }}
-.empty {{ color: #8b949e; font-style: italic; padding: 20px; text-align: center; }}
-.market-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }}
-.market-card {{ background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; }}
-.market-symbol {{ font-size: 14px; color: #8b949e; }}
-.market-price {{ font-size: 28px; font-weight: bold; margin: 4px 0; }}
-.market-change {{ font-size: 16px; margin-bottom: 8px; }}
-.market-detail {{ font-size: 12px; color: #8b949e; display: flex; flex-direction: column; gap: 2px; }}
-.feed-item {{ background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-bottom: 8px; }}
-.feed-header {{ display: flex; gap: 8px; align-items: center; margin-bottom: 4px; font-size: 12px; }}
-.feed-type-badge {{ padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 11px; }}
-.badge-flash {{ background: #ff444433; color: #ff4444; }}
-.badge-news {{ background: #58a6ff33; color: #58a6ff; }}
-.badge-telegram {{ background: #44cc4433; color: #44cc44; }}
-.badge-unknown {{ background: #88888833; color: #888888; }}
-.feed-source {{ color: #8b949e; }}
-.feed-time {{ color: #8b949e; margin-left: auto; }}
-.feed-title {{ font-size: 14px; }}
-.feed-assets {{ font-size: 12px; color: #58a6ff; margin-top: 4px; }}
-.summary-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }}
-.stat-card {{ background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; text-align: center; }}
-.stat-value {{ font-size: 24px; font-weight: bold; }}
-.stat-label {{ font-size: 12px; color: #8b949e; margin-top: 4px; }}
-.error-banner {{ background: #ff444422; border: 1px solid #ff4444; border-radius: 6px; padding: 12px; margin: 12px 0; color: #ff4444; }}
-.warning {{ color: #ffcc00; }}
-.known-limitation {{ color: #8b949e; font-size: 12px; margin: 4px 0; }}
-@media print {{ body {{ background: white; color: black; }} .run-meta, .market-card, .feed-item, .stat-card {{ border-color: #ccc; background: #f5f5f5; }} h1 {{ color: #0366d6; }} }}
-</style>
-</head>
-<body>
-<h1>\U0001f30d Crypto Signal Intelligence — Internal Workbench</h1>
-<div class="subtitle">MVP+ One-Shot Scan | {report.started_at} UTC | Run ID: {report.run_id}</div>"""
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:-apple-system,'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;padding:16px;font-size:14px}}
+h1{{color:#58a6ff;font-size:22px}}
+h2{{color:#c9d1d9;font-size:16px;margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid #30363d}}
+a{{color:#58a6ff}}
+table{{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:12px}}
+th{{background:#161b22;color:#8b949e;padding:6px 8px;text-align:left;font-weight:500;border-bottom:2px solid #30363d;white-space:nowrap}}
+td{{padding:4px 8px;border-bottom:1px solid #21262d;white-space:nowrap;font-size:12px}}
+tr:hover td{{background:#1c2128}}
+.n{{text-align:right;font-family:'SF Mono',Consolas,monospace}}
+.a{{font-family:'SF Mono',Consolas,monospace;font-size:11px}}
+.feed-item{{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:13px}}
+.feed-hdr{{display:flex;gap:6px;align-items:center;margin-bottom:2px;font-size:11px;color:#8b949e}}
+.feed-ttl{{font-size:13px;font-weight:500}}
+.feed-body{{color:#8b949e;font-size:12px;margin-top:2px}}
+.feed-assets{{color:#58a6ff;font-size:11px;margin-top:2px}}
+.badge{{padding:1px 5px;border-radius:3px;font-weight:600;font-size:10px}}
+.badge-flash{{background:#ff444433;color:#ff4444}}
+.badge-news{{background:#58a6ff33;color:#58a6ff}}
+.badge-onchain{{background:#44cc4433;color:#44cc44}}
+.empty{{color:#8b949e;font-style:italic;padding:16px;text-align:center}}
+.mgrid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px}}
+.mcard{{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px}}
+.msym{{font-size:12px;color:#8b949e}}
+.mprc{{font-size:24px;font-weight:bold;margin:2px 0}}
+.mchg{{font-size:14px;margin-bottom:4px}}
+.mdet{{font-size:11px;color:#8b949e;line-height:1.5}}
+.stats{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}}
+.stat{{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:10px;text-align:center}}
+.stat-v{{font-size:20px;font-weight:bold}}
+.stat-l{{font-size:11px;color:#8b949e}}
+.warn{{color:#fc0;font-size:12px;margin:2px 0}}
+.disclaimer{{color:#f80;font-size:11px;margin-top:4px;font-style:italic}}
+.ftr{{margin-top:24px;padding-top:8px;border-top:1px solid #30363d;font-size:10px;color:#8b949e}}
+.jt{{color:#58a6ff;font-family:monospace;font-size:11px}}
+</style></head><body>
+<h1>Crypto Signal Intelligence - Internal Workbench</h1>
+<p style="color:#8b949e;font-size:13px;margin-bottom:12px">
+Run: {_e(bundle.run_id)} | {gen} UTC | {_e(bundle.contracts_version)}</p>'''
 
-    # Error banner
-    if report.error:
-        html += f'<div class="error-banner">⚠️ {report.error}</div>'
+    mc = len([c for c in bundle.changes if c.change_type != ChangeType.NO_CHANGE])
+    ok = len([h for h in bundle.source_health if h.status == SourceStatus.OK])
+    tot = len(bundle.source_health)
+    html += f'''<div class="stats">
+<div class="stat"><div class="stat-v">{len(bundle.positions)}</div><div class="stat-l">Whale</div></div>
+<div class="stat"><div class="stat-v">{mc}</div><div class="stat-l">Changes</div></div>
+<div class="stat"><div class="stat-v">{len(bundle.feed_items)}</div><div class="stat-l">Feeds</div></div>
+<div class="stat"><div class="stat-v">{len(bundle.market_contexts)}</div><div class="stat-l">Market</div></div>
+<div class="stat"><div class="stat-v" style="color:{"#4c4" if ok==tot else "#f80"}">{ok}/{tot}</div><div class="stat-l">Health</div></div></div>'''
 
-    # Summary stats
-    total_positions = len(report.whale_positions)
-    meaningful_changes = len([c for c in report.whale_changes if c.change_type != ChangeType.NO_CHANGE])
-    total_feed = len(report.feed_items)
-    ok_sources = len([h for h in report.source_health if h.status == SourceStatus.OK])
+    for w in bundle.warnings:
+        html += f'<div class="warn">W {_e(w)}</div>'
+    for d in bundle.degraded_paths:
+        html += f'<div class="warn">Degraded: {_e(d)}</div>'
 
-    html += f"""<div class="summary-grid">
-        <div class="stat-card"><div class="stat-value">{total_positions}</div><div class="stat-label">Whale Positions</div></div>
-        <div class="stat-card"><div class="stat-value">{meaningful_changes}</div><div class="stat-label">Position Changes</div></div>
-        <div class="stat-card"><div class="stat-value">{len(report.market_contexts)}</div><div class="stat-label">Market Assets</div></div>
-        <div class="stat-card"><div class="stat-value">{total_feed}</div><div class="stat-label">Feed Items</div></div>
-        <div class="stat-card"><div class="stat-value" style="color:{"#44cc44" if ok_sources == len(report.source_health) else "#ff8800"}">{ok_sources}/{len(report.source_health)}</div><div class="stat-label">Sources OK</div></div>
-    </div>"""
+    # 1. Feed
+    html += _sec("1. Unified Intelligence Feed")
+    if not bundle.feed_items:
+        html += '<div class="empty">No feed items</div>'
+    else:
+        for item in sorted(bundle.feed_items, key=lambda x: x.published_at or x.ingested_at, reverse=True)[:30]:
+            ft = _e(item.feed_type.value)
+            html += f'''<div class="feed-item"><div class="feed-hdr">
+<span class="badge badge-{ft.lower()}">{ft}</span>
+<span style="color:#8b949e">{_e(item.source_name.value)}</span>{_badge(item.data_origin)}
+<span style="margin-left:auto;color:#8b949e">{_e(item.published_at or item.ingested_at)}</span></div>
+<div class="feed-ttl">{_e(item.title)}</div>'''
+            if item.body:
+                html += f'<div class="feed-body">{_e(item.body)[:200]}</div>'
+            if item.assets_affected:
+                html += f'<div class="feed-assets">{", ".join(_e(a) for a in item.assets_affected[:5])}</div>'
+            url = _safe_url(item.url)
+            if url:
+                html += f'<a href="{url}" target="_blank" rel="noopener noreferrer">source</a>'
+            html += "</div>"
 
-    # Run metadata
-    lane_statuses = "".join(
-        f'<span style="margin-right:12px"><b>{lid}</b>: {lr.status}{" ("+str(lr.item_count)+" items)" if lr.item_count else ""}</span>'
-        for lid, lr in sorted(report.lane_results.items())
-    )
-    html += f'<div class="run-meta">{lane_statuses}</div>'
+    # 2. Changes
+    html += _sec("2. Whale Position Changes")
+    meaningful = [c for c in bundle.changes if c.change_type != ChangeType.NO_CHANGE]
+    if not meaningful:
+        html += '<div class="empty">No changes</div>'
+    else:
+        html += "<table><tr><th>Label</th><th>Asset</th><th>Change</th><th>Size</th><th>Delta$</th><th>Delta%</th><th>Risk</th><th>LiqDist</th></tr>"
+        for c in meaningful:
+            html += f'<tr><td class="a">{_e(c.label or "")}</td><td><b>{_e(c.asset)}</b></td>'
+            html += f'<td>{_e(c.change_type.value)}</td><td class="n">{_usd(c.current_position_size_usd)}</td>'
+            html += f'<td class="n">{_usd(c.position_delta_usd)}</td><td class="n">{_pct(c.change_pct)}</td>'
+            html += f'<td style="color:{_rc(c.risk_level.value)};font-weight:bold">{_e(c.risk_level.value)}</td>'
+            html += f'<td class="n" style="color:{"#f44" if (c.current_liquidation_distance_pct or 99)<15 else "#888"}">{_pct(c.current_liquidation_distance_pct)}</td></tr>'
+        html += "</table>"
 
-    # Known limitations
-    if report.known_limitations:
-        for lim in report.known_limitations:
-            html += f'<div class="known-limitation">\U0001f4dd {lim}</div>'
-    if report.degraded_paths:
-        for dp in report.degraded_paths:
-            html += f'<div class="known-limitation">⚠️ Degraded: {dp}</div>'
+    # 3. Positions
+    html += _sec("3. Current Whale Positions")
+    if not bundle.positions:
+        html += '<div class="empty">No positions</div>'
+    else:
+        html += "<table><tr><th>Label</th><th>Asset</th><th>Side</th><th>Size</th><th>Entry</th><th>Lev</th><th>PnL</th><th>LiqDist</th></tr>"
+        for p in sorted(bundle.positions, key=lambda x: x.position_size_usd, reverse=True):
+            sc = "#4c4" if p.side.value == "LONG" else "#f44"
+            pc = "#4c4" if (p.unrealized_pnl_usd or 0) >= 0 else "#f44"
+            html += f'<tr><td class="a">{_e(p.label or "")}</td><td><b>{_e(p.asset)}</b></td>'
+            html += f'<td style="color:{sc};font-weight:bold">{_e(p.side.value)}</td>'
+            html += f'<td class="n">{_usd(p.position_size_usd)}</td><td class="n">{_usd(p.entry_price)}</td>'
+            html += f'<td class="n">{_e(str(p.leverage)+"x" if p.leverage else "N/A")}</td>'
+            html += f'<td class="n" style="color:{pc}">{_usd(p.unrealized_pnl_usd)}</td>'
+            html += f'<td class="n" style="color:{"#f44" if (p.liquidation_distance_pct or 99)<15 else "#888"}">{_pct(p.liquidation_distance_pct)}</td></tr>'
+        html += "</table>"
 
-    # Whale Positions
-    html += "<h2>\U0001f40b Whale Positions</h2>"
-    html += _render_positions_table(report.whale_positions)
+    # 4. Liquidation Risk
+    html += _sec("4. Liquidation Risk")
+    risky = [c for c in bundle.changes if c.change_type != ChangeType.NO_CHANGE and (c.current_liquidation_distance_pct is not None and c.current_liquidation_distance_pct < 20)]
+    if not risky:
+        html += '<div class="empty">No liquidation risks</div>'
+    else:
+        html += "<table><tr><th>Label</th><th>Asset</th><th>Risk</th><th>LiqDist</th><th>LiqPrice</th></tr>"
+        for c in risky:
+            html += f'<tr><td class="a">{_e(c.label or "")}</td><td><b>{_e(c.asset)}</b></td>'
+            html += f'<td style="color:{_rc(c.risk_level.value)}">{_e(c.risk_level.value)}</td>'
+            html += f'<td class="n" style="color:#f44">{_pct(c.current_liquidation_distance_pct)}</td>'
+            html += f'<td class="n">{_usd(c.current_liquidation_price)}</td></tr>'
+        html += "</table>"
 
-    # Position Changes
-    html += "<h2>\U0001f4c8 Position Changes</h2>"
-    html += _render_changes_table(report.whale_changes)
+    # 5. Market Context
+    html += _sec("5. Market Context")
+    if not bundle.market_contexts:
+        html += '<div class="empty">No market data</div>'
+    else:
+        html += '<div class="mgrid">'
+        for ctx in bundle.market_contexts:
+            chg = ctx.price_change_24h_pct
+            cc = "#4c4" if (chg or 0) >= 0 else "#f44"
+            html += f'<div class="mcard"><div class="msym">{_e(ctx.symbol)} {_badge(ctx.data_origin)}</div>'
+            html += f'<div class="mprc">{_usd(ctx.price)}</div>'
+            html += f'<div class="mchg" style="color:{cc}">{_pct(chg)}</div>'
+            html += f'<div class="mdet">Vol:{_usd(ctx.volume_24h)} OI:{_usd(ctx.open_interest)} Fund:{_pct(ctx.funding_rate*100) if ctx.funding_rate is not None else "N/A"} Venue:{_e(ctx.source.value)}</div></div>'
+        html += "</div>"
 
-    # Market Context
-    html += "<h2>\U0001f4ca Market Context</h2>"
-    html += _render_market_cards(report.market_contexts)
+    # 6. Source Health
+    html += _sec("6. Source Health")
+    if not bundle.source_health:
+        html += '<div class="empty">No health data</div>'
+    else:
+        html += "<table><tr><th>Source</th><th>Group</th><th>Status</th><th>OK</th><th>Err</th></tr>"
+        sc_map = {"OK":"#4c4","DEGRADED":"#f80","FAILED":"#f44","UNKNOWN":"#888"}
+        for h in bundle.source_health:
+            c = sc_map.get(h.status.value, "#888")
+            msg = _e(h.degraded_info.message_summary) if h.degraded_info else ""
+            html += f'<tr title="{msg}"><td>{_e(h.source_name)}</td><td>{_e(h.source_group)}</td>'
+            html += f'<td style="color:{c};font-weight:bold">{_e(h.status.value)}</td>'
+            html += f'<td class="n">{h.success_count}</td><td class="n">{h.error_count}</td></tr>'
+        html += "</table>"
 
-    # Feed Items
-    html += "<h2>\U0001f4ec Feed Items</h2>"
-    html += _render_feed_items(report.feed_items)
+    # 7. Watchlists
+    html += _sec("7. Watchlists")
+    if bundle.watchlists:
+        for name, items in bundle.watchlists.items():
+            html += f'<div><b>{_e(name)}</b>: {" | ".join(_e(str(i)) for i in (items or []))}</div>'
+    else:
+        html += '<div class="empty">No watchlists</div>'
 
-    # Source Health
-    html += "<h2>⚙️ Source Health</h2>"
-    html += _render_source_health(report.source_health)
+    # 8. Alert Candidates
+    html += _sec("8. Alert Candidates")
+    if bundle.alert_candidates:
+        for ac in bundle.alert_candidates[:15]:
+            html += f'<div class="feed-item"><b>{_e(ac.get("title",""))}</b><br><span style="color:#8b949e;font-size:11px">{_e(ac.get("rationale",""))} | source: {_e(ac.get("source",""))}</span></div>'
+    else:
+        html += '<div class="empty">No candidates</div>'
 
-    # Footer
-    html += f"""<div style="margin-top:30px;padding-top:12px;border-top:1px solid #30363d;font-size:11px;color:#8b949e">
-        Generated: {_utc_now()} UTC | Contracts: v{report.contracts_version} | Sealed: {report.contracts_sealed_at}
-    </div>
-</body>
-</html>"""
+    # 9. Event Journal
+    html += _sec("9. Event Journal")
+    if bundle.event_journal:
+        for e in bundle.event_journal[-15:]:
+            html += f'<div class="feed-item"><span class="jt">{_e(e.get("timestamp",""))}</span> {_e(e.get("summary",""))}</div>'
+    else:
+        html += '<div class="empty">No entries</div>'
+
+    # Downstream
+    html += _sec("Downstream Candidates")
+    if bundle.downstream_candidates:
+        for d in bundle.downstream_candidates[:10]:
+            html += f'<div class="feed-item"><b>{_e(d.get("title",""))}</b> [{_e(d.get("channel",""))}]<br><span style="color:#8b949e;font-size:11px">{_e(d.get("rationale",""))}</span></div>'
+    else:
+        html += '<div class="empty">No downstream candidates</div>'
+
+    # Market Regime
+    html += _sec("Market Regime")
+    regime = bundle.market_regime
+    if regime:
+        html += f'<div><b>State:</b> {_e(regime.get("state","unknown"))}</div>'
+        for r in regime.get("rules", [])[:5]:
+            html += f'<div style="color:#8b949e;font-size:11px">- {_e(r)}</div>'
+        html += '<div class="disclaimer">interpretation_type: rule_based_system_context - no trading advice</div>'
+    else:
+        html += '<div class="empty">No regime analysis</div>'
+
+    html += f'<div class="ftr">Contracts: {_e(bundle.contracts_version)} | {_e(bundle.contracts_sealed_at)}</div>'
+    html += "</body></html>"
 
     if output_path:
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, "w", encoding="utf-8") as f:
+        tmp = output_path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
             f.write(html)
+        os.replace(tmp, output_path)
 
     return html
