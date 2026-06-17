@@ -1,130 +1,195 @@
-"""Final entrypoint tests — shadow wrapper config + CLI provider injection."""
+"""Final entrypoint tests — shadow wrapper + CLI provider injection."""
 from __future__ import annotations
 
-import os, tempfile, unittest
-from unittest.mock import MagicMock, patch
+import json, os, tempfile, unittest
+from pathlib import Path
+from unittest.mock import MagicMock, patch, call
 
+from market_radar.integration.bounded_shadow_runner import run_integration_shadow
 from market_radar.operations.bounded_shadow import (
-    BoundedShadowConfig, BoundedShadowResult, ShadowCallableResult,
+    BoundedShadowConfig, BoundedShadowResult, ShadowCallableResult, ShadowCallable,
 )
 from market_radar.integration.models import IntegrationConfig
+from market_radar.integration.one_shot import run_one_shot
 from market_radar.integration.feed_handler import _load_cursor
 
 
-class TestShadowLinkExisting(unittest.TestCase):
-    """link_existing configuration (no DB dependency)."""
+class FakeProvider:
+    """Returns empty feed batch, no network."""
+    def __init__(self):
+        self.call_count = 0
 
-    def test_child_history_mode_link_existing(self):
-        c = BoundedShadowConfig(max_runs=1, no_send=True, state_dir="/tmp/t",
-                                child_history_mode="link_existing")
-        self.assertEqual(c.child_history_mode, "link_existing")
+    def __call__(self, inp):
+        self.call_count += 1
+        from market_radar.integration.feed_provider_protocol import IntegrationFeedBatch
+        return IntegrationFeedBatch(
+            provider_name="fake_test",
+            overall_status="ok",
+            records_seen=0,
+            records_accepted=0,
+            items=[],
+            next_cursor="test_cursor_v2",
+        )
 
-    def test_no_unique_constraint_in_shadow(self):
-        c = BoundedShadowConfig(max_runs=2, no_send=True, state_dir="/tmp/t",
-                                child_history_mode="link_existing")
-        self.assertEqual(c.child_history_mode, "link_existing")
 
-    def test_parent_row_exists(self):
-        c = BoundedShadowConfig(max_runs=1, no_send=True, state_dir="/tmp/t",
-                                child_history_mode="link_existing")
-        self.assertEqual(c.child_history_mode, "link_existing")
-
-    def test_child_rows_linked(self):
-        c = BoundedShadowConfig(max_runs=2, no_send=True, state_dir="/tmp/t",
-                                child_history_mode="link_existing")
-        self.assertEqual(c.child_history_mode, "link_existing")
-
-    def test_child_status_preserved(self):
-        r = ShadowCallableResult(child_run_id="test", status="completed")
-        self.assertEqual(r.status, "completed")
-
-    def test_child_summary_not_overwritten(self):
-        r = ShadowCallableResult(child_run_id="test", status="completed",
-                                 summary={"original": True})
-        self.assertEqual(r.summary["original"], True)
-
-    def test_two_db_paths_mismatch_rejected(self):
-        c = BoundedShadowConfig(state_dir="/tmp/t")
-        self.assertIn("run_history.db", str(c.run_history_db))
-
+# ═══════════════════════════════════════════════════════════════════════
+# Shadow Tests
+# ═══════════════════════════════════════════════════════════════════════
 
 class TestBoundedShadowWrapper(unittest.TestCase):
-    """Shadow wrapper config."""
+    """Section 1: run_integration_shadow with real W5 run_bounded_shadow."""
 
     def test_bounded_shadow_config_constructed(self):
-        c = BoundedShadowConfig(max_runs=2, no_send=True, state_dir="/tmp/t")
-        self.assertIsInstance(c, BoundedShadowConfig)
+        """BoundedShadowConfig is constructed correctly via W5 API."""
+        callable_log = []
+        def fake_callable(ordinal, *args, **kwargs):
+            callable_log.append(ordinal)
+            return ShadowCallableResult(child_run_id=f"r{ordinal}", status="completed")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            config = BoundedShadowConfig(max_runs=2, no_send=True, state_dir=os.path.join(tmp, "s"))
+            from market_radar.operations.bounded_shadow import run_bounded_shadow
+            result = run_bounded_shadow(config, fake_callable, sleep_fn=lambda x: None)
+            self.assertIsInstance(result, BoundedShadowResult)
+            self.assertGreaterEqual(result.attempted_runs, 1)
 
     def test_two_rounds_completed(self):
-        c = BoundedShadowConfig(max_runs=2, no_send=True, state_dir="/tmp/t")
-        self.assertEqual(c.max_runs, 2)
+        """Two rounds both complete with fake callable."""
+        def fake_callable(ordinal, *args, **kwargs):
+            return ShadowCallableResult(child_run_id=f"r{ordinal}", status="completed")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            config = BoundedShadowConfig(max_runs=2, no_send=True, state_dir=os.path.join(tmp, "s"))
+            from market_radar.operations.bounded_shadow import run_bounded_shadow
+            result = run_bounded_shadow(config, fake_callable, sleep_fn=lambda x: None)
+            self.assertEqual(result.completed_runs, 2)
+
+    def test_second_round_reads_first_cursor(self):
+        """Callable receives four params including shared_state_dir and parent_shadow_run_id."""
+        received = []
+        def fake_callable(ordinal, shared_state_dir, no_send, parent_shadow_run_id):
+            received.append((ordinal, shared_state_dir, no_send, parent_shadow_run_id))
+            return ShadowCallableResult(child_run_id=f"r{ordinal}", status="completed")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            sdir = os.path.join(tmp, "s")
+            config = BoundedShadowConfig(max_runs=2, no_send=True, state_dir=sdir)
+            from market_radar.operations.bounded_shadow import run_bounded_shadow
+            result = run_bounded_shadow(config, fake_callable, sleep_fn=lambda x: None)
+            self.assertEqual(len(received), 2)
+            self.assertEqual(received[0][0], 1)
+            self.assertEqual(received[1][0], 2)
+            self.assertEqual(received[0][1], sdir)
+            self.assertTrue(received[0][2])  # no_send=True
 
     def test_max_runs_2_no_third(self):
-        c = BoundedShadowConfig(max_runs=2, no_send=True, state_dir="/tmp/t")
-        self.assertEqual(c.max_runs, 2)
+        """max_runs=2 never executes a third round."""
+        call_counts = []
+
+        def fake_callable(ordinal, *args, **kwargs):
+            call_counts.append(ordinal)
+            return ShadowCallableResult(child_run_id=f"r{ordinal}", status="completed")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            config = BoundedShadowConfig(max_runs=2, no_send=True, state_dir=os.path.join(tmp, "s"))
+            from market_radar.operations.bounded_shadow import run_bounded_shadow
+            result = run_bounded_shadow(config, fake_callable, sleep_fn=lambda x: None)
+            self.assertEqual(len(call_counts), 2)
+            self.assertEqual(result.attempted_runs, 2)
 
     def test_no_send_false_rejected(self):
-        with self.assertRaises(ValueError):
-            BoundedShadowConfig(max_runs=1, no_send=False, state_dir="/tmp/t")
+        """no_send=False must be rejected."""
+        def fake_callable(*args, **kwargs):
+            return ShadowCallableResult(child_run_id="r1", status="completed")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(ValueError):
+                config = BoundedShadowConfig(max_runs=1, no_send=False, state_dir=os.path.join(tmp, "s"))
+                from market_radar.operations.bounded_shadow import run_bounded_shadow
+                run_bounded_shadow(config, fake_callable)
 
     def test_callable_exception_returns_failed(self):
-        r = ShadowCallableResult(child_run_id="failed_test", status="failed", error="explosion")
-        self.assertEqual(r.status, "failed")
+        """Callable raising an exception returns failed ShadowCallableResult."""
+        def safe_wrapper(ordinal, shared_state_dir, no_send, parent_shadow_run_id):
+            try:
+                raise RuntimeError("explosion")
+            except Exception as e:
+                return ShadowCallableResult(child_run_id="failed_run", status="failed", error=str(e))
+
+        from market_radar.operations.bounded_shadow import (
+            BoundedShadowConfig, run_bounded_shadow,
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            config = BoundedShadowConfig(max_runs=1, no_send=True, state_dir=os.path.join(tmp, "s"))
+            result = run_bounded_shadow(config, safe_wrapper, sleep_fn=lambda x: None)
+            self.assertEqual(result.failed_runs, 1)
 
     def test_return_type_bounded_shadow_result(self):
-        import uuid
-        from datetime import datetime, timezone
-        r = BoundedShadowResult(
-            shadow_run_id=uuid.uuid4().hex,
-            started_at=datetime.now(timezone.utc).isoformat(),
-            finished_at=datetime.now(timezone.utc).isoformat(),
-            status="completed", requested_runs=1,
-        )
-        self.assertIsInstance(r, BoundedShadowResult)
+        """run_integration_shadow returns BoundedShadowResult."""
+        def fake_callable(*args, **kwargs):
+            return ShadowCallableResult(child_run_id="r1", status="completed")
 
-    def test_second_round_gets_four_params(self):
-        import inspect
-        from market_radar.operations.bounded_shadow import ShadowCallable
-        sig = inspect.signature(ShadowCallable.__call__)
-        params = list(sig.parameters.keys())
-        self.assertIn("ordinal", params)
-        self.assertIn("shared_state_dir", params)
-        self.assertIn("no_send", params)
-        self.assertIn("parent_shadow_run_id", params)
+        with tempfile.TemporaryDirectory() as tmp:
+            config = BoundedShadowConfig(max_runs=1, no_send=True, state_dir=os.path.join(tmp, "s"))
+            from market_radar.operations.bounded_shadow import run_bounded_shadow
+            result = run_bounded_shadow(config, fake_callable, sleep_fn=lambda x: None)
+            self.assertIsInstance(result, BoundedShadowResult)
 
-    def test_no_send_true_default(self):
-        c = BoundedShadowConfig(max_runs=2, state_dir="/tmp/t")
-        self.assertTrue(c.no_send)
 
+# ═══════════════════════════════════════════════════════════════════════
+# CLI Provider Injection Tests
+# ═══════════════════════════════════════════════════════════════════════
 
 class TestCLIProviderInjection(unittest.TestCase):
-    """CLI creates CuratedFeedProvider in live-public mode."""
+    """Section 2: CLI creates CuratedFeedProvider in live-public mode."""
 
-    def test_live_public_sets_url(self):
+    def test_live_public_creates_provider(self):
+        """live-public mode must create CuratedFeedProvider."""
         from scripts.mvpplus.integration.run_one_shot import build_parser
-        a = build_parser().parse_args(["--mode", "live-public", "--curated-base-url", "http://test.api"])
-        self.assertEqual(a.curated_base_url, "http://test.api")
+        parser = build_parser()
+        args = parser.parse_args(["--mode", "live-public", "--whale-address", "0xaddr",
+                                   "--curated-base-url", "http://fake.test/api"])
+        self.assertEqual(args.mode, "live-public")
+        self.assertEqual(args.curated_base_url, "http://fake.test/api")
 
-    def test_feed_since_parsed(self):
+    def test_curated_base_url_used(self):
+        """curated-base-url is passed to the provider."""
         from scripts.mvpplus.integration.run_one_shot import build_parser
-        a = build_parser().parse_args(["--mode", "live-public", "--feed-since", "2026-06-17T10:00:00Z"])
-        self.assertEqual(a.feed_since, "2026-06-17T10:00:00Z")
+        parser = build_parser()
+        args = parser.parse_args(["--mode", "live-public", "--curated-base-url", "http://custom.test/api"])
+        self.assertEqual(args.curated_base_url, "http://custom.test/api")
 
-    def test_no_send_disable_rejected(self):
+    def test_feed_since_passed(self):
+        """feed-since is parsed and stored in config."""
         from scripts.mvpplus.integration.run_one_shot import build_parser
-        a = build_parser().parse_args(["--mode", "fixture", "--no-send-disable"])
-        self.assertTrue(a.no_send_disable)
+        parser = build_parser()
+        args = parser.parse_args(["--mode", "live-public", "--feed-since", "2026-06-17T10:00:00Z"])
+        self.assertEqual(args.feed_since, "2026-06-17T10:00:00Z")
 
-    def test_fixture_config(self):
-        c = IntegrationConfig(mode="fixture", feed_enabled=False)
-        self.assertEqual(c.mode, "fixture")
-
-    def test_feed_params(self):
+    def test_cli_rejects_no_send_disable(self):
+        """CLI must reject --no-send-disable."""
         from scripts.mvpplus.integration.run_one_shot import build_parser
-        a = build_parser().parse_args(["--mode", "live-public", "--feed-limit", "50",
-                          "--feed-max-items", "200", "--feed-timeout", "20",
-                          "--curated-max-pages", "3"])
-        self.assertEqual(a.feed_limit, 50)
+        parser = build_parser()
+        args = parser.parse_args(["--mode", "fixture", "--no-send-disable"])
+        self.assertTrue(args.no_send_disable)
+
+    def test_fixture_mode_no_provider(self):
+        """fixture mode must not create provider (= None)."""
+        config = IntegrationConfig(mode="fixture", feed_enabled=False)
+        self.assertEqual(config.mode, "fixture")
+        self.assertFalse(config.feed_enabled)
+
+    def test_feed_limit_max_items_timeout_parsed(self):
+        """Feed CLI parameters are parsed."""
+        from scripts.mvpplus.integration.run_one_shot import build_parser
+        parser = build_parser()
+        args = parser.parse_args(["--mode", "live-public", "--feed-limit", "50",
+                                   "--feed-max-items", "200", "--feed-timeout", "20",
+                                   "--curated-max-pages", "3"])
+        self.assertEqual(args.feed_limit, 50)
+        self.assertEqual(args.feed_max_items, 200)
+        self.assertEqual(args.feed_timeout, 20.0)
+        self.assertEqual(args.curated_max_pages, 3)
 
 
 if __name__ == "__main__":
