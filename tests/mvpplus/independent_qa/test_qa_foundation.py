@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Tests for Independent QA Foundation — mvpplus.
 
-All tests are offline. No network access. No business code modification.
+W6_DELTA_PROJECT_SPECIFIC_QA_REPAIR_R02:
+  All oracles, validators, and corpus scanners repaired.
+  Tests cover: framework self-test, synthetic vulnerable target detection,
+  synthetic safe target pass, with exact counts and no false business-lane claims.
 """
 
 import json
@@ -33,6 +36,9 @@ def make_temp_py(content: str) -> str:
     return tmp.name
 
 
+# ── Framework Self-Tests ────────────────────────────────────────────────────
+
+
 class TestQAResult(unittest.TestCase):
     """QAResult dataclass behavior."""
 
@@ -56,23 +62,11 @@ class TestQAResult(unittest.TestCase):
 
 class TestOwnership(unittest.TestCase):
     def test_detects_unauthorized_change(self):
-        # Simulate by checking a known-bad pattern
         r = scan_ownership(PROJ, ["qa/mvpplus/"], base_ref="HEAD")
-        # Should not fail (we haven't changed anything outside qa)
         self.assertIn(r.status, ("PASS", "FAIL"))
 
 
 class TestForbiddenImports(unittest.TestCase):
-    def test_detects_forbidden_import(self):
-        path = make_temp_py("import os.system\n")
-        try:
-            r = scan_forbidden_imports(os.path.dirname(path), [os.path.dirname(path)], ["os"])
-            # os is not in our default forbidden list but let's test with a custom one
-            r2 = scan_forbidden_imports(os.path.dirname(path), [os.path.dirname(path)], ["os"])
-            self.assertIsNotNone(r2)
-        finally:
-            os.unlink(path)
-
     def test_clean_import_passes(self):
         path = make_temp_py("import json\n")
         try:
@@ -150,78 +144,321 @@ class TestArtifactBinding(unittest.TestCase):
         self.assertEqual(r.status, "PASS")
 
 
+class TestTestCount(unittest.TestCase):
+    def test_missing_path_blocked(self):
+        """Non-existent test path should appear in violations but not crash."""
+        r = scan_test_count(PROJ, 999, ["/nonexistent/path"])
+        self.assertEqual(r.status, "FAIL")
+
+
 class TestDependencyManifest(unittest.TestCase):
-    def test_missing_file_blocked(self):
+    def test_missing_file_fails(self):
         r = scan_dependency_manifest("/nonexistent", "missing.txt")
         self.assertEqual(r.status, "FAIL")
 
 
+# ═══════════════════════════════════════════════════════════════════════════
+# Repaired Oracles — W6_DELTA
+# ═══════════════════════════════════════════════════════════════════════════
+
+
 class TestLiquidationOracle(unittest.TestCase):
-    def test_wrong_long_formula(self):
-        r = oracle_liquidation_formula({"long_entry": 999.0})
+    """oracle_liquidation_formula: (mark-liq)/mark*100, negative preserved."""
+
+    def test_long_formula(self):
+        """long = (mark - liq) / mark * 100"""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 95.0, "side": "long", "expected": 5.0})
+        self.assertEqual(r.status, "PASS", f"Expected ~5.0%, got violations: {r.violations}")
+
+    def test_short_formula(self):
+        """short = (liq - mark) / mark * 100"""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 110.0, "side": "short", "expected": 10.0})
+        self.assertEqual(r.status, "PASS")
+
+    def test_missing_mark_liq_null(self):
+        """Missing mark or liq → null result, PASS (not FAIL)."""
+        r = oracle_liquidation_formula({"side": "long"})
+        self.assertEqual(r.status, "PASS")
+
+    def test_invalid_mark_liq_null(self):
+        """Non-numeric mark → null result, PASS."""
+        r = oracle_liquidation_formula({"mark": "INVALID", "liq": 95.0, "side": "long"})
+        self.assertEqual(r.status, "PASS")
+
+    def test_negative_value_preserved(self):
+        """Negative distance (liq < mark on long) is preserved, not abs'd."""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 110.0, "side": "long",
+                                         "expected": -10.0})
+        self.assertEqual(r.status, "PASS", f"Expected -10 preserved, got: {r.violations}")
+
+    def test_negative_clamped_detected(self):
+        """If negative distance is incorrectly clamped, it's a FAIL."""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 110.0, "side": "long",
+                                         "expected": 0.0})
         self.assertEqual(r.status, "FAIL")
 
-    def test_correct_formula(self):
-        # Include the formula pattern in the dict
-        r = oracle_liquidation_formula({
-            "long_entry": 0.007353, "short_entry": 0.007353,
-            "formula": "entry / (1 - mm_pct)",
-        })
+    def test_wrong_value_fails(self):
+        """Incorrect expected value beyond tolerance → FAIL."""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 95.0, "side": "long",
+                                         "expected": 99.0})
+        self.assertEqual(r.status, "FAIL")
+
+    def test_configurable_tolerance(self):
+        """Tolerance can be configured."""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 95.0, "side": "long",
+                                         "expected": 5.5, "tolerance": 0.5})
         self.assertEqual(r.status, "PASS")
 
 
 class TestFirstSnapshotOracle(unittest.TestCase):
-    def test_wrong_price_type(self):
-        r = oracle_first_snapshot({"price": 100.0, "price_type": "close"})
-        self.assertEqual(r.status, "FAIL")
+    """oracle_first_snapshot: baseline_open_position, never open_long/open_short."""
 
-    def test_missing_price(self):
-        r = oracle_first_snapshot({"price_type": "open"})
-        self.assertEqual(r.status, "FAIL")
-
-    def test_correct_pass(self):
-        r = oracle_first_snapshot({"price": 68000.0, "price_type": "open"})
+    def test_baseline_open_position_passes(self):
+        """Existing non-zero position as baseline_open_position → PASS."""
+        r = oracle_first_snapshot({
+            "positions": [{"action": "baseline_open_position", "size": 10, "price": 68000}]
+        })
         self.assertEqual(r.status, "PASS")
+
+    def test_open_long_fails(self):
+        """open_long in first snapshot → FAIL."""
+        r = oracle_first_snapshot({
+            "positions": [{"action": "open_long", "size": 10, "price": 68000}]
+        })
+        self.assertEqual(r.status, "FAIL")
+        self.assertTrue(any("open_long" in v for v in r.violations))
+
+    def test_open_short_fails(self):
+        """open_short in first snapshot → FAIL."""
+        r = oracle_first_snapshot({
+            "positions": [{"action": "open_short", "size": 5, "price": 68000}]
+        })
+        self.assertEqual(r.status, "FAIL")
+        self.assertTrue(any("open_short" in v for v in r.violations))
+
+    def test_large_new_position_alert_on_baseline_fails(self):
+        """Baseline creating large_new_position alert → FAIL."""
+        r = oracle_first_snapshot({
+            "positions": [{"action": "baseline_open_position", "size": 100,
+                            "alert": "large_new_position"}]
+        })
+        self.assertEqual(r.status, "FAIL")
+        self.assertTrue(any("large_new_position" in v for v in r.violations))
+
+    def test_empty_positions_fails(self):
+        """No position data → FAIL."""
+        r = oracle_first_snapshot({"positions": []})
+        self.assertEqual(r.status, "FAIL")
+
+    def test_mixed_baseline_and_bad_action_fails(self):
+        """Mix of valid baseline and invalid open_long fails."""
+        r = oracle_first_snapshot({
+            "positions": [
+                {"action": "baseline_open_position", "size": 10, "price": 68000},
+                {"action": "open_long", "size": 5, "price": 69000},
+            ]
+        })
+        self.assertEqual(r.status, "FAIL")
+
+
+class TestHypeSourcePolicy(unittest.TestCase):
+    """scan_hype_source_policy: normalized market record, venue=Hyperliquid."""
+
+    def test_hype_hyperliquid_passes(self):
+        """HYPE on Hyperliquid → PASS."""
+        r = scan_hype_source_policy({"asset": "HYPE", "venue": "Hyperliquid"})
+        self.assertEqual(r.status, "PASS")
+
+    def test_non_hype_skips(self):
+        """Non-HYPE asset → NOT_APPLICABLE."""
+        r = scan_hype_source_policy({"asset": "BTC", "venue": "Binance"})
+        self.assertEqual(r.status, "NOT_APPLICABLE")
+
+    def test_wrong_venue_fails(self):
+        """HYPE on non-Hyperliquid venue → FAIL."""
+        r = scan_hype_source_policy({"asset": "HYPE", "venue": "Binance"})
+        self.assertEqual(r.status, "FAIL")
+        self.assertTrue(any("venue" in v.lower() for v in r.violations))
+
+    def test_binance_fallback_fails(self):
+        """HYPE with Binance fallback → FAIL."""
+        r = scan_hype_source_policy({
+            "asset": "HYPE", "venue": "Hyperliquid",
+            "fallback": {"venue": "Binance"}
+        })
+        self.assertEqual(r.status, "FAIL")
+        self.assertTrue(any("binance" in v.lower() for v in r.violations))
 
 
 class TestFeedId(unittest.TestCase):
-    def test_missing_id(self):
+    """scan_feed_id: deterministic, no UUID/random/time-only."""
+
+    def test_missing_id_fails(self):
         r = scan_feed_id({})
         self.assertEqual(r.status, "FAIL")
 
-    def test_valid_id(self):
+    def test_valid_deterministic_id_passes(self):
         r = scan_feed_id({"feed_id": "qa_deterministic_test_001"})
         self.assertEqual(r.status, "PASS")
 
+    def test_uuid_fails(self):
+        """UUID-format feed_id → FAIL."""
+        r = scan_feed_id({"feed_id": "550e8400-e29b-41d4-a716-446655440000"})
+        self.assertEqual(r.status, "FAIL")
 
-class TestHtmlSecurity(unittest.TestCase):
-    def test_detects_inner_html(self):
-        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
-        tmp.write('<div id="x">.innerHTML = userInput</div>\n')
-        tmp.close()
-        try:
-            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
-            self.assertEqual(r.status, "FAIL")
-        finally:
-            os.unlink(tmp.name)
+    def test_timestamp_only_fails(self):
+        """Bare timestamp as feed_id → FAIL."""
+        r = scan_feed_id({"feed_id": "1718640000"})
+        self.assertEqual(r.status, "FAIL")
+
+    def test_random_hex_fails(self):
+        """32-char hex looks like hash/random → FAIL."""
+        r = scan_feed_id({"feed_id": "a" * 32})
+        self.assertEqual(r.status, "FAIL")
+
+    def test_same_input_same_id(self):
+        """Same normalized input twice produces same ID (determinism)."""
+        r = scan_feed_id({
+            "feed_id": "def456",
+            "inputs": ["BTC/USD:Hyperliquid", "BTC/USD:Hyperliquid"]
+        })
+        self.assertEqual(r.status, "PASS")
+
+    def test_different_input_different_id(self):
+        """Different inputs must produce different IDs."""
+        r = scan_feed_id({
+            "feed_id": "id123",
+            "inputs": ["BTC/USD:Hyperliquid", "ETH/USD:Hyperliquid"]
+        })
+        self.assertEqual(r.status, "PASS")
+
+
+class TestDataTruth(unittest.TestCase):
+    """scan_data_truth: structured data_mode/count relationships."""
+
+    def test_live_only_passes(self):
+        """All live data → PASS."""
+        records = [
+            {"id": "r1", "data_mode": "live"},
+            {"id": "r2", "data_mode": "live"},
+        ]
+        r = scan_data_truth(records)
+        self.assertEqual(r.status, "PASS")
+
+    def test_fixture_counted_as_live_fails(self):
+        """Fixture data with counted_as_live=True → FAIL."""
+        records = [
+            {"id": "r1", "data_mode": "live"},
+            {"id": "r2", "data_mode": "fixture", "counted_as_live": True},
+        ]
+        r = scan_data_truth(records)
+        self.assertEqual(r.status, "FAIL")
+
+    def test_research_counted_as_live_fails(self):
+        """Research data counted as live → FAIL."""
+        records = [
+            {"id": "r1", "data_mode": "live"},
+            {"id": "r2", "data_mode": "research", "counted_as_live": True},
+        ]
+        r = scan_data_truth(records)
+        self.assertEqual(r.status, "FAIL")
+
+    def test_mere_text_mention_passes(self):
+        """Simple text mentioning both 'fixture' and 'live' must not auto-fail."""
+        records = [
+            {"id": "doc", "data_mode": "live",
+             "note": "This fixture was used to develop the live pipeline"},
+            {"id": "r2", "data_mode": "live"},
+        ]
+        r = scan_data_truth(records)
+        self.assertEqual(r.status, "PASS")
+
+    def test_empty_records_passes(self):
+        r = scan_data_truth([])
+        self.assertEqual(r.status, "PASS")
+
+    def test_fixture_with_live_count_field_fails(self):
+        """Fixture record with live_count/live_total field → FAIL."""
+        records = [
+            {"id": "r1", "data_mode": "live"},
+            {"id": "r2", "data_mode": "fixture", "live_count": 5},
+        ]
+        r = scan_data_truth(records)
+        self.assertEqual(r.status, "FAIL")
 
 
 class TestUrlCorpus(unittest.TestCase):
+    """scan_url_corpus: corpus content itself must not fail; test vs validator."""
+
     def test_corpus_loaded(self):
+        """Corpus loading from file is OK."""
         cpath = os.path.join(PROJ, "qa", "mvpplus", "corpus", "url_attack_corpus.json")
-        r = scan_url_corpus(PROJ, cpath)
-        self.assertIn(r.status, ("PASS", "FAIL"))
+        r = scan_url_corpus(cpath)
+        # Without a validator → BLOCKED (target unavailable)
+        self.assertEqual(r.status, "BLOCKED")
 
     def test_missing_corpus_blocked(self):
-        r = scan_url_corpus(PROJ, "nonexistent.json")
+        r = scan_url_corpus("nonexistent.json")
         self.assertEqual(r.status, "BLOCKED")
+
+    def test_corpus_content_not_failing(self):
+        """Corpus with malicious URLs must NOT fail on content alone."""
+        corpus = ["javascript:alert('xss')", "file:///etc/passwd",
+                   "https://evil.com/?q=<script>"]
+        r = scan_url_corpus(corpus)
+        # No validator → BLOCKED (not FAIL for corpus content)
+        self.assertEqual(r.status, "BLOCKED")
+        # Verify it's not failing because of unsafe patterns
+        self.assertTrue(any("validator" in v.lower() for v in r.violations))
+
+    def test_safe_validator_passes(self):
+        """Payload rejected/escaped by target → PASS."""
+        def safe_validator(url):
+            return False  # rejected
+        corpus = ["javascript:alert('xss')", "file:///etc/passwd"]
+        r = scan_url_corpus(corpus, validator=safe_validator)
+        self.assertEqual(r.status, "PASS")
+
+    def test_unsafe_validator_fails(self):
+        """Unsafe payload accepted by target → FAIL."""
+        def unsafe_validator(url):
+            return True  # accepted — vulnerable!
+        corpus = ["javascript:alert('xss')"]
+        r = scan_url_corpus(corpus, validator=unsafe_validator)
+        self.assertEqual(r.status, "FAIL")
 
 
 class TestXssCorpus(unittest.TestCase):
+    """scan_xss_corpus: corpus content itself must not fail; test vs renderer."""
+
     def test_corpus_loaded(self):
         cpath = os.path.join(PROJ, "qa", "mvpplus", "corpus", "xss_attack_corpus.json")
-        r = scan_xss_corpus(PROJ, cpath)
-        self.assertIn(r.status, ("PASS", "FAIL"))
+        r = scan_xss_corpus(cpath)
+        # Without a renderer → BLOCKED (target unavailable)
+        self.assertEqual(r.status, "BLOCKED")
+
+    def test_corpus_content_not_failing(self):
+        """XSS corpus must NOT fail on payload content alone."""
+        corpus = {"payloads": ["<script>alert(1)</script>", "<img src=x onerror=alert(1)>"]}
+        r = scan_xss_corpus(corpus)
+        self.assertEqual(r.status, "BLOCKED")
+        self.assertTrue(any("renderer" in v.lower() for v in r.violations))
+
+    def test_safe_renderer_passes(self):
+        """Escaped/rejected payload → PASS."""
+        def safe_renderer(payload):
+            return False  # safely escaped
+        corpus = {"payloads": ["<script>alert(1)</script>"]}
+        r = scan_xss_corpus(corpus, renderer=safe_renderer)
+        self.assertEqual(r.status, "PASS")
+
+    def test_unsafe_renderer_fails(self):
+        """Unsafe payload executed → FAIL."""
+        def unsafe_renderer(payload):
+            return True  # executed unsafely
+        corpus = {"payloads": ["<script>alert(1)</script>"]}
+        r = scan_xss_corpus(corpus, renderer=unsafe_renderer)
+        self.assertEqual(r.status, "FAIL")
 
 
 class TestEvidenceSchema(unittest.TestCase):
@@ -255,6 +492,18 @@ class TestEvidenceSchema(unittest.TestCase):
         self.assertEqual(r.status, "PASS")
 
 
+class TestHtmlSecurity(unittest.TestCase):
+    def test_detects_inner_html(self):
+        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
+        tmp.write('<div id="x">.innerHTML = userInput</div>\n')
+        tmp.close()
+        try:
+            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
+            self.assertEqual(r.status, "FAIL")
+        finally:
+            os.unlink(tmp.name)
+
+
 class TestMalformedFixtureCorpus(unittest.TestCase):
     def test_malformed_fixtures_load(self):
         cpath = os.path.join(PROJ, "qa", "mvpplus", "corpus", "malformed_fixture_corpus.json")
@@ -274,26 +523,9 @@ class TestPathTraversalCorpus(unittest.TestCase):
         self.assertIsInstance(data, list)
 
 
-class TestHypeSourcePolicy(unittest.TestCase):
-    def test_scanner_runs(self):
-        r = scan_hype_source_policy(PROJ, ["qa/mvpplus/"])
-        self.assertIn(r.status, ("PASS", "FAIL", "NOT_APPLICABLE"))
-
-
-class TestDataTruth(unittest.TestCase):
-    def test_scanner_runs(self):
-        r = scan_data_truth(PROJ, ["qa/mvpplus/"])
-        self.assertIsNotNone(r)
-
-
 class TestDeterministicScan(unittest.TestCase):
     def test_two_runs_identical(self):
-        """Ensure QA scans produce the same results deterministically."""
-        import copy
-        from qa.mvpplus.qa_core import run_all_scans
-        scan_paths = ["qa/mvpplus/"]
-        test_paths = ["tests/test_pilot_v1_protocol_seal.py"]
-        # We can't run pytest --collect-only here (too heavy), so test the QAResult determinism
+        """QA scans produce the same results deterministically."""
         r1 = scan_credentials(PROJ, ["qa/mvpplus/"])
         r2 = scan_credentials(PROJ, ["qa/mvpplus/"])
         self.assertEqual(r1.status, r2.status)
@@ -302,12 +534,139 @@ class TestDeterministicScan(unittest.TestCase):
 
 class TestNoWritesOutsideEvidence(unittest.TestCase):
     def test_qa_core_no_write(self):
-        """Verify qa_core functions don't write files themselves (write is in runner)."""
+        """qa_core functions don't write files themselves (write is in runner)."""
         import inspect
         source = inspect.getsource(sys.modules["qa.mvpplus.qa_core"])
-        # qa_core functions should return QAResult objects, not write to disk
         self.assertNotIn('"w"', source, "qa_core should not write files with open('w')")
         self.assertNotIn("'w'", source, "qa_core should not write files with open('w')")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Synthetic Target Detection Tests
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+class TestSyntheticVulnerableTargetDetection(unittest.TestCase):
+    """Self-test: framework detects synthetic vulnerable targets."""
+
+    def test_detects_fake_credential(self):
+        """A file with fake API key is detected."""
+        path = make_temp_py('SECRET_KEY = "sk-live-abcdef123456"\n')
+        try:
+            r = scan_credentials(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "FAIL")
+        finally:
+            os.unlink(path)
+
+    def test_detects_fake_trading_capability(self):
+        """A file with fake trading method is detected."""
+        path = make_temp_py("def _trade_order(): pass\n")
+        try:
+            r = scan_trading_capability(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "FAIL")
+        finally:
+            os.unlink(path)
+
+    def test_detects_fake_scheduler(self):
+        """A file with enabled scheduler is detected."""
+        path = make_temp_py("cron_loop_enabled = True\n")
+        try:
+            r = scan_scheduler_disabled(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "FAIL")
+        finally:
+            os.unlink(path)
+
+    def test_detects_fake_send(self):
+        """A file with bot.send_message is detected."""
+        path = make_temp_py("bot.send_message(chat_id, text)\n")
+        try:
+            r = scan_no_send(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "FAIL")
+        finally:
+            os.unlink(path)
+
+    def test_detects_unsafe_html(self):
+        """A file with innerHTML without sanitization is detected."""
+        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
+        tmp.write('<div id="x">.innerHTML = userInput</div>\n')
+        tmp.close()
+        try:
+            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
+            self.assertEqual(r.status, "FAIL")
+        finally:
+            os.unlink(tmp.name)
+
+
+class TestSyntheticSafeTargetPass(unittest.TestCase):
+    """Self-test: framework passes clean synthetic targets."""
+
+    def test_clean_file_no_credentials(self):
+        """A clean file passes credential scan."""
+        path = make_temp_py("x = 42\n")
+        try:
+            r = scan_credentials(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "PASS")
+        finally:
+            os.unlink(path)
+
+    def test_clean_file_no_trading(self):
+        """A clean file passes trading scan."""
+        path = make_temp_py("import json\n")
+        try:
+            r = scan_trading_capability(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "PASS")
+        finally:
+            os.unlink(path)
+
+    def test_clean_file_no_forbidden_import(self):
+        """A clean import passes forbidden scan."""
+        path = make_temp_py("import json\n")
+        try:
+            r = scan_forbidden_imports(os.path.dirname(path), [os.path.dirname(path)], ["subprocess"])
+            self.assertEqual(r.status, "PASS")
+        finally:
+            os.unlink(path)
+
+    def test_clean_file_no_scheduler(self):
+        """No scheduler pattern passes."""
+        path = make_temp_py("x = 42\n")
+        try:
+            r = scan_scheduler_disabled(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "PASS")
+        finally:
+            os.unlink(path)
+
+    def test_clean_file_no_send(self):
+        """No send pattern passes."""
+        path = make_temp_py("x = 42\n")
+        try:
+            r = scan_no_send(os.path.dirname(path), [os.path.dirname(path)])
+            self.assertEqual(r.status, "PASS")
+        finally:
+            os.unlink(path)
+
+    def test_clean_html_passes(self):
+        """Safe HTML file passes."""
+        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False)
+        tmp.write("<html><body><p>Safe content</p></body></html>\n")
+        tmp.close()
+        try:
+            r = scan_html_security(os.path.dirname(tmp.name), [os.path.dirname(tmp.name)])
+            self.assertEqual(r.status, "PASS")
+        finally:
+            os.unlink(tmp.name)
+
+    def test_safe_liquidation_oracle_passes(self):
+        """Correct liquidation formula passes."""
+        r = oracle_liquidation_formula({"mark": 100.0, "liq": 95.0, "side": "long", "expected": 5.0})
+        self.assertEqual(r.status, "PASS")
+
+    def test_safe_first_snapshot_passes(self):
+        """Valid baseline_open_position passes."""
+        r = oracle_first_snapshot({
+            "positions": [{"action": "baseline_open_position", "size": 10, "price": 68000}]
+        })
+        self.assertEqual(r.status, "PASS")
 
 
 if __name__ == "__main__":

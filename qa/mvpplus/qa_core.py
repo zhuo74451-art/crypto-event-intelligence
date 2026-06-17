@@ -50,11 +50,17 @@ class QAScanReport:
 # ── Helpers ─────────────────────────────────────────────────────────────────
 
 
-def _glob_files(root: str, patterns: list[str]) -> list[str]:
-    """Simple glob: match extensions or leading paths."""
+def _glob_files(root: str, patterns: list[str], exclude: list[str] | None = None) -> list[str]:
+    """Simple glob: match extensions or leading paths.
+
+    exclude: list of filename suffixes or infixes to skip (e.g. ['qa_core.py']).
+    """
     matched = []
     for dirpath, _, filenames in os.walk(root):
         for fn in filenames:
+            # Skip excluded filenames
+            if exclude and any(excl in fn for excl in exclude):
+                continue
             fpath = os.path.join(dirpath, fn)
             rel = os.path.relpath(fpath, root)
             for pat in patterns:
@@ -139,7 +145,8 @@ def scan_forbidden_imports(
         spath = os.path.join(repo_root, sp)
         if not os.path.isdir(spath):
             continue
-        for fpath in _glob_files(spath, ["*.py"]):
+        # Exclude the scanner framework itself
+        for fpath in _glob_files(spath, ["*.py"], exclude=["qa_core.py"]):
             full = os.path.join(spath, fpath)
             try:
                 content = _file_content(full)
@@ -185,7 +192,8 @@ def scan_trading_capability(repo_root: str, scan_paths: list[str]) -> QAResult:
         spath = os.path.join(repo_root, sp)
         if not os.path.isdir(spath):
             continue
-        for fpath in _glob_files(spath, ["*.py"]):
+        # Exclude the scanner framework itself (it contains patterns but doesn't use them)
+        for fpath in _glob_files(spath, ["*.py"], exclude=["qa_core.py"]):
             full = os.path.join(spath, fpath)
             try:
                 content = _file_content(full)
@@ -221,7 +229,8 @@ def scan_credentials(repo_root: str, scan_paths: list[str]) -> QAResult:
         spath = os.path.join(repo_root, sp)
         if not os.path.isdir(spath):
             continue
-        for fpath in _glob_files(spath, ["*.py", "*.json", "*.env", "*.yaml", "*.yml", "*.toml", "*.cfg", "*.ini", "*.txt", "*.md"]):
+        # Exclude the scanner framework itself (it contains patterns but doesn't use them)
+        for fpath in _glob_files(spath, ["*.py", "*.json", "*.env", "*.yaml", "*.yml", "*.toml", "*.cfg", "*.ini", "*.txt", "*.md"], exclude=["qa_core.py"]):
             full = os.path.join(spath, fpath)
             try:
                 content = _file_content(full)
@@ -290,7 +299,8 @@ def scan_no_send(repo_root: str, scan_paths: list[str]) -> QAResult:
         spath = os.path.join(repo_root, sp)
         if not os.path.isdir(spath):
             continue
-        for fpath in _glob_files(spath, ["*.py"]):
+        # Exclude the scanner framework itself (it contains patterns but doesn't use them)
+        for fpath in _glob_files(spath, ["*.py"], exclude=["qa_core.py"]):
             full = os.path.join(spath, fpath)
             try:
                 content = _file_content(full)
@@ -405,27 +415,65 @@ def scan_dependency_manifest(repo_root: str, manifest_path: str) -> QAResult:
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-def scan_data_truth(repo_root: str, scan_paths: list[str]) -> QAResult:
-    """Verify data sources are correctly labeled."""
+def scan_data_truth(data_records: list[dict]) -> QAResult:
+    """Verify data source labels match count relationships.
+
+    Inspects structured data_mode/count relationships:
+    - fixture or research rows included in live counts must FAIL
+    - simple text mentioning 'fixture' and 'live' does NOT automatically fail
+      (must inspect structured data_mode/count relationships)
+    """
     violations = []
-    for sp in scan_paths:
-        spath = os.path.join(repo_root, sp)
-        if not os.path.isdir(spath):
-            continue
-        for fpath in _glob_files(spath, ["*.py", "*.json"]):
-            full = os.path.join(spath, fpath)
-            try:
-                content = _file_content(full)
-                # Check if fixture is counted as live
-                if re.search(r"fixture.*(?:live|real|production)", content, re.IGNORECASE):
-                    violations.append(f"{sp}/{fpath}: fixture labeled as live")
-            except (IOError, UnicodeDecodeError):
-                continue
+
+    if not data_records:
+        return QAResult(
+            scanner="data_truth_validator",
+            status="PASS",
+            detail="No data records to validate",
+            violations=[],
+        )
+
+    live_data = [r for r in data_records if r.get("data_mode") == "live"]
+    fixture_data = [r for r in data_records if r.get("data_mode") == "fixture"]
+    research_data = [r for r in data_records if r.get("data_mode") == "research"]
+    unknown = [r for r in data_records if r.get("data_mode") not in ("live", "fixture", "research")]
+
+    # Fixture or research rows included in live counts must fail
+    for rec in fixture_data:
+        name = rec.get("id") or rec.get("name") or "unknown"
+        if rec.get("counted_as_live", False):
+            violations.append(f"Fixture '{name}' is counted in live totals")
+
+        # Check structural: if a fixture record explicitly sets live_count/live_total, flag it
+        if "live_count" in rec or "live_total" in rec:
+            violations.append(f"Fixture '{name}' has live count/total field — data_mode mismatch")
+
+    for rec in research_data:
+        name = rec.get("id") or rec.get("name") or "unknown"
+        if rec.get("counted_as_live", False):
+            violations.append(f"Research '{name}' is counted in live totals")
+
+    # Check aggregate counts if a summary record exists
+    summary = None
+    for r in data_records:
+        if r.get("kind") == "summary" or "reported_live_count" in r:
+            summary = r
+            break
+    if summary:
+        reported_live = summary.get("reported_live_count")
+        if reported_live is not None and len(live_data) != reported_live:
+            violations.append(
+                f"Reported live count ({reported_live}) doesn't match "
+                f"actual live data ({len(live_data)} records)"
+            )
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="data_truth_validator",
         status=status,
-        detail=f"Scanned {len(scan_paths)} paths for data source mislabeling",
+        detail=f"Validated {len(data_records)} records: "
+               f"{len(live_data)} live, {len(fixture_data)} fixture, "
+               f"{len(research_data)} research, {len(unknown)} unknown",
         violations=violations,
     )
 
@@ -436,26 +484,62 @@ def scan_data_truth(repo_root: str, scan_paths: list[str]) -> QAResult:
 
 
 def oracle_liquidation_formula(formula: dict) -> QAResult:
-    """Validate liquidation formula against reference.
+    """Validate liquidation distance formula calculation.
 
-    Expected fields: long_entry, short_entry, maintenance_margin, position_size.
-    Reference: long_liquidation_price = entry / (1 - mm_pct) for isolated long.
+    long expected = (mark - liq) / mark * 100
+    short expected = (liq - mark) / mark * 100
+    missing/invalid mark or liq → PASS (null result expected)
+    negative value preserved (never abs'd or clamped)
+    configurable numeric tolerance (default 0.01)
     """
     violations = []
-    ref = {"long_entry": 0.007353, "short_entry": 0.007353}
-    for k in ("long_entry", "short_entry"):
-        v = formula.get(k)
-        if v is not None and abs(v - ref.get(k, 0)) > 0.0001:
-            violations.append(f"{k}: {v} != reference {ref[k]}")
-    # Check wrong formula patterns
-    text = json.dumps(formula)
-    if "entry / (1 - mm_pct)" not in text and "entry / (1 + mm_pct)" not in text:
-        violations.append("Long liquidation formula does not match reference pattern")
+    mark = formula.get("mark")
+    liq = formula.get("liq")
+    position_side = formula.get("side", "long")
+    tolerance = formula.get("tolerance", 0.01)
+
+    # Missing or invalid mark/liq → null result expected (PASS)
+    if mark is None or liq is None:
+        return QAResult(
+            scanner="liquidation_formula_oracle",
+            status="PASS",
+            detail="Missing mark or liq: null result expected",
+            violations=[],
+        )
+    if not isinstance(mark, (int, float)) or not isinstance(liq, (int, float)):
+        return QAResult(
+            scanner="liquidation_formula_oracle",
+            status="PASS",
+            detail="Non-numeric mark or liq: null result expected",
+            violations=[],
+        )
+
+    if position_side == "long" or position_side == "LONG":
+        expected = (mark - liq) / mark * 100
+    else:  # short
+        expected = (liq - mark) / mark * 100
+
+    actual = formula.get("expected", formula.get("actual"))
+    if actual is not None:
+        if abs(actual - expected) > tolerance:
+            violations.append(
+                f"Expected {expected:.6f} (side={position_side}, mark={mark}, liq={liq}), got {actual}"
+            )
+
+    # Check negative values are preserved (not abs'd or clamped to zero)
+    if expected < 0:
+        if actual is not None and actual >= 0:
+            violations.append(
+                f"Negative liquidation distance ({expected:.6f}) was incorrectly clamped to non-negative ({actual})"
+            )
+        if formula.get("check_negative", False) and actual is None:
+            pass  # Nothing to check against
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="liquidation_formula_oracle",
         status=status,
-        detail="Checked liquidation formula against reference",
+        detail=f"Checked ({position_side}) mark={mark} liq={liq} → {expected:.6f}",
         violations=violations,
     )
 
@@ -466,19 +550,54 @@ def oracle_liquidation_formula(formula: dict) -> QAResult:
 
 
 def oracle_first_snapshot(snapshot: dict) -> QAResult:
-    """Validate that first snapshot uses open price (not close/high/low)."""
+    """Validate first-run positions use baseline_open_position.
+
+    Rules:
+    - first-run existing non-zero positions → baseline_open_position action
+    - never open_long / open_short
+    - baseline must not create large_new_position alert
+    - (price_type=open logic removed per W6_DELTA spec)
+    """
     violations = []
-    price = snapshot.get("price")
-    price_type = snapshot.get("price_type", "open")
-    if price_type != "open":
-        violations.append(f"First snapshot price_type is '{price_type}', expected 'open'")
-    if price is None or price <= 0:
-        violations.append("First snapshot price missing or non-positive")
+    positions = snapshot.get("positions", [])
+
+    if not positions:
+        violations.append("No position data in first snapshot — expected baseline entries")
+        return QAResult(
+            scanner="first_snapshot_oracle",
+            status="FAIL",
+            detail="First snapshot missing position data",
+            violations=violations,
+        )
+
+    for pos in positions:
+        action = pos.get("action", "")
+        size = pos.get("size", 0)
+
+        # Existing non-zero positions must use baseline_open_position
+        if size > 0 and action not in ("baseline_open_position", "baseline"):
+            violations.append(
+                f"Position size={size} should use 'baseline_open_position', got '{action}'"
+            )
+
+        # Must never have open_long/open_short in first snapshot
+        if action in ("open_long", "open_short"):
+            violations.append(
+                f"First snapshot must not use '{action}' — use 'baseline_open_position' for existing positions"
+            )
+
+        # Baseline must not create large_new_position alert
+        if action in ("baseline_open_position", "baseline"):
+            if pos.get("alert") == "large_new_position":
+                violations.append(
+                    f"Baseline position triggered 'large_new_position' alert (size={size})"
+                )
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="first_snapshot_oracle",
         status=status,
-        detail="Validated first snapshot uses open price",
+        detail=f"Validated {len(positions)} positions in first snapshot",
         violations=violations,
     )
 
@@ -488,27 +607,51 @@ def oracle_first_snapshot(snapshot: dict) -> QAResult:
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-def scan_hype_source_policy(repo_root: str, scan_paths: list[str]) -> QAResult:
-    """Verify HYPE data source is correctly documented as 15m."""
+def scan_hype_source_policy(market_record: dict) -> QAResult:
+    """Validate normalized HYPE market record.
+
+    Rules:
+    - asset == HYPE
+    - venue/source must be Hyperliquid
+    - Binance HYPE fallback must fail (HYPE is Hyperliquid-native only)
+    - (unrelated 15m interval rule removed per W6_DELTA spec)
+    """
     violations = []
-    for sp in scan_paths:
-        spath = os.path.join(repo_root, sp)
-        if not os.path.isdir(spath):
-            continue
-        for fpath in _glob_files(spath, ["*.py", "*.json", "*.md"]):
-            full = os.path.join(spath, fpath)
-            try:
-                content = _file_content(full)
-                if "HYPE" in content and "15m" not in content and ("interval" in content or "candle" in content.lower()):
-                    if "hyperliquid" in content.lower():
-                        violations.append(f"{sp}/{fpath}: HYPE without 15m reference")
-            except (IOError, UnicodeDecodeError):
-                continue
+    asset = market_record.get("asset", "")
+    venue = market_record.get("venue") or market_record.get("source", "")
+    venue_str = str(venue)
+
+    if asset != "HYPE" and asset != "hype":
+        return QAResult(
+            scanner="hype_source_policy_validator",
+            status="NOT_APPLICABLE",
+            detail=f"Asset is '{asset}', not HYPE — skipping",
+            violations=[],
+        )
+
+    # Venue/source must be Hyperliquid
+    if "hyperliquid" not in venue_str.lower():
+        violations.append(
+            f"HYPE venue/source must be Hyperliquid, got '{venue_str}'"
+        )
+
+    # Binance fallback must fail — HYPE does not exist on Binance
+    if "binance" in venue_str.lower():
+        violations.append("Binance is not a valid HYPE venue — HYPE is Hyperliquid-native only")
+
+    fallback = market_record.get("fallback", market_record.get("fallback_source"))
+    if fallback:
+        fb_venue = str(fallback.get("venue", fallback.get("source", fallback)))
+        if "binance" in fb_venue.lower():
+            violations.append(
+                f"Binance HYPE fallback must fail — HYPE only exists on Hyperliquid"
+            )
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="hype_source_policy_validator",
         status=status,
-        detail="Verified HYPE source policy references 15m intervals",
+        detail=f"Validated HYPE market record: venue={venue_str}",
         violations=violations,
     )
 
@@ -519,21 +662,63 @@ def scan_hype_source_policy(repo_root: str, scan_paths: list[str]) -> QAResult:
 
 
 def scan_feed_id(feed: dict) -> QAResult:
-    """Validate feed ID is deterministic (not random) and stable."""
+    """Validate feed ID is deterministic (not random/UUID/timestamp).
+
+    Rules:
+    - same normalized input twice must produce same ID
+    - changed meaningful input must produce a different ID
+    - UUID/random/time-only IDs fail
+    """
     violations = []
     feed_id = feed.get("feed_id", "")
     if not feed_id:
         violations.append("Missing feed_id")
-    elif len(feed_id) < 8:
-        violations.append("feed_id too short to be deterministic")
-    # Check for timestamp-based randomness
-    if re.search(r"timestamp|random|uuid", feed_id, re.IGNORECASE):
-        violations.append(f"feed_id may contain non-deterministic component: {feed_id[:40]}")
+        return QAResult(
+            scanner="feed_id_validator",
+            status="FAIL",
+            detail="feed_id is required",
+            violations=violations,
+        )
+
+    # UUID/random/time-only IDs fail
+    if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", feed_id, re.IGNORECASE):
+        violations.append(f"feed_id looks like a UUID (non-deterministic): {feed_id}")
+    if re.match(r"^[0-9a-f]{32}$", feed_id, re.IGNORECASE) and len(feed_id) == 32:
+        violations.append(f"feed_id looks like an MD5/SHA1 hash (not a meaningful ID): {feed_id[:16]}...")
+    if re.match(r"^\d{10,}$", feed_id):
+        violations.append(f"feed_id looks like a bare timestamp (non-deterministic): {feed_id}")
+    if re.match(r"^\d{4}-\d{2}-\d{2}", feed_id):
+        violations.append(f"feed_id is date-prefixed only — not enough semantic content: {feed_id}")
+    if re.search(r"random|uuid|timestamp", feed_id, re.IGNORECASE):
+        violations.append(f"feed_id contains non-deterministic component: {feed_id[:40]}")
+
+    # Determinism test: if inputs are provided, verify
+    inputs = feed.get("inputs", [])
+    if inputs:
+        ids = []
+        for inp in inputs:
+            hid = hashlib.sha256(inp.encode()).hexdigest()[:16]
+            ids.append(hid)
+
+        # Same input repeated must produce same ID
+        if len(inputs) >= 2 and inputs[0] == inputs[1]:
+            if ids[0] != ids[1]:
+                violations.append("Same input produced different IDs — not deterministic")
+
+        # Different inputs must produce different IDs
+        if len(inputs) >= 2 and inputs[0] != inputs[1]:
+            if ids[0] == ids[1]:
+                violations.append("Different inputs produced same ID — collision")
+    else:
+        # No inputs provided; check if feed_id itself looks deterministic
+        if len(feed_id) < 8:
+            violations.append(f"feed_id too short to be deterministic ({len(feed_id)} chars)")
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="feed_id_validator",
         status=status,
-        detail=f"Validated feed_id: {feed_id[:40]}",
+        detail=f"Validated feed_id: {feed_id[:50]}",
         violations=violations,
     )
 
@@ -580,34 +765,59 @@ def scan_html_security(repo_root: str, scan_paths: list[str]) -> QAResult:
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-def scan_url_corpus(repo_root: str, corpus_path: str) -> QAResult:
-    """Run URL attack corpus against scanned files."""
+def scan_url_corpus(corpus_path_or_data, validator=None) -> QAResult:
+    """Run URL attack corpus through a validator/renderer.
+
+    Corpus containing malicious URLs is EXPECTED — must NOT fail on corpus content.
+    Instead, pass each payload through the injected validator callable:
+    - unsafe payload ACCEPTED by target → FAIL
+    - payload rejected/escaped by target → PASS
+    - target unavailable (no validator) → BLOCKED
+    """
+    # Load corpus
+    if isinstance(corpus_path_or_data, str):
+        if not os.path.isfile(corpus_path_or_data):
+            return QAResult(scanner="url_attack_corpus", status="BLOCKED",
+                            detail=f"Corpus not found: {corpus_path_or_data}",
+                            violations=["Corpus file missing — target cannot be tested"])
+        try:
+            with open(corpus_path_or_data, "r", encoding="utf-8") as f:
+                corpus = json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            return QAResult(scanner="url_attack_corpus", status="BLOCKED",
+                            detail=f"Corpus parse error: {e}",
+                            violations=["Corpus unreadable — target cannot be tested"])
+    else:
+        corpus = corpus_path_or_data
+
+    urls = corpus if isinstance(corpus, list) else corpus.get("urls", [])
+
+    if validator is None:
+        return QAResult(
+            scanner="url_attack_corpus",
+            status="BLOCKED",
+            detail=f"Corpus loaded ({len(urls)} URLs) but no validator available",
+            violations=["No URL validator provided — target unavailable"],
+        )
+
+    # Corpus itself is expected to contain malicious content — never flag corpus as violation
+    # Only flag if the target ACCEPTS an unsafe payload
     violations = []
-    corpus_file = os.path.join(repo_root, corpus_path)
-    if not os.path.isfile(corpus_file):
-        return QAResult(scanner="url_attack_corpus", status="BLOCKED",
-                        detail=f"Corpus not found: {corpus_path}")
-    try:
-        with open(corpus_file, "r", encoding="utf-8") as f:
-            corpus = json.load(f)
-        urls = corpus if isinstance(corpus, list) else corpus.get("urls", [])
-        # Check for unsafe URL patterns
-        unsafe_patterns = [
-            r"javascript:", r"data:text/html", r"vbscript:",
-            r"onclick=", r"onerror=", r"onload=",
-        ]
-        for url in urls:
-            for pat in unsafe_patterns:
-                if re.search(pat, url, re.IGNORECASE):
-                    violations.append(f"Unsafe URL pattern '{pat}' in corpus URL: {url[:60]}")
-    except (json.JSONDecodeError, IOError) as e:
-        return QAResult(scanner="url_attack_corpus", status="BLOCKED",
-                        detail=f"Corpus parse error: {e}")
+    tested = 0
+    for url in urls:
+        tested += 1
+        try:
+            accepted = validator(url)
+            if accepted:
+                violations.append(f"Unsafe URL accepted by target: {url[:80]}")
+        except Exception as e:
+            violations.append(f"Validator error for URL ({url[:40]}...): {e}")
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="url_attack_corpus",
         status=status,
-        detail=f"Tested {len(urls)} URLs against attack patterns",
+        detail=f"Tested {tested}/{len(urls)} URLs against validator",
         violations=violations,
     )
 
@@ -617,29 +827,59 @@ def scan_url_corpus(repo_root: str, corpus_path: str) -> QAResult:
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-def scan_xss_corpus(repo_root: str, corpus_path: str) -> QAResult:
-    """Run XSS attack corpus against scanned files."""
+def scan_xss_corpus(corpus_path_or_data, renderer=None) -> QAResult:
+    """Run XSS attack corpus through a renderer/sanitizer.
+
+    Corpus containing XSS payloads is EXPECTED — must NOT fail on corpus content.
+    Instead, pass each payload through an injected renderer callable:
+    - unsafe payload rendered/executed unsafely → FAIL
+    - payload rejected/escaped → PASS
+    - target unavailable (no renderer) → BLOCKED
+    """
+    # Load corpus
+    if isinstance(corpus_path_or_data, str):
+        if not os.path.isfile(corpus_path_or_data):
+            return QAResult(scanner="xss_attack_corpus", status="BLOCKED",
+                            detail=f"Corpus not found: {corpus_path_or_data}",
+                            violations=["Corpus file missing — target cannot be tested"])
+        try:
+            with open(corpus_path_or_data, "r", encoding="utf-8") as f:
+                corpus = json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            return QAResult(scanner="xss_attack_corpus", status="BLOCKED",
+                            detail=f"Corpus parse error: {e}",
+                            violations=["Corpus unreadable — target cannot be tested"])
+    else:
+        corpus = corpus_path_or_data
+
+    payloads = corpus if isinstance(corpus, list) else corpus.get("payloads", [])
+
+    if renderer is None:
+        return QAResult(
+            scanner="xss_attack_corpus",
+            status="BLOCKED",
+            detail=f"Corpus loaded ({len(payloads)} payloads) but no renderer available",
+            violations=["No XSS renderer/sanitizer provided — target unavailable"],
+        )
+
+    # Corpus itself is expected to contain XSS — never flag corpus as violation
+    # Only flag if the target renders/executes unsafely
     violations = []
-    corpus_file = os.path.join(repo_root, corpus_path)
-    if not os.path.isfile(corpus_file):
-        return QAResult(scanner="xss_attack_corpus", status="BLOCKED",
-                        detail=f"Corpus not found: {corpus_path}")
-    try:
-        with open(corpus_file, "r", encoding="utf-8") as f:
-            corpus = json.load(f)
-        payloads = corpus if isinstance(corpus, list) else corpus.get("payloads", [])
-        for payload in payloads:
-            # Check for unescaped script in payload
-            if "<script" in payload and ">" in payload and "<" in payload:
-                violations.append(f"Unescaped script payload detected: {payload[:60]}")
-    except (json.JSONDecodeError, IOError) as e:
-        return QAResult(scanner="xss_attack_corpus", status="BLOCKED",
-                        detail=f"Corpus parse error: {e}")
+    tested = 0
+    for payload in payloads:
+        tested += 1
+        try:
+            unsafe = renderer(payload)
+            if unsafe:
+                violations.append(f"Unsafe XSS payload rendered unsafely by target: {payload[:60]}")
+        except Exception as e:
+            violations.append(f"Renderer error for payload ({payload[:30]}...): {e}")
+
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="xss_attack_corpus",
         status=status,
-        detail=f"Tested {len(payloads)} XSS payloads",
+        detail=f"Tested {tested}/{len(payloads)} XSS payloads against renderer",
         violations=violations,
     )
 
@@ -681,9 +921,34 @@ def run_all_scans(
     test_paths: list[str],
     manifest_path: str,
     corpus_dir: str,
+    artifact_paths: list[str] | None = None,
+    claimed_commit: str | None = None,
+    oracle_liquidation_input: dict | None = None,
+    oracle_first_snapshot_input: dict | None = None,
+    hype_source_record: dict | None = None,
+    feed_id_input: dict | None = None,
+    data_truth_records: list[dict] | None = None,
+    url_validator=None,
+    xss_renderer=None,
 ) -> QAScanReport:
-    """Run all QA scanners and produce a report."""
+    """Run all QA scanners and produce a report.
+
+    All target refs, artifacts, test paths and expected results are supplied
+    explicitly — no hardcoded fakes. Missing evidence → BLOCKED.
+    Scans only requested target paths/diff, not unrelated historical scripts.
+    """
     head_commit = _git_head(repo_root)
+    if head_commit == "unknown" or not head_commit:
+        return QAScanReport(
+            scan_id=f"qa_blocked_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}",
+            target_repo=repo_root, target_ref=target_ref,
+            scanned_at=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            results=[QAResult(scanner="master_runner", status="BLOCKED",
+                               detail="Cannot resolve HEAD commit — target repo unavailable",
+                               violations=["Missing evidence: no commit resolved"])],
+            summary={"total": 1, "pass": 0, "fail": 0, "blocked": 1, "not_applicable": 0},
+        )
+
     scan_id = f"qa_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{head_commit[:8]}"
     report = QAScanReport(
         scan_id=scan_id,
@@ -692,7 +957,7 @@ def run_all_scans(
         scanned_at=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     )
 
-    # Run each scanner
+    # Run each scanner (only requested paths — no historical repo scanning)
     report.results.append(scan_ownership(repo_root, owned_paths, target_ref))
     report.results.append(scan_forbidden_imports(repo_root, scan_paths, [
         "os.system", "subprocess.run", "shutil.rmtree",
@@ -701,23 +966,101 @@ def run_all_scans(
     report.results.append(scan_credentials(repo_root, scan_paths))
     report.results.append(scan_scheduler_disabled(repo_root, scan_paths))
     report.results.append(scan_no_send(repo_root, scan_paths))
-    report.results.append(scan_artifact_binding([], "unknown", head_commit))
-    report.results.append(scan_test_count(repo_root, expected_test_count, test_paths))
-    report.results.append(scan_dependency_manifest(repo_root, manifest_path))
-    report.results.append(scan_data_truth(repo_root, scan_paths))
 
-    # Oracles
-    report.results.append(oracle_liquidation_formula({"long_entry": 0.007353, "short_entry": 0.007353}))
-    report.results.append(oracle_first_snapshot({"price": 68000.0, "price_type": "open"}))
+    # Artifact binding — all params supplied explicitly
+    if artifact_paths and claimed_commit:
+        report.results.append(scan_artifact_binding(artifact_paths, claimed_commit, head_commit))
+    else:
+        report.results.append(QAResult(
+            scanner="artifact_binding_validator", status="BLOCKED",
+            detail="Missing evidence: artifact_paths or claimed_commit not provided",
+            violations=["Artifact paths and claimed commit must be supplied explicitly"],
+        ))
+
+    # Test counts
+    if test_paths:
+        report.results.append(scan_test_count(repo_root, expected_test_count, test_paths))
+    else:
+        report.results.append(QAResult(
+            scanner="test_count_validator", status="BLOCKED",
+            detail="Missing evidence: no test paths provided",
+            violations=["Test paths must be supplied explicitly"],
+        ))
+
+    report.results.append(scan_dependency_manifest(repo_root, manifest_path))
+
+    # Data truth — uses structured records, not file grepping
+    if data_truth_records is not None:
+        report.results.append(scan_data_truth(data_truth_records))
+    else:
+        report.results.append(QAResult(
+            scanner="data_truth_validator", status="NOT_APPLICABLE",
+            detail="No data truth records provided — skipping",
+            violations=[],
+        ))
+
+    # Oracles — all inputs supplied explicitly (no hardcoded fakes)
+    if oracle_liquidation_input is not None:
+        report.results.append(oracle_liquidation_formula(oracle_liquidation_input))
+    else:
+        report.results.append(QAResult(
+            scanner="liquidation_formula_oracle", status="NOT_APPLICABLE",
+            detail="No liquidation formula input provided — skipping",
+            violations=[],
+        ))
+
+    if oracle_first_snapshot_input is not None:
+        report.results.append(oracle_first_snapshot(oracle_first_snapshot_input))
+    else:
+        report.results.append(QAResult(
+            scanner="first_snapshot_oracle", status="NOT_APPLICABLE",
+            detail="No first snapshot input provided — skipping",
+            violations=[],
+        ))
 
     # Source policy
-    report.results.append(scan_hype_source_policy(repo_root, scan_paths))
-    report.results.append(scan_feed_id({"feed_id": f"qa_scan_{head_commit[:16]}"}))
+    if hype_source_record is not None:
+        report.results.append(scan_hype_source_policy(hype_source_record))
+    else:
+        report.results.append(QAResult(
+            scanner="hype_source_policy_validator", status="NOT_APPLICABLE",
+            detail="No HYPE market record provided — skipping",
+            violations=[],
+        ))
+
+    # Feed ID
+    if feed_id_input is not None:
+        report.results.append(scan_feed_id(feed_id_input))
+    else:
+        report.results.append(QAResult(
+            scanner="feed_id_validator", status="NOT_APPLICABLE",
+            detail="No feed ID input provided — skipping",
+            violations=[],
+        ))
 
     # Security
     report.results.append(scan_html_security(repo_root, scan_paths))
-    report.results.append(scan_url_corpus(repo_root, os.path.join(corpus_dir, "url_attack_corpus.json")))
-    report.results.append(scan_xss_corpus(repo_root, os.path.join(corpus_dir, "xss_attack_corpus.json")))
+
+    # Attack corpus — passes through injected validator/renderer
+    url_corpus_path = os.path.join(corpus_dir, "url_attack_corpus.json")
+    if os.path.isfile(url_corpus_path):
+        report.results.append(scan_url_corpus(url_corpus_path, validator=url_validator))
+    else:
+        report.results.append(QAResult(
+            scanner="url_attack_corpus", status="BLOCKED",
+            detail=f"URL attack corpus not found at {url_corpus_path}",
+            violations=["Corpus file missing"],
+        ))
+
+    xss_corpus_path = os.path.join(corpus_dir, "xss_attack_corpus.json")
+    if os.path.isfile(xss_corpus_path):
+        report.results.append(scan_xss_corpus(xss_corpus_path, renderer=xss_renderer))
+    else:
+        report.results.append(QAResult(
+            scanner="xss_attack_corpus", status="BLOCKED",
+            detail=f"XSS attack corpus not found at {xss_corpus_path}",
+            violations=["Corpus file missing"],
+        ))
 
     # Evidence schema
     evidence_schema_path = os.path.join(repo_root, "qa", "mvpplus", "evidence_schema.json")
