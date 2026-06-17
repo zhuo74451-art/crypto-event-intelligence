@@ -1,0 +1,160 @@
+{
+  "ticket": "W1_PARALLEL_REPAIR_CONTROL_R05",
+  "role": "Project Controller — Read-Only Refresh",
+  "mode": "REMOTE_HANDOFF_V1",
+  "generated_at_utc": "2026-06-17T12:00:00Z",
+  "authoritative_main": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "fetch_result": "ok fetched",
+  "local_head_sha": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "remote_head_sha": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "main_frozen": true,
+  "integration_v2_created": false,
+  "any_lane_merged": false,
+  "business_code_modified": false,
+  "lane_matrix": [
+    {
+      "lane": "W2",
+      "branch": "workbench/mvpplus-whale-prod-v2",
+      "head_sha": "d422c4391f5cd8d48645b0848033944da68d76f3",
+      "status": "QA_SCAN_CANDIDATE",
+      "r02_repair_commits": [
+        "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+        "dde800b3fe627e875c66338eacfea46d4d6dea4f",
+        "d422c4391f5cd8d48645b0848033944da68d76f3"
+      ],
+      "evidence_tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+      "evidence_binding_status": "FIXED",
+      "test_results": {
+        "total": 85,
+        "passed": 84,
+        "failed": 0,
+        "skipped": 1
+      },
+      "evidence_path": "artifacts/evidence/w2_whale_domain_report.json",
+      "cross_lane_contamination": false,
+      "files_outside_owned": []
+    },
+    {
+      "lane": "W3",
+      "branch": "workbench/mvpplus-feeds-market-ui-v2",
+      "head_sha": "dbb15dad6f439fe698ec5283ac9c1f77f59384f8",
+      "status": "QA_SCAN_CANDIDATE",
+      "r02_repair_commits": [
+        "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+        "dbb15dad6f439fe698ec5283ac9c1f77f59384f8"
+      ],
+      "evidence_tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+      "evidence_binding_status": "FIXED",
+      "test_results": {
+        "total": 44,
+        "passed": 44,
+        "failed": 0,
+        "skipped": 0
+      },
+      "evidence_path": "artifacts/evidence/w3_feeds_market_ui_report.json",
+      "cross_lane_contamination": false,
+      "files_outside_owned": []
+    },
+    {
+      "lane": "W4",
+      "branch": "workbench/mvpplus-open-source-adapters-v1",
+      "head_sha": "dab56b34cdd6baa5f432cecfa722fec99e76a138",
+      "status": "QA_SCAN_CANDIDATE",
+      "r02_repair_commits": [
+        "23d3cc0c23dbbf38524164b51592460ea96b2516",
+        "dab56b34cdd6baa5f432cecfa722fec99e76a138"
+      ],
+      "evidence_tested_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516",
+      "evidence_binding_status": "CORRECT",
+      "test_results": {
+        "total": 75,
+        "passed": 75,
+        "failed": 0
+      },
+      "evidence_path": "artifacts/evidence/w4_adapter_interface_repair_evidence.json",
+      "forbidden_capability_scan": "PASS",
+      "import_smoke_result": "PASS",
+      "cross_lane_contamination": false,
+      "files_outside_owned": []
+    },
+    {
+      "lane": "W5",
+      "branch": "workbench/mvpplus-ops-foundation-v1",
+      "head_sha": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+      "status": "QA_SCAN_CANDIDATE",
+      "r02_repair_commits": [
+        "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61",
+        "e1d5d5c16d6345c73402226749cf09c998d694c5"
+      ],
+      "evidence_tested_commit": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61",
+      "evidence_binding_status": "CORRECT",
+      "test_results": {
+        "total": 61,
+        "passed": 61,
+        "failed": 0
+      },
+      "evidence_path": "artifacts/evidence/w5_operations_foundation_report.json",
+      "cross_lane_contamination": false,
+      "files_outside_owned": []
+    },
+    {
+      "lane": "W6",
+      "branch": "workbench/mvpplus-independent-qa-v1",
+      "head_sha": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+      "status": "PROCESS_REPAIR_REQUIRED_R03",
+      "r02_repair_commits": [
+        "3e09034fcb4b697b5f79dadf4e54fc7052a6c460",
+        "046a7209a417c248f7d6ba3b899de349cc2e5ffb"
+      ],
+      "evidence_tested_commit": "504518c5d79086e52cca9b89156ffc36a113daf0",
+      "evidence_binding_status": "CORRECT",
+      "test_results": {
+        "total": 74,
+        "passed": 74,
+        "failed": 0
+      },
+      "scanner_results": {
+        "total": 18,
+        "pass": 17,
+        "fail": 1,
+        "blocked": 0,
+        "not_applicable": 0
+      },
+      "r03_required": true,
+      "r03_reason": "1 scanner failure remains unresolved",
+      "evidence_path": "artifacts/evidence/w6_qa_foundation_report.json",
+      "cross_lane_contamination": false,
+      "files_outside_owned": []
+    }
+  ],
+  "r04_corrections": [
+    "W2 evidence binding fixed — new commit d422c43 corrects tested_commit SHA",
+    "W3 evidence binding fixed — tested_commit now matches actual fix commit",
+    "W4 test count corrected from 32 (baseline) to 75 (R02 evidence)",
+    "W6 R02 repair detected — new commits 3e09034 + 046a720"
+  ],
+  "evidence_binding_audit": [
+    {"lane": "W2", "evidence_tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715", "actual_fix_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715", "status": "MATCH"},
+    {"lane": "W3", "evidence_tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce", "actual_fix_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce", "status": "MATCH"},
+    {"lane": "W4", "evidence_tested_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516", "actual_fix_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516", "status": "MATCH"},
+    {"lane": "W5", "evidence_tested_commit": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61", "actual_fix_commit": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61", "status": "MATCH"},
+    {"lane": "W6", "evidence_tested_commit": "504518c5d79086e52cca9b89156ffc36a113daf0", "actual_fix_commit": "504518c5d79086e52cca9b89156ffc36a113daf0", "status": "MATCH (baseline-only)"}
+  ],
+  "blocking_rules": {
+    "main_frozen": true,
+    "integration_v2_created": false,
+    "any_lane_merged": false,
+    "business_code_modified_by_controller": false
+  },
+  "gates_before_integration_v2": [
+    "W6 R03 repair — fix the 1 scanner failure",
+    "Controller dispatches QA scan against W2-W5 precise remote HEADs",
+    "All lanes independently accepted",
+    "W6 can correctly scan W2/W3/W4"
+  ],
+  "documents_created": [
+    "LANE_STATUS_MATRIX_R05.md",
+    "INDEPENDENT_AUDIT_R05.md",
+    "artifacts/evidence/w1_controller_evidence_r05.json"
+  ]
+}
