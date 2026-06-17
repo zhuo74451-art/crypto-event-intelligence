@@ -1,8 +1,8 @@
 {
   "ticket": "W4_DELTA_ADAPTER_INTERFACE_REPAIR_R02",
   "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
-  "repair_base_commit": "0125fe6674565bc9478213ff081ccf0ff17cac41",
-  "tested_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516",
+  "repair_base_commit": "7654ab10e7dc9ca84e766e414d35e754c5cf2786",
+  "tested_commit": "a1370c86deeb5942af9b7612a64441fc58026859",
   "branch": "workbench/mvpplus-open-source-adapters-v1",
   "mode": "Delta Repair Only",
   "package_versions": {
@@ -11,70 +11,56 @@
     "ccxt": "4.5.59"
   },
   "license_checks": "docs/adapters/THIRD_PARTY_ADAPTER_MANIFEST.json",
-  "repair_summary": "Replaced generic hardcoded Hyperliquid fetch API with five parameterized read-only methods; added Ethereum address/coin/time-range validation; separated SDK vs raw HTTP provenance reporting; embedded AdapterHealth in every AdapterResult; added CCXT bounded timeout/kwargs/normalized dicts; separated HTTPX connect/read/write/pool timeouts.",
+  "repair_summary": "Replaced generic hardcoded Hyperliquid fetch API with five parameterized read-only methods; added Ethereum address/coin/time-range validation; separated SDK vs raw HTTP provenance reporting; embedded AdapterHealth in every AdapterResult; added CCXT bounded timeout/kwargs/normalized dicts; separated HTTPX connect/read/write/pool timeouts; fixed CCXT capability mapping (camelCase has key vs snake_case method name).",
   "unit_test_command": "python -m unittest discover -s tests/mvpplus/adapters -v",
-  "unit_test_count": 75,
-  "unit_test_passed": 75,
+  "unit_test_count": 86,
+  "unit_test_passed": 86,
   "unit_test_failed": 0,
   "unit_test_skipped": 0,
   "import_smoke_result": "PASS",
   "forbidden_capability_scan": "PASS (verified no wallet/exchange/signing/order imports in adapter code)",
-  "probe_generated_at_utc": "2026-06-17T05:15:06Z",
-  "data_mode": "degraded",
+  "probe_generated_at_utc": "2026-06-17T06:05:34Z",
+  "data_mode": "live",
   "no_credentials": true,
   "timeout_seconds": 30.0,
   "max_attempts": 3,
-  "sdk_probe": {
-    "operation": "fetch_all_mids",
-    "method": "sdk",
-    "status": "OK",
-    "latency_ms": 2897.1,
-    "asset_count": 866,
-    "sample_mids": {"#1040": "0.006755", "#1041": "0.993245", "#1710": "0.5"},
-    "health_available": true
-  },
-  "meta_probe": {
-    "operation": "fetch_meta",
-    "method": "sdk",
-    "status": "OK",
-    "latency_ms": 219.4,
-    "health_available": true
-  },
-  "raw_http_probe": {
-    "operation": "fetch_all_mids",
-    "method": "raw_http_fallback",
-    "status": "OK",
-    "latency_ms": 517.9,
-    "asset_count": 866,
-    "health_available": true
-  },
-  "clearinghouse_probe": {
-    "operation": "fetch_clearinghouse_state",
-    "address": "0x000000000000000000000000000000000000dead",
-    "status": "OK",
-    "latency_ms": 469.6,
-    "has_asset_positions": false,
-    "health_available": true,
-    "note": "Dead address — no real positions expected; tests validation + HTTP path"
-  },
-  "funding_history_probe": {
-    "operation": "fetch_funding_history",
-    "coin": "BTC",
-    "start_time_ms": 1781669706336,
-    "end_time_ms": 1781673306336,
-    "status": "OK",
-    "latency_ms": 213.8,
-    "funding_count": 1,
-    "sample_record": {"coin": "BTC", "fundingRate": "0.0000041932", "premium": "-0.0004664541", "time": 1781672400013},
-    "health_available": true
-  },
-  "ccxt_probe": {
+  "ccxt_live_probe": {
     "exchange": "binance",
     "operation": "ticker",
     "symbol": "BTC/USDT",
-    "status": "FAILED",
-    "reason": "unsupported_capability — CCXT 4.5.59 has dict uses camelCase fetchTicker, adapter checks snake_case fetch_ticker",
-    "health_available": false
+    "ok": true,
+    "latency_ms": 4465.9,
+    "health_available": true,
+    "provenance_source": "ccxt",
+    "last": 65831.99,
+    "bid": 65831.99,
+    "ask": 65832.0,
+    "has_bid_field": true,
+    "has_ask_field": true
+  },
+  "watchlist_clearinghouse_probe": {
+    "operation": "fetch_clearinghouse_state",
+    "address": "0x7a9f2c8d4e6b1a3f5c7d9e2b4a6f8c0d2e4a6b8c",
+    "address_source": "scripts/market_radar_whale_position_feed_v112f.py (public watchlist)",
+    "ok": true,
+    "latency_ms": 2990.4,
+    "health_available": true,
+    "has_asset_positions": false,
+    "position_count": 0
+  },
+  "hyperliquid_sdk_probe": {
+    "operation": "fetch_all_mids",
+    "ok": true,
+    "latency_ms": 1431.5,
+    "asset_count": 866,
+    "provenance_source": "sdk",
+    "health_available": true
+  },
+  "previous_live_probes": {
+    "note": "R03 probes from earlier run preserved for reference",
+    "meta_probe": {"operation": "fetch_meta", "method": "sdk", "status": "OK", "latency_ms": 219.4, "health_available": true},
+    "raw_http_probe": {"operation": "fetch_all_mids", "method": "raw_http_fallback", "status": "OK", "latency_ms": 517.9, "asset_count": 866, "health_available": true},
+    "funding_history_probe": {"operation": "fetch_funding_history", "coin": "BTC", "status": "OK", "latency_ms": 213.8, "funding_count": 1}
   },
   "validation_coverage": {
     "ethereum_address_format": "tested — valid hex, mixed-case, empty, short, no-prefix, non-string cases",
@@ -93,7 +79,15 @@
     "bounded_timeout": "clamped to [1.0, 60.0]s, default 15.0s",
     "operation_kwargs": "kwargs passed to ticker/OI/funding_rate; OHLCV uses positional timeframe/limit",
     "normalized_dicts": "ticker, OHLCV, OI, funding rate each normalized to stable adapter-owned dicts",
-    "raw_preserved": "raw CCXT data preserved as _raw key inside each normalized record"
+    "raw_preserved": "raw CCXT data preserved as _raw key inside each normalized record",
+    "capability_mapping": "explicit OPERATION_MAP separates method_name (snake_case) from capability_key (camelCase); _check_capability validates method exists AND has[key] is true/'emulated'; false/None/missing → unsupported_capability"
+  },
+  "capability_mapping": {
+    "fetchTicker": {"method": "fetch_ticker", "capability": "fetchTicker"},
+    "fetchOHLCV": {"method": "fetch_ohlcv", "capability": "fetchOHLCV"},
+    "fetchOpenInterest": {"method": "fetch_open_interest", "capability": "fetchOpenInterest"},
+    "fetchFundingRate": {"method": "fetch_funding_rate", "capability": "fetchFundingRate"},
+    "policy": "true or 'emulated' → allowed; false/None/missing → unsupported_capability"
   },
   "httpx_improvements": {
     "connect_timeout": "10.0s (clamped [0.5, 120.0])",
@@ -117,10 +111,9 @@
   "known_limitations": [
     "Hyperliquid SDK Info(skip_ws=True) requires websocket dependency — may fail in minimal environments (unchanged from baseline)",
     "CCXT 4.5.59 shadows import when ccxt subpackage exists in project (unchanged from baseline)",
-    "CCXT adapter _has_method checks snake_case method name against camelCase CCXT has dict — live Binance ticker probe FAILED (unsupported_capability). Unit tests pass because mock has dict is hand-written. Requires repair in ccxt_public_market_adapter.py.",
     "Only 3 exchanges in allowlist (binance, okx, bybit) (unchanged from baseline)",
     "AdapterHealth uses __post_init__ auto-population — health is present on all AdapterResult instances"
   ],
-  "clean_status": "All 75 unit tests pass (0 failed, 0 skipped). Live probes: Hyperliquid SDK allMids OK (866 assets), meta OK, raw HTTP OK, clearinghouse OK, fundingHistory OK (1 BTC record). CCXT Binance ticker FAILED — camelCase capability mismatch (known baseline bug, out of scope for R02). data_mode=degraded. No wallet/exchange/signing/order imports. No zero-address or BTC hardcoding.",
-  "generated_at_utc": "2026-06-17T05:15:06Z"
+  "clean_status": "All 86 unit tests pass (0 failed, 0 skipped). Live probes: CCXT Binance BTC/USDT ticker OK (last=65831.99, bid=65831.99, ask=65832.0, provenance=ccxt, health_available=true); watchlist clearinghouseState OK (no active positions — expected); Hyperliquid SDK allMids OK (866 assets). data_mode=live. No wallet/exchange/signing/order imports. No zero-address or BTC hardcoding.",
+  "generated_at_utc": "2026-06-17T06:05:34Z"
 }
