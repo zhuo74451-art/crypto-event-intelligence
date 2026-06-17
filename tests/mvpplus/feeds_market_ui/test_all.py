@@ -29,6 +29,7 @@ Tests:
 """
 
 import json, os, re, sys, tempfile, unittest
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -45,7 +46,7 @@ from market_radar.intelligence_feed.truth_audit import (
 from market_radar.intelligence_feed.feed_loader import load_feed, FLASH_FIXTURES, NEWS_FIXTURES, TELEGRAM_FIXTURES
 
 # ── Market imports ───────────────────────────────────────────────────────────
-from market_radar.market_view.models import MarketSnapshot, MarketHealth, Venue, Freshness as MarketFreshness
+from market_radar.market_view.models import MarketSnapshot, MarketHealth, Venue, Freshness as MarketFreshness, DataMode
 from market_radar.market_view.loader import load_market_view
 
 # ── Workbench imports ────────────────────────────────────────────────────────
@@ -60,9 +61,14 @@ class TestFeedSeparation(unittest.TestCase):
         self.result = load_feed()
 
     def test_live_items_exist(self):
-        """There should be live flash and news items from fixtures."""
+        """Fixture-only run — all items are fixture, zero live items."""
         live = [i for i in self.result.items if i.data_mode == FeedDataMode.LIVE]
-        self.assertGreater(len(live), 0, "Should contain live items")
+        self.assertEqual(len(live), 0, "Fixture-only run should have 0 live items")
+
+    def test_fixture_only_no_live(self):
+        """All fixture data — no live items should exist."""
+        live = [i for i in self.result.items if i.data_mode == FeedDataMode.LIVE]
+        self.assertEqual(len(live), 0, "Fixture-only run should have 0 live items")
 
     def test_fixture_excluded_from_live(self):
         """Fixture items must NOT be counted as live."""
@@ -85,11 +91,18 @@ class TestFeedSeparation(unittest.TestCase):
         self.assertEqual(self.result.truth.telegram_live, 0)
 
     def test_source_counts_truth(self):
-        """Flash and news should have correct counts."""
+        """Fixture-only — flash_live and news_live are 0; fixture count matches."""
         live_flash = [i for i in self.result.items if i.source_type == FeedSourceType.FLASH and i.data_mode == FeedDataMode.LIVE]
         live_news = [i for i in self.result.items if i.source_type == FeedSourceType.NEWS and i.data_mode == FeedDataMode.LIVE]
-        self.assertEqual(len(live_flash), self.result.truth.flash_live)
-        self.assertEqual(len(live_news), self.result.truth.news_live)
+        self.assertEqual(len(live_flash), 0)
+        self.assertEqual(len(live_news), 0)
+        self.assertEqual(self.result.truth.flash_live, 0)
+        self.assertEqual(self.result.truth.news_live, 0)
+        # All flash/news fixture items count as fixture
+        fixture = [i for i in self.result.items if i.data_mode == FeedDataMode.FIXTURE]
+        self.assertEqual(self.result.truth.fixture, len(fixture))
+        # live_total must be 0 for fixture-only run
+        self.assertEqual(self.result.truth.live_total, 0)
 
 
 class TestDeterministicID(unittest.TestCase):
@@ -158,29 +171,43 @@ class TestMissingTimestamp(unittest.TestCase):
 
 
 class TestStaleDetection(unittest.TestCase):
-    """Items older than threshold should be STALE."""
+    """Items older than threshold should be STALE.
+
+    All tests use deterministic reference_time — never depends on machine clock.
+    """
+
+    REF_TIME = datetime(2026, 6, 17, 12, 0, 0, tzinfo=timezone.utc)
 
     def test_recent_is_fresh(self):
-        f = make_freshness("2026-06-17T10:00:00Z")
-        self.assertIn(f, (Freshness.FRESH, Freshness.UNKNOWN))
+        f = make_freshness("2026-06-17T10:00:00Z", reference_time=self.REF_TIME)
+        self.assertEqual(f, Freshness.FRESH)
 
     def test_old_is_stale(self):
-        f = make_freshness("2025-01-01T00:00:00Z")
+        f = make_freshness("2025-01-01T00:00:00Z", reference_time=self.REF_TIME)
         self.assertEqual(f, Freshness.STALE)
 
-    def test_future_is_fresh(self):
-        f = make_freshness("2099-01-01T00:00:00Z")
-        self.assertEqual(f, Freshness.FRESH)
+    def test_future_is_unknown(self):
+        """Future timestamps are not reliable — must be UNKNOWN, not FRESH."""
+        f = make_freshness("2099-01-01T00:00:00Z", reference_time=self.REF_TIME)
+        self.assertEqual(f, Freshness.UNKNOWN)
+
+    def test_none_is_unknown(self):
+        """None published_at must be UNKNOWN regardless of reference_time."""
+        f = make_freshness(None, reference_time=self.REF_TIME)
+        self.assertEqual(f, Freshness.UNKNOWN)
 
 
 class TestDegradation(unittest.TestCase):
     """Single-source failure degrades only that source."""
 
-    def test_market_health_ok(self):
+    def test_market_health_fixture(self):
+        """Fixture data reports status=fixture and live_sources=0."""
         result = load_market_view()
-        self.assertGreater(result.live_sources, 0)
+        self.assertEqual(result.live_sources, 0)
         for h in result.health:
-            self.assertIn(h.status, ("ok", "degraded", "failed"))
+            self.assertIn(h.status, ("fixture", "degraded", "failed"))
+            if h.status == "fixture":
+                self.assertIn("fixture", h.message)
 
 
 class TestMarketView(unittest.TestCase):
@@ -198,12 +225,15 @@ class TestMarketView(unittest.TestCase):
             self.assertIsInstance(s.price, (int, float))
             self.assertGreater(s.price, 0)
             self.assertIsInstance(s.venue, Venue)
+            self.assertEqual(s.data_mode, DataMode.FIXTURE)
+            self.assertEqual(s.provenance, "fixture")
 
     def test_hype_from_hyperliquid(self):
         result = load_market_view()
         hype = [s for s in result.snapshots if s.symbol == "HYPE"]
         self.assertEqual(len(hype), 1)
         self.assertEqual(hype[0].venue, Venue.HYPERLIQUID_PERP)
+        self.assertEqual(hype[0].data_mode, DataMode.FIXTURE)
 
 
 class TestWorkbenchSecurity(unittest.TestCase):
@@ -311,6 +341,15 @@ class TestWorkbenchSecurity(unittest.TestCase):
         bundle = WorkbenchBundle(feed_items=[item])
         html = render_workbench(bundle)
         self.assertIn("live", html.lower())
+
+    def test_fixture_provenance_badge(self):
+        """Fixture items should show fixture provenance, not live."""
+        item = FeedItem(feed_id="fi_fix_badge", source_type=FeedSourceType.FLASH,
+                        source_label="test", data_mode=FeedDataMode.FIXTURE,
+                        title="Fixture badge test")
+        bundle = WorkbenchBundle(feed_items=[item])
+        html = render_workbench(bundle)
+        self.assertIn("fixture", html.lower())
 
     def test_no_external_stylesheets(self):
         self.assertNotIn("@import", self.empty_html)

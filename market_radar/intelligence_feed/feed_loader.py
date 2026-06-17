@@ -46,7 +46,7 @@ FLASH_FIXTURES: list[dict] = [
         "source_label": "hl_watcher",
         "assets": ["BTC"],
         "published_at": None,
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "USDT $180M minted on Tron Treasury",
@@ -54,7 +54,7 @@ FLASH_FIXTURES: list[dict] = [
         "source_label": "onchain_watcher",
         "assets": ["USDT"],
         "published_at": "2026-06-16T14:30:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "Binance hot wallet $500M USDT transfer to unknown address",
@@ -62,7 +62,7 @@ FLASH_FIXTURES: list[dict] = [
         "source_label": "onchain_watcher",
         "assets": ["USDT", "BTC"],
         "published_at": "2026-06-16T12:00:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "Whale loraclexyz flipped HYPE short to long, +$8M",
@@ -70,7 +70,7 @@ FLASH_FIXTURES: list[dict] = [
         "source_label": "hl_watcher",
         "assets": ["HYPE"],
         "published_at": "2026-06-16T10:15:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "Research: BTC accumulation pattern analysis",
@@ -89,7 +89,7 @@ NEWS_FIXTURES: list[dict] = [
         "source_label": "coindesk",
         "assets": ["ETH"],
         "published_at": "2026-06-16T15:00:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "Hyperliquid surpasses $5B in daily DEX volume",
@@ -97,7 +97,7 @@ NEWS_FIXTURES: list[dict] = [
         "source_label": "theblock",
         "assets": ["HYPE"],
         "published_at": "2026-06-16T13:45:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "Bitcoin hash rate reaches new ATH of 800 EH/s",
@@ -105,7 +105,7 @@ NEWS_FIXTURES: list[dict] = [
         "source_label": "cointelegraph",
         "assets": ["BTC"],
         "published_at": "2026-06-16T11:30:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "SOL developer activity up 40% in Q2 2026",
@@ -113,7 +113,7 @@ NEWS_FIXTURES: list[dict] = [
         "source_label": "coindesk",
         "assets": ["SOL"],
         "published_at": "2026-06-16T09:00:00Z",
-        "data_mode": "live",
+        "data_mode": "fixture",
     },
     {
         "title": "Historical: BTC ETF approval impact study",
@@ -204,9 +204,14 @@ def load_feed(project_root: Optional[str] = None) -> FeedResult:
     truth = build_truth(unique)
     truth.total_raw_rows = len(all_items)
 
+    # Count sources that are genuinely live (not fixture/research)
+    live_sources = 0
+    for item in unique:
+        if item.data_mode == FeedDataMode.LIVE:
+            live_sources += 1
     return FeedResult(
         items=unique,
         truth=truth,
-        sources_ok=2 if len(FLASH_FIXTURES) > 0 and len(NEWS_FIXTURES) > 0 else 0,
+        sources_ok=live_sources,
         sources_failed=0,
     )

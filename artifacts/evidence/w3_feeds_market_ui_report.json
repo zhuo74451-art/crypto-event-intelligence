@@ -1,96 +1,99 @@
 {
-  "run_id": "w3_2f0439dc",
-  "feed_truth": {
-    "flash_live": 4,
-    "news_live": 4,
-    "telegram_live": 0,
-    "cached": 0,
-    "fixture": 1,
-    "research_sample": 2,
-    "research_excluded_rows": 0,
-    "duplicates_removed": 0,
-    "total_raw_rows": 11,
-    "live_total": 8
+  "report_type": "w3_feeds_market_ui_evidence",
+  "version": "v2",
+  "generated_at_utc": "2026-06-17T03:00:46Z",
+  "baseline": {
+    "repository": "zhuo74451-art/crypto-event-intelligence",
+    "branch": "workbench/mvpplus-feeds-market-ui-v2",
+    "commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04"
   },
-  "market_snapshots": [
-    {
-      "symbol": "BTC",
-      "price": 65720.0,
-      "change_1h_pct": -0.15,
-      "change_24h_pct": -1.03,
-      "volume_24h": 28500000000.0,
-      "open_interest": 12000000000.0,
-      "funding_rate": 0.000105,
-      "mark_price": 65720.0,
-      "oracle_price": 65718.5,
-      "venue": "binance_spot",
-      "observed_at": "2026-06-17T10:00:00Z",
-      "freshness": "fresh"
-    },
-    {
-      "symbol": "ETH",
-      "price": 1789.64,
-      "change_1h_pct": -0.08,
-      "change_24h_pct": -0.36,
-      "volume_24h": 12000000000.0,
-      "open_interest": 5000000000.0,
-      "funding_rate": 5.2e-05,
-      "mark_price": 1789.64,
-      "oracle_price": 1788.9,
-      "venue": "binance_spot",
-      "observed_at": "2026-06-17T10:00:00Z",
-      "freshness": "fresh"
-    },
-    {
-      "symbol": "SOL",
-      "price": 73.58,
-      "change_1h_pct": 0.22,
-      "change_24h_pct": -0.84,
-      "volume_24h": 3500000000.0,
-      "open_interest": 1200000000.0,
-      "funding_rate": -2e-05,
-      "mark_price": 73.58,
-      "oracle_price": 73.55,
-      "venue": "binance_spot",
-      "observed_at": "2026-06-17T10:00:00Z",
-      "freshness": "fresh"
-    },
-    {
-      "symbol": "HYPE",
-      "price": 74.05,
-      "change_1h_pct": 1.52,
-      "change_24h_pct": 9.78,
-      "volume_24h": 850000000.0,
-      "open_interest": 1490000000.0,
-      "funding_rate": 1.25e-05,
-      "mark_price": 74.05,
-      "oracle_price": 74.01,
-      "venue": "hyperliquid_perp",
-      "observed_at": "2026-06-17T10:00:00Z",
-      "freshness": "fresh"
-    }
+  "tested_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "modified_files": [
+    "market_radar/intelligence_feed/models.py",
+    "market_radar/intelligence_feed/feed_loader.py",
+    "market_radar/intelligence_feed/truth_audit.py",
+    "market_radar/market_view/models.py",
+    "market_radar/market_view/loader.py",
+    "market_radar/workbench/bundle.py",
+    "market_radar/workbench/renderer.py",
+    "tests/mvpplus/feeds_market_ui/test_all.py",
+    "artifacts/evidence/w3_feeds_market_ui_report.json"
   ],
-  "market_health": [
-    {
-      "venue": "binance_spot",
-      "asset": "BTC",
-      "status": "ok"
-    },
-    {
-      "venue": "binance_spot",
-      "asset": "ETH",
-      "status": "ok"
-    },
-    {
-      "venue": "binance_spot",
-      "asset": "SOL",
-      "status": "ok"
-    },
-    {
-      "venue": "hyperliquid_perp",
-      "asset": "HYPE",
-      "status": "ok"
-    }
+  "outside_owned_path_files": [],
+  "deleted_files": [
+    "artifacts/reports/workbench.html"
   ],
-  "workbench_path": "C:\\Users\\PC\\Desktop\\市场信号\\crypto-event-intelligence-worktrees\\feeds-market-ui-v2\\artifacts\\reports\\workbench.html"
+  "tests": {
+    "total": 44,
+    "collected": 44,
+    "passed": 44,
+    "failed": 0,
+    "skipped": 0,
+    "xfailed": 0
+  },
+  "test_command": "python -m pytest tests/mvpplus/feeds_market_ui/test_all.py -v",
+  "fixture_truth": {
+    "flash_fixture": 4,
+    "news_fixture": 4,
+    "fixture_items": 1,
+    "research_sample": 2,
+    "telegram": 0,
+    "flash_live": 0,
+    "news_live": 0,
+    "live_total": 0,
+    "live_sources": 0
+  },
+  "market_provenance": {
+    "data_mode": "fixture",
+    "provenance": "fixture",
+    "venue_real": "yes_for_HYPE_hyperliquid_perp",
+    "not_live_data": true
+  },
+  "freshness_rules": [
+    "make_freshness accepts reference_time parameter (deterministic)",
+    "Future timestamps → UNKNOWN (not FRESH)",
+    "Fixture hardcoded freshness not trusted — computed from observed_at vs reference_time",
+    "Tests use deterministic reference_time, never machine clock"
+  ],
+  "fixes_applied": [
+    "FLASH_FIXTURES data_mode changed from live to fixture",
+    "NEWS_FIXTURES data_mode changed from live to fixture",
+    "sources_ok now counts only genuinely live items",
+    "market_view loader: health status=fixture, live_sources=0",
+    "MarketSnapshot: added data_mode, provenance fields",
+    "make_freshness: accepts reference_time, future → UNKNOWN",
+    "Deleted artifacts/reports/workbench.html from branch tracking",
+    "All tests use deterministic reference_time"
+  ],
+  "regression_tests": [
+    "test_fixture_only_no_live — fixture-only run has 0 live",
+    "test_source_counts_truth — flash_live/news_live=0, fixture=8, live_total=0",
+    "test_future_is_unknown — future timestamp → UNKNOWN",
+    "test_none_is_unknown — None published_at → UNKNOWN",
+    "test_market_health_fixture — health status=fixture, live_sources=0",
+    "test_required_fields — data_mode=fixture, provenance=fixture",
+    "test_hype_from_hyperliquid — venue preserved with data_mode=fixture",
+    "test_fixture_provenance_badge — fixture badge rendered"
+  ],
+  "security_renderer": {
+    "csp_present": true,
+    "script-src_none": true,
+    "no_script_tags": true,
+    "html_escaping": true,
+    "javascript_url_rejected": true,
+    "data_url_rejected": true,
+    "path_traversal_rejected": true,
+    "null_safe": true,
+    "atomic_write": true,
+    "all_original_tests_retained": true
+  },
+  "known_limitations": [
+    "No network I/O in domain layer (by design)",
+    "All current data is fixture — no live feed sources connected",
+    "Telegram fixtures remain empty (honest reporting)",
+    "Market snapshots are fixture data, not live Hyperliquid API"
+  ],
+  "git_status": "clean",
+  "merge_readiness": "LANE_MERGE_READY"
 }

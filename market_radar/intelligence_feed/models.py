@@ -87,16 +87,31 @@ def make_feed_id(content: str, source_label: str) -> str:
     return "fi_" + hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
 
 
-def make_freshness(published_at: Optional[str], max_stale_hours: int = 48) -> Freshness:
-    """Determine freshness from published_at timestamp."""
+def make_freshness(published_at: Optional[str],
+                   max_stale_hours: int = 48,
+                   reference_time: Optional[datetime] = None) -> Freshness:
+    """Determine freshness from published_at timestamp.
+
+    Args:
+        published_at: UTC ISO 8601 timestamp (or None).
+        max_stale_hours: Hours after which published_at is considered stale.
+        reference_time: Injection point for deterministic testing.
+                        Defaults to datetime.now(timezone.utc).
+
+    Returns:
+        Freshness.FRESH if published_at is within max_stale_hours of
+        reference_time; Freshness.STALE if older; Freshness.UNKNOWN
+        if published_at is None, unparseable, or in the future.
+    """
     if published_at is None:
         return Freshness.UNKNOWN
     try:
         dt = datetime.fromisoformat(published_at.replace("Z", "+00:00"))
-        now = datetime.now(timezone.utc)
-        delta = (now - dt).total_seconds()
+        ref = reference_time if reference_time is not None else datetime.now(timezone.utc)
+        delta = (ref - dt).total_seconds()
         if delta < 0:
-            return Freshness.FRESH  # future timestamp = presumed fresh
+            # Future timestamps are not reliable — mark unknown
+            return Freshness.UNKNOWN
         if delta < max_stale_hours * 3600:
             return Freshness.FRESH
         return Freshness.STALE

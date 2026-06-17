@@ -29,11 +29,18 @@ class MarketHealth:
     message: str = ""
 
 
+class DataMode(str, Enum):
+    LIVE = "live"
+    FIXTURE = "fixture"
+    UNKNOWN = "unknown"
+
+
 @dataclass
 class MarketSnapshot:
-    """Single asset market snapshot with full context.
+    """Single asset market snapshot with full context and provenance.
 
     No network provider implementation — data is injected via fixtures.
+    All fixture data explicitly declares data_mode=fixture.
     """
     symbol: str                         # BTC / ETH / SOL / HYPE
     price: float                        # USD
@@ -45,6 +52,8 @@ class MarketSnapshot:
     mark_price: Optional[float] = None
     oracle_price: Optional[float] = None
     venue: Venue = Venue.UNKNOWN
+    data_mode: DataMode = DataMode.FIXTURE
+    provenance: str = "fixture"
     observed_at: Optional[str] = None   # UTC ISO 8601
     freshness: Freshness = Freshness.UNKNOWN
 
@@ -60,6 +69,8 @@ class MarketSnapshot:
             "mark_price": self.mark_price,
             "oracle_price": self.oracle_price,
             "venue": self.venue.value,
+            "data_mode": self.data_mode.value,
+            "provenance": self.provenance,
             "observed_at": self.observed_at,
             "freshness": self.freshness.value,
         }

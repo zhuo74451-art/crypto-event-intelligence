@@ -87,13 +87,36 @@ FIXTURE_SNAPSHOTS: list[dict] = [
 ]
 
 
-def _make_snapshot(raw: dict) -> MarketSnapshot:
+def _compute_freshness(observed_at: Optional[str],
+                       reference_time: Optional[datetime] = None) -> Freshness:
+    """Compute freshness from observed_at vs reference_time.
+
+    Hardcoded fixture freshness values must NOT be trusted — always compute
+    from the timestamp relative to a deterministic reference point.
+    Future timestamps → UNKNOWN.
+    """
+    if observed_at is None:
+        return Freshness.UNKNOWN
+    try:
+        dt = datetime.fromisoformat(observed_at.replace("Z", "+00:00"))
+        ref = reference_time if reference_time is not None else datetime.now(timezone.utc)
+        delta = (ref - dt).total_seconds()
+        if delta < 0:
+            return Freshness.UNKNOWN  # future → not reliable
+        if delta < 48 * 3600:
+            return Freshness.FRESH
+        return Freshness.STALE
+    except (ValueError, TypeError):
+        return Freshness.UNKNOWN
+
+
+def _make_snapshot(raw: dict, reference_time: Optional[datetime] = None) -> MarketSnapshot:
     venue_str = raw.get("venue", "unknown")
     venue = Venue.BINANCE_SPOT if venue_str == "binance_spot" else \
             Venue.HYPERLIQUID_PERP if venue_str == "hyperliquid_perp" else Venue.UNKNOWN
-    freshness_str = raw.get("freshness", "unknown")
-    freshe = Freshness.FRESH if freshness_str == "fresh" else \
-             Freshness.STALE if freshness_str == "stale" else Freshness.UNKNOWN
+    observed_at = raw.get("observed_at")
+    # Compute freshness from timestamp, NOT from hardcoded fixture "freshness" field
+    freshe = _compute_freshness(observed_at, reference_time)
     return MarketSnapshot(
         symbol=raw["symbol"],
         price=raw["price"],
@@ -105,26 +128,35 @@ def _make_snapshot(raw: dict) -> MarketSnapshot:
         mark_price=raw.get("mark_price"),
         oracle_price=raw.get("oracle_price"),
         venue=venue,
-        observed_at=raw.get("observed_at"),
+        observed_at=observed_at,
         freshness=freshe,
     )
 
 
-def load_market_view() -> MarketViewResult:
-    """Load market snapshots from fixture data. No network calls."""
-    snapshots = [_make_snapshot(raw) for raw in FIXTURE_SNAPSHOTS]
+def load_market_view(reference_time: Optional[datetime] = None) -> MarketViewResult:
+    """Load market snapshots from fixture data. No network calls.
+
+    All data in this loader is fixture — health reports mode=fixture
+    and live_sources=0 so callers can distinguish from live data.
+
+    Args:
+        reference_time: Injection point for deterministic freshness
+                        computation. Defaults to datetime.now(timezone.utc).
+    """
+    snapshots = [_make_snapshot(raw, reference_time) for raw in FIXTURE_SNAPSHOTS]
     health = []
 
     for snap in snapshots:
-        h = MarketHealth(venue=snap.venue, asset=snap.symbol, status="ok")
-        # Simulate degraded if stale or missing price
+        # Fixture data: health is "fixture", not "ok"
+        h = MarketHealth(venue=snap.venue, asset=snap.symbol,
+                         status="fixture", message="fixture data — not live")
         if snap.price <= 0:
             h.status = "degraded"
             h.message = "Price is zero or negative"
         health.append(h)
 
     live = sum(1 for h in health if h.status == "ok")
-    degraded = sum(1 for h in health if h.status != "ok")
+    degraded = sum(1 for h in health if h.status == "degraded")
 
     return MarketViewResult(
         snapshots=snapshots,
