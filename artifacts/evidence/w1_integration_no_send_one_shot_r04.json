@@ -1,0 +1,136 @@
+{
+  "ticket": "W1_INTEGRATION_FINAL_TRUTH_CLOSURE_R04",
+  "role": "Final Integration Truth + Evidence Closure",
+  "mode": "R04 closure — all sections verified",
+  "generated_at_utc": "2026-06-17T12:00:00Z",
+  "repair_base_commit": "0d64871282723277bafbc9e56084830881167851",
+  "tested_commit": "2e113c2e7a7e54cabf0181d5b489fb0eb5f47b9f",
+  "supersedes": "w1_integration_no_send_one_shot_r03.json",
+  "superseded_by_r04": true,
+  "sections": [
+    {
+      "id": 1,
+      "title": "Final status semantics — degraded when any source degraded",
+      "status": "COMPLETED",
+      "detail": "_compute_final_status() checks all source statuses. Feed not_connected → degraded overall. Live run verified status=degraded."
+    },
+    {
+      "id": 2,
+      "title": "Final report order — pre-computed paths, correct sequence",
+      "status": "COMPLETED",
+      "detail": "Order: finished_at → output/state paths in result → source health → artifacts → run history update. Final report written last. Output paths include state DB paths."
+    },
+    {
+      "id": 3,
+      "title": "Whale required field validation — no zero defaults",
+      "status": "COMPLETED",
+      "detail": "WhalePositionInput not constructed when signed_size/entry_price/mark_price/position_value_usd/leverage are None or invalid. Field validation errors recorded with kind=required_field_error. Mark price still injectable via allMids."
+    },
+    {
+      "id": 4,
+      "title": "Mapping status — explicit kind field, correct status/ok",
+      "status": "COMPLETED",
+      "detail": "Errors use explicit kind field (parse_error, mapping_error, required_field_error). errors=0 → ok=true. errors>0 with partial valid → degraded, ok=false. Completely unavailable → unavailable, ok=false. Previous state only overwritten on zero errors."
+    },
+    {
+      "id": 5,
+      "title": "Workbench atomic output — no open() fallback",
+      "status": "COMPLETED",
+      "detail": "render_workbench(bundle, output_path) is the only write path. No open(html_path, 'w') fallback."
+    },
+    {
+      "id": 6,
+      "title": "Runtime file cleanup",
+      "status": "COMPLETED",
+      "detail": "data/integration/.gitignore created (output/, state/, *.db, *.lock, *.json, *.html). All tracked runtime files removed from git index. Live run used temp dirs, cleaned after evidence capture."
+    },
+    {
+      "id": 7,
+      "title": "Evidence binding",
+      "status": "COMPLETED",
+      "detail": "R04 evidence with full structured summary. R03 marked superseded."
+    },
+    {
+      "id": 8,
+      "title": "Operations verification — real get_run() queries",
+      "status": "COMPLETED",
+      "detail": "Fresh live run verified: run_history row exists with status=degraded, source_health has 6 rows."
+    },
+    {
+      "id": 9,
+      "title": "Fresh-state live acceptance",
+      "status": "COMPLETED",
+      "detail": "Temp dirs, no prior state. Whale baseline=true, 1 position, 1 change (baseline_open_position), 2 alerts. BTC/ETH/SOL/HYPE all live success. Feed degraded. Overall status=degraded. 0 errors."
+    },
+    {
+      "id": 10,
+      "title": "Complete tests",
+      "status": "COMPLETED",
+      "detail": "287 passed / 1 skipped (combined pytest), 86 adapter PASS, 44 feed/UI PASS. 0 failed."
+    }
+  ],
+  "test_results": {
+    "combined_pytest": {"total": 288, "passed": 287, "failed": 0, "skipped": 1},
+    "adapter_unittest": {"total": 86, "passed": 86, "failed": 0},
+    "feed_ui_unittest": {"total": 44, "passed": 44, "failed": 0},
+    "integration_tests": {"total": 52, "passed": 52, "failed": 0}
+  },
+  "live_run_summary": {
+    "run_id": "os-9c56415f950d",
+    "status": "degraded",
+    "degraded_reason": "Feed not_connected (readers not wired — expected external limitation)",
+    "data_mode": "live-public",
+    "no_send": true,
+    "scheduler_started": false,
+    "credentials_used": false,
+    "errors": 0,
+    "sources": {
+      "whale:0x6c851251": "ok (1 position, 1 change, 2 alerts, baseline=true)",
+      "ccxt:BTC/USDT": "ok",
+      "ccxt:ETH/USDT": "ok",
+      "ccxt:SOL/USDT": "ok",
+      "hyperliquid:HYPE": "ok",
+      "feed": "degraded (not_connected)"
+    },
+    "whale": {
+      "parse_error_count": 0,
+      "mapping_error_count": 0,
+      "required_field_error_count": 0,
+      "real_position_count": 1,
+      "is_baseline": true,
+      "change_count": 1,
+      "change_types": ["baseline_open_position"],
+      "alert_count": 2,
+      "large_new_position_alert_count": 0,
+      "position_level_alerts": ["high_leverage", "concentrated_exposure"]
+    },
+    "output_hashes": {
+      "run_os-9c56415f950d.json": "22e102ef88770fd42450151f62881123b83b617ff3e6a446752feb092de2bff7",
+      "workbench_os-9c56415f950d.html": "3c2b8c3f6b72afcb133cc7a53ec9719fd289fc5bbd9491b8bba533959baa257f",
+      "whale_os-9c56415f950d.json": "016b99f23a6beba744c442c16f675d6714abdb058c686976601614ce941e4ee9",
+      "market_os-9c56415f950d.json": "21d0b2efa81a67c722e41a2669a773a3c1e43f7ba1db56d664754eb4c24849c3"
+    },
+    "run_history_status": "degraded",
+    "source_health_rows": 6
+  },
+  "modified_files": [
+    "market_radar/integration/one_shot.py",
+    "market_radar/integration/whale_mapper.py",
+    "market_radar/integration/models.py",
+    "tests/mvpplus/integration/test_integration.py",
+    "data/integration/.gitignore",
+    "artifacts/evidence/w1_integration_no_send_one_shot_r03.json",
+    "artifacts/evidence/w1_integration_no_send_one_shot_r04.json"
+  ],
+  "files_outside_owned_paths": [],
+  "no_send": true,
+  "scheduler_started": false,
+  "credentials_used": false,
+  "runtime_data_committed": false,
+  "data_integration_tracked_files": ["data/integration/.gitignore"],
+  "known_limitations": [
+    "Feed readers not wired — live-public feed handler returns not_connected (expected, documented limitation)",
+    "ccxt/hyperliquid namespace shadow: pre-import + sys.modules restore in one_shot.py works around hyperliquid.ccxt shadowing the real ccxt module",
+    "No cross-host state sharing — whale snapshot state is local to state_dir"
+  ]
+}
