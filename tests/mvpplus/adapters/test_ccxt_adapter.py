@@ -1,16 +1,33 @@
 """Unit tests for CcxtPublicMarketAdapter — no live network.
 
-Tests timeout config, kwargs support, normalization, and credential safety.
+Tests timeout config, kwargs support, normalization, credential safety,
+and CCXT capability mapping (camelCase has keys).
 """
 import unittest, json
 from unittest.mock import MagicMock, patch
 
 from market_radar.external_adapters.ccxt_public_market_adapter import (
     CcxtPublicMarketAdapter, ALLOWLISTED_EXCHANGES, SUPPORTED_OPERATIONS,
-    DEFAULT_EXCHANGE_TIMEOUT,
+    DEFAULT_EXCHANGE_TIMEOUT, OPERATION_MAP,
     _normalize_ticker, _normalize_ohlcv,
     _normalize_open_interest, _normalize_funding_rate,
 )
+
+
+# ── Helper: build a mock exchange with real CCXT-style camelCase has keys ──
+
+
+def _mock_exchange(has: dict, method_name: str = "fetch_ticker",
+                   return_value=None) -> MagicMock:
+    """Create a MagicMock exchange with camelCase *has* dict and a method stub.
+
+    *has* keys should be CCXT camelCase, e.g. ``{"fetchTicker": True}``.
+    """
+    ex = MagicMock()
+    ex.has = has
+    fn = MagicMock(return_value=return_value if return_value is not None else {})
+    setattr(ex, method_name, fn)
+    return ex
 
 
 # ── Timeout Configuration ──
@@ -122,7 +139,8 @@ class TestUnsupportedOperation(unittest.TestCase):
         adapter = CcxtPublicMarketAdapter()
         adapter._ccxt_available = True
         mock_ex = MagicMock()
-        mock_ex.has = {"fetch_funding_rate": False}
+        mock_ex.has = {"fetchFundingRate": False}
+        mock_ex.fetch_funding_rate = MagicMock()  # method exists but caps says no
         adapter._get_exchange = lambda ex_id: mock_ex
 
         result = adapter.fetch("binance", "funding_rate", "BTC/USDT")
@@ -139,7 +157,7 @@ class TestKwargsSupport(unittest.TestCase):
         adapter = CcxtPublicMarketAdapter()
         adapter._ccxt_available = True
         mock_ex = MagicMock()
-        mock_ex.has = {"fetch_ticker": True}
+        mock_ex.has = {"fetchTicker": True}
         mock_ex.fetch_ticker = MagicMock(return_value={"last": 50000})
         adapter._get_exchange = lambda ex_id: mock_ex
 
@@ -154,7 +172,7 @@ class TestOHLCVKwargsOrder(unittest.TestCase):
         adapter = CcxtPublicMarketAdapter()
         adapter._ccxt_available = True
         mock_ex = MagicMock()
-        mock_ex.has = {"fetch_ohlcv": True}
+        mock_ex.has = {"fetchOHLCV": True}
         mock_ex.fetch_ohlcv = MagicMock(return_value=[])
         adapter._get_exchange = lambda ex_id: mock_ex
 
@@ -173,7 +191,7 @@ class TestNormalizationApplied(unittest.TestCase):
         adapter = CcxtPublicMarketAdapter()
         adapter._ccxt_available = True
         mock_ex = MagicMock()
-        mock_ex.has = {"fetch_ticker": True}
+        mock_ex.has = {"fetchTicker": True}
         mock_ex.fetch_ticker = MagicMock(return_value={
             "last": 50000.0, "bid": 49900.0, "ask": 50100.0,
             "baseVolume": 1000.0, "quoteVolume": 50_000_000.0,
@@ -191,7 +209,7 @@ class TestNormalizationApplied(unittest.TestCase):
         adapter = CcxtPublicMarketAdapter()
         adapter._ccxt_available = True
         mock_ex = MagicMock()
-        mock_ex.has = {"fetch_ohlcv": True}
+        mock_ex.has = {"fetchOHLCV": True}
         mock_ex.fetch_ohlcv = MagicMock(return_value=[[1700000000000, 100.0, 110.0, 90.0, 105.0, 500.0]])
         adapter._get_exchange = lambda ex_id: mock_ex
 
@@ -200,6 +218,129 @@ class TestNormalizationApplied(unittest.TestCase):
         self.assertIsInstance(result.data, list)
         self.assertEqual(result.data[0]["close"], 105.0)
         self.assertIn("_raw", result.data[0])
+
+
+# ── Capability Mapping (camelCase) ──
+
+
+class TestCapabilityFetchTickerTrue(unittest.TestCase):
+    """fetchTicker=true → ticker fetch succeeds."""
+
+    def test_binance_ticker_allowed(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchTicker": True}, "fetch_ticker", {"last": 50000.0})
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "ticker", "BTC/USDT")
+        self.assertTrue(result.ok)
+        self.assertEqual(result.provenance.source, "ccxt")
+
+
+class TestCapabilityFetchTickerFalse(unittest.TestCase):
+    """fetchTicker=false → unsupported_capability even if method exists."""
+
+    def test_ticker_rejected_when_false(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchTicker": False}, "fetch_ticker")
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "ticker", "BTC/USDT")
+        self.assertFalse(result.ok)
+        self.assertEqual(result.error.code, "unsupported_capability")
+
+
+class TestCapabilityFetchOHLCVTrue(unittest.TestCase):
+    def test_ohlcv_allowed(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchOHLCV": True}, "fetch_ohlcv", [])
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "ohlcv", "BTC/USDT")
+        self.assertTrue(result.ok)
+
+
+class TestCapabilityFetchOpenInterestTrue(unittest.TestCase):
+    def test_open_interest_allowed(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchOpenInterest": True}, "fetch_open_interest", {})
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "open_interest", "BTC/USDT")
+        self.assertTrue(result.ok)
+
+
+class TestCapabilityFetchFundingRateTrue(unittest.TestCase):
+    def test_funding_rate_allowed(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchFundingRate": True}, "fetch_funding_rate", {})
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "funding_rate", "BTC/USDT")
+        self.assertTrue(result.ok)
+
+
+class TestCapabilityEmulated(unittest.TestCase):
+    """'emulated' is treated as capable."""
+
+    def test_emulated_ticker_allowed(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchTicker": "emulated"}, "fetch_ticker", {"last": 100.0})
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "ticker", "BTC/USDT")
+        self.assertTrue(result.ok)
+
+
+class TestCapabilityMissing(unittest.TestCase):
+    """Missing capability key → unsupported."""
+
+    def test_missing_capability_rejected(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({}, "fetch_ticker")  # no fetchTicker key at all
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "ticker", "BTC/USDT")
+        self.assertFalse(result.ok)
+        self.assertEqual(result.error.code, "unsupported_capability")
+
+
+class TestCapabilityNone(unittest.TestCase):
+    """None capability value → unsupported."""
+
+    def test_none_capability_rejected(self):
+        adapter = CcxtPublicMarketAdapter()
+        adapter._ccxt_available = True
+        ex = _mock_exchange({"fetchTicker": None}, "fetch_ticker")
+        adapter._get_exchange = lambda eid: ex
+        result = adapter.fetch("binance", "ticker", "BTC/USDT")
+        self.assertFalse(result.ok)
+        self.assertEqual(result.error.code, "unsupported_capability")
+
+
+# ── OPERATION_MAP consistency ──
+
+
+class TestOperationMapConsistency(unittest.TestCase):
+    def test_all_supported_operations_mapped(self):
+        for op in SUPPORTED_OPERATIONS:
+            self.assertIn(op, OPERATION_MAP, f"Missing OPERATION_MAP entry for {op}")
+
+    def test_each_map_has_method_and_capability(self):
+        for op, cfg in OPERATION_MAP.items():
+            self.assertIn("method", cfg, f"{op} missing 'method'")
+            self.assertIn("capability", cfg, f"{op} missing 'capability'")
+            self.assertIsInstance(cfg["method"], str)
+            self.assertIsInstance(cfg["capability"], str)
+
+    def test_capability_key_is_camelcase(self):
+        """Capability keys should start with lowercase fetch + PascalCase remainder."""
+        for op, cfg in OPERATION_MAP.items():
+            cap = cfg["capability"]
+            self.assertTrue(cap[0].islower(), f"{op} capability {cap!r} should start lowercase")
+            # At least one uppercase letter after 'fetch'
+            rest = cap[5:]  # after "fetch"
+            self.assertGreater(len(rest), 0, f"{op} capability {cap!r} too short")
+            self.assertTrue(rest[0].isupper(), f"{op} capability {cap!r} should have PascalCase remainder")
 
 
 # ── No Private Endpoints ──
@@ -254,7 +395,7 @@ class TestAdapterHealthPresence(unittest.TestCase):
         adapter = CcxtPublicMarketAdapter()
         adapter._ccxt_available = True
         mock_ex = MagicMock()
-        mock_ex.has = {"fetch_ticker": True}
+        mock_ex.has = {"fetchTicker": True}
         mock_ex.fetch_ticker = MagicMock(return_value={"last": 50000.0})
         adapter._get_exchange = lambda ex_id: mock_ex
         result = adapter.fetch("binance", "ticker", "BTC/USDT")

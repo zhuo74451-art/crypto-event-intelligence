@@ -25,6 +25,17 @@ SUPPORTED_OPERATIONS_DESC = ", ".join(sorted(SUPPORTED_OPERATIONS))
 # This bounds the total HTTP wait per exchange call.
 DEFAULT_EXCHANGE_TIMEOUT = 15.0
 
+# ── Operation mapping: operation → (Python method name, CCXT has key) ──
+# CCXT uses camelCase capability keys (e.g. fetchTicker) while Python
+# adapter methods are snake_case (e.g. fetch_ticker).  We maintain the
+# separation explicitly so capability lookups match CCXT's actual dict.
+OPERATION_MAP: dict[str, dict[str, str]] = {
+    "ticker":        {"method": "fetch_ticker",        "capability": "fetchTicker"},
+    "ohlcv":         {"method": "fetch_ohlcv",         "capability": "fetchOHLCV"},
+    "open_interest": {"method": "fetch_open_interest", "capability": "fetchOpenInterest"},
+    "funding_rate":  {"method": "fetch_funding_rate",  "capability": "fetchFundingRate"},
+}
+
 
 # ── Normalizers ──
 
@@ -146,13 +157,23 @@ class CcxtPublicMarketAdapter:
         except (AttributeError, ImportError) as e:
             return None
 
-    def _has_method(self, exchange: Any, method: str) -> bool:
-        if not hasattr(exchange, method):
+    def _check_capability(self, exchange: Any, method_name: str, capability_key: str) -> bool:
+        """Check that *exchange* has *method_name* and its *capability_key* is truthy.
+
+        CCXT stores capabilities as camelCase keys (``fetchTicker``) in its
+        ``has`` dict.  We check:
+          1. The Python method exists on the exchange object.
+          2. The capability value is ``True`` or ``'emulated'``.
+        ``False``, ``None``, or a missing key means the operation is unsupported,
+        even if the method happens to exist on the object.
+        """
+        if not hasattr(exchange, method_name):
             return False
         caps = getattr(exchange, "has", {})
-        if isinstance(caps, dict):
-            return caps.get(method, False)
-        return True
+        if not isinstance(caps, dict):
+            return True  # no has dict → assume capable
+        value = caps.get(capability_key)
+        return value is True or value == "emulated"
 
     def fetch(self, exchange_id: str, operation: str, symbol: str,
               kwargs: Optional[dict[str, Any]] = None) -> AdapterResult:
@@ -203,25 +224,29 @@ class CcxtPublicMarketAdapter:
                 provenance=AdapterProvenance(source="unavailable", method=operation, healthy=False),
             )
 
-        ccxt_methods = {
-            "ticker": "fetch_ticker",
-            "ohlcv": "fetch_ohlcv",
-            "open_interest": "fetch_open_interest",
-            "funding_rate": "fetch_funding_rate",
-        }
-        ccxt_method = ccxt_methods.get(operation, "")
+        op_cfg = OPERATION_MAP.get(operation)
+        if op_cfg is None:
+            return AdapterResult(
+                ok=False,
+                error=AdapterError("unsupported_operation", f"no mapping for '{operation}'"),
+                provenance=AdapterProvenance(source="unavailable", method=operation, healthy=False),
+            )
 
-        if not self._has_method(exchange, ccxt_method):
+        method_name = op_cfg["method"]
+        capability_key = op_cfg["capability"]
+
+        if not self._check_capability(exchange, method_name, capability_key):
             return AdapterResult(
                 ok=False,
                 error=AdapterError("unsupported_capability",
-                                   f"'{exchange_id}' does not support '{operation}'"),
+                                   f"'{exchange_id}' does not support '{operation}' "
+                                   f"(has['{capability_key}'] is false/missing)"),
                 provenance=AdapterProvenance(source="unavailable", method=operation, healthy=False),
             )
 
         start = time.monotonic()
         try:
-            method_fn = getattr(exchange, ccxt_method)
+            method_fn = getattr(exchange, method_name)
             merged_kwargs = dict(kwargs or {})
             # CCXT ohlcv uses positional args, not kwargs, for timeframe/limit
             if operation == "ohlcv":
@@ -247,11 +272,11 @@ class CcxtPublicMarketAdapter:
                 ok=True,
                 data=data,
                 provenance=AdapterProvenance(
-                    source="sdk",  # ccxt is the SDK here
+                    source="ccxt",  # ccxt is the SDK here
                     method=operation,
                     endpoint=exchange_id,
                     latency_ms=round(elapsed, 1),
-                    detail=f"ccxt {ccxt_method} normalized via stable adapter dict",
+                    detail=f"ccxt.{method_name} normalized via stable adapter dict",
                 ),
             )
         except Exception as e:
