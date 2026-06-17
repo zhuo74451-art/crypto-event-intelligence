@@ -1,0 +1,41 @@
+{
+  "ticket": "W1_POST_MVP_OPERATOR_WORKBENCH_R01",
+  "branch": "workbench/post-mvp-operator-workbench-v1",
+  "source_sha": "0cf9edfad3402cc18542d57634b01586e03224d4",
+  "tested_commit": "fbdf29e0a690896538b3334e8fed1ac8e9e56724",
+  "features": {
+    "operator_profiles": 7,
+    "diagnosis_codes": 14,
+    "manifest_fields": 20,
+    "cli_commands": ["doctor", "run", "shadow", "inspect", "compare", "bundle"]
+  },
+  "test_counts": {
+    "operator_tests": 63,
+    "integration_tests": 109,
+    "combined_pytest": 172,
+    "adapters": 96,
+    "total": 268,
+    "failed": 0
+  },
+  "live_acceptance": {
+    "doctor_offline": "6 checks PASS, 0 FAIL",
+    "no_send": true,
+    "daemon_started": false,
+    "scheduler_started": false,
+    "threads_started": false
+  },
+  "modified_files": [
+    "market_radar/integration/operator_profiles.py",
+    "market_radar/integration/operator_diagnosis.py",
+    "market_radar/integration/operator_manifest.py",
+    "scripts/post_mvp/operator/operator_workbench.py",
+    "tests/post_mvp/operator/test_profiles.py",
+    "tests/post_mvp/operator/test_diagnosis.py",
+    "tests/post_mvp/operator/test_manifest.py",
+    "tests/post_mvp/operator/test_cli_workbench.py"
+  ],
+  "files_outside_owned_paths": [],
+  "w2_w3_w4_w5_w6_modified": false,
+  "main_unchanged": true,
+  "runtime_data_committed": false
+}
