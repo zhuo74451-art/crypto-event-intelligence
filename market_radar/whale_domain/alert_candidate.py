@@ -113,8 +113,9 @@ def generate_alert_candidates(
                 alerts.append(alert)
                 seen_ids.add(alert.alert_id)
 
-        # Large new position
-        if "open" in ct and change.current:
+        # Large new position (only real opens, not baseline)
+        REAL_OPEN_TYPES = {"open_long", "open_short"}
+        if ct in REAL_OPEN_TYPES and change.current:
             pos_value = change.current.get("position_value_usd", 0) or 0
             if pos_value >= ALERT_RULES["large_new_position"]["min_value_usd"]:
                 alert = WhaleAlertCandidate(

@@ -240,6 +240,15 @@ class TestChangeDetectionBaseline:
         )
         assert ct == ChangeType.OPEN_SHORT
 
+    def test_baseline_zero_position_no_open(self):
+        """Zero-size position on baseline must not become baseline_open_position."""
+        zero = make_input(signed_size=0.0, position_value_usd=0.0)
+        snap = extract_snapshot(zero)
+        ct, direction, prev, curr, delta = detect_change(
+            snap, previous=None, is_baseline_run=True,
+        )
+        assert ct == ChangeType.NO_CHANGE
+
 
 # ═══════════════════════════════════════════════════════════════════════
 # 4. Change Detection — Change Types
@@ -305,6 +314,28 @@ class TestChangeDetectionTypes:
         )
         assert ct == ChangeType.CLOSE_SHORT
 
+    def test_close_long_exact_zero(self):
+        """signed_size == 0 must use previous direction for long."""
+        prev = self.make_prev(signed_size=10.0, position_value_usd=650000.0)
+        closed = make_input(signed_size=0.0, position_value_usd=0.0)
+        snap = extract_snapshot(closed)
+        ct, direction, p, c, d = detect_change(
+            snap, prev, is_baseline_run=False,
+        )
+        assert ct == ChangeType.CLOSE_LONG
+        assert direction == "long"
+
+    def test_close_short_exact_zero(self):
+        """signed_size == 0 must use previous direction for short."""
+        prev = self.make_prev(signed_size=-10.0, position_value_usd=650000.0)
+        closed = make_input(signed_size=0.0, position_value_usd=0.0)
+        snap = extract_snapshot(closed)
+        ct, direction, p, c, d = detect_change(
+            snap, prev, is_baseline_run=False,
+        )
+        assert ct == ChangeType.CLOSE_SHORT
+        assert direction == "short"
+
     def test_flip_long_to_short(self, long_snapshot):
         flipped = make_input(signed_size=-5.0, position_value_usd=325000.0)
         snap = extract_snapshot(flipped)
@@ -326,17 +357,73 @@ class TestChangeDetectionTypes:
         assert direction == "long"
 
     def test_liquidation_narrowed(self, long_snapshot):
-        """Liq distance changed by > 0.5% while size unchanged."""
+        """Liq distance narrowed by > 0.5% while size unchanged.
+
+        Prev: liq=58000 → dist=(66000-58000)/66000*100 = 12.12%
+        Curr: liq=60000 → dist=(66000-60000)/66000*100 = 9.09%
+        Delta = 9.09 - 12.12 = -3.03 < -0.5 → narrowed
+        """
         prev = self.make_prev(
-            signed_size=10.0, liquidation_price=62000.0,
+            signed_size=10.0, liquidation_price=58000.0,
         )
-        # Current has liq at 60000 (distance = (66000-60000)/66000*100 = 9.09%)
-        # Prev has liq at 62000 (distance = (66000-62000)/66000*100 = 6.06%)
-        # Delta = 9.09 - 6.06 = 3.03 > 0.5 → narrowed
         ct, direction, p, c, d = detect_change(
             long_snapshot, prev, is_baseline_run=False,
         )
         assert ct == ChangeType.LIQUIDATION_DISTANCE_NARROWED
+
+    def test_liquidation_widened_is_no_change(self, long_snapshot):
+        """Liq distance widened must be no_change, not narrowed.
+
+        Prev: liq=62000 → dist=(66000-62000)/66000*100 = 6.06%
+        Curr: liq=60000 → dist=(66000-60000)/66000*100 = 9.09%
+        Delta = 9.09 - 6.06 = 3.03 > 0.5 but widened → no_change
+        """
+        prev = self.make_prev(
+            signed_size=10.0, liquidation_price=62000.0,
+        )
+        ct, direction, p, c, d = detect_change(
+            long_snapshot, prev, is_baseline_run=False,
+        )
+        assert ct == ChangeType.NO_CHANGE
+
+    def test_liquidation_narrowed_short(self, short_snapshot):
+        """Short position liq distance narrowed.
+
+        Prev: liq=120000 → dist=(120000-66000)/66000*100 = 81.82%
+        Curr: liq=68000 → dist=(68000-66000)/66000*100 = 3.03%
+        Delta = 3.03 - 81.82 = -78.79 < -0.5 → narrowed
+        """
+        prev = self.make_prev(
+            signed_size=-10.0, liquidation_price=120000.0,
+            mark_price=66000.0,
+        )
+        curr_input = make_input(
+            signed_size=-10.0, liquidation_price=68000.0,
+            mark_price=66000.0,
+        )
+        curr_snap = extract_snapshot(curr_input)
+        ct, direction, p, c, d = detect_change(
+            curr_snap, prev, is_baseline_run=False,
+        )
+        assert ct == ChangeType.LIQUIDATION_DISTANCE_NARROWED
+        assert direction == "short"
+
+    def test_liquidation_widened_short_is_no_change(self, short_snapshot):
+        """Short position liq distance widened → no_change."""
+        prev = self.make_prev(
+            signed_size=-10.0, liquidation_price=68000.0,
+            mark_price=66000.0,
+        )
+        curr_input = make_input(
+            signed_size=-10.0, liquidation_price=120000.0,
+            mark_price=66000.0,
+        )
+        curr_snap = extract_snapshot(curr_input)
+        ct, direction, p, c, d = detect_change(
+            curr_snap, prev, is_baseline_run=False,
+        )
+        assert ct == ChangeType.NO_CHANGE
+        assert direction == "short"
 
     def test_no_change(self, long_snapshot):
         """Same size and same liq distance → no_change."""
@@ -406,6 +493,20 @@ class TestDetectAllChanges:
         assert len(changes) == 2
         for c in changes:
             assert c.change_type == "baseline_open_position"
+
+    def test_baseline_run_skips_zero_positions(self):
+        """Zero-size positions on baseline must not generate baseline_open_position."""
+        inputs = [
+            make_input(coin="BTC", signed_size=10.0),
+            make_input(coin="ETH", signed_size=0.0, position_value_usd=0.0),
+        ]
+        changes = detect_all_changes(
+            inputs, previous_snapshots={}, is_baseline_run=True,
+            detected_at_utc=TEST_TS,
+        )
+        assert len(changes) == 1
+        assert changes[0].change_type == "baseline_open_position"
+        assert changes[0].coin == "BTC"
 
     def test_detect_disappeared_position(self):
         """Position in previous but not current must be detected as close."""
@@ -486,6 +587,13 @@ class TestRiskFlags:
         snap = extract_snapshot(make_input(position_value_usd=10_000_000.0))
         flags = compute_risk_flags(ChangeType.OPEN_LONG, snap)
         assert any(f["rule_id"] == "R6_CONCENTRATED_ASSET" for f in flags)
+
+    def test_baseline_does_not_trigger_R3(self):
+        """baseline_open_position must not trigger R3_LARGE_POSITION_OPEN."""
+        snap = extract_snapshot(make_input(position_value_usd=2_000_000.0))
+        flags = compute_risk_flags(ChangeType.BASELINE_OPEN_POSITION, snap)
+        r3 = [f for f in flags if f["rule_id"] == "R3_LARGE_POSITION_OPEN"]
+        assert len(r3) == 0
 
     def test_direction_flip_flag(self):
         snap = extract_snapshot(make_input())
@@ -712,6 +820,22 @@ class TestAlertCandidates:
         )
         lc = [a for a in alerts if a.alert_type == "liquidation_critical"]
         assert len(lc) == 0
+
+    def test_baseline_does_not_trigger_large_new_position(self):
+        """baseline_open_position must not generate large_new_position alert."""
+        snapshots = [extract_snapshot(make_input(position_value_usd=2_000_000.0))]
+        change = WhalePositionChange(
+            change_id="test",
+            address=TEST_ADDR, label="Test", coin="BTC",
+            change_type="baseline_open_position", direction="long",
+            current={"position_value_usd": 2_000_000.0},
+            detected_at_utc=TEST_TS,
+        )
+        alerts = generate_alert_candidates(
+            snapshots, [change], generated_at_utc=TEST_TS,
+        )
+        lnp = [a for a in alerts if a.alert_type == "large_new_position"]
+        assert len(lnp) == 0
 
     def test_alert_ids_deterministic(self):
         snapshots = [extract_snapshot(make_input(leverage=15.0))]

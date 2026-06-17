@@ -95,6 +95,12 @@ def detect_change(
 
     # Case 1: First run — mark as baseline
     if is_baseline_run:
+        if curr_signed == 0:
+            # Zero-size position on baseline — not an open position
+            return (
+                ChangeType.NO_CHANGE, direction,
+                None, snapshot_to_dict(current), delta,
+            )
         return (
             ChangeType.BASELINE_OPEN_POSITION, direction,
             None, snapshot_to_dict(current), delta,
@@ -119,8 +125,10 @@ def detect_change(
 
     # Case 4: Position closed (size at or near zero)
     if curr_signed == 0 or curr_abs < size_threshold:
-        ct = ChangeType.CLOSE_LONG if direction == "long" else ChangeType.CLOSE_SHORT
-        return (ct, direction, snapshot_to_dict(previous), None, delta)
+        # When signed_size == 0, current.direction is ambiguous — use previous
+        close_dir = previous.direction if curr_signed == 0 and previous else direction
+        ct = ChangeType.CLOSE_LONG if close_dir == "long" else ChangeType.CLOSE_SHORT
+        return (ct, close_dir, snapshot_to_dict(previous), None, delta)
 
     # Case 5: Size change
     if prev_abs is not None:
@@ -133,7 +141,7 @@ def detect_change(
         prev_liq = previous.liquidation_distance_pct if previous else None
         curr_liq = current.liquidation_distance_pct
         if (prev_liq is not None and curr_liq is not None
-                and abs(curr_liq - prev_liq) > 0.5):
+                and (curr_liq - prev_liq) < -0.5):
             return (
                 ChangeType.LIQUIDATION_DISTANCE_NARROWED, direction,
                 snapshot_to_dict(previous), snapshot_to_dict(current), delta,
@@ -195,7 +203,8 @@ def compute_risk_flags(
     # R3: Large position open
     pos_value = current.position_value_usd
     ct_str = change_type.value if isinstance(change_type, ChangeType) else str(change_type)
-    if "open" in ct_str and pos_value >= LARGE_POSITION_USD:
+    REAL_OPEN_TYPES = {ChangeType.OPEN_LONG.value, ChangeType.OPEN_SHORT.value}
+    if ct_str in REAL_OPEN_TYPES and pos_value >= LARGE_POSITION_USD:
         flags.append({
             "rule_id": "R3_LARGE_POSITION_OPEN",
             "threshold": f">= ${LARGE_POSITION_USD:,.0f}",
