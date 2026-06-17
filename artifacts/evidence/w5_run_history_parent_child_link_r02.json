@@ -1,0 +1,74 @@
+{
+  "evidence_id": "w5_run_history_parent_child_link_r02",
+  "ticket": "W5_RUN_HISTORY_PARENT_CHILD_LINK_R02",
+  "lane": "W5",
+  "branch": "workbench/mvpplus-ops-foundation-v1",
+  "repair_base_commit": "b23975984c3a7be765f8b718de4c87e291b28927",
+  "tested_commit": "015a4a29766634900d0dc2356e802b0e581426c1",
+  "schema_version": 2,
+  "migration_tests": [
+    "new DB creates schema v2 directly",
+    "v1 DB migrates to v2 with data preserved",
+    "repeated initialize_sqlite is idempotent (v2 stays v2)",
+    "v2 columns (parent_run_id, run_ordinal, run_kind) present",
+    "run_kind defaults to 'standalone'",
+    "v2 indexes (parent, parent_ordinal, kind) created"
+  ],
+  "child_history_modes": {
+    "insert": "bounded_shadow inserts child wrapper row with parent_run_id and ordinal",
+    "link_existing": "callable writes own row, bounded_shadow links via UPDATE"
+  },
+  "link_existing_simulation": {
+    "pass": true,
+    "attempted_runs": 2,
+    "completed_runs": 2,
+    "parent_status": "completed",
+    "result_errors": [],
+    "collision_found": false,
+    "parent_id": "verified",
+    "child_ids": [
+      "self-rec-1-<uuid>",
+      "self-rec-2-<uuid>"
+    ],
+    "child_ordinals": [1, 2],
+    "unique_constraint_violations": 0
+  },
+  "exact_test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/operations/ -v --tb=line"
+  ],
+  "old_tests_count": 61,
+  "new_tests_count": 25,
+  "total_collected": 151,
+  "total_passed": 151,
+  "total_failed": 0,
+  "total_skipped": 0,
+  "static_safety": {
+    "integration_imported": false,
+    "network_used": false,
+    "no_send": true,
+    "daemon_started": false,
+    "scheduler_started": false,
+    "threads_started": false
+  },
+  "modified_files": [
+    "market_radar/operations/sqlite_schema.py",
+    "market_radar/operations/run_history.py",
+    "market_radar/operations/bounded_shadow.py",
+    "tests/mvpplus/operations/test_sqlite_schema.py",
+    "tests/mvpplus/operations/test_bounded_shadow.py",
+    "docs/operations/RUN_HISTORY_PARENT_CHILD_LINK_R02.md",
+    "artifacts/evidence/w5_run_history_parent_child_link_r02.json"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "link_existing requires callable and shadow to share the same SQLite database",
+    "Schema v2 migration is one-way (no downgrade from v2 to v1)",
+    "UNIQUE index idx_run_history_parent_ordinal only applies when parent_run_id IS NOT NULL"
+  ],
+  "git_status": {
+    "branch": "workbench/mvpplus-ops-foundation-v1",
+    "repair_base_commit": "b23975984c3a7be765f8b718de4c87e291b28927",
+    "tested_commit": "015a4a29766634900d0dc2356e802b0e581426c1",
+    "working_tree": "clean (evidence pending commit)"
+  }
+}
