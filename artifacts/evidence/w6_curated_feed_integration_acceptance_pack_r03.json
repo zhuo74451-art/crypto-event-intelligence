@@ -1,0 +1,233 @@
+{
+  "document": "w6_curated_feed_integration_acceptance_pack_r03",
+  "ticket": "W6_CURATED_FEED_INTEGRATION_ACCEPTANCE_PACK_R03",
+  "branch": "workbench/mvpplus-independent-qa-v1",
+  "repair_base_commit": "0ccafdc3aea82923ded6cdc1e0a5075e7200baa0",
+  "tested_commit": "0ccafdc3aea82923ded6cdc1e0a5075e7200baa0",
+  "w1_target": {
+    "branch": "workbench/mvpplus-integration-v2",
+    "head": "88b26fb3d30a374356ea85448fee9bda151ee910",
+    "r06_evidence_exists": false,
+    "status": "NOT_PUSHED"
+  },
+  "w3_target": {
+    "branch": "workbench/mvpplus-feeds-market-ui-v2",
+    "head": "f7761cf14d4a1c0ff0100d22d1471b48abe0b168",
+    "r02_evidence_exists": true,
+    "evidence_file": "artifacts/evidence/w3_curated_api_live_reader_r02.json",
+    "status": "PUSHED"
+  },
+  "curated_contract_checks": {
+    "results": [
+      {
+        "name": "default_query",
+        "status": "PASS",
+        "detail": "Default query rules",
+        "violations": []
+      },
+      {
+        "name": "idempotency_key",
+        "status": "PASS",
+        "detail": "tweet_id is unique business key. 19 unique IDs. 1 items to reject/dedup.",
+        "violations": [
+          "Item without tweet_id should be rejected: \u65e0tweet_id"
+        ]
+      },
+      {
+        "name": "title_fallback",
+        "status": "PASS",
+        "detail": "Title fallback chain checked",
+        "violations": []
+      },
+      {
+        "name": "body_fallback",
+        "status": "PASS",
+        "detail": "Body fallback chain checked",
+        "violations": []
+      },
+      {
+        "name": "source_mapping",
+        "status": "PASS",
+        "detail": "Source kind mapping checked",
+        "violations": []
+      },
+      {
+        "name": "db_path_suppression",
+        "status": "PASS",
+        "detail": "db_path suppression verified on 20 items, 1 had db_path",
+        "violations": []
+      },
+      {
+        "name": "pagination",
+        "status": "PASS",
+        "detail": "Pagination contract checked",
+        "violations": []
+      },
+      {
+        "name": "featured_metadata",
+        "status": "PASS",
+        "detail": "is_featured is metadata, not source classification",
+        "violations": []
+      },
+      {
+        "name": "cursor_contract",
+        "status": "PASS",
+        "detail": "published_at_backend is cursor source",
+        "violations": [
+          "Cursor field = published_at_backend (contract)"
+        ]
+      }
+    ],
+    "all_pass": true
+  },
+  "provider_contract_checks": {
+    "results": [
+      {
+        "name": "provider_injection",
+        "status": "PASS",
+        "detail": "Provider injection contract verified",
+        "violations": [
+          "Contract: run_one_shot accepts provider= callable",
+          "Contract: provider=None \u2192 feed degraded/not_connected",
+          "Contract: Integration does NOT hardcode Curated API URL",
+          "Contract: Provider only called once per run",
+          "Contract: Provider exception does not block Whale/Market"
+        ]
+      },
+      {
+        "name": "multi_source_semantics",
+        "status": "PASS",
+        "detail": "Multi-source semantics contract",
+        "violations": [
+          "Contract: Each sub-source gets independent source health entry",
+          "Contract: Aggregated provider health may exist",
+          "Contract: Curated API failure != other Reader failure",
+          "Contract: Other Reader failure != Curated API failure",
+          "Contract: Sources not collapsed into single feed=ok"
+        ]
+      },
+      {
+        "name": "feed_status_matrix",
+        "status": "PASS",
+        "detail": "Feed status matrix exact assertions",
+        "violations": []
+      },
+      {
+        "name": "overall_status_matrix",
+        "status": "PASS",
+        "detail": "Overall status exact assertions",
+        "violations": []
+      },
+      {
+        "name": "cursor_state_machine",
+        "status": "PASS",
+        "detail": "Cursor state machine exact assertions",
+        "violations": []
+      },
+      {
+        "name": "report_contract",
+        "status": "PASS",
+        "detail": "Report summary contract",
+        "violations": [
+          "Report must include: provider_name, records_seen, accepted, rejected, live_count, fixture_count, research_count, cached_count, cursor_before, cursor_after, cursor_advanced, source_statuses",
+          "Report must NOT include full item bodies",
+          "Report is still the last persisted output",
+          "Report status must match run-history status"
+        ]
+      }
+    ],
+    "all_pass": true
+  },
+  "compatibility": {
+    "name": "cross_branch_compatibility",
+    "status": "FAIL",
+    "detail": "W3 output \u2194 W1 provider contract compatibility",
+    "violations": [
+      "backend_error in W3 \u2014 W1 should handle via records_rejected"
+    ]
+  },
+  "fixture_case_count": 20,
+  "fixture_cases": [
+    "news:jin10",
+    "telegram_message",
+    "webhook/unknown",
+    "is_featured=true",
+    "is_featured=false",
+    "same_published_at diff tweet_id",
+    "duplicate tweet_id",
+    "missing tweet_id",
+    "no zh_title has raw_title",
+    "no zh_body has extracted_text",
+    "backend_error",
+    "pipeline_stage!=published",
+    "unsafe URL",
+    "XSS body",
+    "db_path top-level",
+    "pagination page1",
+    "pagination page2",
+    "duplicate page",
+    "partial page failure",
+    "future time boundary"
+  ],
+  "http_probe": {
+    "reachable": true,
+    "http_status": 200,
+    "stage": "published",
+    "items_count": 5,
+    "limit_respected": true,
+    "source_kinds": [
+      "telegram",
+      "news",
+      "webhook"
+    ],
+    "content_types": [
+      "telegram_message",
+      "news_article"
+    ],
+    "db_path_in_response": true,
+    "verifies_suppression_required": true
+  },
+  "safety": {
+    "no_credentials": true,
+    "no_send": true,
+    "no_daemon": true,
+    "no_scheduler": true,
+    "no_mutations": true
+  },
+  "default_no_filters": true,
+  "include_special_line_default_omitted": true,
+  "include_raw_json_default_false": true,
+  "idempotency_key": "tweet_id",
+  "cursor_field": "published_at_backend",
+  "db_path_recorded": false,
+  "full_content_committed": false,
+  "curated_is_only_source": false,
+  "target_branches_modified": false,
+  "runtime_artifacts_committed": false,
+  "w6_tests": {
+    "total": 157,
+    "passed": 157,
+    "failed": 0,
+    "command": "python -X utf8 -m pytest tests/mvpplus/independent_qa/ -v"
+  },
+  "limitations": [
+    "W1 integration-v2 R06 evidence not yet pushed \u2014 W1 acceptance deferred",
+    "W3 R02 evidence exists \u2014 W3 acceptance scripts ready, not yet verified with target SHA",
+    "HTTP probe confirmed db_path in raw API response \u2014 suppression verified as required",
+    "No live W3 CuratedApiReader source code verification performed (not yet on this branch)",
+    "Cross-branch contract compatibility checked at schema level, not runtime"
+  ],
+  "final_decision": "ACCEPTANCE_PACK_READY_WAITING_TARGETS",
+  "mvpplus_ready": false,
+  "internal_production_ready": false,
+  "modified_files": [
+    "qa/mvpplus/curated_reader_acceptance.py",
+    "qa/mvpplus/feed_provider_acceptance.py",
+    "qa/mvpplus/contract_compatibility.py",
+    "tests/mvpplus/independent_qa/test_curated_reader_acceptance.py",
+    "tests/mvpplus/independent_qa/test_feed_provider_acceptance.py",
+    "tests/mvpplus/independent_qa/test_feed_contract_compatibility.py"
+  ],
+  "files_outside_owned_paths": [],
+  "git_status": "pending"
+}
