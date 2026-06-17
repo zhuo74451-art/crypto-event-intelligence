@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import math
 import re as _re
 import urllib.error
 import urllib.request
@@ -102,16 +103,30 @@ class CuratedApiConfig:
     user_agent: str = _DEFAULT_USER_AGENT
 
     def __post_init__(self) -> None:
+        if isinstance(self.limit, bool):
+            raise ValueError("limit must be a number, got bool: %s" % self.limit)
         if not 1 <= self.limit <= 500:
-            raise ValueError(f"limit must be 1-500, got {self.limit}")
+            raise ValueError("limit must be 1-500, got %s" % self.limit)
+        if isinstance(self.max_pages, bool):
+            raise ValueError("max_pages must be a number, got bool: %s" % self.max_pages)
         if not 1 <= self.max_pages <= 10:
-            raise ValueError(f"max_pages must be 1-10, got {self.max_pages}")
+            raise ValueError("max_pages must be 1-10, got %s" % self.max_pages)
+        if isinstance(self.max_items, bool):
+            raise ValueError("max_items must be a number, got bool: %s" % self.max_items)
         if not 1 <= self.max_items <= 5000:
-            raise ValueError(f"max_items must be 1-5000, got {self.max_items}")
-        if not isinstance(self.timeout_seconds, (int, float)) or self.timeout_seconds <= 0:
-            raise ValueError(f"timeout_seconds must be >0, got {self.timeout_seconds}")
+            raise ValueError("max_items must be 1-5000, got %s" % self.max_items)
+        if isinstance(self.timeout_seconds, bool):
+            raise ValueError("timeout_seconds must be a finite number, got bool: %s" % self.timeout_seconds)
+        if not isinstance(self.timeout_seconds, (int, float)):
+            raise ValueError("timeout_seconds must be a finite number, got %s: %s" % (type(self.timeout_seconds).__name__, self.timeout_seconds))
+        if not math.isfinite(self.timeout_seconds):
+            raise ValueError("timeout_seconds must be finite, got %s" % self.timeout_seconds)
+        if self.timeout_seconds <= 0:
+            raise ValueError("timeout_seconds must be >0, got %s" % self.timeout_seconds)
+        if isinstance(self.max_response_bytes, bool):
+            raise ValueError("max_response_bytes must be a number, got bool: %s" % self.max_response_bytes)
         if not isinstance(self.max_response_bytes, int) or self.max_response_bytes <= 0:
-            raise ValueError(f"max_response_bytes must be >0, got {self.max_response_bytes}")
+            raise ValueError("max_response_bytes must be >0, got %s" % self.max_response_bytes)
         if not isinstance(self.base_url, str) or not _SAFE_URL_RE.match(self.base_url):
             raise ValueError(f"base_url must start with http:// or https://, got {self.base_url}")
         if self.include_special_line not in (None, True, False):
@@ -249,6 +264,7 @@ class CuratedApiReader(ReaderProtocol):
                         "source": item.source_label,
                         "source_type": item.source_type.value,
                         "status": "ok",
+                        "ok": True,
                         "accepted_count": 0,
                         "rejected_count": 0,
                         "detail": "",
@@ -277,10 +293,9 @@ class CuratedApiReader(ReaderProtocol):
         # Determine status
         has_errors = bool(errors)
         if has_errors:
-            if all_items:
-                status = ReaderStatus.DEGRADED
-            else:
-                status = ReaderStatus.DEGRADED
+            status = ReaderStatus.DEGRADED
+        elif truncated:
+            status = ReaderStatus.DEGRADED
         else:
             status = ReaderStatus.OK
 
@@ -569,6 +584,7 @@ class CuratedApiReader(ReaderProtocol):
         cursor_safe = not truncated and not has_errors and not cursor_has_invalid
 
         next_cursor = _format_utc(max_cursor_dt) if max_cursor_dt else None
+        cursor_invalid_count = 1 if cursor_has_invalid else 0
 
         # Build source_statuses list
         source_statuses = list(source_records.values())
@@ -576,17 +592,30 @@ class CuratedApiReader(ReaderProtocol):
             source_statuses = [{
                 "source": "curated_api",
                 "source_type": "unknown",
-                "status": status.value if items else "ok",
+                "status": status.value,
+                "ok": status.value == "ok",
                 "accepted_count": len(items),
                 "rejected_count": rejected,
                 "detail": "aggregated — no per-source breakdown available" if not items else "",
             }]
 
-        # Mark per-source as degraded if overall is degraded
+        # Per-source degraded: keep successful sources ok, add aggregate
         if status == ReaderStatus.DEGRADED:
-            for ss in source_statuses:
-                if ss.get("status") == "ok":
+            has_individual_ok = any(ss.get("status") == "ok" for ss in source_statuses)
+            if has_individual_ok:
+                source_statuses.append({
+                    "source": "curated_api",
+                    "source_type": "unknown",
+                    "status": "degraded",
+                    "ok": False,
+                    "accepted_count": len(items),
+                    "rejected_count": rejected,
+                    "detail": "aggregated transport-level degradation",
+                })
+            else:
+                for ss in source_statuses:
                     ss["status"] = "degraded"
+                    ss["ok"] = False
 
         return ReaderBatchResult(
             source_name=self.source_name,
@@ -610,6 +639,7 @@ class CuratedApiReader(ReaderProtocol):
                 "truncated": truncated,
                 "max_cursor_dt": _format_utc(max_cursor_dt) if max_cursor_dt else None,
                 "cursor_has_invalid_time": cursor_has_invalid,
+                "invalid_cursor_timestamp_count": cursor_invalid_count,
             },
         )
 
