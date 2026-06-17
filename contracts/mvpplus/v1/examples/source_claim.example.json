@@ -1,0 +1,12 @@
+{
+  "claim_id": "claim_001",
+  "source_item_id": "flash_20260616_001",
+  "claim_type": "fact",
+  "statement": "Bitcoin rebounded above $68,000 with 15% volume increase following Fed rate decision.",
+  "confidence": 0.92,
+  "assets": ["BTC"],
+  "entities": ["Federal Reserve"],
+  "extracted_at_utc": "2026-06-16T11:45:35Z",
+  "extraction_status": "complete",
+  "extraction_note": null
+}

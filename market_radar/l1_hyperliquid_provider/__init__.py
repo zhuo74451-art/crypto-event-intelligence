@@ -1,1 +1,1 @@
-# MVP+ Lane: l1_hyperliquid_provider
+# MVP+ L1: Hyperliquid Provider (Window 1 + Window 2 merged)

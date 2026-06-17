@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "whale_position.schema.json",
+  "title": "WhalePosition",
+  "description": "A single whale position snapshot from Hyperliquid. All monetary values in USD unless noted. Missing or unavailable fields MUST be null, never 0 or empty string.",
+  "type": "object",
+  "required": [
+    "address",
+    "label",
+    "coin",
+    "direction",
+    "signed_size",
+    "absolute_size",
+    "position_value_usd",
+    "entry_price",
+    "mark_price",
+    "leverage",
+    "unrealized_pnl_usd",
+    "snapshot_time_utc",
+    "data_source"
+  ],
+  "properties": {
+    "address": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Full wallet address (0x-prefixed, 40 hex chars)."
+    },
+    "label": {
+      "type": ["string", "null"],
+      "description": "Human-readable label for the address. null if unknown."
+    },
+    "account_value_usd": {
+      "type": ["number", "null"],
+      "description": "Total account value in USD. null if unavailable. Unit: USD.",
+      "minimum": 0
+    },
+    "coin": {
+      "type": "string",
+      "description": "Asset symbol, e.g. BTC, ETH, SOL, HYPE. Uppercase."
+    },
+    "direction": {
+      "type": "string",
+      "enum": ["long", "short"],
+      "description": "Position direction. MUST be long or short. NEVER buy/sell."
+    },
+    "signed_size": {
+      "type": "number",
+      "description": "Signed position size in coin units. Positive = long, negative = short."
+    },
+    "absolute_size": {
+      "type": "number",
+      "description": "Absolute position size in coin units. Always >= 0.",
+      "minimum": 0
+    },
+    "position_value_usd": {
+      "type": "number",
+      "description": "Total position value in USD. Unit: USD.",
+      "minimum": 0
+    },
+    "entry_price": {
+      "type": "number",
+      "description": "Average entry price in USD. Unit: USD.",
+      "exclusiveMinimum": 0
+    },
+    "mark_price": {
+      "type": "number",
+      "description": "Current mark price in USD. Unit: USD.",
+      "exclusiveMinimum": 0
+    },
+    "leverage": {
+      "type": "number",
+      "description": "Effective leverage (e.g. 5.0 = 5x).",
+      "minimum": 0
+    },
+    "unrealized_pnl_usd": {
+      "type": "number",
+      "description": "Unrealized profit/loss in USD. Positive = profit, negative = loss. Unit: USD."
+    },
+    "liquidation_price": {
+      "type": ["number", "null"],
+      "description": "Liquidation price in USD. null if unavailable or not applicable. Unit: USD."
+    },
+    "liquidation_distance_pct": {
+      "type": ["number", "null"],
+      "description": "Percentage distance from mark price to liquidation price. Negative = closer to liquidation. Example: -8.5 means 8.5% away from liquidation. null if unavailable."
+    },
+    "funding_rate_pct": {
+      "type": ["number", "null"],
+      "description": "Current funding rate as percentage for this position. null if unavailable."
+    },
+    "margin_mode": {
+      "type": ["string", "null"],
+      "enum": ["cross", "isolated", null],
+      "description": "Margin mode. null if unknown."
+    },
+    "snapshot_time_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when this position snapshot was taken. Format: yyyy-MM-ddTHH:mm:ssZ."
+    },
+    "data_source": {
+      "type": "string",
+      "description": "Data source identifier. Example: hyperliquid_info_public, fixture, degraded."
+    },
+    "source_health": {
+      "$ref": "source_health.schema.json",
+      "description": "Health status of the data source at snapshot time."
+    }
+  },
+  "allOf": [
+    {
+      "description": "When liquidation_price is present, liquidation_distance_pct SHOULD also be computed. When liquidation_price is null, liquidation_distance_pct MUST be null.",
+      "if": {
+        "properties": { "liquidation_price": { "type": "null" } }
+      },
+      "then": {
+        "properties": { "liquidation_distance_pct": { "type": "null" } }
+      }
+    }
+  ]
+}

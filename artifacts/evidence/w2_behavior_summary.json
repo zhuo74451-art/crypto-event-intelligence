@@ -1,0 +1,150 @@
+{
+  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "data_sufficiency": "sufficient",
+  "total_addresses_analyzed": 4,
+  "per_address": [
+    {
+      "address_short": "0x082e843a",
+      "label": "Unknown HYPE Whale",
+      "asset_count": 1,
+      "most_traded_assets": [
+        {
+          "coin": "HYPE",
+          "value_usd": 104625174.18
+        }
+      ],
+      "long_short_ratio": {
+        "long_count": 1,
+        "short_count": 0,
+        "bias": "long"
+      },
+      "typical_leverage": 5.0,
+      "largest_position": {
+        "coin": "HYPE",
+        "value_usd": 104625174.18,
+        "direction": "long"
+      },
+      "total_value_usd": 104625174.18,
+      "total_pnl_usd": 51251244.14,
+      "position_change_count": 0,
+      "liquidation_risk_count": 0,
+      "change_history_note": "insufficient_history: no changes detected yet",
+      "diversification_note": "insufficient_history: need more positions",
+      "most_traded_note": "single_asset_focus"
+    },
+    {
+      "address_short": "0x50b309f7",
+      "label": "Unknown Hyperliquid Whale",
+      "asset_count": 2,
+      "most_traded_assets": [
+        {
+          "coin": "BTC",
+          "value_usd": 50063458.77
+        },
+        {
+          "coin": "ETH",
+          "value_usd": 24624294.49
+        }
+      ],
+      "long_short_ratio": {
+        "long_count": 1,
+        "short_count": 1,
+        "bias": "neutral"
+      },
+      "typical_leverage": 21.5,
+      "largest_position": {
+        "coin": "BTC",
+        "value_usd": 50063458.77,
+        "direction": "long"
+      },
+      "total_value_usd": 74687753.26,
+      "total_pnl_usd": -600778.16,
+      "position_change_count": 1,
+      "liquidation_risk_count": 0,
+      "most_traded_note": "tracking 2 assets"
+    },
+    {
+      "address_short": "0x6c851251",
+      "label": "Matrixport Related",
+      "asset_count": 1,
+      "most_traded_assets": [
+        {
+          "coin": "ETH",
+          "value_usd": 72168000.0
+        }
+      ],
+      "long_short_ratio": {
+        "long_count": 1,
+        "short_count": 0,
+        "bias": "long"
+      },
+      "typical_leverage": 20.0,
+      "largest_position": {
+        "coin": "ETH",
+        "value_usd": 72168000.0,
+        "direction": "long"
+      },
+      "total_value_usd": 72168000.0,
+      "total_pnl_usd": -18449764.97,
+      "position_change_count": 0,
+      "liquidation_risk_count": 0,
+      "change_history_note": "insufficient_history: no changes detected yet",
+      "diversification_note": "insufficient_history: need more positions",
+      "most_traded_note": "single_asset_focus"
+    },
+    {
+      "address_short": "0x8def9f50",
+      "label": "loraclexyz",
+      "asset_count": 7,
+      "most_traded_assets": [
+        {
+          "coin": "ZEC",
+          "value_usd": 19019618.82
+        },
+        {
+          "coin": "HYPE",
+          "value_usd": 10357529.6
+        },
+        {
+          "coin": "NEAR",
+          "value_usd": 10133495.18
+        },
+        {
+          "coin": "WLD",
+          "value_usd": 6266202.14
+        },
+        {
+          "coin": "SOL",
+          "value_usd": 3084874.78
+        }
+      ],
+      "long_short_ratio": {
+        "long_count": 7,
+        "short_count": 0,
+        "bias": "long"
+      },
+      "typical_leverage": 8.43,
+      "largest_position": {
+        "coin": "ZEC",
+        "value_usd": 19019618.82,
+        "direction": "long"
+      },
+      "total_value_usd": 53433987.93,
+      "total_pnl_usd": 8222965.07,
+      "position_change_count": 0,
+      "liquidation_risk_count": 0,
+      "change_history_note": "insufficient_history: no changes detected yet",
+      "most_traded_note": "tracking 7 assets"
+    }
+  ],
+  "aggregate": {
+    "total_value_usd": 304914915.37,
+    "total_pnl_usd": 40423666.08,
+    "avg_leverage": 13.73,
+    "long_bias_count": 3,
+    "short_bias_count": 0
+  },
+  "metadata": {
+    "note": "Behavior summary computed from single snapshot. Multi-snapshot history required for trend analysis."
+  }
+}

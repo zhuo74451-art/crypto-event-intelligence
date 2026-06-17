@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_health.schema.json",
+  "title": "SourceHealth",
+  "description": "Health status metadata for a data source. Embedded in other contracts to indicate data quality. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "status",
+    "source",
+    "occurred_at_utc"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["healthy", "degraded", "unavailable"],
+      "description": "Current operational status: healthy = all data nominal; degraded = partial data or stale; unavailable = no data received."
+    },
+    "source": {
+      "type": "string",
+      "description": "Canonical source identifier, e.g. hyperliquid_info_public, binance_public, aicoin_flash, tg_monitor."
+    },
+    "occurred_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of the health assessment."
+    },
+    "error_type": {
+      "type": ["string", "null"],
+      "description": "Machine-readable error type identifier when status is degraded or unavailable. null when healthy."
+    },
+    "retryable": {
+      "type": ["boolean", "null"],
+      "description": "Whether the error is likely transient. null when healthy or unknown."
+    },
+    "message_summary": {
+      "type": ["string", "null"],
+      "description": "Short human-readable summary of the issue. MUST NOT contain sensitive details. null when healthy."
+    }
+  }
+}

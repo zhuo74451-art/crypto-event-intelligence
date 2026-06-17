@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Signal Intelligence — Workbench MVP+</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Segoe UI', 'Roboto', sans-serif; background: #0d1117; color: #e6edf3; padding: 20px; }
+h1 { color: #58a6ff; font-size: 24px; margin-bottom: 4px; }
+h2 { color: #c9d1d9; font-size: 18px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #30363d; }
+.subtitle { color: #8b949e; font-size: 14px; margin-bottom: 20px; }
+.run-meta { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #8b949e; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+th { background: #161b22; color: #8b949e; padding: 8px 10px; text-align: left; font-weight: 500; border-bottom: 2px solid #30363d; white-space: nowrap; }
+td { padding: 6px 10px; border-bottom: 1px solid #21262d; white-space: nowrap; }
+tr:hover td { background: #1c2128; }
+.num { text-align: right; font-family: 'SF Mono', 'Consolas', monospace; }
+.addr { font-family: 'SF Mono', 'Consolas', monospace; font-size: 12px; }
+.symbol { font-weight: bold; color: #58a6ff; }
+.empty { color: #8b949e; font-style: italic; padding: 20px; text-align: center; }
+.market-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.market-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; }
+.market-symbol { font-size: 14px; color: #8b949e; }
+.market-price { font-size: 28px; font-weight: bold; margin: 4px 0; }
+.market-change { font-size: 16px; margin-bottom: 8px; }
+.market-detail { font-size: 12px; color: #8b949e; display: flex; flex-direction: column; gap: 2px; }
+.feed-item { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-bottom: 8px; }
+.feed-header { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; font-size: 12px; }
+.feed-type-badge { padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 11px; }
+.badge-flash { background: #ff444433; color: #ff4444; }
+.badge-news { background: #58a6ff33; color: #58a6ff; }
+.badge-telegram { background: #44cc4433; color: #44cc44; }
+.badge-unknown { background: #88888833; color: #888888; }
+.feed-source { color: #8b949e; }
+.feed-time { color: #8b949e; margin-left: auto; }
+.feed-title { font-size: 14px; }
+.feed-assets { font-size: 12px; color: #58a6ff; margin-top: 4px; }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.stat-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; text-align: center; }
+.stat-value { font-size: 24px; font-weight: bold; }
+.stat-label { font-size: 12px; color: #8b949e; margin-top: 4px; }
+.error-banner { background: #ff444422; border: 1px solid #ff4444; border-radius: 6px; padding: 12px; margin: 12px 0; color: #ff4444; }
+.warning { color: #ffcc00; }
+.known-limitation { color: #8b949e; font-size: 12px; margin: 4px 0; }
+@media print { body { background: white; color: black; } .run-meta, .market-card, .feed-item, .stat-card { border-color: #ccc; background: #f5f5f5; } h1 { color: #0366d6; } }
+</style>
+</head>
+<body>
+<h1>🌍 Crypto Signal Intelligence — Internal Workbench</h1>
+<div class="subtitle">MVP+ One-Shot Scan | 2026-06-16T13:32:24Z UTC | Run ID: 281deec2ef43</div><div class="summary-grid">
+        <div class="stat-card"><div class="stat-value">11</div><div class="stat-label">Whale Positions</div></div>
+        <div class="stat-card"><div class="stat-value">1</div><div class="stat-label">Position Changes</div></div>
+        <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Market Assets</div></div>
+        <div class="stat-card"><div class="stat-value">84</div><div class="stat-label">Feed Items</div></div>
+        <div class="stat-card"><div class="stat-value" style="color:#ff8800">8/9</div><div class="stat-label">Sources OK</div></div>
+    </div><div class="run-meta"><span style="margin-right:12px"><b>L1</b>: OK (11 items)</span><span style="margin-right:12px"><b>L2</b>: OK (11 items)</span><span style="margin-right:12px"><b>L3</b>: OK (4 items)</span><span style="margin-right:12px"><b>L4</b>: OK (84 items)</span></div><div class="known-limitation">📝 One-shot scan: data reflects single point in time</div><div class="known-limitation">📝 Hyperliquid whale positions limited to tracked address list</div><div class="known-limitation">📝 Liquidation distance computed from mark price approximation</div><div class="known-limitation">📝 No persistent storage — previous state resets on each run</div><div class="known-limitation">⚠️ Degraded: L3:market_context</div><h2>🐋 Whale Positions</h2><table>
+        <tr><th>Address</th><th>Label</th><th>Asset</th><th>Side</th><th>Size</th>
+            <th>Entry</th><th>Mark</th><th>Leverage</th><th>Unreal. PnL</th><th>Liq Dist</th></tr>
+        <tr>
+            <td class="addr">0x082e...ca88</td>
+            <td>Unknown HYPE Whale</td>
+            <td class="symbol">HYPE</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$104.67M</td>
+            <td class="num">$38.68</td>
+            <td class="num">$75.84</td>
+            <td class="num">5.0x</td>
+            <td class="num" style="color:#44cc44">$51.29M</td>
+            <td class="num" style="color:#888888">+29.55%</td>
+        </tr><tr>
+            <td class="addr">0x6c85...84f6</td>
+            <td>Matrixport Related</td>
+            <td class="symbol">ETH</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$72.21M</td>
+            <td class="num">$2.3K</td>
+            <td class="num">$1.8K</td>
+            <td class="num">20.0x</td>
+            <td class="num" style="color:#ff4444">$-18.41M</td>
+            <td class="num" style="color:#888888">+35.52%</td>
+        </tr><tr>
+            <td class="addr">0x50b3...9f20</td>
+            <td>Unknown Hyperliquid Whale</td>
+            <td class="symbol">BTC</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$50.04M</td>
+            <td class="num">$66.6K</td>
+            <td class="num">$66.1K</td>
+            <td class="num">20.0x</td>
+            <td class="num" style="color:#ff4444">$-430.0K</td>
+            <td class="num" style="color:#888888">+11.24%</td>
+        </tr><tr>
+            <td class="addr">0x50b3...9f20</td>
+            <td>Unknown Hyperliquid Whale</td>
+            <td class="symbol">ETH</td>
+            <td style="color:#ff4444;font-weight:bold">SHORT</td>
+            <td class="num">$24.64M</td>
+            <td class="num">$1.8K</td>
+            <td class="num">$1.8K</td>
+            <td class="num">23.0x</td>
+            <td class="num" style="color:#ff4444">$-207.3K</td>
+            <td class="num" style="color:#888888">+22.10%</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">ZEC</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$19.02M</td>
+            <td class="num">$351.39</td>
+            <td class="num">$504.95</td>
+            <td class="num">10.0x</td>
+            <td class="num" style="color:#44cc44">$5.78M</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">HYPE</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$10.36M</td>
+            <td class="num">$70.54</td>
+            <td class="num">$75.84</td>
+            <td class="num">2.0x</td>
+            <td class="num" style="color:#44cc44">$724.9K</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">NEAR</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$10.14M</td>
+            <td class="num">$2.22</td>
+            <td class="num">$2.40</td>
+            <td class="num">10.0x</td>
+            <td class="num" style="color:#44cc44">$762.7K</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">WLD</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$6.27M</td>
+            <td class="num">$0.51</td>
+            <td class="num">$0.64</td>
+            <td class="num">10.0x</td>
+            <td class="num" style="color:#44cc44">$1.26M</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">SOL</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$3.08M</td>
+            <td class="num">$75.30</td>
+            <td class="num">$74.22</td>
+            <td class="num">17.0x</td>
+            <td class="num" style="color:#ff4444">$-44.7K</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">ASTER</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$2.37M</td>
+            <td class="num">$0.74</td>
+            <td class="num">$0.66</td>
+            <td class="num">5.0x</td>
+            <td class="num" style="color:#ff4444">$-292.0K</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr><tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">XMR</td>
+            <td style="color:#44cc44;font-weight:bold">LONG</td>
+            <td class="num">$2.18M</td>
+            <td class="num">$336.88</td>
+            <td class="num">$338.76</td>
+            <td class="num">5.0x</td>
+            <td class="num" style="color:#44cc44">$12.1K</td>
+            <td class="num" style="color:#888888">N/A</td>
+        </tr>
+    </table><h2>📈 Position Changes</h2><table>
+        <tr><th>Address</th><th>Label</th><th>Asset</th><th>Side</th><th>Change</th>
+            <th>Size</th><th>Delta $</th><th>Delta %</th><th>Risk</th></tr>
+        <tr>
+            <td class="addr">0x8def...2dae</td>
+            <td>loraclexyz</td>
+            <td class="symbol">WLD</td>
+            <td style="color:#44cc44">LONG</td>
+            <td>🟡 POSITION_INCREASED</td>
+            <td class="num">$6.27M</td>
+            <td class="num">$71.8K</td>
+            <td class="num">+1.16%</td>
+            <td style="color:#44cc44;font-weight:bold">LOW</td>
+        </tr>
+    </table><h2>📊 Market Context</h2><div class="market-grid"><div class="market-card">
+            <div class="market-symbol">BTC</div>
+            <div class="market-price">$66.1K</div>
+            <div class="market-change" style="color:#ff4444">-1.11%</div>
+            <div class="market-detail">
+                <span>Vol: $1.12B</span>
+                <span>OI: N/A</span>
+                <span>Funding: N/A</span>
+                <span>L/S: N/A</span>
+            </div>
+        </div><div class="market-card">
+            <div class="market-symbol">ETH</div>
+            <div class="market-price">$1.8K</div>
+            <div class="market-change" style="color:#ff4444">-0.76%</div>
+            <div class="market-detail">
+                <span>Vol: $783.32M</span>
+                <span>OI: N/A</span>
+                <span>Funding: N/A</span>
+                <span>L/S: N/A</span>
+            </div>
+        </div><div class="market-card">
+            <div class="market-symbol">SOL</div>
+            <div class="market-price">$74.24</div>
+            <div class="market-change" style="color:#44cc44">+0.28%</div>
+            <div class="market-detail">
+                <span>Vol: $205.15M</span>
+                <span>OI: N/A</span>
+                <span>Funding: N/A</span>
+                <span>L/S: N/A</span>
+            </div>
+        </div><div class="market-card">
+            <div class="market-symbol">HYPE</div>
+            <div class="market-price">$0.00</div>
+            <div class="market-change" style="color:#44cc44">N/A</div>
+            <div class="market-detail">
+                <span>Vol: N/A</span>
+                <span>OI: N/A</span>
+                <span>Funding: N/A</span>
+                <span>L/S: N/A</span>
+            </div>
+        </div></div><h2>📬 Feed Items</h2><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">Unknown Hyperliquid Whale holds large Hyperliquid long position: $34.96M BTC</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">Matrixport Related holds large Hyperliquid long position: $79.52M ETH</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">loraclexyz holds large Hyperliquid short position: $34.38M BTC</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">loraclexyz holds large Hyperliquid short position: $102.66M HYPE</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">Unknown HYPE Whale holds large Hyperliquid long position: $78.37M HYPE</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">Binance published listing announcement for CTR</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">HAEDAL scheduled token unlock is approaching: $762.03K</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">HOME scheduled token unlock is approaching: $19.62M</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">TBOT scheduled token unlock is approaching: $1.10K</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | Unknown Hyperliquid Whale BTC long 仓位 34,887,498USD 距清算15.1%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | Matrixport Related ETH long 仓位 80,016,000USD 距清算32.2%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | loraclexyz BTC short 仓位 34,303,966USD 距清算167.5%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | loraclexyz TON short 仓位 6,586USD 距清算804947.5%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | loraclexyz HYPE short 仓位 106,131,021USD 距清算49.8%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | loraclexyz VVV short 仓位 752,767USD 距清算6622.7%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | loraclexyz LIT short 仓位 733,857USD 距清算7205.1%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | Unknown HYPE Whale HYPE long 仓位 84,299,906USD 距清算19.6%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">UNKNOWN</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">监控地址清算风险 | Unknown Hyperliquid Whale BTC short 仓位 11,890,058USD 距清算29.4%</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">BINANCE_ANNOUNCEMENTS</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">BTC funding_rate_percentile 分位 98.9% | 核心资产资金费率达到异常分位</div>
+            
+        </div><div class="feed-item">
+            <div class="feed-header">
+                <span class="feed-type-badge badge-news">NEWS</span>
+                <span class="feed-source">BINANCE_ANNOUNCEMENTS</span>
+                <span class="feed-time">2026-06-16T13:32:27Z</span>
+            </div>
+            <div class="feed-title">BTC funding_price_confirmation 分位 98.9% | 多头持仓成本偏高，需结合价格变化确认</div>
+            
+        </div><h2>⚙️ Source Health</h2><table>
+        <tr><th>Source</th><th>Group</th><th>Status</th><th>OK</th><th>Errors</th><th>Latency</th></tr>
+        <tr >
+            <td>hyperliquid_whale_fetcher</td>
+            <td>hyperliquid</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">4</td>
+            <td class="num">0</td>
+            <td class="num">1956.7ms</td>
+        </tr><tr >
+            <td>whale_engine</td>
+            <td>hyperliquid</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr><tr >
+            <td>binance:BTCUSDT</td>
+            <td>market</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr><tr >
+            <td>binance:ETHUSDT</td>
+            <td>market</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr><tr >
+            <td>binance:SOLUSDT</td>
+            <td>market</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr><tr title="HYPEUSDT not found on Binance (may not be listed)">
+            <td>binance:HYPEUSDT</td>
+            <td>market</td>
+            <td style="color:#ff8800;font-weight:bold">DEGRADED</td>
+            <td class="num">0</td>
+            <td class="num">1</td>
+            <td class="num">N/A</td>
+        </tr><tr >
+            <td>raw_signals</td>
+            <td>news</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr><tr >
+            <td>watcher_alerts</td>
+            <td>telegram</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr><tr >
+            <td>news_live</td>
+            <td>news</td>
+            <td style="color:#44cc44;font-weight:bold">OK</td>
+            <td class="num">1</td>
+            <td class="num">0</td>
+            <td class="num">N/A</td>
+        </tr>
+    </table><div style="margin-top:30px;padding-top:12px;border-top:1px solid #30363d;font-size:11px;color:#8b949e">
+        Generated: 2026-06-16T13:32:27Z UTC | Contracts: vmvp+v1.0 | Sealed: 2026-06-16T00:00:00Z
+    </div>
+</body>
+</html>

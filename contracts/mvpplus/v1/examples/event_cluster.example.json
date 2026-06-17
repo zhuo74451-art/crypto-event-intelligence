@@ -1,0 +1,18 @@
+{
+  "cluster_id": "cluster_001",
+  "title": "BTC whale accumulation detected across multiple addresses",
+  "event_type": "whale_move",
+  "entities": ["Smart Money Whale A", "Smart Money Whale B"],
+  "assets": ["BTC"],
+  "first_seen_at_utc": "2026-06-16T10:00:00Z",
+  "last_seen_at_utc": "2026-06-16T12:00:00Z",
+  "observation_ids": ["obs_whale_a_001", "obs_whale_b_001"],
+  "claim_ids": ["claim_001"],
+  "confirmed_reposts": 3,
+  "likely_reposts": 2,
+  "independent_sources": 2,
+  "has_explicit_conflict": false,
+  "freshness_state": "fresh",
+  "possible_related_cluster_ids": [],
+  "impact_score": 0.65
+}

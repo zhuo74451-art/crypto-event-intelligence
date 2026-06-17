@@ -1,1 +1,1 @@
-# MVP+ Lane: l2_whale_engine
+# MVP+ L2: Whale Engine (Window 1 + Window 2 merged)

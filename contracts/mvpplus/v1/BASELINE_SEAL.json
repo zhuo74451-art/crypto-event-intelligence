@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "BASELINE_SEAL.json",
+  "title": "MVP+ Baseline Seal",
+  "description": "Records the sealed baseline state from which all MVP+ lanes branch. All commits, test results, and environment context at seal time.",
+  "version": "v1",
+  "sealed_at_utc": "2026-06-16T13:12:00Z",
+  "repository": {
+    "local_path": "C:\\Users\\PC\\Desktop\\Projects\\事件情报系统",
+    "charter_path": "C:\\Users\\zhuo7\\Desktop\\市场信号\\crypto-event-intelligence",
+    "charter_path_resolved": "C:\\Users\\PC\\Desktop\\Projects\\事件情报系统",
+    "charter_worktree_root": "C:\\Users\\zhuo7\\Desktop\\市场信号\\crypto-event-intelligence-worktrees",
+    "worktree_root_resolved": "C:\\Users\\PC\\Desktop\\市场信号\\crypto-event-intelligence-worktrees",
+    "path_note": "Charter specified zhuo7 user path; actual path is PC user. Resolved paths recorded above.",
+    "remote_url": "https://github.com/zhuo74451-art/crypto-event-intelligence.git",
+    "local_main": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+    "origin_main": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+    "up_to_date": true
+  },
+  "dirty_state": {
+    "has_uncommitted_changes": false,
+    "untracked_files": [
+      "github_status_report.md"
+    ],
+    "note": "Untracked file is non-functional, does not affect baseline."
+  },
+  "baseline_tests": {
+    "command": "python -X utf8 -m pytest tests/ -q",
+    "total": 233,
+    "passed": 233,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 4,
+    "subtests_passed": 50,
+    "duration_seconds": 2.70,
+    "pre_existing_failures": [],
+    "environment_failures": [],
+    "log_path": "artifacts/logs/stage0_baseline_tests.log"
+  },
+  "environment": {
+    "python_version": "3.11.9",
+    "pytest_version": "9.0.3",
+    "httpx_version": "0.28.1",
+    "hyperliquid_python_sdk": "0.23.0",
+    "pydantic": "2.13.3",
+    "ccxt": "not_installed",
+    "platform": "win32"
+  },
+  "existing_worktrees": {
+    "description": "Pre-existing worktrees from prior development phases. Not modified by MVP+.",
+    "worktrees": [
+      { "path": "C:\\Users\\PC\\Desktop\\市场信号\\cei_signal_audit", "branch": "workbench/signal-spine-audit-v1", "commit": "8f02084" },
+      { "path": "C:\\Users\\PC\\Desktop\\市场信号\\cei_signal_core", "branch": "workbench/signal-spine-core-v1", "commit": "9768868" },
+      { "path": "C:\\Users\\PC\\Desktop\\市场信号\\cei_signal_integration", "branch": "workbench/devset-week1-batch-v1", "commit": "a4fd5f1" },
+      { "path": "C:\\Users\\PC\\Desktop\\市场信号\\cei_signal_io", "branch": "workbench/signal-spine-io-v1", "commit": "17aac4b" },
+      { "path": "C:\\Users\\PC\\Desktop\\市场信号\\cei_week1_price", "branch": "workbench/week1-price-providers-v1", "commit": "7188a52" },
+      { "path": "C:\\Users\\PC\\Desktop\\市场信号\\cei_week1_raw_dataset", "branch": "detached", "commit": "d9f1bda" }
+    ]
+  },
+  "contract_tests": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "note": "All contract seal tests pass."
+  }
+}

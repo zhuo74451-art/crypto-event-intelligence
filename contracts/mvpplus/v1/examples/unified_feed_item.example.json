@@ -1,0 +1,21 @@
+{
+  "item_id": "flash_20260616_001",
+  "stream_type": "flash",
+  "source_label": "AICoin",
+  "published_at_utc": "2026-06-16T11:45:00Z",
+  "ingested_at_utc": "2026-06-16T11:45:30Z",
+  "title": "BTC rebounded above $68,000 in the last hour",
+  "summary": "Bitcoin briefly touched $68,200 amid positive market sentiment following the Fed's rate decision. Trading volume increased 15% in the last hour.",
+  "assets": ["BTC"],
+  "source_url": "https://example.com/flash/12345",
+  "existing_decision": null,
+  "raw_reference": "aicoin_flash_20260616_001.json",
+  "source_health": {
+    "status": "healthy",
+    "source": "aicoin_flash",
+    "occurred_at_utc": "2026-06-16T11:45:30Z",
+    "error_type": null,
+    "retryable": null,
+    "message_summary": null
+  }
+}

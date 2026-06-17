@@ -1,0 +1,20 @@
+{
+  "run_id": "281deec2ef43",
+  "started_at": "2026-06-16T13:32:24Z",
+  "completed_at": "2026-06-16T13:32:27Z",
+  "positions_count": 11,
+  "changes_count": 11,
+  "meaningful_changes": 1,
+  "market_contexts_count": 4,
+  "feed_items_count": 84,
+  "source_health_count": 9,
+  "ok_sources": 8,
+  "degraded_sources": 1,
+  "failed_sources": 0,
+  "warnings": [
+    "L3: 1/4 symbols failed"
+  ],
+  "degraded_paths": [
+    "L3:market_context"
+  ]
+}

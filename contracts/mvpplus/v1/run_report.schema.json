@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run_report.schema.json",
+  "title": "RunReport",
+  "description": "Report for a single MVP+ run execution. Captures sources queried, records produced, artifacts generated, and any degraded/errored paths. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "run_id",
+    "started_at_utc",
+    "ended_at_utc",
+    "source_results",
+    "record_counts",
+    "artifact_paths",
+    "decision"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Unique identifier for this run. Format: mvpplus_<yyyy-mm-dd>_<seq>."
+    },
+    "started_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the run started."
+    },
+    "ended_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the run ended."
+    },
+    "source_results": {
+      "type": "object",
+      "description": "Per-source execution results keyed by source identifier.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "degraded", "failed", "skipped"]
+          },
+          "records_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "duration_seconds": {
+            "type": ["number", "null"]
+          },
+          "error": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": ["status", "records_count"]
+      }
+    },
+    "record_counts": {
+      "type": "object",
+      "description": "Aggregate record counts by category.",
+      "properties": {
+        "whale_positions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "position_changes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "market_contexts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "feed_items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_clusters": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "artifact_paths": {
+      "type": "object",
+      "description": "Paths to generated artifacts, relative to project root.",
+      "properties": {
+        "whale_report": { "type": ["string", "null"] },
+        "market_context": { "type": ["string", "null"] },
+        "feed_report": { "type": ["string", "null"] },
+        "event_report": { "type": ["string", "null"] },
+        "workbench_html": { "type": ["string", "null"] },
+        "run_log": { "type": ["string", "null"] }
+      },
+      "additionalProperties": { "type": ["string", "null"] }
+    },
+    "degraded_sources": {
+      "type": "array",
+      "description": "List of sources that returned degraded or unavailable data.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "status": { "type": "string", "enum": ["degraded", "unavailable"] },
+          "error_type": { "type": "string" },
+          "occurred_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["source", "status"]
+      }
+    },
+    "errors": {
+      "type": "array",
+      "description": "Non-fatal errors encountered during the run.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "error_type": { "type": "string" },
+          "message_summary": { "type": "string" },
+          "occurred_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["source", "error_type", "message_summary"]
+      }
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["accept", "review_needed", "rejected"],
+      "description": "Overall run decision: accept = data sufficiently complete; review_needed = partial data with issues; rejected = critical data missing."
+    }
+  }
+}

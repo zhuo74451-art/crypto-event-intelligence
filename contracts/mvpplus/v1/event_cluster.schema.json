@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "event_cluster.schema.json",
+  "title": "EventCluster",
+  "description": "A cluster of related signals/claims forming a coherent market event. Groups multiple observations and claims into a single analyzable unit. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "cluster_id",
+    "title",
+    "event_type",
+    "first_seen_at_utc",
+    "last_seen_at_utc",
+    "observation_ids",
+    "claim_ids"
+  ],
+  "properties": {
+    "cluster_id": {
+      "type": "string",
+      "description": "Unique identifier for this event cluster."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title summarizing the event cluster."
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Event classification type. Examples: whale_move, protocol_upgrade, regulatory, market_macro, liquidation_ cascade, partnership, security_incident, token_unlock, macroeconomic."
+    },
+    "entities": {
+      "type": "array",
+      "description": "Named entities involved (people, protocols, organizations). Empty array if none.",
+      "items": { "type": "string" }
+    },
+    "assets": {
+      "type": "array",
+      "description": "Asset symbols affected. Empty array if none or unknown.",
+      "items": { "type": "string" }
+    },
+    "first_seen_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of the earliest observation in this cluster."
+    },
+    "last_seen_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of the most recent observation in this cluster."
+    },
+    "observation_ids": {
+      "type": "array",
+      "description": "IDs of observations (WhalePositionChange or MarketContext) grouped into this cluster.",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "claim_ids": {
+      "type": "array",
+      "description": "IDs of SourceClaims grouped into this cluster.",
+      "items": { "type": "string" }
+    },
+    "confirmed_reposts": {
+      "type": "integer",
+      "description": "Number of confirmed reposts of the same information from independent sources.",
+      "minimum": 0,
+      "default": 0
+    },
+    "likely_reposts": {
+      "type": "integer",
+      "description": "Number of likely (but unconfirmed) reposts of the same information.",
+      "minimum": 0,
+      "default": 0
+    },
+    "independent_sources": {
+      "type": "integer",
+      "description": "Number of genuinely independent sources reporting on this event.",
+      "minimum": 0,
+      "default": 0
+    },
+    "has_explicit_conflict": {
+      "type": "boolean",
+      "description": "Whether there is an explicit contradiction between claims in this cluster.",
+      "default": false
+    },
+    "freshness_state": {
+      "type": "string",
+      "enum": ["fresh", "aging", "stale", "archived"],
+      "description": "Freshness state of this cluster: fresh = recent/active; aging = past relevance window; stale = old but preserved; archived = moved to long-term storage."
+    },
+    "possible_related_cluster_ids": {
+      "type": "array",
+      "description": "IDs of other clusters that may be related. Empty array if none identified.",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "impact_score": {
+      "type": ["number", "null"],
+      "description": "Estimated market impact score 0.0–1.0. null if not assessed.",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

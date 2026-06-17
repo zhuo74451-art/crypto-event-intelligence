@@ -1,0 +1,66 @@
+{
+  "run_id": "mvpplus_2026-06-16_df703fcb",
+  "started_at_utc": "2026-06-16T13:26:34Z",
+  "ended_at_utc": "2026-06-16T13:26:40Z",
+  "source_results": {
+    "lane1_hyperliquid": {
+      "lane": "lane1_hyperliquid",
+      "status": "success",
+      "records_count": 11,
+      "duration_seconds": 2.56,
+      "error": null,
+      "log_path": "artifacts\\logs\\lane1_hyperliquid_mvpplus_2026-06-16_df703fcb.log"
+    },
+    "lane3_market_context": {
+      "lane": "lane3_market_context",
+      "status": "success",
+      "records_count": 4,
+      "duration_seconds": 2.48,
+      "error": null,
+      "log_path": "artifacts\\logs\\lane3_market_context_mvpplus_2026-06-16_df703fcb.log"
+    },
+    "lane4_existing_feeds": {
+      "lane": "lane4_existing_feeds",
+      "status": "success",
+      "records_count": 139,
+      "duration_seconds": 0.13,
+      "error": null,
+      "log_path": "artifacts\\logs\\lane4_existing_feeds_mvpplus_2026-06-16_df703fcb.log"
+    },
+    "lane2_whale_engine": {
+      "lane": "lane2_whale_engine",
+      "status": "success",
+      "records_count": 11,
+      "duration_seconds": 0.15,
+      "error": null,
+      "log_path": "artifacts\\logs\\lane2_whale_engine_mvpplus_2026-06-16_df703fcb.log"
+    },
+    "lane5_workbench_ui": {
+      "lane": "lane5_workbench_ui",
+      "status": "success",
+      "records_count": 0,
+      "duration_seconds": 0.16,
+      "error": null,
+      "log_path": "artifacts\\logs\\lane5_workbench_ui_mvpplus_2026-06-16_df703fcb.log"
+    }
+  },
+  "record_counts": {
+    "whale_positions": 11,
+    "position_changes": 11,
+    "market_contexts": 4,
+    "feed_items": 139,
+    "claims": 0,
+    "event_clusters": 0
+  },
+  "artifact_paths": {
+    "whale_report": "results\\mvpplus\\lane1_whale_positions.json",
+    "market_context": "results\\mvpplus\\lane3_market_context.json",
+    "feed_report": "results\\mvpplus\\lane4_existing_feeds.json",
+    "event_report": "results\\mvpplus\\lane2_whale_changes.json",
+    "workbench_html": "results\\mvpplus\\workbench.html",
+    "run_log": "artifacts\\logs\\run_mvpplus_2026-06-16_df703fcb.log"
+  },
+  "degraded_sources": [],
+  "errors": null,
+  "decision": "accept"
+}

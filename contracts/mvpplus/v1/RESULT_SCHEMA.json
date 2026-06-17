@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "RESULT_SCHEMA.json",
+  "title": "MVP+ Lane Execution Result Schema",
+  "description": "Schema for the result returned by each lane executor upon completion or blocker.",
+  "version": "v1",
+  "type": "object",
+  "required": [
+    "lane", "task_id", "status", "baseline",
+    "output", "tests", "artifacts", "decision"
+  ],
+  "properties": {
+    "lane": {
+      "type": "string",
+      "enum": ["lane1", "lane2", "lane3", "lane4", "lane5", "lane6"]
+    },
+    "task_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": [
+        "WAITING_FOR_CONTRACT",
+        "PREFLIGHT_OK",
+        "PREFLIGHT_FAILED",
+        "TARGET_MAP_READY",
+        "CORE_IMPLEMENTATION",
+        "NO_NEW_EVIDENCE",
+        "BLOCKED_BY_PERMISSION",
+        "BLOCKED_BY_CONTRACT",
+        "PROCESS_REPAIR_REQUIRED",
+        "LANE_MERGE_READY",
+        "CONTRACT_SEAL_READY",
+        "MVP_READY"
+      ]
+    },
+    "baseline": {
+      "type": "object",
+      "properties": {
+        "branch": { "type": "string" },
+        "commit": { "type": "string" },
+        "dirty_state": { "type": "boolean" }
+      },
+      "required": ["branch", "commit"]
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "branch": { "type": "string" },
+        "commit": { "type": "string" },
+        "pushed": { "type": "boolean" }
+      }
+    },
+    "modified_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "created_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "deleted_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "external_projects": { "type": "array" },
+    "tests": { "type": "object" },
+    "live_probe": { "type": ["object", "null"] },
+    "artifacts": { "type": "object" },
+    "source_health": { "type": "object" },
+    "degraded_paths": { "type": "array" },
+    "known_limitations": { "type": "array" },
+    "permission_issues": { "type": "array" },
+    "contract_change_requests": { "type": "array" },
+    "dependency_change_requests": { "type": "array" },
+    "merge_ready": { "type": "boolean" },
+    "decision": { "type": "string" }
+  }
+}

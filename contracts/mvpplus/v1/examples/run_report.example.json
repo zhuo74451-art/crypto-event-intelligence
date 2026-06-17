@@ -1,0 +1,58 @@
+{
+  "run_id": "mvpplus_2026-06-16_001",
+  "started_at_utc": "2026-06-16T12:00:00Z",
+  "ended_at_utc": "2026-06-16T12:05:00Z",
+  "source_results": {
+    "hyperliquid_info_public": {
+      "status": "success",
+      "records_count": 42,
+      "duration_seconds": 1.5,
+      "error": null
+    },
+    "binance_public": {
+      "status": "success",
+      "records_count": 4,
+      "duration_seconds": 0.8,
+      "error": null
+    },
+    "aicoin_flash": {
+      "status": "degraded",
+      "records_count": 0,
+      "duration_seconds": 5.0,
+      "error": "rate_limit_exceeded"
+    }
+  },
+  "record_counts": {
+    "whale_positions": 42,
+    "position_changes": 8,
+    "market_contexts": 4,
+    "feed_items": 15,
+    "claims": 20,
+    "event_clusters": 3
+  },
+  "artifact_paths": {
+    "whale_report": "results/mvpplus/whale_report_2026-06-16.json",
+    "market_context": "results/mvpplus/market_context_2026-06-16.json",
+    "feed_report": "results/mvpplus/feed_report_2026-06-16.json",
+    "event_report": "results/mvpplus/event_report_2026-06-16.json",
+    "workbench_html": "results/mvpplus/workbench_2026-06-16.html",
+    "run_log": "results/mvpplus/run_log_2026-06-16.log"
+  },
+  "degraded_sources": [
+    {
+      "source": "aicoin_flash",
+      "status": "degraded",
+      "error_type": "rate_limit_exceeded",
+      "occurred_at_utc": "2026-06-16T12:01:00Z"
+    }
+  ],
+  "errors": [
+    {
+      "source": "aicoin_flash",
+      "error_type": "rate_limit_exceeded",
+      "message_summary": "AICoin API rate limit hit, 5 min cooldown applied",
+      "occurred_at_utc": "2026-06-16T12:01:00Z"
+    }
+  ],
+  "decision": "review_needed"
+}

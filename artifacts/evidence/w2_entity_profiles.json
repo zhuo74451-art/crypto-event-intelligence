@@ -1,0 +1,158 @@
+{
+  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "known_entities": [
+    {
+      "entity_id": "entity_hype_whale",
+      "entity_label": "Unknown HYPE Whale",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "label_source": "heuristic",
+      "notes": "Large HYPE position holder. Single massive long position.",
+      "addresses": [
+        "0x082e843a431aef031264dc232693dd710aedca88"
+      ],
+      "position_count": 1,
+      "total_value_usd": 104625174.18,
+      "total_pnl_usd": 51251244.14,
+      "positions": [
+        {
+          "coin": "HYPE",
+          "direction": "long",
+          "position_value_usd": 104625174.18,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 51251244.14,
+          "liquidation_distance_pct": -29.5528
+        }
+      ]
+    },
+    {
+      "entity_id": "entity_hl_whale",
+      "entity_label": "Unknown Hyperliquid Whale",
+      "entity_type": "unknown_whale",
+      "confidence": "low",
+      "label_source": "heuristic",
+      "notes": "BTC long + ETH short whale, high leverage on both sides.",
+      "addresses": [
+        "0x50b309f78e774a756a2230e1769729094cac9f20"
+      ],
+      "position_count": 2,
+      "total_value_usd": 74687753.26,
+      "total_pnl_usd": -600778.16,
+      "positions": [
+        {
+          "coin": "BTC",
+          "direction": "long",
+          "position_value_usd": 50063458.77,
+          "leverage": 20.0,
+          "unrealized_pnl_usd": -405772.98,
+          "liquidation_distance_pct": -11.2987
+        },
+        {
+          "coin": "ETH",
+          "direction": "short",
+          "position_value_usd": 24624294.49,
+          "leverage": 23.0,
+          "unrealized_pnl_usd": -195005.18,
+          "liquidation_distance_pct": 22.2761
+        }
+      ]
+    },
+    {
+      "entity_id": "entity_matrixport",
+      "entity_label": "Matrixport Related",
+      "entity_type": "fund_wallet",
+      "confidence": "medium",
+      "label_source": "hyperliquid_observer",
+      "notes": "Associated with Matrixport, a crypto financial services platform",
+      "addresses": [
+        "0x6c8512516ce5669d35113a11ca8b8de322fd84f6"
+      ],
+      "position_count": 1,
+      "total_value_usd": 72168000.0,
+      "total_pnl_usd": -18449764.97,
+      "positions": [
+        {
+          "coin": "ETH",
+          "direction": "long",
+          "position_value_usd": 72168000.0,
+          "leverage": 20.0,
+          "unrealized_pnl_usd": -18449764.97,
+          "liquidation_distance_pct": -35.4774
+        }
+      ]
+    },
+    {
+      "entity_id": "entity_loraclexyz",
+      "entity_label": "loraclexyz",
+      "entity_type": "high_leverage_trader",
+      "confidence": "medium",
+      "label_source": "hyperliquid_observer",
+      "notes": "High-leverage multi-asset trader. Active on Hyperliquid.",
+      "addresses": [
+        "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae"
+      ],
+      "position_count": 7,
+      "total_value_usd": 53433987.93,
+      "total_pnl_usd": 8222965.07,
+      "positions": [
+        {
+          "coin": "SOL",
+          "direction": "long",
+          "position_value_usd": 3084874.78,
+          "leverage": 17.0,
+          "unrealized_pnl_usd": -42685.16,
+          "liquidation_distance_pct": null
+        },
+        {
+          "coin": "WLD",
+          "direction": "long",
+          "position_value_usd": 6266202.14,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 1254747.4,
+          "liquidation_distance_pct": null
+        },
+        {
+          "coin": "NEAR",
+          "direction": "long",
+          "position_value_usd": 10133495.18,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 759329.93,
+          "liquidation_distance_pct": null
+        },
+        {
+          "coin": "HYPE",
+          "direction": "long",
+          "position_value_usd": 10357529.6,
+          "leverage": 2.0,
+          "unrealized_pnl_usd": 720955.22,
+          "liquidation_distance_pct": null
+        },
+        {
+          "coin": "ASTER",
+          "direction": "long",
+          "position_value_usd": 2393838.87,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": -270514.95,
+          "liquidation_distance_pct": null
+        },
+        {
+          "coin": "ZEC",
+          "direction": "long",
+          "position_value_usd": 19019618.82,
+          "leverage": 10.0,
+          "unrealized_pnl_usd": 5786026.68,
+          "liquidation_distance_pct": null
+        },
+        {
+          "coin": "XMR",
+          "direction": "long",
+          "position_value_usd": 2178428.54,
+          "leverage": 5.0,
+          "unrealized_pnl_usd": 15105.95,
+          "liquidation_distance_pct": null
+        }
+      ]
+    }
+  ],
+  "unassociated_positions": []
+}

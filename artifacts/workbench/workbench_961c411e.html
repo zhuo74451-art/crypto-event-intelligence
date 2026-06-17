@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVP+ Crypto Signal Workbench</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card-bg: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --orange: #d29922;
+    --yellow: #e3b341;
+    --purple: #bc8cff;
+    --font: -apple-system, 'Segoe UI', 'Noto Sans SC', Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); padding: 20px; }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  h2 { font-size: 1.2rem; margin: 24px 0 12px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 1rem; margin: 16px 0 8px; }
+  .subtitle { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px; }
+  .run-meta { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.85rem; }
+  .run-meta dt { color: var(--text-muted); display: inline; }
+  .run-meta dd { display: inline; margin-right: 20px; }
+  .status-banner { padding: 8px 16px; border-radius: 6px; margin-bottom: 16px; font-weight: 600; font-size: 0.9rem; }
+  .status-ok { color: var(--green); }
+  .status-degraded { color: var(--orange); }
+  .status-failed { color: var(--red); }
+  .status-unknown { color: var(--text-muted); }
+  .banner-ok { background: #0a2e1a; border: 1px solid var(--green); color: var(--green); }
+  .banner-degraded { background: #2e1a0a; border: 1px solid var(--orange); color: var(--orange); }
+  .banner-failed { background: #2e0a0a; border: 1px solid var(--red); color: var(--red); }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.85rem; }
+  th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--card-bg); color: var(--text-muted); font-weight: 500; position: sticky; top: 0; }
+  tr:hover td { background: #1c2128; }
+  .null { color: var(--text-muted); font-style: italic; }
+  .side-long { color: var(--green); font-weight: 600; }
+  .side-short { color: var(--red); font-weight: 600; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+  .badge-opened { background: #0a2e1a; color: var(--green); }
+  .badge-increased { background: #0a2e1a; color: var(--green); }
+  .badge-reduced { background: #2e0a0a; color: var(--red); }
+  .badge-closed { background: #2e0a0a; color: var(--red); }
+  .badge-flipped { background: #2e1a0a; color: var(--orange); }
+  .badge-nochange { background: var(--card-bg); color: var(--text-muted); }
+  .badge-unknown { background: var(--card-bg); color: var(--text-muted); }
+  .risk-critical { color: var(--red); font-weight: 700; }
+  .risk-elevated { color: var(--orange); font-weight: 600; }
+  .risk-normal { color: var(--yellow); }
+  .risk-low { color: var(--green); }
+  .risk-unknown { color: var(--text-muted); }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .market-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+  .market-card .symbol { font-size: 1rem; font-weight: 600; }
+  .market-card .price { font-size: 1.3rem; font-weight: 700; margin: 4px 0; }
+  .market-card .detail { font-size: 0.8rem; color: var(--text-muted); }
+  .market-card .change-pos { color: var(--green); }
+  .market-card .change-neg { color: var(--red); }
+  .feed-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; }
+  .feed-item .feed-title { font-weight: 600; font-size: 0.9rem; }
+  .feed-item .feed-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+  .feed-item .feed-type-badge { display: inline-block; padding: 1px 6px; border-radius: 8px; font-size: 0.7rem; background: var(--card-bg); border: 1px solid var(--border); }
+  .health-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; margin-bottom: 16px; }
+  .health-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 0.85rem; }
+  .health-item .src-name { font-weight: 600; }
+  .health-item .src-detail { font-size: 0.75rem; color: var(--text-muted); }
+  .limitation { color: var(--orange); font-size: 0.85rem; }
+  .scroll-wrap { overflow-x: auto; }
+  .mt-4 { margin-top: 16px; }
+  @media (max-width: 640px) {
+    body { padding: 12px; }
+    table { font-size: 0.75rem; }
+    th, td { padding: 4px 6px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>⚡ Crypto Signal Intelligence Workbench</h1>
+<div class='subtitle'>MVP+ Internal · One-Shot Read-Only · Generated 2026-06-16T13:27:17Z</div>
+<div class="status-banner banner-degraded">
+  ⚡ Overall Status: DEGRADED
+</div>
+<div class="run-meta">
+  <dl>
+    <dt>Run ID:</dt><dd>3cbc034465ac</dd>
+    <dt>Started:</dt><dd>2026-06-16T13:27:16Z</dd>
+    <dt>Completed:</dt><dd>2026-06-16T13:27:17Z</dd>
+    <dt>Items:</dt><dd>88</dd>
+    <dt>Lanes:</dt><dd>4</dd>
+    <dt>Errors:</dt><dd>5</dd>
+    <dt>Contracts:</dt><dd>mvp+v1.0</dd>
+  </dl>
+</div>
+<h2>🏗 Lane Results</h2><table><thead><tr><th>Lane</th><th>Status</th><th>Items</th><th>Errors</th><th>Duration</th></tr></thead><tbody><tr><td>L1</td><td><span class='status-failed'>FAILED</span></td><td>0</td><td>4</td><td>0.0s</td></tr><tr><td>L2</td><td><span class='status-unknown'>SKIPPED</span></td><td>0</td><td>0</td><td>0.0s</td></tr><tr><td>L3</td><td><span class='status-degraded'>DEGRADED</span></td><td>4</td><td>1</td><td>1.0s</td></tr><tr><td>L4</td><td><span class='status-ok'>OK</span></td><td>84</td><td>0</td><td>0.0s</td></tr></tbody></table>
+<h2>🐋 Whale Positions</h2><p class="null">No positions found.</p>
+<h2>📊 Market Context</h2><div class="card-grid"><div class="market-card">
+  <div class="symbol">BTC</div>
+  <div class="price">$66,134.00</div>
+  <div class='change-neg'>-1.06%</div>
+  <div class='detail'>Vol: $1,128,665,649</div>
+  
+  
+  <div class='detail'>Source: BINANCE_SPOT</div>
+</div><div class="market-card">
+  <div class="symbol">ETH</div>
+  <div class="price">$1,805.18</div>
+  <div class='change-neg'>-0.89%</div>
+  <div class='detail'>Vol: $793,996,590</div>
+  
+  
+  <div class='detail'>Source: BINANCE_SPOT</div>
+</div><div class="market-card">
+  <div class="symbol">SOL</div>
+  <div class="price">$74.19</div>
+  <div class='change-pos'>+0.47%</div>
+  <div class='detail'>Vol: $205,302,025</div>
+  
+  
+  <div class='detail'>Source: BINANCE_SPOT</div>
+</div><div class="market-card">
+  <div class="symbol">HYPE</div>
+  <div class="price"><span class='null'>N/A</span></div>
+  
+  
+  
+  
+  <div class='detail'>Source: DEGRADED</div>
+</div></div>
+<h2>🔄 Position Changes</h2><p class="null">No changes detected.</p>
+<h2>📰 Feed Items (84)</h2><div class="feed-item">
+  <div class="feed-title">Unknown Hyperliquid Whale holds large Hyperliquid long position: $34.96M BTC</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">Matrixport Related holds large Hyperliquid long position: $79.52M ETH</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">loraclexyz holds large Hyperliquid short position: $34.38M BTC</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">loraclexyz holds large Hyperliquid short position: $102.66M HYPE</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">Unknown HYPE Whale holds large Hyperliquid long position: $78.37M HYPE</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">Binance published listing announcement for CTR</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">HAEDAL scheduled token unlock is approaching: $762.03K</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">HOME scheduled token unlock is approaching: $19.62M</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">TBOT scheduled token unlock is approaching: $1.10K</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | Unknown Hyperliquid Whale BTC long 仓位 34,887,498USD 距清算15.1%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | Matrixport Related ETH long 仓位 80,016,000USD 距清算32.2%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | loraclexyz BTC short 仓位 34,303,966USD 距清算167.5%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | loraclexyz TON short 仓位 6,586USD 距清算804947.5%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | loraclexyz HYPE short 仓位 106,131,021USD 距清算49.8%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | loraclexyz VVV short 仓位 752,767USD 距清算6622.7%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | loraclexyz LIT short 仓位 733,857USD 距清算7205.1%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | Unknown HYPE Whale HYPE long 仓位 84,299,906USD 距清算19.6%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">监控地址清算风险 | Unknown Hyperliquid Whale BTC short 仓位 11,890,058USD 距清算29.4%</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    UNKNOWN
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">BTC funding_rate_percentile 分位 98.9% | 核心资产资金费率达到异常分位</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    BINANCE_ANNOUNCEMENTS
+  </div>
+</div><div class="feed-item">
+  <div class="feed-title">BTC funding_price_confirmation 分位 98.9% | 多头持仓成本偏高，需结合价格变化确认</div>
+  <div class="feed-meta">
+    <span class="feed-type-badge">NEWS</span>
+    BINANCE_ANNOUNCEMENTS
+  </div>
+</div><p class="null">... and 64 more items</p>
+<h2>❤️ Source Health</h2><div class="health-grid"><div class="health-item">
+  <div class="src-name">hyperliquid_clearinghouse:0x6c851251... <span style="float:right;"><span class='status-failed'>FAILED</span></span></div>
+  <div class="src-detail">OK: 0 | Err: 1 | Consec: 1</div>
+  <div class='src-detail' style='color:var(--orange);'>Unexpected error: TypeError</div>
+</div><div class="health-item">
+  <div class="src-name">hyperliquid_clearinghouse:0x8def9f50... <span style="float:right;"><span class='status-failed'>FAILED</span></span></div>
+  <div class="src-detail">OK: 0 | Err: 1 | Consec: 1</div>
+  <div class='src-detail' style='color:var(--orange);'>Unexpected error: TypeError</div>
+</div><div class="health-item">
+  <div class="src-name">hyperliquid_clearinghouse:0x082e843a... <span style="float:right;"><span class='status-failed'>FAILED</span></span></div>
+  <div class="src-detail">OK: 0 | Err: 1 | Consec: 1</div>
+  <div class='src-detail' style='color:var(--orange);'>Unexpected error: TypeError</div>
+</div><div class="health-item">
+  <div class="src-name">hyperliquid_clearinghouse:0x50b309f7... <span style="float:right;"><span class='status-failed'>FAILED</span></span></div>
+  <div class="src-detail">OK: 0 | Err: 1 | Consec: 1</div>
+  <div class='src-detail' style='color:var(--orange);'>Unexpected error: TypeError</div>
+</div><div class="health-item">
+  <div class="src-name">whale_engine <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div><div class="health-item">
+  <div class="src-name">binance:BTCUSDT <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div><div class="health-item">
+  <div class="src-name">binance:ETHUSDT <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div><div class="health-item">
+  <div class="src-name">binance:SOLUSDT <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div><div class="health-item">
+  <div class="src-name">binance:HYPEUSDT <span style="float:right;"><span class='status-degraded'>DEGRADED</span></span></div>
+  <div class="src-detail">OK: 0 | Err: 1</div>
+  <div class='src-detail' style='color:var(--orange);'>HYPEUSDT not found on Binance (may not be listed)</div>
+</div><div class="health-item">
+  <div class="src-name">raw_signals <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div><div class="health-item">
+  <div class="src-name">watcher_alerts <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div><div class="health-item">
+  <div class="src-name">news_live <span style="float:right;"><span class='status-ok'>OK</span></span></div>
+  <div class="src-detail">OK: 1</div>
+  
+</div></div>
+<h2>⚠ Known Limitations</h2><ul><li class="limitation">One-shot read-only — no daemon or cron</li><li class="limitation">Production send is always False</li><li class="limitation">Telegram/X sends are always blocked</li><li class="limitation">HYPE price may be unavailable (not listed on Binance)</li><li class="limitation">Previous snapshot required for position change detection</li><li class="limitation">No previous snapshot — all positions shown as newly opened</li></ul>
+<h2>🔻 Degraded Paths</h2><ul><li class="limitation">L1: 4/4 addresses failed</li><li class="limitation">L3: 1/4 symbols failed</li></ul>
+
+</body>
+</html>

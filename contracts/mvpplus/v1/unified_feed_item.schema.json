@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "unified_feed_item.schema.json",
+  "title": "UnifiedFeedItem",
+  "description": "A single unified feed item from any stream (flash, news, Telegram). Items from existing server feeds are read-only. Missing/unavailable fields MUST be null.",
+  "type": "object",
+  "required": [
+    "item_id",
+    "stream_type",
+    "source_label",
+    "published_at_utc",
+    "ingested_at_utc",
+    "title",
+    "source_health"
+  ],
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "description": "Unique identifier for this feed item across all streams."
+    },
+    "stream_type": {
+      "type": "string",
+      "enum": ["flash", "news", "tg"],
+      "description": "Type of stream this item originated from: flash = flash news, news = full article, tg = Telegram message."
+    },
+    "source_label": {
+      "type": "string",
+      "description": "Human-readable source label, e.g. AICoin, BlockBeats, TG_Channel_Name."
+    },
+    "published_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the item was originally published."
+    },
+    "ingested_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the item was ingested by the system."
+    },
+    "title": {
+      "type": "string",
+      "description": "Item title or headline. MAY be truncated to fit display constraints."
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "Item summary or body text. null if not available or not extracted."
+    },
+    "assets": {
+      "type": "array",
+      "description": "List of asset symbols mentioned in the item. Empty array if none detected.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_url": {
+      "type": ["string", "null"],
+      "description": "URL to the original source. null if not available."
+    },
+    "existing_decision": {
+      "type": ["string", "null"],
+      "description": "Existing processing decision from the server. null if not previously processed."
+    },
+    "raw_reference": {
+      "type": ["string", "null"],
+      "description": "Reference to raw source data (file path, message ID, etc.). null if not applicable."
+    },
+    "source_health": {
+      "$ref": "source_health.schema.json",
+      "description": "Health status of the feed source."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "address": "0x1234567890abcdef1234567890abcdef12345678",
+  "label": "Smart Money Whale A",
+  "coin": "ETH",
+  "change_type": "increase_long",
+  "previous": {
+    "signed_size": 8500.0,
+    "position_value_usd": 16235000.00,
+    "entry_price": 1910.00,
+    "mark_price": 1925.00,
+    "unrealized_pnl_usd": 127500.00,
+    "leverage": 4.2,
+    "liquidation_price": 1520.00,
+    "liquidation_distance_pct": -21.0,
+    "snapshot_time_utc": "2026-06-16T11:55:00Z"
+  },
+  "current": {
+    "signed_size": 10500.0,
+    "position_value_usd": 20107500.00,
+    "entry_price": 1925.00,
+    "mark_price": 1915.00,
+    "unrealized_pnl_usd": -105000.00,
+    "leverage": 4.5,
+    "liquidation_price": 1480.00,
+    "liquidation_distance_pct": -22.7,
+    "snapshot_time_utc": "2026-06-16T12:00:00Z"
+  },
+  "delta": {
+    "size_delta": 2000.0,
+    "position_value_delta_usd": 3872500.00,
+    "entry_price_delta_usd": 15.00,
+    "unrealized_pnl_delta_usd": -232500.00,
+    "liquidation_distance_delta_pct": -1.7
+  },
+  "detected_at_utc": "2026-06-16T12:01:30Z",
+  "data_source": "hyperliquid_info_public",
+  "source_health": {
+    "status": "healthy",
+    "source": "hyperliquid_info_public",
+    "occurred_at_utc": "2026-06-16T12:01:30Z",
+    "error_type": null,
+    "retryable": null,
+    "message_summary": null
+  },
+  "risk_flags": ["high_leverage_increase"]
+}
