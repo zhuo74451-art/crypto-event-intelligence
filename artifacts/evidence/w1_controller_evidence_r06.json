@@ -1,0 +1,96 @@
+{
+  "ticket": "W1_PARALLEL_REPAIR_CONTROL",
+  "handoff": "CONTROLLER_HANDOFF_V1",
+  "role": "Project Controller",
+  "generated_at_utc": "2026-06-17T12:00:00Z",
+  "authoritative_main": "ef11baf462633687b727cfe93a900d7de2125513",
+  "fetch_result": "ok fetched (1 new ref)",
+  "main_frozen": true,
+  "integration_v2_created": false,
+  "any_lane_merged": false,
+  "business_code_modified": false,
+  "round_status": "ROUND_READY_FOR_AUDIT",
+  "lane_matrix": [
+    {
+      "lane": "W2",
+      "branch": "workbench/mvpplus-whale-prod-v2",
+      "remote_sha": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a",
+      "status": "QA_SCAN_CANDIDATE",
+      "last_action": "evidence field normalization",
+      "evidence_binding": "FIXED",
+      "test_claims": "84/85 pass, 0 fail"
+    },
+    {
+      "lane": "W3",
+      "branch": "workbench/mvpplus-feeds-market-ui-v2",
+      "remote_sha": "241e9a981c74de81d7898531dfbf5f777cde9ae4",
+      "status": "QA_SCAN_CANDIDATE",
+      "last_action": "evidence field unification",
+      "evidence_binding": "FIXED",
+      "test_claims": "44/44 pass, 0 fail"
+    },
+    {
+      "lane": "W4",
+      "branch": "workbench/mvpplus-open-source-adapters-v1",
+      "remote_sha": "7eaeaaddd70e30b081bdf57bec70326065674152",
+      "status": "QA_SCAN_CANDIDATE",
+      "last_action": "evidence field alignment",
+      "evidence_binding": "CORRECT",
+      "test_claims": "75/75 pass, 0 fail"
+    },
+    {
+      "lane": "W5",
+      "branch": "workbench/mvpplus-ops-foundation-v1",
+      "remote_sha": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+      "status": "QA_SCAN_CANDIDATE",
+      "last_action": "unchanged since R05",
+      "evidence_binding": "CORRECT",
+      "test_claims": "61/61 pass, 0 fail"
+    },
+    {
+      "lane": "W6",
+      "branch": "workbench/mvpplus-independent-qa-v1",
+      "remote_sha": "06374a98799aee02701959aac494605463572c65",
+      "status": "QA_SCAN_CANDIDATE",
+      "last_action": "R03 repair completed — 18/18 scans PASS, 90/90 tests",
+      "evidence_binding": "CORRECT",
+      "r03_summary": "624efa5 fix(qa): W6_DELTA_QA_FOUNDATION_REPAIR_R03 — all 7 delta fixes",
+      "r03_tests": "bad1d26 evidence — 90/90 tests, 18/18 scans PASS",
+      "r03_handoff": "06374a9 REMOTE_HANDOFF_V1 — 90/90 tests, 18/18 scans PASS",
+      "test_results": {"total": 90, "passed": 90, "failed": 0},
+      "scanner_results": {"total": 18, "pass": 18, "fail": 0, "blocked": 0},
+      "note": "Self-tests pass. Has NOT yet scanned W2-W5 business lanes."
+    }
+  ],
+  "blocking_rules_enforced": {
+    "main_frozen": true,
+    "no_merge": true,
+    "no_integration_v2": true,
+    "no_business_code_modification": true
+  },
+  "evidence_paths": [
+    "artifacts/evidence/w1_controller_evidence_r06.json",
+    "artifacts/evidence/w2_whale_domain_report.json",
+    "artifacts/evidence/w3_feeds_market_ui_report.json",
+    "artifacts/evidence/w4_adapter_interface_repair_evidence.json",
+    "artifacts/evidence/w5_operations_foundation_report.json",
+    "artifacts/evidence/w6_qa_foundation_report.json"
+  ],
+  "evidence_binding_audit": [
+    {"lane": "W2", "evidence_tested_commit": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715", "actual": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715", "status": "MATCH"},
+    {"lane": "W3", "evidence_tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce", "actual": "1a9951141c97043ea5ba08d062f2cbc01cff30ce", "status": "MATCH"},
+    {"lane": "W4", "evidence_tested_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516", "actual": "23d3cc0c23dbbf38524164b51592460ea96b2516", "status": "MATCH"},
+    {"lane": "W5", "evidence_tested_commit": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61", "actual": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61", "status": "MATCH"},
+    {"lane": "W6", "evidence_tested_commit": "bad1d26ab765721585f80c354cd07d4b1aa680f6", "actual": "bad1d26ab765721585f80c354cd07d4b1aa680f6", "status": "MATCH"}
+  ],
+  "gates_remaining": [
+    "Dispatch W6 to scan W2/W3/W4/W5 at their precise remote HEADs",
+    "All lanes independently accepted after QA scan",
+    "Then: Integration v2 may be created"
+  ],
+  "documents": {
+    "matrix": "LANE_STATUS_MATRIX_R06.md",
+    "audit": "INDEPENDENT_AUDIT_R06.md",
+    "evidence": "artifacts/evidence/w1_controller_evidence_r06.json"
+  }
+}
