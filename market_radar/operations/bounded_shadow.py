@@ -24,7 +24,7 @@ Lifecycle
    a. Check StopMarker.
    b. Call injected one-shot callable.
    c. Normalize result.
-   d. Write child run record.
+   d. Write child run record (insert or link_existing).
    e. Apply stop-policy rules.
    f. If not last round, call injected sleep_fn.
 8. Update parent run-history row (final status).
@@ -43,7 +43,11 @@ from pathlib import Path
 from typing import Any, Callable, Optional, Protocol
 
 from market_radar.operations.file_lock import FileLock
-from market_radar.operations.run_history import insert_run, update_run_finish
+from market_radar.operations.run_history import (
+    insert_run,
+    link_existing_run_to_parent,
+    update_run_finish,
+)
 from market_radar.operations.sqlite_schema import initialize_sqlite
 from market_radar.operations.stop_marker import StopMarker
 
@@ -69,6 +73,9 @@ class BoundedShadowConfig:
     lock_name: str = "bounded_shadow.lock"
     stop_marker_name: str = "STOP"
     run_history_db_name: str = "run_history.db"
+    child_history_mode: str = "insert"
+    # "insert" — bounded_shadow inserts wrapper child row
+    # "link_existing" — callable already wrote its row, only link
 
     def __post_init__(self) -> None:
         if self.max_runs is None:
@@ -94,6 +101,11 @@ class BoundedShadowConfig:
             )
         if not self.state_dir:
             raise ValueError("state_dir must be a non-empty path")
+        if self.child_history_mode not in ("insert", "link_existing"):
+            raise ValueError(
+                f"child_history_mode must be 'insert' or 'link_existing', "
+                f"got '{self.child_history_mode}'"
+            )
 
     @property
     def run_history_db(self) -> Path:
@@ -215,18 +227,27 @@ class BoundedShadowResult:
 # 2. Any degraded run  → "degraded"
 # 3. Stopped by marker → "stopped"
 # 4. All completed     → "completed"
+#
+# Additionally: if result.errors contains a persistence failure the
+# parent status MUST be "failed" regardless of child statuses.
 
 
 def _determine_final_status(result: BoundedShadowResult) -> str:
     """Determine the final parent status from child-run counters.
 
     Rules (applied in order):
-    1. ``failed_runs > 0``              → ``failed``
-    2. ``degraded_runs > 0``            → ``degraded``
-    3. ``stopped_by_marker``            → ``stopped``
-    4. ``attempted_runs == 0``          → ``stopped`` (pre-race stop)
-    5. Otherwise                        → ``completed``
+    1. ``result.errors`` contains persistence failure  → ``failed``
+    2. ``failed_runs > 0``              → ``failed``
+    3. ``degraded_runs > 0``            → ``degraded``
+    4. ``stopped_by_marker``            → ``stopped``
+    5. ``attempted_runs == 0``          → ``stopped`` (pre-race stop)
+    6. Otherwise                        → ``completed``
     """
+    # Persistence errors force failed status
+    for err in result.errors:
+        if _is_persistence_error(err):
+            return STATUS_FAILED
+
     if result.failed_runs > 0:
         return STATUS_FAILED
     if result.degraded_runs > 0:
@@ -234,6 +255,23 @@ def _determine_final_status(result: BoundedShadowResult) -> str:
     if result.stopped_by_marker or result.attempted_runs == 0:
         return STATUS_STOPPED
     return STATUS_COMPLETED
+
+
+def _is_persistence_error(err: str) -> bool:
+    """Heuristic: does *err* describe a persistence/DB failure?"""
+    keywords = (
+        "child insert failed",
+        "link_existing",
+        "unique constraint",
+        "duplicate run_id",
+        "child does not exist",
+        "parent does not exist",
+        "link returned false",
+        "db init failed",
+        "parent insert failed",
+        "parent update failed",
+    )
+    return any(kw in err.lower() for kw in keywords)
 
 
 # ---------------------------------------------------------------------------
@@ -319,7 +357,7 @@ def run_bounded_shadow(
             return result
 
         # ------------------------------------------------------------------
-        # 6. Insert parent shadow run-history row
+        # 6. Insert parent shadow run-history row (run_kind=shadow_parent)
         # ------------------------------------------------------------------
         parent_config_summary = {
             "max_runs": config.max_runs,
@@ -327,6 +365,7 @@ def run_bounded_shadow(
             "stop_on_failure": config.stop_on_failure,
             "continue_on_degraded": config.continue_on_degraded,
             "runner_label": config.runner_label,
+            "child_history_mode": config.child_history_mode,
         }
         try:
             insert_run(
@@ -335,6 +374,9 @@ def run_bounded_shadow(
                 runner_label=config.runner_label,
                 status="started",
                 summary=parent_config_summary,
+                parent_run_id=None,
+                run_ordinal=None,
+                run_kind="shadow_parent",
             )
         except Exception as e:
             result.status = STATUS_FAILED
@@ -393,28 +435,20 @@ def run_bounded_shadow(
                 no_send=True,
             )
 
-            # Write child run to run_history (as shadow child wrapper row)
-            try:
-                child_summary_json = {
-                    "parent_shadow_run_id": shadow_run_id,
-                    "ordinal": ordinal,
-                    "no_send": True,
-                }
-                if child_summary:
-                    child_summary_json["callable_summary"] = child_summary
-
-                insert_run(
-                    db_path=str(db_path),
-                    run_id=child_run_id,
-                    runner_label=f"{config.runner_label}_child",
-                    status=child_status,
-                    summary=child_summary_json,
-                    error=child_error,
-                )
-            except Exception as e:
-                result.errors.append(
-                    f"child insert failed for ordinal {ordinal}: {_safe_error(e)}"
-                )
+            # ------------------------------------------------------------------
+            # d. Write child run record (insert or link_existing)
+            # ------------------------------------------------------------------
+            _persist_child_record(
+                config=config,
+                db_path=db_path,
+                shadow_run_id=shadow_run_id,
+                ordinal=ordinal,
+                child_run_id=child_run_id,
+                child_status=child_status,
+                child_error=child_error,
+                child_summary=child_summary,
+                result=result,
+            )
 
             # Update counters
             result.attempted_runs += 1
@@ -530,6 +564,63 @@ def run_bounded_shadow(
         result.errors.append(f"lock release failed: {_safe_error(e)}")
 
     return result
+
+
+# ---------------------------------------------------------------------------
+# Child persistence
+# ---------------------------------------------------------------------------
+
+
+def _persist_child_record(
+    config: BoundedShadowConfig,
+    db_path: Path,
+    shadow_run_id: str,
+    ordinal: int,
+    child_run_id: str,
+    child_status: str,
+    child_error: Optional[str],
+    child_summary: Optional[dict[str, Any]],
+    result: BoundedShadowResult,
+) -> None:
+    """Write the child run record — either *insert* or *link_existing*.
+
+    On failure, appends to ``result.errors``.
+    """
+    try:
+        if config.child_history_mode == "link_existing":
+            # Callable already wrote its own row — just link
+            link_existing_run_to_parent(
+                db_path=str(db_path),
+                run_id=child_run_id,
+                parent_run_id=shadow_run_id,
+                run_ordinal=ordinal,
+                run_kind="shadow_child",
+            )
+        else:
+            # Default "insert" mode — write a wrapper child row
+            child_summary_json = {
+                "parent_shadow_run_id": shadow_run_id,
+                "ordinal": ordinal,
+                "no_send": True,
+            }
+            if child_summary:
+                child_summary_json["callable_summary"] = child_summary
+
+            insert_run(
+                db_path=str(db_path),
+                run_id=child_run_id,
+                runner_label=f"{config.runner_label}_child",
+                status=child_status,
+                summary=child_summary_json,
+                error=child_error,
+                parent_run_id=shadow_run_id,
+                run_ordinal=ordinal,
+                run_kind="shadow_child",
+            )
+    except Exception as e:
+        result.errors.append(
+            f"child insert failed for ordinal {ordinal}: {_safe_error(e)}"
+        )
 
 
 # ---------------------------------------------------------------------------
