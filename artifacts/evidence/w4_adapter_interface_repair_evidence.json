@@ -1,7 +1,7 @@
 {
   "ticket": "W4_DELTA_ADAPTER_INTERFACE_REPAIR_R02",
   "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
-  "repair_base_commit": "7654ab10e7dc9ca84e766e414d35e754c5cf2786",
+  "repair_base_commit": "a703c49ad348224c2a7f29731523bbb6bb13aaea",
   "tested_commit": "a1370c86deeb5942af9b7612a64441fc58026859",
   "branch": "workbench/mvpplus-open-source-adapters-v1",
   "mode": "Delta Repair Only",
@@ -19,7 +19,7 @@
   "unit_test_skipped": 0,
   "import_smoke_result": "PASS",
   "forbidden_capability_scan": "PASS (verified no wallet/exchange/signing/order imports in adapter code)",
-  "probe_generated_at_utc": "2026-06-17T06:05:34Z",
+  "probe_generated_at_utc": "2026-06-17T06:13:20Z",
   "data_mode": "live",
   "no_credentials": true,
   "timeout_seconds": 30.0,
@@ -38,16 +38,6 @@
     "has_bid_field": true,
     "has_ask_field": true
   },
-  "watchlist_clearinghouse_probe": {
-    "operation": "fetch_clearinghouse_state",
-    "address": "0x7a9f2c8d4e6b1a3f5c7d9e2b4a6f8c0d2e4a6b8c",
-    "address_source": "scripts/market_radar_whale_position_feed_v112f.py (public watchlist)",
-    "ok": true,
-    "latency_ms": 2990.4,
-    "health_available": true,
-    "has_asset_positions": false,
-    "position_count": 0
-  },
   "hyperliquid_sdk_probe": {
     "operation": "fetch_all_mids",
     "ok": true,
@@ -57,10 +47,30 @@
     "health_available": true
   },
   "previous_live_probes": {
-    "note": "R03 probes from earlier run preserved for reference",
-    "meta_probe": {"operation": "fetch_meta", "method": "sdk", "status": "OK", "latency_ms": 219.4, "health_available": true},
-    "raw_http_probe": {"operation": "fetch_all_mids", "method": "raw_http_fallback", "status": "OK", "latency_ms": 517.9, "asset_count": 866, "health_available": true},
-    "funding_history_probe": {"operation": "fetch_funding_history", "coin": "BTC", "status": "OK", "latency_ms": 213.8, "funding_count": 1}
+    "note": "R03/R04 earlier probes preserved for reference. R04 used SYNTHETIC_KEYS address incorrectly labeled as public watchlist — corrected in R05 with real whitelist address from get_whitelist().",
+    "meta_probe": {
+      "operation": "fetch_meta",
+      "method": "sdk",
+      "status": "OK",
+      "latency_ms": 219.4,
+      "health_available": true
+    },
+    "raw_http_probe": {
+      "operation": "fetch_all_mids",
+      "method": "raw_http_fallback",
+      "status": "OK",
+      "latency_ms": 517.9,
+      "asset_count": 866,
+      "health_available": true
+    },
+    "funding_history_probe": {
+      "operation": "fetch_funding_history",
+      "coin": "BTC",
+      "status": "OK",
+      "latency_ms": 213.8,
+      "funding_count": 1
+    },
+    "r04_synthetic_keys_correction": "watchlist_clearinghouse_probe from R04 removed — address was SYNTHETIC_KEYS, not public watchlist"
   },
   "validation_coverage": {
     "ethereum_address_format": "tested — valid hex, mixed-case, empty, short, no-prefix, non-string cases",
@@ -83,10 +93,22 @@
     "capability_mapping": "explicit OPERATION_MAP separates method_name (snake_case) from capability_key (camelCase); _check_capability validates method exists AND has[key] is true/'emulated'; false/None/missing → unsupported_capability"
   },
   "capability_mapping": {
-    "fetchTicker": {"method": "fetch_ticker", "capability": "fetchTicker"},
-    "fetchOHLCV": {"method": "fetch_ohlcv", "capability": "fetchOHLCV"},
-    "fetchOpenInterest": {"method": "fetch_open_interest", "capability": "fetchOpenInterest"},
-    "fetchFundingRate": {"method": "fetch_funding_rate", "capability": "fetchFundingRate"},
+    "fetchTicker": {
+      "method": "fetch_ticker",
+      "capability": "fetchTicker"
+    },
+    "fetchOHLCV": {
+      "method": "fetch_ohlcv",
+      "capability": "fetchOHLCV"
+    },
+    "fetchOpenInterest": {
+      "method": "fetch_open_interest",
+      "capability": "fetchOpenInterest"
+    },
+    "fetchFundingRate": {
+      "method": "fetch_funding_rate",
+      "capability": "fetchFundingRate"
+    },
     "policy": "true or 'emulated' → allowed; false/None/missing → unsupported_capability"
   },
   "httpx_improvements": {
@@ -114,6 +136,28 @@
     "Only 3 exchanges in allowlist (binance, okx, bybit) (unchanged from baseline)",
     "AdapterHealth uses __post_init__ auto-population — health is present on all AdapterResult instances"
   ],
-  "clean_status": "All 86 unit tests pass (0 failed, 0 skipped). Live probes: CCXT Binance BTC/USDT ticker OK (last=65831.99, bid=65831.99, ask=65832.0, provenance=ccxt, health_available=true); watchlist clearinghouseState OK (no active positions — expected); Hyperliquid SDK allMids OK (866 assets). data_mode=live. No wallet/exchange/signing/order imports. No zero-address or BTC hardcoding.",
-  "generated_at_utc": "2026-06-17T06:05:34Z"
+  "clean_status": "All 86 unit tests pass (0 failed, 0 skipped). Live probes: CCXT Binance BTC/USDT ticker OK (last=65831.99, provenance=ccxt, health_available=true); whitelist clearinghouseState OK (1 real position found, address from get_whitelist()); Hyperliquid SDK allMids OK (866 assets). data_mode=live. No wallet/exchange/signing/order imports. No zero-address or BTC hardcoding.",
+  "generated_at_utc": "2026-06-17T06:13:20Z",
+  "whitelist_clearinghouse_probe": {
+    "operation": "fetch_clearinghouse_state",
+    "address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+    "address_source": "market_radar/l1_hyperliquid_provider/address_universe.py :: get_whitelist()",
+    "source_classification": "legacy_project_whitelist",
+    "ok": true,
+    "latency_ms": 3541.4,
+    "health_available": true,
+    "provenance_source": "raw_http_fallback",
+    "has_asset_positions": true,
+    "position_count": 1,
+    "response_keys": [
+      "marginSummary",
+      "crossMarginSummary",
+      "crossMaintenanceMarginUsed",
+      "withdrawable",
+      "assetPositions",
+      "time"
+    ],
+    "zero_positions": false,
+    "no_credentials": true
+  }
 }
