@@ -1,0 +1,120 @@
+{
+  "evidence_id": "w5_post_mvp_audit_recovery_r03",
+  "ticket": "W5_AUDIT_EXPORT_RECOVERY_HARDENING_R03",
+  "lane": "W5",
+  "branch": "workbench/post-mvp-ops-audit-recovery-v1",
+  "source_branch": "workbench/mvpplus-ops-foundation-v1",
+  "source_head": "5c6f33ce1b4eca915ff4ff64693730eb407e7f9b",
+  "tested_commit": "f1a50d19fc845bb5283f412f4a7e4cea1311d473",
+  "parent_update_hardening": {
+    "completed_plus_error_prevented": true,
+    "fallback_attempt": true,
+    "lock_release_failure_recorded": true
+  },
+  "doctor_checks": [
+    "db:exists", "db:schema_version", "db:integrity", "db:wal_status",
+    "db:tables", "db:indexes", "parent_child:integrity",
+    "ordinal:duplicates", "orphan:children", "unfinished:runs",
+    "status:abnormal", "time:travel", "summary:json",
+    "source_health:all", "lock:exists", "stop_marker:exists", "db:sha256"
+  ],
+  "bundle_verification": {
+    "export_has_all_files": true,
+    "verify_clean_bundle": true,
+    "detects_missing_file": true,
+    "detects_tampered_file": true,
+    "deterministic_output": true,
+    "sanitize_redacts_sensitive_keys": true
+  },
+  "backup_restore": {
+    "backup_creates_file": true,
+    "backup_integrity_check_passed": true,
+    "backup_refuses_existing": true,
+    "restore_new_path_works": true,
+    "restore_refuses_existing": true,
+    "source_never_modified": true
+  },
+  "retention_plan": {
+    "plan_only": true,
+    "no_delete_executed": true,
+    "estimated_savings_calculated": true,
+    "delete_candidates_only_marked": true
+  },
+  "recovery_plan": {
+    "plan_only": true,
+    "no_destructive_sql": true,
+    "requires_approval_for_high_risk": true,
+    "requires_backup_for_destructive": true
+  },
+  "run_diff": {
+    "same_run_no_changes": true,
+    "detects_status_change": true,
+    "detects_child_count_change": true,
+    "handles_missing_run": true
+  },
+  "fault_tests": [
+    "1000 run rows stress test",
+    "100 parents + 900 children stress test",
+    "orphan child injection",
+    "ordinal collision injection",
+    "corrupt JSON injection",
+    "DB locked handling",
+    "backup interruption cleanup",
+    "bundle tamper detection",
+    "restore to existing rejected",
+    "200 source_health entries"
+  ],
+  "exact_test_commands": [
+    "python -X utf8 -m pytest tests/post_mvp/operations/test_audit_recovery_hardening.py -v --tb=line",
+    "python -X utf8 -m pytest tests/mvpplus/operations/ tests/post_mvp/operations/ -v --tb=line"
+  ],
+  "old_tests_passed": 151,
+  "new_tests_passed": 54,
+  "total_passed": 205,
+  "total_failed": 0,
+  "static_safety": {
+    "no_deletion": true,
+    "no_network": true,
+    "no_send": true,
+    "no_daemon": true,
+    "no_scheduler": true,
+    "no_threads": true,
+    "no_credentials": true,
+    "no_destructive_recovery": true
+  },
+  "extensions": {
+    "A_tamper_evident_chain": true,
+    "B_run_lineage_graph": true,
+    "C_operator_runbook": true
+  },
+  "modified_files": [
+    "market_radar/operations/bounded_shadow.py",
+    "market_radar/operations/doctor.py",
+    "market_radar/operations/audit_bundle.py",
+    "market_radar/operations/db_backup.py",
+    "market_radar/operations/recovery_plan.py",
+    "market_radar/operations/retention_planner.py",
+    "market_radar/operations/run_diff.py",
+    "tests/post_mvp/operations/test_audit_recovery_hardening.py",
+    "docs/operations/EXTENSION_A_TAMPER_EVIDENT_CHAIN.md",
+    "docs/operations/EXTENSION_B_RUN_LINEAGE_GRAPH.md",
+    "docs/operations/EXTENSION_C_OPERATOR_RECOVERY_RUNBOOK.md",
+    "artifacts/evidence/w5_post_mvp_audit_recovery_r03.json"
+  ],
+  "files_outside_owned_paths": [],
+  "main_unchanged": true,
+  "known_limitations": [
+    "Backup uses SQLite online backup API — source DB must not be in WAL mode during backup",
+    "Doctor PRAGMA integrity_check may be I/O intensive on large databases",
+    "Retention estimates are approximate (based on JSON length heuristics)",
+    "Bundle does not include raw Feed data or API responses by design",
+    "Recovery plans are advisory — no automated execution",
+    "Permission-based backup interruption test adapted for cross-platform compatibility"
+  ],
+  "git_status": {
+    "branch": "workbench/post-mvp-ops-audit-recovery-v1",
+    "source_head": "5c6f33ce1b4eca915ff4ff64693730eb407e7f9b",
+    "tested_commit": "f1a50d19fc845bb5283f412f4a7e4cea1311d473",
+    "working_tree": "clean (evidence pending commit)"
+  }
+}
