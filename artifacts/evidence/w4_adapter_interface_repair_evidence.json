@@ -1,0 +1,70 @@
+{
+  "ticket": "W4_DELTA_ADAPTER_INTERFACE_REPAIR_R02",
+  "baseline_commit": "85df823a199d2e0ca9bde354687930cce5e7c497",
+  "previous_remote_head": "0125fe6674565bc9478213ff081ccf0ff17cac41",
+  "tested_commit": "23d3cc0c23dbbf38524164b51592460ea96b2516",
+  "branch": "workbench/mvpplus-open-source-adapters-v1",
+  "mode": "Delta Repair Only",
+  "package_versions": {
+    "httpx": "0.28.1",
+    "hyperliquid": "0.4.66",
+    "ccxt": "4.5.59"
+  },
+  "license_checks": "docs/adapters/THIRD_PARTY_ADAPTER_MANIFEST.json",
+  "repair_summary": "Replaced generic hardcoded Hyperliquid fetch API with five parameterized read-only methods; added Ethereum address/coin/time-range validation; separated SDK vs raw HTTP provenance reporting; embedded AdapterHealth in every AdapterResult; added CCXT bounded timeout/kwargs/normalized dicts; separated HTTPX connect/read/write/pool timeouts.",
+  "unit_test_command": "python -m unittest discover -s tests/mvpplus/adapters -v",
+  "unit_test_count": 75,
+  "unit_test_passed": 75,
+  "unit_test_failed": 0,
+  "unit_test_skipped": 0,
+  "import_smoke_result": "PASS",
+  "forbidden_capability_scan": "PASS (verified no wallet/exchange/signing/order imports in adapter code)",
+  "live_probe_mode": "bounded public data (mocked in CI — no live network in repair environment)",
+  "validation_coverage": {
+    "ethereum_address_format": "tested — valid hex, mixed-case, empty, short, no-prefix, non-string cases",
+    "non_empty_coin": "tested — valid, empty, non-string cases",
+    "integer_time_range": "tested — valid range, negative start/end, start>end, equal, non-integer",
+    "start_less_equal_end": "tested — start>end rejected, equal accepted"
+  },
+  "mocked_test_coverage": {
+    "fetch_all_mids": true,
+    "fetch_meta": true,
+    "fetch_clearinghouse_state": "valid address + invalid address + SDK fallback tests",
+    "fetch_spot_clearinghouse_state": "invalid address rejection",
+    "fetch_funding_history": "empty coin, negative start, start>end, valid with/without end, SDK fallback"
+  },
+  "ccxt_improvements": {
+    "bounded_timeout": "clamped to [1.0, 60.0]s, default 15.0s",
+    "operation_kwargs": "kwargs passed to ticker/OI/funding_rate; OHLCV uses positional timeframe/limit",
+    "normalized_dicts": "ticker, OHLCV, OI, funding rate each normalized to stable adapter-owned dicts",
+    "raw_preserved": "raw CCXT data preserved as _raw key inside each normalized record"
+  },
+  "httpx_improvements": {
+    "connect_timeout": "10.0s (clamped [0.5, 120.0])",
+    "read_timeout": "30.0s (clamped [1.0, 120.0])",
+    "write_timeout": "10.0s (clamped [0.5, 120.0])",
+    "pool_timeout": "5.0s (clamped [0.5, 30.0])",
+    "max_retries": "3 (clamped [1, 10])",
+    "host_allowlist_preserved": true
+  },
+  "modified_files": [
+    "market_radar/external_adapters/adapter_models.py",
+    "market_radar/external_adapters/ccxt_public_market_adapter.py",
+    "market_radar/external_adapters/httpx_transport.py",
+    "market_radar/external_adapters/hyperliquid_public_adapter.py",
+    "tests/mvpplus/adapters/test_ccxt_adapter.py",
+    "tests/mvpplus/adapters/test_httpx_transport.py",
+    "tests/mvpplus/adapters/test_hyperliquid_adapter.py",
+    "artifacts/evidence/w4_adapter_interface_repair_evidence.json"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "Hyperliquid SDK Info(skip_ws=True) requires websocket dependency — may fail in minimal environments (unchanged from baseline)",
+    "CCXT 4.5.59 shadows import when ccxt subpackage exists in project (unchanged from baseline)",
+    "Only 3 exchanges in allowlist (binance, okx, bybit) (unchanged from baseline)",
+    "No live network probe run in repair environment — unit tests use mocking",
+    "AdapterHealth uses __post_init__ auto-population — health is present on all AdapterResult instances"
+  ],
+  "clean_status": "All 75 unit tests pass (0 failed, 0 skipped). No wallet/exchange/signing/order imports. No zero-address or BTC hardcoding. All five parameterized methods return AdapterResult with AdapterHealth.",
+  "generated_at_utc": "2026-06-17T12:00:00Z"
+}
