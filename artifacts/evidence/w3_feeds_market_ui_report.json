@@ -1,0 +1,96 @@
+{
+  "run_id": "w3_2f0439dc",
+  "feed_truth": {
+    "flash_live": 4,
+    "news_live": 4,
+    "telegram_live": 0,
+    "cached": 0,
+    "fixture": 1,
+    "research_sample": 2,
+    "research_excluded_rows": 0,
+    "duplicates_removed": 0,
+    "total_raw_rows": 11,
+    "live_total": 8
+  },
+  "market_snapshots": [
+    {
+      "symbol": "BTC",
+      "price": 65720.0,
+      "change_1h_pct": -0.15,
+      "change_24h_pct": -1.03,
+      "volume_24h": 28500000000.0,
+      "open_interest": 12000000000.0,
+      "funding_rate": 0.000105,
+      "mark_price": 65720.0,
+      "oracle_price": 65718.5,
+      "venue": "binance_spot",
+      "observed_at": "2026-06-17T10:00:00Z",
+      "freshness": "fresh"
+    },
+    {
+      "symbol": "ETH",
+      "price": 1789.64,
+      "change_1h_pct": -0.08,
+      "change_24h_pct": -0.36,
+      "volume_24h": 12000000000.0,
+      "open_interest": 5000000000.0,
+      "funding_rate": 5.2e-05,
+      "mark_price": 1789.64,
+      "oracle_price": 1788.9,
+      "venue": "binance_spot",
+      "observed_at": "2026-06-17T10:00:00Z",
+      "freshness": "fresh"
+    },
+    {
+      "symbol": "SOL",
+      "price": 73.58,
+      "change_1h_pct": 0.22,
+      "change_24h_pct": -0.84,
+      "volume_24h": 3500000000.0,
+      "open_interest": 1200000000.0,
+      "funding_rate": -2e-05,
+      "mark_price": 73.58,
+      "oracle_price": 73.55,
+      "venue": "binance_spot",
+      "observed_at": "2026-06-17T10:00:00Z",
+      "freshness": "fresh"
+    },
+    {
+      "symbol": "HYPE",
+      "price": 74.05,
+      "change_1h_pct": 1.52,
+      "change_24h_pct": 9.78,
+      "volume_24h": 850000000.0,
+      "open_interest": 1490000000.0,
+      "funding_rate": 1.25e-05,
+      "mark_price": 74.05,
+      "oracle_price": 74.01,
+      "venue": "hyperliquid_perp",
+      "observed_at": "2026-06-17T10:00:00Z",
+      "freshness": "fresh"
+    }
+  ],
+  "market_health": [
+    {
+      "venue": "binance_spot",
+      "asset": "BTC",
+      "status": "ok"
+    },
+    {
+      "venue": "binance_spot",
+      "asset": "ETH",
+      "status": "ok"
+    },
+    {
+      "venue": "binance_spot",
+      "asset": "SOL",
+      "status": "ok"
+    },
+    {
+      "venue": "hyperliquid_perp",
+      "asset": "HYPE",
+      "status": "ok"
+    }
+  ],
+  "workbench_path": "C:\\Users\\PC\\Desktop\\市场信号\\crypto-event-intelligence-worktrees\\feeds-market-ui-v2\\artifacts\\reports\\workbench.html"
+}
