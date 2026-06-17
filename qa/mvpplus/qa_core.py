@@ -382,25 +382,35 @@ def scan_test_count(repo_root: str, expected: int, test_paths: list[str]) -> QAR
 # ═══════════════════════════════════════════════════════════════════════════
 
 
-def scan_dependency_manifest(repo_root: str, manifest_path: str) -> QAResult:
-    """Verify dependency manifest exists and is parseable."""
+def scan_dependency_manifest(repo_root: str, manifest_path: str,
+                              content_override: str | None = None) -> QAResult:
+    """Verify dependency manifest exists and is parseable.
+
+    content_override: synthetic manifest content for self-test (avoids scanning
+                      real project requirements.txt during QA foundation self-test).
+    """
     violations = []
-    mpath = os.path.join(repo_root, manifest_path)
-    if not os.path.isfile(mpath):
-        violations.append(f"Manifest not found: {manifest_path}")
-        return QAResult(scanner="dependency_validator", status="FAIL", violations=violations,
-                        detail="Manifest file missing")
-    try:
-        with open(mpath, "r") as f:
-            content = f.read()
-        for line in content.strip().split("\n"):
-            line = line.strip()
-            if line and not line.startswith("#") and not line.startswith("-r"):
-                # Simple check: should have a package name
-                if "==" not in line and ">=" not in line and line != "":
-                    violations.append(f"Unpinned dependency: {line}")
-    except (IOError, UnicodeDecodeError) as e:
-        violations.append(f"Cannot read manifest: {e}")
+    if content_override is not None:
+        content = content_override
+    else:
+        mpath = os.path.join(repo_root, manifest_path)
+        if not os.path.isfile(mpath):
+            violations.append(f"Manifest not found: {manifest_path}")
+            return QAResult(scanner="dependency_validator", status="FAIL", violations=violations,
+                            detail="Manifest file missing")
+        try:
+            with open(mpath, "r") as f:
+                content = f.read()
+        except (IOError, UnicodeDecodeError) as e:
+            violations.append(f"Cannot read manifest: {e}")
+            return QAResult(scanner="dependency_validator", status="FAIL",
+                            detail=f"Cannot read {manifest_path}", violations=violations)
+
+    for line in content.strip().split("\n"):
+        line = line.strip()
+        if line and not line.startswith("#") and not line.startswith("-r"):
+            if "==" not in line and ">=" not in line and line != "":
+                violations.append(f"Unpinned dependency: {line}")
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="dependency_validator",
@@ -418,12 +428,15 @@ def scan_dependency_manifest(repo_root: str, manifest_path: str) -> QAResult:
 def scan_data_truth(data_records: list[dict]) -> QAResult:
     """Verify data source labels match count relationships.
 
-    Inspects structured data_mode/count relationships:
-    - fixture or research rows included in live counts must FAIL
+    Inspects structured data_mode/count relationships.
+    Known modes: live, cached, fixture, research_sample.
+    - fixture/research_sample rows included in live counts → FAIL
+    - unknown data_mode → explicitly reported
     - simple text mentioning 'fixture' and 'live' does NOT automatically fail
       (must inspect structured data_mode/count relationships)
     """
     violations = []
+    KNOWN_MODES = {"live", "cached", "fixture", "research_sample"}
 
     if not data_records:
         return QAResult(
@@ -433,25 +446,43 @@ def scan_data_truth(data_records: list[dict]) -> QAResult:
             violations=[],
         )
 
-    live_data = [r for r in data_records if r.get("data_mode") == "live"]
-    fixture_data = [r for r in data_records if r.get("data_mode") == "fixture"]
-    research_data = [r for r in data_records if r.get("data_mode") == "research"]
-    unknown = [r for r in data_records if r.get("data_mode") not in ("live", "fixture", "research")]
+    live_data = []
+    cached_data = []
+    fixture_data = []
+    research_data = []
+    unknown = []
 
-    # Fixture or research rows included in live counts must fail
+    for r in data_records:
+        mode = r.get("data_mode", "")
+        if mode == "live":
+            live_data.append(r)
+        elif mode == "cached":
+            cached_data.append(r)
+        elif mode == "fixture":
+            fixture_data.append(r)
+        elif mode == "research_sample":
+            research_data.append(r)
+        else:
+            unknown.append(r)
+
+    # Unknown mode must be explicitly reported
+    for rec in unknown:
+        name = rec.get("id") or rec.get("name") or "unknown"
+        mode = rec.get("data_mode", "")
+        violations.append(f"Record '{name}' has unknown data_mode='{mode}'")
+
+    # Fixture or research_sample rows included in live counts must fail
     for rec in fixture_data:
         name = rec.get("id") or rec.get("name") or "unknown"
         if rec.get("counted_as_live", False):
             violations.append(f"Fixture '{name}' is counted in live totals")
-
-        # Check structural: if a fixture record explicitly sets live_count/live_total, flag it
         if "live_count" in rec or "live_total" in rec:
-            violations.append(f"Fixture '{name}' has live count/total field — data_mode mismatch")
+            violations.append(f"Fixture '{name}' has live count/total field")
 
     for rec in research_data:
         name = rec.get("id") or rec.get("name") or "unknown"
         if rec.get("counted_as_live", False):
-            violations.append(f"Research '{name}' is counted in live totals")
+            violations.append(f"Research_sample '{name}' is counted in live totals")
 
     # Check aggregate counts if a summary record exists
     summary = None
@@ -472,8 +503,9 @@ def scan_data_truth(data_records: list[dict]) -> QAResult:
         scanner="data_truth_validator",
         status=status,
         detail=f"Validated {len(data_records)} records: "
-               f"{len(live_data)} live, {len(fixture_data)} fixture, "
-               f"{len(research_data)} research, {len(unknown)} unknown",
+               f"{len(live_data)} live, {len(cached_data)} cached, "
+               f"{len(fixture_data)} fixture, {len(research_data)} research_sample, "
+               f"{len(unknown)} unknown",
         violations=violations,
     )
 
@@ -488,7 +520,8 @@ def oracle_liquidation_formula(formula: dict) -> QAResult:
 
     long expected = (mark - liq) / mark * 100
     short expected = (liq - mark) / mark * 100
-    missing/invalid mark or liq → PASS (null result expected)
+    mark <= 0 → null expected (cannot divide by zero)
+    invalid liquidation price → null per project policy
     negative value preserved (never abs'd or clamped)
     configurable numeric tolerance (default 0.01)
     """
@@ -506,11 +539,22 @@ def oracle_liquidation_formula(formula: dict) -> QAResult:
             detail="Missing mark or liq: null result expected",
             violations=[],
         )
-    if not isinstance(mark, (int, float)) or not isinstance(liq, (int, float)):
+
+    # mark <= 0 → null (cannot divide by zero, invalid price)
+    if not isinstance(mark, (int, float)) or mark <= 0:
         return QAResult(
             scanner="liquidation_formula_oracle",
             status="PASS",
-            detail="Non-numeric mark or liq: null result expected",
+            detail=f"mark={mark}: null result expected (invalid or non-positive mark)",
+            violations=[],
+        )
+
+    # Invalid liquidation price → null per project policy
+    if not isinstance(liq, (int, float)) or liq <= 0:
+        return QAResult(
+            scanner="liquidation_formula_oracle",
+            status="PASS",
+            detail=f"liq={liq}: null result expected (invalid or non-positive liquidation price)",
             violations=[],
         )
 
@@ -532,8 +576,6 @@ def oracle_liquidation_formula(formula: dict) -> QAResult:
             violations.append(
                 f"Negative liquidation distance ({expected:.6f}) was incorrectly clamped to non-negative ({actual})"
             )
-        if formula.get("check_negative", False) and actual is None:
-            pass  # Nothing to check against
 
     status = "PASS" if not violations else "FAIL"
     return QAResult(
@@ -553,10 +595,10 @@ def oracle_first_snapshot(snapshot: dict) -> QAResult:
     """Validate first-run positions use baseline_open_position.
 
     Rules:
-    - first-run existing non-zero positions → baseline_open_position action
-    - never open_long / open_short
+    - existing non-zero positions (abs(size) > 0) → baseline_open_position action
+    - never open_long / open_short (both directions)
+    - size == 0 must NOT require baseline
     - baseline must not create large_new_position alert
-    - (price_type=open logic removed per W6_DELTA spec)
     """
     violations = []
     positions = snapshot.get("positions", [])
@@ -574,10 +616,10 @@ def oracle_first_snapshot(snapshot: dict) -> QAResult:
         action = pos.get("action", "")
         size = pos.get("size", 0)
 
-        # Existing non-zero positions must use baseline_open_position
-        if size > 0 and action not in ("baseline_open_position", "baseline"):
+        # Existing non-zero positions (any direction) must use baseline_open_position
+        if abs(size) > 0 and action not in ("baseline_open_position", "baseline"):
             violations.append(
-                f"Position size={size} should use 'baseline_open_position', got '{action}'"
+                f"Position abs(size)={abs(size)} should use 'baseline_open_position', got '{action}'"
             )
 
         # Must never have open_long/open_short in first snapshot
@@ -662,63 +704,90 @@ def scan_hype_source_policy(market_record: dict) -> QAResult:
 
 
 def scan_feed_id(feed: dict) -> QAResult:
-    """Validate feed ID is deterministic (not random/UUID/timestamp).
+    """Validate feed ID determinism using injected generator or 3-group outputs.
+
+    The oracle does NOT compute IDs itself. It accepts either:
+    A) a feed_id_generator callable that maps string input → string ID, OR
+    B) three pre-computed output groups from the target implementation:
+       - same_input_output_A, same_input_output_B (same input run twice)
+       - changed_input_output (different input)
 
     Rules:
-    - same normalized input twice must produce same ID
-    - changed meaningful input must produce a different ID
-    - UUID/random/time-only IDs fail
+    - same_input_output_A == same_input_output_B  (same input → same ID) → PASS
+    - same_input_output_A != same_input_output_B  → FAIL (not deterministic)
+    - same_input_output_A == changed_input_output  → FAIL (collision)
+    - UUID/random/time-only IDs → FAIL
     """
     violations = []
     feed_id = feed.get("feed_id", "")
-    if not feed_id:
-        violations.append("Missing feed_id")
+    generator = feed.get("feed_id_generator")
+
+    # ── UUID/random/time-only checks ──
+    if feed_id:
+        if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", feed_id, re.IGNORECASE):
+            violations.append(f"feed_id looks like a UUID (non-deterministic): {feed_id}")
+        if re.match(r"^[0-9a-f]{32}$", feed_id, re.IGNORECASE) and len(feed_id) == 32:
+            violations.append(f"feed_id looks like a hash (not meaningful): {feed_id[:16]}...")
+        if re.match(r"^\d{10,}$", feed_id):
+            violations.append(f"feed_id looks like a bare timestamp (non-deterministic): {feed_id}")
+        if re.match(r"^\d{4}-\d{2}-\d{2}", feed_id):
+            violations.append(f"feed_id is date-prefixed only: {feed_id}")
+        if re.search(r"random|uuid|timestamp", feed_id, re.IGNORECASE):
+            violations.append(f"feed_id contains non-deterministic component: {feed_id[:40]}")
+    elif not generator and not feed.get("same_input_output_A"):
+        violations.append("Missing feed_id, generator, or output groups")
         return QAResult(
             scanner="feed_id_validator",
             status="FAIL",
-            detail="feed_id is required",
+            detail="No feed_id, generator, or output groups provided",
             violations=violations,
         )
 
-    # UUID/random/time-only IDs fail
-    if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", feed_id, re.IGNORECASE):
-        violations.append(f"feed_id looks like a UUID (non-deterministic): {feed_id}")
-    if re.match(r"^[0-9a-f]{32}$", feed_id, re.IGNORECASE) and len(feed_id) == 32:
-        violations.append(f"feed_id looks like an MD5/SHA1 hash (not a meaningful ID): {feed_id[:16]}...")
-    if re.match(r"^\d{10,}$", feed_id):
-        violations.append(f"feed_id looks like a bare timestamp (non-deterministic): {feed_id}")
-    if re.match(r"^\d{4}-\d{2}-\d{2}", feed_id):
-        violations.append(f"feed_id is date-prefixed only — not enough semantic content: {feed_id}")
-    if re.search(r"random|uuid|timestamp", feed_id, re.IGNORECASE):
-        violations.append(f"feed_id contains non-deterministic component: {feed_id[:40]}")
+    # ── Determinism test via generator (A) ──
+    if generator:
+        same_input = feed.get("same_input", "test_input")
+        changed_input = feed.get("changed_input", "other_input")
 
-    # Determinism test: if inputs are provided, verify
-    inputs = feed.get("inputs", [])
-    if inputs:
-        ids = []
-        for inp in inputs:
-            hid = hashlib.sha256(inp.encode()).hexdigest()[:16]
-            ids.append(hid)
+        id_a = generator(same_input)
+        id_b = generator(same_input)
+        id_c = generator(changed_input)
 
-        # Same input repeated must produce same ID
-        if len(inputs) >= 2 and inputs[0] == inputs[1]:
-            if ids[0] != ids[1]:
-                violations.append("Same input produced different IDs — not deterministic")
-
+        # Same input must produce same ID
+        if id_a != id_b:
+            violations.append(
+                f"Same input '{same_input}' produced different IDs: '{id_a}' vs '{id_b}'"
+            )
         # Different inputs must produce different IDs
-        if len(inputs) >= 2 and inputs[0] != inputs[1]:
-            if ids[0] == ids[1]:
-                violations.append("Different inputs produced same ID — collision")
-    else:
-        # No inputs provided; check if feed_id itself looks deterministic
-        if len(feed_id) < 8:
-            violations.append(f"feed_id too short to be deterministic ({len(feed_id)} chars)")
+        if id_a == id_c:
+            violations.append(
+                f"Different inputs ('{same_input}', '{changed_input}') produced same ID: '{id_a}'"
+            )
+        # Also validate the generated IDs themselves
+        if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}", id_a, re.IGNORECASE):
+            violations.append(f"Generator produced UUID-like ID: '{id_a[:20]}'")
+        if re.match(r"^\d{10,}$", id_a):
+            violations.append(f"Generator produced timestamp-like ID: '{id_a[:20]}'")
+
+    # ── Determinism test via output groups (B) ──
+    out_a = feed.get("same_input_output_A")
+    out_b = feed.get("same_input_output_B")
+    out_c = feed.get("changed_input_output")
+
+    if out_a is not None and out_b is not None:
+        if out_a != out_b:
+            violations.append(
+                f"Same input produced different outputs: '{out_a}' vs '{out_b}'"
+            )
+        if out_c is not None and out_a == out_c:
+            violations.append(
+                f"Different inputs produced same output: '{out_a}'"
+            )
 
     status = "PASS" if not violations else "FAIL"
     return QAResult(
         scanner="feed_id_validator",
         status=status,
-        detail=f"Validated feed_id: {feed_id[:50]}",
+        detail=f"Validated feed ID determinism",
         violations=violations,
     )
 
@@ -930,12 +999,17 @@ def run_all_scans(
     data_truth_records: list[dict] | None = None,
     url_validator=None,
     xss_renderer=None,
+    dependency_test_content: str | None = None,
 ) -> QAScanReport:
     """Run all QA scanners and produce a report.
 
     All target refs, artifacts, test paths and expected results are supplied
     explicitly — no hardcoded fakes. Missing evidence → BLOCKED.
     Scans only requested target paths/diff, not unrelated historical scripts.
+
+    dependency_test_content: synthetic pinned manifest content for self-test.
+                             When provided, the dependency scanner validates this
+                             instead of reading the real project requirements.txt.
     """
     head_commit = _git_head(repo_root)
     if head_commit == "unknown" or not head_commit:
@@ -987,7 +1061,8 @@ def run_all_scans(
             violations=["Test paths must be supplied explicitly"],
         ))
 
-    report.results.append(scan_dependency_manifest(repo_root, manifest_path))
+    report.results.append(scan_dependency_manifest(repo_root, manifest_path,
+                                                    content_override=dependency_test_content))
 
     # Data truth — uses structured records, not file grepping
     if data_truth_records is not None:
