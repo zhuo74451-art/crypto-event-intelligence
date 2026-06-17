@@ -1,0 +1,101 @@
+{
+  "ticket": "W2_WHALE_PORTFOLIO_INTELLIGENCE_R02",
+  "source_branch": "workbench/mvpplus-whale-prod-v2",
+  "branch": "workbench/post-mvp-whale-portfolio-intelligence-v1",
+  "source_sha": "6802ac84b017b583fabb643618f7051153503a75",
+  "tested_commit": "HEAD (final after evidence)",
+  "models": [
+    "AddressExposureSummary",
+    "CoinExposureSummary",
+    "EntityExposureSummary",
+    "CoordinatedAction",
+    "PortfolioChange",
+    "PortfolioRiskFinding",
+    "WhalePortfolioSnapshot",
+    "PortfolioIntelligenceSummary"
+  ],
+  "metrics": [
+    "gross_exposure",
+    "net_exposure",
+    "long_short_ratio",
+    "top_n_concentration",
+    "herfindahl_hhi",
+    "weighted_leverage",
+    "weighted_liquidation_distance",
+    "liq_cluster_2pct",
+    "liq_cluster_5pct",
+    "profitable_unprofitable_exposure",
+    "same_coin_opposing",
+    "cross_address_same_direction",
+    "data_quality_assessment"
+  ],
+  "risk_rules": [
+    "PR1_HIGH_GROSS_EXPOSURE",
+    "PR2_NET_DIRECTION_CONCENTRATION",
+    "PR3_SINGLE_COIN_CONCENTRATION",
+    "PR4_SINGLE_ADDRESS_CONCENTRATION",
+    "PR5_HIGH_WEIGHTED_LEVERAGE",
+    "PR6_LIQUIDATION_CLUSTER_2PCT",
+    "PR7_LIQUIDATION_CLUSTER_5PCT",
+    "PR8_CROSS_WHALE_SAME_DIRECTION",
+    "PR9_CROSS_WHALE_DIRECTION_FLIP",
+    "PR10_RAPID_EXPOSURE_EXPANSION",
+    "PR11_DATA_STALE",
+    "PR12_DATA_INCOMPLETE"
+  ],
+  "coordinated_actions": [
+    "coordinated_build",
+    "coordinated_reduction",
+    "coordinated_flip",
+    "divergent_behavior",
+    "liquidation_cluster_formation"
+  ],
+  "interpretation": {
+    "output_types": ["FACT", "DERIVED_METRIC", "RULE_TRIGGER", "INTERPRETATION_LIMIT"],
+    "no_investment_advice": true,
+    "no_llm_core_judgment": true
+  },
+  "test_counts": {
+    "original_w2_tests": {"total": 128, "passed": 127, "skipped": 1, "failed": 0},
+    "new_portfolio_tests": {"total": 85, "passed": 85, "failed": 0},
+    "total_all": {"total": 213, "passed": 212, "skipped": 1, "failed": 0}
+  },
+  "test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/whale_domain -v",
+    "python -X utf8 -m pytest tests/post_mvp/whale_intelligence -v"
+  ],
+  "live_probe": {
+    "performed": false,
+    "reason": "No public Hyperliquid read-only provider available in this environment. Probe requires external HTTP access which is outside the deterministic domain scope. Addresses would use existing KNOWN_ENTITIES from entity_profile.py.",
+    "max_addresses": 0,
+    "max_requests": 0,
+    "credentials_used": false
+  },
+  "no_credentials": true,
+  "no_send": true,
+  "no_network_unit_tests": true,
+  "files_outside_owned_paths": [],
+  "modified_files": [
+    "market_radar/whale_domain/portfolio_models.py",
+    "market_radar/whale_domain/portfolio_metrics.py",
+    "market_radar/whale_domain/portfolio_risk.py",
+    "market_radar/whale_domain/portfolio_coordination.py",
+    "market_radar/whale_domain/portfolio_change.py",
+    "market_radar/whale_domain/portfolio_engine.py",
+    "market_radar/whale_domain/portfolio_summary.py",
+    "tests/post_mvp/whale_intelligence/test_portfolio_intelligence.py",
+    "docs/whale_intelligence/WHALE_PORTFOLIO_INTELLIGENCE.md",
+    "artifacts/evidence/w2_post_mvp_whale_portfolio_intelligence_r02.json"
+  ],
+  "main_unchanged": true,
+  "limitations": [
+    "Live probe not performed — requires external read-only Hyperliquid HTTP access",
+    "Coordinated behavior detection uses fixed 6h window — not configurable at runtime",
+    "Entity resolution uses static KNOWN_ENTITIES list — no dynamic entity clustering",
+    "No integration with W3 feeds or market context layer",
+    "Corpus V2 not yet created (70+ cases) — current corpus remains at V1 (30 cases)",
+    "Risk rule thresholds are hardcoded constants — no admin override API",
+    "Stale snapshot detection only by timestamp — no block height comparison"
+  ],
+  "git_status": "clean (pending commit and push)"
+}
