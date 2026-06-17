@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "generated_at_utc": "2026-06-17T01:41:08Z",
   "config_version": "v1",
   "filters_applied": {
     "minimum_position_value_usd": 100000,
@@ -11,35 +11,28 @@
   "priority_assets_tracked": 4,
   "priority_whale_positions": 11,
   "significant_positions_count": 11,
-  "liquidation_watch_count": 3,
-  "liquidation_watch": [
-    {
-      "address": "0x6c851251",
-      "label": "Matrixport Related",
-      "coin": "ETH",
-      "liquidation_distance_pct": -35.4774,
-      "position_value_usd": 72168000.0
-    },
-    {
-      "address": "0x082e843a",
-      "label": "Unknown HYPE Whale",
-      "coin": "HYPE",
-      "liquidation_distance_pct": -29.5528,
-      "position_value_usd": 104625174.18
-    },
-    {
-      "address": "0x50b309f7",
-      "label": "Unknown Hyperliquid Whale",
-      "coin": "BTC",
-      "liquidation_distance_pct": -11.2987,
-      "position_value_usd": 50063458.77
-    }
-  ],
-  "significant_changes_count": 1,
+  "liquidation_watch_count": 0,
+  "liquidation_watch": [],
+  "significant_changes_count": 4,
   "significant_changes": [
     {
       "coin": "ETH",
       "change_type": "liquidation_distance_narrowed",
+      "label": "Matrixport Related"
+    },
+    {
+      "coin": "HYPE",
+      "change_type": "liquidation_distance_narrowed",
+      "label": "Unknown HYPE Whale"
+    },
+    {
+      "coin": "BTC",
+      "change_type": "increase_long",
+      "label": "Unknown Hyperliquid Whale"
+    },
+    {
+      "coin": "ETH",
+      "change_type": "flip_short_to_long",
       "label": "Unknown Hyperliquid Whale"
     }
   ],

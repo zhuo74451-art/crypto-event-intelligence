@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "generated_at_utc": "2026-06-17T01:41:08Z",
   "known_entities": [
     {
       "entity_id": "entity_hype_whale",
@@ -12,16 +12,16 @@
         "0x082e843a431aef031264dc232693dd710aedca88"
       ],
       "position_count": 1,
-      "total_value_usd": 104625174.18,
-      "total_pnl_usd": 51251244.14,
+      "total_value_usd": 102185258.76,
+      "total_pnl_usd": 48811328.71,
       "positions": [
         {
           "coin": "HYPE",
           "direction": "long",
-          "position_value_usd": 104625174.18,
+          "position_value_usd": 102185258.76,
           "leverage": 5.0,
-          "unrealized_pnl_usd": 51251244.14,
-          "liquidation_distance_pct": -29.5528
+          "unrealized_pnl_usd": 48811328.71,
+          "liquidation_distance_pct": 25.3417
         }
       ]
     },
@@ -36,24 +36,24 @@
         "0x50b309f78e774a756a2230e1769729094cac9f20"
       ],
       "position_count": 2,
-      "total_value_usd": 74687753.26,
-      "total_pnl_usd": -600778.16,
+      "total_value_usd": 79378343.31,
+      "total_pnl_usd": -717947.43,
       "positions": [
         {
           "coin": "BTC",
           "direction": "long",
-          "position_value_usd": 50063458.77,
+          "position_value_usd": 68111107.15,
           "leverage": 20.0,
-          "unrealized_pnl_usd": -405772.98,
-          "liquidation_distance_pct": -11.2987
+          "unrealized_pnl_usd": -737072.9,
+          "liquidation_distance_pct": 8.3704
         },
         {
           "coin": "ETH",
-          "direction": "short",
-          "position_value_usd": 24624294.49,
+          "direction": "long",
+          "position_value_usd": 11267236.16,
           "leverage": 23.0,
-          "unrealized_pnl_usd": -195005.18,
-          "liquidation_distance_pct": 22.2761
+          "unrealized_pnl_usd": 19125.47,
+          "liquidation_distance_pct": 51.1726
         }
       ]
     },
@@ -68,16 +68,16 @@
         "0x6c8512516ce5669d35113a11ca8b8de322fd84f6"
       ],
       "position_count": 1,
-      "total_value_usd": 72168000.0,
-      "total_pnl_usd": -18449764.97,
+      "total_value_usd": 71632000.0,
+      "total_pnl_usd": -18985764.97,
       "positions": [
         {
           "coin": "ETH",
           "direction": "long",
-          "position_value_usd": 72168000.0,
+          "position_value_usd": 71632000.0,
           "leverage": 20.0,
-          "unrealized_pnl_usd": -18449764.97,
-          "liquidation_distance_pct": -35.4774
+          "unrealized_pnl_usd": -18985764.97,
+          "liquidation_distance_pct": 34.9393
         }
       ]
     },
@@ -92,63 +92,63 @@
         "0x8def9f50456c6c4e37fa5d3d57f108ed23992dae"
       ],
       "position_count": 7,
-      "total_value_usd": 53433987.93,
-      "total_pnl_usd": 8222965.07,
+      "total_value_usd": 53692541.48,
+      "total_pnl_usd": 8481518.61,
       "positions": [
         {
           "coin": "SOL",
           "direction": "long",
-          "position_value_usd": 3084874.78,
+          "position_value_usd": 3056424.19,
           "leverage": 17.0,
-          "unrealized_pnl_usd": -42685.16,
+          "unrealized_pnl_usd": -71135.75,
           "liquidation_distance_pct": null
         },
         {
           "coin": "WLD",
           "direction": "long",
-          "position_value_usd": 6266202.14,
+          "position_value_usd": 6922286.76,
           "leverage": 10.0,
-          "unrealized_pnl_usd": 1254747.4,
+          "unrealized_pnl_usd": 1910832.02,
           "liquidation_distance_pct": null
         },
         {
           "coin": "NEAR",
           "direction": "long",
-          "position_value_usd": 10133495.18,
+          "position_value_usd": 9860359.71,
           "leverage": 10.0,
-          "unrealized_pnl_usd": 759329.93,
+          "unrealized_pnl_usd": 486194.46,
           "liquidation_distance_pct": null
         },
         {
           "coin": "HYPE",
           "direction": "long",
-          "position_value_usd": 10357529.6,
+          "position_value_usd": 10115986.43,
           "leverage": 2.0,
-          "unrealized_pnl_usd": 720955.22,
+          "unrealized_pnl_usd": 479412.05,
           "liquidation_distance_pct": null
         },
         {
           "coin": "ASTER",
           "direction": "long",
-          "position_value_usd": 2393838.87,
+          "position_value_usd": 2395021.72,
           "leverage": 5.0,
-          "unrealized_pnl_usd": -270514.95,
+          "unrealized_pnl_usd": -269332.1,
           "liquidation_distance_pct": null
         },
         {
           "coin": "ZEC",
           "direction": "long",
-          "position_value_usd": 19019618.82,
+          "position_value_usd": 19120174.01,
           "leverage": 10.0,
-          "unrealized_pnl_usd": 5786026.68,
+          "unrealized_pnl_usd": 5886581.87,
           "liquidation_distance_pct": null
         },
         {
           "coin": "XMR",
           "direction": "long",
-          "position_value_usd": 2178428.54,
+          "position_value_usd": 2222288.66,
           "leverage": 5.0,
-          "unrealized_pnl_usd": 15105.95,
+          "unrealized_pnl_usd": 58966.06,
           "liquidation_distance_pct": null
         }
       ]

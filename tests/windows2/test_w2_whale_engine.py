@@ -133,30 +133,33 @@ class TestProvenance:
 class TestLiquidationDistance:
     """Verify liquidation distance formulas.
 
-    Long:  (liq - mark) / mark * 100   → negative means below mark
-    Short: (mark - liq) / mark * 100   → positive means above mark
+    Long:  (mark - liq) / mark * 100   → positive away from liq
+    Short: (liq - mark) / mark * 100   → positive away from liq
+
+    Both return positive distance FROM liquidation.
+    Smaller positive = closer to liquidation.
     """
 
     def test_long_normal(self):
-        """Long position, mark=$100, liq=$80 → distance = (80-100)/100*100 = -20%"""
+        """Long: mark=$100, liq=$80 → (100-80)/100*100 = 20.0"""
         d = compute_liquidation_distance("long", 100.0, 80.0)
         assert d is not None
-        assert d == pytest.approx(-20.0, abs=0.01)
+        assert d == pytest.approx(20.0, abs=0.01)
 
     def test_long_above_mark(self):
-        """Liq above mark is unusual but formula should still compute."""
+        """Anomalous long with liq above mark produces negative distance."""
         d = compute_liquidation_distance("long", 80.0, 100.0)
         assert d is not None
-        assert d == pytest.approx(25.0, abs=0.01)
+        assert d == pytest.approx(-25.0, abs=0.01)
 
     def test_short_normal(self):
-        """Short position, mark=$100, liq=$120 → (120-100)/100*100 = +20%"""
+        """Short: mark=$100, liq=$120 → (120-100)/100*100 = 20.0"""
         d = compute_liquidation_distance("short", 100.0, 120.0)
         assert d is not None
         assert d == pytest.approx(20.0, abs=0.01)
 
     def test_short_liq_close(self):
-        """Liq close to mark — small positive distance (+2%)."""
+        """Short 2% from liq: mark=$100, liq=$102 → (102-100)/100*100 = 2.0"""
         d = compute_liquidation_distance("short", 100.0, 102.0)
         assert d is not None
         assert d == pytest.approx(2.0, abs=0.01)
@@ -179,10 +182,18 @@ class TestLiquidationDistance:
         assert compute_liquidation_distance("short", -10.0, 80.0) is None
 
     def test_critical_threshold(self):
-        """Liq distance < -5% should be flagged as critical."""
-        d = compute_liquidation_distance("long", 100.0, 94.0)
+        """Liq distance <= 5% should be flagged as critical (positive distance from liq)."""
+        d = compute_liquidation_distance("long", 100.0, 96.0)
         assert d is not None
-        assert d < -5.0
+        assert d == pytest.approx(4.0, abs=0.01)
+        assert 0 < d <= 5.0  # Within critical range
+
+    def test_not_critical_above_threshold(self):
+        """Liq distance > 5% should NOT be flagged as critical."""
+        d = compute_liquidation_distance("long", 100.0, 80.0)
+        assert d is not None
+        assert d == pytest.approx(20.0, abs=0.01)
+        assert d > 5.0  # Outside critical range (safe)
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -446,7 +457,7 @@ class TestChangeDetection:
             "leverage": 10.0,
             "unrealized_pnl_usd": 10000.0,
             "liquidation_price": 60000.0,
-            "liquidation_distance_pct": -9.09,
+            "liquidation_distance_pct": 9.09,
             "snapshot_time_utc": "2026-06-16T12:00:00Z",
         }
 
@@ -480,7 +491,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 320000.0, "unrealized_pnl_usd": 5000.0,
                      "leverage": 10.0, "liquidation_price": 59000.0,
-                     "liquidation_distance_pct": -10.6}
+                     "liquidation_distance_pct": 10.6}
         ct, direction, prev, curr, delta = detect_change(
             base_position, previous, is_baseline_run=False,
         )
@@ -491,7 +502,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 975000.0, "unrealized_pnl_usd": 15000.0,
                      "leverage": 10.0, "liquidation_price": 60000.0,
-                     "liquidation_distance_pct": -9.09}
+                     "liquidation_distance_pct": 9.09}
         ct, direction, prev, curr, delta = detect_change(
             base_position, previous, is_baseline_run=False,
         )
@@ -505,7 +516,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 650000.0, "unrealized_pnl_usd": 10000.0,
                      "leverage": 10.0, "liquidation_price": 60000.0,
-                     "liquidation_distance_pct": -9.09}
+                     "liquidation_distance_pct": 9.09}
         ct, direction, prev, curr, delta = detect_change(
             closed, previous, is_baseline_run=False,
         )
@@ -520,7 +531,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 650000.0, "unrealized_pnl_usd": 10000.0,
                      "leverage": 10.0, "liquidation_price": 60000.0,
-                     "liquidation_distance_pct": -9.09}
+                     "liquidation_distance_pct": 9.09}
         ct, direction, prev, curr, delta = detect_change(
             flipped, previous, is_baseline_run=False,
         )
@@ -545,7 +556,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 650000.0, "unrealized_pnl_usd": 10000.0,
                      "leverage": 10.0, "liquidation_price": 60000.0,
-                     "liquidation_distance_pct": -9.09}
+                     "liquidation_distance_pct": 9.09}
         ct, direction, prev, curr, delta = detect_change(
             base_position, previous, is_baseline_run=False,
         )
@@ -556,9 +567,9 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 650000.0, "unrealized_pnl_usd": 10000.0,
                      "leverage": 10.0, "liquidation_price": 60000.0,
-                     "liquidation_distance_pct": -9.09}  # Changed in current
+                     "liquidation_distance_pct": 9.09}  # Changed in current
         curr = dict(base_position)
-        curr["liquidation_distance_pct"] = -5.0  # Narrowed!
+        curr["liquidation_distance_pct"] = 5.0  # Narrowed (was 9.09, now 5.0)
         ct, direction, prev, curr_s, delta = detect_change(
             curr, previous, is_baseline_run=False,
         )
@@ -570,7 +581,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 650033.0, "unrealized_pnl_usd": 10000.0,
                      "leverage": 10.0, "liquidation_price": 60000.0,
-                     "liquidation_distance_pct": -9.09}
+                     "liquidation_distance_pct": 9.09}
         # Change of 0.0005 < 0.001 threshold → should be no_change
         ct, direction, prev, curr, delta = detect_change(
             base_position, previous, size_threshold=0.001, is_baseline_run=False,
@@ -583,7 +594,7 @@ class TestChangeDetection:
                 "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T13:00:00Z",
                 "position_value_usd": 650000.0, "unrealized_pnl_usd": 10000.0,
                 "leverage": 10.0, "liquidation_price": 60000.0,
-                "liquidation_distance_pct": -9.09}
+                "liquidation_distance_pct": 9.09}
         stale = dict(base_position)
         stale["snapshot_time_utc"] = "2026-06-16T11:00:00Z"  # Older than prev
         ct, direction, prev_s, curr_s, delta = detect_change(
@@ -597,7 +608,7 @@ class TestChangeDetection:
                      "mark_price": 66000.0, "snapshot_time_utc": "2026-06-16T11:00:00Z",
                      "position_value_usd": 320000.0, "unrealized_pnl_usd": 5000.0,
                      "leverage": 10.0, "liquidation_price": 59000.0,
-                     "liquidation_distance_pct": -10.6}
+                     "liquidation_distance_pct": 10.6}
         ct1, _, _, _, _ = detect_change(base_position, previous, is_baseline_run=False)
         ct2, _, _, _, _ = detect_change(base_position, previous, is_baseline_run=False)
         assert ct1 == ct2
@@ -621,7 +632,7 @@ class TestChangeDetection:
 
 class TestRiskFlags:
     def test_risk_flag_has_rule_id(self):
-        current = {"liquidation_distance_pct": -10.0, "leverage": 5.0,
+        current = {"liquidation_distance_pct": 3.0, "leverage": 5.0,
                     "position_value_usd": 100000.0, "signed_size": 1.0}
         flags = compute_risk_flags("open_long", current)
         for f in flags:
@@ -630,31 +641,39 @@ class TestRiskFlags:
             assert "observed_value" in f
 
     def test_liquidation_critical_flag(self):
-        current = {"liquidation_distance_pct": -10.0, "leverage": 5.0,
+        """Within 5% of liquidation should trigger R1."""
+        current = {"liquidation_distance_pct": 3.0, "leverage": 5.0,
                     "position_value_usd": 100000.0, "signed_size": 1.0}
         flags = compute_risk_flags("open_long", current)
         assert any(f["rule_id"] == "R1_LIQ_DISTANCE_CRITICAL" for f in flags)
 
+    def test_not_critical_when_safe(self):
+        """>5% from liquidation should NOT trigger R1."""
+        current = {"liquidation_distance_pct": 20.0, "leverage": 5.0,
+                    "position_value_usd": 100000.0, "signed_size": 1.0}
+        flags = compute_risk_flags("open_long", current)
+        assert not any(f["rule_id"] == "R1_LIQ_DISTANCE_CRITICAL" for f in flags)
+
     def test_high_leverage_flag(self):
-        current = {"liquidation_distance_pct": -20.0, "leverage": 15.0,
+        current = {"liquidation_distance_pct": 20.0, "leverage": 15.0,
                     "position_value_usd": 100000.0, "signed_size": 1.0}
         flags = compute_risk_flags("open_long", current)
         assert any(f["rule_id"] == "R2_HIGH_LEVERAGE" for f in flags)
 
     def test_large_open_flag(self):
-        current = {"liquidation_distance_pct": -20.0, "leverage": 5.0,
+        current = {"liquidation_distance_pct": 20.0, "leverage": 5.0,
                     "position_value_usd": 2_000_000.0, "signed_size": 10.0}
         flags = compute_risk_flags("open_long", current)
         assert any(f["rule_id"] == "R3_LARGE_POSITION_OPEN" for f in flags)
 
     def test_concentrated_asset_flag(self):
-        current = {"liquidation_distance_pct": -20.0, "leverage": 5.0,
+        current = {"liquidation_distance_pct": 20.0, "leverage": 5.0,
                     "position_value_usd": 10_000_000.0, "signed_size": 10.0}
         flags = compute_risk_flags("open_long", current)
         assert any(f["rule_id"] == "R6_CONCENTRATED_ASSET" for f in flags)
 
     def test_risk_evidence_structure(self):
-        current = {"liquidation_distance_pct": -10.0, "leverage": 5.0,
+        current = {"liquidation_distance_pct": 3.0, "leverage": 5.0,
                     "position_value_usd": 100000.0, "signed_size": 1.0}
         flags = compute_risk_flags("open_long", current)
         for f in flags:
@@ -702,7 +721,7 @@ class TestStateManager:
                      "snapshot_time_utc": "2026-06-16T12:00:00Z",
                      "entry_price": 50000.0, "mark_price": 51000.0,
                      "unrealized_pnl_usd": 10000.0, "leverage": 10.0,
-                     "liquidation_price": 45000.0, "liquidation_distance_pct": -11.76}
+                     "liquidation_price": 45000.0, "liquidation_distance_pct": 11.76}
             sm._loaded = {"test:a:btc": orig}
             sm.save_current([
                 {"address": "test:a", "coin": "BTC", **orig}
@@ -738,7 +757,7 @@ class TestExtensions:
             {"address": "0x" + "a" * 40, "label": "Test A", "coin": "BTC",
              "direction": "long", "position_value_usd": 650000.0,
              "leverage": 10.0, "unrealized_pnl_usd": 10000.0,
-             "liquidation_distance_pct": -9.09},
+             "liquidation_distance_pct": 9.09},
             {"address": "0x" + "b" * 40, "label": "Test B", "coin": "ETH",
              "direction": "short", "position_value_usd": 300000.0,
              "leverage": 5.0, "unrealized_pnl_usd": -2000.0,
@@ -806,7 +825,7 @@ class TestExtensions:
     def test_alert_text_format(self):
         alert = {"alert_type": "liquidation_critical", "coin": "BTC",
                  "label": "Test", "severity": "critical",
-                 "liquidation_distance_pct": -8.5, "change_type": "test"}
+                 "liquidation_distance_pct": 3.0, "change_type": "test"}
         text = format_alert_text(alert)
         assert "LIQUIDATION" in text
         assert "CRITICAL" in text
@@ -915,7 +934,7 @@ class TestEdgeCases:
                 "position_value_usd": 100000.0 * (i + 1),
                 "leverage": 5.0 + (i % 10),
                 "unrealized_pnl_usd": 1000.0 * (i % 20 - 10),
-                "liquidation_distance_pct": -5.0 - (i % 15),
+                "liquidation_distance_pct": 5.0 + (i % 15),
             })
         result = aggregate_exposure(positions)
         assert result["summary"]["total_positions"] == 50

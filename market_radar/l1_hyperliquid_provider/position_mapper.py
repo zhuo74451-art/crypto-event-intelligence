@@ -25,9 +25,16 @@ def compute_liquidation_distance(
 ) -> Optional[float]:
     """Compute liquidation distance percentage.
 
-    Long:  (mark - liq) / mark * 100  → negative means below entry
-    Short: (liq - mark) / mark * 100  → positive means above entry
+    Long:  (mark_price - liquidation_price) / mark_price * 100
+           Positive when liquidation is below mark (normal for longs).
+           Larger value = further from liquidation (safer).
 
+    Short: (liquidation_price - mark_price) / mark_price * 100
+           Positive when liquidation is above mark (normal for shorts).
+           Larger value = further from liquidation (safer).
+
+    Both formulas return positive values when the position is away from
+    liquidation. Smaller positive values = closer to liquidation.
     Returns None if either price is missing or invalid.
     """
     if mark_price is None or liquidation_price is None:
@@ -36,8 +43,10 @@ def compute_liquidation_distance(
         return None
 
     if direction == "long":
-        return (liquidation_price - mark_price) / mark_price * 100
+        # Long: liq is below mark, distance = (mark - liq) / mark * 100
+        return (mark_price - liquidation_price) / mark_price * 100
     elif direction == "short":
+        # Short: liq is above mark, distance = (liq - mark) / mark * 100
         return (liquidation_price - mark_price) / mark_price * 100
 
 

@@ -38,7 +38,9 @@ from market_radar.l2_whale_engine.state_manager import (
 DEFAULT_SIZE_THRESHOLD = 0.001
 
 # Risk flag thresholds
-LIQ_DISTANCE_CRITICAL = -5.0
+# Liquidation distance is now always positive (distance FROM liquidation).
+# Smaller value = closer to liquidation. <= 5% means within 5% of liq.
+LIQ_DISTANCE_CRITICAL = 5.0
 HIGH_LEVERAGE = 10.0
 LARGE_POSITION_USD = 1_000_000
 MASSIVE_POSITION_USD = 5_000_000
@@ -187,11 +189,13 @@ def compute_risk_flags(
     data_mode = current.get("_provenance", {}).get("data_mode", "live")
 
     # R1: Liquidation distance critical
+    # Distance is now always positive (distance FROM liquidation).
+    # Smaller value = closer to liquidation. <= threshold means critical.
     liq_dist = current.get("liquidation_distance_pct")
-    if liq_dist is not None and liq_dist < LIQ_DISTANCE_CRITICAL:
+    if liq_dist is not None and liq_dist > 0 and liq_dist <= LIQ_DISTANCE_CRITICAL:
         flags.append({
             "rule_id": "R1_LIQ_DISTANCE_CRITICAL",
-            "threshold": f"< {LIQ_DISTANCE_CRITICAL}%",
+            "threshold": f"<= {LIQ_DISTANCE_CRITICAL}% (distance from liquidation)",
             "observed_value": liq_dist,
             "observed_at": now,
             "data_mode": data_mode,

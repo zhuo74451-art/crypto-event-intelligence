@@ -1,104 +1,104 @@
 {
-  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "generated_at_utc": "2026-06-17T01:41:08Z",
   "data_mode": "live",
   "summary": {
     "total_positions": 11,
-    "total_long_value_usd": 280290620.88,
-    "total_short_value_usd": 24624294.49,
-    "net_exposure_usd": 255666326.39,
-    "total_unrealized_pnl_usd": 40423666.08,
+    "total_long_value_usd": 306888143.55,
+    "total_short_value_usd": 0,
+    "net_exposure_usd": 306888143.55,
+    "total_unrealized_pnl_usd": 37589134.92,
     "unique_addresses": 4,
     "unique_coins": 9
   },
   "per_coin_exposure": [
     {
       "coin": "HYPE",
-      "long_value_usd": 114982703.78,
+      "long_value_usd": 112301245.19,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 114982703.78,
+      "net_exposure_usd": 112301245.19,
       "long_count": 2,
       "short_count": 0,
-      "total_pnl_usd": 51972199.36,
+      "total_pnl_usd": 49290740.76,
       "max_leverage": 5.0
     },
     {
       "coin": "ETH",
-      "long_value_usd": 72168000.0,
-      "short_value_usd": 24624294.49,
-      "net_exposure_usd": 47543705.51,
-      "long_count": 1,
-      "short_count": 1,
-      "total_pnl_usd": -18644770.15,
+      "long_value_usd": 82899236.16,
+      "short_value_usd": 0.0,
+      "net_exposure_usd": 82899236.16,
+      "long_count": 2,
+      "short_count": 0,
+      "total_pnl_usd": -18966639.5,
       "max_leverage": 23.0
     },
     {
       "coin": "BTC",
-      "long_value_usd": 50063458.77,
+      "long_value_usd": 68111107.15,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 50063458.77,
+      "net_exposure_usd": 68111107.15,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": -405772.98,
+      "total_pnl_usd": -737072.9,
       "max_leverage": 20.0
     },
     {
       "coin": "ZEC",
-      "long_value_usd": 19019618.82,
+      "long_value_usd": 19120174.01,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 19019618.82,
+      "net_exposure_usd": 19120174.01,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": 5786026.68,
+      "total_pnl_usd": 5886581.87,
       "max_leverage": 10.0
     },
     {
       "coin": "NEAR",
-      "long_value_usd": 10133495.18,
+      "long_value_usd": 9860359.71,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 10133495.18,
+      "net_exposure_usd": 9860359.71,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": 759329.93,
+      "total_pnl_usd": 486194.46,
       "max_leverage": 10.0
     },
     {
       "coin": "WLD",
-      "long_value_usd": 6266202.14,
+      "long_value_usd": 6922286.76,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 6266202.14,
+      "net_exposure_usd": 6922286.76,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": 1254747.4,
+      "total_pnl_usd": 1910832.02,
       "max_leverage": 10.0
     },
     {
       "coin": "SOL",
-      "long_value_usd": 3084874.78,
+      "long_value_usd": 3056424.19,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 3084874.78,
+      "net_exposure_usd": 3056424.19,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": -42685.16,
+      "total_pnl_usd": -71135.75,
       "max_leverage": 17.0
     },
     {
       "coin": "ASTER",
-      "long_value_usd": 2393838.87,
+      "long_value_usd": 2395021.72,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 2393838.87,
+      "net_exposure_usd": 2395021.72,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": -270514.95,
+      "total_pnl_usd": -269332.1,
       "max_leverage": 5.0
     },
     {
       "coin": "XMR",
-      "long_value_usd": 2178428.54,
+      "long_value_usd": 2222288.66,
       "short_value_usd": 0.0,
-      "net_exposure_usd": 2178428.54,
+      "net_exposure_usd": 2222288.66,
       "long_count": 1,
       "short_count": 0,
-      "total_pnl_usd": 15105.95,
+      "total_pnl_usd": 58966.06,
       "max_leverage": 5.0
     }
   ],
@@ -108,52 +108,52 @@
       "label": "Unknown HYPE Whale",
       "coin": "HYPE",
       "direction": "long",
-      "position_value_usd": 104625174.18,
+      "position_value_usd": 102185258.76,
       "leverage": 5.0,
-      "liquidation_distance_pct": -29.5528
+      "liquidation_distance_pct": 25.3417
     },
     {
       "address": "0x6c851251",
       "label": "Matrixport Related",
       "coin": "ETH",
       "direction": "long",
-      "position_value_usd": 72168000.0,
+      "position_value_usd": 71632000.0,
       "leverage": 20.0,
-      "liquidation_distance_pct": -35.4774
+      "liquidation_distance_pct": 34.9393
     },
     {
       "address": "0x50b309f7",
       "label": "Unknown Hyperliquid Whale",
       "coin": "BTC",
       "direction": "long",
-      "position_value_usd": 50063458.77,
+      "position_value_usd": 68111107.15,
       "leverage": 20.0,
-      "liquidation_distance_pct": -11.2987
-    },
-    {
-      "address": "0x50b309f7",
-      "label": "Unknown Hyperliquid Whale",
-      "coin": "ETH",
-      "direction": "short",
-      "position_value_usd": 24624294.49,
-      "leverage": 23.0,
-      "liquidation_distance_pct": 22.2761
+      "liquidation_distance_pct": 8.3704
     },
     {
       "address": "0x8def9f50",
       "label": "loraclexyz",
       "coin": "ZEC",
       "direction": "long",
-      "position_value_usd": 19019618.82,
+      "position_value_usd": 19120174.01,
       "leverage": 10.0,
       "liquidation_distance_pct": null
+    },
+    {
+      "address": "0x50b309f7",
+      "label": "Unknown Hyperliquid Whale",
+      "coin": "ETH",
+      "direction": "long",
+      "position_value_usd": 11267236.16,
+      "leverage": 23.0,
+      "liquidation_distance_pct": 51.1726
     },
     {
       "address": "0x8def9f50",
       "label": "loraclexyz",
       "coin": "HYPE",
       "direction": "long",
-      "position_value_usd": 10357529.6,
+      "position_value_usd": 10115986.43,
       "leverage": 2.0,
       "liquidation_distance_pct": null
     },
@@ -162,7 +162,7 @@
       "label": "loraclexyz",
       "coin": "NEAR",
       "direction": "long",
-      "position_value_usd": 10133495.18,
+      "position_value_usd": 9860359.71,
       "leverage": 10.0,
       "liquidation_distance_pct": null
     },
@@ -171,7 +171,7 @@
       "label": "loraclexyz",
       "coin": "WLD",
       "direction": "long",
-      "position_value_usd": 6266202.14,
+      "position_value_usd": 6922286.76,
       "leverage": 10.0,
       "liquidation_distance_pct": null
     },
@@ -180,7 +180,7 @@
       "label": "loraclexyz",
       "coin": "SOL",
       "direction": "long",
-      "position_value_usd": 3084874.78,
+      "position_value_usd": 3056424.19,
       "leverage": 17.0,
       "liquidation_distance_pct": null
     },
@@ -189,71 +189,43 @@
       "label": "loraclexyz",
       "coin": "ASTER",
       "direction": "long",
-      "position_value_usd": 2393838.87,
+      "position_value_usd": 2395021.72,
       "leverage": 5.0,
       "liquidation_distance_pct": null
     }
   ],
-  "nearest_liquidation": [
-    {
-      "address": "0x6c851251",
-      "label": "Matrixport Related",
-      "coin": "ETH",
-      "direction": "long",
-      "position_value_usd": 72168000.0,
-      "liquidation_price": 1164.02,
-      "liquidation_distance_pct": -35.4774
-    },
-    {
-      "address": "0x082e843a",
-      "label": "Unknown HYPE Whale",
-      "coin": "HYPE",
-      "direction": "long",
-      "position_value_usd": 104625174.18,
-      "liquidation_price": 53.43,
-      "liquidation_distance_pct": -29.5528
-    },
-    {
-      "address": "0x50b309f7",
-      "label": "Unknown Hyperliquid Whale",
-      "coin": "BTC",
-      "direction": "long",
-      "position_value_usd": 50063458.77,
-      "liquidation_price": 58635.55,
-      "liquidation_distance_pct": -11.2987
-    }
-  ],
+  "nearest_liquidation": [],
   "high_leverage_positions": [
     {
       "address": "0x50b309f7",
       "label": "Unknown Hyperliquid Whale",
       "coin": "ETH",
       "leverage": 23.0,
-      "position_value_usd": 24624294.49,
-      "liquidation_distance_pct": 22.2761
+      "position_value_usd": 11267236.16,
+      "liquidation_distance_pct": 51.1726
     },
     {
       "address": "0x6c851251",
       "label": "Matrixport Related",
       "coin": "ETH",
       "leverage": 20.0,
-      "position_value_usd": 72168000.0,
-      "liquidation_distance_pct": -35.4774
+      "position_value_usd": 71632000.0,
+      "liquidation_distance_pct": 34.9393
     },
     {
       "address": "0x50b309f7",
       "label": "Unknown Hyperliquid Whale",
       "coin": "BTC",
       "leverage": 20.0,
-      "position_value_usd": 50063458.77,
-      "liquidation_distance_pct": -11.2987
+      "position_value_usd": 68111107.15,
+      "liquidation_distance_pct": 8.3704
     },
     {
       "address": "0x8def9f50",
       "label": "loraclexyz",
       "coin": "SOL",
       "leverage": 17.0,
-      "position_value_usd": 3084874.78,
+      "position_value_usd": 3056424.19,
       "liquidation_distance_pct": null
     },
     {
@@ -261,7 +233,7 @@
       "label": "loraclexyz",
       "coin": "WLD",
       "leverage": 10.0,
-      "position_value_usd": 6266202.14,
+      "position_value_usd": 6922286.76,
       "liquidation_distance_pct": null
     },
     {
@@ -269,7 +241,7 @@
       "label": "loraclexyz",
       "coin": "NEAR",
       "leverage": 10.0,
-      "position_value_usd": 10133495.18,
+      "position_value_usd": 9860359.71,
       "liquidation_distance_pct": null
     },
     {
@@ -277,14 +249,14 @@
       "label": "loraclexyz",
       "coin": "ZEC",
       "leverage": 10.0,
-      "position_value_usd": 19019618.82,
+      "position_value_usd": 19120174.01,
       "liquidation_distance_pct": null
     }
   ],
   "liquidation_distance_bands": {
-    "critical_under_5pct": 3,
+    "critical_under_5pct": 0,
     "warning_5_15pct": 0,
-    "safe_over_15pct": 1,
+    "safe_over_15pct": 4,
     "unknown": 7
   }
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-16T13:45:17Z",
+  "generated_at_utc": "2026-06-17T01:41:08Z",
   "data_sufficiency": "sufficient",
   "total_addresses_analyzed": 4,
   "per_address": [
@@ -10,7 +10,7 @@
       "most_traded_assets": [
         {
           "coin": "HYPE",
-          "value_usd": 104625174.18
+          "value_usd": 102185258.76
         }
       ],
       "long_short_ratio": {
@@ -21,14 +21,13 @@
       "typical_leverage": 5.0,
       "largest_position": {
         "coin": "HYPE",
-        "value_usd": 104625174.18,
+        "value_usd": 102185258.76,
         "direction": "long"
       },
-      "total_value_usd": 104625174.18,
-      "total_pnl_usd": 51251244.14,
-      "position_change_count": 0,
+      "total_value_usd": 102185258.76,
+      "total_pnl_usd": 48811328.71,
+      "position_change_count": 1,
       "liquidation_risk_count": 0,
-      "change_history_note": "insufficient_history: no changes detected yet",
       "diversification_note": "insufficient_history: need more positions",
       "most_traded_note": "single_asset_focus"
     },
@@ -39,27 +38,27 @@
       "most_traded_assets": [
         {
           "coin": "BTC",
-          "value_usd": 50063458.77
+          "value_usd": 68111107.15
         },
         {
           "coin": "ETH",
-          "value_usd": 24624294.49
+          "value_usd": 11267236.16
         }
       ],
       "long_short_ratio": {
-        "long_count": 1,
-        "short_count": 1,
-        "bias": "neutral"
+        "long_count": 2,
+        "short_count": 0,
+        "bias": "long"
       },
       "typical_leverage": 21.5,
       "largest_position": {
         "coin": "BTC",
-        "value_usd": 50063458.77,
+        "value_usd": 68111107.15,
         "direction": "long"
       },
-      "total_value_usd": 74687753.26,
-      "total_pnl_usd": -600778.16,
-      "position_change_count": 1,
+      "total_value_usd": 79378343.31,
+      "total_pnl_usd": -717947.43,
+      "position_change_count": 2,
       "liquidation_risk_count": 0,
       "most_traded_note": "tracking 2 assets"
     },
@@ -70,7 +69,7 @@
       "most_traded_assets": [
         {
           "coin": "ETH",
-          "value_usd": 72168000.0
+          "value_usd": 71632000.0
         }
       ],
       "long_short_ratio": {
@@ -81,14 +80,13 @@
       "typical_leverage": 20.0,
       "largest_position": {
         "coin": "ETH",
-        "value_usd": 72168000.0,
+        "value_usd": 71632000.0,
         "direction": "long"
       },
-      "total_value_usd": 72168000.0,
-      "total_pnl_usd": -18449764.97,
-      "position_change_count": 0,
+      "total_value_usd": 71632000.0,
+      "total_pnl_usd": -18985764.97,
+      "position_change_count": 1,
       "liquidation_risk_count": 0,
-      "change_history_note": "insufficient_history: no changes detected yet",
       "diversification_note": "insufficient_history: need more positions",
       "most_traded_note": "single_asset_focus"
     },
@@ -99,23 +97,23 @@
       "most_traded_assets": [
         {
           "coin": "ZEC",
-          "value_usd": 19019618.82
+          "value_usd": 19120174.01
         },
         {
           "coin": "HYPE",
-          "value_usd": 10357529.6
+          "value_usd": 10115986.43
         },
         {
           "coin": "NEAR",
-          "value_usd": 10133495.18
+          "value_usd": 9860359.71
         },
         {
           "coin": "WLD",
-          "value_usd": 6266202.14
+          "value_usd": 6922286.76
         },
         {
           "coin": "SOL",
-          "value_usd": 3084874.78
+          "value_usd": 3056424.19
         }
       ],
       "long_short_ratio": {
@@ -126,11 +124,11 @@
       "typical_leverage": 8.43,
       "largest_position": {
         "coin": "ZEC",
-        "value_usd": 19019618.82,
+        "value_usd": 19120174.01,
         "direction": "long"
       },
-      "total_value_usd": 53433987.93,
-      "total_pnl_usd": 8222965.07,
+      "total_value_usd": 53692541.48,
+      "total_pnl_usd": 8481518.61,
       "position_change_count": 0,
       "liquidation_risk_count": 0,
       "change_history_note": "insufficient_history: no changes detected yet",
@@ -138,10 +136,10 @@
     }
   ],
   "aggregate": {
-    "total_value_usd": 304914915.37,
-    "total_pnl_usd": 40423666.08,
+    "total_value_usd": 306888143.55,
+    "total_pnl_usd": 37589134.92,
     "avg_leverage": 13.73,
-    "long_bias_count": 3,
+    "long_bias_count": 4,
     "short_bias_count": 0
   },
   "metadata": {

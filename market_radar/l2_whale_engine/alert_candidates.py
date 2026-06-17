@@ -23,7 +23,9 @@ ALERT_RULES = {
     "large_increase": {"label": "Large Increase", "min_delta_usd": 500_000, "severity": "medium"},
     "large_decrease": {"label": "Large Decrease", "min_delta_usd": 500_000, "severity": "medium"},
     "direction_flip": {"label": "Direction Flip", "severity": "high"},
-    "liquidation_critical": {"label": "Liquidation Critical", "max_distance_pct": -5.0, "severity": "critical"},
+    "liquidation_critical": {"label": "Liquidation Critical", "max_distance_pct": 5.0, "severity": "critical"},
+    # Note: liquidation_distance_pct is now positive (distance FROM liquidation).
+    # Smaller value = closer to liquidation. <= 5% means within 5% of liq.
     "high_leverage": {"label": "High Leverage", "min_leverage": 10.0, "severity": "medium"},
     "concentrated_exposure": {"label": "Concentrated Exposure", "min_value_usd": 5_000_000, "severity": "medium"},
 }
@@ -129,7 +131,8 @@ def generate_alert_candidates(
 
         # Liquidation critical
         liq_dist = change.get("current", {}).get("liquidation_distance_pct")
-        if liq_dist is not None and liq_dist <= ALERT_RULES["liquidation_critical"]["max_distance_pct"]:
+        max_dist = ALERT_RULES["liquidation_critical"]["max_distance_pct"]
+        if liq_dist is not None and liq_dist > 0 and liq_dist <= max_dist:
             alert_key = f"liq_crit_{addr_short}_{coin}"
             if alert_key not in alert_ids:
                 alerts.append({
