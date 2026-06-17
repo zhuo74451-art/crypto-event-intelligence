@@ -9,8 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 
-# APScheduler pin: 3.10.x LTS
-REQUIRED_APSCHEDULER_VERSION = "3.10.4"
+# APScheduler pin: 3.11.x LTS
+REQUIRED_APSCHEDULER_VERSION = "3.11"
 
 
 @dataclass
@@ -58,11 +58,16 @@ class SchedulerConfig:
 
 
 def check_apscheduler_available() -> bool:
-    """Check if APScheduler is installed at the required version."""
+    """Check if APScheduler is installed at the required version.
+
+    Uses ``importlib.metadata`` to verify the installed package matches the
+    required version.  Returns ``False`` if the package is missing, the
+    version doesn't match, or the metadata cannot be read.
+    """
     try:
-        import apscheduler  # noqa: F401
-        from importlib.metadata import version
-        installed = version("apscheduler")
-        return installed == REQUIRED_APSCHEDULER_VERSION
-    except (ImportError, ModuleNotFoundError):
+        from importlib.metadata import version as _pkg_version
+
+        installed = _pkg_version("apscheduler")
+        return installed.startswith(REQUIRED_APSCHEDULER_VERSION)
+    except (ImportError, ModuleNotFoundError, Exception):
         return False
