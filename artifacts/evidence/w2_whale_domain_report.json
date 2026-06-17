@@ -1,0 +1,84 @@
+{
+  "report_type": "w2_whale_domain_evidence",
+  "version": "v2",
+  "generated_at_utc": "2026-06-17T03:00:46Z",
+  "baseline": {
+    "repository": "zhuo74451-art/crypto-event-intelligence",
+    "branch": "main",
+    "commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9"
+  },
+  "current_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "branch": "workbench/mvpplus-whale-prod-v2",
+  "source_legacy_references": [
+    "dc426b1 market_radar/l2_whale_engine/change_detector.py",
+    "dc426b1 market_radar/l2_whale_engine/alert_candidates.py",
+    "dc426b1 market_radar/l2_whale_engine/entity_profile.py",
+    "dc426b1 market_radar/l2_whale_engine/exposure_aggregator.py",
+    "dc426b1 market_radar/l2_whale_engine/state_manager.py",
+    "dc426b1 market_radar/l2_whale_engine/watchlist.py"
+  ],
+  "modified_files": [
+    "market_radar/whale_domain/__init__.py",
+    "market_radar/whale_domain/models.py",
+    "market_radar/whale_domain/change_detector.py",
+    "market_radar/whale_domain/exposure.py",
+    "market_radar/whale_domain/watchlist.py",
+    "market_radar/whale_domain/entity_profile.py",
+    "market_radar/whale_domain/alert_candidate.py",
+    "tests/mvpplus/whale_domain/__init__.py",
+    "tests/mvpplus/whale_domain/test_whale_domain.py",
+    "artifacts/evidence/w2_whale_domain_report.json"
+  ],
+  "outside_owned_path_files": [],
+  "tests": {
+    "total": 75,
+    "passed": 75,
+    "failed": 0,
+    "skipped": 1
+  },
+  "formula_test_results": {
+    "long_mark100_liq80": "20.0",
+    "short_mark100_liq120": "20.0",
+    "null_mark_or_liq": "null",
+    "zero_mark": "null",
+    "negative_preserved": true
+  },
+  "first_snapshot_results": {
+    "existing_long": "baseline_open_position",
+    "existing_short": "baseline_open_position"
+  },
+  "change_types_implemented": [
+    "baseline_open_position",
+    "open_long",
+    "open_short",
+    "increase_long",
+    "increase_short",
+    "reduce_long",
+    "reduce_short",
+    "close_long",
+    "close_short",
+    "flip_long_to_short",
+    "flip_short_to_long",
+    "liquidation_distance_narrowed",
+    "no_change",
+    "stale_snapshot_rejected"
+  ],
+  "no_network_scan": {
+    "forbidden_imports": [
+      "urllib",
+      "requests",
+      "httpx",
+      "aiohttp",
+      "websocket",
+      "grpc"
+    ],
+    "modules_scanned": 6,
+    "violations": 0
+  },
+  "known_limitations": [
+    "No network I/O in domain layer (by design)",
+    "Entity profiles manually curated",
+    "Alert candidates: generated only, no send"
+  ],
+  "merge_readiness": "LANE_MERGE_READY"
+}
