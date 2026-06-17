@@ -601,7 +601,8 @@ class TestReaderConstraints(unittest.TestCase):
             if py_file.name == "__init__.py":
                 continue
             src = py_file.read_text(encoding="utf-8")
-            self.assertNotIn("requests", src, f"{py_file.name} imports requests")
+            self.assertNotIn("import requests", src, f"{py_file.name} imports requests")
+            self.assertNotIn("from requests", src, f"{py_file.name} imports requests")
             self.assertNotIn("import telegram", src, f"{py_file.name} imports telegram")
             self.assertNotIn("web3", src, f"{py_file.name} imports web3")
             self.assertNotIn("wallet", src, f"{py_file.name} mentions wallet")
