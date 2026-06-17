@@ -938,6 +938,294 @@ class TestCuratedApiReaderR03PublicContract(unittest.TestCase):
         self.assertEqual(CuratedApiConfig().base_url, "http://43.98.174.247:8001/api/integration/curated")
 
 
+# ═══════════════════════════════════════════════════════════════════════
+# R06 — Source Status Consistency Tests
+# ═══════════════════════════════════════════════════════════════════════
+
+class TestSourceStatusConsistency(unittest.TestCase):
+    """Section 1: source_statuses must contain ok, status/ok consistent."""
+
+    def setUp(self):
+        self.cfg = CuratedApiConfig(base_url="http://fake.test/api/read")
+        self.cfg.max_pages = 1
+
+    def _mock_response(self, status_code: int, data: dict):
+        m = MagicMock()
+        m.__enter__.return_value = m
+        m.status = status_code
+        m.read.return_value = json.dumps(data).encode("utf-8")
+        m.getcode.return_value = status_code
+        return m
+
+    def test_status_ok_ok_true(self):
+        """status=ok → ok=true."""
+        data = {
+            "stage": "published",
+            "items": [{"tweet_id": 1, "source": "test", "raw_title": "T1",
+                       "raw_text": "Body", "published_at_backend": "2026-06-17T12:00:00Z"}],
+            "total": 1,
+        }
+        with patch("urllib.request.urlopen", return_value=self._mock_response(200, data)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            for ss in result.source_statuses:
+                if ss.get("status") == "ok":
+                    self.assertTrue(ss.get("ok"), f"source {ss.get('source')} status=ok but ok=false")
+
+    def test_degraded_ok_false(self):
+        """status=degraded → ok=false."""
+        data = {"stage": "unknown_stage", "items": []}
+        with patch("urllib.request.urlopen", return_value=self._mock_response(200, data)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            for ss in result.source_statuses:
+                if ss.get("status") == "degraded":
+                    self.assertFalse(ss.get("ok"), f"source {ss.get('source')} status=degraded but ok=true")
+
+    def test_unavailable_ok_false(self):
+        """status=unavailable → ok=false."""
+        with patch("urllib.request.urlopen", side_effect=URLError("connection refused")):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            for ss in result.source_statuses:
+                if ss.get("status") == "unavailable":
+                    self.assertFalse(ss.get("ok"), f"source {ss.get('source')} status=unavailable but ok=true")
+
+
+class TestEmptyAndFailureBatchConsistency(unittest.TestCase):
+    """Section 2: empty and failure batch status consistency."""
+
+    def setUp(self):
+        self.cfg = CuratedApiConfig(base_url="http://fake.test/api/read")
+        self.cfg.max_pages = 1
+
+    def _mock_response(self, status_code: int, data: dict):
+        m = MagicMock()
+        m.__enter__.return_value = m
+        m.status = status_code
+        m.read.return_value = json.dumps(data).encode("utf-8")
+        m.getcode.return_value = status_code
+        return m
+
+    def test_normal_empty_batch_ok(self):
+        """Normal empty batch (HTTP 200, empty items) → source ok, ok=true."""
+        data = {"stage": "published", "items": [], "total": 0}
+        with patch("urllib.request.urlopen", return_value=self._mock_response(200, data)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            self.assertEqual(result.status, ReaderStatus.OK)
+            for ss in result.source_statuses:
+                self.assertEqual(ss.get("status"), "ok")
+                self.assertTrue(ss.get("ok"))
+
+    def test_http_unavailable_empty_batch(self):
+        """HTTP unavailable → source unavailable, ok=false."""
+        with patch("urllib.request.urlopen", side_effect=HTTPError(
+                "http://fake.test", 503, "Service Unavailable", {}, None)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            self.assertEqual(result.status, ReaderStatus.UNAVAILABLE)
+            for ss in result.source_statuses:
+                self.assertEqual(ss.get("status"), "unavailable")
+                self.assertFalse(ss.get("ok"))
+
+    def test_stage_missing_degraded(self):
+        """Missing stage → source degraded, ok=false."""
+        data = {"items": []}
+        with patch("urllib.request.urlopen", return_value=self._mock_response(200, data)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            self.assertEqual(result.status, ReaderStatus.DEGRADED)
+            for ss in result.source_statuses:
+                self.assertEqual(ss.get("status"), "degraded")
+                self.assertFalse(ss.get("ok"))
+
+    def test_non_json_degraded(self):
+        """Non-JSON response → degraded."""
+        m = MagicMock()
+        m.__enter__.return_value = m
+        m.read.return_value = b"not json at all"
+        m.getcode.return_value = 200
+        with patch("urllib.request.urlopen", return_value=m):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            self.assertIn(result.status, (ReaderStatus.DEGRADED, ReaderStatus.UNAVAILABLE))
+            for ss in result.source_statuses:
+                self.assertFalse(ss.get("ok"))
+
+
+class TestMultiSourcePartialFailure(unittest.TestCase):
+    """Section 3: multi-source partial failure handling."""
+
+    def setUp(self):
+        self.cfg = CuratedApiConfig(base_url="http://fake.test/api/read")
+        self.cfg.max_pages = 5
+
+    def _mock_response(self, pages: list[dict]):
+        """Create a urlopen mock that returns different pages sequentially."""
+        responses = []
+        for page_data in pages:
+            m = MagicMock()
+            m.__enter__.return_value = m
+            m.read.return_value = json.dumps(page_data).encode("utf-8")
+            m.getcode.return_value = 200
+            responses.append(m)
+        iterator = iter(responses)
+        def side_effect(*args, **kwargs):
+            return next(iterator)
+        return side_effect
+
+    def test_all_sources_ok(self):
+        """All sources ok → each source status=ok, ok=true."""
+        page1 = {
+            "stage": "published",
+            "items": [
+                {"tweet_id": 1, "source": "coindesk", "source_kind": "news",
+                 "source_label": "CoinDesk", "raw_title": "T1", "raw_text": "B1",
+                 "published_at_backend": "2026-06-17T12:00:00Z"},
+                {"tweet_id": 2, "source": "telegram_channel", "source_kind": "telegram",
+                 "source_label": "Telegram A", "raw_title": "T2", "raw_text": "B2",
+                 "published_at_backend": "2026-06-17T12:01:00Z"},
+            ],
+            "total": 2,
+        }
+        with patch("urllib.request.urlopen", side_effect=self._mock_response([page1])):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            self.assertEqual(result.status, ReaderStatus.OK)
+            for ss in result.source_statuses:
+                self.assertEqual(ss.get("status"), "ok")
+                self.assertTrue(ss.get("ok"))
+
+    def test_partial_page_failure_keeps_ok_sources(self):
+        """Page-level partial failure: ok sources stay ok, aggregate curated_api degraded."""
+        pages = [
+            {"stage": "published",
+             "items": [{"tweet_id": 1, "source": "coindesk", "source_kind": "news",
+                        "source_label": "CoinDesk", "raw_title": "T1", "raw_text": "B1",
+                        "published_at_backend": "2026-06-17T12:00:00Z"}],
+             "total": 300},
+            {"stage": "error_stage",
+             "items": []},
+        ]
+        with patch("urllib.request.urlopen", side_effect=self._mock_response(pages)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            # Status should be degraded
+            self.assertEqual(result.status, ReaderStatus.DEGRADED)
+            # Successful source should be ok
+            coinbase_sources = [ss for ss in result.source_statuses if ss.get("source") == "CoinDesk"]
+            if coinbase_sources:
+                self.assertEqual(coinbase_sources[0].get("status"), "ok")
+                self.assertTrue(coinbase_sources[0].get("ok"))
+            # Aggregate degraded source should exist
+            api_sources = [ss for ss in result.source_statuses if ss.get("source") == "curated_api"]
+            self.assertGreater(len(api_sources), 0)
+            self.assertEqual(api_sources[0].get("status"), "degraded")
+            self.assertFalse(api_sources[0].get("ok"))
+
+
+class TestW1Compatibility(unittest.TestCase):
+    """Section 9: W1 FeedProviderProtocol compatibility."""
+
+    def setUp(self):
+        self.cfg = CuratedApiConfig(base_url="http://fake.test/api/read")
+        self.cfg.max_pages = 1
+
+    def _mock_response(self, data: dict):
+        m = MagicMock()
+        m.__enter__.return_value = m
+        m.read.return_value = json.dumps(data).encode("utf-8")
+        m.getcode.return_value = 200
+        return m
+
+    def test_w1_ss_get_ok_default_false_ok_source(self):
+        """W1 uses ss.get('ok', False) — normal ok source must return True."""
+        data = {
+            "stage": "published",
+            "items": [{"tweet_id": 1, "source": "test", "raw_title": "T",
+                       "raw_text": "B", "published_at_backend": "2026-06-17T12:00:00Z"}],
+            "total": 1,
+        }
+        with patch("urllib.request.urlopen", return_value=self._mock_response(data)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            for ss in result.source_statuses:
+                # W1 does: ss.get("ok", False)
+                self.assertTrue(ss.get("ok", False), f"W1 compatibility: source {ss.get('source')} ss.get('ok', False) should be True")
+
+
+class TestFiniteValidation(unittest.TestCase):
+    """Section 4: timeout_seconds finite validation."""
+
+    def test_timeout_nan_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(timeout_seconds=float("nan"))
+
+    def test_timeout_infinity_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(timeout_seconds=float("inf"))
+
+    def test_timeout_neg_infinity_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(timeout_seconds=float("-inf"))
+
+    def test_timeout_zero_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(timeout_seconds=0)
+
+    def test_timeout_negative_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(timeout_seconds=-5)
+
+    def test_limit_bool_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(limit=True)
+
+    def test_max_pages_bool_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_pages=True)
+
+    def test_max_items_bool_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_items=True)
+
+    def test_max_response_bytes_bool_rejected(self):
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_response_bytes=True)
+
+
+class TestInvalidCursorAudit(unittest.TestCase):
+    """Section 5: invalid cursor timestamp audit."""
+
+    def setUp(self):
+        self.cfg = CuratedApiConfig(base_url="http://fake.test/api/read")
+        self.cfg.max_pages = 1
+
+    def _mock_response(self, data: dict):
+        m = MagicMock()
+        m.__enter__.return_value = m
+        m.read.return_value = json.dumps(data).encode("utf-8")
+        m.getcode.return_value = 200
+        return m
+
+    def test_invalid_cursor_timestamp_counted(self):
+        """Invalid published_at_backend must set cursor_safe=false and record count."""
+        data = {
+            "stage": "published",
+            "items": [{"tweet_id": 1, "source": "test", "raw_title": "T",
+                       "raw_text": "B", "published_at_backend": "not-a-timestamp"}],
+            "total": 1,
+        }
+        with patch("urllib.request.urlopen", return_value=self._mock_response(data)):
+            reader = CuratedApiReader(self.cfg, reference_time=REF_TIME)
+            result = reader.read_once()
+            self.assertFalse(result.cursor_safe)
+            metadata = result.metadata or {}
+            count = metadata.get("invalid_cursor_timestamp_count", 0)
+            self.assertGreater(count, 0, "invalid cursor timestamp count must be > 0")
+
+
 class TestCuratedApiReaderLiveProbe(unittest.TestCase):
     """Placeholder for live probe — only runs when explicitly enabled."""
 
