@@ -1,4 +1,4 @@
-{
+﻿{
   "ticket": "W1_INTEGRATION_ASSEMBLY_R01",
   "role": "Integration Owner",
   "repository": "zhuo74451-art/crypto-event-intelligence",
@@ -19,27 +19,27 @@
   "merge_commits": {
     "W4_adapters": {
       "lane_sha": "660fcc56b2812b06bef58b9632caa5a5f7431ae7",
-      "merge_commit_sha": "745fa779b26c6f124c8bb12b6f8b808e83ae8f11",
+      "merge_commit_sha": "745fa7710646378cee3a74683b2b96191b5753a4",
       "conflicts": "none"
     },
     "W2_whale_domain": {
       "lane_sha": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a",
-      "merge_commit_sha": "ae6f856afc8a28f211d7d81675817b7008a1dfaf",
+      "merge_commit_sha": "ae6f856a3d05314f05f76f498e9cca37cbffcc2b",
       "conflicts": "none"
     },
     "W3_feeds_market_ui": {
       "lane_sha": "241e9a981c74de81d7898531dfbf5f777cde9ae4",
-      "merge_commit_sha": "d31cb55a52c3f2f99f5d5b9b4757bfac017e77f0",
+      "merge_commit_sha": "d31cb55bdd9731c52332992b3d44d5095541c698",
       "conflicts": "none"
     },
     "W5_operations": {
       "lane_sha": "e1d5d5c16d6345c73402226749cf09c998d694c5",
-      "merge_commit_sha": "9a016c2bac6b28bf61cbbd8aad3863ea0a1c67df",
+      "merge_commit_sha": "9a016c25824c29a97b7d1f58ba57746c4a08b837",
       "conflicts": "none"
     },
     "W6_independent_qa": {
       "lane_sha": "a3e06ab3629504434a60b15e19899dab5c6ec79e",
-      "merge_commit_sha": "29d8dbfa19f28a7a15a25df2a0223717e3c3b560",
+      "merge_commit_sha": "29d8dbf7dcdd803f088fd31dd6b0a906fb8a88cc",
       "conflicts": "none"
     }
   },
@@ -102,7 +102,7 @@
     "total_skipped": 1
   },
   "merge_conflicts": [],
-  "modified_files_beyond_merged_content": [],
+  "modified_files_beyond_merged_content": ["artifacts/evidence/w1_integration_assembly_r01.json"],
   "git_status": "clean",
   "main_unchanged": true,
   "limitations": [
