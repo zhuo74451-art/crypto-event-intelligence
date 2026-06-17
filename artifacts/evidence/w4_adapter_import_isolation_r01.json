@@ -1,0 +1,69 @@
+{
+  "ticket": "W4_ADAPTER_IMPORT_ISOLATION_R01",
+  "branch": "workbench/mvpplus-open-source-adapters-v1",
+  "repair_base_commit": "660fcc56b2812b06bef58b9632caa5a5f7431ae7",
+  "tested_commit": "fd452c2cb2e806c93c6f50dac4876b9a9b8f3f75",
+  "root_cause": "hyperliquid.__init__.py (v0.4.66) executes sys.modules['ccxt'] = hyperliquid.ccxt, overwriting the real third-party CCXT with a minimal shim that lacks exchange classes like binance, okx, bybit",
+  "reproduced_import_orders": {
+    "ccxt-first": "import ccxt → import hyperliquid → bare import ccxt returns hyperliquid.ccxt (FAIL expected → resolver fixes this)",
+    "hyperliquid-first": "import hyperliquid → bare import ccxt returns hyperliquid.ccxt (FAIL expected → resolver fixes this)",
+    "W4-HL-first": "HLPublicAdapter → resolve_real_ccxt() → real ccxt (PASS)",
+    "W4-CCXT-first": "CcxtPublicMarketAdapter → HLPublicAdapter → resolve_real_ccxt() → real ccxt (PASS)",
+    "alternating": "Both adapters imported → ccxt is real (PASS)",
+    "repeated-resolver": "resolve_real_ccxt() called 3x → idempotent (PASS)"
+  },
+  "resolver_design": "3-strategy cascade: 1) sys.modules check, 2) fresh import, 3) clear hyperliquid.ccxt shadow keys then re-import. All encapsulated in import_resolver.py. Callers never need to manipulate sys.modules.",
+  "actual_ccxt_version": "4.5.59",
+  "sanitized_ccxt_module_source": "site-packages/ccxt/__init__.py (not hyperliquid/ccxt/__init__.py)",
+  "hyperliquid_version": "0.4.66",
+  "test_commands_and_results": {
+    "existing_adapter_tests": {
+      "command": "python -m unittest discover -s tests/mvpplus/adapters -v",
+      "total": 96,
+      "passed": 96,
+      "failed": 0
+    },
+    "subprocess_isolation_tests": {
+      "command": "python -X utf8 -m pytest tests/mvpplus/adapters/test_import_isolation.py -v",
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "capability_mapping_regression_verified": true,
+  "public_live_probe": {
+    "probes_scheduled": [
+      "HL fetch_all_mids",
+      "CCXT Binance BTC/USDT ticker",
+      "HL fetch_meta",
+      "CCXT Binance ETH/USDT ticker",
+      "CCXT Binance SOL/USDT ticker"
+    ],
+    "all_passed": true,
+    "no_credentials": true,
+    "no_wallet": true,
+    "no_signing": true,
+    "no_orders": true,
+    "no_send": true,
+    "ccxt_module_name_verified": "ccxt (real) — never hyperliquid.ccxt during any probe",
+    "retry_policy": "3 max attempts per operation",
+    "timeout": "15s-30s per operation"
+  },
+  "integration_modified": false,
+  "modified_files": [
+    "market_radar/external_adapters/import_resolver.py",
+    "market_radar/external_adapters/ccxt_public_market_adapter.py",
+    "market_radar/external_adapters/hyperliquid_public_adapter.py",
+    "tests/mvpplus/adapters/test_import_isolation.py",
+    "docs/adapters/ADAPTER_IMPORT_ISOLATION_MIGRATION_R01.md",
+    "artifacts/evidence/w4_adapter_import_isolation_r01.json"
+  ],
+  "files_outside_owned_paths": [],
+  "remaining_upstream_risks": [
+    "hyperliquid.ccxt shadowing is intentional SDK behavior; will need update if SDK changes shadow mechanism",
+    "Resolver assumes ccxt distribution is installed via pip; air-gapped installations may need path override",
+    "Windows O_EXCL behavior differs from POSIX for FileLock (not related to import isolation, noted for awareness)"
+  ],
+  "git_status": "clean",
+  "generated_at_utc": "2026-06-17T08:20:00Z"
+}
