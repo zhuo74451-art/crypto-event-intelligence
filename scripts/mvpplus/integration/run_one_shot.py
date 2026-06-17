@@ -38,6 +38,11 @@ def build_parser() -> argparse.ArgumentParser:
                     help="Must remain true. This flag is for clarity only.")
     p.add_argument("--no-send-disable", action="store_true", dest="no_send_disable",
                     help=argparse.SUPPRESS)
+    p.add_argument("--feed-since", default=None,
+                    help="Initial feed cursor (UTC ISO 8601) for first run.")
+    p.add_argument("--curated-base-url",
+                    default="http://43.98.174.247:8001/api/integration/curated",
+                    help="Curated API base URL.")
     return p
 
 
@@ -58,6 +63,7 @@ def main() -> int:
         exchange=args.exchange,
         timeout=args.timeout,
         no_send=True,
+        feed_initial_since=args.feed_since,
     )
 
     result = run_one_shot(config)

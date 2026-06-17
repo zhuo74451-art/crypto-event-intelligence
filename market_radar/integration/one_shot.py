@@ -14,18 +14,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-# Pre-import ccxt before hyperliquid to prevent hyperliquid.ccxt namespace shadowing.
-import ccxt as _real_ccxt
-_CCXT_ID = id(_real_ccxt)
+# W4 import isolation — resolves real ccxt module regardless of import order
+from market_radar.external_adapters.import_resolver import resolve_real_ccxt
+_resolve_ccxt = resolve_real_ccxt
 
 from market_radar.external_adapters.hyperliquid_public_adapter import (
     HyperliquidPublicAdapter,
 )
-
-# Restore real ccxt in sys.modules if hyperliquid shadowed it
-import sys as _sys
-if id(_sys.modules.get("ccxt")) != _CCXT_ID:
-    _sys.modules["ccxt"] = _real_ccxt
 
 from market_radar.external_adapters.ccxt_public_market_adapter import (
     CcxtPublicMarketAdapter,
@@ -58,12 +53,6 @@ from market_radar.operations.atomic_json import atomic_write_json
 from market_radar.operations.run_history import insert_run, update_run_finish
 
 
-def _ensure_real_ccxt() -> None:
-    """Ensure sys.modules['ccxt'] is the real ccxt, not hyperliquid.ccxt shadow."""
-    if id(_sys.modules.get("ccxt")) != _CCXT_ID:
-        _sys.modules["ccxt"] = _real_ccxt
-
-
 def _ensure_dir(path: str) -> Path:
     p = Path(path)
     p.mkdir(parents=True, exist_ok=True)
@@ -87,7 +76,7 @@ def run_ccxt_preflight(exchange_id: str = "binance") -> dict[str, Any]:
         "exchange_init_error": None,
         "adapter_import_smoke": False,
     }
-    raw_exe = _sys.executable
+    import sys; raw_exe = sys.executable
     try:
         parts = raw_exe.replace("\\", "/").split("/")
         if len(parts) > 2:
@@ -193,7 +182,7 @@ def run_one_shot(
 
     # ── CCXT preflight (live mode only) ──
     if config.mode == "live-public":
-        _ensure_real_ccxt()
+        resolve_real_ccxt()
         preflight = run_ccxt_preflight(config.exchange)
         result.ccxt_preflight = preflight
         if preflight.get("exchange_init_error") and "not install" in str(preflight.get("exchange_init_error", "")).lower():
@@ -335,7 +324,7 @@ def _run_pipeline(
 
     # ── Adapters ──
     hl_adapter = HyperliquidPublicAdapter()
-    _ensure_real_ccxt()
+    resolve_real_ccxt()
     ccxt_adapter = CcxtPublicMarketAdapter(exchange_timeout=config.timeout)
 
     try:
@@ -364,7 +353,7 @@ def _run_pipeline(
             statuses.append("skipped")
 
         # Ensure real ccxt before market mapper (HL methods re-shadow it)
-        _ensure_real_ccxt()
+        resolve_real_ccxt()
 
         # ── Market mapper ──
         market_snapshots, market_sources = run_market_snapshot(

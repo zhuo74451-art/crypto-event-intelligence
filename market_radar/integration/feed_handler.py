@@ -162,9 +162,14 @@ def run_feed_with_provider(
         (feed_result, source_status, raw_batch_or_None, cursor_error_or_None,
          feed_summary_dict_or_None, sub_sources)
     """
-    # Load cursor
+    # Load cursor — use persisted state first, then feed_initial_since as bootstrap
     cursor_state = _load_cursor(state_dir, config)
-    since_cursor = cursor_state.cursor_value if cursor_state else None
+    if cursor_state and cursor_state.cursor_value:
+        since_cursor = cursor_state.cursor_value
+    elif config.feed_initial_since:
+        since_cursor = config.feed_initial_since
+    else:
+        since_cursor = None
     cursor_before = since_cursor
 
     # Build input
@@ -271,6 +276,7 @@ def run_feed_with_provider(
         "cursor_before": cursor_before,
         "cursor_after": batch.next_cursor,
         "cursor_advanced": batch.next_cursor is not None and batch.next_cursor != cursor_before,
+        "initial_since": config.feed_initial_since,
         "errors": batch.errors,
     }
 

@@ -96,6 +96,7 @@ class IntegrationConfig:
     feed_timeout_seconds: float = 10.0
     feed_cursor_name: str = "published_at_backend"
     feed_cursor_state_file: str = "feed_cursor.json"
+    feed_initial_since: Optional[str] = None
 
     def __post_init__(self) -> None:
         if not self.no_send:
