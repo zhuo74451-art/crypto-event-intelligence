@@ -9,19 +9,15 @@ Business rules:
   - Each item retains its own source/source_kind/source_category — NOT all "curated"
   - is_featured is metadata only — does not increase factual trust
   - Pagination is bounded (max_pages, max_items, total, empty-page)
-
-Design:
-  - Single synchronous read_once() call with bounded pagination
-  - Uses urllib only (no requests, no external HTTP deps)
-  - Invalid items isolated without blocking the batch
-  - tweet_id is the idempotency key
-  - published_at_backend is the cursor field
+  - Empty batch with HTTP 200 + empty items = ok (not degraded)
+  - Public contract fields via ReaderBatchResult (no private attrs)
 """
 
 from __future__ import annotations
 
 import json
 import os
+import re as _re
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -35,20 +31,15 @@ from market_radar.intelligence_feed.models import (
     FeedItem, FeedSourceType, FeedDataMode, make_feed_id, make_freshness,
 )
 
-# Default maximum response size: 10 MB
 _DEFAULT_MAX_RESPONSE_BYTES = 10 * 1024 * 1024
 _DEFAULT_USER_AGENT = "CEI-W3-CuratedApiReader/1.0"
-
-
-# ── Source kind mapping ────────────────────────────────────────────────────────
+_SAFE_URL_RE = _re.compile(r"^https?://", _re.IGNORECASE)
 
 _SOURCE_KIND_MAP: dict[str, FeedSourceType] = {
     "telegram": FeedSourceType.TELEGRAM,
     "news": FeedSourceType.NEWS,
     "flash": FeedSourceType.FLASH,
-    # webhook → mapped by content_type/source_category; falls to UNKNOWN
 }
-
 _CONTENT_TYPE_TO_SOURCE: dict[str, FeedSourceType] = {
     "flash": FeedSourceType.FLASH,
     "news": FeedSourceType.NEWS,
@@ -59,11 +50,41 @@ _CONTENT_TYPE_TO_SOURCE: dict[str, FeedSourceType] = {
 }
 
 
+# ── Time helpers ───────────────────────────────────────────────────────────────
+
+def _parse_utc(ts: Any) -> Optional[datetime]:
+    """Parse a timestamp string into a timezone-aware UTC datetime.
+
+    Supports Z, +00:00, +08:00, and fractional seconds.
+    Returns None for unparseable values.
+    """
+    if not ts or not isinstance(ts, str):
+        return None
+    try:
+        # Normalize Z to +00:00
+        normalized = ts.replace("Z", "+00:00").strip()
+        dt = datetime.fromisoformat(normalized)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
+    except (ValueError, TypeError):
+        return None
+
+
+def _format_utc(dt: datetime) -> str:
+    """Format a datetime as UTC ISO 8601 with Z suffix."""
+    utc = dt.astimezone(timezone.utc)
+    return utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+# ── Config ─────────────────────────────────────────────────────────────────────
+
 @dataclass
 class CuratedApiConfig:
     """Configuration for the CuratedApiReader.
 
     All parameters map directly to the curated API query parameters.
+    Validated on construction via __post_init__.
     """
     base_url: str = "http://43.98.174.247:8001/api/integration/curated"
     limit: int = 100
@@ -75,19 +96,40 @@ class CuratedApiConfig:
     exclude_source: Optional[str] = None
     content_type: Optional[str] = None
     q: Optional[str] = None
-    include_special_line: Optional[bool] = None  # None = don't send param
+    include_special_line: Optional[bool] = None
     include_raw_json: bool = False
     max_response_bytes: int = _DEFAULT_MAX_RESPONSE_BYTES
     user_agent: str = _DEFAULT_USER_AGENT
+
+    def __post_init__(self) -> None:
+        if not 1 <= self.limit <= 500:
+            raise ValueError(f"limit must be 1-500, got {self.limit}")
+        if not 1 <= self.max_pages <= 10:
+            raise ValueError(f"max_pages must be 1-10, got {self.max_pages}")
+        if not 1 <= self.max_items <= 5000:
+            raise ValueError(f"max_items must be 1-5000, got {self.max_items}")
+        if not isinstance(self.timeout_seconds, (int, float)) or self.timeout_seconds <= 0:
+            raise ValueError(f"timeout_seconds must be >0, got {self.timeout_seconds}")
+        if not isinstance(self.max_response_bytes, int) or self.max_response_bytes <= 0:
+            raise ValueError(f"max_response_bytes must be >0, got {self.max_response_bytes}")
+        if not isinstance(self.base_url, str) or not _SAFE_URL_RE.match(self.base_url):
+            raise ValueError(f"base_url must start with http:// or https://, got {self.base_url}")
+        if self.include_special_line not in (None, True, False):
+            raise ValueError(f"include_special_line must be None/True/False, got {self.include_special_line}")
+        if not isinstance(self.include_raw_json, bool):
+            raise ValueError(f"include_raw_json must be bool, got {type(self.include_raw_json).__name__}")
 
 
 class CuratedApiReader(ReaderProtocol):
     """Read curated feed items from the remote API.
 
+    All contract fields are exposed via ReaderBatchResult public fields:
+      - next_cursor, cursor_safe, source_statuses, provider_name, metadata
+
     Args:
-        config: CuratedApiConfig instance with connection and filter settings.
-        source_label: Override source label (default: "curated_api").
-        reference_time: Deterministic time for freshness computation.
+        config: CuratedApiConfig instance.
+        source_label: Override source label.
+        reference_time: Deterministic time for freshness.
     """
 
     def __init__(
@@ -102,7 +144,7 @@ class CuratedApiReader(ReaderProtocol):
 
     @property
     def source_type(self) -> FeedSourceType:
-        return FeedSourceType.UNKNOWN  # Aggregated — individual items carry real types
+        return FeedSourceType.UNKNOWN
 
     @property
     def source_name(self) -> str:
@@ -118,55 +160,77 @@ class CuratedApiReader(ReaderProtocol):
         seen_ids: set[str] = set()
         total_seen = 0
         total_rejected = 0
-        max_published_at_backend: Optional[str] = None
+        max_cursor_dt: Optional[datetime] = None
+        cursor_has_invalid_time = False
+        source_records: dict[str, dict] = {}
+        pages_fetched = 0
+        truncated = False
+        remote_total: Optional[int] = None
 
         cfg = self._config
         offset = 0
-        pages_fetched = 0
-        remote_total: Optional[int] = None
 
         while True:
-            # Bounds check
+            # ── Bounds check ────────────────────────────────────────────────
             if pages_fetched >= cfg.max_pages:
-                errors.append(f"Stopped: reached max_pages={cfg.max_pages}")
+                # Only truncated if there may be more data
+                if remote_total is None or offset < remote_total:
+                    truncated = True
+                    errors.append(f"Truncated: reached max_pages={cfg.max_pages}")
                 break
             if cfg.max_items > 0 and len(all_items) >= cfg.max_items:
-                errors.append(f"Stopped: reached max_items={cfg.max_items}")
+                # Check if we've hit the total
+                if remote_total is None or len(all_items) < remote_total:
+                    truncated = True
+                    errors.append(f"Truncated: reached max_items={cfg.max_items}")
                 break
             if remote_total is not None and offset >= remote_total:
+                # Normal completion — all pages read
                 break
 
-            # Fetch one page
-            page_result = self._fetch_page(cfg, offset, started_at)
+            # ── Fetch page ──────────────────────────────────────────────────
+            page_result = self._fetch_page(cfg, offset)
+            pages_fetched += 1
+
             if page_result.status == ReaderStatus.UNAVAILABLE:
                 if len(all_items) == 0:
-                    return self._finalize(
-                        page_result.status, [], total_seen, total_rejected,
+                    return self._build_result(
+                        page_result.status, all_items, total_seen, total_rejected,
                         errors + page_result.errors, started_at, start_ms,
+                        max_cursor_dt, cursor_has_invalid_time or True,
+                        truncated or True, pages_fetched, source_records,
                     )
-                else:
-                    # Partial success: return degraded with collected items
-                    errors.append(f"Page {pages_fetched + 1} unavailable after {len(all_items)} accepted items")
-                    break
-
-            if page_result.status == ReaderStatus.DEGRADED and len(page_result.items_data) == 0:
-                if len(all_items) == 0:
-                    return self._finalize(
-                        page_result.status, [], total_seen, total_rejected,
-                        errors + page_result.errors, started_at, start_ms,
-                    )
-                errors.extend(page_result.errors)
+                errors.append(f"Page {pages_fetched} unavailable after {len(all_items)} items")
+                truncated = True
                 break
 
-            pages_fetched += 1
+            if page_result.status == ReaderStatus.DEGRADED and len(page_result.items_data) == 0:
+                # Parse-level failure — still check if we have partial items
+                errors.extend(page_result.errors)
+                if len(all_items) == 0:
+                    return self._build_result(
+                        page_result.status, all_items, total_seen, total_rejected,
+                        errors, started_at, start_ms,
+                        max_cursor_dt, cursor_has_invalid_time,
+                        truncated, pages_fetched, source_records,
+                    )
+                truncated = True
+                break
+
+            if page_result.status == ReaderStatus.OK and not page_result.items_data:
+                # Empty page is normal completion
+                break
+
             remote_total = page_result.meta.get("total")
 
-            # Process items
+            # ── Process items ───────────────────────────────────────────────
             for item_data in page_result.items_data:
                 total_seen += 1
-                item = self._build_feed_item(item_data)
+                item, rejection = self._build_feed_item(item_data)
                 if item is None:
                     total_rejected += 1
+                    if rejection:
+                        errors.append(rejection)
                     continue
 
                 # Dedup by tweet_id across pages
@@ -178,56 +242,62 @@ class CuratedApiReader(ReaderProtocol):
 
                 all_items.append(item)
 
-                # Track max published_at_backend for cursor
-                pub_back = item_data.get("published_at_backend")
-                if pub_back and isinstance(pub_back, str):
-                    if max_published_at_backend is None or pub_back > max_published_at_backend:
-                        max_published_at_backend = pub_back
+                # Track per-source stats
+                src_key = item.source_label or "unknown"
+                if src_key not in source_records:
+                    source_records[src_key] = {
+                        "source": item.source_label,
+                        "source_type": item.source_type.value,
+                        "status": "ok",
+                        "accepted_count": 0,
+                        "rejected_count": 0,
+                        "detail": "",
+                    }
+                source_records[src_key]["accepted_count"] += 1
+
+                # Cursor: parse published_at_backend
+                raw_cursor = item_data.get("published_at_backend")
+                cursor_dt = _parse_utc(raw_cursor)
+                if cursor_dt is not None:
+                    if max_cursor_dt is None or cursor_dt > max_cursor_dt:
+                        max_cursor_dt = cursor_dt
+                elif raw_cursor is not None:
+                    cursor_has_invalid_time = True
 
                 if cfg.max_items > 0 and len(all_items) >= cfg.max_items:
                     break
 
-            # Check for empty page
+            # Check for empty items_data (parse succeeded but no items)
             if not page_result.items_data:
                 break
 
             # Advance offset
             offset += cfg.limit
 
-        latency = _now_ms() - start_ms
-
-        # Partial success with errors → degraded, not ok
+        # Determine status
         has_errors = bool(errors)
-        status = ReaderStatus.DEGRADED if has_errors else \
-                 ReaderStatus.OK if all_items else ReaderStatus.DEGRADED
-        result = ReaderBatchResult(
-            source_name=self.source_name,
-            source_type=FeedSourceType.UNKNOWN,
-            status=status,
-            items=all_items,
-            records_seen=total_seen,
-            records_accepted=len(all_items),
-            records_rejected=total_rejected,
-            errors=errors,
-            provenance="transport=curated_api",
-            started_at=started_at,
-            finished_at=_utc_now(),
-            data_mode=FeedDataMode.LIVE,
+        if has_errors:
+            if all_items:
+                status = ReaderStatus.DEGRADED
+            else:
+                status = ReaderStatus.DEGRADED
+        else:
+            status = ReaderStatus.OK
+
+        cursor_safe = not truncated and not has_errors and not cursor_has_invalid_time
+        next_cursor_str = _format_utc(max_cursor_dt) if max_cursor_dt else None
+
+        return self._build_result(
+            status, all_items, total_seen, total_rejected,
+            errors, started_at, start_ms,
+            max_cursor_dt, cursor_has_invalid_time,
+            truncated, pages_fetched, source_records,
         )
-        # Attach metadata for cursor
-        result._next_cursor = max_published_at_backend  # type: ignore[attr-defined]
-        result._pages = pages_fetched  # type: ignore[attr-defined]
-        result._meta = {  # type: ignore[attr-defined]
-            "pages_fetched": pages_fetched,
-            "max_published_at_backend": max_published_at_backend,
-        }
-        return result
 
     # ── HTTP fetch ─────────────────────────────────────────────────────────────
 
-    def _fetch_page(self, cfg: CuratedApiConfig, offset: int, trace_id: str) -> _PageResult:
-        """Fetch a single page from the curated API."""
-        params = {
+    def _fetch_page(self, cfg: CuratedApiConfig, offset: int) -> _PageResult:
+        params: dict[str, str] = {
             "limit": str(min(cfg.limit, 500)),
             "offset": str(offset),
         }
@@ -245,7 +315,6 @@ class CuratedApiReader(ReaderProtocol):
             params["include_special_line"] = "1"
         elif cfg.include_special_line is False:
             params["include_special_line"] = "0"
-        # include_raw_json defaults to False; only send when True
         if cfg.include_raw_json:
             params["include_raw_json"] = "1"
 
@@ -272,7 +341,6 @@ class CuratedApiReader(ReaderProtocol):
                 errors=[f"Network error: {e}"],
             )
 
-        # Check response size
         try:
             raw = resp.read(cfg.max_response_bytes + 1)
         except OSError as e:
@@ -287,7 +355,6 @@ class CuratedApiReader(ReaderProtocol):
                 errors=[f"Response exceeds max_response_bytes={cfg.max_response_bytes}"],
             )
 
-        # Parse JSON
         try:
             data = json.loads(raw.decode("utf-8", errors="replace"))
         except (json.JSONDecodeError, UnicodeDecodeError) as e:
@@ -302,12 +369,13 @@ class CuratedApiReader(ReaderProtocol):
                 errors=["Response is not a JSON object"],
             )
 
-        # Validate stage
+        # Stage must be "published"; missing stage is also degraded
         stage = data.get("stage")
-        if stage and stage != "published":
+        if not stage or stage != "published":
             return _PageResult(
                 status=ReaderStatus.DEGRADED,
-                errors=[f"Stage is '{stage}', not 'published'"],
+                errors=[f"Stage is '{stage}', not 'published'"] if stage
+                        else ["Stage field missing from response"],
             )
 
         items_raw = data.get("items")
@@ -324,9 +392,6 @@ class CuratedApiReader(ReaderProtocol):
             except (ValueError, TypeError):
                 total = None
 
-        # Discard db_path
-        _ = data.get("db_path")  # explicitly not used
-
         return _PageResult(
             status=ReaderStatus.OK,
             items_data=items_raw,
@@ -335,19 +400,21 @@ class CuratedApiReader(ReaderProtocol):
 
     # ── Item mapping ───────────────────────────────────────────────────────────
 
-    def _build_feed_item(self, item_data: dict) -> Optional[FeedItem]:
-        """Convert a raw API item dict to a FeedItem. Returns None if rejected."""
+    def _build_feed_item(self, item_data: dict) -> tuple[Optional[FeedItem], Optional[str]]:
+        """Convert raw API item to FeedItem. Returns (item, rejection_reason).
+
+        Returns (None, reason) for rejected items. reason is used for error logs.
+        """
         # Idempotency key: tweet_id is required
         tweet_id = item_data.get("tweet_id")
         if tweet_id is None:
-            return None
+            return None, "Rejected: missing tweet_id"
 
         tweet_id_str = str(tweet_id)
-        source = item_data.get("source", "unknown")
-        source_label = item_data.get("source_label") or source
+        source_raw = item_data.get("source", "unknown")
+        source_label = item_data.get("source_label") or source_raw
 
-        # Stable feed_id from source + tweet_id
-        feed_id = make_feed_id(f"{source}:{tweet_id_str}", "curated")
+        feed_id = make_feed_id(f"{source_raw}:{tweet_id_str}", "curated")
 
         # Title with fallback
         title = (
@@ -359,7 +426,6 @@ class CuratedApiReader(ReaderProtocol):
         )
         derived_title = False
         if not title:
-            # Generate safe truncated display title from body
             body_for_title = (
                 item_data.get("zh_body")
                 or item_data.get("extracted_text")
@@ -370,7 +436,7 @@ class CuratedApiReader(ReaderProtocol):
                 title = body_for_title[:80] + ("…" if len(body_for_title) > 80 else "")
                 derived_title = True
             else:
-                return None  # No title and no body to derive from — reject
+                return None, "Rejected: no title and no body to derive from"
         title_str = str(title).strip() if title else ""
 
         # Body with fallback
@@ -381,42 +447,51 @@ class CuratedApiReader(ReaderProtocol):
             or self._get_nested(item_data, "delivery_payload", "body")
         )
         if not body:
-            return None  # No body content — reject
+            return None, "Rejected: no body content"
         body_str = str(body).strip() if body else ""
 
-        # URL with fallback — must pass safety check
-        import re as _re
-        _safe_url_re = _re.compile(r"^https?://", _re.IGNORECASE)
+        # URL with safety check
         raw_url = item_data.get("canonical_url") or item_data.get("article_url")
         url: Optional[str] = None
         if raw_url and isinstance(raw_url, str):
             raw_url = raw_url.strip()
-            if raw_url and _safe_url_re.match(raw_url):
+            if raw_url and _SAFE_URL_RE.match(raw_url):
                 url = raw_url
 
-        # Source type via source_kind mapping
+        # Source type mapping
         source_kind = (item_data.get("source_kind") or "").lower()
         source_type = _SOURCE_KIND_MAP.get(source_kind)
         if source_type is None:
             raw_ct = item_data.get("content_type")
-            content_type = raw_ct.lower() if raw_ct else ""
-            source_type = _CONTENT_TYPE_TO_SOURCE.get(content_type, FeedSourceType.UNKNOWN)
+            ct = raw_ct.lower() if raw_ct else ""
+            source_type = _CONTENT_TYPE_TO_SOURCE.get(ct, FeedSourceType.UNKNOWN)
 
         # Timestamps
         published_at = item_data.get("published_at") or item_data.get("tweet_created_at")
         published_at_backend = item_data.get("published_at_backend")
-
-        # Freshness computed from published_at if available, else backend
         freshness_ref = published_at or published_at_backend
         freshness = make_freshness(freshness_ref, reference_time=self._reference_time)
-
-        # Ingested_at: use published_at_backend if available
         ingested_at = published_at_backend
+
+        # Pipeline stage check
+        pipeline_stage = item_data.get("pipeline_stage")
+        if pipeline_stage and pipeline_stage != "published":
+            return None, f"Rejected: pipeline_stage={pipeline_stage}"
+
+        # Upload status check
+        backend_upload_status = item_data.get("backend_upload_status")
+        if backend_upload_status and str(backend_upload_status).lower() in ("failed", "error"):
+            return None, f"Rejected: backend_upload_status={backend_upload_status}"
+
+        # Backend error check
+        backend_error = item_data.get("backend_error")
+        if backend_error and isinstance(backend_error, str) and backend_error.strip():
+            return None, f"Rejected: backend_error={backend_error[:100]}"
 
         # Build metadata
         metadata: dict[str, Any] = {
             "tweet_id": tweet_id_str,
-            "source": source,
+            "source": source_raw,
             "source_category": item_data.get("source_category"),
             "source_kind": source_kind,
             "content_type": item_data.get("content_type"),
@@ -431,29 +506,19 @@ class CuratedApiReader(ReaderProtocol):
             "hermes_category": item_data.get("hermes_category"),
             "editorial_categories": item_data.get("editorial_categories"),
             "is_featured": item_data.get("is_featured"),
-            "pipeline_stage": item_data.get("pipeline_stage"),
+            "pipeline_stage": pipeline_stage,
             "filter_status": item_data.get("filter_status"),
             "dedupe_status": item_data.get("dedupe_status"),
             "bridge_status": item_data.get("bridge_status"),
             "publish_block_reason": item_data.get("publish_block_reason"),
-            "backend_upload_status": item_data.get("backend_upload_status"),
-            "backend_error": item_data.get("backend_error"),
+            "backend_upload_status": backend_upload_status,
+            "backend_error": backend_error,
             "event_fingerprint": item_data.get("event_fingerprint"),
             "transport": "curated_api",
         }
         if derived_title:
             metadata["derived_title"] = True
 
-        # Classification rules
-        pipeline_stage = item_data.get("pipeline_stage")
-        if pipeline_stage and pipeline_stage != "published":
-            return None  # Only accept published items
-
-        backend_upload_status = item_data.get("backend_upload_status")
-        if backend_upload_status and str(backend_upload_status).lower() in ("failed", "error"):
-            return None  # Explicitly failed uploads
-
-        # Build FeedItem
         item = FeedItem(
             feed_id=feed_id,
             source_type=source_type,
@@ -468,12 +533,11 @@ class CuratedApiReader(ReaderProtocol):
             freshness=freshness,
             original_id=tweet_id_str,
         )
-        # Store metadata
-        item._metadata = metadata  # type: ignore[attr-defined]
-        return item
+        item._metadata = metadata
+        return item, None
 
-    def _get_nested(self, data: dict, *keys: str) -> Any:
-        """Safely get a nested dict value."""
+    @staticmethod
+    def _get_nested(data: dict, *keys: str) -> Any:
         current: Any = data
         for key in keys:
             if not isinstance(current, dict):
@@ -483,7 +547,9 @@ class CuratedApiReader(ReaderProtocol):
                 return None
         return current
 
-    def _finalize(
+    # ── Result builder ─────────────────────────────────────────────────────────
+
+    def _build_result(
         self,
         status: ReaderStatus,
         items: list[FeedItem],
@@ -492,8 +558,36 @@ class CuratedApiReader(ReaderProtocol):
         errors: list[str],
         started_at: str,
         start_ms: float,
+        max_cursor_dt: Optional[datetime],
+        cursor_has_invalid: bool,
+        truncated: bool,
+        pages: int,
+        source_records: dict[str, dict],
     ) -> ReaderBatchResult:
         latency = _now_ms() - start_ms
+        has_errors = bool(errors)
+        cursor_safe = not truncated and not has_errors and not cursor_has_invalid
+
+        next_cursor = _format_utc(max_cursor_dt) if max_cursor_dt else None
+
+        # Build source_statuses list
+        source_statuses = list(source_records.values())
+        if not source_statuses:
+            source_statuses = [{
+                "source": "curated_api",
+                "source_type": "unknown",
+                "status": status.value if items else "ok",
+                "accepted_count": len(items),
+                "rejected_count": rejected,
+                "detail": "aggregated — no per-source breakdown available" if not items else "",
+            }]
+
+        # Mark per-source as degraded if overall is degraded
+        if status == ReaderStatus.DEGRADED:
+            for ss in source_statuses:
+                if ss.get("status") == "ok":
+                    ss["status"] = "degraded"
+
         return ReaderBatchResult(
             source_name=self.source_name,
             source_type=FeedSourceType.UNKNOWN,
@@ -507,6 +601,16 @@ class CuratedApiReader(ReaderProtocol):
             started_at=started_at,
             finished_at=_utc_now(),
             data_mode=FeedDataMode.LIVE,
+            next_cursor=next_cursor,
+            cursor_safe=cursor_safe,
+            source_statuses=source_statuses,
+            provider_name="curated_api",
+            metadata={
+                "pages_fetched": pages,
+                "truncated": truncated,
+                "max_cursor_dt": _format_utc(max_cursor_dt) if max_cursor_dt else None,
+                "cursor_has_invalid_time": cursor_has_invalid,
+            },
         )
 
 

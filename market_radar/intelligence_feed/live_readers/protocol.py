@@ -80,6 +80,12 @@ class ReaderBatchResult:
         started_at: UTC ISO 8601 when read started.
         finished_at: UTC ISO 8601 when read finished.
         data_mode: Effective data mode (each item carries its own).
+        next_cursor: Optional cursor for incremental reads (UTC ISO 8601).
+        cursor_safe: True if cursor can be trusted for incremental reads.
+        cached_count: Number of cached items in this batch.
+        source_statuses: Per-source status breakdown.
+        provider_name: Name of the provider/reader.
+        metadata: Arbitrary reader-specific metadata.
     """
     source_name: str
     source_type: FeedSourceType
@@ -93,9 +99,16 @@ class ReaderBatchResult:
     started_at: Optional[str] = None
     finished_at: Optional[str] = None
     data_mode: FeedDataMode = FeedDataMode.LIVE
+    # Public contract fields (backward-compatible defaults)
+    next_cursor: Optional[str] = None
+    cursor_safe: bool = True
+    cached_count: int = 0
+    source_statuses: list[dict] = field(default_factory=list)
+    provider_name: Optional[str] = None
+    metadata: dict = field(default_factory=dict)
 
     def as_dict(self) -> dict:
-        return {
+        d: dict = {
             "source_name": self.source_name,
             "source_type": self.source_type.value,
             "status": self.status.value,
@@ -108,7 +121,14 @@ class ReaderBatchResult:
             "started_at": self.started_at,
             "finished_at": self.finished_at,
             "data_mode": self.data_mode.value,
+            "next_cursor": self.next_cursor,
+            "cursor_safe": self.cursor_safe,
+            "cached_count": self.cached_count,
+            "source_statuses": self.source_statuses,
+            "provider_name": self.provider_name,
+            "metadata": self.metadata,
         }
+        return d
 
     def to_health(self, latency_ms: Optional[float] = None) -> ReaderHealth:
         return ReaderHealth(

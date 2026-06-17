@@ -187,13 +187,18 @@ class TestCuratedApiReaderParams(unittest.TestCase):
 
     @patch("urllib.request.urlopen")
     def test_6_limit_range(self, mock_urlopen):
-        """6. limit parameter capped at 500."""
+        """6. limit parameter within 1-500."""
         mock_urlopen.return_value = _mock_response(_make_page([_make_item(1)]))
-        config = CuratedApiConfig(limit=999)
+        config = CuratedApiConfig(limit=500)
         reader = CuratedApiReader(config, reference_time=REF_TIME)
         reader.read_once()
         call_url = mock_urlopen.call_args[0][0].full_url
         self.assertIn("limit=500", call_url)
+
+    def test_6b_limit_out_of_range(self):
+        """6b. limit=999 raises ValueError."""
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(limit=999)
 
 
 class TestCuratedApiReaderPagination(unittest.TestCase):
@@ -434,7 +439,7 @@ class TestCuratedApiReaderItemMapping(unittest.TestCase):
 
     @patch("urllib.request.urlopen")
     def test_27_cursor_from_backend(self, mock_urlopen):
-        """27. published_at_backend generates next_cursor."""
+        """27. published_at_backend generates next_cursor via public field."""
         items = [
             _make_item(1, published_at_backend="2026-06-17T10:00:00Z"),
             _make_item(2, published_at_backend="2026-06-17T11:00:00Z"),
@@ -442,9 +447,8 @@ class TestCuratedApiReaderItemMapping(unittest.TestCase):
         mock_urlopen.return_value = _mock_response(_make_page(items))
         reader = CuratedApiReader(reference_time=REF_TIME)
         result = reader.read_once()
-        meta = getattr(result, "_meta", {}) or {}
-        cursor = meta.get("max_published_at_backend")
-        self.assertEqual(cursor, "2026-06-17T11:00:00Z")
+        self.assertEqual(result.next_cursor, "2026-06-17T11:00:00Z")
+        self.assertTrue(result.cursor_safe)
 
     @patch("urllib.request.urlopen")
     def test_28_no_cursor_without_backend_time(self, mock_urlopen):
@@ -454,8 +458,7 @@ class TestCuratedApiReaderItemMapping(unittest.TestCase):
         )
         reader = CuratedApiReader(reference_time=REF_TIME)
         result = reader.read_once()
-        meta = getattr(result, "_meta", {}) or {}
-        self.assertIsNone(meta.get("max_published_at_backend"))
+        self.assertIsNone(result.next_cursor)
 
     @patch("urllib.request.urlopen")
     def test_29_is_featured_preserved(self, mock_urlopen):
@@ -733,12 +736,214 @@ class TestCuratedApiReaderEdge(unittest.TestCase):
         self.assertLessEqual(len(result.items[0].title), 82)
 
 
+class TestCuratedApiReaderR03PublicContract(unittest.TestCase):
+    """R03: Public contract fields — next_cursor, cursor_safe, source_statuses, empty-batch truth."""
+
+    @patch("urllib.request.urlopen")
+    def test_empty_batch_is_ok(self, mock_urlopen):
+        """Empty batch (200, stage=published, items=[]) → status=ok, cursor_safe=true."""
+        mock_urlopen.return_value = _mock_response(_make_page([], total=0))
+        config = CuratedApiConfig(limit=100, max_pages=2)
+        reader = CuratedApiReader(config, reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.OK)
+        self.assertEqual(len(result.items), 0)
+        self.assertIsNone(result.next_cursor)
+        self.assertTrue(result.cursor_safe)
+
+    @patch("urllib.request.urlopen")
+    def test_completed_total_not_degraded(self, mock_urlopen):
+        """offset >= total normal completion → not truncated, cursor_safe=true."""
+        page = _make_page([_make_item(1)], total=1, offset=0, limit=2)
+        mock_urlopen.return_value = _mock_response(page)
+        config = CuratedApiConfig(limit=2, max_pages=5, max_items=500)
+        reader = CuratedApiReader(config, reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.OK)
+        self.assertTrue(result.cursor_safe)
+
+    @patch("urllib.request.urlopen")
+    def test_max_pages_truncated(self, mock_urlopen):
+        """max_pages hit with more data → degraded, cursor_safe=false."""
+        items = [_make_item(i) for i in range(50)]
+        page = _make_page(items, total=200, offset=0, limit=50)
+        mock_urlopen.return_value = _mock_response(page)
+        config = CuratedApiConfig(limit=50, max_pages=1, max_items=5000)
+        reader = CuratedApiReader(config, reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.DEGRADED)
+        self.assertFalse(result.cursor_safe)
+
+    @patch("urllib.request.urlopen")
+    def test_max_items_truncated(self, mock_urlopen):
+        """max_items hit → degraded, cursor_safe=false."""
+        items = [_make_item(i) for i in range(100)]
+        mock_urlopen.return_value = _mock_response(
+            _make_page(items, total=100, offset=0, limit=100)
+        )
+        config = CuratedApiConfig(limit=100, max_pages=5, max_items=5)
+        reader = CuratedApiReader(config, reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.DEGRADED)
+        self.assertFalse(result.cursor_safe)
+
+    @patch("urllib.request.urlopen")
+    def test_public_next_cursor_field(self, mock_urlopen):
+        """next_cursor is a public ReaderBatchResult field, not private _next_cursor."""
+        mock_urlopen.return_value = _mock_response(
+            _make_page([_make_item(1, published_at_backend="2026-06-17T10:00:00Z")])
+        )
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertIsNotNone(result.next_cursor)
+        self.assertFalse(hasattr(result, "_next_cursor") and
+                         "_next_cursor" in type(result).__dataclass_fields__)
+
+    @patch("urllib.request.urlopen")
+    def test_cursor_z_suffix_comparison(self, mock_urlopen):
+        """Z and +00:00 times compare correctly (same time → same cursor)."""
+        mock_urlopen.return_value = _mock_response(_make_page([
+            _make_item(1, published_at_backend="2026-06-17T10:00:00Z"),
+            _make_item(2, published_at_backend="2026-06-17T10:00:00+00:00"),
+        ]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.next_cursor, "2026-06-17T10:00:00Z")
+
+    @patch("urllib.request.urlopen")
+    def test_cursor_plus08_convert(self, mock_urlopen):
+        """+08:00 times convert to UTC correctly."""
+        mock_urlopen.return_value = _mock_response(_make_page([
+            _make_item(1, published_at_backend="2026-06-17T18:00:00+08:00"),
+        ]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        # 18:00 +08:00 → 10:00 UTC
+        self.assertEqual(result.next_cursor, "2026-06-17T10:00:00Z")
+
+    @patch("urllib.request.urlopen")
+    def test_cursor_invalid_time(self, mock_urlopen):
+        """Invalid published_at_backend → cursor_safe=false."""
+        mock_urlopen.return_value = _mock_response(_make_page([
+            _make_item(1, published_at_backend="not-a-timestamp"),
+        ]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertFalse(result.cursor_safe)
+
+    @patch("urllib.request.urlopen")
+    def test_config_validation_boundaries(self, mock_urlopen):
+        """Config validation rejects out-of-range values."""
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(limit=0)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(limit=501)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_pages=0)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_pages=11)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_items=0)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(max_items=5001)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(timeout_seconds=0)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(base_url="ftp://bad")
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(include_special_line=123)
+        with self.assertRaises(ValueError):
+            CuratedApiConfig(include_raw_json="yes")
+
+    @patch("urllib.request.urlopen")
+    def test_stage_missing(self, mock_urlopen):
+        """Missing stage field → degraded."""
+        page = {"total": 1, "limit": 100, "offset": 0, "items": [_make_item(1)]}
+        mock_urlopen.return_value = _mock_response(page)
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.DEGRADED)
+
+    @patch("urllib.request.urlopen")
+    def test_backend_error_rejected(self, mock_urlopen):
+        """backend_error non-empty → item rejected."""
+        mock_urlopen.return_value = _mock_response(_make_page([
+            _make_item(1, backend_error=""),  # empty → ok
+            _make_item(2, backend_error="Rate limit exceeded"),  # non-empty → rejected
+        ]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(len(result.items), 1)
+        self.assertEqual(result.records_rejected, 1)
+
+    @patch("urllib.request.urlopen")
+    def test_source_statuses_multiple(self, mock_urlopen):
+        """source_statuses groups by source_label."""
+        mock_urlopen.return_value = _mock_response(_make_page([
+            _make_item(1, source_label="CoinDesk", source_kind="news"),
+            _make_item(2, source_label="CoinDesk", source_kind="news"),
+            _make_item(3, source_label="TG Channel", source_kind="telegram"),
+        ]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertGreaterEqual(len(result.source_statuses), 2)
+
+    @patch("urllib.request.urlopen")
+    def test_db_path_not_in_output(self, mock_urlopen):
+        """db_path never appears in items or metadata."""
+        mock_urlopen.return_value = _mock_response(_make_page([_make_item(1)]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertNotIn("db_path", result.provenance)
+
+    @patch("urllib.request.urlopen")
+    def test_empty_second_increment_is_ok(self, mock_urlopen):
+        """Empty incremental poll (since=some time, no new items) → ok."""
+        mock_urlopen.return_value = _mock_response(_make_page([], total=0))
+        config = CuratedApiConfig(since="2026-06-17T12:00:00Z")
+        reader = CuratedApiReader(config, reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.OK)
+        self.assertEqual(len(result.items), 0)
+
+    @patch("urllib.request.urlopen")
+    def test_same_time_different_tweet_id(self, mock_urlopen):
+        """Same published_at_backend time, different tweet_ids → both accepted."""
+        mock_urlopen.return_value = _mock_response(_make_page([
+            _make_item(tweet_id=101, published_at_backend="2026-06-17T10:00:00Z"),
+            _make_item(tweet_id=102, published_at_backend="2026-06-17T10:00:00Z"),
+        ]))
+        reader = CuratedApiReader(reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(len(result.items), 2)
+        self.assertIsNotNone(result.next_cursor)
+
+    @patch("urllib.request.urlopen")
+    def test_partial_page_failure_cursor_not_safe(self, mock_urlopen):
+        """Partial page failure → cursor_safe=false, degraded, has partial items."""
+        page1 = _make_page([_make_item(1), _make_item(2)], total=4, offset=0, limit=2)
+        mock_urlopen.side_effect = [
+            _mock_response(page1),
+            _mock_response("notjson", 200),
+        ]
+        config = CuratedApiConfig(limit=2, max_pages=5)
+        reader = CuratedApiReader(config, reference_time=REF_TIME)
+        result = reader.read_once()
+        self.assertEqual(result.status, ReaderStatus.DEGRADED)
+        self.assertFalse(result.cursor_safe)
+        self.assertGreaterEqual(len(result.items), 2)
+
+    def test_provider_name_field(self):
+        """provider_name is 'curated_api'."""
+        self.assertEqual(CuratedApiConfig().base_url, "http://43.98.174.247:8001/api/integration/curated")
+
+
 class TestCuratedApiReaderLiveProbe(unittest.TestCase):
     """Placeholder for live probe — only runs when explicitly enabled."""
 
     def test_live_probe_disabled_by_default(self):
         """Live probe does not run during unit tests."""
-        pass  # Real probe executed separately as a one-off CLI call
+        pass
 
 
 if __name__ == "__main__":
