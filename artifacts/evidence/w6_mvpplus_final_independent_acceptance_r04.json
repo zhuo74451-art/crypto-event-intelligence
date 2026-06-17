@@ -1,0 +1,80 @@
+{
+  "document": "w6_mvpplus_final_independent_acceptance_r04",
+  "ticket": "W6_MVPPLUS_FINAL_INDEPENDENT_ACCEPTANCE_R04",
+  "w6_branch": "workbench/mvpplus-independent-qa-v1",
+  "w6_repair_base_commit": "cc201b109e4261be890608f96df479aabdce3fc5",
+  "w1_target": {
+    "exact_head": "49119b7710862f70f77dad02f35ed05e45a1cae3",
+    "head_match": true,
+    "tested_commit": "33602458bc15a2239ee50bf97e0851a18410d09d",
+    "tested_is_ancestor": true,
+    "main_head": "a8fd827e0d4b7426326238e9d8e0be456e2474bd",
+    "main_match": true
+  },
+  "independent_tests": {
+    "integration": "90 passed (min 90)",
+    "feeds_ui": "170 passed (min 170)",
+    "whale_domain": "127 passed, 1 skipped",
+    "operations": "122 passed (min 122)",
+    "adapters": "96 passed (min 96)",
+    "combined": "509 passed, 1 skipped",
+    "all_pass": true
+  },
+  "cli_live_oneshot": {
+    "status": "PASS",
+    "result": "completed",
+    "whale_ok": true,
+    "whale_is_baseline": true,
+    "markets": "4 assets (BTC/ETH/SOL/HYPE) with non-zero prices",
+    "feed": "48 live, 0 fixture, multi-source (6 sub-sources all ok)",
+    "errors": 0,
+    "no_send": true,
+    "cursor_advanced": true
+  },
+  "shadow_run": {
+    "status": "PASS",
+    "attempted": 2,
+    "completed": 2,
+    "parent_id": "bb573b1a423245839624445f810ebd31",
+    "child_ids": [
+      "os-5a806664c89a",
+      "os-260a702bf6a8"
+    ],
+    "elapsed_seconds": 18.4
+  },
+  "run_history_audit": {
+    "collision_found": true,
+    "parent_exists": true,
+    "children_exist": true,
+    "child_count": 2,
+    "collision_errors": [
+      "child insert failed for ordinal 1: IntegrityError: UNIQUE constraint failed: run_history.run_id",
+      "child insert failed for ordinal 2: IntegrityError: UNIQUE constraint failed: run_history.run_id"
+    ],
+    "has_parent_shadow_column": false,
+    "shadow_errors": [
+      "child insert failed for ordinal 1: IntegrityError: UNIQUE constraint failed: run_history.run_id",
+      "child insert failed for ordinal 2: IntegrityError: UNIQUE constraint failed: run_history.run_id"
+    ],
+    "note": "shadow wrapper re-inserts children already inserted by run_one_shot \u2192 UNIQUE constraint",
+    "business_pipeline_ok": true,
+    "audit_chain_failed": true
+  },
+  "final_decision": "MVPPLUS_REJECTED_RUN_HISTORY_COLLISION",
+  "mvpplus_ready": false,
+  "internal_production_ready": false,
+  "safety": {
+    "no_credentials": true,
+    "no_send": true,
+    "no_daemon": true,
+    "no_scheduler": true,
+    "target_modified": false,
+    "main_modified": false
+  },
+  "limitations": [
+    "Run-history collision: shadow wrapper child insert fails UNIQUE constraint",
+    "Business pipeline works (CLI/shadow/children all completed) but audit chain fails",
+    "No parent_shadow_run_id column in run_history schema"
+  ],
+  "git_status": "clean"
+}
