@@ -1,0 +1,148 @@
+{
+  "scan_id": "qa_20260617_051424_06374a98",
+  "target_repo": "C:\\Users\\PC\\Desktop\\cei_independent_qa",
+  "target_ref": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+  "scanned_at": "2026-06-17T05:14:24Z",
+  "results": [
+    {
+      "scanner": "ownership_validator",
+      "status": "PASS",
+      "detail": "Scanned 3 changed files against 5 owned paths",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "forbidden_import_scanner",
+      "status": "PASS",
+      "detail": "Scanned 1 paths for 3 forbidden imports",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "trading_capability_scanner",
+      "status": "PASS",
+      "detail": "Scanned 1 paths for trading patterns",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "credential_scanner",
+      "status": "PASS",
+      "detail": "Scanned 1 paths for credential patterns",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "scheduler_disabled_validator",
+      "status": "PASS",
+      "detail": "Scanned 1 paths for enabled schedulers",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "no_send_validator",
+      "status": "PASS",
+      "detail": "Scanned 1 paths for send patterns",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "artifact_binding_validator",
+      "status": "PASS",
+      "detail": "Verified 1 artifacts against commit 06374a98799aee02701959aac494605463572c65",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "test_count_validator",
+      "status": "PASS",
+      "detail": "Expected 90, collected 90 across 1 paths",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "dependency_validator",
+      "status": "PASS",
+      "detail": "Checked requirements.txt",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "data_truth_validator",
+      "status": "PASS",
+      "detail": "Validated 3 records: 2 live, 0 cached, 1 fixture, 0 research_sample, 0 unknown",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "liquidation_formula_oracle",
+      "status": "PASS",
+      "detail": "Checked (long) mark=100.0 liq=95.0 → 5.000000",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "first_snapshot_oracle",
+      "status": "PASS",
+      "detail": "Validated 1 positions in first snapshot",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "hype_source_policy_validator",
+      "status": "PASS",
+      "detail": "Validated HYPE market record: venue=Hyperliquid",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "feed_id_validator",
+      "status": "PASS",
+      "detail": "Validated feed ID determinism",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "html_security_scanner",
+      "status": "PASS",
+      "detail": "Scanned 1 paths for HTML vulnerabilities",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "url_attack_corpus",
+      "status": "PASS",
+      "detail": "Tested 18/18 URLs against validator",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "xss_attack_corpus",
+      "status": "PASS",
+      "detail": "Tested 17/17 XSS payloads against renderer",
+      "evidence_ref": null,
+      "violations": []
+    },
+    {
+      "scanner": "evidence_schema_validator",
+      "status": "PASS",
+      "detail": "Validated evidence against schema (6 properties)",
+      "evidence_ref": null,
+      "violations": []
+    }
+  ],
+  "summary": {
+    "total": 18,
+    "pass": 18,
+    "fail": 0,
+    "blocked": 0,
+    "not_applicable": 0
+  },
+  "remote_handoff": "REMOTE_HANDOFF_V1",
+  "lane": "workbench/mvpplus-independent-qa-v1",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+  "tested_commit": "624efa5d6947547b924cabfd369d69d9a853b91c",
+  "framework_tests": "90 collected / 90 passed / 0 failed / 0 skipped",
+  "stage": "A"
+}

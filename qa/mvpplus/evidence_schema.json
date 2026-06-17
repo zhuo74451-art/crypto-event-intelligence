@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QAEvidenceSchema",
+  "description": "Schema for QA scan evidence artifacts",
+  "type": "object",
+  "required": ["scan_id", "target_repo", "target_ref", "scanned_at", "results", "summary"],
+  "properties": {
+    "scan_id": {"type": "string"},
+    "target_repo": {"type": "string"},
+    "target_ref": {"type": "string"},
+    "scanned_at": {"type": "string", "format": "date-time"},
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scanner", "status"],
+        "properties": {
+          "scanner": {"type": "string"},
+          "status": {"type": "string", "enum": ["PASS", "FAIL", "BLOCKED", "NOT_APPLICABLE"]},
+          "detail": {"type": "string"},
+          "evidence_ref": {"type": "string"},
+          "violations": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total", "pass", "fail", "blocked", "not_applicable"],
+      "properties": {
+        "total": {"type": "integer"},
+        "pass": {"type": "integer"},
+        "fail": {"type": "integer"},
+        "blocked": {"type": "integer"},
+        "not_applicable": {"type": "integer"}
+      }
+    }
+  }
+}

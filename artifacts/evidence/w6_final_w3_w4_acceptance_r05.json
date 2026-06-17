@@ -1,0 +1,171 @@
+{
+  "document": "w6_final_w3_w4_acceptance_r05",
+  "remote_handoff": "REMOTE_HANDOFF_V1",
+  "lane": "workbench/mvpplus-independent-qa-v1",
+  "notes": "Final re-scan: W3 and W4 only. W2/W5 previously accepted.",
+  "W2": {
+    "status": "PASS",
+    "source": "previously_accepted",
+    "branch": "workbench/mvpplus-whale-prod-v2",
+    "head": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a",
+    "tested_code": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+    "tests": {
+      "collected": 85,
+      "passed": 84,
+      "skipped": 1,
+      "failed": 0
+    }
+  },
+  "W3": {
+    "status": "PASS",
+    "branch": "workbench/mvpplus-feeds-market-ui-v2",
+    "head": "241e9a981c74de81d7898531dfbf5f777cde9ae4",
+    "tested_code": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+    "tests": {
+      "collected": 44,
+      "passed": 44,
+      "failed": 0,
+      "skipped": 0
+    },
+    "feed_id": {
+      "status": "PASS",
+      "method": "direct import market_radar.intelligence_feed.models.make_feed_id",
+      "results": {
+        "same_input_twice_same_id": "PASS (via test_same_content_same_id + test_different_content_different_id + test_id_format)",
+        "meaningful_field_changes_id": "PASS (different content produces different ID)",
+        "not_uuid_timestamp": "PASS (test_id_format validates deterministic format)"
+      }
+    },
+    "renderer_security": {
+      "status": "PASS",
+      "method": "All 44 lane tests pass including real renderer security tests",
+      "results": {
+        "unsafe_url_rejected": "PASS (test_javascript_url_rejected, test_data_url_rejected, test_path_traversal_rejected)",
+        "xss_escaped_or_rejected": "PASS (test_html_escaping_in_asset/body/source_label/title, test_no_script_tags)",
+        "csp_present": "PASS (test_csp_present)",
+        "no_external_resources": "PASS (test_no_external_stylesheets, test_no_external_fonts, test_no_network_imports)",
+        "atomic_output": "PASS (test_atomic_output)",
+        "deterministic_render": "PASS (test_deterministic_render)",
+        "fixture_provenance_badge": "PASS (test_fixture_provenance_badge)",
+        "bundle_integrity": "PASS (test_full_bundle_renders, test_degraded_bundle_renders, test_empty_bundle_renders)"
+      }
+    },
+    "data_truth": {
+      "status": "PASS",
+      "results": {
+        "fixture_only_live_count_0": "PASS (test_fixture_only_no_live, test_fixture_excluded_from_live)",
+        "research_sample_excluded": "PASS (test_research_excluded_from_live)",
+        "hype_fixture_classified_fixture": "PASS (HYPE data in FLASH_FIXTURES/NEWS_FIXTURES/TELEGRAM_FIXTURES, all FIXTURE mode)",
+        "source_counts_match": "PASS (test_source_counts_truth)"
+      }
+    },
+    "ownership": [
+      "market_radar/intelligence_feed/",
+      "market_radar/workbench/",
+      "market_radar/market_view/",
+      "market_radar/shared/",
+      "tests/mvpplus/feeds_market_ui/"
+    ],
+    "mandatory_all_pass": true,
+    "evidence_binding": "PASS"
+  },
+  "W4": {
+    "status": "PASS",
+    "branch": "workbench/mvpplus-open-source-adapters-v1",
+    "head": "660fcc56b2812b06bef58b9632caa5a5f7431ae7",
+    "tested_code": "a1370c86deeb5942af9b7612a64441fc58026859",
+    "tests": {
+      "collected": 86,
+      "passed": 86,
+      "failed": 0,
+      "skipped": 0
+    },
+    "static_checks": {
+      "status": "PASS",
+      "results": {
+        "no_credentials": "PASS (test_no_credential_params)",
+        "no_wallet_signing": "PASS (test_no_wallet_or_exchange_class_imported)",
+        "no_orders_transfers": "PASS (no exchange order/transfer/trade methods in external_adapters)",
+        "ccxt_camelcase_capability_mapping": "PASS (OPERATION_MAP validates has[key] true/emulated; test_ccxt_adapter capability tests)",
+        "adapter_health": "PASS (test_health_on_success, test_health_on_failure)",
+        "normalized_result_structure": "PASS (adapter_models.py AdapterResult with normalized dicts; test_ccxt_adapter structure tests)",
+        "bounded_timeout_retry": "PASS (timeout_seconds=30.0, max_attempts=3, retriable [429,500-504]; httpx separate connect/read/write/pool timeouts)",
+        "exact_dependency_pins": "PASS (requirements/mvpplus-adapters.txt: httpx==0.28.1, hyperliquid==0.4.66, ccxt==4.5.59)",
+        "correct_owned_path": "PASS (owned: market_radar/external_adapters/**, not market_radar/adapters/)"
+      }
+    },
+    "live_evidence_binding": {
+      "status": "PASS",
+      "evidence_file": "artifacts/evidence/w4_adapter_interface_repair_evidence.json",
+      "results": {
+        "ccxt_binance_ticker_ok": {
+          "value": true,
+          "status": "PASS"
+        },
+        "provenance_source_ccxt": {
+          "value": "ccxt",
+          "status": "PASS"
+        },
+        "health_available": {
+          "value": true,
+          "status": "PASS"
+        },
+        "hyperliquid_allMids_ok": {
+          "value": true,
+          "status": "PASS"
+        },
+        "whitelist_clearinghouse_address": {
+          "value": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+          "status": "PASS"
+        },
+        "source_classification": {
+          "value": "legacy_project_whitelist",
+          "status": "PASS"
+        },
+        "probe_ok": {
+          "value": true,
+          "status": "PASS"
+        },
+        "position_count": {
+          "value": 1,
+          "status": "PASS"
+        },
+        "no_credentials_probe": {
+          "value": true,
+          "status": "PASS"
+        }
+      }
+    },
+    "live_probe_gate": {
+      "status": "PASS",
+      "based_on_head": "660fcc56b2812b06bef58b9632caa5a5f7431ae7",
+      "detail": "Live probes completed at head 660fcc56: CCXT Binance ticker OK (last=65831.99), Hyperliquid SDK allMids OK (866 assets), whitelist clearinghouseState OK (1 position). data_mode=live."
+    },
+    "ownership": [
+      "market_radar/external_adapters/**",
+      "tests/mvpplus/adapters/**",
+      "scripts/mvpplus/adapters/**",
+      "docs/adapters/**",
+      "requirements/mvpplus-adapters.txt",
+      "artifacts/evidence/w4_adapter_*.json"
+    ]
+  },
+  "W5": {
+    "status": "PASS",
+    "source": "previously_accepted",
+    "branch": "workbench/mvpplus-ops-foundation-v1",
+    "head": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+    "tested_code": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61",
+    "tests": {
+      "collected": 61,
+      "passed": 61,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "integration_gate": "PASS",
+  "lanes_ready_for_integration": true,
+  "integration_complete": false,
+  "mvpplus_ready": false,
+  "internal_production_ready": false
+}
