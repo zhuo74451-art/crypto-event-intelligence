@@ -554,6 +554,19 @@ def run_bounded_shadow(
         )
     except Exception as e:
         result.errors.append(f"parent update failed: {_safe_error(e)}")
+        # Re-evaluate status after persistence failure — must downgrade to failed
+        result.status = _determine_final_status(result)
+        # Best-effort fallback: try once more with failed status
+        try:
+            update_run_finish(
+                db_path=str(db_path),
+                run_id=shadow_run_id,
+                status=result.status,
+                summary=parent_summary_final,
+                error=result.errors[-1] if result.errors else None,
+            )
+        except Exception:
+            pass  # Unable to persist — keep in-memory result for diagnostics
 
     # ------------------------------------------------------------------
     # 15. Release lock
