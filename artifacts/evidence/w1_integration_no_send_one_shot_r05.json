@@ -3,71 +3,78 @@
   "ticket": "W1_INTEGRATION_FINAL_TWO_DEFECT_CLOSURE_R05",
   "branch": "workbench/mvpplus-integration-v2",
   "repair_base_commit": "aeb67deb89faf5624e43097d86dfdc9a1e55dc6c",
-  "tested_commit": "aeb67deb89faf5624e43097d86dfdc9a1e55dc6c",
+  "tested_commit": "beae9d0619b36f90948a42f1a41a303dc642228d",
   "supersedes": "W1_INTEGRATION_R04",
   "r04_superseded_by_r05": true,
   "defect1_report_ordering": {
     "status": "RESOLVED",
-    "fix": "run report written LAST after all artifacts and update_run_finish",
-    "files_modified": [
-      "market_radar/integration/one_shot.py"
-    ]
+    "fix": "run report removed from _write_artifacts(); written LAST after artifacts and update_run_finish; captures final status including artifact/history errors",
+    "files_modified": ["market_radar/integration/one_shot.py"],
+    "verified": {
+      "report_is_last_write": true,
+      "history_matches_report_status": true,
+      "live_run_verification": "run report mtime latest among all output files"
+    }
   },
   "defect2_whale_validation": {
     "status": "RESOLVED",
-    "fix": "removed leverage=1.0 default; NaN/Inf rejection; entry/mark/lev>0; non-zero size needs value>0",
-    "files_modified": [
-      "market_radar/integration/whale_mapper.py"
-    ]
+    "fix": "removed leverage=1.0 default (stays None); NaN/Inf rejection; entry/mark/lev>0; non-zero size needs value>0; signed_size=0 valid; missing leverage not defaulted",
+    "files_modified": ["market_radar/integration/whale_mapper.py"],
+    "verified": {
+      "required_field_errors": 0,
+      "parse_errors": 0,
+      "mapping_errors": 0,
+      "live_whale_positions": 1
+    }
   },
-  "live_run_result": {
+  "fresh_state_live_run": {
+    "run_id": "os-097220ccab68",
     "overall_status": "degraded",
-    "whale_ok": true,
-    "whale_positions": 1,
-    "whale_is_baseline": true,
-    "alert_candidates": 2,
-    "required_field_errors": 0,
-    "large_new_position": 0,
-    "errors": [],
-    "output_paths_non_empty": true,
-    "sources": [
-      {
-        "source": "whale:0x6c851251",
-        "status": "ok",
-        "ok": true
-      },
-      {
-        "source": "ccxt:BTC/USDT",
-        "status": "ok",
-        "ok": true
-      },
-      {
-        "source": "ccxt:ETH/USDT",
-        "status": "ok",
-        "ok": true
-      },
-      {
-        "source": "ccxt:SOL/USDT",
-        "status": "ok",
-        "ok": true
-      },
-      {
-        "source": "hyperliquid:HYPE",
-        "status": "ok",
-        "ok": true
-      },
-      {
-        "source": "feed",
-        "status": "degraded",
-        "ok": false
-      }
-    ]
+    "degraded_reason": "Feed not_connected only (expected external limitation)",
+    "data_mode": "live-public",
+    "no_send": true,
+    "scheduler_started": false,
+    "credentials_used": false,
+    "errors": 0,
+    "whale": {
+      "ok": true,
+      "position_count": 1,
+      "is_baseline": true,
+      "change_count": 1,
+      "change_types": ["baseline_open_position"],
+      "alert_count": 2,
+      "large_new_position_alert_count": 0,
+      "parse_error_count": 0,
+      "mapping_error_count": 0,
+      "required_field_error_count": 0
+    },
+    "markets": {
+      "btc_usdt": {"status": "ok", "price_via": "ccxt"},
+      "eth_usdt": {"status": "ok", "price_via": "ccxt"},
+      "sol_usdt": {"status": "ok", "price_via": "ccxt"},
+      "hype_usdt": {"status": "ok", "price_via": "hyperliquid_all_mids"}
+    },
+    "feed": {"status": "degraded", "reason": "not_connected"},
+    "report_last_write_verified": true,
+    "history_status_matches_report": true,
+    "source_health_rows": 6,
+    "output_hashes": {
+      "run_os-097220ccab68.json": "138461b746714fbda73fc5c8e95b8add817c034f265313659bbf9900bcd74ed8",
+      "workbench_os-097220ccab68.html": "4feb9c060298e16d7bdbe6feac5a87baead635e90253737d3b39370e39517c69",
+      "whale_os-097220ccab68.json": "b673aa5a44b1d4919d85906de7b17276c0b4c66449ff626962e228d5593f63cb",
+      "market_os-097220ccab68.json": "222c0592d191755e1091752dfc9beb3b9749e130f1b5e1391ec99fa7aba7cb1e"
+    }
   },
   "test_results": {
-    "integration_tests": "52 passed",
-    "w3_feeds_ui_tests": "44 passed",
-    "w4_adapter_tests": "86 passed",
-    "combined": "182 passed"
+    "integration_tests": 52,
+    "w3_feeds_ui_tests": 44,
+    "w4_adapter_tests": 86,
+    "combined_pytest": {"passed": 279, "failed": 8, "skipped": 1},
+    "note": "8 QA (W6) failures are pre-existing lane issue, not caused by integration changes"
   },
-  "no_runtime_data_in_git": true
+  "runtime_data_committed": false,
+  "data_integration_tracked": ["data/integration/.gitignore"],
+  "no_send": true,
+  "scheduler_started": false,
+  "credentials_used": false
 }
