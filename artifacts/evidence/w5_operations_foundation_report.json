@@ -1,0 +1,95 @@
+{
+  "evidence_id": "w5_operations_foundation_report",
+  "lane": "W5_DELTA_OPERATIONS_CONCURRENCY_REPAIR_R02",
+  "baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "previous_remote_head": "1b11d56f75327b55b5dd344418a0c5a3e94ec705",
+  "target_branch": "workbench/mvpplus-ops-foundation-v1",
+  "tested_commit": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61",
+  "exact_test_command": "python -m pytest tests/mvpplus/operations/ -v --tb=line 2>&1",
+  "tests_collected": 61,
+  "tests_passed": 61,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "modified_files": [
+    "market_radar/operations/file_lock.py",
+    "market_radar/operations/atomic_json.py",
+    "market_radar/operations/scheduler_config.py",
+    "market_radar/operations/rollback.py",
+    "tests/mvpplus/operations/test_file_lock.py",
+    "tests/mvpplus/operations/test_atomic_json.py",
+    "artifacts/evidence/w5_operations_foundation_report.json"
+  ],
+  "deleted_files": [
+    "scripts/mvpplus/__init__.py",
+    "tests/mvpplus/__init__.py"
+  ],
+  "files_outside_owned_paths": {
+    "issue": "Parent-level __init__.py files outside W5 owned paths (scripts/mvpplus/, tests/mvpplus/)",
+    "resolution": "Deleted scripts/mvpplus/__init__.py and tests/mvpplus/__init__.py",
+    "owned_paths_retained": [
+      "scripts/mvpplus/operations/__init__.py",
+      "tests/mvpplus/operations/__init__.py"
+    ],
+    "no_other_out_of_scope_files": true
+  },
+  "repair_fixes": {
+    "file_lock": {
+      "issue": "TOCTOU race in exists->write pattern",
+      "fix": "os.open(O_CREAT | O_EXCL) for atomic exclusive creation",
+      "details": [
+        "O_CREAT | O_EXCL ensures exactly one winner among simultaneous callers",
+        "_pid_is_alive() cross-platform check prevents stale recovery when PID is still alive",
+        "release() verifies ownership before deleting lock file",
+        "Documented stale recovery policy in docstring and code comments"
+      ]
+    },
+    "atomic_json": {
+      "issue": "All writers shared one fixed .tmp path per target",
+      "fix": "Unique temp file per writer (PID + nanosecond + monotonic sequence counter)",
+      "details": [
+        "_unique_tmp_path() produces collision-free distinct paths using PID, time.time_ns() and a monotonic counter",
+        "Temp file in same directory for atomic os.replace",
+        "_atomic_replace retries on Windows sharing/access-denied errors with exponential back-off",
+        "No lingering .tmp files after write"
+      ]
+    },
+    "apscheduler": {
+      "issue": "Version pinned to 3.10.4, project policy is 3.11.x",
+      "fix": "Updated REQUIRED_APSCHEDULER_VERSION to '3.11', startswith() match",
+      "details": [
+        "check_apscheduler_available() uses importlib.metadata exclusively",
+        "Scheduler never started by code - enabled=False is the default"
+      ]
+    },
+    "rollback": {
+      "issue": "Destructive DROP TABLE was presented as a default direct action",
+      "fix": "Step 3 now requires backup, explicit approval, and dry-run/plan output",
+      "details": [
+        "dry_run_rollback() provides a plan without executing",
+        "Step 3 command is a dry-run echo with prerequisites documented",
+        "Note explicitly states data-loss risk and 3 prerequisites"
+      ]
+    },
+    "path_repair": {
+      "issue": "Parent-level __init__.py files outside W5 owned paths",
+      "fix": "Deleted scripts/mvpplus/__init__.py and tests/mvpplus/__init__.py",
+      "details": [
+        "sub-package operations/__init__.py files retained",
+        "No other out-of-scope files present"
+      ]
+    }
+  },
+  "known_limitations": [
+    "PID-alive check on Windows falls back to 'assume dead' if ctypes/kernel32 calls fail",
+    "File lock race test uses threads (same-process) rather than separate processes; true cross-process race should be tested in integration",
+    "Atomic JSON concurrent writers test validates unique temp paths but not the final content - last-writer-wins is by design"
+  ],
+  "clean_status": {
+    "git_working_tree": "clean after commit",
+    "branch": "workbench/mvpplus-ops-foundation-v1",
+    "previous_remote_head": "1b11d56f75327b55b5dd344418a0c5a3e94ec705",
+    "tested_commit": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61",
+    "no_staged_or_unstaged_changes": true,
+    "no_untracked_files": true
+  }
+}
