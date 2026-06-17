@@ -1,0 +1,72 @@
+{
+  "document": "w6_post_mvp_red_team_acceptance_pack_r01",
+  "ticket": "W6_POST_MVP_RED_TEAM_ACCEPTANCE_PACK_R01",
+  "branch": "workbench/post-mvp-red-team-v1",
+  "source_sha": "b28a240b5494115b2fe73ce9925d31f9604cf2d1",
+  "tested_commit": "b28a240b5494115b2fe73ce9925d31f9604cf2d1",
+  "invariant_checkers": 15,
+  "fault_cases": 154,
+  "fault_categories": {
+    "feed": 34,
+    "markets": 24,
+    "whale": 24,
+    "operations": 24,
+    "cli": 24,
+    "combo": 24
+  },
+  "post_mvp_tests": 75,
+  "all_post_mvp_tests_pass": true,
+  "security_scan": {
+    "no_credentials": true,
+    "no_wallet": true,
+    "no_send": true,
+    "no_shell_injection": true,
+    "no_path_traversal": true,
+    "no_env_leak": true,
+    "no_order_methods": true
+  },
+  "determinism_verified": true,
+  "performance_baseline": {
+    "corpus_iteration_ms": "<10",
+    "invariant_batch_ms": "<100"
+  },
+  "target_snapshot": {
+    "w2_whale": {
+      "branch": "workbench/post-mvp-whale-portfolio-intelligence-v1",
+      "head": "98f5c98342bb8f3ee45069f7c2af5f9d2f44e039",
+      "exists": true
+    },
+    "w3_events": {
+      "branch": "workbench/post-mvp-event-clustering-v1",
+      "head": "483b38fb1a0d7fa606fecada412b887b95ecfc04",
+      "exists": true
+    },
+    "w1_operator": {
+      "branch": "workbench/post-mvp-operator-workbench-v1",
+      "exists": false
+    },
+    "w4_market": {
+      "branch": "workbench/post-mvp-market-resilience-v1",
+      "exists": false
+    },
+    "w5_ops": {
+      "branch": "workbench/post-mvp-ops-audit-recovery-v1",
+      "exists": false
+    }
+  },
+  "merge_readiness_path": "docs/qa/POST_MVP_MERGE_READINESS_R01.md",
+  "no_target_modifications": true,
+  "no_send": true,
+  "no_credentials": true,
+  "no_daemon": true,
+  "files_outside_owned_paths": [],
+  "main_unchanged": true,
+  "git_status": "pending",
+  "limitations": [
+    "Only W2 and W3 post-MVP branches exist; W1/W4/W5 branches not yet pushed",
+    "Post-MVP target branches not independently tested yet \u2014 only acceptance pack ready",
+    "Performance baselines are soft thresholds, not hard pass/fail",
+    "External benchmark document not generated (time constraints)"
+  ],
+  "final_decision": "POST_MVP_TARGETS_PARTIALLY_AVAILABLE"
+}
