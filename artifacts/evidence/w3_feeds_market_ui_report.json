@@ -2,14 +2,9 @@
   "report_type": "w3_feeds_market_ui_evidence",
   "version": "v2",
   "generated_at_utc": "2026-06-17T03:00:46Z",
-  "baseline": {
-    "repository": "zhuo74451-art/crypto-event-intelligence",
-    "branch": "workbench/mvpplus-feeds-market-ui-v2",
-    "commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04"
-  },
-  "baseline_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
-  "previous_remote_head": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
-  "tested_commit": "1a995119fad8de45e6374f658af946c52a5e9044",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
   "branch": "workbench/mvpplus-feeds-market-ui-v2",
   "modified_files": [
     "market_radar/intelligence_feed/models.py",
@@ -34,7 +29,7 @@
     "skipped": 0,
     "xfailed": 0
   },
-  "test_command": "python -m pytest tests/mvpplus/feeds_market_ui/test_all.py -v",
+  "test_command": "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v",
   "fixture_truth": {
     "flash_fixture": 4,
     "news_fixture": 4,
@@ -96,6 +91,5 @@
     "Telegram fixtures remain empty (honest reporting)",
     "Market snapshots are fixture data, not live Hyperliquid API"
   ],
-  "git_status": "clean",
-  "merge_readiness": "LANE_MERGE_READY"
+  "git_status": "clean"
 }
