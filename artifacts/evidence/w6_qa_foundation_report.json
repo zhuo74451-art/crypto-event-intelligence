@@ -1,8 +1,8 @@
 {
-  "scan_id": "qa_20260617_042746_bad1d26a",
+  "scan_id": "qa_20260617_051424_06374a98",
   "target_repo": "C:\\Users\\PC\\Desktop\\cei_independent_qa",
   "target_ref": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
-  "scanned_at": "2026-06-17T04:27:46Z",
+  "scanned_at": "2026-06-17T05:14:24Z",
   "results": [
     {
       "scanner": "ownership_validator",
@@ -49,7 +49,7 @@
     {
       "scanner": "artifact_binding_validator",
       "status": "PASS",
-      "detail": "Verified 1 artifacts against commit bad1d26ab765721585f80c354cd07d4b1aa680f6",
+      "detail": "Verified 1 artifacts against commit 06374a98799aee02701959aac494605463572c65",
       "evidence_ref": null,
       "violations": []
     },
@@ -140,160 +140,9 @@
   },
   "remote_handoff": "REMOTE_HANDOFF_V1",
   "lane": "workbench/mvpplus-independent-qa-v1",
-  "status": "REMOTE_READY",
-  "baseline_commit": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
-  "previous_remote_head": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
-  "final_sha": "bad1d26ab765721585f80c354cd07d4b1aa680f6",
-  "tested_commit": "bad1d26ab765721585f80c354cd07d4b1aa680f6",
-  "tests": {
-    "collected": 90,
-    "passed": 90,
-    "failed": 0,
-    "skipped": 0
-  },
-  "exact_test_command": "python -X utf8 -m pytest tests/mvpplus/independent_qa/test_qa_foundation.py -v",
-  "evidence_path": "artifacts/evidence/w6_qa_foundation_report.json",
-  "git_status": "clean",
-  "blocking_reason": null,
-  "modified_files": [
-    "artifacts/evidence/w6_qa_foundation_report.json",
-    "qa/mvpplus/qa_core.py",
-    "tests/mvpplus/independent_qa/test_qa_foundation.py"
-  ],
-  "files_outside_owned_paths": [],
-  "diff_stat": "artifacts/evidence/w6_qa_foundation_report.json    |  45 ++--\n qa/mvpplus/qa_core.py                              | 239 ++++++++++++++-------\n tests/mvpplus/independent_qa/test_qa_foundation.py | 161 ++++++++++++--\n 3 files changed, 320 insertions(+), 125 deletions(-)",
-  "known_limitations": [
-    "Dependency scanner uses synthetic pinned manifest for self-test (real requirements.txt not scanned)",
-    "Attack corpus scans use simulated validators -- BLOCKED if no validator provided; no real HTTP target tested",
-    "No business lane scans were executed; only QA framework self-tests",
-    "Ownership scan PASS when no diff vs baseline (expected for single-lane worktree)"
-  ],
-  "path_ownership": {
-    "owned": [
-      "qa/mvpplus/",
-      "tests/mvpplus/independent_qa/",
-      "scripts/mvpplus/independent_qa/",
-      "docs/qa/",
-      "artifacts/evidence/"
-    ],
-    "scanned_paths": [
-      "qa/mvpplus/"
-    ],
-    "modified_in_owned": [
-      "artifacts/evidence/w6_qa_foundation_report.json",
-      "qa/mvpplus/qa_core.py",
-      "tests/mvpplus/independent_qa/test_qa_foundation.py"
-    ],
-    "modified_outside_owned": []
-  },
-  "scanner_details": [
-    {
-      "scanner": "ownership_validator",
-      "status": "PASS",
-      "detail": "Scanned 3 changed files against 5 owned paths",
-      "violation_count": 0
-    },
-    {
-      "scanner": "forbidden_import_scanner",
-      "status": "PASS",
-      "detail": "Scanned 1 paths for 3 forbidden imports",
-      "violation_count": 0
-    },
-    {
-      "scanner": "trading_capability_scanner",
-      "status": "PASS",
-      "detail": "Scanned 1 paths for trading patterns",
-      "violation_count": 0
-    },
-    {
-      "scanner": "credential_scanner",
-      "status": "PASS",
-      "detail": "Scanned 1 paths for credential patterns",
-      "violation_count": 0
-    },
-    {
-      "scanner": "scheduler_disabled_validator",
-      "status": "PASS",
-      "detail": "Scanned 1 paths for enabled schedulers",
-      "violation_count": 0
-    },
-    {
-      "scanner": "no_send_validator",
-      "status": "PASS",
-      "detail": "Scanned 1 paths for send patterns",
-      "violation_count": 0
-    },
-    {
-      "scanner": "artifact_binding_validator",
-      "status": "PASS",
-      "detail": "Verified 1 artifacts against commit bad1d26ab765721585f80c354cd07d4b1aa680f6",
-      "violation_count": 0
-    },
-    {
-      "scanner": "test_count_validator",
-      "status": "PASS",
-      "detail": "Expected 90, collected 90 across 1 paths",
-      "violation_count": 0
-    },
-    {
-      "scanner": "dependency_validator",
-      "status": "PASS",
-      "detail": "Checked requirements.txt",
-      "violation_count": 0
-    },
-    {
-      "scanner": "data_truth_validator",
-      "status": "PASS",
-      "detail": "Validated 3 records: 2 live, 0 cached, 1 fixture, 0 research_sample, 0 unknown",
-      "violation_count": 0
-    },
-    {
-      "scanner": "liquidation_formula_oracle",
-      "status": "PASS",
-      "detail": "Checked (long) mark=100.0 liq=95.0 → 5.000000",
-      "violation_count": 0
-    },
-    {
-      "scanner": "first_snapshot_oracle",
-      "status": "PASS",
-      "detail": "Validated 1 positions in first snapshot",
-      "violation_count": 0
-    },
-    {
-      "scanner": "hype_source_policy_validator",
-      "status": "PASS",
-      "detail": "Validated HYPE market record: venue=Hyperliquid",
-      "violation_count": 0
-    },
-    {
-      "scanner": "feed_id_validator",
-      "status": "PASS",
-      "detail": "Validated feed ID determinism",
-      "violation_count": 0
-    },
-    {
-      "scanner": "html_security_scanner",
-      "status": "PASS",
-      "detail": "Scanned 1 paths for HTML vulnerabilities",
-      "violation_count": 0
-    },
-    {
-      "scanner": "url_attack_corpus",
-      "status": "PASS",
-      "detail": "Tested 18/18 URLs against validator",
-      "violation_count": 0
-    },
-    {
-      "scanner": "xss_attack_corpus",
-      "status": "PASS",
-      "detail": "Tested 17/17 XSS payloads against renderer",
-      "violation_count": 0
-    },
-    {
-      "scanner": "evidence_schema_validator",
-      "status": "PASS",
-      "detail": "Validated evidence against schema (6 properties)",
-      "violation_count": 0
-    }
-  ]
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "046a7209a417c248f7d6ba3b899de349cc2e5ffb",
+  "tested_commit": "624efa5d6947547b924cabfd369d69d9a853b91c",
+  "framework_tests": "90 collected / 90 passed / 0 failed / 0 skipped",
+  "stage": "A"
 }

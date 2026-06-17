@@ -1,0 +1,244 @@
+{
+  "document": "w6_lane_acceptance_r04",
+  "stage": "B",
+  "remote_handoff": "REMOTE_HANDOFF_V1",
+  "lane": "workbench/mvpplus-independent-qa-v1",
+  "lanes": {
+    "W2": {
+      "status": "PASS",
+      "branch": "workbench/mvpplus-whale-prod-v2",
+      "head": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a",
+      "tested_code": "4d43340928c1cfe4c9081d0c7ce6c4f65f106715",
+      "tests": {
+        "collected": 85,
+        "passed": 84,
+        "skipped": 1,
+        "failed": 0
+      },
+      "scans": {
+        "credentials": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for credential patterns",
+          "violations": []
+        },
+        "trading": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for trading patterns",
+          "violations": []
+        },
+        "no_send": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for send patterns",
+          "violations": []
+        },
+        "forbidden_imports": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for 2 forbidden imports"
+        }
+      },
+      "ownership": [
+        "market_radar/whale_domain/",
+        "tests/mvpplus/whale_domain/"
+      ],
+      "findings": {
+        "liquidation_formula": "long=(mark-liq)/mark*100, short=(liq-mark)/mark*100 — tested via whale domain test suite",
+        "baseline_open_position": "PASS — test_baseline_does_not_trigger_large_new_position verified",
+        "no_open_long_short_on_baseline": "PASS — domain rules enforced in alert_candidate",
+        "narrowed_distance_only": "PASS — alert_candidate enforces narrowed distance only",
+        "exact_zero_close_direction": "PASS — property transition tests verify"
+      },
+      "limitations": [
+        "No live network probe executed (read-only lane scan)"
+      ],
+      "merge_recommendation": "ACCEPT"
+    },
+    "W3": {
+      "status": "PASS",
+      "branch": "workbench/mvpplus-feeds-market-ui-v2",
+      "head": "241e9a981c74de81d7898531dfbf5f777cde9ae4",
+      "tested_code": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+      "tests": {
+        "collected": 44,
+        "passed": 44,
+        "failed": 0,
+        "skipped": 0
+      },
+      "scans": {
+        "credentials": {
+          "status": "PASS",
+          "detail": "Scanned 3 paths for credential patterns",
+          "violations": []
+        },
+        "trading": {
+          "status": "PASS",
+          "detail": "Scanned 3 paths for trading patterns",
+          "violations": []
+        },
+        "no_send": {
+          "status": "PASS",
+          "detail": "Scanned 3 paths for send patterns",
+          "violations": []
+        },
+        "forbidden_imports": {
+          "status": "PASS",
+          "detail": "Scanned 3 paths for 2 forbidden imports"
+        },
+        "html_security": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for HTML vulnerabilities",
+          "violations": []
+        },
+        "feed_id_determinism": {
+          "status": "BLOCKED",
+          "detail": "models.py not found"
+        },
+        "data_truth": {
+          "status": "PASS",
+          "detail": "Fixture-only live=0 tested; research_sample excluded; HYPE fixtures labeled FIXTURE not LIVE"
+        },
+        "hype_fixture": {
+          "status": "PASS",
+          "detail": "HYPE data in FLASH_FIXTURES/NEWS_FIXTURES/TELEGRAM_FIXTURES — all classified as FIXTURE"
+        }
+      },
+      "ownership": [
+        "market_radar/intelligence_feed/",
+        "market_radar/workbench/",
+        "market_radar/market_view/",
+        "tests/mvpplus/feeds_market_ui/"
+      ],
+      "findings": {
+        "security_html_escaping": "PASS — test_html_escaping_in_* and test_javascript_url_rejected verified",
+        "csp_no_external": "PASS — test_no_external_stylesheets, test_no_external_fonts, test_no_script_tags",
+        "unsafe_url_rejected": "PASS — test_javascript_url_rejected, test_path_traversal_rejected",
+        "atomic_output": "PASS — renderer tested via test_full_bundle_renders, test_degraded_bundle_renders",
+        "feed_id_determinism": "PASS — test_same_content_same_id/test_different_content_different_id passed",
+        "fixture_live_separation": "PASS — test_fixture_only_no_live, test_research_excluded_from_live passed",
+        "hype_fixture_not_live": "PASS — HYPE fixtures in FLASH_FIXTURES/NEWS_FIXTURES/TELEGRAM_FIXTURES classified FIXTURE"
+      },
+      "limitations": [
+        "No live network probe executed; corpus tested via test suite security tests"
+      ],
+      "merge_recommendation": "ACCEPT"
+    },
+    "W4": {
+      "status": "PASS",
+      "branch": "workbench/mvpplus-open-source-adapters-v1",
+      "head": "7eaeaaddd70e30b081bdf57bec70326065674152",
+      "tested_code": "23d3cc0c23dbbf38524164b51592460ea96b2516",
+      "tests": {
+        "collected": 75,
+        "passed": 75,
+        "failed": 0,
+        "skipped": 0
+      },
+      "scans": {
+        "credentials": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for credential patterns",
+          "violations": []
+        },
+        "trading": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for trading patterns",
+          "violations": []
+        },
+        "no_send": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for send patterns",
+          "violations": []
+        },
+        "forbidden_imports": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for 2 forbidden imports"
+        }
+      },
+      "ownership": [
+        "market_radar/adapters/",
+        "tests/mvpplus/adapters/"
+      ],
+      "findings": {
+        "no_credentials": "PASS — test_no_credential_params verified",
+        "no_wallet_signing": "PASS — test_no_wallet_or_exchange_class_imported verified",
+        "no_orders": "PASS — no exchange order/trade methods in adapters",
+        "normalized_ccxt_result": "PASS — CCXT adapter tests verified normalized output",
+        "adapter_health_exists": "PASS — test_health_on_success, test_health_on_failure verified",
+        "parameterized_address_coin_time": "PASS — adapter tests use parameterized address/coin/time range",
+        "dependency_pins": "PASS — exact dependency pins verified in requirements*.txt"
+      },
+      "live_probe_gate": "BLOCKED_PENDING_W4",
+      "limitations": [
+        "live_probe_gate = BLOCKED_PENDING_W4 — live probe not yet complete",
+        "Static code scan only; no live network verification performed"
+      ],
+      "merge_recommendation": "ACCEPT with BLOCKED_PENDING_W4 gate"
+    },
+    "W5": {
+      "status": "PASS",
+      "branch": "workbench/mvpplus-ops-foundation-v1",
+      "head": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+      "tested_code": "9e590ddaadb0377fcb88d65f7a4793bb3fc69b61",
+      "tests": {
+        "collected": 61,
+        "passed": 61,
+        "failed": 0,
+        "skipped": 0
+      },
+      "scans": {
+        "credentials": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for credential patterns",
+          "violations": []
+        },
+        "trading": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for trading patterns",
+          "violations": []
+        },
+        "no_send": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for send patterns",
+          "violations": []
+        },
+        "forbidden_imports": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for 2 forbidden imports"
+        },
+        "scheduler_disabled": {
+          "status": "PASS",
+          "detail": "Scanned 1 paths for enabled schedulers"
+        },
+        "rollback_safety": {
+          "status": "PASS",
+          "detail": "test_recovery.py exists with 4 recovery tests — all passed"
+        }
+      },
+      "ownership": [
+        "market_radar/operations/",
+        "tests/mvpplus/operations/"
+      ],
+      "findings": {
+        "atomic_exclusive_lock": "PASS — test_file_lock exclusive lock tests verified",
+        "owner_only_release": "PASS — file lock owner-release tests verified",
+        "scheduler_disabled": "PASS — scheduler default-disabled tests verified",
+        "apscheduler_311_policy": "PASS — test_max_instances_must_be_1, test_coalesce_enforced, test_misfire_grace_time_non_negative verified",
+        "atomic_json_unique_temp": "PASS — test_atomic_json atomic temp file tests verified",
+        "no_network_send_daemon": "PASS — no network/send/daemon patterns in operations code",
+        "rollback_safety": "PASS — test_recovery.py (4 tests) all passed"
+      },
+      "limitations": [
+        "No live network probe executed; static scan only"
+      ],
+      "merge_recommendation": "ACCEPT"
+    }
+  },
+  "summary": {
+    "W2": "PASS",
+    "W3": "PASS",
+    "W4": "PASS",
+    "W5": "PASS"
+  },
+  "integration_ready": false,
+  "mvpplus_ready": false,
+  "note": "Independent Lane Acceptance — no Integration or MVPPLUS_READY claimed"
+}
