@@ -1078,3 +1078,339 @@ class TestNoForbiddenTestImports:
                 pass
         # The test should simply pass — we are not importing these at module level
         assert True
+
+
+# ===================================================================
+# Parent-child link tests (child_history_mode)
+# ===================================================================
+
+
+class TestChildHistoryModeConfig:
+    def test_insert_mode_default(self):
+        cfg = BoundedShadowConfig(state_dir="/tmp/test")
+        assert cfg.child_history_mode == "insert"
+
+    def test_link_existing_mode_accepted(self):
+        cfg = BoundedShadowConfig(state_dir="/tmp/test", child_history_mode="link_existing")
+        assert cfg.child_history_mode == "link_existing"
+
+    def test_invalid_mode_rejected(self):
+        with pytest.raises(ValueError, match="child_history_mode"):
+            BoundedShadowConfig(state_dir="/tmp/test", child_history_mode="auto")
+
+
+class TestChildHistoryModeInsert:
+    """insert mode: bounded_shadow writes child wrapper rows with parent_run_id."""
+
+    def test_insert_writes_parent_run_id(self, state_dir: str):
+        """6. Insert mode writes parent_run_id, run_ordinal, run_kind."""
+        config = make_config(state_dir, child_history_mode="insert")
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, fake_completed,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        assert result.status == STATUS_COMPLETED
+        from market_radar.operations.run_history import get_run
+        for record in result.records:
+            child = get_run(str(config.run_history_db), record.child_run_id)
+            assert child is not None
+            assert child["parent_run_id"] == result.shadow_run_id
+            assert child["run_ordinal"] == record.ordinal
+            assert child["run_kind"] == "shadow_child"
+
+    def test_parent_run_kind(self, state_dir: str):
+        """Parent row has run_kind=shadow_parent."""
+        config = make_config(state_dir, child_history_mode="insert")
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, fake_completed,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        from market_radar.operations.run_history import get_run
+        parent = get_run(str(config.run_history_db), result.shadow_run_id)
+        assert parent is not None
+        assert parent["run_kind"] == "shadow_parent"
+
+    def test_backward_compat_insert_works(self, state_dir: str):
+        """5. Insert mode original behavior continues to pass."""
+        config = make_config(state_dir, child_history_mode="insert")
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, fake_completed,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        assert result.attempted_runs == 2
+        assert result.status == STATUS_COMPLETED
+        assert len(result.errors) == 0
+
+
+class FakeSelfRecordingCallable:
+    """Simulates an Integration callable that writes its own run_history row."""
+
+    def __init__(self, db_path: str):  # noqa: N803
+        self.db_path = db_path
+
+    def __call__(self, ordinal: int, shared_state_dir: str, no_send: bool,
+                 parent_shadow_run_id: str) -> ShadowCallableResult:
+        child_run_id = f"self-rec-{ordinal}-{uuid.uuid4().hex[:8]}"
+        # Write our own row first, simulating Integration behavior
+        from market_radar.operations.run_history import insert_run
+        insert_run(
+            db_path=self.db_path,
+            run_id=child_run_id,
+            runner_label="integration_oneshot",
+            status=STATUS_COMPLETED,
+            summary={"from": "self-recording", "ordinal": ordinal},
+        )
+        return ShadowCallableResult(
+            child_run_id=child_run_id,
+            status=STATUS_COMPLETED,
+            summary={"self_recorded": True},
+        )
+
+
+class TestChildHistoryModeLinkExisting:
+    """link_existing mode: callable writes own row, bounded_shadow only links."""
+
+    def test_link_existing_two_rounds_no_conflict(self, state_dir: str):
+        """9-10. Link existing mode: 2 rounds, no UNIQUE conflict."""
+        config = make_config(
+            state_dir, max_runs=2,
+            child_history_mode="link_existing",
+        )
+        callable_ = FakeSelfRecordingCallable(str(config.run_history_db))
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, callable_,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        assert result.attempted_runs == 2
+        assert result.status == STATUS_COMPLETED
+        assert len(result.errors) == 0, f"errors: {result.errors}"
+
+    def test_real_child_ids_preserved(self, state_dir: str):
+        """11. Two real child IDs remain unchanged."""
+        config = make_config(state_dir, max_runs=2, child_history_mode="link_existing")
+        callable_ = FakeSelfRecordingCallable(str(config.run_history_db))
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, callable_,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        assert len(result.records) == 2
+        for record in result.records:
+            assert record.child_run_id.startswith("self-rec-")
+
+    def test_parent_exists(self, state_dir: str):
+        """12. Parent exists in DB."""
+        config = make_config(state_dir, max_runs=2, child_history_mode="link_existing")
+        callable_ = FakeSelfRecordingCallable(str(config.run_history_db))
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, callable_,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        from market_radar.operations.run_history import get_run
+        parent = get_run(str(config.run_history_db), result.shadow_run_id)
+        assert parent is not None
+
+    def test_children_exist(self, state_dir: str):
+        """13. Children exist in DB."""
+        config = make_config(state_dir, max_runs=2, child_history_mode="link_existing")
+        callable_ = FakeSelfRecordingCallable(str(config.run_history_db))
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, callable_,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        from market_radar.operations.run_history import get_run
+        for record in result.records:
+            child = get_run(str(config.run_history_db), record.child_run_id)
+            assert child is not None, f"child {record.child_run_id} not found"
+
+    def test_list_child_runs_ordinal_order(self, state_dir: str):
+        """14. list_child_runs returns ordinal 1, 2."""
+        config = make_config(state_dir, max_runs=2, child_history_mode="link_existing")
+        callable_ = FakeSelfRecordingCallable(str(config.run_history_db))
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, callable_,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        from market_radar.operations.run_history import list_child_runs
+        children = list_child_runs(str(config.run_history_db), result.shadow_run_id)
+        assert len(children) == 2
+        assert children[0]["run_ordinal"] == 1
+        assert children[1]["run_ordinal"] == 2
+
+    def test_child_has_parent_run_id(self, state_dir: str):
+        """15. Each child has parent_run_id set."""
+        config = make_config(state_dir, max_runs=2, child_history_mode="link_existing")
+        callable_ = FakeSelfRecordingCallable(str(config.run_history_db))
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, callable_,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        from market_radar.operations.run_history import list_child_runs
+        children = list_child_runs(str(config.run_history_db), result.shadow_run_id)
+        for child in children:
+            assert child["parent_run_id"] == result.shadow_run_id
+
+    def test_same_link_idempotent(self, state_dir: str):
+        """16. Same link repeated is idempotent."""
+        from market_radar.operations.run_history import link_existing_run_to_parent, insert_run, get_run
+        from market_radar.operations.sqlite_schema import initialize_sqlite
+        cfg = config_path(state_dir)
+        db = str(cfg.run_history_db)
+        initialize_sqlite(db)
+        # Insert parent and child manually
+        insert_run(db, "parent-id", "test", "started")
+        insert_run(db, "child-id", "test", "completed")
+        # Link twice
+        assert link_existing_run_to_parent(db, "child-id", "parent-id", 1) is True
+        assert link_existing_run_to_parent(db, "child-id", "parent-id", 1) is True
+        child = get_run(db, "child-id")
+        assert child["parent_run_id"] == "parent-id"
+        assert child["run_ordinal"] == 1
+
+    def test_different_parent_overwrite_rejected(self, state_dir: str):
+        """17. Overwriting with a different parent is rejected."""
+        from market_radar.operations.run_history import link_existing_run_to_parent, insert_run
+        from market_radar.operations.sqlite_schema import initialize_sqlite
+        cfg = config_path(state_dir)
+        db = str(cfg.run_history_db)
+        initialize_sqlite(db)
+        insert_run(db, "parent-a", "test", "started")
+        insert_run(db, "parent-b", "test", "started")
+        insert_run(db, "child-id", "test", "completed")
+        link_existing_run_to_parent(db, "child-id", "parent-a", 1)
+        with pytest.raises(ValueError, match="already linked"):
+            link_existing_run_to_parent(db, "child-id", "parent-b", 1)
+
+    def test_ordinal_conflict_rejected(self, state_dir: str):
+        """18. Ordinal conflict raises error."""
+        from market_radar.operations.run_history import link_existing_run_to_parent, insert_run
+        from market_radar.operations.sqlite_schema import initialize_sqlite
+        cfg = config_path(state_dir)
+        db = str(cfg.run_history_db)
+        initialize_sqlite(db)
+        insert_run(db, "parent-id", "test", "started")
+        insert_run(db, "child-a", "test", "completed")
+        insert_run(db, "child-b", "test", "completed")
+        link_existing_run_to_parent(db, "child-a", "parent-id", 1)
+        with pytest.raises(ValueError, match="already assigned"):
+            link_existing_run_to_parent(db, "child-b", "parent-id", 1)
+
+    def test_child_not_found(self, state_dir: str):
+        """19. Non-existent child -> failed."""
+        config = make_config(state_dir, max_runs=1, child_history_mode="link_existing")
+
+        class CallableReturnsMissing:
+            def __call__(self, **kwargs: Any) -> ShadowCallableResult:
+                return ShadowCallableResult(child_run_id="nonexistent-child", status=STATUS_COMPLETED)
+
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, CallableReturnsMissing(),
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        assert result.status == STATUS_FAILED
+        assert any("link_existing" in e.lower() or "does not exist" in e.lower()
+                   for e in result.errors), f"expected link error, got: {result.errors}"
+
+    def test_parent_not_found_via_link(self, state_dir: str):
+        """20. Direct link_existing with non-existent parent -> error."""
+        from market_radar.operations.run_history import link_existing_run_to_parent, insert_run
+        from market_radar.operations.sqlite_schema import initialize_sqlite
+        cfg = config_path(state_dir)
+        db = str(cfg.run_history_db)
+        initialize_sqlite(db)
+        insert_run(db, "orphan-child", "test", "completed")
+        with pytest.raises(ValueError, match="does not exist"):
+            link_existing_run_to_parent(db, "orphan-child", "no-parent", 1)
+
+    def test_persistence_error_forces_failed(self, state_dir: str):
+        """21-22. Persistence error -> parent failed, result has errors."""
+        config = make_config(state_dir, max_runs=1, child_history_mode="link_existing")
+
+        class CallableWithBadId:
+            def __call__(self, **kwargs: Any) -> ShadowCallableResult:
+                return ShadowCallableResult(child_run_id="", status=STATUS_COMPLETED)
+
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, CallableWithBadId(),
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        # Empty child_run_id leads to link failure (or empty id error)
+        assert result.status == STATUS_FAILED
+
+    def test_completed_has_no_errors(self, state_dir: str):
+        """22. Completed successfully -> result.errors=[]."""
+        config = make_config(state_dir, max_runs=2, child_history_mode="insert")
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, fake_completed,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        assert result.status == STATUS_COMPLETED
+        assert len(result.errors) == 0, f"errors: {result.errors}"
+
+    def test_parent_summary_matches_db_children(self, state_dir: str):
+        """24. Parent summary child_records match DB children."""
+        config = make_config(state_dir, max_runs=3, child_history_mode="insert")
+        clock = FakeClock()
+        result = run_bounded_shadow(
+            config, fake_completed,
+            sleep_fn=make_fake_sleep(clock), clock_fn=clock,
+        )
+        from market_radar.operations.run_history import get_run, list_child_runs
+        parent = get_run(str(config.run_history_db), result.shadow_run_id)
+        assert parent is not None
+        summary = parent.get("summary") or {}
+        child_records = summary.get("child_records", [])
+        assert len(child_records) == 3
+        db_children = list_child_runs(str(config.run_history_db), result.shadow_run_id)
+        assert len(db_children) == 3
+        for cr, dbc in zip(child_records, db_children):
+            assert cr["child_run_id"] == dbc["run_id"]
+            assert cr["status"] == dbc["status"]
+
+
+def config_path(state_dir: str) -> BoundedShadowConfig:
+    """Helper: build config just for path resolution (no run)."""
+    return BoundedShadowConfig(state_dir=state_dir)
+
+
+class TestLinkExistingApi:
+    """Direct unit tests for link_existing_run_to_parent and list_child_runs."""
+
+    def test_ordinal_must_be_positive(self):
+        from market_radar.operations.run_history import link_existing_run_to_parent
+        with pytest.raises(ValueError, match="positive"):
+            link_existing_run_to_parent(":memory:", "c", "p", 0)
+
+    def test_empty_run_id_rejected(self):
+        from market_radar.operations.run_history import link_existing_run_to_parent
+        with pytest.raises(ValueError, match="non-empty"):
+            link_existing_run_to_parent(":memory:", "", "p", 1)
+
+    def test_empty_parent_run_id_rejected(self):
+        from market_radar.operations.run_history import link_existing_run_to_parent
+        with pytest.raises(ValueError, match="non-empty"):
+            link_existing_run_to_parent(":memory:", "c", "", 1)
+
+    def test_list_child_runs_empty(self, tmp_path: Path):
+        from market_radar.operations.run_history import list_child_runs
+        db = tmp_path / "empty.db"
+        from market_radar.operations.sqlite_schema import initialize_sqlite
+        initialize_sqlite(db)
+        children = list_child_runs(str(db), "no-parent")
+        assert children == []
+
+    def test_no_send_still_rejected(self, state_dir: str):
+        """25. no_send=false still rejected in link_existing mode."""
+        with pytest.raises(ValueError, match="no_send must be True"):
+            BoundedShadowConfig(state_dir=state_dir, no_send=False, child_history_mode="link_existing")
