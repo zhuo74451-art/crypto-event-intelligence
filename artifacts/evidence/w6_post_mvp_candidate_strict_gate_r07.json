@@ -1,0 +1,43 @@
+{
+  "document": "w6_post_mvp_candidate_strict_gate_r07",
+  "ticket": "W6_STRICT_GATE_RESTORATION_R07",
+  "repair_base_commit": "c37dde48c1e7ac9ff948bf7ce8f365013a0cd1ca",
+  "w6_tested_commit": "6c98949ea6dcd1892f66e3b574dc4cd3cb53b776",
+  "previous_weakened_assertions": [
+    "XSS threshold lowered to 4",
+    "Credential scan used os.listdir(\".\")",
+    "Owned paths allowed broad directories (tests/, scripts/)",
+    "Runtime artifact gate used results/runs as broad exclusions",
+    "Whale JSON test used pass  # filtered"
+  ],
+  "restored_assertions": [
+    "XSS threshold restored to >=5, 5th case added",
+    "Credential scan uses git ls-files, 7 file types, 5 patterns",
+    "Owned paths exact to W6 paths + target freeze check",
+    "Runtime artifact gate uses exact allowlist + pre-existing dir prefix",
+    "Whale JSON test fails on non-allowed paths"
+  ],
+  "xss_case_count": 5,
+  "credential_scan_scope": "git ls-files recursive, market_radar/ scripts/ qa/ config/",
+  "exact_owned_paths": [
+    "qa/post_mvp/",
+    "tests/post_mvp/independent_qa/",
+    "scripts/post_mvp/qa/",
+    "docs/qa/",
+    "artifacts/evidence/"
+  ],
+  "runtime_artifact_allowlist": "Exact file set + config/ data/ fixtures/ evidence/ results/ logs/ runs/ schemas/ memory/ prefixes",
+  "mutation_tests": 14,
+  "w6_passed": 169,
+  "w6_failed": 0,
+  "w6_skipped": 0,
+  "candidate_head": "9637a47249dde006f07c22c37002cb98ff6e168e",
+  "candidate_tested": "805188a6a50e2600387d52e3071ed3f97d4ff394",
+  "candidate_unchanged": true,
+  "main_unchanged": true,
+  "inherited_business_tests": "2504 passed (from R05/R06)",
+  "inherited_live_one_shot": "PASS",
+  "inherited_live_shadow": "PASS",
+  "final_decision": "POST_MVP_CANDIDATE_ACCEPTED_FOR_MAIN_REVIEW",
+  "git_status": "clean"
+}
