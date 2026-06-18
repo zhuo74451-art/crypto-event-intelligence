@@ -1,0 +1,111 @@
+{
+  "evidence_id": "w5_post_mvp_audit_recovery_r04",
+  "ticket": "W5_OPS_AUDIT_RECOVERY_COMPLETION_R04",
+  "lane": "W5",
+  "branch": "workbench/post-mvp-ops-audit-recovery-v1",
+  "source_head": "5dd9b07cb6774e1b03ca6e6f0f8be312e44105d4",
+  "tested_commit": "1175bb4a03f28ff89249b59cc4143a348a54f237",
+  "old_tests": 151,
+  "new_tests": 94,
+  "total_tests": 245,
+  "persistence_matrix": {
+    "final_update_failure_forces_failed": true,
+    "error_detection_patterns": 10,
+    "normal_errors_not_confused": true,
+    "lock_release_failure_no_mask": true
+  },
+  "doctor_checks": [
+    "db:exists", "db:schema_version", "db:integrity", "db:wal_status",
+    "db:tables", "db:indexes", "parent_child:integrity",
+    "ordinal:duplicates", "orphan:children", "unfinished:runs",
+    "status:abnormal", "time:travel", "summary:json",
+    "source_health:all", "lock:exists", "stop_marker:exists",
+    "db:sha256", "security:path_leak", "security:sensitive_key",
+    "artifact:db_checksum"
+  ],
+  "bundle_features": [
+    "manifest_schema_version",
+    "canonical_json_sort_keys",
+    "hash_chain",
+    "bundle_id_deterministic",
+    "redaction_report",
+    "excluded_fields_report",
+    "lineage_graph_in_parent_child_graph",
+    "SHA256SUMS_per_file"
+  ],
+  "bundle_verification": {
+    "tamper_detected": true,
+    "missing_file_detected": true,
+    "sha256_mismatch_detected": true,
+    "deterministic_business_hash": true
+  },
+  "backup_restore_matrix": {
+    "normal_db": true,
+    "wal_db": true,
+    "locked_db": true,
+    "empty_db": true,
+    "1000_rows": true,
+    "destination_exists_rejected": true,
+    "restore_to_new_path": true,
+    "restore_to_source_rejected": true,
+    "schema_version_match": true,
+    "atomic_cleanup_on_fail": true,
+    "source_never_modified": true
+  },
+  "retention": {
+    "plan_only": true,
+    "failed_kept_permanently": true,
+    "reason_codes": true,
+    "estimated_savings_non_negative": true,
+    "no_delete_executed": true
+  },
+  "recovery_plan": {
+    "plan_only": true,
+    "no_destructive_sql": true,
+    "requires_approval": true,
+    "requires_backup": true,
+    "scenarios": ["orphan", "duplicate_ordinal", "corrupt_json", "schema_mismatch", "missing_db", "incomplete_parent"]
+  },
+  "stress_matrix": {
+    "100_bundle_exports": true,
+    "tamper_matrix": true,
+    "fault_injection_matrix": true,
+    "3000_row_stress": true,
+    "orphan_count_accurate": true
+  },
+  "test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/operations/ tests/post_mvp/operations/ -v --tb=line"
+  ],
+  "static_safety": {
+    "no_deletion": true,
+    "no_network": true,
+    "no_send": true,
+    "no_daemon": true,
+    "no_scheduler": true,
+    "no_threads": true,
+    "no_credentials": true,
+    "main_unchanged": true
+  },
+  "modified_files": [
+    "market_radar/operations/audit_bundle.py",
+    "market_radar/operations/doctor.py",
+    "market_radar/operations/recovery_plan.py",
+    "tests/post_mvp/operations/test_audit_recovery_hardening.py",
+    "artifacts/evidence/w5_post_mvp_audit_recovery_r04.json"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "Backup uses SQLite online backup API — locked transactions may require retry",
+    "Doctor PRAGMA integrity_check may be I/O intensive",
+    "Retention estimates are approximate (text-length-based heuristics)",
+    "Bundle does not include raw Feed data or API responses",
+    "Recovery plans are advisory — no automated execution",
+    "Permission-based fault injection adapted for cross-platform compatibility"
+  ],
+  "git_status": {
+    "branch": "workbench/post-mvp-ops-audit-recovery-v1",
+    "source_head": "5dd9b07cb6774e1b03ca6e6f0f8be312e44105d4",
+    "tested_commit": "1175bb4a03f28ff89249b59cc4143a348a54f237",
+    "working_tree": "clean"
+  }
+}
