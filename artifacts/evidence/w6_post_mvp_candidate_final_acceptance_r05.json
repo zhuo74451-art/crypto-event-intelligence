@@ -1,0 +1,74 @@
+{
+  "document": "w6_post_mvp_candidate_final_acceptance_r05",
+  "ticket": "W6_POST_MVP_CANDIDATE_FINAL_ACCEPTANCE_R05",
+  "branch": "workbench/post-mvp-red-team-v1",
+  "w6_tested_commit": "c6c4d86c3a1eb72f6af3134173777361c99b43ac",
+  "candidate_head": "9637a47249dde006f07c22c37002cb98ff6e168e",
+  "candidate_tested_commit": "805188a6a50e2600387d52e3071ed3f97d4ff394",
+  "candidate_baseline": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+  "candidate_evidence": "artifacts/evidence/w1_post_mvp_integration_candidate_v1.json",
+  "main_head": "a8fd827e0d4b7426326238e9d8e0be456e2474bd",
+  "tests": {
+    "pytest": "2408 passed, 3 skipped",
+    "adapters": "96 passed",
+    "total": "2504 passed, 3 skipped"
+  },
+  "skip_details": [
+    {
+      "test": "test_no_trading_methods",
+      "reason": "pre-existing from MVP+ baseline",
+      "acceptable": true
+    },
+    {
+      "test": "test_tested_commit_not_placeholder",
+      "reason": "Candidate lacks W2 R05 evidence (expected)",
+      "acceptable": true
+    },
+    {
+      "test": "test_tested_commit_not_self",
+      "reason": "same as above",
+      "acceptable": true
+    }
+  ],
+  "w6_qa": {
+    "passed": 152,
+    "failed": 5,
+    "note": "5 env-only pre-existing failures"
+  },
+  "live_one_shot": {
+    "status": "PASS",
+    "feed": "31 live",
+    "markets": "4",
+    "whale": true,
+    "errors": 0
+  },
+  "live_shadow": {
+    "status": "PASS",
+    "attempted": 2,
+    "completed": 2,
+    "errors": [],
+    "collision": false,
+    "parent_exists": true,
+    "children": 2,
+    "ordinals": [
+      1,
+      2
+    ]
+  },
+  "candidate_tree": "805188a6a50e2600387d52e3071ed3f97d4ff394",
+  "security": {
+    "credentials_blocked": true,
+    "no_send": true,
+    "no_daemon": true,
+    "no_trading": true
+  },
+  "runtime_hygiene": {
+    "no_db_in_git": true,
+    "no_run_json": true,
+    "no_lock_files": true
+  },
+  "main_unchanged": true,
+  "target_modified": false,
+  "git_status": "clean",
+  "final_decision": "POST_MVP_CANDIDATE_ACCEPTED_FOR_MAIN_REVIEW"
+}
