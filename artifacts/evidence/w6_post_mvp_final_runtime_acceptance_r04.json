@@ -1,0 +1,78 @@
+{
+  "document": "w6_post_mvp_final_runtime_acceptance_r04",
+  "ticket": "W6_FINAL_EVIDENCE_BINDING_FIX_R04",
+  "branch": "workbench/post-mvp-red-team-v1",
+  "repair_base": "b191a4b10d9ea3c2db388bf439f88eb0926614ab",
+  "tested_commit": "18992e158c50069f1323dfb05ca4991fdde0be2f",
+  "mvp_baseline": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+  "w1": {
+    "head": "22c088d7",
+    "tested": "fa3ecd59",
+    "tests": "212 passed",
+    "decision": "READY_FOR_SELECTIVE_INTEGRATION"
+  },
+  "w2": {
+    "head": "25bddbfb",
+    "tested": "3f40c1e5",
+    "tests": "368 passed, 3 skipped",
+    "decision": "READY_FOR_SELECTIVE_INTEGRATION"
+  },
+  "w3": {
+    "head": "97e73100",
+    "tested": "b5ef8488",
+    "tests": "1423 passed",
+    "decision": "READY_FOR_SELECTIVE_INTEGRATION"
+  },
+  "w4": {
+    "head": "a9b04727",
+    "tested": "b99c2b46",
+    "tests": "256 passed",
+    "decision": "READY_FOR_SELECTIVE_INTEGRATION"
+  },
+  "w5": {
+    "head": "63360661",
+    "tested": "1175bb4a",
+    "tests": "245 passed",
+    "decision": "READY_FOR_SELECTIVE_INTEGRATION"
+  },
+  "merge_simulation": {
+    "order": "W5\u2192W4\u2192W2\u2192W3\u2192W1",
+    "baseline": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+    "after_w5": "354 passed",
+    "after_w4": "96+160=256 passed",
+    "after_w2": "477+3sk passed",
+    "after_w3": "1532 passed",
+    "after_w1": "2408+3sk+96=2504 passed",
+    "conflicts": "none",
+    "cherry_picks_applied": "W5:3,W4:5,W2:9,W3:3,W1:5 commits"
+  },
+  "live_one_shot": {
+    "status": "PASS",
+    "feed": "30 live",
+    "markets": "4",
+    "whale": true,
+    "errors": 0
+  },
+  "live_shadow": {
+    "status": "PASS",
+    "attempted": 2,
+    "completed": 2,
+    "errors": [],
+    "collision": false
+  },
+  "security": {
+    "findings": "203 pattern matches in scanner/adapter code (no execution paths)",
+    "credentials_blocked": true,
+    "no_send": true
+  },
+  "final_decision": "POST_MVP_READY_FOR_FINAL_ASSEMBLY",
+  "repair_base_commit": "a4534c542bf96e504ce868ac8753c424cc3fac92",
+  "tested_commit_exists": true,
+  "tested_commit_is_ancestor": true,
+  "previous_binding_error": "R03 incorrectly pointed to b191a4b10d9ea3c2db388bf439f88eb0926614ab instead of 18992e158c50069f1323dfb05ca4991fdde0be2f",
+  "report_path": "docs/qa/POST_MVP_FINAL_RUNTIME_ACCEPTANCE_R03.md",
+  "git_status": "clean",
+  "no_send": true,
+  "main_unchanged": true,
+  "no_target_modifications": true
+}
