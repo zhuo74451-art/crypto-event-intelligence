@@ -1,0 +1,42 @@
+{
+  "ticket": "W1_OPERATOR_WORKBENCH_COMPLETION_R02",
+  "branch": "workbench/post-mvp-operator-workbench-v1",
+  "repair_base_commit": "b9b1dd2815b5e35a0de24d17e0db235e1b8a9ef6",
+  "tested_commit": "37bb759ae094fa22712c79dae588660d149ddd66",
+  "features": {
+    "operator_profiles": 7,
+    "diagnosis_codes": 14,
+    "cli_commands": ["doctor","run","shadow","inspect","compare","bundle","catalog","replay-pack","readiness-score"],
+    "catalog_formats": ["json","markdown","html"],
+    "replay_diagnosis_codes": 14,
+    "readiness_components": 8
+  },
+  "test_counts": {
+    "operator_tests": 89,
+    "integration_tests": 109,
+    "combined_pytest": 198,
+    "adapters": 96,
+    "total": 294,
+    "failed": 0
+  },
+  "live_acceptance": {
+    "one_shot": {"run_id": "os-22aaab33c44b", "status": "completed", "sources": 12, "errors": 0},
+    "shadow": {"status": "completed", "attempted_runs": 2, "completed_runs": 2, "errors": 0},
+    "inspect": "manifest + report verified, 12 sources",
+    "bundle": "3 files, SHA256SUMS, no full content"
+  },
+  "no_send": true,
+  "daemon_started": false,
+  "scheduler_started": false,
+  "threads_started": false,
+  "main_unchanged": true,
+  "runtime_data_committed": false,
+  "modified_files": [
+    "market_radar/integration/operator_catalog.py",
+    "market_radar/integration/operator_replay.py",
+    "market_radar/integration/operator_readiness.py",
+    "scripts/post_mvp/operator/operator_workbench.py",
+    "tests/post_mvp/operator/test_completion.py"
+  ],
+  "files_outside_owned_paths": []
+}
