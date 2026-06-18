@@ -1,8 +1,8 @@
-{
+﻿{
   "ticket": "W4_MARKET_RESILIENCE_COMPLETION_R03",
   "branch": "workbench/post-mvp-market-resilience-v1",
   "source_sha": "0fe1716d984728dd1974e0a0c4dd85acae123c03",
-  "tested_commit": "PLACEHOLDER",
+  "tested_commit": "0fe1716d984728dd1974e0a0c4dd85acae123c03",
   "capability_matrix": {
     "venues": ["binance", "okx", "bybit", "hyperliquid"],
     "capabilities": ["spot_ticker", "perp_ticker", "volume_24h", "open_interest", "funding_rate", "next_funding_time", "mark_price", "index_price", "basis", "order_book_top"],
