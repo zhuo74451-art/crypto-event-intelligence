@@ -294,7 +294,10 @@ class TGTestGroupSender:
                     _body = http_resp.json() if http_resp.text else {}
                 except Exception as _e:
                     _status = 0
-                    _body = {"ok": False, "description": str(_e)}
+                    _e_str = str(_e)
+                    if bot_token and bot_token in _e_str:
+                        _e_str = _e_str.replace(bot_token, "[REDACTED_TOKEN]")
+                    _body = {"ok": False, "description": f"{type(_e).__name__}: {_e_str[:200]}"}
 
                 if _status == 200 and _body.get("ok") is True:
                     _result_data = _body.get("result", {})
