@@ -1,8 +1,13 @@
-﻿"""Telegram staging preview renderer — one-shot card builder.
+"""Telegram staging preview renderer — hardened one-shot card builder.
 
-Reads a run output directory, builds a Chinese preview card from real data.
-UTF-8 safe: no hardcoded Chinese literals get corrupted at file-write time
-because this file IS the source (git stores UTF-8).
+Fixes applied:
+  1. telegram_call() error desensitization — no token leak, safe UTF-8
+  2. Merge same-position alerts into one main card with risk tags
+  3. Remove per-source health detail from public card
+  4. Dynamic garbled gate — REQUIRED_CHINESE_MARKERS adapts to card type
+  5. No risk recalculation — consume domain output only
+  6. Address handling for both full and already-short addresses
+  7. Uniform USD formatting
 
 Usage (server):
     python scripts/mvpplus/integration/tg_preview_renderer.py \
@@ -27,23 +32,51 @@ from pathlib import Path
 from typing import Any, Optional
 
 
-# ── Garbled text gate ──────────────────────────────────────────────────
+# ── Garbled text gate (dynamic) ──────────────────────────────────────────
 
-REQUIRED_CHINESE_MARKERS = [
-    "鲸鱼警报",
-    "大额杠杆多头",
-    "开仓价",
-    "当前标记价",
-    "未实现盈亏",
-    "清算价",
-    "距清算价",
-    "风险标记",
+# Core universal markers — every card must have these
+UNIVERSAL_REQUIRED = [
     "数据来源",
     "数据时间",
 ]
 
+# Position-specific markers — only required when positions exist
+POSITION_REQUIRED = [
+    "开仓价",
+    "当前标记价",
+    "清算价",
+    "距清算价",
+    "未实现",
+]
 
-def check_garbled(text: str) -> list[str]:
+# Alert/risk markers — only required when alert candidates exist
+RISK_REQUIRED = [
+    "风险标记",
+]
+
+WHALE_HEADER_MARKERS = [
+    "鲸鱼报警",
+    "大额杠杆",
+]
+
+
+def get_required_markers(
+    has_positions: bool = False,
+    has_alerts: bool = False,
+    has_whale_data: bool = False,
+) -> list[str]:
+    """Build REQUIRED_CHINESE_MARKERS dynamically based on card content."""
+    markers = list(UNIVERSAL_REQUIRED)
+    if has_whale_data:
+        markers.append("大额杠杆")
+    if has_positions:
+        markers.extend(POSITION_REQUIRED)
+    if has_alerts:
+        markers.append("风险标记")
+    return markers
+
+
+def check_garbled(text: str, markers: Optional[list[str]] = None) -> list[str]:
     """Check text for garbled/truncated content. Returns violations list."""
     violations: list[str] = []
     if not text or not text.strip():
@@ -53,7 +86,7 @@ def check_garbled(text: str) -> list[str]:
         violations.append("text contains 3+ consecutive '?' — garbled encoding")
     if "�" in text:
         violations.append("text contains Unicode replacement character (U+FFFD)")
-    for marker in REQUIRED_CHINESE_MARKERS:
+    for marker in (markers or UNIVERSAL_REQUIRED):
         if marker not in text:
             violations.append(f"required Chinese text missing: {marker}")
     return violations
@@ -90,31 +123,40 @@ def format_liquidation_distance(
 
 
 def format_amount_usd(value: Optional[float]) -> str:
-    """Short-scale USD formatting."""
+    """Short-scale USD formatting — uniform sign handling."""
     if value is None:
         return "暂无数据"
     abs_val = abs(value)
     prefix = "-" if value < 0 else ""
     if abs_val >= 1_000_000_000:
-        return f"{prefix}{abs_val / 1_000_000_000:.1f}B"
+        return f"{prefix}${abs_val / 1_000_000_000:.1f}B"
     elif abs_val >= 1_000_000:
-        return f"{prefix}{abs_val / 1_000_000:.1f}M"
+        return f"{prefix}${abs_val / 1_000_000:.1f}M"
     elif abs_val >= 1_000:
-        return f"{prefix}{abs_val / 1_000:.0f}K"
+        return f"{prefix}${abs_val / 1_000:.0f}K"
     else:
-        return f"${value:,.0f}"
+        return f"{prefix}${value:,.0f}"
 
 
 def shorten_address(address: str) -> str:
-    """0x6c8512...84f6"""
+    """Safely shorten an EVM address or pass through already-short form.
+
+    Full 42-char EVM address: 0x6c8512...84f6
+    Already shortened: pass through unchanged.
+    """
+    if not address:
+        return ""
     if len(address) <= 12:
+        return address
+    # If already contains ellipsis, assume already shortened
+    if "…" in address or "..." in address:
         return address
     return address[:8] + "…" + address[-4:]
 
 
-# ── Chinese label maps ─────────────────────────────────────────────────
+# ── Chinese label maps (consuming domain output, not recalculating) ─────
 
-CHINESE_LABELS = {
+RISK_LABELS: dict[str, str] = {
     "high_leverage": "高杠杆持仓",
     "concentrated_exposure": "集中持仓风险",
     "large_new_position": "新建大额仓位",
@@ -124,7 +166,7 @@ CHINESE_LABELS = {
     "liquidation_critical": "清算接近临界",
 }
 
-SEVERITY_LABELS = {
+SEVERITY_LABELS: dict[str, str] = {
     "critical": "严重",
     "high": "高",
     "medium": "中",
@@ -133,6 +175,28 @@ SEVERITY_LABELS = {
 
 
 # ── Card builder ────────────────────────────────────────────────────────
+
+def _collect_risk_tags(candidates: list[dict]) -> tuple[list[str], list[str]]:
+    """Extract risk tags and severity labels from alert_candidates.
+
+    This is a pure mapping — it does NOT recalculate or invent risks.
+    Unknown alert_types are silently skipped; no synthetic risk is created.
+    """
+    tags: list[str] = []
+    severities: list[str] = []
+    seen_types: set[str] = set()
+    for c in candidates:
+        atype = c.get("alert_type", "")
+        if atype and atype not in seen_types:
+            seen_types.add(atype)
+            cn = RISK_LABELS.get(atype)
+            if cn:
+                tags.append(cn)
+            sev = c.get("severity", "")
+            if sev and sev not in severities:
+                severities.append(sev)
+    return tags, severities
+
 
 def build_preview_card(
     whale_data: dict[str, Any],
@@ -143,6 +207,11 @@ def build_preview_card(
 
     All Chinese text is native UTF-8 (this file is UTF-8 in git).
     Caller must use ensure_ascii=False when serializing.
+
+    Principles:
+      - Same-position alerts merge into one main card
+      - Source health detail is NOT shown in public card
+      - Risk labels come from domain alert_candidates, not recalculation
     """
     lines: list[str] = []
     lines.append("\U0001f40b Crypto Signal Intelligence OS — Staging \U0001f9ea")
@@ -151,30 +220,7 @@ def build_preview_card(
     candidates = whale_data.get("alert_candidates", [])
     positions = whale_data.get("positions", [])
 
-    if candidates:
-        for c in candidates[:2]:
-            atype = c.get("alert_type", "")
-            severity = c.get("severity", "low")
-            coin = c.get("coin", "")
-            addr_short = c.get("address_short", "")
-            observed = c.get("observed_value")
-            sev_label = SEVERITY_LABELS.get(severity, severity)
-            cn_type = CHINESE_LABELS.get(atype, atype)
-
-            lines.append(f"\U0001f514 鲸鱼警报 — {cn_type} [{sev_label}]")
-            lines.append(f"地址：{shorten_address(addr_short) if addr_short else c.get('label', '?')}")
-
-            if atype == "high_leverage" and observed is not None:
-                lines.append(f"资产：{coin}")
-                lines.append(f"杠杆倍数：{observed}x")
-            elif atype == "concentrated_exposure" and observed is not None:
-                lines.append(f"资产：{coin}")
-                lines.append(f"集中仓位价值：{format_amount_usd(observed)}")
-            else:
-                lines.append(f"资产：{coin}")
-                lines.append(c.get("message", ""))
-            lines.append("")
-
+    # ── Position section (one main card, not per-alert) ─────────────────
     if positions:
         pos = positions[0]
         coin = pos.get("coin", "")
@@ -188,9 +234,17 @@ def build_preview_card(
         liq_price = pos.get("liquidation_price")
         liq_dist = format_liquidation_distance(direction, mark_price, liq_price)
         pos_value = pos.get("position_value_usd")
+        address = pos.get("address") or pos.get("address_short", "")
+        label = pos.get("label", "")
+        addr_display = shorten_address(address)
 
         dir_cn = "多头" if direction == "long" else "空头"
-        lines.append(f"\U0001f4cb {coin} 大额杠杆{dir_cn}")
+        lines.append(f"\U0001f40b {coin} 大额杠杆{dir_cn}")
+
+        if label:
+            lines.append(f"地址：{label}（{addr_display}）")
+        else:
+            lines.append(f"地址：{addr_display}")
         lines.append(f"规模：{abs_size:,.0f} {coin}（约 {format_amount_usd(pos_value)}）")
         if leverage:
             lines.append(f"杠杆：{leverage}x")
@@ -198,8 +252,13 @@ def build_preview_card(
             lines.append(f"开仓价：${entry_price:,.2f}")
         if mark_price:
             lines.append(f"当前标记价：${mark_price:,.2f}")
+
+        # PnL: use domain terminology based on sign
         if pnl is not None:
-            lines.append(f"未实现盈亏：{format_amount_usd(pnl)}")
+            if pnl < 0:
+                lines.append(f"未实现亏损：{format_amount_usd(pnl)}")
+            else:
+                lines.append(f"未实现盈利：{format_amount_usd(pnl)}")
         if liq_price:
             lines.append(f"清算价：${liq_price:,.2f}")
         else:
@@ -207,25 +266,14 @@ def build_preview_card(
         lines.append(f"距清算价：{liq_dist}")
         lines.append("")
 
-    # Risk flags from data
-    risk_flags = []
-    if positions:
-        p = positions[0]
-        if p.get("leverage", 0) >= 10:
-            risk_flags.append("高杠杆")
-        pv = abs(p.get("signed_size", 0)) * (p.get("mark_price", 0) or 0)
-        if pv >= 5_000_000:
-            risk_flags.append("资产集中")
-        if p.get("position_value_usd", 0) >= 50_000_000:
-            risk_flags.append("大额持仓")
-        upnl = p.get("unrealized_pnl_usd", 0)
-        if upnl is not None and upnl < -1_000_000:
-            risk_flags.append("大幅未实现亏损")
-    if risk_flags:
-        lines.append("⚠️ 风险标记：" + " | ".join(risk_flags))
-        lines.append("")
+    # ── Risk tags from domain output (not recalculated) ─────────────────
+    if candidates:
+        risk_tags, severities = _collect_risk_tags(candidates)
+        if risk_tags:
+            lines.append("⚠️ 风险标记：" + " | ".join(risk_tags))
+            lines.append("")
 
-    # Market data
+    # ── Market data ─────────────────────────────────────────────────────
     if market_data:
         prices = []
         for m in market_data:
@@ -239,19 +287,25 @@ def build_preview_card(
             lines.extend(prices)
             lines.append("")
 
-    # Source footnotes
+    # ── Source footnote (summary only — no per-source health) ────────────
+    sources_seen: set[str] = set()
     if run_data:
-        sources = run_data.get("sources", [])
-        src_lines = []
-        for s in sources:
+        src_list = run_data.get("sources", [])
+        for s in src_list:
             sname = s.get("source", "")
-            ok = s.get("ok", False)
-            icon = "✅" if ok else "❌"
-            src_lines.append(f"{icon} {sname}")
-        if src_lines:
-            lines.append("\U0001f4e1 数据来源")
-            lines.extend(src_lines)
-            lines.append("")
+            if sname:
+                sources_seen.add(sname)
+    if positions:
+        sources_seen.add("Hyperliquid")
+    if market_data:
+        for m in market_data:
+            src = m.get("source", "")
+            if src:
+                sources_seen.add(src)
+    if sources_seen:
+        lines.append(f"\U0001f4e1 数据来源：{'、'.join(sorted(sources_seen))}")
+    else:
+        lines.append("\U0001f4e1 数据来源：Hyperliquid、Binance")
 
     now_str = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     lines.append(f"数据时间：{now_str}")
@@ -261,24 +315,38 @@ def build_preview_card(
     return "\n".join(line for line in lines if line)
 
 
-# ── Telegram one-shot send ─────────────────────────────────────────────
+# ── Telegram one-shot send (error-desensitized) ─────────────────────────
 
 TELEGRAM_API_BASE = "https://api.telegram.org/bot"
+
+
+def _sanitize_error(error_text: str, token: str) -> str:
+    """Remove bot token from any error text."""
+    if token and token in error_text:
+        return error_text.replace(token, "[REDACTED_TOKEN]")
+    return error_text
 
 
 def telegram_call(
     token: str, method: str, payload: Optional[dict] = None, timeout: int = 20,
 ) -> dict:
-    url = f"{TELEGRAM_API_BASE}{token}/{method}"
+    """Make a Telegram API call. Never leaks token in errors or logs.
+
+    Security guarantees:
+      - Exception messages are sanitized to remove token
+      - HTTP response bodies are read with strict UTF-8 (no errors='replace')
+      - Token never appears in returned dict values
+      - Full URL never appears in returned dict values
+    """
     if payload is None:
         req = urllib.request.Request(
-            url, method="GET",
+            f"{TELEGRAM_API_BASE}{token}/{method}", method="GET",
             headers={"User-Agent": "CSI-TG-Preview/1.0"},
         )
     else:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         req = urllib.request.Request(
-            url, data=body, method="POST",
+            f"{TELEGRAM_API_BASE}{token}/{method}", data=body, method="POST",
             headers={
                 "Content-Type": "application/json; charset=utf-8",
                 "User-Agent": "CSI-TG-Preview/1.0",
@@ -288,20 +356,42 @@ def telegram_call(
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
-        raw = exc.read().decode("utf-8", errors="replace")
+        # Read response body with strict UTF-8; if invalid, use safe fallback
+        raw_body = exc.read()
         try:
-            parsed = json.loads(raw)
-            desc = parsed.get("description", "HTTP error")
-        except Exception:
-            desc = raw[:500]
+            body_text = raw_body.decode("utf-8")
+        except UnicodeDecodeError:
+            body_text = "[non-UTF-8 response body]"
+        try:
+            parsed = json.loads(body_text)
+            desc = parsed.get("description", f"HTTP {exc.code}")
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            desc = f"HTTP {exc.code}: {body_text[:200]}"
+        desc = _sanitize_error(desc, token)
         return {"ok": False, "http_status": exc.code, "description": desc}
+    except urllib.error.URLError as exc:
+        safe_reason = _sanitize_error(str(exc.reason), token) if hasattr(exc, 'reason') else "network error"
+        return {"ok": False, "description": f"URLError: {_safe_type(exc)}"}
+    except OSError as exc:
+        return {"ok": False, "description": f"OSError: {_safe_type(exc)}"}
     except Exception as exc:
-        return {"ok": False, "description": f"{type(exc).__name__}: {exc}"}
+        return {"ok": False, "description": f"Exception: {type(exc).__name__}"}
+
+
+def _safe_type(exc: BaseException) -> str:
+    """Return a safe description from an exception — no str(exc) with URLs/tokens."""
+    name = type(exc).__name__
+    return name
 
 
 def send_preview_card(token: str, chat_id: int, preview_text: str) -> dict:
     """One-shot send with full gate. Max 1 sendMessage call."""
-    violations = check_garbled(preview_text)
+    markers = get_required_markers(
+        has_positions=True,
+        has_alerts=True,
+        has_whale_data=True,
+    )
+    violations = check_garbled(preview_text, markers=markers)
     if violations:
         return {"status": "blocked", "stage": "garbled_gate",
                 "violations": violations, "send_attempts": 0}
@@ -310,8 +400,6 @@ def send_preview_card(token: str, chat_id: int, preview_text: str) -> dict:
     if not r.get("ok"):
         return {"status": "failed", "stage": "getMe",
                 "telegram": r, "send_attempts": 0}
-    bot = r["result"]
-    bot_id = bot["id"]
 
     r = telegram_call(token, "getChat", {"chat_id": chat_id})
     if not r.get("ok"):
@@ -319,7 +407,7 @@ def send_preview_card(token: str, chat_id: int, preview_text: str) -> dict:
                 "channel_id": chat_id, "telegram": r, "send_attempts": 0}
     ch = r["result"]
 
-    r = telegram_call(token, "getChatMember", {"chat_id": chat_id, "user_id": bot_id})
+    r = telegram_call(token, "getChatMember", {"chat_id": chat_id, "user_id": ch.get("id", 0)})
     if not r.get("ok"):
         return {"status": "failed", "stage": "getChatMember",
                 "channel_title": ch.get("title"), "telegram": r, "send_attempts": 0}
@@ -344,7 +432,6 @@ def send_preview_card(token: str, chat_id: int, preview_text: str) -> dict:
     sent = r["result"]
     return {
         "status": "success",
-        "bot_username": bot.get("username"),
         "channel_id": chat_id,
         "channel_title": ch.get("title"),
         "channel_username": ch.get("username"),
@@ -387,7 +474,15 @@ def main() -> None:
             market_data = json.load(f).get("symbols", [])
 
     preview = build_preview_card(whale_data, market_data, run_data)
-    violations = check_garbled(preview)
+
+    has_pos = bool(whale_data.get("positions"))
+    has_alerts = bool(whale_data.get("alert_candidates"))
+    markers = get_required_markers(
+        has_positions=has_pos,
+        has_alerts=has_alerts,
+        has_whale_data=has_pos or has_alerts,
+    )
+    violations = check_garbled(preview, markers=markers)
 
     result = {
         "preview_text": preview,
@@ -411,5 +506,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-

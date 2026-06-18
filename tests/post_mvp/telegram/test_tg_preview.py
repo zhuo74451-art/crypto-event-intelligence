@@ -11,7 +11,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from scripts.mvpplus.integration.tg_preview_renderer import (
     build_preview_card, check_garbled, format_liquidation_distance,
-    format_amount_usd, shorten_address, REQUIRED_CHINESE_MARKERS,
+    format_amount_usd, shorten_address, get_required_markers,
+)
+
+# Get expected markers for a whale card with positions and alerts
+REQUIRED_CHINESE_MARKERS = get_required_markers(
+    has_positions=True, has_alerts=True, has_whale_data=True,
 )
 
 
