@@ -41,7 +41,7 @@ class CuratedFeedProvider:
 
     def __init__(
         self,
-        base_url: str = "http://43.98.174.247:8001/api/integration/curated",
+        base_url: str = "http://127.0.0.1:8001/api/integration/curated",
         limit: int = 100,
         max_items: int = 500,
         max_pages: int = 5,

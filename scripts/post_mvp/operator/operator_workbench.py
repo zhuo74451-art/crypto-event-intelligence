@@ -173,10 +173,9 @@ def cmd_doctor(args: argparse.Namespace) -> int:
     if not args.offline:
         try:
             import urllib.request
-            resp = urllib.request.urlopen(
-                "http://43.98.174.247:8001/api/integration/curated?limit=1",
-                timeout=10
-            )
+            from market_radar.integration.curated_url_resolver import resolve_curated_url
+            probe_url = resolve_curated_url() + "?limit=1"
+            resp = urllib.request.urlopen(probe_url, timeout=10)
             resp.read()
             resp.close()
         except Exception as e:
@@ -270,8 +269,10 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     provider = None
     if profile.feed_enabled and profile.network_allowed:
+        from market_radar.integration.curated_url_resolver import resolve_curated_url
+        curated_url = resolve_curated_url(cli_arg=args.curated_base_url)
         provider = CuratedFeedProvider(
-            base_url=args.curated_base_url or "http://43.98.174.247:8001/api/integration/curated",
+            base_url=curated_url,
             limit=profile.feed_limit,
             max_items=profile.feed_max_items,
             max_pages=profile.feed_max_pages,
@@ -336,12 +337,14 @@ def cmd_shadow(args: argparse.Namespace) -> int:
     os.makedirs(output_dir, exist_ok=True)
 
     print(f"Shadow Profile: {profile.name} — max_runs={profile.max_runs}")
+    curated_url = resolve_curated_url(cli_arg=args.curated_base_url)
     result = run_integration_shadow(
         state_dir=state_dir, output_dir=output_dir,
         max_runs=profile.max_runs, interval_seconds=profile.interval_seconds,
         whale_address=args.whale_address or "",
         feed_timeout_seconds=profile.feed_timeout_seconds,
         feed_initial_since=args.feed_since,
+        curated_base_url=curated_url,
     )
     d = result.to_dict()
     print(f"Shadow {d.get('shadow_run_id')}: status={d.get('status')}")
@@ -684,7 +687,8 @@ def build_parser() -> argparse.ArgumentParser:
     run_p.add_argument("--output-dir", default="", help="Output directory override")
     run_p.add_argument("--whale-address", default="", help="Whale address")
     run_p.add_argument("--feed-since", default=None, help="Initial feed cursor")
-    run_p.add_argument("--curated-base-url", default="http://43.98.174.247:8001/api/integration/curated")
+    run_p.add_argument("--curated-base-url", default=None,
+                        help="Curated API base URL (default: env CURATED_BASE_URL or loopback).")
     run_p.add_argument("--exchange", default="binance")
     run_p.add_argument("--confirm-read-only-network", action="store_true")
 
@@ -695,6 +699,8 @@ def build_parser() -> argparse.ArgumentParser:
     shd.add_argument("--output-dir", default="", help="Output directory override")
     shd.add_argument("--whale-address", default="")
     shd.add_argument("--feed-since", default=None)
+    shd.add_argument("--curated-base-url", default=None,
+                     help="Curated API base URL (default: env CURATED_BASE_URL or loopback).")
     shd.add_argument("--confirm-read-only-network", action="store_true")
 
     # inspect
