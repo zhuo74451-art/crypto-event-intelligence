@@ -70,7 +70,8 @@ CORPUS_PATH = _FIXTURES_DIR / "whale_replay_corpus_v2.json"
 # ---------------------------------------------------------------------------
 # Corpus expectations use the exact code rule_ids, change_types, and
 # action_type values.  The corpus is regenerated from the code by
-# C:\tmp\fix_v2_corpus.py so no mapping layer is needed.
+# the repository's corpus generator (gen_v2_corpus.py) so no mapping
+# layer is needed.
 #
 # Rule IDs follow the convention PR{1..12}_{DESCRIPTION} from
 # portfolio_risk.py.
