@@ -1,0 +1,61 @@
+{
+  "ticket": "W2_WHALE_FINAL_REMOTE_BINDING_R05",
+  "repair_base_commit": "d2fb0cd5f3c1868f5af82f1e4d1fd6f7283d5ead",
+  "tested_commit": "3f40c1e5887b3aefd95ce806564fa8d5c8624059",
+  "remote_commit_resolved": true,
+  "branch": "workbench/post-mvp-whale-portfolio-intelligence-v1",
+  "absolute_path_scan": {
+    "files_scanned": 6,
+    "paths_found": 0,
+    "paths_fixed": [
+      "tests/post_mvp/whale_intelligence/test_whale_replay_corpus_v2.py: line 73: 'C:\\tmp\\fix_v2_corpus.py' replaced with generic description"
+    ],
+    "outside_owned_paths_ignored": "scripts/ files contain path-validation patterns (not execution paths)"
+  },
+  "rule_mapping_removed": true,
+  "corpus": {
+    "v1": {"cases": 30, "status": "passed"},
+    "v2": {
+      "cases": 71,
+      "case_ids": "C101–C171",
+      "executed": 71,
+      "passed": 71,
+      "rule_id_contract": "full rule_ids (no short codes or mapping)"
+    },
+    "total": 101
+  },
+  "test_counts": {
+    "original_w2": {"total": 128, "passed": 127, "skipped": 1, "failed": 0},
+    "post_mvp_whale": {"total": 234, "passed": 234, "failed": 0},
+    "grand_total": {"total": 362, "passed": 361, "skipped": 1, "failed": 0}
+  },
+  "live_probe": {
+    "performed": true,
+    "inherited_from": "R03",
+    "not_re_run": true,
+    "summary": "Matrixport 90.6M ETH long, 20x leverage, 5 risk findings"
+  },
+  "security": {
+    "no_credentials": true,
+    "no_send": true,
+    "no_network_unit_tests": true,
+    "business_code_modified": false,
+    "main_unchanged": true
+  },
+  "files_outside_owned_paths": [],
+  "modified_files": [
+    "tests/post_mvp/whale_intelligence/test_whale_replay_corpus_v2.py",
+    "tests/post_mvp/whale_intelligence/test_remote_binding.py",
+    "artifacts/evidence/w2_post_mvp_whale_portfolio_intelligence_r05.json"
+  ],
+  "verification": {
+    "tested_commit_exists_remotely": true,
+    "tested_commit_is_ancestor_of_head": true,
+    "diff_tested_to_head": "artifacts/evidence/w2_post_mvp_whale_portfolio_intelligence_r05.json only"
+  },
+  "limitations": [
+    "Business logic frozen since R03",
+    "Only path cleanup, binding tests, and evidence added in R04–R05"
+  ],
+  "git_status": "clean (pending evidence commit)"
+}
