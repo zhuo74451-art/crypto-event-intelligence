@@ -555,3 +555,348 @@ def fetch_with_fallback(
         errors=["all venues exhausted"],
         provenance="fallback",
     ), chain
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section 1: Independent Field Fetchers
+# ═══════════════════════════════════════════════════════════════════
+
+@dataclass
+class FieldResult:
+    """Result of a single field fetch from one venue."""
+    capability: str
+    value: Optional[float] = None
+    timestamp: str = ""
+    age_ms: Optional[float] = None
+    status: str = "ok"  # "ok" | "unsupported" | "unavailable" | "error"
+    error: Optional[str] = None
+    provenance: str = ""
+
+    def as_dict(self) -> dict[str, Any]:
+        return {k: v for k, v in asdict(self).items() if v is not None}
+
+
+def fetch_field_open_interest(
+    adapter: CcxtPublicMarketAdapter, venue: str, symbol: str,
+    timeout: float = TIMEOUT_PER_REQUEST,
+) -> FieldResult:
+    """Fetch open interest from a CCXT venue."""
+    t0 = time.monotonic()
+    try:
+        r = adapter.fetch(venue, "open_interest", symbol, kwargs={"timeout": int(timeout * 1000)})
+        elapsed = (time.monotonic() - t0) * 1000
+        if not r.ok or not isinstance(r.data, dict):
+            return FieldResult("open_interest", status="unavailable", timestamp=_utc_now(),
+                               age_ms=round(elapsed, 1), error=r.error.message if r.error else "fetch failed",
+                               provenance="ccxt")
+        oi = _coalesce_float(r.data.get("openInterest"))
+        if oi is None:
+            return FieldResult("open_interest", status="unavailable", timestamp=_utc_now(),
+                               age_ms=round(elapsed, 1), error="openInterest field missing",
+                               provenance="ccxt")
+        return FieldResult("open_interest", value=oi, timestamp=_utc_now(), age_ms=round(elapsed, 1),
+                           provenance="ccxt")
+    except Exception as e:
+        return FieldResult("open_interest", status="unavailable", timestamp=_utc_now(),
+                           error=f"{type(e).__name__}: {e}", provenance="ccxt")
+
+
+def fetch_field_funding_rate(
+    adapter: CcxtPublicMarketAdapter, venue: str, symbol: str,
+    timeout: float = TIMEOUT_PER_REQUEST,
+) -> FieldResult:
+    """Fetch funding rate from a CCXT venue."""
+    t0 = time.monotonic()
+    try:
+        r = adapter.fetch(venue, "funding_rate", symbol, kwargs={"timeout": int(timeout * 1000)})
+        elapsed = (time.monotonic() - t0) * 1000
+        if not r.ok or not isinstance(r.data, dict):
+            return FieldResult("funding_rate", status="unavailable", timestamp=_utc_now(),
+                               age_ms=round(elapsed, 1), error=r.error.message if r.error else "fetch failed",
+                               provenance="ccxt")
+        fr = _coalesce_float(r.data.get("fundingRate"))
+        if fr is None:
+            return FieldResult("funding_rate", status="unavailable", timestamp=_utc_now(),
+                               age_ms=round(elapsed, 1), error="fundingRate field missing",
+                               provenance="ccxt")
+        return FieldResult("funding_rate", value=fr, timestamp=_utc_now(), age_ms=round(elapsed, 1),
+                           provenance="ccxt")
+    except Exception as e:
+        return FieldResult("funding_rate", status="unavailable", timestamp=_utc_now(),
+                           error=f"{type(e).__name__}: {e}", provenance="ccxt")
+
+
+def fetch_field_order_book_top(
+    adapter: CcxtPublicMarketAdapter, venue: str, symbol: str,
+    timeout: float = TIMEOUT_PER_REQUEST,
+) -> FieldResult:
+    """Fetch top-of-order-book bid/ask from a CCXT venue (uses ticker)."""
+    # Order book top is available via ticker's bid/ask
+    t0 = time.monotonic()
+    try:
+        r = adapter.fetch(venue, "ticker", symbol, kwargs={"timeout": int(timeout * 1000)})
+        elapsed = (time.monotonic() - t0) * 1000
+        if not r.ok or not isinstance(r.data, dict):
+            return FieldResult("order_book_top", status="unavailable", timestamp=_utc_now(),
+                               age_ms=round(elapsed, 1), error=r.error.message if r.error else "fetch failed",
+                               provenance="ccxt")
+        bid = _coalesce_float(r.data.get("bid"))
+        ask = _coalesce_float(r.data.get("ask"))
+        if bid is None or ask is None:
+            return FieldResult("order_book_top", status="unavailable", timestamp=_utc_now(),
+                               age_ms=round(elapsed, 1), error="bid/ask missing",
+                               provenance="ccxt")
+        return FieldResult("order_book_top", value=(bid + ask) / 2, timestamp=_utc_now(),
+                           age_ms=round(elapsed, 1), provenance="ccxt")
+    except Exception as e:
+        return FieldResult("order_book_top", status="unavailable", timestamp=_utc_now(),
+                           error=f"{type(e).__name__}: {e}", provenance="ccxt")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section 2: Market Type & Unit Normalization
+# ═══════════════════════════════════════════════════════════════════
+
+class MarketType(str):
+    """Market type classification."""
+
+MARKET_SPOT = "spot"
+MARKET_LINEAR_PERP = "linear_perp"
+MARKET_INVERSE_PERP = "inverse_perp"
+MARKET_SWAP = "swap"
+MARKET_UNKNOWN = "unknown"
+
+
+def classify_market_type(venue: str, symbol: str) -> str:
+    """Classify market type from venue and symbol.
+
+    Rules:
+    - Hyperliquid: always linear_perp
+    - Binance: USDT-marginated = linear_perp; no suffix = spot
+    - OKX: USDT-SWAP = linear_perp; USDT = spot
+    - Bybit: USDT = linear_perp; no suffix = spot
+    """
+    sym_upper = symbol.upper()
+    if venue == "hyperliquid":
+        return MARKET_LINEAR_PERP
+    if "/" in sym_upper:
+        base, quote = sym_upper.split("/", 1)
+        if quote == "USDT":
+            return MARKET_SPOT
+    if "USDT" in sym_upper and any(t in sym_upper for t in ("SWAP", "PERP", "LINEAR")):
+        return MARKET_LINEAR_PERP
+    if "INV" in sym_upper or "INVERSE" in sym_upper:
+        return MARKET_INVERSE_PERP
+    return MARKET_SPOT
+
+
+@dataclass
+class NormalizedOI:
+    """Normalized open interest value with unit metadata."""
+    value_usd: Optional[float] = None
+    value_contracts: Optional[float] = None
+    value_base: Optional[float] = None
+    market_type: str = MARKET_UNKNOWN
+    unit: str = "usd"  # "usd" | "contracts" | "base" | "incomparable"
+    comparable_with: list[str] = field(default_factory=lambda: ["usd"])
+    incomparable: bool = False
+    incomparable_reason: str = ""
+
+    def as_dict(self) -> dict[str, Any]:
+        return {k: v for k, v in asdict(self).items() if v is not None or k == "incomparable"}
+
+
+def normalize_oi(
+    raw_oi: Optional[float],
+    market_type: str,
+    price: Optional[float] = None,
+    contract_size: Optional[float] = None,
+) -> NormalizedOI:
+    """Normalize OI to USD notional where possible.
+
+    Spot: OI value is directly USD equivalent.
+    Linear perp: OI * contract_size * price → USD (contract_size is often 1).
+    Inverse perp: cannot reliably convert without knowing margin currency.
+    """
+    if raw_oi is None:
+        return NormalizedOI(incomparable=True, incomparable_reason="raw OI is None")
+
+    if market_type == MARKET_INVERSE_PERP:
+        return NormalizedOI(
+            value_contracts=raw_oi, market_type=market_type, unit="contracts",
+            incomparable=True,
+            incomparable_reason="inverse perp OI requires margin currency conversion",
+        )
+
+    if market_type in (MARKET_SPOT, MARKET_LINEAR_PERP, MARKET_SWAP):
+        cs = contract_size or 1.0
+        if market_type == MARKET_SPOT:
+            usd_value = raw_oi * cs
+            return NormalizedOI(value_usd=usd_value, value_contracts=raw_oi,
+                                market_type=market_type, unit="usd")
+        else:
+            usd_value = raw_oi * cs * (price or 1.0)
+            return NormalizedOI(value_usd=usd_value, value_contracts=raw_oi,
+                                market_type=market_type, unit="usd")
+
+    return NormalizedOI(value_contracts=raw_oi, market_type=market_type,
+                        incomparable=True,
+                        incomparable_reason=f"unknown market type: {market_type}")
+
+
+def aggregate_oi(snapshots: list[MarketVenueSnapshot]) -> tuple[Optional[float], list[str]]:
+    """Aggregate OI across venues where comparable.
+
+    Returns (total_usd, incomparable_venues).
+    Skips venues whose OI unit is not comparable (e.g. inverse perp).
+    """
+    total: Optional[float] = None
+    incomparable: list[str] = []
+    for s in snapshots:
+        if s.open_interest_usd is not None:
+            total = (total or 0) + s.open_interest_usd
+        elif s.open_interest is not None:
+            incomparable.append(f"{s.venue}(oi={s.open_interest},unit=contracts,incomparable)")
+    return total, incomparable
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section 3: Venue Health
+# ═══════════════════════════════════════════════════════════════════
+
+@dataclass
+class VenueHealthSnapshot:
+    """Non-persistent, non-threaded health snapshot for a venue."""
+    venue: str
+    available: bool = True
+    latency_ms: Optional[float] = None
+    freshness_ms: Optional[float] = None
+    completeness: float = 0.0  # 0.0 - 1.0 fraction of fields available
+    consecutive_failures: int = 0
+    last_success_utc: str = ""
+    last_error_utc: str = ""
+    last_error: Optional[str] = None
+    capability_coverage: float = 0.0
+
+    def as_dict(self) -> dict[str, Any]:
+        return {k: v for k, v in asdict(self).items() if v is not None}
+
+
+def compute_venue_health(
+    snapshots: list[MarketVenueSnapshot],
+    venue: str,
+    total_capabilities: int = 10,
+) -> VenueHealthSnapshot:
+    """Compute health for a venue from its current snapshot batch.
+
+    No threads, no persistence — purely derived from current data.
+    """
+    venue_snaps = [s for s in snapshots if s.venue == venue]
+    if not venue_snaps:
+        return VenueHealthSnapshot(venue=venue, available=False,
+                                    last_error="no snapshots in batch")
+
+    latest = max(venue_snaps, key=lambda s: s.timestamp)
+
+    caps = get_venue_capabilities(venue)
+    supported_count = sum(1 for v in caps.values() if v == "supported")
+    fields_present = set()
+    for s in venue_snaps:
+        fields_present.update(s.fields_available)
+
+    capability_coverage = len(fields_present) / max(supported_count, 1)
+
+    # Completeness: fields_present / expected per snapshot
+    expected_fields = {"last", "bid", "ask", "mark"}
+    completeness = len(fields_present & expected_fields) / len(expected_fields)
+
+    available = latest.status == "ok"
+    return VenueHealthSnapshot(
+        venue=venue,
+        available=available,
+        latency_ms=latest.data_age_ms,
+        freshness_ms=latest.data_age_ms,
+        completeness=completeness,
+        capability_coverage=capability_coverage,
+        last_success_utc=latest.timestamp if available else "",
+        last_error=next(iter(latest.errors), None) if not available else None,
+    )
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section 4: Health-aware Fallback
+# ═══════════════════════════════════════════════════════════════════
+
+@dataclass
+class FallbackDecision:
+    """Record of a fallback decision with audit trail."""
+    chosen_venue: str
+    reason: str
+    chain: list[str] = field(default_factory=list)
+    market_type: str = ""
+    field_capability: bool = False
+    freshness_ok: bool = False
+    completeness_ok: bool = False
+    latency_ok: bool = False
+
+    def as_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+def health_aware_fallback(
+    symbol: str,
+    preferred_venues: list[str],
+    venue_health: dict[str, VenueHealthSnapshot],
+    field: str = "ticker",
+) -> tuple[Optional[str], FallbackDecision]:
+    """Select best venue based on health metrics.
+
+    Priority:
+    1. Preferred venue is healthy
+    2. Market type matches
+    3. Field capability supported
+    4. Fresh enough
+    5. High completeness
+    6. Low latency
+    """
+    chain: list[str] = []
+
+    for venue in preferred_venues:
+        health = venue_health.get(venue)
+        if health is None:
+            chain.append(f"{venue}:no_health_data")
+            continue
+        if not health.available:
+            chain.append(f"{venue}:unavailable")
+            continue
+
+        caps = get_venue_capabilities(venue)
+        cap_key_map = {
+            "ticker": CAP_SPOT_TICKER,
+            "open_interest": CAP_OPEN_INTEREST,
+            "funding_rate": CAP_FUNDING_RATE,
+        }
+        cap_key = cap_key_map.get(field, CAP_SPOT_TICKER)
+        if caps.get(cap_key) != "supported":
+            chain.append(f"{venue}:{cap_key}_unsupported")
+            continue
+
+        freshness_ok = health.freshness_ms is None or health.freshness_ms < STALE_AGE_SECONDS * 1000
+        completeness_ok = health.completeness >= 0.5
+        latency_ok = health.latency_ms is None or health.latency_ms < 10000
+
+        decision = FallbackDecision(
+            chosen_venue=venue,
+            reason=f"healthy preferred venue: {venue}",
+            chain=chain,
+            field_capability=True,
+            freshness_ok=freshness_ok,
+            completeness_ok=completeness_ok,
+            latency_ok=latency_ok,
+        )
+        return venue, decision
+
+    chain.append("all_preferred_venues_exhausted")
+    return None, FallbackDecision(
+        chosen_venue="", reason="no healthy venue available", chain=chain,
+    )
