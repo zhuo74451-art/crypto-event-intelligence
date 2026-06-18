@@ -1,0 +1,20 @@
+{
+  "ticket": "W1_OPERATOR_FINAL_TEST_COMPLETION_R03",
+  "branch": "workbench/post-mvp-operator-workbench-v1",
+  "repair_base_commit": "baf6d5378b7c58eb042f9bd651964739471dda1e",
+  "tested_commit": "fa3ecd592ab9228899e38426b9f06a96ee84de6e",
+  "old_test_count": 89,
+  "new_test_count": 103,
+  "integration_tests": 109,
+  "combined_total": 212,
+  "adapters": 96,
+  "grand_total": 308,
+  "failed": 0,
+  "business_code_modified": false,
+  "main_unchanged": true,
+  "no_send": true,
+  "runtime_data_committed": false,
+  "live_acceptance_inherited": "R02 one-shot/shadow not re-run",
+  "modified_files": ["tests/post_mvp/operator/test_completion.py"],
+  "files_outside_owned_paths": []
+}
