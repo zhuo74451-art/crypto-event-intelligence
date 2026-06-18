@@ -1,0 +1,37 @@
+{
+  "document": "w6_post_mvp_executable_gate_final_closure_r09",
+  "ticket": "W6_EXECUTABLE_GATE_FINAL_CLOSURE_R09",
+  "repair_base_commit": "a248d3564bb3181ad94ccbdd35b25757016db920",
+  "w6_tested_commit": "e554e654ca53d6b65987d7b0a5ef33bec2853150",
+  "hard_forbidden_any_path": "*.db, *.sqlite, *.sqlite3, *.lock, STOP, feed_cursor.json",
+  "runtime_name_patterns": [
+    "run_*.json",
+    "market_*.json",
+    "whale_*.json",
+    "workbench*.html",
+    "live_*response*.json",
+    "raw_*response*.json"
+  ],
+  "exact_allowlist": "historic config/fixture files",
+  "broad_prefixes_present": false,
+  "old_tests_rewired": true,
+  "frozen_refs": {
+    "main": "a8fd827e0d4b7426326238e9d8e0be456e2474bd",
+    "candidate": "9637a47249dde006f07c22c37002cb98ff6e168e",
+    "w1": "22c088d7c7e9f77336056674248a539fdfa936d8",
+    "w2": "25bddbfb994c851845eef4940338897094ccade7",
+    "w3": "97e7310098a19ca11a7f28545e2d0a2cae89820f",
+    "w4": "a9b04727bcea77c69524d6c1225933df2c86045f",
+    "w5": "633606614695940f02a83bd0fce7695dbb469a65"
+  },
+  "mutation_results": "all 18 pass",
+  "total_tests": 221,
+  "w6_passed": 221,
+  "w6_failed": 0,
+  "w6_skipped": 0,
+  "candidate_unchanged": true,
+  "main_unchanged": true,
+  "lanes_unchanged": true,
+  "final_decision": "POST_MVP_CANDIDATE_ACCEPTED_FOR_MAIN_REVIEW",
+  "git_status": "clean"
+}
