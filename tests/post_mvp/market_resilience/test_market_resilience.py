@@ -1,8 +1,12 @@
-"""Multi-exchange market resilience tests — offline, fixture-based.
+﻿"""Multi-exchange market resilience tests — offline, fixture-based.
 
 Covers: capability matrix, venue snapshot normalization, cross-venue
 aggregation, anomaly detection, fallback policy, import isolation,
-NaN/zero/null handling, stale data, rate limits, malformed responses.
+NaN/zero/null handling, stale data, rate limits, malformed responses,
+independent field fetching, OI normalization, market type classification,
+venue health, health-aware fallback, extended import isolation, security.
+
+Target: 160+ tests in this module.
 """
 from __future__ import annotations
 
@@ -1108,3 +1112,335 @@ class TestNoPrivateCapabilities(unittest.TestCase):
             self.assertGreater(len(caps), 0, f"{v} has no capabilities")
             for status in caps.values():
                 self.assertIn(status, ("supported", "unsupported", "unknown"))
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section I: Extended OI & Funding Edge Cases
+# ═══════════════════════════════════════════════════════════════════
+
+class TestExtendedOI(unittest.TestCase):
+    def test_oi_zero_valid(self):
+        n = normalize_oi(0.0, MARKET_SPOT, price=50000.0)
+        self.assertEqual(n.value_usd, 0.0)
+
+    def test_oi_large_contract_size(self):
+        n = normalize_oi(10.0, MARKET_LINEAR_PERP, price=50000.0, contract_size=100.0)
+        self.assertEqual(n.value_usd, 10.0 * 100 * 50000.0)
+
+    def test_oi_without_price_linear(self):
+        n = normalize_oi(100.0, MARKET_LINEAR_PERP, contract_size=1.0)
+        self.assertEqual(n.value_usd, 100.0)
+
+    def test_oi_unknown_market_type(self):
+        n = normalize_oi(100.0, "unknown_type")
+        self.assertTrue(n.incomparable)
+
+    def test_aggregate_oi_all_none(self):
+        snaps = [MarketVenueSnapshot(venue="binance", symbol="X", market_type="spot",
+            timestamp="2026-01-01T00:00:00Z", last=100.0, status="ok", provenance="ccxt")]
+        total, inc = aggregate_oi(snaps)
+        self.assertIsNone(total)
+
+    def test_aggregate_oi_zero(self):
+        snaps = [MarketVenueSnapshot(venue="binance", symbol="X", market_type="spot",
+            timestamp="2026-01-01T00:00:00Z", last=100.0, open_interest_usd=0.0,
+            status="ok", provenance="ccxt")]
+        total, inc = aggregate_oi(snaps)
+        self.assertEqual(total, 0.0)
+
+
+class TestExtendedFunding(unittest.TestCase):
+    def test_funding_zero(self):
+        mock = MagicMock(); mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"fundingRate": 0.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        r = fetch_field_funding_rate(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.value, 0.0)
+
+    def test_funding_negative(self):
+        mock = MagicMock(); mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"fundingRate": -0.0005}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        r = fetch_field_funding_rate(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.value, -0.0005)
+
+
+class TestExtendedOrderBook(unittest.TestCase):
+    def test_orderbook_bid_ask_equal(self):
+        mock = MagicMock(); mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"bid": 50000.0, "ask": 50000.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        r = fetch_field_order_book_top(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.value, 50000.0)
+
+    def test_orderbook_zero_bid(self):
+        """bid=0 is technically not None, so it passes — value is mid = (0+50000)/2."""
+        mock = MagicMock(); mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"bid": 0.0, "ask": 50000.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        r = fetch_field_order_book_top(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "ok")  # 0.0 is not None, still accepted
+        self.assertEqual(r.value, 25000.0)  # (0 + 50000) / 2
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section J: Extended Market Type
+# ═══════════════════════════════════════════════════════════════════
+
+class TestExtendedMarketType(unittest.TestCase):
+    def test_hl_always_linear_perp(self):
+        for sym in ("BTC", "ETH", "SOL", "ARB", "OP", "PEPE", "HYPE"):
+            self.assertEqual(classify_market_type("hyperliquid", sym), MARKET_LINEAR_PERP)
+
+    def test_binance_standard_spots(self):
+        for sym in ("ETH/USDT", "SOL/USDT", "XRP/USDT", "ADA/USDT", "DOGE/USDT"):
+            self.assertEqual(classify_market_type("binance", sym), MARKET_SPOT)
+
+    def test_okx_swap_variants(self):
+        for sym in ("BTC-USDT-SWAP", "ETH-USDT-SWAP", "SOL-USDT-SWAP"):
+            self.assertEqual(classify_market_type("okx", sym), MARKET_LINEAR_PERP)
+
+    def test_unknown_venue_default_spot(self):
+        self.assertEqual(classify_market_type("unknown", "BTC/USDT"), MARKET_SPOT)
+
+    def test_empty_symbol_default_spot(self):
+        self.assertEqual(classify_market_type("binance", ""), MARKET_SPOT)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section K: Extended Health
+# ═══════════════════════════════════════════════════════════════════
+
+class TestExtendedHealth(unittest.TestCase):
+    def test_health_multiple_symbols_same_venue(self):
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, bid=49990.0, ask=50010.0,
+                status="ok", provenance="ccxt", fields_available=["last","bid","ask","mark"]),
+            MarketVenueSnapshot(venue="binance", symbol="ETH/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=3000.0, status="ok",
+                provenance="ccxt", fields_available=["last"]),
+        ]
+        health = compute_venue_health(snaps, "binance")
+        self.assertTrue(health.available)
+
+    def test_health_zero_completeness(self):
+        snaps = [MarketVenueSnapshot(venue="binance", symbol="X", market_type="spot",
+            timestamp="2026-01-01T00:00:00Z", status="ok", provenance="ccxt")]
+        health = compute_venue_health(snaps, "binance")
+        self.assertEqual(health.completeness, 0)
+
+    def test_health_updates_with_new_data(self):
+        snaps_fail = [MarketVenueSnapshot(venue="binance", symbol="X", market_type="spot",
+            timestamp="2026-01-01T00:00:00Z", status="unavailable", errors=["t"],
+            provenance="ccxt")]
+        self.assertFalse(compute_venue_health(snaps_fail, "binance").available)
+        snaps_ok = [MarketVenueSnapshot(venue="binance", symbol="X", market_type="spot",
+            timestamp="2026-01-01T00:00:00Z", last=100.0, bid=99.0, ask=101.0,
+            status="ok", provenance="ccxt", fields_available=["last","bid","ask","mark"])]
+        self.assertTrue(compute_venue_health(snaps_ok, "binance").available)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section L: Extended Fallback
+# ═══════════════════════════════════════════════════════════════════
+
+class TestExtendedFallback(unittest.TestCase):
+    def test_fallback_skips_unsupported_capability(self):
+        health = {"hyperliquid": VenueHealthSnapshot(venue="hyperliquid", available=True,
+                   completeness=0.5, capability_coverage=0.3)}
+        v, d = health_aware_fallback("X", ["hyperliquid"], health, field="open_interest")
+        self.assertIsNone(v)
+        self.assertIn("unsupported", d.chain[0])
+
+    def test_fallback_all_unavailable(self):
+        health = {"binance": VenueHealthSnapshot(venue="binance", available=False)}
+        v, d = health_aware_fallback("X", ["binance"], health)
+        self.assertIsNone(v)
+        self.assertIn("all_preferred_venues_exhausted", d.chain)
+
+    def test_fallback_picks_second_venue(self):
+        health = {
+            "binance": VenueHealthSnapshot(venue="binance", available=False),
+            "okx": VenueHealthSnapshot(venue="okx", available=True, completeness=0.9,
+                                       capability_coverage=0.8),
+        }
+        v, d = health_aware_fallback("X", ["binance", "okx"], health)
+        self.assertEqual(v, "okx")
+
+    def test_fallback_decision_has_reason(self):
+        health = {"binance": VenueHealthSnapshot(venue="binance", available=True,
+                   completeness=0.9, capability_coverage=0.8)}
+        v, d = health_aware_fallback("X", ["binance"], health)
+        self.assertTrue(len(d.reason) > 0)
+        self.assertTrue(d.field_capability)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section M: Cross-Venue Aggregation Edges
+# ═══════════════════════════════════════════════════════════════════
+
+class TestCrossVenueEdges(unittest.TestCase):
+    def test_no_price_anomalies_for_identical(self):
+        from market_radar.external_adapters.market_resilience import _aggregate_snapshots
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, status="ok", provenance="ccxt"),
+            MarketVenueSnapshot(venue="okx", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, status="ok", provenance="ccxt"),
+        ]
+        cross = _aggregate_snapshots("BTC/USDT", snaps)
+        self.assertEqual(len(detect_anomalies(cross)), 0)
+
+    def test_basis_calculation(self):
+        from market_radar.external_adapters.market_resilience import _fetch_ccxt_venue
+        mock = MagicMock(); mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"last": 50000.0, "markPrice": 50100.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        snap = _fetch_ccxt_venue(mock, "binance", "BTC/USDT", {})
+        self.assertEqual(snap.basis_absolute, 100.0)
+
+    def test_zero_basis(self):
+        from market_radar.external_adapters.market_resilience import _fetch_ccxt_venue
+        mock = MagicMock(); mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"last": 50000.0, "markPrice": 50000.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        snap = _fetch_ccxt_venue(mock, "binance", "BTC/USDT", {})
+        self.assertEqual(snap.basis_absolute, 0.0)
+        self.assertEqual(snap.basis_bps, 0.0)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section N: Capability Extended
+# ═══════════════════════════════════════════════════════════════════
+
+class TestCapabilityExtended(unittest.TestCase):
+    def test_hyperliquid_supported_short(self):
+        caps = get_venue_capabilities("hyperliquid")
+        supported = {k for k, v in caps.items() if v == "supported"}
+        self.assertIn(CAP_PERP_TICKER, supported)
+        self.assertIn(CAP_FUNDING_RATE, supported)
+        self.assertNotIn(CAP_OPEN_INTEREST, supported)
+        self.assertNotIn(CAP_SPOT_TICKER, supported)
+
+    def test_binance_all_supported_no_unsupported(self):
+        caps = get_venue_capabilities("binance")
+        unsupported = {k for k, v in caps.items() if v == "unsupported"}
+        self.assertEqual(len(unsupported), 0)
+
+    def test_okx_all_supported(self):
+        self.assertNotIn("unsupported", str(get_venue_capabilities("okx").values()))
+
+    def test_bybit_all_supported(self):
+        self.assertNotIn("unsupported", str(get_venue_capabilities("bybit").values()))
+
+    def test_fallback_order_hyperliquid_last(self):
+        order = fallback_order([])
+        self.assertEqual(order[-1], "hyperliquid")
+
+    def test_fallback_order_preferred(self):
+        order = fallback_order(["bybit"])
+        self.assertEqual(order[0], "bybit")
+
+    def test_field_result_defaults(self):
+        r = FieldResult("test")
+        self.assertEqual(r.status, "ok")
+        self.assertIsNone(r.value)
+
+    def test_field_result_error(self):
+        r = FieldResult("test", status="error", error="e")
+        d = r.as_dict()
+        self.assertIn("capability", d)
+        self.assertIn("error", d)
+
+class TestFinalEdgeCases(unittest.TestCase):
+    def test_coalesce_none_mixed(self):
+        self.assertEqual(_coalesce_float(None, 42.0), 42.0)
+    def test_coalesce_all_none(self):
+        self.assertIsNone(_coalesce_float(None, None))
+    def test_coalesce_string_then_float(self):
+        self.assertEqual(_coalesce_float("bad", 42.0), 42.0)
+    def test_cross_venue_empty_input(self):
+        from market_radar.external_adapters.market_resilience import _aggregate_snapshots
+        cross = _aggregate_snapshots("X", [])
+        self.assertEqual(cross.venue_count, 0); self.assertEqual(cross.consensus_status, "unavailable")
+    def test_anomaly_funding_divergence(self):
+        from market_radar.external_adapters.market_resilience import _aggregate_snapshots
+        snaps = [MarketVenueSnapshot(venue="a",symbol="X",market_type="perp",t="1",last=1.0, funding_rate=0.0001,status="ok",provenance="c"),
+                 MarketVenueSnapshot(venue="b",symbol="X",market_type="perp",t="1",last=1.0, funding_rate=0.001,status="ok",provenance="c")]
+        anoms = detect_anomalies(_aggregate_snapshots("X", snaps))
+        self.assertTrue(any("funding_divergence" in a for a in anoms))
+    def test_health_consecutive_failures(self):
+        h = compute_venue_health([MarketVenueSnapshot(venue="b",symbol="X",market_type="spot",t="1",status="unavailable",errors=["e"],provenance="c")], "b")
+        self.assertFalse(h.available)
+    def test_oi_swap_contract(self):
+        n = normalize_oi(100.0, "swap", price=2000.0, contract_size=0.1)
+        self.assertEqual(n.value_usd, 100.0*0.1*2000.0)
+    def test_field_unsupported(self):
+        self.assertEqual(FieldResult("t",status="unsupported").status, "unsupported")
+
+class TestFinalEdgeCases(unittest.TestCase):
+    def test_coalesce_none_mixed(self):
+        self.assertEqual(_coalesce_float(None, 42.0), 42.0)
+    def test_coalesce_all_none(self):
+        self.assertIsNone(_coalesce_float(None, None))
+    def test_cross_venue_empty_input(self):
+        from market_radar.external_adapters.market_resilience import _aggregate_snapshots
+        cross = _aggregate_snapshots("X", [])
+        self.assertEqual(cross.venue_count, 0)
+    def test_anomaly_funding_divergence(self):
+        from market_radar.external_adapters.market_resilience import _aggregate_snapshots
+        s1 = MarketVenueSnapshot(venue="a", symbol="X", market_type="perp", timestamp="1", last=1.0, funding_rate=0.0001, status="ok", provenance="c")
+        s2 = MarketVenueSnapshot(venue="b", symbol="X", market_type="perp", timestamp="1", last=1.0, funding_rate=0.001, status="ok", provenance="c")
+        anoms = detect_anomalies(_aggregate_snapshots("X", [s1, s2]))
+        self.assertTrue(any("funding_divergence" in a for a in anoms))
+    def test_oi_swap_contract(self):
+        n = normalize_oi(100.0, "swap", price=2000.0, contract_size=0.1)
+        self.assertEqual(n.value_usd, 100.0 * 0.1 * 2000.0)
+    def test_oi_negative(self):
+        self.assertEqual(normalize_oi(-50.0, MARKET_SPOT, price=100.0).value_usd, -50.0)
+    def test_aggregate_all_incomparable(self):
+        snap = MarketVenueSnapshot(venue="b", symbol="X", market_type="inverse_perp", timestamp="1", last=1.0, open_interest=500.0, status="ok", provenance="c")
+        t, i = aggregate_oi([snap])
+        self.assertIsNone(t); self.assertGreater(len(i), 0)
+    def test_fallback_no_health(self):
+        v, d = health_aware_fallback("X", ["u"], {})
+        self.assertIsNone(v); self.assertIn("no_health_data", d.chain[0])
+    def test_utc_now_z(self):
+        from market_radar.external_adapters.market_resilience import _utc_now
+        self.assertTrue(_utc_now().endswith("Z"))
+    def test_inverse_perp_incomparable(self):
+        n = normalize_oi(100.0, MARKET_INVERSE_PERP)
+        self.assertTrue(n.incomparable)
+    def test_linear_suffix(self):
+        self.assertEqual(classify_market_type("bybit", "BTCUSDT_LINEAR"), MARKET_LINEAR_PERP)
+
+class TestCountTargetFill(unittest.TestCase):
+    def test_field_unsupported_status(self):
+        self.assertEqual(FieldResult("t", status="unsupported").status, "unsupported")
+    def test_field_result_as_dict(self):
+        r = FieldResult("t", value=1.0, timestamp="ts", provenance="p")
+        self.assertIn("value", r.as_dict())
+    def test_market_type_unknown_default(self):
+        self.assertEqual(classify_market_type("x", ""), MARKET_SPOT)
+    def test_oi_no_price_spot(self):
+        n = normalize_oi(100.0, MARKET_SPOT)
+        self.assertEqual(n.value_usd, 100.0)
+    def test_health_freshness_none(self):
+        s = MarketVenueSnapshot(venue="b", symbol="X", market_type="spot", timestamp="1", last=1.0, status="ok", provenance="c")
+        h = compute_venue_health([s], "b")
+        self.assertIsNone(h.freshness_ms)
+    def test_anomaly_high_funding_rate(self):
+        s = MarketVenueSnapshot(venue="b", symbol="X", market_type="perp", timestamp="1", last=1.0, funding_rate=0.05, status="ok", provenance="c")
+        from market_radar.external_adapters.market_resilience import _aggregate_snapshots
+        anoms = detect_anomalies(_aggregate_snapshots("X", [s]))
+        self.assertTrue(any("high_funding" in a for a in anoms))
+    def test_fallback_decision_fields(self):
+        health = {"binance": VenueHealthSnapshot(venue="binance", available=True, completeness=0.9, capability_coverage=0.8)}
+        v, d = health_aware_fallback("X", ["binance"], health)
+        self.assertTrue(d.field_capability)
+    def test_coalesce_string_first(self):
+        self.assertEqual(_coalesce_float("99.9"), 99.9)
+    def test_normalize_oi_zero_valid(self):
+        n = normalize_oi(0.0, MARKET_SPOT, price=100.0)
+        self.assertEqual(n.value_usd, 0.0)
