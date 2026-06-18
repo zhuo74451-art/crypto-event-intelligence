@@ -14,8 +14,10 @@ from typing import Optional
 from market_radar.whale_domain.models import (
     WhaleSnapshot, WhalePositionChange, _iso_to_ts,
 )
+from market_radar.whale_domain.portfolio_config import (
+    PortfolioThresholds, DEFAULT_THRESHOLDS,
+)
 
-COORD_WINDOW_HOURS = 6
 MIN_COORD_ADDRESSES = 2
 
 
@@ -27,8 +29,11 @@ def _make_action_id(action_type: str, coin: str, direction: str,
 
 def detect_coordinated_direction_build(
     changes: list[WhalePositionChange],
-    window_hours: float = COORD_WINDOW_HOURS,
+    window_hours: Optional[float] = None,
+    cfg: PortfolioThresholds = DEFAULT_THRESHOLDS,
 ) -> list[dict]:
+    if window_hours is None:
+        window_hours = cfg.coordination_window_hours
     """Detect 2+ addresses increasing same coin in same direction within window.
 
     Returns list of coordinated action dicts.
@@ -80,8 +85,11 @@ def detect_coordinated_direction_build(
 
 def detect_coordinated_reduction(
     changes: list[WhalePositionChange],
-    window_hours: float = COORD_WINDOW_HOURS,
+    window_hours: Optional[float] = None,
+    cfg: PortfolioThresholds = DEFAULT_THRESHOLDS,
 ) -> list[dict]:
+    if window_hours is None:
+        window_hours = cfg.coordination_window_hours
     """Detect 2+ addresses reducing same coin in same direction within window."""
     reductions: dict[tuple[str, str], list[WhalePositionChange]] = {}
     for c in changes:
@@ -129,8 +137,11 @@ def detect_coordinated_reduction(
 
 def detect_coordinated_flip(
     changes: list[WhalePositionChange],
-    window_hours: float = COORD_WINDOW_HOURS,
+    window_hours: Optional[float] = None,
+    cfg: PortfolioThresholds = DEFAULT_THRESHOLDS,
 ) -> list[dict]:
+    if window_hours is None:
+        window_hours = cfg.coordination_window_hours
     """Detect 2+ addresses flipping same coin direction within window."""
     flips: dict[str, list[WhalePositionChange]] = {}
     for c in changes:
@@ -175,8 +186,11 @@ def detect_coordinated_flip(
 
 def detect_divergent_behavior(
     changes: list[WhalePositionChange],
-    window_hours: float = COORD_WINDOW_HOURS,
+    window_hours: Optional[float] = None,
+    cfg: PortfolioThresholds = DEFAULT_THRESHOLDS,
 ) -> list[dict]:
+    if window_hours is None:
+        window_hours = cfg.coordination_window_hours
     """Detect opposing direction actions on same coin within window."""
     by_coin: dict[str, list[WhalePositionChange]] = {}
     for c in changes:
@@ -253,13 +267,16 @@ def detect_liquidation_cluster_formation(
 def detect_all_coordinated_actions(
     changes: list[WhalePositionChange],
     snapshots: list[WhaleSnapshot],
-    window_hours: float = COORD_WINDOW_HOURS,
+    window_hours: Optional[float] = None,
+    cfg: PortfolioThresholds = DEFAULT_THRESHOLDS,
 ) -> list[dict]:
     """Run all coordination detectors and return combined results."""
+    if window_hours is None:
+        window_hours = cfg.coordination_window_hours
     results: list[dict] = []
-    results.extend(detect_coordinated_direction_build(changes, window_hours))
-    results.extend(detect_coordinated_reduction(changes, window_hours))
-    results.extend(detect_coordinated_flip(changes, window_hours))
-    results.extend(detect_divergent_behavior(changes, window_hours))
+    results.extend(detect_coordinated_direction_build(changes, window_hours, cfg))
+    results.extend(detect_coordinated_reduction(changes, window_hours, cfg))
+    results.extend(detect_coordinated_flip(changes, window_hours, cfg))
+    results.extend(detect_divergent_behavior(changes, window_hours, cfg))
     results.extend(detect_liquidation_cluster_formation(snapshots))
     return results
