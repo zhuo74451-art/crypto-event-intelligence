@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Operator Workbench CLI — run, shadow, inspect, compare, bundle, doctor.
+"""Operator Workbench CLI — run, shadow, inspect, compare, bundle, doctor, status.
 
 Usage:
   python -m scripts.post_mvp.operator.operator_workbench doctor [--offline] [--json]
@@ -8,6 +8,7 @@ Usage:
   python -m scripts.post_mvp.operator.operator_workbench inspect <run-dir>
   python -m scripts.post_mvp.operator.operator_workbench compare <run-dir-1> <run-dir-2>
   python -m scripts.post_mvp.operator.operator_workbench bundle <run-dir> [--output]
+  python -m scripts.post_mvp.operator.operator_workbench status [--json] [--state-dir DIR]
 """
 from __future__ import annotations
 
@@ -15,9 +16,11 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
+import sqlite3
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Optional
 
@@ -665,6 +668,523 @@ def cmd_readiness_score(args: argparse.Namespace) -> int:
     return 0 if score["score"] >= 70 else 1
 
 
+
+# -- Status -----------------------------------------------------------
+
+def _scan_state_dirs(state_root):
+    """Return all sub-directories under *state_root* that may hold run state."""
+    if not state_root.is_dir():
+        return []
+    return sorted([d for d in state_root.iterdir() if d.is_dir() and not d.name.startswith(".")])
+
+
+def _find_run_history_dbs(state_root):
+    """Find all ``run_history.db`` files under *state_root*."""
+    if not state_root.is_dir():
+        return []
+    return sorted(state_root.rglob("run_history.db"))
+
+
+def _read_latest_run(db_path):
+    """Fetch the most recent run record from a run_history.db."""
+    try:
+        conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            "SELECT * FROM run_history ORDER BY started_at DESC LIMIT 1"
+        ).fetchone()
+        conn.close()
+        if row is None:
+            return None
+        d = dict(row)
+        if d.get("summary_json"):
+            try:
+                d["summary"] = json.loads(d["summary_json"])
+            except (json.JSONDecodeError, TypeError):
+                pass
+        return d
+    except (sqlite3.Error, OSError):
+        return None
+
+
+def _read_run_history(db_path, limit=10):
+    """Fetch recent run records from a run_history.db."""
+    try:
+        conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT run_id, runner_label, status, started_at, finished_at, error "
+            "FROM run_history ORDER BY started_at DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+        conn.close()
+        return [dict(r) for r in rows]
+    except (sqlite3.Error, OSError):
+        return []
+
+
+def _read_alert_state_summary(state_root):
+    """Query alert_state.db for state counts."""
+    alert_dbs = sorted(state_root.rglob("alert_state.db"))
+    if not alert_dbs:
+        return {"new": 0, "persistent": 0, "changed": 0, "resolved": 0,
+                "delivery_candidates": 0, "db_found": False}
+    db_path = alert_dbs[0]
+    try:
+        conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        conn.row_factory = sqlite3.Row
+        counts = {"new": 0, "persistent": 0, "changed": 0, "resolved": 0}
+        rows = conn.execute(
+            "SELECT state, COUNT(*) as cnt FROM alert_state GROUP BY state"
+        ).fetchall()
+        for r in rows:
+            counts[r["state"]] = r["cnt"]
+        delivery_candidates = counts.get("new", 0) + counts.get("changed", 0)
+        conn.close()
+        return {**counts, "delivery_candidates": delivery_candidates, "db_found": True,
+                "db_path": str(db_path)}
+    except (sqlite3.Error, OSError):
+        return {"new": 0, "persistent": 0, "changed": 0, "resolved": 0,
+                "delivery_candidates": 0, "db_found": False}
+
+
+def _read_telegram_receipt():
+    """Read the latest Telegram delivery receipt from the sent-state SQLite."""
+    sent_db = Path("data/local_news_flow_tg_sent_state.sqlite")
+    if not sent_db.is_file():
+        return {"found": False, "message": "sent state db not found"}
+    try:
+        conn = sqlite3.connect(f"file:{sent_db}?mode=ro", uri=True)
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            "SELECT content_hash, sent_at, chat_id, msg_id, status, error "
+            "FROM sent ORDER BY sent_at DESC LIMIT 1"
+        ).fetchone()
+        conn.close()
+        if row is None:
+            return {"found": False, "message": "no sent records"}
+        d = dict(row)
+        raw_chat = d.get("chat_id", "")
+        redacted_chat = ("..." + raw_chat[-4:]) if len(raw_chat) > 4 else raw_chat
+        return {
+            "found": True,
+            "sent_at": d.get("sent_at"),
+            "message_id": d.get("msg_id"),
+            "status": d.get("status"),
+            "error": d.get("error", ""),
+            "chat_id_redacted": redacted_chat,
+        }
+    except (sqlite3.Error, OSError) as e:
+        return {"found": False, "message": str(e)}
+
+
+def _check_locks(state_root):
+    """Scan for lock files in state directories."""
+    locks = []
+    # Also check the root state directory itself
+    candidates = [state_root] + _scan_state_dirs(state_root)
+    for state_dir in candidates:
+        for lock_name in ("one_shot.lock", "bounded_shadow.lock"):
+            lock_path = state_dir / lock_name
+            if lock_path.is_file():
+                age_seconds = None
+                content_info = ""
+                try:
+                    data = lock_path.read_text(encoding="utf-8").strip()
+                    parts = data.split("|")
+                    if len(parts) >= 2:
+                        ts = float(parts[1])
+                        age_seconds = (datetime.now().timestamp() - ts)
+                        content_info = f"pid={parts[0]} age={age_seconds:.0f}s"
+                except (OSError, ValueError):
+                    content_info = "unreadable"
+                locks.append({
+                    "path": str(lock_path),
+                    "name": lock_name,
+                    "state_dir": str(state_dir),
+                    "exists": True,
+                    "content": content_info,
+                    "age_seconds": age_seconds,
+                })
+    return locks
+
+
+def _check_stop_markers(state_root):
+    """Scan for STOP markers in state directories."""
+    markers = []
+    candidates = [state_root] + _scan_state_dirs(state_root)
+    for state_dir in candidates:
+        stop_path = state_dir / "STOP"
+        if stop_path.is_file():
+            markers.append({
+                "path": str(stop_path),
+                "state_dir": str(state_dir),
+                "is_set": True,
+            })
+    return markers
+
+
+def _find_latest_manifest(output_root):
+    """Find the most recent run manifest under *output_root*."""
+    if not output_root.is_dir():
+        return None
+    manifests = sorted(output_root.rglob("manifest_*.json"),
+                        key=lambda p: p.stat().st_mtime, reverse=True)
+    if not manifests:
+        return None
+    try:
+        with open(manifests[0], "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def _check_disk_space(path):
+    """Check available disk space on the filesystem containing *path*."""
+    try:
+        anchor = path.resolve().anchor if os.name == "nt" else path.resolve().root
+        usage = shutil.disk_usage(anchor)
+        free_gb = usage.free / (1024 ** 3)
+        total_gb = usage.total / (1024 ** 3)
+        return {
+            "path": str(path.resolve()),
+            "free_bytes": usage.free,
+            "free_gb": round(free_gb, 1),
+            "total_gb": round(total_gb, 1),
+            "free_pct": round(usage.free / usage.total * 100, 1) if usage.total else 0,
+        }
+    except OSError:
+        return {"path": str(path), "free_gb": "unknown", "error": "unable to query"}
+
+
+def _format_timedelta(td):
+    """Format a timedelta as a human-readable relative time string."""
+    total_seconds = int(td.total_seconds())
+    if total_seconds < 60:
+        return f"{total_seconds}s ago"
+    elif total_seconds < 3600:
+        return f"{total_seconds // 60}m {total_seconds % 60}s ago"
+    elif total_seconds < 86400:
+        hours = total_seconds // 3600
+        mins = (total_seconds % 3600) // 60
+        return f"{hours}h {mins}m ago"
+    else:
+        days = total_seconds // 86400
+        hours = (total_seconds % 86400) // 3600
+        return f"{days}d {hours}h ago"
+
+
+def _compute_exit_code(status):
+    """Compute exit code: 0 = healthy, 1 = warning, 2 = unhealthy."""
+    issues = []
+    criticals = []
+
+    lr = status.get("latest_run")
+    if lr:
+        run_status = lr.get("status", "")
+        if run_status in ("failed", "stopped", "crashed"):
+            criticals.append(f"last run failed: {run_status}")
+        elif run_status == "degraded":
+            issues.append(f"last run degraded: {run_status}")
+        if not lr.get("finished_at") and lr.get("started_at"):
+            started = lr["started_at"]
+            try:
+                started_dt = datetime.fromisoformat(started.replace("Z", "+00:00"))
+                age_hours = (datetime.now(timezone.utc) - started_dt).total_seconds() / 3600
+                if age_hours > 2:
+                    criticals.append(f"run not closed for {age_hours:.1f}h")
+                elif age_hours > 0.5:
+                    issues.append(f"run not closed for {age_hours:.1f}h")
+            except (ValueError, TypeError):
+                pass
+
+    sources = status.get("sources", {})
+    failed_sources = [k for k, v in sources.items() if v == "failed"]
+    degraded_sources = [k for k, v in sources.items() if v == "degraded"]
+    if len(failed_sources) >= 2:
+        criticals.append(f"consecutive source failures: {', '.join(failed_sources)}")
+    elif failed_sources:
+        issues.append(f"source failures: {', '.join(failed_sources)}")
+    if degraded_sources:
+        issues.append(f"degraded sources: {', '.join(degraded_sources)}")
+
+    if status.get("stop_marker"):
+        issues.append("STOP marker present")
+
+    for lock in status.get("locks", []):
+        age = lock.get("age_seconds")
+        if age and age > 300:
+            issues.append(f"stale lock: {lock.get('name')} ({age:.0f}s old)")
+
+    disk = status.get("disk", {})
+    free_gb = disk.get("free_gb")
+    if free_gb is not None and isinstance(free_gb, (int, float)):
+        if free_gb < 1:
+            criticals.append(f"disk space critically low: {free_gb:.1f}GB")
+        elif free_gb < 5:
+            issues.append(f"disk space low: {free_gb:.1f}GB")
+
+    alert_state = status.get("alert_state", {})
+    if alert_state.get("new", 0) > 0 or alert_state.get("changed", 0) > 0:
+        issues.append("pending delivery candidates")
+
+    if lr and lr.get("started_at"):
+        started = lr["started_at"]
+        try:
+            started_dt = datetime.fromisoformat(started.replace("Z", "+00:00"))
+            elapsed = datetime.now(timezone.utc) - started_dt
+            if elapsed.total_seconds() > 7200:
+                issues.append(f"last run started {elapsed.total_seconds() / 3600:.1f}h ago")
+        except (ValueError, TypeError):
+            pass
+
+    if criticals:
+        return 2
+    if issues:
+        return 1
+    return 0
+
+
+def cmd_status(args):
+    """Show operator runtime status and health (fully offline, read-only).
+
+    Outputs structured JSON (--json) or formatted text.
+    Exit code: 0 = healthy, 1 = warning, 2 = unhealthy.
+    """
+    state_root = Path(args.state_dir) if args.state_dir else Path("data/post_mvp/state")
+    output_root = Path(args.output_dir) if args.output_dir else Path("data/post_mvp/output")
+    log_root = Path("logs")
+
+    sha = _git_sha()
+    branch = _git_branch()
+    now_utc = datetime.now(timezone.utc)
+
+    status = {
+        "release_sha": sha,
+        "branch": branch,
+        "timestamp": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+
+    # Latest run
+    run_history_dbs = _find_run_history_dbs(state_root)
+    all_runs = []
+    for db_path in run_history_dbs:
+        latest = _read_latest_run(db_path)
+        if latest is not None:
+            all_runs.append((latest, db_path))
+    if all_runs:
+        def _ps(item):
+            try:
+                return item[0].get("started_at", "")
+            except Exception:
+                return ""
+        all_runs.sort(key=_ps, reverse=True)
+        latest_run, latest_db = all_runs[0]
+        run_started_raw = latest_run.get("started_at", "")
+        try:
+            run_started_dt = datetime.fromisoformat(
+                run_started_raw.replace("Z", "+00:00")
+            )
+            elapsed = now_utc - run_started_dt
+            time_ago = _format_timedelta(elapsed)
+        except (ValueError, TypeError):
+            time_ago = "unknown"
+        status["latest_run"] = {
+            "run_id": latest_run.get("run_id"),
+            "status": latest_run.get("status"),
+            "runner_label": latest_run.get("runner_label"),
+            "started_at": run_started_raw,
+            "finished_at": latest_run.get("finished_at"),
+            "time_ago": time_ago,
+            "error": latest_run.get("error"),
+            "db_path": str(latest_db),
+        }
+    else:
+        status["latest_run"] = None
+
+    # Run history
+    all_history = []
+    for db_path in run_history_dbs:
+        all_history.extend(_read_run_history(db_path, limit=10))
+    all_history.sort(key=lambda r: r.get("started_at", ""), reverse=True)
+    status["run_history"] = all_history[:20]
+
+    # Source health from latest manifest
+    manifest = _find_latest_manifest(output_root)
+    if manifest:
+        source_summary = manifest.get("source_summary", {})
+        if isinstance(source_summary, dict):
+            status["sources"] = source_summary
+        elif isinstance(source_summary, list):
+            status["sources"] = {s.get("source", str(i)): s.get("status")
+                                  for i, s in enumerate(source_summary)}
+        else:
+            status["sources"] = {}
+
+        feed_summary = manifest.get("feed_summary", {}) or {}
+        status["feed"] = {
+            "live_count": feed_summary.get("live_count"),
+            "overall_status": feed_summary.get("overall_status"),
+        }
+        status["whale"] = manifest.get("whale", {})
+        status["markets"] = {}
+        mkts = manifest.get("markets", [])
+        if isinstance(mkts, list):
+            status["markets"] = {
+                m.get("market", m.get("source", f"mkt_{i}")):
+                    {"status": m.get("status"), "price": m.get("price")}
+                for i, m in enumerate(mkts)
+            }
+        status["cursor"] = {
+            "before": manifest.get("cursor_before"),
+            "after": manifest.get("cursor_after"),
+        }
+        status["manifest_profile"] = manifest.get("profile_name")
+        status["manifest_run_id"] = manifest.get("run_id")
+    else:
+        status["sources"] = {}
+        status["feed"] = {}
+        status["whale"] = {}
+        status["markets"] = {}
+        status["cursor"] = {}
+
+    # Locks
+    status["locks"] = _check_locks(state_root)
+
+    # STOP marker
+    status["stop_marker"] = _check_stop_markers(state_root)
+
+    # Paths
+    status["paths"] = {
+        "state": str(state_root.resolve()),
+        "output": str(output_root.resolve()),
+        "log": str(log_root.resolve()),
+    }
+
+    # Disk space
+    status["disk"] = _check_disk_space(state_root)
+
+    # Alert state
+    status["alert_state"] = _read_alert_state_summary(state_root)
+
+    # Telegram receipt
+    status["telegram_receipt"] = _read_telegram_receipt()
+
+    # Exit code and health
+    exit_code = _compute_exit_code(status)
+    status["exit_code"] = exit_code
+    status["health"] = {0: "healthy", 1: "warning", 2: "unhealthy"}.get(exit_code, "unknown")
+
+    if args.json:
+        print(json.dumps(status, indent=2, default=str))
+    else:
+        _print_status_human(status)
+
+    return exit_code
+
+
+def _print_status_human(status):
+    """Pretty-print the status dict for human reading."""
+    health_icon = {"healthy": "✓", "warning": "⚠", "unhealthy": "✗"}
+    icon = health_icon.get(status.get("health", ""), "?")
+    print(f"Operator Status {status.get('branch', '?')}@{status.get('release_sha', '?')[:12]}")
+    print(f"  Health: {icon} {status['health']} (exit {status['exit_code']})")
+    print(f"  Timestamp: {status['timestamp']}")
+
+    lr = status.get("latest_run")
+    if lr:
+        print(f"\n  Latest Run:")
+        print(f"    ID:     {lr.get('run_id', '?')}")
+        print(f"    Status: {lr.get('status', '?')}")
+        print(f"    When:   {lr.get('started_at', '?')} ({lr.get('time_ago', '?')})")
+        if lr.get("error"):
+            print(f"    Error:  {lr['error']}")
+    else:
+        print("\n  Latest Run: none")
+
+    src = status.get("sources", {})
+    if src:
+        print(f"\n  Sources ({len(src)}):")
+        healthy_count = sum(1 for v in src.values() if v in ("ok", "completed", "healthy"))
+        print(f"    {healthy_count}/{len(src)} healthy")
+        for name, s in sorted(src.items()):
+            icon_s = {"ok": "ok", "completed": "ok", "degraded": "-",
+                       "failed": "X", "unhealthy": "X"}.get(str(s), "?")
+            print(f"    {icon_s} {name}: {s}")
+
+    feed = status.get("feed", {}) or {}
+    if feed.get("live_count") is not None:
+        print(f"\n  Feed live_count: {feed['live_count']}")
+
+    wh = status.get("whale", {}) or {}
+    if wh:
+        print(f"\n  Whale: {json.dumps(wh, default=str)}")
+
+    mkt = status.get("markets", {}) or {}
+    if mkt:
+        print(f"\n  Markets ({len(mkt)}):")
+        for name, m in sorted(mkt.items()):
+            s = m.get("status", "?")
+            icon_m = {"ok": "ok", "healthy": "ok", "degraded": "-", "failed": "X"}.get(str(s), "?")
+            print(f"    {icon_m} {name}: {s}")
+
+    cursor = status.get("cursor", {}) or {}
+    if cursor.get("before") or cursor.get("after"):
+        print(f"\n  Cursor: {cursor.get('before', '?')} -> {cursor.get('after', '?')}")
+
+    hist = status.get("run_history", [])
+    if hist:
+        print(f"\n  Run History ({len(hist)}):")
+        for r in hist[:5]:
+            print(f"    {str(r.get('started_at', '?'))[:19]}  {str(r.get('run_id', '?')):20s}  {r.get('status', '?')}")
+
+    locks = status.get("locks", [])
+    if locks:
+        print(f"\n  Locks ({len(locks)}):")
+        for lock in locks:
+            print(f"    {lock['name']}: {lock.get('content', 'present')}")
+
+    stops = status.get("stop_marker", [])
+    if stops:
+        print(f"\n  STOP Marker: SET ({len(stops)} found)")
+
+    paths = status.get("paths", {})
+    if paths:
+        print(f"\n  Paths:")
+        for k, v in paths.items():
+            print(f"    {k}: {v}")
+
+    disk = status.get("disk", {})
+    free_gb = disk.get("free_gb", "?")
+    if isinstance(free_gb, (int, float)):
+        disk_icon = "-" if free_gb < 5 else "+"
+        print(f"\n  Disk: {disk_icon} {free_gb}GB free / {disk.get('total_gb', '?')}GB total")
+    else:
+        print(f"\n  Disk: ?")
+
+    alert_state = status.get("alert_state", {})
+    if alert_state:
+        print(f"\n  Alert State:")
+        for state_name in ("new", "persistent", "changed", "resolved"):
+            count = alert_state.get(state_name, 0)
+            print(f"    {state_name}: {count}")
+        dc = alert_state.get("delivery_candidates", 0)
+        print(f"    delivery candidates: {dc}")
+
+    tg = status.get("telegram_receipt", {})
+    if tg.get("found"):
+        print(f"\n  Telegram Receipt:")
+        print(f"    Sent:   {tg.get('sent_at', '?')}")
+        print(f"    MsgID:  {tg.get('message_id', '?')}")
+        print(f"    Status: {tg.get('status', '?')}")
+        if tg.get("error"):
+            print(f"    Error:  {tg['error']}")
+    else:
+        print(f"\n  Telegram Receipt: {tg.get('message', 'none')}")
+
+    print()
+
+
 # ── Main ─────────────────────────────────────────────────────────────
 
 def build_parser() -> argparse.ArgumentParser:
@@ -736,6 +1256,12 @@ def build_parser() -> argparse.ArgumentParser:
     rs.add_argument("--sources", type=int, default=4, help="Connected source count")
     rs.add_argument("--json", action="store_true", help="JSON output")
 
+    # status
+    st = sub.add_parser("status", help="Operator runtime status and health")
+    st.add_argument("--json", action="store_true", help="JSON output")
+    st.add_argument("--state-dir", default="", help="State directory override")
+    st.add_argument("--output-dir", default="", help="Output directory override")
+
     return p
 
 
@@ -753,6 +1279,7 @@ def main() -> int:
         "catalog": cmd_catalog,
         "replay-pack": cmd_replay_pack,
         "readiness-score": cmd_readiness_score,
+        "status": cmd_status,
     }
     handler = commands.get(args.command)
     if handler:
