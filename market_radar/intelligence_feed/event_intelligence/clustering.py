@@ -130,7 +130,29 @@ class ClusteringEngine:
 
         for idx, event in enumerate(events):
             score = self._cluster_score(item, extr, event)
-            if score > 30.0 and score > best_score:
+            # Boost if same source group
+            if event.items:
+                event_sources = {i.source_label for i in event.items}
+                item_groups = self._compute_source_groups([item.source_label])
+                event_groups = self._compute_source_groups(list(event_sources))
+                shared_groups = set(g.group_label for g in item_groups) & set(g.group_label for g in event_groups)
+                if shared_groups:
+                    score += 15.0  # Same source group boost
+            # Require at least one of these overlaps for clustering
+            item_tokens = _tokenize(item.title)
+            event_tokens = _tokenize(event.canonical_title)
+            title_overlap = (len(item_tokens & event_tokens) / max(len(item_tokens | event_tokens), 1)
+                             if item_tokens and event_tokens else 0.0)
+            has_content_overlap = bool(
+                title_overlap > 0.3
+                or (extr.assets and event.assets and
+                    {a.symbol for a in extr.assets} & {a.symbol for a in event.assets})
+                or (extr.topics and event.topics and
+                    {t.topic for t in extr.topics} & {t.topic for t in event.topics})
+                or (extr.entities and event.entities and
+                    {e.name.lower() for e in extr.entities} & {e.name.lower() for e in event.entities})
+            )
+            if score > 25.0 and score > best_score and has_content_overlap:
                 best_score = score
                 best_idx = idx
 

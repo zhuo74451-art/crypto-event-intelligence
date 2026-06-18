@@ -116,11 +116,18 @@ class ScoreBreakdown:
 
     @property
     def total(self) -> float:
-        return max(0.0, min(100.0, sum([
-            self.freshness, self.novelty, self.source_independence,
-            self.asset_relevance, self.event_severity, self.evidence_completeness,
-        ]) - self.conflict_penalty - self.duplication_penalty -
-        self.stale_penalty - self.data_quality_penalty))
+        # Weighted average: weights sum to 100 (20+15+25+15+15+10)
+        weighted = (
+            self.freshness * 20.0 +
+            self.novelty * 15.0 +
+            self.source_independence * 25.0 +
+            self.asset_relevance * 15.0 +
+            self.event_severity * 15.0 +
+            self.evidence_completeness * 10.0
+        ) / 100.0
+        penalties = (self.conflict_penalty + self.duplication_penalty +
+                     self.stale_penalty + self.data_quality_penalty)
+        return max(0.0, min(100.0, weighted - penalties))
 
 
 class CandidateLevel(str, Enum):
