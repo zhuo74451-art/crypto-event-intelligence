@@ -190,7 +190,9 @@ class WhaleAlertCandidate:
     coin: str
     label: Optional[str]
     address_short: str
-    message: str
+    address: str = ""           # Full address for stable alert_key
+    direction: str = ""         # "long" | "short" for stable alert_key
+    message: str = ""
     observed_value: Optional[float] = None
     generated_at_utc: str = ""
 

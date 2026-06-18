@@ -31,6 +31,7 @@ class WorkbenchBundle:
 
     # Alert candidates
     alert_candidates: list[dict] = field(default_factory=list)
+    delivery_candidates: list[dict] = field(default_factory=list)
 
     # Event journal
     event_journal: list[dict] = field(default_factory=list)

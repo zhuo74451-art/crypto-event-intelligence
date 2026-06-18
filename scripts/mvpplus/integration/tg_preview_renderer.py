@@ -217,7 +217,9 @@ def build_preview_card(
     lines.append("\U0001f40b Crypto Signal Intelligence OS — Staging \U0001f9ea")
     lines.append("")
 
-    candidates = whale_data.get("alert_candidates", [])
+    # Prefer delivery_candidates (alert-state filtered), fallback to raw
+    candidates = whale_data.get("delivery_candidates",
+                                whale_data.get("alert_candidates", []))
     positions = whale_data.get("positions", [])
 
     # ── Position section (one main card, not per-alert) ─────────────────

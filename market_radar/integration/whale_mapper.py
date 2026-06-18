@@ -483,7 +483,22 @@ def run_whale_mapper(
         _save_snapshot_state(state_dir, address, new_state)
 
     # ── Build results ──
+    # Build a lookup map: (address, coin) → computed liquidation_distance_pct
+    liq_dist_map: dict[tuple[str, str], float | None] = {}
+    for snap in snapshots:
+        liq_dist_map[(snap.address.lower(), snap.coin.upper())] = snap.liquidation_distance_pct
+
     raw_positions_serializable = [dict(p) for p in marked_positions]
+    # Inject liquidation_distance_pct from W2 domain computation
+    for pos in raw_positions_serializable:
+        addr = pos.get("address", "").lower()
+        coin = pos.get("coin", "").upper()
+        liq_val = liq_dist_map.get((addr, coin))
+        if liq_val is not None:
+            pos["liquidation_distance_pct"] = round(liq_val, 4)
+        else:
+            pos["liquidation_distance_pct"] = None
+
     changes_serializable = [c.to_dict() for c in changes]
     alerts_serializable = [a.to_dict() for a in alert_candidates]
 

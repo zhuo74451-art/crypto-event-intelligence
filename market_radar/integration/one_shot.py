@@ -345,6 +345,49 @@ def _run_pipeline(
             result.sources.append(whale_src)
             statuses.append(whale_src.status)
             result.alert_candidate_count = len(whale_result.alert_candidates)
+
+            # Alert state tracking (cross-run dedup)
+            if state_dir and whale_result.alert_candidates and not is_baseline:
+                try:
+                    from market_radar.operations.alert_state import AlertStateTracker
+                    tracker = AlertStateTracker(state_dir)
+                    # Load previous alert keys for resolution detection
+                    import json as _json
+                    prev_keys_path = state_dir / "alert_keys_seen.json"
+                    previous_alert_keys: set[str] = set()
+                    if prev_keys_path.exists():
+                        try:
+                            with open(prev_keys_path, "r") as _f:
+                                previous_alert_keys = set(_json.load(_f))
+                        except Exception:
+                            pass
+
+                    classified = tracker.classify_batch(
+                        whale_result.alert_candidates, previous_alert_keys,
+                    )
+                    tracker.close()
+
+                    # Save current keys for next run
+                    current_keys = {a.get("alert_key", "") for a in
+                                    classified["new"] + classified["persistent"] +
+                                    classified["changed"]}
+                    with open(prev_keys_path, "w") as _f:
+                        _json.dump(sorted(current_keys), _f)
+
+                    result.alert_state = {
+                        k: len(v) for k, v in classified.items()
+                    }
+                    # Attach state to each candidate for downstream
+                    for cat_name in ("new", "persistent", "changed"):
+                        for a in classified[cat_name]:
+                            for i, ac in enumerate(whale_result.alert_candidates):
+                                if ac.get("alert_id") == a.get("alert_id"):
+                                    whale_result.alert_candidates[i]["alert_key"] = a.get("alert_key", "")
+                                    whale_result.alert_candidates[i]["alert_state"] = a.get("alert_state", "")
+                                    break
+                except Exception as e:
+                    # Alert state tracking is non-fatal
+                    pass
         else:
             result.sources.append(SourceRunStatus(
                 source="whale", status="degraded", ok=False,
@@ -526,6 +569,11 @@ def _build_workbench_bundle(
         whale_positions=whale_positions,
         whale_changes=whale_changes,
         alert_candidates=whale_alerts,
+        delivery_candidates=(
+            [a for a in whale_alerts if a.get("alert_state") in ("new", "changed")]
+            if any(a.get("alert_state") for a in whale_alerts)
+            else whale_alerts
+        ),
         warnings=warnings,
         degraded_paths=degraded_reasons,
         feed_truth=feed_truth,

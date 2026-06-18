@@ -137,6 +137,7 @@ class IntegrationRunResult:
     errors: list[str] = field(default_factory=list)
     ccxt_preflight: Optional[dict] = None
     feed_summary: Optional[dict] = None
+    alert_state: Optional[dict] = None  # new/persistent/changed/resolved breakdown
 
     def as_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {
@@ -172,6 +173,8 @@ class IntegrationRunResult:
             d["feed"] = self.feed.as_dict()
         if self.feed_summary:
             d["feed_summary"] = self.feed_summary
+        if self.alert_state:
+            d["alert_state"] = self.alert_state
         return d
 
 
