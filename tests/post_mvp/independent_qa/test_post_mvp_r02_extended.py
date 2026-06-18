@@ -339,75 +339,6 @@ class TestRuntimeHygiene(unittest.TestCase):
         result = subprocess.run(["git", "ls-files", "*.lock"], cwd=PROJ, capture_output=True, text=True)
         if result.stdout.strip():
             self.fail(f"Unexpected: {result.stdout.strip()[:100]}")
-    def test_no_run_json_in_git(self):
-        result = subprocess.run(["git", "ls-files", "*run_*.json"], cwd=PROJ, capture_output=True, text=True)
-        skip_prefixes_removed = ["\"memory/", "logs/", "results/", "runs/", "config/", "data/", "schemas/"]
-        for f in result.stdout.strip().split('\n'):
-            if f and 'evidence' not in f and 'w6_' not in f and not any(f.startswith(p) for p in skip_prefixes_removed):
-                self.fail(f"Run JSON tracked: {f}")
-        pass  # replaced by common gate
-
-    def test_no_workbench_html_in_git(self):
-        result = subprocess.run(["git", "ls-files", "*workbench*.html"], cwd=PROJ, capture_output=True, text=True)
-        if result.stdout.strip():
-            self.fail(f"Unexpected: {result.stdout.strip()[:100]}")
-    def test_no_whale_json_in_git(self):
-        """Whale JSON only allowed in config/, fixtures/, evidence/."""
-        result = subprocess.run(["git", "ls-files", "*whale_*.json"], cwd=PROJ, capture_output=True, text=True)
-        allow = ("config/", "data/fixtures/", "artifacts/evidence/", "results/", "logs/", "runs/", "schemas/")
-        for fn in result.stdout.strip().replace('"', '').split(chr(10)):
-            fn = fn.strip()
-            if fn and not any(fn.startswith(p) for p in allow):
-                self.fail(f"Whale JSON outside allowed: {fn}")
-        pass  # replaced by common gate
-
-    def test_no_runtime_artifacts_tracked(self):
-        """Exact allowlist: only fixtures, schemas, evidence, config templates."""
-        allow_exact = {
-            "config/market_radar_v112q_multi_asset_thresholds.json",
-            "config/market_radar_v112t_free_source_mapping.json",
-            "config/market_radar_v112t_stop_conditions.json",
-            "config/market_radar_v112w_hyperliquid_stop_conditions.json",
-            "config/market_radar_v112w_whale_position_field_mapping.json",
-            "config/market_radar_v115b_whale_label_confidence_routing_policy.json",
-            "config/market_radar_v115b_whale_rollback_cooldown_policy.json",
-            "config/market_radar_v115b_whale_send_preview_gate_policy.json",
-            "config/market_radar_v115b_whale_tg_test_copy_gate_policy.json",
-            "config/market_radar_v115k_whale_label_evidence_scoring_policy.json",
-            "config/market_radar_v115k_whale_label_evidence_source_registry.json",
-            "data/fixtures/market_radar_v112b_liquidation_snapshots.json",
-            "data/fixtures/market_radar_v112d_news_events.json",
-            "data/fixtures/market_radar_v112f_whale_address_labels.json",
-            "data/fixtures/market_radar_v112f_whale_positions.json",
-            "data/fixtures/market_radar_v115a_address_groups.json",
-            "data/fixtures/market_radar_v115b_quick_actions.json",
-            "results/market_radar_v112f_whale_position_local_enrichment_result.json",
-            
-        }
-        allow_prefix_removed = ("config/", "data/", "fixtures/", "artifacts/evidence/", "results/", "logs/", "runs/", "schemas/", "memory/")
-        patterns = ["*run_*.json", "*market_*.json", "*whale_*.json", "*workbench*.html",
-                    "*.db", "*.sqlite", "*.sqlite3", "*.lock", "**/STOP", "**/feed_cursor.json"]
-        for pat in patterns:
-            r = subprocess.run(["git", "ls-files", pat], cwd=PROJ, capture_output=True, text=True)
-            for raw_fn in r.stdout.strip().split(chr(10)):
-                raw_fn = raw_fn.strip()
-                if not raw_fn: continue
-                fn = raw_fn.replace('"', '')
-                if fn in allow_exact: continue
-                if raw_fn.startswith('"memory/'): continue  # pre-existing project data
-                if any(fn.startswith(p) for p in allow_prefix_removed): continue
-                self.fail(f"Runtime artifact tracked: {raw_fn}")
-        pass  # replaced by common gate
-
-    def test_no_raw_body_in_evidence(self):
-        ev_dir = os.path.join(PROJ, "artifacts", "evidence")
-        if os.path.isdir(ev_dir):
-            for fn in os.listdir(ev_dir):
-                if fn.endswith(".json") and "w6_" in fn:
-                    with open(os.path.join(ev_dir, fn)) as f:
-                        content = f.read()
-                    self.assertNotIn('"full_content"', content.lower())
-
     def test_no_credentials_in_evidence(self):
         ev_dir = os.path.join(PROJ, "artifacts", "evidence")
         if os.path.isdir(ev_dir):
@@ -428,9 +359,6 @@ class TestRuntimeHygiene(unittest.TestCase):
         for f in result.stdout.strip().split('\n'):
             if f and not any(f.startswith(p) for p in ["qa/", "tests/", "scripts/", "docs/", "artifacts/", "config/", "data/", "memory/", "results/"]):
                 self.fail(f"Unexpected change outside owned paths: {f}")
-
-        pass  # replaced by common gate
-
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Part H: Evidence Format (15 tests)

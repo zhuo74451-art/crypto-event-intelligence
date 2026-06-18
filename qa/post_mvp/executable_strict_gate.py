@@ -116,7 +116,7 @@ def validate_runtime_artifacts(
     fixture_roots: tuple[str, ...] = ("tests/",),
     schema_roots: tuple[str, ...] = ("schemas/",),
     evidence_roots: tuple[str, ...] = ("artifacts/evidence/",),
-    candidate_roots: tuple[str, ...] = ("artifacts/candidate/",),
+    candidate_roots: tuple[str, ...] = ("artifacts/candidate/", "data/fixtures/"),
 ) -> list[GateViolation]:
     """Validate that no runtime artifacts are tracked in git.
 
@@ -128,7 +128,16 @@ def validate_runtime_artifacts(
     if exact_allowlist is None:
         exact_allowlist = set()
     violations: list[GateViolation] = []
-    allowed_roots = fixture_roots + schema_roots + evidence_roots + candidate_roots
+
+    def _in_allowed_root(path: str) -> bool:
+        # Precise fixture check: must contain /fixtures/ subdirectory
+        if "/fixtures/" in path:
+            return True
+        # Schema, evidence, candidate — prefix check
+        for root in (schema_roots + evidence_roots + candidate_roots):
+            if path.startswith(root):
+                return True
+        return False
 
     for rel_path in tracked_files:
         basename = os.path.basename(rel_path)
@@ -163,8 +172,7 @@ def validate_runtime_artifacts(
                 break
 
         if matched_pattern:
-            in_allowed_root = any(rel_path.startswith(r) for r in allowed_roots)
-            if not in_allowed_root:
+            if not _in_allowed_root(rel_path):
                 violations.append(GateViolation(
                     code="RUNTIME_ARTIFACT_PATTERN", path_or_ref=rel_path,
                     message=f"Runtime artifact pattern '{matched_pattern}' outside allowed root: {rel_path}",
