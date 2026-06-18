@@ -42,7 +42,7 @@ feed_cases = [
     {"id": "F017", "description": "Feed source status=degraded but ok=true (contradiction)", "tags": ["contradiction", "status"]},
     {"id": "F018", "description": "Feed normal empty batch (0 items)", "tags": ["empty", "normal"]},
     {"id": "F019", "description": "Feed item with unsafe javascript: URL", "tags": ["xss", "security"]},
-    {"id": "F020", "description": "Feed item with XSS script payload", "tags": ["xss", "security"]},
+    {"id": "F020", "description": "Feed item with XSS img onerror payload", "tags": ["xss", "security"]},
     {"id": "F021", "description": "Feed item with db_path at top level", "tags": ["leak", "hygiene"]},
     {"id": "F022", "description": "Feed item with raw_json included", "tags": ["leak", "raw"]},
     {"id": "F023", "description": "Feed source_kind unknown type", "tags": ["mapping", "unknown"]},
@@ -305,7 +305,7 @@ r02_extra = [
     # Schema & contract faults
     {"id": "R011", "category": "combo", "description": "Cross-lane duplicate symbol name", "fixture": {}, "expected": "conflict detected", "tags": ["schema", "collision"]},
     {"id": "R012", "category": "combo", "description": "Schema version conflict between lanes", "fixture": {}, "expected": "migration needed", "tags": ["schema", "version"]},
-    {"id": "R013", "category": "feed", "description": "Static HTML output contains unsafe content", "fixture": {}, "expected": "escaped", "tags": ["xss", "html"]},
+    {"id": "R013", "category": "feed", "description": "Static HTML output with SVG onload", "fixture": {}, "expected": "escaped", "tags": ["xss", "html"]},
     {"id": "R014", "category": "whale", "description": "Scoring over-alerts on tiny position changes", "fixture": {}, "expected": "threshold respected", "tags": ["scoring", "alert"]},
     {"id": "R015", "category": "whale", "description": "Fallback unit mismatch (BTC vs sats)", "fixture": {}, "expected": "normalized", "tags": ["units", "fallback"]},
     {"id": "R016", "category": "markets", "description": "Backup source mutation returns different data", "fixture": {}, "expected": "versioned", "tags": ["backup", "consistency"]},
@@ -381,6 +381,12 @@ r02_extra = [
     {"id": "R080", "category": "combo", "description": "Post-merge acceptance pack successfully validates all lanes", "fixture": {}, "expected": "all pass", "tags": ["combo"]},
 ]
 FAULT_CASES.extend(r02_extra)
+FAULT_CASES.append({"id": "R082", "category": "feed", "description": "Feed item with SVG onload XSS",
+     "fixture": {"zh_body": "<svg onload=alert(1)>"},
+     "expected": "escaped or rejected", "tags": ["xss", "svg"]})
+FAULT_CASES.append({"id": "R083", "category": "feed", "description": "Feed item with attribute injection XSS",
+     "fixture": {"zh_body": "<img src=x onerror=alert(1)> <div onmouseover=alert(1)>"},
+     "expected": "escaped or rejected", "tags": ["xss", "attribute_injection"]})
 FAULT_CASES.append({"id": "R081", "category": "feed", "description": "Feed item with encoded XSS (HTML entity encoded script)", 
      "fixture": {"content": "&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#62;alert(1)&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;"},
      "expected": "decoded and escaped or rejected", "tags": ["xss", "encoded", "html_entity"]},)
