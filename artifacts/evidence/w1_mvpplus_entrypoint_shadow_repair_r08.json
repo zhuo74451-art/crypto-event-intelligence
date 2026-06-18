@@ -1,0 +1,68 @@
+{
+  "ticket": "W1_MVPPLUS_ENTRYPOINT_AND_SHADOW_REPAIR_R08",
+  "branch": "workbench/mvpplus-integration-v2",
+  "repair_base_commit": "11d1c2bfcbc8eaab0ba87306b2736ab8c5a6d440",
+  "tested_commit": "33602458bc15a2239ee50bf97e0851a18410d09d",
+  "defect1_shadow_wrapper": {
+    "status": "RESOLVED",
+    "issue": "run_integration_shadow was incompatible with W5 run_bounded_shadow API",
+    "fix": "Now uses BoundedShadowConfig + ShadowCallable -> BoundedShadowResult",
+    "w5_api_signature": "run_bounded_shadow(config: BoundedShadowConfig, one_shot_callable: ShadowCallable) -> BoundedShadowResult",
+    "callable_signature": "(ordinal: int, shared_state_dir: str, no_send: bool, parent_shadow_run_id: str) -> ShadowCallableResult",
+    "committed_invocation": "run_integration_shadow(max_runs=2, interval_seconds=0.0, whale_address=..., feed_initial_since=...) -> BoundedShadowResult"
+  },
+  "defect2_cli_provider": {
+    "status": "RESOLVED",
+    "issue": "CLI did not create CuratedFeedProvider for live-public mode",
+    "fix": "live-public creates CuratedFeedProvider with all config fields; fixture mode uses None",
+    "cli_args": ["--feed-limit", "--feed-max-items", "--feed-timeout", "--curated-max-pages", "--feed-since", "--curated-base-url"],
+    "live_proof": "provider=curated_api, 43 live items, 10 source statuses, all ok=true"
+  },
+  "live_cli_oneshot": {
+    "command": "scripts/mvpplus/integration/run_one_shot.py --mode live-public --whale-address 0x6c851251... --feed-since <2h-ago>",
+    "run_id": "os-6bdc554a3925",
+    "status": "completed",
+    "feed_provider": "curated_api",
+    "feed_items": 43,
+    "feed_sources": 10,
+    "markets": {"BTC": 64775.99, "ETH": 1765.24, "SOL": 72.12, "HYPE": 71.1155},
+    "whale": {"positions": 1, "changes": 1, "alerts": 2, "is_baseline": true},
+    "no_send": true,
+    "errors": 0
+  },
+  "committed_shadow": {
+    "fn": "run_integration_shadow(max_runs=2, ...)",
+    "shadow_run_id": "6af92b24e9bd492fbf50171e64f5ee2d",
+    "status": "completed",
+    "attempted_runs": 2,
+    "completed_runs": 2,
+    "child1": {"run_id": "os-5c301ed35d12", "status": "completed"},
+    "child2": {"run_id": "os-617ccf52feef", "status": "completed"},
+    "no_send": true,
+    "known_limitation": "W5 bounded_shadow run_history insert conflicts with child run_id (non-critical, pipeline still works)"
+  },
+  "test_results": {
+    "integration_old": 77,
+    "integration_new": 13,
+    "integration_total": 90,
+    "integration_passed": 90,
+    "combined_regression_pytest": 509,
+    "combined_regression_adapters": 96,
+    "total": 605,
+    "failed": 0
+  },
+  "runtime_hygiene": {
+    "main_unchanged": true,
+    "no_send": true,
+    "credentials_used": false,
+    "scheduler_started": false,
+    "daemon_started": false,
+    "threads_started": false
+  },
+  "modified_files": [
+    "market_radar/integration/bounded_shadow_runner.py",
+    "scripts/mvpplus/integration/run_one_shot.py",
+    "tests/mvpplus/integration/test_final_entrypoints.py"
+  ],
+  "files_outside_owned_paths": []
+}

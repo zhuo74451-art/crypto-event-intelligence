@@ -1,0 +1,71 @@
+﻿{
+  "ticket": "W1_FEED_INTEGRATION_SLOT_AND_CURSOR_R06",
+  "branch": "workbench/mvpplus-integration-v2",
+  "repair_base_commit": "88b26fb3d30a374356ea85448fee9bda151ee910",
+  "tested_commit": "91529f13be19bff898cce75df8876a9d0e1dd5e1",
+  "provider_contract": {
+    "name": "FeedProviderProtocol",
+    "input_type": "FeedProviderInput",
+    "output_type": "IntegrationFeedBatch",
+    "called_once_per_run": true,
+    "integration_does_http": false
+  },
+  "config_fields": [
+    "feed_enabled", "feed_limit", "feed_max_items",
+    "feed_timeout_seconds", "feed_cursor_name", "feed_cursor_state_file"
+  ],
+  "cursor_schema": {
+    "fields": ["cursor_name", "cursor_value", "updated_at", "provider_name",
+               "last_successful_run_id", "accepted_count"],
+    "persist_via": "atomic_write_json",
+    "rules_count": 11
+  },
+  "status_truth_matrix": {
+    "provider_ok_feed_ok": "overall completed when all sources ok",
+    "provider_degraded": "overall degraded",
+    "provider_unavailable": "overall degraded",
+    "not_configured": "feed degraded, overall degraded",
+    "provider_raises": "feed degraded, overall degraded"
+  },
+  "test_results": {
+    "new_feed_provider_tests": 25,
+    "existing_integration_tests": 52,
+    "total": 77,
+    "passed": 77,
+    "failed": 0
+  },
+  "fixture_oneshot": {
+    "run1_status": "degraded",
+    "run1_feed_status": "ok",
+    "run1_cursor_written": "fixture_cursor_3",
+    "run2_cursor_loaded": "fixture_cursor_3",
+    "run2_cursor_advanced": false,
+    "report_has_feed_summary": true,
+    "report_written_last": true,
+    "sub_sources_tracked": true
+  },
+  "w3_modified": false,
+  "network_used": false,
+  "no_send": true,
+  "daemon_started": false,
+  "scheduler_started": false,
+  "threads_started": false,
+  "runtime_data_committed": false,
+  "modified_files": [
+    "market_radar/integration/feed_provider_protocol.py",
+    "market_radar/integration/feed_handler.py",
+    "market_radar/integration/models.py",
+    "market_radar/integration/one_shot.py",
+    "tests/mvpplus/integration/test_feed_provider.py",
+    "scripts/mvpplus/integration/run_feed_provider_fixture_once.py",
+    "docs/integration/FEED_PROVIDER_INTEGRATION_CONTRACT_R06.md",
+    "market_radar/integration/__init__.py"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "Feed readers still not wired — provider protocol only, no real CuratedApiReader yet",
+    "W3 must register their CuratedApiReader as a FeedProviderProtocol callable",
+    "Fixture provider returns static data — no network, no real feed sources",
+    "No live run was performed in this ticket (no Whale/Market logic changes)"
+  ]
+}

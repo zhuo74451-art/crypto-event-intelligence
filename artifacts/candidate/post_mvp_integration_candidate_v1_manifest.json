@@ -1,0 +1,37 @@
+{
+  "manifest_version": "1.0",
+  "candidate_branch": "workbench/post-mvp-integration-candidate-v1",
+  "baseline_commit": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+  "assembly_order": ["W5", "W4", "W2", "W3", "W1"],
+  "lane_tested_commits": {
+    "W5_Operations": "1175bb4a03f28ff89249b59cc4143a348a54f237",
+    "W4_Markets": "b99c2b4690195727abc0f784da43c4cf26626153",
+    "W2_Whale": "3f40c1e5887b3aefd95ce806564fa8d5c8624059",
+    "W3_Events": "b5ef84880547e6be0e1312e2da7ea6136b4e8aa9",
+    "W1_Operator": "fa3ecd592ab9228899e38426b9f06a96ee84de6e"
+  },
+  "code_tree_sha": "da8338eee978f7502c705e150ecbed83818c92da",
+  "test_counts": {
+    "combined": 2314,
+    "adapters": 96,
+    "total": 2410,
+    "failed": 0,
+    "skipped": 3
+  },
+  "live_run": {
+    "one_shot_run_id": "os-efa748de085d",
+    "one_shot_status": "completed",
+    "shadow_status": "completed",
+    "shadow_attempted": 2,
+    "shadow_completed": 2,
+    "shadow_errors": 0
+  },
+  "no_send": true,
+  "generated_at": "2026-06-18T00:00:00Z",
+  "limitations": [
+    "W6 independent QA not included in this candidate",
+    "SQLite DB files not tracked in git",
+    "Feed full content not tracked in git",
+    "No production deployment — candidate only"
+  ]
+}

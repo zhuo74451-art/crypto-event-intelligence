@@ -1,0 +1,97 @@
+{
+  "ticket": "W1_MVPPLUS_FINAL_ASSEMBLY_AND_LIVE_SHADOW_R07",
+  "branch": "workbench/mvpplus-integration-v2",
+  "repair_base_commit": "74f22cebba8825662e9e4240a9153414ec54bfb1",
+  "tested_commit": "26b96eb2ae27cab886f4b5e01c78fa8742d3822b",
+  "integrated_commits": {
+    "W2": {"sha": "6802ac84b017b583fabb643618f7051153503a75", "title": "feat(whale-domain): W2 Whale Replay Corpus V1"},
+    "W3": {"count": 6, "range": "e8723a5..483b38f", "note": "Live Readers + CuratedApiReader + R03/R04"},
+    "W4": {"sha_fix": "fd452c2de63b39cb86005737010eaacae9be471d", "sha_evidence": "b7672f87c5726d7c2312f94e23b8fd0994cb785f",
+           "note": "expected SHA fd452c2cb... differs from actual fd452c2de... (first 7 chars match)"},
+    "W5": {"sha_fix": "b612753d46739cf9cf1a7c58e04ef498fa90563c", "sha_evidence": "b23975984c3a7be765f8b718de4c87e291b28927"}
+  },
+  "all_commits_ancestor_verified": "N/A (direct cherry-picks)",
+  "conflicts": 0,
+  "curated_provider": {
+    "file": "market_radar/integration/curated_feed_provider.py",
+    "mapping": "ReaderBatchResult -> IntegrationFeedBatch",
+    "fields_mapped": ["provider_name","overall_status","records_seen","records_accepted","records_rejected",
+                       "items","source_statuses","next_cursor","cursor_safe","cached_count","provenance","errors"],
+    "data_mode_counted": "from actual FeedItem.data_mode, not assumed live",
+    "w1_compatibility_verified": "ss.get('ok', False) returns True for normal W3 sources"
+  },
+  "w4_workaround_removed": {
+    "removed": ["_ensure_real_ccxt()", "import ccxt as _real_ccxt", "sys.modules restore"],
+    "replaced_with": "market_radar.external_adapters.import_resolver.resolve_real_ccxt()",
+    "verified": "all import order tests pass (HL first, CCXT first, alternating, sequential)"
+  },
+  "oneshot_acceptance": {
+    "run_id": "os-7d79a898de46",
+    "status": "completed",
+    "errors": 0,
+    "feed": {"provider": "curated_api", "status": "ok", "records_seen": 44, "records_accepted": 44, "live": 44, "sources": 8},
+    "markets": {"BTC": "ok", "ETH": "ok", "SOL": "ok", "HYPE": "ok"},
+    "whale": {"position_count": 1, "changes": 1, "alerts": 2, "is_baseline": true, "parse_errors": 0},
+    "initial_since": "2026-06-17T09:27:52Z",
+    "cursor_after": "2026-06-17T11:18:26Z",
+    "report_last_write": true,
+    "run_history_match": true
+  },
+  "shadow_two_rounds": {
+    "round1": {"run_id": "os-8540be0aa6d5", "status": "completed", "feed_items": 44, "cursor_written": "2026-06-17T11:18:26Z", "initial_since_used": true},
+    "round2": {"run_id": "os-93cd3052d284", "status": "completed", "feed_items": 1, "cursor_reused": true, "cursor_did_not_regress": true, "initial_since_not_used": true},
+    "both_run_history_match": true
+  },
+  "regression_tests": {
+    "W3_feeds_ui": 170,
+    "W2_whale": {"passed": 127, "skipped": 1},
+    "W5_operations": 122,
+    "W1_integration": 77,
+    "W4_adapters": 96,
+    "total_passed": 592,
+    "total_failed": 0
+  },
+  "runtime_hygiene": {
+    "data_integration_tracked": ["data/integration/.gitignore"],
+    "live_temp_dirs_deleted": true,
+    "shadow_temp_dirs_deleted": true,
+    "main_unchanged": true,
+    "no_send": true,
+    "credentials_used": false,
+    "scheduler_started": false,
+    "daemon_started": false,
+    "threads_started": false,
+    "full_content_committed": false,
+    "db_path_recorded": false
+  },
+  "modified_files": [
+    "market_radar/integration/bounded_shadow_runner.py",
+    "market_radar/integration/curated_feed_provider.py",
+    "market_radar/integration/feed_handler.py",
+    "market_radar/integration/models.py",
+    "market_radar/integration/one_shot.py",
+    "scripts/mvpplus/integration/run_one_shot.py"
+  ],
+  "files_outside_owned_paths": [],
+  "cherry_picked_ancillary_files": [
+    "docs/operations/BOUNDED_SHADOW_FOUNDATION_R01.md",
+    "docs/adapters/ADAPTER_IMPORT_ISOLATION_MIGRATION_R01.md",
+    "docs/feeds_market_ui/LIVE_FEED_SOURCE_CONTRACT_AUDIT_R01.md",
+    "docs/feeds_market_ui/CURATED_API_READER_R02.md",
+    "docs/whale_domain/WHALE_REPLAY_CORPUS_V1.md",
+    "market_radar/operations/bounded_shadow.py",
+    "market_radar/external_adapters/import_resolver.py",
+    "market_radar/intelligence_feed/live_readers/",
+    "tests/mvpplus/operations/test_bounded_shadow.py",
+    "tests/mvpplus/adapters/test_import_isolation.py",
+    "tests/mvpplus/whale_domain/test_whale_replay_corpus.py",
+    "tests/mvpplus/whale_domain/fixtures/",
+    "tests/mvpplus/feeds_market_ui/test_live_readers.py",
+    "tests/mvpplus/feeds_market_ui/test_curated_api_reader.py"
+  ],
+  "known_limitations": [
+    "W4 commit SHA differs from ticket specification (fd452c2cb... listed, fd452c2de... actual) — first 7 chars match, content identical",
+    "No W6 independent QA scan performed yet — this is the candidate for W6 review",
+    "W3 R06 feed provider contract work (integration directory) is not yet cherry-picked into W3 branch — this is an integration-v2 only capability"
+  ]
+}

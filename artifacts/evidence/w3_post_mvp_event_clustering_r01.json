@@ -1,0 +1,86 @@
+{
+  "ticket": "W3_EVENT_CLUSTERING_SIGNAL_CANDIDATES_R01",
+  "branch": "workbench/post-mvp-event-clustering-v1",
+  "source_branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "483b38fb1a0d7fa606fecada412b887b95ecfc04",
+  "tested_commit": "a19dce7b7869e0c4eb8888a1e50c1b87fadc6d36",
+  "implementation": {
+    "dedup_engine": "5-layer deterministic: original_id → URL → content_fingerprint → title_fingerprint → near_dup_fingerprint",
+    "extraction_engine": "Rule-based: 15 assets, 6 entity types, 18 topics, anti-pattern filtering",
+    "clustering_engine": "Cross-source scoring: assets(30) + topics(20) + title(25) + time(15) + entities(10); threshold=30",
+    "scoring_engine": "6 components + 4 penalties; range 0-100; WATCH(<40)/REVIEW(40-69)/HIGH_ATTENTION(>=70)",
+    "timeline_builder": "Idempotent entry add; status change tracking; first_report/update/conflict types",
+    "relationship_graph": "6 relationship types; POSSIBLE_CONSEQUENCE always marked inferred=true",
+    "narrative_burst": "Window-based topic burst detection; novelty ranking",
+    "export_contract": "Stable JSON contract for W1 integration; no runtime UUIDs",
+    "static_renderer": "CSP-secure HTML; no script tags; no db_path; no raw_json"
+  },
+  "corpus": {
+    "total_items": 120,
+    "coverage": [
+      "exact_duplicates", "url_mirror", "same_title_different_body",
+      "cross_source_same_event", "official_plus_news_relay", "conflicting_reports",
+      "event_updates", "old_news_rehash", "same_topic_different_events",
+      "multi_asset_events", "unknown_assets", "ambiguous_tickers",
+      "empty_title_fallback", "unsafe_url", "xss",
+      "future_timestamp", "same_time_different_tweet_id",
+      "is_featured_true/false", "different_source_kinds",
+      "chinese_english_mixed", "macro_events", "security_exploit_events",
+      "whale_liquidation_events", "listing_delisting_events", "regulation_events",
+      "stablecoin_defi_events", "token_unlock_events", "partnership_events",
+      "funding_derivatives_events", "outage_events",
+      "fixture_data", "research_sample", "tg_relay_not_independent"
+    ]
+  },
+  "test_results": {
+    "existing_mvpplus": {"total": 170, "passed": 170, "failed": 0},
+    "event_intelligence": {"total": 45, "passed": 45, "failed": 0},
+    "full_regression": {"total": 215, "passed": 215, "failed": 0}
+  },
+  "live_probe": {
+    "item_count": 200,
+    "duplicate_count": 0,
+    "event_count": 187,
+    "conflict_count": 6,
+    "assets_detected": ["BTC", "ETH", "SOL", "HYPE", "UNI", "USDC", "ADA", "USDT"],
+    "topics_detected": ["partnership", "stablecoin"],
+    "pipeline_latency_ms": 318,
+    "db_path_not_recorded": true,
+    "full_content_not_committed": true,
+    "no_filters": true,
+    "no_raw_json": true
+  },
+  "modified_files": [
+    "market_radar/intelligence_feed/event_intelligence/__init__.py",
+    "market_radar/intelligence_feed/event_intelligence/models.py",
+    "market_radar/intelligence_feed/event_intelligence/dedup.py",
+    "market_radar/intelligence_feed/event_intelligence/extraction.py",
+    "market_radar/intelligence_feed/event_intelligence/clustering.py",
+    "market_radar/intelligence_feed/event_intelligence/scoring.py",
+    "market_radar/intelligence_feed/event_intelligence/timeline.py",
+    "market_radar/intelligence_feed/event_intelligence/orchestrator.py",
+    "market_radar/intelligence_feed/event_intelligence/renderer.py",
+    "market_radar/intelligence_feed/event_intelligence/relationship.py",
+    "market_radar/intelligence_feed/event_intelligence/narrative.py",
+    "market_radar/intelligence_feed/event_intelligence/export.py",
+    "tests/post_mvp/event_intelligence/test_event_intelligence.py"
+  ],
+  "files_outside_owned_paths": [],
+  "limitations": [
+    "Scoring defaults to HIGH_ATTENTION for NEW items — tuning needed in future iterations",
+    "Source independence heuristic uses domain grouping, not verified editorial independence",
+    "No vector DB or persistent storage — all in-memory per run",
+    "No streaming or real-time update — one-shot only",
+    "Clustering threshold (30/100) may need tuning for production",
+    "Asset extraction uses dictionary only — unknown symbols not detected",
+    "Topic extraction uses keyword rules — may miss nuanced coverage",
+    "Narrative burst is window-based, not detection-algorithm-based"
+  ],
+  "no_llm": true,
+  "no_network_unit_tests": true,
+  "no_buy_sell_labels": true,
+  "no_is_featured_trust": true,
+  "no_daemon": true,
+  "git_status": "clean"
+}

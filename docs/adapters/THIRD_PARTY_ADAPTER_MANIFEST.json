@@ -1,0 +1,63 @@
+{
+  "manifest_version": "1",
+  "generated_at_utc": "2026-06-17T00:00:00Z",
+  "dependencies": [
+    {
+      "package": "httpx",
+      "exact_version": "0.28.1",
+      "upstream": "httpx",
+      "license": "MIT (inferred)",
+      "usage_mode": "public_data_read_only",
+      "imported_modules": [
+        "httpx"
+      ],
+      "public_data_scope": true,
+      "fallback": true,
+      "upgrade_risk": "low",
+      "prohibited_capabilities": [
+        "private_apis",
+        "trading",
+        "credentials"
+      ],
+      "verification_method": "import + importlib.metadata"
+    },
+    {
+      "package": "hyperliquid",
+      "exact_version": "0.4.66",
+      "upstream": "hyperliquid",
+      "license": "MIT (inferred)",
+      "usage_mode": "public_data_read_only",
+      "imported_modules": [
+        "hyperliquid"
+      ],
+      "public_data_scope": true,
+      "fallback": true,
+      "upgrade_risk": "low",
+      "prohibited_capabilities": [
+        "private_apis",
+        "trading",
+        "credentials"
+      ],
+      "verification_method": "import + importlib.metadata"
+    },
+    {
+      "package": "ccxt",
+      "exact_version": "4.5.59",
+      "upstream": "ccxt",
+      "license": "MIT (inferred)",
+      "usage_mode": "public_data_read_only",
+      "imported_modules": [
+        "ccxt"
+      ],
+      "public_data_scope": true,
+      "fallback": true,
+      "upgrade_risk": "low",
+      "prohibited_capabilities": [
+        "private_apis",
+        "trading",
+        "credentials"
+      ],
+      "verification_method": "import + importlib.metadata"
+    }
+  ]
+}

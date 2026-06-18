@@ -1,0 +1,106 @@
+{
+  "ticket": "W3_CURATED_API_LIVE_READER_R02_REVISED",
+  "branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+  "endpoint": "http://43.98.174.247:8001/api/integration/curated",
+  "default_query_parameters": "limit=100, offset=0",
+  "default_no_source_filter": true,
+  "default_no_exclude_source": true,
+  "default_no_content_type_filter": true,
+  "include_special_line_parameter_sent_by_default": false,
+  "include_raw_json": false,
+  "idempotency_key": "tweet_id",
+  "cursor_field": "published_at_backend",
+  "title_priority": ["zh_title", "raw_title", "delivery_payload.title", "zh_short_title", "delivery_payload.short_title", "truncated_body"],
+  "body_priority": ["zh_body", "extracted_text", "raw_text", "delivery_payload.body"],
+  "source_mapping": {
+    "telegram": "FeedSourceType.TELEGRAM",
+    "news": "FeedSourceType.NEWS",
+    "flash": "FeedSourceType.FLASH",
+    "webhook+unknown": "FeedSourceType.UNKNOWN"
+  },
+  "pagination_bounds": {
+    "max_pages": 5,
+    "max_items": 500,
+    "limit_max": 500,
+    "stop_conditions": ["empty_page", "offset>=total", "max_pages", "max_items"]
+  },
+  "test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/feeds_market_ui/test_curated_api_reader.py -v",
+    "python -X utf8 -m pytest tests/mvpplus/feeds_market_ui -v",
+    "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v"
+  ],
+  "original_tests_result": {
+    "total": 44,
+    "passed": 44,
+    "failed": 0
+  },
+  "reader_tests_result": {
+    "total": 37,
+    "passed": 37,
+    "failed": 0
+  },
+  "curated_tests_result": {
+    "total": 51,
+    "passed": 51,
+    "failed": 0
+  },
+  "full_regression": {
+    "total": 132,
+    "passed": 132,
+    "failed": 0
+  },
+  "live_probe_summary": {
+    "status": "degraded (max_pages hit — expected)",
+    "records_seen": 200,
+    "accepted": 200,
+    "rejected": 0,
+    "pages_fetched": 2,
+    "response_seconds": 18.24,
+    "http_via_reader": true
+  },
+  "source_kind_counts": {
+    "news": 76,
+    "telegram": 63,
+    "exchange": 10,
+    "webhook": 51
+  },
+  "content_type_counts": {
+    "news_article": 70,
+    "telegram_message": 63,
+    "exchange_announcement": 15,
+    "unknown": 51,
+    "prediction_market": 1
+  },
+  "featured_metadata_observed": {
+    "is_featured_true": 19,
+    "is_featured_false": 181
+  },
+  "max_published_at_backend": "2026-06-17T08:47:35.981922+00:00",
+  "db_path_recorded": false,
+  "full_content_committed": false,
+  "no_credentials": true,
+  "no_send": true,
+  "no_daemon": true,
+  "no_scheduler": true,
+  "modified_files": [
+    "market_radar/intelligence_feed/live_readers/__init__.py",
+    "market_radar/intelligence_feed/live_readers/curated_api_reader.py",
+    "tests/mvpplus/feeds_market_ui/test_curated_api_reader.py",
+    "scripts/mvpplus/feeds_market_ui/run_curated_api_reader_once.py",
+    "docs/feeds_market_ui/CURATED_API_READER_R02.md",
+    "artifacts/evidence/w3_curated_api_live_reader_r02.json"
+  ],
+  "files_outside_owned_paths": [],
+  "limitations": [
+    "CACHED data_mode not in FeedDataMode enum — use LIVE + health metadata",
+    "No streaming or long-polling — one-shot synchronous only",
+    "Pagination is offset-based, not cursor-based",
+    "Response times can be slow (~9s per 100 items observed)",
+    "exchange and webhook source_kinds map to UNKNOWN FeedSourceType",
+    "unknown content_type (51 of 200 items) maps via source_kind or fallback"
+  ],
+  "git_status": "clean"
+}

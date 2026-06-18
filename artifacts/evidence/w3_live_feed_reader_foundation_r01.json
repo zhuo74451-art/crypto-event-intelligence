@@ -1,0 +1,113 @@
+{
+  "ticket": "W3_LIVE_FEED_READER_FOUNDATION_R01",
+  "branch": "workbench/mvpplus-feeds-market-ui-v2",
+  "project_baseline_commit": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9",
+  "repair_base_commit": "a69b4b60c6ea897d4d538d41860261dbe3322d04",
+  "tested_commit": "1a9951141c97043ea5ba08d062f2cbc01cff30ce",
+  "source_contract_audit_path": "docs/feeds_market_ui/LIVE_FEED_SOURCE_CONTRACT_AUDIT_R01.md",
+  "verified_source_contracts": [
+    "FeedSourceType.FLASH — enum + FLASH_FIXTURES schema",
+    "FeedSourceType.NEWS — enum + NEWS_FIXTURES schema + raw_news_column_mapping.json",
+    "FeedSourceType.TELEGRAM — enum + TELEGRAM_FIXTURES (honestly empty)",
+    "FeedItem model with 15 fields (feed_id, source_type, source_label, data_mode, title, body, url, assets, published_at, ingested_at, freshness, event_type, intensity, dedup_group, original_id)",
+    "FeedDataMode: LIVE / FIXTURE / RESEARCH_SAMPLE / UNKNOWN",
+    "make_feed_id — deterministic SHA256 (fi_ prefix)",
+    "make_freshness — reference_time injectable, future→UNKNOWN",
+    "SQLite read-only mode (?mode=ro + PRAGMA query_only)",
+    "CSV column mapping from raw_news_column_mapping.json",
+    "JSONL format from data/benchmark/ and results/"
+  ],
+  "inferred_contracts": [
+    "Telegram message shape from publisher code (message_id, chat_id, text, date)",
+    "CACHED data_mode — referenced in renderer badges but not in FeedDataMode enum"
+  ],
+  "missing_contracts": [
+    "monitor_events — no function with this name exists",
+    "Flash live input path (JSONL/SQLite) — only fixtures exist",
+    "Telegram incoming message DB (tdata/) — not in repo"
+  ],
+  "implemented_readers": [
+    "FlashReader — reads JSON/JSONL from injected path",
+    "NewsReader — reads JSON/JSONL/CSV from injected path",
+    "TelegramReader — reads SQLite read-only from injected path"
+  ],
+  "reader_protocol": {
+    "base_class": "ReaderProtocol (ABC)",
+    "read_once": "ReaderBatchResult",
+    "health": "ReaderHealth (status, source_name, latency, record counts)",
+    "status_enum": "ReaderStatus: ok / degraded / unavailable"
+  },
+  "aggregate": {
+    "entry_point": "read_all_once(readers) -> FeedReadSummary",
+    "dedup": "by feed_id with conflict detection",
+    "error_isolation": "single reader failure does not block others"
+  },
+  "supported_input_types": [
+    "JSON (list[dict])",
+    "JSONL (one JSON object per line)",
+    "CSV (with configurable column mapping)",
+    "SQLite (read-only URI mode)"
+  ],
+  "test_commands": [
+    "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v",
+    "python -X utf8 -m pytest tests/mvpplus/feeds_market_ui/test_live_readers.py -v",
+    "python -X utf8 -m pytest tests/mvpplus/feeds_market_ui -v"
+  ],
+  "original_tests_result": {
+    "total": 44,
+    "passed": 44,
+    "failed": 0,
+    "skipped": 0
+  },
+  "new_tests_result": {
+    "total": 37,
+    "passed": 37,
+    "failed": 0,
+    "skipped": 0
+  },
+  "full_regression": {
+    "total": 81,
+    "passed": 81,
+    "failed": 0,
+    "skipped": 0
+  },
+  "fixture_live_truth": {
+    "fixture_only_live_sources": 0,
+    "flash_live": 0,
+    "news_live": 0,
+    "telegram_live": 0,
+    "live_total": 0,
+    "fixture_count": 9,
+    "research_sample_count": 2,
+    "reader_live_items": "determined by injected data (test = 2-10 per reader)"
+  },
+  "read_only_sqlite_proof": "TelegramReader uses URI ?mode=ro + PRAGMA query_only; write attempts fail with OperationalError; verified by test_20_sqlite_read_only",
+  "no_network": true,
+  "no_credentials": true,
+  "no_send": true,
+  "no_daemon": true,
+  "no_scheduler": true,
+  "modified_files": [
+    "market_radar/intelligence_feed/__init__.py",
+    "market_radar/intelligence_feed/live_readers/__init__.py",
+    "market_radar/intelligence_feed/live_readers/protocol.py",
+    "market_radar/intelligence_feed/live_readers/flash_reader.py",
+    "market_radar/intelligence_feed/live_readers/news_reader.py",
+    "market_radar/intelligence_feed/live_readers/telegram_reader.py",
+    "market_radar/intelligence_feed/live_readers/aggregate.py",
+    "tests/mvpplus/feeds_market_ui/test_live_readers.py",
+    "docs/feeds_market_ui/LIVE_FEED_SOURCE_CONTRACT_AUDIT_R01.md",
+    "scripts/mvpplus/feeds_market_ui/run_live_feed_readers_once.py",
+    "artifacts/evidence/w3_live_feed_reader_foundation_r01.json"
+  ],
+  "files_outside_owned_paths": [],
+  "limitations": [
+    "No real live flash input path exists in repo — FlashReader requires injected path",
+    "No Telegram message DB contract — TelegramReader reads sent-state SQLite",
+    "CACHED data_mode not in FeedDataMode enum — use LIVE + health metadata",
+    "Reader is one-shot synchronous only — no streaming or polling support",
+    "No production paths hardcoded — all paths must be injected",
+    "Existing_feed_readers_not_wired remains for Integration until readers connected there"
+  ],
+  "git_status": "clean"
+}

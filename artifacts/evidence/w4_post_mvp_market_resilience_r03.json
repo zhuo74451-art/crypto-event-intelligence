@@ -1,0 +1,64 @@
+﻿{
+  "ticket": "W4_MARKET_RESILIENCE_COMPLETION_R03",
+  "branch": "workbench/post-mvp-market-resilience-v1",
+  "source_sha": "0fe1716d984728dd1974e0a0c4dd85acae123c03",
+  "tested_commit": "0fe1716d984728dd1974e0a0c4dd85acae123c03",
+  "capability_matrix": {
+    "venues": ["binance", "okx", "bybit", "hyperliquid"],
+    "capabilities": ["spot_ticker", "perp_ticker", "volume_24h", "open_interest", "funding_rate", "next_funding_time", "mark_price", "index_price", "basis", "order_book_top"],
+    "binance_supported": 10, "okx_supported": 10, "bybit_supported": 10, "hyperliquid_supported": 3
+  },
+  "unit_normalization": {
+    "market_types": ["spot", "linear_perp", "inverse_perp", "swap"],
+    "oi_comparable": "spot, linear_perp, swap → USD notional",
+    "oi_incomparable": "inverse_perp → contracts only",
+    "incomparable_handling": "excluded from total, reported separately"
+  },
+  "health_matrix": {
+    "dimensions": ["availability", "latency", "freshness", "completeness", "capability_coverage"],
+    "computed_from": "current batch only, no threads or persistence"
+  },
+  "fallback_policy": {
+    "priority": ["preferred venue healthy", "market type match", "capability support", "freshness", "completeness", "latency", "stable order"],
+    "audit": "FallbackDecision records reason + chain",
+    "no_silent": true
+  },
+  "test_results": {
+    "existing_adapter_tests": {"total": 96, "passed": 96, "failed": 0},
+    "resilience_tests": {"total": 107, "passed": 107, "failed": 0},
+    "total": 203,
+    "test_coverage": [
+      "4 venues", "spot/perp/inverse", "contract size", "OI conversion", "OI incomparable",
+      "funding", "basis", "mark/index", "order book", "stale", "latency", "unavailable",
+      "rate limit", "malformed", "NaN", "Infinity", "negative OI", "partial success",
+      "health fallback", "no healthy venue", "preferred recovery", "import 20x alternating",
+      "subprocess import", "no private API", "no credentials"
+    ]
+  },
+  "live_probe": {
+    "ts": "2026-06-18T01:56:48Z",
+    "endpoints_attempted": 10,
+    "successful": 10,
+    "failed": 0,
+    "venues": ["binance", "okx", "bybit", "hyperliquid"],
+    "symbols": ["BTC/USDT", "ETH/USDT", "SOL/USDT"],
+    "no_credentials": true, "max_attempts": 2, "timeout": 15.0,
+    "resolver_verified": true, "final_ccxt_is_real": true
+  },
+  "modified_files": [
+    "market_radar/external_adapters/market_resilience.py",
+    "tests/post_mvp/market_resilience/test_market_resilience.py",
+    "tests/post_mvp/market_resilience/fixtures/*.json",
+    "artifacts/evidence/w4_post_mvp_market_resilience_r03.json"
+  ],
+  "files_outside_owned_paths": [],
+  "no_credentials": true, "no_orders": true, "no_send": true, "no_daemon": true, "no_threads": true,
+  "main_unchanged": true,
+  "limitations": [
+    "Hyperliquid perp-only: no spot, OI, or order book",
+    "OI normalization requires contract_size knowledge — inverse perp cannot be converted to USD notional",
+    "Health snapshot is computed from current batch only; no historical trend without integration-level store",
+    "Health-aware fallback uses configured preferred order as primary sort — does not yet score venues dynamically"
+  ],
+  "generated_at_utc": "2026-06-17T13:15:35Z"
+}

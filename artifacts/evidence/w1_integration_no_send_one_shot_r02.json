@@ -1,0 +1,92 @@
+{
+  "ticket": "W1_INTEGRATION_NO_SEND_ONE_SHOT_R02",
+  "role": "Integration Owner",
+  "repository": "zhuo74451-art/crypto-event-intelligence",
+  "branch": "workbench/mvpplus-integration-v2",
+  "stage_0": {
+    "description": "Fix assembly evidence with real git history",
+    "real_merge_history": [
+      {"merge_sha": "745fa7710646378cee3a74683b2b96191b5753a4", "first_parent": "cfc1e09b9c4e0c734ae4bfc913b726c6e2b145f9", "second_parent": "660fcc56b2812b06bef58b9632caa5a5f7431ae7", "subject": "merge(mvpplus): W4 adapters"},
+      {"merge_sha": "ae6f856a3d05314f05f76f498e9cca37cbffcc2b", "first_parent": "745fa7710646378cee3a74683b2b96191b5753a4", "second_parent": "bb0b71d42f1e0b85528c94f47dcb9fd69becc88a", "subject": "merge(mvpplus): W2 whale domain"},
+      {"merge_sha": "d31cb55bdd9731c52332992b3d44d5095541c698", "first_parent": "ae6f856a3d05314f05f76f498e9cca37cbffcc2b", "second_parent": "241e9a981c74de81d7898531dfbf5f777cde9ae4", "subject": "merge(mvpplus): W3 feeds/market/workbench"},
+      {"merge_sha": "9a016c25824c29a97b7d1f58ba57746c4a08b837", "first_parent": "d31cb55bdd9731c52332992b3d44d5095541c698", "second_parent": "e1d5d5c16d6345c73402226749cf09c998d694c5", "subject": "merge(mvpplus): W5 operations"},
+      {"merge_sha": "29d8dbf7dcdd803f088fd31dd6b0a906fb8a88cc", "first_parent": "9a016c25824c29a97b7d1f58ba57746c4a08b837", "second_parent": "a3e06ab3629504434a60b15e19899dab5c6ec79e", "subject": "merge(mvpplus): W6 independent QA"}
+    ],
+    "merge_order_verified": "W4 -> W2 -> W3 -> W5 -> W6",
+    "all_lane_shas_are_ancestors": true
+  },
+  "stage_1": {
+    "description": "No-send one-shot integration pipeline",
+    "integration_base": "06a883b (Stage 0 evidence fix)",
+    "tested_commit": "d906986f8e5ac3ba1fbff73529a18047497d08d8",
+    "modified_files": [
+      "market_radar/integration/__init__.py",
+      "market_radar/integration/models.py",
+      "market_radar/integration/whale_mapper.py",
+      "market_radar/integration/market_mapper.py",
+      "market_radar/integration/feed_handler.py",
+      "market_radar/integration/one_shot.py",
+      "scripts/mvpplus/integration/__init__.py",
+      "scripts/mvpplus/integration/run_one_shot.py",
+      "tests/mvpplus/integration/__init__.py",
+      "tests/mvpplus/integration/test_integration.py"
+    ],
+    "files_outside_owned_paths": [],
+    "integration_test_command": "python -X utf8 -m pytest tests/mvpplus/integration/test_integration.py -v",
+    "integration_test_count": 31,
+    "integration_test_passed": 31,
+    "integration_test_failed": 0,
+    "regression_test_commands": {
+      "pytest_suites": "python -X utf8 -m pytest tests/mvpplus/whale_domain tests/mvpplus/operations tests/mvpplus/independent_qa -v",
+      "adapter_suite": "python -m unittest discover -s tests/mvpplus/adapters -v",
+      "feeds_market_ui": "python -m unittest tests/mvpplus/feeds_market_ui/test_all.py -v"
+    },
+    "regression_test_results": {
+      "pytest_combined": "235 passed, 1 skipped",
+      "adapters": "86 passed",
+      "feeds_market_ui": "44 passed",
+      "total_collected": 397,
+      "total_passed": 396,
+      "total_failed": 0,
+      "total_skipped": 1
+    },
+    "live_public_one_shot": {
+      "run_id": "os-60fbde583ca6",
+      "mode": "live-public",
+      "whale_address": "0x6c8512516ce5669d35113a11ca8b8de322fd84f6",
+      "whale_address_source": "market_radar/l1_hyperliquid_provider/address_universe.py :: get_whitelist()",
+      "whale_address_classification": "legacy_project_whitelist",
+      "whale_status": "ok (provenance=raw_http_fallback, 0 active positions, 1 parse error)",
+      "market_sources": {
+        "BTC/USDT": "unavailable (CCXT binance init failed)",
+        "ETH/USDT": "unavailable (CCXT binance init failed)",
+        "SOL/USDT": "unavailable (CCXT binance init failed)",
+        "HYPE/USDT": "ok (last_price=73.363, provenance=sdk, latency=188ms)"
+      },
+      "feed_status": "degraded (not_connected — existing feed readers not wired)",
+      "overall_status": "degraded",
+      "no_send": true,
+      "scheduler_started": false,
+      "credentials_used": false,
+      "output_artifacts": [
+        "data/integration/output/run_os-60fbde583ca6.json",
+        "data/integration/output/workbench_os-60fbde583ca6.html",
+        "data/integration/output/whale_os-60fbde583ca6.json",
+        "data/integration/output/market_os-60fbde583ca6.json"
+      ],
+      "source_health_db": "data/integration/state/source_health.db"
+    },
+    "no_send_enforced": true,
+    "scheduler_enabled": false
+  },
+  "known_limitations": [
+    "CCXT Binance exchange init failed in live-public run — possibly rate limit or connectivity. CCXT ticker adapter works in unit tests (mocked).",
+    "Whale mapper reported 1 parse error — HL response format may differ from expected; non-critical positions are skipped.",
+    "Feed live-public mode returns not_connected — existing flash/news/TG readers are not wired (documented limitation).",
+    "No whale position change detection — integration treats every observation as baseline (no prior state storage)",
+    "No one-shot runner for integration assembly — this is a pure code composition baseline",
+    "Integration tests use 100% mocked adapters — no network calls",
+    "W5 FileLock try_acquire semantics inverted from initial implementation (fixed in R02)"
+  ],
+  "generated_at_utc": "2026-06-17T06:55:00Z"
+}

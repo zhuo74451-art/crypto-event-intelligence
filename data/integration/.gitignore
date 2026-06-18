@@ -1,0 +1,7 @@
+# Integration runtime data — never commit live run artifacts
+output/
+state/
+*.db
+*.lock
+*.json
+*.html

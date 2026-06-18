@@ -1,0 +1,134 @@
+{
+  "evidence_id": "w5_bounded_shadow_foundation_r01",
+  "ticket": "W5_BOUNDED_SHADOW_FOUNDATION_R01",
+  "lane": "W5",
+  "branch": "workbench/mvpplus-ops-foundation-v1",
+  "repair_base_commit": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+  "tested_commit": "b612753d46739cf9cf1a7c58e04ef498fa90563c",
+  "config_bounds": {
+    "max_runs": {
+      "minimum": 1,
+      "maximum": 10,
+      "default": 2,
+      "null_rejected": true,
+      "zero_rejected": true,
+      "non_int_rejected": true
+    },
+    "interval_seconds": {
+      "minimum": 0,
+      "maximum": 3600,
+      "negative_rejected": true
+    },
+    "no_send": {
+      "locked": true,
+      "false_rejected": true,
+      "runtime_guard": true
+    },
+    "state_dir": {
+      "empty_rejected": true
+    }
+  },
+  "state_transition_rules": [
+    "any failed run -> final status=failed",
+    "no failures, any degraded -> final status=degraded",
+    "stopped by marker, no failures -> final status=stopped",
+    "0 attempted (pre-race stop) -> final status=stopped",
+    "all completed, no stops -> final status=completed"
+  ],
+  "stop_marker_tests": [
+    "pre-race stop: StopMarker set before start -> 0 attempted, stopped",
+    "post-round stop: StopMarker set after round 1 -> no round 2",
+    "sleep stop: StopMarker set during sleep interval -> no next round"
+  ],
+  "lock_tests": [
+    "lock contention: external lock held -> no callable invoked, failed status",
+    "lock released after failure: re-acquirable after callable error",
+    "lock released after stop: re-acquirable after stop-marker stop"
+  ],
+  "run_history_tests": [
+    "parent row exists in run_history DB",
+    "parent final status matches result.status",
+    "child wrapper rows recorded with runner_label=bounded_shadow_child",
+    "counters: attempted/completed/degraded/failed match callable results",
+    "ordinals continuous from 1",
+    "child_run_id preserved across records",
+    "started_at/finished_at non-empty",
+    "duration non-negative"
+  ],
+  "fake_callable_scenarios": [
+    "default max_runs=2 -> 2 completed",
+    "max_runs=1 -> 1 completed",
+    "max_runs=10 -> 10 completed",
+    "first degraded, continue_on_degraded=True -> runs second round",
+    "first degraded, continue_on_degraded=False -> stops after round 1",
+    "first failed, stop_on_failure=True -> stops immediately",
+    "first failed, stop_on_failure=False -> continues",
+    "callable raises exception -> treated as failed",
+    "callable returns invalid status -> treated as failed",
+    "callable returns None -> treated as failed",
+    "callable receives no_send=True",
+    "callable receives correct ordinal (1, 2, 3...)",
+    "callable receives shared_state_dir",
+    "callable receives parent_shadow_run_id",
+    "no sleep after last round",
+    "no sleep after policy stop",
+    "sleep calls count = max_runs - 1",
+    "interval=0 -> no sleep called"
+  ],
+  "exact_test_commands": [
+    "python -X utf8 -m pytest tests/mvpplus/operations/test_bounded_shadow.py -v --tb=line",
+    "python -X utf8 -m pytest tests/mvpplus/operations/ -v --tb=line"
+  ],
+  "original_tests_result": {
+    "collected": 61,
+    "passed": 61,
+    "failed": 0,
+    "skipped": 0
+  },
+  "new_tests_result": {
+    "collected": 61,
+    "passed": 61,
+    "failed": 0,
+    "skipped": 0
+  },
+  "total_tests_passed": 122,
+  "total_tests_failed": 0,
+  "total_skipped": 0,
+  "static_safety_scan": {
+    "integration_imported": false,
+    "network_used": false,
+    "credentials_used": false,
+    "no_send": true,
+    "daemon_started": false,
+    "scheduler_started": false,
+    "threads_started": false,
+    "runtime_artifacts_committed": false
+  },
+  "forbidden_capabilities_checked": [
+    "threading, multiprocessing, asyncio, sched, schedule, cron, systemd",
+    "create_order, cancel_order, withdraw, transfer, wallet, signing, private_key",
+    "webhook"
+  ],
+  "modified_files": [
+    "market_radar/operations/bounded_shadow.py",
+    "tests/mvpplus/operations/test_bounded_shadow.py",
+    "scripts/mvpplus/operations/run_bounded_shadow_demo.py",
+    "docs/operations/BOUNDED_SHADOW_FOUNDATION_R01.md",
+    "artifacts/evidence/w5_bounded_shadow_foundation_r01.json"
+  ],
+  "files_outside_owned_paths": [],
+  "known_limitations": [
+    "Same-process only — FileLock prevents concurrent instances but not cross-machine coordination",
+    "No progress reporting — runner blocks until all rounds complete",
+    "No retry — failed callable is counted but not retried within same run",
+    "SQLite WAL mode used but may contend with other callables writing to the same DB",
+    "No external summary artifact by default — requires explicit injection",
+    "Clock resolution on Windows: time.time_ns() used for temp-file uniqueness"
+  ],
+  "git_status": {
+    "branch": "workbench/mvpplus-ops-foundation-v1",
+    "repair_base_commit": "e1d5d5c16d6345c73402226749cf09c998d694c5",
+    "tested_commit": "b612753d46739cf9cf1a7c58e04ef498fa90563c",
+    "working_tree": "clean (evidence pending commit)"
+  }
+}

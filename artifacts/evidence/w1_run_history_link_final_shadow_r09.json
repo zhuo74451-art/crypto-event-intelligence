@@ -1,0 +1,48 @@
+{
+  "ticket": "W1_INTEGRATE_RUN_HISTORY_LINK_AND_FINAL_SHADOW_R09",
+  "branch": "workbench/mvpplus-integration-v2",
+  "repair_base_commit": "49119b7710862f70f77dad02f35ed05e45a1cae3",
+  "tested_commit": "d173b5a42feb5b116bc880f0ccde1c32d999a9ba",
+  "integrated_w5_commit": "015a4a29766634900d0dc2356e802b0e581426c1",
+  "schema_version": 2,
+  "child_history_mode": "link_existing",
+  "shared_db_path_proof": "assert os.path.normpath(integration_db) == os.path.normpath(shadow_db)",
+  "shadow_result": {
+    "shadow_run_id": "66df7bdafed3463c808b90bea52c5a4b",
+    "status": "completed",
+    "attempted_runs": 2,
+    "completed_runs": 2,
+    "no_send": true,
+    "errors": [],
+    "collision_found": false,
+    "db_audit": {
+      "parent_kind": "shadow_parent",
+      "child_count": 2,
+      "child_kind": "shadow_child",
+      "ordinals": [1, 2],
+      "parent_run_id_matches": true
+    }
+  },
+  "test_results": {
+    "integration": 97,
+    "operations": 151,
+    "combined_pytest": 545,
+    "adapters": 96,
+    "total": 641,
+    "failed": 0
+  },
+  "runtime_hygiene": {
+    "main_unchanged": true,
+    "no_send": true,
+    "temp_dirs_deleted": true,
+    "credentials_used": false,
+    "scheduler_started": false,
+    "daemon_started": false,
+    "threads_started": false
+  },
+  "modified_files": [
+    "market_radar/integration/bounded_shadow_runner.py",
+    "tests/mvpplus/integration/test_final_entrypoints.py"
+  ],
+  "files_outside_owned_paths": []
+}
