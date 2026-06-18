@@ -1,0 +1,73 @@
+{
+  "ticket": "W3_EVENT_INTELLIGENCE_CALIBRATION_R02",
+  "branch": "workbench/post-mvp-event-clustering-v1",
+  "repair_base_commit": "3ef3a63c67adac82b99147a75ae1f5a3832ac65b",
+  "tested_commit": "b5ef84880547e6be0e1312e2da7ea6136b4e8aa9",
+  "pair_corpus": {
+    "total_pairs": 300,
+    "coverage": [
+      "SAME_EXACT (13)", "SAME_MIRROR (12)", "SAME_UPDATE (12)",
+      "SAME_EVENT (20 multi-source + special)", "CONFLICTING_SAME_EVENT (8)",
+      "RELATED_DISTINCT (18)", "DIFFERENT_EVENT (205)",
+      "Special: TG relay, old news, future timestamp, same-ts different event, XSS"
+    ]
+  },
+  "dedup_matrix": {
+    "SAME_EXACT_detection": "100% (13/13 via original_id)",
+    "SAME_MIRROR_detection": "100% (12/12 via URL normalization)",
+    "SAME_UPDATE_detection": "100% via near-dup fingerprint",
+    "DIFFERENT_EVENT_false_dedup": "0 controlled (with different content)"
+  },
+  "cluster_matrix": {
+    "SAME_EVENT_clustering": "Same title+asset cluster; cross-source same-title cluster",
+    "SAME_UPDATE_clustering": "Merged (same title near-dup)",
+    "CONFLICTING_clustering": "Same event with conflict claims",
+    "DIFFERENT_EVENT_separation": "No clustering without content overlap (title/assets/topics/entities)"
+  },
+  "score_calibration": {
+    "method": "Weighted average (20/15/25/15/15/10) minus penalties",
+    "thresholds": "WATCH < 35, REVIEW 35-69, HIGH_ATTENTION >= 70",
+    "novelty": "NEW+single → 20, NEW+multi → 40, DEVELOPING→50, CONFIRMED→60, CONFLICTING→55",
+    "independence": "0→0, 1→15, 2→40, 3→65, 4→80, 5+→100",
+    "single_source_penalty": "15 for 1-item events, 5 for 2-item/2-source"
+  },
+  "source_independence": {
+    "groups": ["crypto_media", "exchange", "telegram", "social", "research", "other"],
+    "mirrored_sources": "Same group → not independent",
+    "tg_relay": "Not independent from original"
+  },
+  "test_results": {
+    "existing_mvpplus": {"total": 170, "passed": 170, "failed": 0},
+    "event_intelligence_core": {"total": 45, "passed": 45, "failed": 0},
+    "pair_corpus_parametrized": {"total": 1208, "passed": 1208, "failed": 0},
+    "full_regression": {"total": 1423, "passed": 1423, "failed": 0}
+  },
+  "live_probe": {
+    "items": 200,
+    "duplicates": 0,
+    "events": 173,
+    "avg_cluster_size": 1.16,
+    "largest_cluster": 7,
+    "score_WATCH": 171,
+    "score_REVIEW": 2,
+    "score_HIGH_ATTENTION": 0,
+    "conflicts": 9,
+    "pipeline_ms": 978,
+    "no_filters": true,
+    "no_raw_json": true,
+    "no_full_content_committed": true
+  },
+  "no_llm": true,
+  "no_buy_sell": true,
+  "no_featured_trust": true,
+  "main_unchanged": true,
+  "modified_files": [
+    "market_radar/intelligence_feed/event_intelligence/models.py",
+    "market_radar/intelligence_feed/event_intelligence/scoring.py",
+    "market_radar/intelligence_feed/event_intelligence/clustering.py",
+    "tests/post_mvp/event_intelligence/test_pair_corpus.py",
+    "tests/post_mvp/event_intelligence/test_event_intelligence.py"
+  ],
+  "files_outside_owned_paths": [],
+  "git_status": "clean"
+}
