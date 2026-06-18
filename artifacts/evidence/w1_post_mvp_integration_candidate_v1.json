@@ -1,0 +1,29 @@
+{
+  "ticket": "W1_POST_MVP_INTEGRATION_CANDIDATE_V1",
+  "branch": "workbench/post-mvp-integration-candidate-v1",
+  "baseline_commit": "8d553fa2d4cf9f2633f2751fafa96f38a7484d76",
+  "tested_commit": "805188a6a50e2600387d52e3071ed3f97d4ff394",
+  "lane_tested_commits": {
+    "W5": "1175bb4a03f28ff89249b59cc4143a348a54f237",
+    "W4": "b99c2b4690195727abc0f784da43c4cf26626153",
+    "W2": "3f40c1e5887b3aefd95ce806564fa8d5c8624059",
+    "W3": "b5ef84880547e6be0e1312e2da7ea6136b4e8aa9",
+    "W1": "fa3ecd592ab9228899e38426b9f06a96ee84de6e"
+  },
+  "applied_commits": 25,
+  "conflicts": 0,
+  "stage_tests": "151+96+127+170+212 all PASS",
+  "full_regression": {"pytest": 2314, "adapters": 96, "total": 2410, "failed": 0, "skipped": 3},
+  "doctor_status": "8 PASS, 0 FAIL",
+  "one_shot": {"run_id": "os-efa748de085d", "status": "completed", "sources": 13, "errors": 0},
+  "shadow": {"status": "completed", "attempted": 2, "completed": 2, "errors": 0},
+  "run_history_status": "parent + 2 children verified, no collision",
+  "smoke_status": "Whale Portfolio, Event Clustering, Market Resilience, Ops Doctor, Bundle, Catalog, Replay Pack, Readiness Score — all generated",
+  "security_status": "no credentials, no send, no daemon, no absolute paths",
+  "manifest_path": "artifacts/candidate/post_mvp_integration_candidate_v1_manifest.json",
+  "no_send": true,
+  "main_unchanged": true,
+  "runtime_data_committed": false,
+  "files_outside_allowed_scope": [],
+  "git_status": "clean"
+}
