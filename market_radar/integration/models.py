@@ -97,6 +97,7 @@ class IntegrationConfig:
     feed_cursor_name: str = "published_at_backend"
     feed_cursor_state_file: str = "feed_cursor.json"
     feed_initial_since: Optional[str] = None
+    feed_base_url: str = ""  # Resolved curated API URL (recorded in manifest)
 
     def __post_init__(self) -> None:
         if not self.no_send:

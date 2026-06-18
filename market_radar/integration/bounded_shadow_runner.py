@@ -15,6 +15,7 @@ from typing import Any, Optional, Callable
 from market_radar.integration.one_shot import run_one_shot
 from market_radar.integration.models import IntegrationConfig
 from market_radar.integration.curated_feed_provider import CuratedFeedProvider
+from market_radar.integration.curated_url_resolver import resolve_curated_url
 from market_radar.operations.bounded_shadow import (
     run_bounded_shadow,
     BoundedShadowConfig,
@@ -32,7 +33,7 @@ def run_integration_shadow(
     whale_address: str = "",
     exchange: str = "binance",
     timeout: float = 30.0,
-    curated_base_url: str = "http://43.98.174.247:8001/api/integration/curated",
+    curated_base_url: Optional[str] = None,
     feed_limit: int = 100,
     feed_max_items: int = 500,
     feed_max_pages: int = 5,
@@ -47,8 +48,9 @@ def run_integration_shadow(
     output_dir_str = str(output_dir)
 
     def _make_provider() -> CuratedFeedProvider:
+        resolved_url = resolve_curated_url(cli_arg=curated_base_url)
         return CuratedFeedProvider(
-            base_url=curated_base_url,
+            base_url=resolved_url,
             limit=feed_limit,
             max_items=feed_max_items,
             max_pages=feed_max_pages,
