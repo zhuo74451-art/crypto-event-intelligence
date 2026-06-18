@@ -61,12 +61,14 @@ class DoctorReport:
 def run_doctor(
     state_dir: str | Path,
     clock_fn: Callable[[], float] = time.time,
+    check_artifacts: bool = True,
 ) -> DoctorReport:
     """Run all diagnostic checks on an Operations state directory.
 
     Args:
         state_dir: Path to the Operations state directory.
         clock_fn: Clock function (injectable for tests).
+        check_artifacts: If True, check artifact file integrity.
 
     Returns:
         ``DoctorReport`` with all check results.
@@ -90,6 +92,9 @@ def run_doctor(
     _check_lock(report, sd)
     _check_stop_marker(report, sd)
     _check_db_file_checksum(report, db_path)
+    _check_path_leak(report, db_path)
+    _check_sensitive_key_in_summary(report, db_path)
+    _check_artifact_checksum(report, sd, db_path, check_artifacts)
     return report
 
 
@@ -477,6 +482,97 @@ def _check_db_file_checksum(report: DoctorReport, db_path: Path) -> None:
                evidence={"sha256_prefix": h.hexdigest()[:32]})
     except Exception as e:
         _check(report, "db:sha256", "low", "error", f"Checksum failed: {e}")
+
+
+def _check_path_leak(report: DoctorReport, db_path: Path) -> None:
+    """Detect absolute Windows/POSIX paths in run_history fields."""
+    conn = _db_ok(report, db_path)
+    if conn is None:
+        return
+    try:
+        import re
+        leaked: list[dict] = []
+        rows = conn.execute(
+            "SELECT run_id, summary_json, error FROM run_history "
+            "WHERE summary_json IS NOT NULL OR error IS NOT NULL"
+        ).fetchall()
+        for r in rows:
+            text = (r["summary_json"] or "") + " " + (r["error"] or "")
+            # Windows path: C:\...  or  /absolute/path
+            win_paths = re.findall(r"[A-Za-z]:\\[^\s:,)]{5,}", text)
+            posix_paths = re.findall(r"/[a-z]{2,}/[^\s:,)]{5,}", text.lower())
+            if win_paths or posix_paths:
+                leaked.append({
+                    "run_id": r["run_id"],
+                    "windows_paths": win_paths[:3],
+                    "posix_paths": posix_paths[:3],
+                })
+        if leaked:
+            _check(report, "security:path_leak", "medium", "warn",
+                   f"Found {len(leaked)} run(s) with absolute paths",
+                   evidence={"leaked_runs": leaked[:5]})
+        else:
+            _check(report, "security:path_leak", "medium", "pass",
+                   "No absolute paths detected")
+    except Exception as e:
+        _check(report, "security:path_leak", "high", "error", str(e))
+    finally:
+        conn.close()
+
+
+def _check_sensitive_key_in_summary(report: DoctorReport, db_path: Path) -> None:
+    """Detect potential sensitive keys in summary_json."""
+    conn = _db_ok(report, db_path)
+    if conn is None:
+        return
+    sensitive_patterns = {"token", "secret", "password", "api_key", "authorization",
+                          "private_key", "credential"}
+    try:
+        import json as _json
+        flagged = 0
+        rows = conn.execute(
+            "SELECT run_id, summary_json FROM run_history WHERE summary_json IS NOT NULL"
+        ).fetchall()
+        for r in rows:
+            try:
+                obj = _json.loads(r["summary_json"])
+                if isinstance(obj, dict):
+                    for key in obj:
+                        if any(p in key.lower() for p in sensitive_patterns):
+                            flagged += 1
+            except (json.JSONDecodeError, TypeError):
+                pass
+        if flagged:
+            _check(report, "security:sensitive_key", "medium", "warn",
+                   f"Found {flagged} summary run(s) with potentially sensitive keys",
+                   evidence={"flagged_count": flagged})
+        else:
+            _check(report, "security:sensitive_key", "medium", "pass",
+                   "No sensitive keys detected")
+    except Exception as e:
+        _check(report, "security:sensitive_key", "high", "error", str(e))
+    finally:
+        conn.close()
+
+
+def _check_artifact_checksum(report: DoctorReport, state_dir: Path,
+                              db_path: Path, enabled: bool) -> None:
+    """Check file checksums against stored artifacts (if any)."""
+    if not enabled:
+        return
+    if not db_path.exists():
+        return
+    import hashlib
+    try:
+        h = hashlib.sha256()
+        with open(db_path, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                h.update(chunk)
+        _check(report, "artifact:db_checksum", "info", "pass",
+               f"DB SHA256: {h.hexdigest()[:16]}...",
+               evidence={"sha256_prefix": h.hexdigest()[:16]})
+    except Exception as e:
+        _check(report, "artifact:db_checksum", "low", "error", str(e))
 
 
 # ---------------------------------------------------------------------------

@@ -113,7 +113,8 @@ def _propose_action(check: DoctorCheck) -> Optional[RecoveryAction]:
         ),
     }
     for prefix in ("summary_json:", "source_health:", "time_travel:",
-                   "abnormal_status:", "parent_child:count_"):
+                   "abnormal_status:", "parent_child:count_",
+                   "orphan:", "ordinal:dup", "db:schema"):
         if check.check_id.startswith(prefix):
             return RecoveryAction(
                 issue=f"{check.message[:80]}",
@@ -123,5 +124,8 @@ def _propose_action(check: DoctorCheck) -> Optional[RecoveryAction]:
                 backup_required=False,
                 expected_result="Issue resolved.",
             )
-    return mappings.get(check.check_id.split(":")[0] + ":" + check.check_id.split(":")[1]
-                        if ":" in check.check_id else check.check_id)
+    # Fallback: check partial key match against the mapping
+    for key, action in mappings.items():
+        if key in check.check_id:
+            return action
+    return None
