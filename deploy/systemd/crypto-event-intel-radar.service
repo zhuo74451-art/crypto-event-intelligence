@@ -1,0 +1,24 @@
+# crypto-event-intel-radar.service
+[Unit]
+Description=Crypto Event Intelligence -- Market Radar Cycle
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+User=crypto-event-intel
+Group=crypto-event-intel
+Restart=no
+WorkingDirectory=/opt/crypto-event-intel-watchers/current
+EnvironmentFile=/opt/crypto-event-intel-watchers/.env
+ExecStart=/opt/crypto-event-intel-watchers/current/scripts/operations/radar_one_shot.sh
+TimeoutStartSec=3600
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=crypto-event-intel-radar
+ProtectSystem=full
+ProtectHome=yes
+PrivateTmp=yes
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+[Install]
+WantedBy=timers.target

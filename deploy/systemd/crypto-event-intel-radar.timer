@@ -1,0 +1,9 @@
+# crypto-event-intel-radar.timer
+[Unit]
+Description=Crypto Event Intelligence -- Market Radar Timer (10 min)
+[Timer]
+Unit=crypto-event-intel-radar.service
+OnUnitActiveSec=10min
+RandomizedDelaySec=60
+[Install]
+WantedBy=timers.target
