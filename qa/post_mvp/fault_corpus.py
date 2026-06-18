@@ -381,5 +381,7 @@ r02_extra = [
     {"id": "R080", "category": "combo", "description": "Post-merge acceptance pack successfully validates all lanes", "fixture": {}, "expected": "all pass", "tags": ["combo"]},
 ]
 FAULT_CASES.extend(r02_extra)
-
+FAULT_CASES.append({"id": "R081", "category": "feed", "description": "Feed item with encoded XSS (HTML entity encoded script)", 
+     "fixture": {"content": "&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#62;alert(1)&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;"},
+     "expected": "decoded and escaped or rejected", "tags": ["xss", "encoded", "html_entity"]},)
 assert len(FAULT_CASES) >= 234, f"Only {len(FAULT_CASES)} cases, need ≥234"
