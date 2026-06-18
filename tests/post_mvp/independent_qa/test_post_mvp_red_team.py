@@ -448,15 +448,15 @@ class TestAcceptancePack(unittest.TestCase):
             self.assertGreater(len(l.safety_checks), 0, f"{l.name} has no safety checks")
 
     def test_verify_lane_waiting_when_no_head(self):
-        v = verify_lane_contract(ALL_LANES[0], None, 0)
+        v = verify_lane_contract(ALL_LANES[0], None, 0, False)
         self.assertEqual(v.overall, "WAITING")
 
     def test_verify_lane_pass_with_adequate_tests(self):
-        v = verify_lane_contract(ALL_LANES[0], "abc123", ALL_LANES[0].min_tests + 10)
+        v = verify_lane_contract(ALL_LANES[0], "abc123", ALL_LANES[0].min_tests + 10, True)
         self.assertEqual(v.overall, "PASS")
 
     def test_verify_lane_fail_with_too_few_tests(self):
-        v = verify_lane_contract(ALL_LANES[0], "abc123", 1)
+        v = verify_lane_contract(ALL_LANES[0], "abc123", 1, True)
         self.assertEqual(v.overall, "FAIL")
 
     def test_no_forbidden_paths_overlap_allowed(self):

@@ -286,4 +286,100 @@ combo_cases = [
 ]
 FAULT_CASES.extend(combo_cases)
 
-assert len(FAULT_CASES) >= 150, f"Only {len(FAULT_CASES)} cases, need ≥150"
+# ═══════════════════════════════════════════════════════════════════════════
+# R02 Additional Cases (80+ cases)
+# ═══════════════════════════════════════════════════════════════════════════
+
+r02_extra = [
+    # Evidence & binding faults
+    {"id": "R001", "category": "operations", "description": "Tests claimed but missing in test suite", "fixture": {}, "expected": "detected", "tags": ["evidence", "integrity"]},
+    {"id": "R002", "category": "operations", "description": "Evidence SHA invalid (not hex)", "fixture": {}, "expected": "rejected", "tags": ["evidence", "sha"]},
+    {"id": "R003", "category": "operations", "description": "Runner absent from expected path", "fixture": {}, "expected": "blocked", "tags": ["runner", "missing"]},
+    {"id": "R004", "category": "cli", "description": "Branch exists after stale snapshot recorded", "fixture": {}, "expected": "evidence outdated", "tags": ["stale", "snapshot"]},
+    {"id": "R005", "category": "cli", "description": "Live probe result fabricated (no network call)", "fixture": {}, "expected": "detected", "tags": ["probe", "integrity"]},
+    {"id": "R006", "category": "cli", "description": "Hardcoded local path in evidence", "fixture": {}, "expected": "detected", "tags": ["path", "hygiene"]},
+    {"id": "R007", "category": "operations", "description": "Evidence file has UTF-8 BOM", "fixture": {}, "expected": "readable or rejected", "tags": ["bom", "encoding"]},
+    {"id": "R008", "category": "cli", "description": "Target branch HEAD moved after evidence generated", "fixture": {}, "expected": "re-scan required", "tags": ["stale", "head"]},
+    {"id": "R009", "category": "cli", "description": "Source HEAD mismatch with evidence claim", "fixture": {}, "expected": "binding fail", "tags": ["sha", "mismatch"]},
+    {"id": "R010", "category": "cli", "description": "Public model removed in new commit", "fixture": {}, "expected": "contract break", "tags": ["api", "contract"]},
+    # Schema & contract faults
+    {"id": "R011", "category": "combo", "description": "Cross-lane duplicate symbol name", "fixture": {}, "expected": "conflict detected", "tags": ["schema", "collision"]},
+    {"id": "R012", "category": "combo", "description": "Schema version conflict between lanes", "fixture": {}, "expected": "migration needed", "tags": ["schema", "version"]},
+    {"id": "R013", "category": "feed", "description": "Static HTML output contains unsafe content", "fixture": {}, "expected": "escaped", "tags": ["xss", "html"]},
+    {"id": "R014", "category": "whale", "description": "Scoring over-alerts on tiny position changes", "fixture": {}, "expected": "threshold respected", "tags": ["scoring", "alert"]},
+    {"id": "R015", "category": "whale", "description": "Fallback unit mismatch (BTC vs sats)", "fixture": {}, "expected": "normalized", "tags": ["units", "fallback"]},
+    {"id": "R016", "category": "markets", "description": "Backup source mutation returns different data", "fixture": {}, "expected": "versioned", "tags": ["backup", "consistency"]},
+    # Feed additional
+    {"id": "R017", "category": "feed", "description": "Feed response with BOM in JSON", "fixture": {}, "expected": "parsed correctly", "tags": ["bom", "encoding"]},
+    {"id": "R018", "category": "feed", "description": "Feed item content truncated mid-UTF8", "fixture": {}, "expected": "handled", "tags": ["encoding", "truncation"]},
+    {"id": "R019", "category": "feed", "description": "Feed response with null bytes", "fixture": {}, "expected": "sanitized", "tags": ["security", "null"]},
+    {"id": "R020", "category": "feed", "description": "Feed extremely long source_label (10k chars)", "fixture": {}, "expected": "truncated", "tags": ["overflow", "safety"]},
+    {"id": "R021", "category": "feed", "description": "Feed item injection: <script> in source_label", "fixture": {}, "expected": "escaped", "tags": ["xss", "injection"]},
+    {"id": "R022", "category": "feed", "description": "Feed duplicate tweet_id across different sources", "fixture": {}, "expected": "deduped per source", "tags": ["dedup", "idempotency"]},
+    {"id": "R023", "category": "feed", "description": "Feed provider returns 0 items but total>0", "fixture": {}, "expected": "inconsistency flagged", "tags": ["consistency", "pagination"]},
+    {"id": "R024", "category": "feed", "description": "Feed provider returns items older than since", "fixture": {}, "expected": "filtered or flagged", "tags": ["cursor", "filter"]},
+    {"id": "R025", "category": "feed", "description": "Feed 3 consecutive empty pages (end of stream)", "fixture": {}, "expected": "stop pagination", "tags": ["pagination", "empty"]},
+    {"id": "R026", "category": "feed", "description": "Feed response has no items key", "fixture": {}, "expected": "degraded", "tags": ["schema", "missing"]},
+    {"id": "R027", "category": "feed", "description": "Feed item source_kind is empty string", "fixture": {}, "expected": "mapped to UNKNOWN", "tags": ["mapping", "empty"]},
+    # Markets additional
+    {"id": "R028", "category": "markets", "description": "Market adapter returns empty dict", "fixture": {}, "expected": "degraded", "tags": ["empty", "schema"]},
+    {"id": "R029", "category": "markets", "description": "Market adapter returns unexpected type (str)", "fixture": {}, "expected": "degraded", "tags": ["type", "error"]},
+    {"id": "R030", "category": "markets", "description": "Market all-mids response partially missing coins", "fixture": {}, "expected": "partial ok", "tags": ["partial", "allmids"]},
+    {"id": "R031", "category": "markets", "description": "Market ccxt init succeeds but ticker fails", "fixture": {}, "expected": "degraded", "tags": ["init", "ticker"]},
+    {"id": "R032", "category": "markets", "description": "Market ccxt init fails then falls back", "fixture": {}, "expected": "fallback", "tags": ["init", "fallback"]},
+    {"id": "R033", "category": "markets", "description": "Market latency spikes to 60s+", "fixture": {}, "expected": "timeout", "tags": ["latency", "timeout"]},
+    {"id": "R034", "category": "markets", "description": "Market snapshot contains NaN bid/ask", "fixture": {}, "expected": "nulled or rejected", "tags": ["nan", "validation"]},
+    {"id": "R035", "category": "markets", "description": "Market snapshot has bid but no ask", "fixture": {}, "expected": "partial ok", "tags": ["partial", "spread"]},
+    {"id": "R036", "category": "markets", "description": "Market exchange not in allowlist", "fixture": {}, "expected": "skipped", "tags": ["allowlist", "policy"]},
+    # Whale additional
+    {"id": "R037", "category": "whale", "description": "Whale position coin has special characters", "fixture": {}, "expected": "handled", "tags": ["encoding", "coin"]},
+    {"id": "R038", "category": "whale", "description": "Whale position with unrealizedPnl NaN", "fixture": {}, "expected": "nulled", "tags": ["nan", "pnl"]},
+    {"id": "R039", "category": "whale", "description": "Whale account has 50+ positions", "fixture": {}, "expected": "all processed", "tags": ["scale", "many"]},
+    {"id": "R040", "category": "whale", "description": "Whale allMids missing every position coin", "fixture": {}, "expected": "mark_price=null", "tags": ["allmids", "missing"]},
+    {"id": "R041", "category": "whale", "description": "Whale clearinghouse response has unknown fields", "fixture": {}, "expected": "forward compat", "tags": ["schema", "extensible"]},
+    {"id": "R042", "category": "whale", "description": "Whale same position appears twice in response", "fixture": {}, "expected": "deduped", "tags": ["duplicate", "dedup"]},
+    {"id": "R043", "category": "whale", "description": "Whale fresh account with zero positions", "fixture": {}, "expected": "empty ok", "tags": ["empty", "fresh"]},
+    {"id": "R044", "category": "whale", "description": "Whale liquidation price same as mark (no distance)", "fixture": {}, "expected": "zero distance handled", "tags": ["liquidation", "edge"]},
+    # Operations additional
+    {"id": "R045", "category": "operations", "description": "DB pool exhausted / too many connections", "fixture": {}, "expected": "degraded", "tags": ["db", "pool"]},
+    {"id": "R046", "category": "operations", "description": "Atomic write to network path (not local)", "fixture": {}, "expected": "blocked", "tags": ["atomic", "network"]},
+    {"id": "R047", "category": "operations", "description": "File lock already held by dead PID", "fixture": {}, "expected": "stale lock handled", "tags": ["lock", "stale"]},
+    {"id": "R048", "category": "operations", "description": "State file has wrong permissions (read-only)", "fixture": {}, "expected": "blocked", "tags": ["permissions", "state"]},
+    {"id": "R049", "category": "operations", "description": "Run history table missing (fresh DB)", "fixture": {}, "expected": "auto-create", "tags": ["schema", "init"]},
+    {"id": "R050", "category": "operations", "description": "Parent shadow run has summary with wrong child count", "fixture": {}, "expected": "detected", "tags": ["shadow", "consistency"]},
+    {"id": "R051", "category": "operations", "description": "Atomic write temp file not cleaned up after crash", "fixture": {}, "expected": "idempotent cleanup", "tags": ["atomic", "cleanup"]},
+    {"id": "R052", "category": "operations", "description": "Source health DB written but run failed", "fixture": {}, "expected": "health preserved", "tags": ["health", "partial"]},
+    {"id": "R053", "category": "operations", "description": "Shadow interval_seconds negative", "fixture": {}, "expected": "clamped", "tags": ["validation", "interval"]},
+    {"id": "R054", "category": "operations", "description": "Shadow max_runs=0 (should run at least 1)", "fixture": {}, "expected": "clamped", "tags": ["validation", "max_runs"]},
+    {"id": "R055", "category": "operations", "description": "Shadow max_runs=1000 (unreasonable)", "fixture": {}, "expected": "capped", "tags": ["validation", "max_runs"]},
+    # CLI additional
+    {"id": "R056", "category": "cli", "description": "CLI --help returns exit 0", "fixture": {}, "expected": "exit 0", "tags": ["help", "cli"]},
+    {"id": "R057", "category": "cli", "description": "CLI unknown argument rejected", "fixture": {}, "expected": "exit non-zero", "tags": ["validation", "args"]},
+    {"id": "R058", "category": "cli", "description": "CLI --state-dir is a file not a directory", "fixture": {}, "expected": "blocked", "tags": ["path", "validation"]},
+    {"id": "R059", "category": "cli", "description": "CLI --output-dir is a file not a directory", "fixture": {}, "expected": "blocked", "tags": ["path", "validation"]},
+    {"id": "R060", "category": "cli", "description": "CLI --feed-since=future_date (>now+1h)", "fixture": {}, "expected": "accepted or warned", "tags": ["time", "future"]},
+    {"id": "R061", "category": "cli", "description": "CLI --feed-since=year 1999 (very old)", "fixture": {}, "expected": "accepted", "tags": ["time", "past"]},
+    {"id": "R062", "category": "cli", "description": "CLI without --whale-address in live-public", "fixture": {}, "expected": "degraded whale", "tags": ["whale", "missing"]},
+    {"id": "R063", "category": "cli", "description": "CLI concurrently with same state dir", "fixture": {}, "expected": "lock blocks second", "tags": ["lock", "concurrent"]},
+    # Combo additional
+    {"id": "R064", "category": "combo", "description": "Feed timeout + Whale stale + Market NaN + Ops DB locked", "fixture": {}, "expected": "degraded", "tags": ["combo"]},
+    {"id": "R065", "category": "combo", "description": "Provider missing + Whale empty + Markets partial", "fixture": {}, "expected": "degraded", "tags": ["combo"]},
+    {"id": "R066", "category": "combo", "description": "All sources ok + Bundle write fails", "fixture": {}, "expected": "degraded", "tags": ["combo"]},
+    {"id": "R067", "category": "combo", "description": "Skip first run (max_runs=1) + shadow runs once", "fixture": {}, "expected": "1 child", "tags": ["combo"]},
+    {"id": "R068", "category": "combo", "description": "Shadow parent + child + orphan child from old run", "fixture": {}, "expected": "orphan detected", "tags": ["combo"]},
+    {"id": "R069", "category": "combo", "description": "Feed provider returns HTTP 200 but empty body", "fixture": {}, "expected": "degraded", "tags": ["combo"]},
+    {"id": "R070", "category": "combo", "description": "Both Whale and Market use same adapter type", "fixture": {}, "expected": "independent", "tags": ["combo"]},
+    {"id": "R071", "category": "combo", "description": "W3 make_feed_id function changed between two runs", "fixture": {}, "expected": "different IDs", "tags": ["combo"]},
+    {"id": "R072", "category": "combo", "description": "Evidence contains stale snapshot of non-existent branch", "fixture": {}, "expected": "detected", "tags": ["combo"]},
+    {"id": "R073", "category": "combo", "description": "Cross-lane: W2 uses W4 adapter that changed interface", "fixture": {}, "expected": "contract check", "tags": ["combo"]},
+    {"id": "R074", "category": "combo", "description": "Merge simulation: W5 + W4 + W2 + W3 + W1 in order", "fixture": {}, "expected": "all tests pass", "tags": ["combo"]},
+    {"id": "R075", "category": "combo", "description": "Merge simulation: W5 + W4 only (partial)", "fixture": {}, "expected": "partial pass", "tags": ["combo"]},
+    {"id": "R076", "category": "combo", "description": "Evidence with tested_commit=placeholder HEAD", "fixture": {}, "expected": "binding fail", "tags": ["combo"]},
+    {"id": "R077", "category": "combo", "description": "After merge, public model import path changed", "fixture": {}, "expected": "contract verified", "tags": ["combo"]},
+    {"id": "R078", "category": "combo", "description": "Cross-lane test count regression", "fixture": {}, "expected": "detected", "tags": ["combo"]},
+    {"id": "R079", "category": "combo", "description": "Dependency conflict between lanes (e.g. ccxt version)", "fixture": {}, "expected": "resolved", "tags": ["combo"]},
+    {"id": "R080", "category": "combo", "description": "Post-merge acceptance pack successfully validates all lanes", "fixture": {}, "expected": "all pass", "tags": ["combo"]},
+]
+FAULT_CASES.extend(r02_extra)
+
+assert len(FAULT_CASES) >= 234, f"Only {len(FAULT_CASES)} cases, need ≥234"
