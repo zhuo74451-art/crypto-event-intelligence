@@ -288,3 +288,100 @@ class TestCooldown(unittest.TestCase):
         remaining = tracker.get_cooldown_remaining(rec.alert_key)
         self.assertEqual(remaining, 0.0)
         tracker.close()
+
+
+class TestCooldownReal(unittest.TestCase):
+    def test_cooldown_blocks_delivery(self):
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        alert = _make_alert()
+        result1 = tracker.classify_batch([alert], set())
+        self.assertGreater(len(result1["delivery_candidates"]), 0)
+        # Mark as delivered to start cooldown
+        for a in result1["delivery_candidates"]:
+            tracker.mark_delivered(a["alert_key"])
+        # Second identical round should be suppressed by cooldown
+        result2 = tracker.classify_batch([alert], set())
+        self.assertEqual(len(result2["delivery_candidates"]), 0)
+        self.assertGreater(len(result2["suppressed"]), 0)
+        tracker.close()
+
+    def test_delivery_updates_last_delivery_at(self):
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        alert = _make_alert()
+        _, rec = tracker.classify_alert(alert)
+        self.assertIsNone(rec.last_delivery_at)
+        tracker.mark_delivered(rec.alert_key)
+        rec2 = tracker._load(rec.alert_key)
+        self.assertIsNotNone(rec2.last_delivery_at)
+        self.assertEqual(rec2.delivery_count, 1)
+        tracker.close()
+
+
+class TestDirectionFlip(unittest.TestCase):
+    def test_direction_flip_resolves_old(self):
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        long_alert = _make_alert(direction="long")
+        short_alert = _make_alert(direction="short")
+        tracker.classify_alert(long_alert)
+        long_key = make_alert_key(TEST_ADDR, TEST_COIN, "long", "high_leverage")
+        short_key = make_alert_key(TEST_ADDR, TEST_COIN, "short", "high_leverage")
+        self.assertNotEqual(long_key, short_key)
+        # classify_batch with empty args reads active keys from SQLite
+        # The long key should be active, short batch is new
+        result = tracker.classify_batch([short_alert])
+        resolved_keys = [r["alert_key"] for r in result["resolved"]]
+        self.assertIn(long_key, resolved_keys)
+        tracker.close()
+
+
+class TestLiquidationDistanceJSON(unittest.TestCase):
+    def test_liq_distance_in_alert_metrics(self):
+        alert = _make_alert(liq_dist=33.4)
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        _, rec = tracker.classify_alert(alert)
+        snap = json.loads(rec.snapshot_json)
+        self.assertEqual(snap.get("liquidation_distance_pct"), 33.4)
+        tracker.close()
+
+    def test_liq_distance_none(self):
+        alert = _make_alert(liq_dist=None)
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        _, rec = tracker.classify_alert(alert)
+        snap = json.loads(rec.snapshot_json)
+        self.assertEqual(snap.get("liquidation_distance_pct"), 0.0)
+        tracker.close()
+
+
+class TestFirstRoundBaseline(unittest.TestCase):
+    def test_first_round_establishes_state(self):
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        alert = _make_alert()
+        # First round - simulate baseline
+        state1, rec1 = tracker.classify_alert(alert)
+        self.assertEqual(state1, STATE_NEW)
+        # Second round - should be persistent
+        state2, _ = tracker.classify_alert(alert)
+        self.assertEqual(state2, STATE_PERSISTENT)
+        tracker.close()
+
+
+class TestDeliveryCount(unittest.TestCase):
+    def test_delivery_count_increments(self):
+        tmpdir = tempfile.mkdtemp()
+        tracker = AlertStateTracker(tmpdir)
+        alert = _make_alert()
+        _, rec = tracker.classify_alert(alert)
+        self.assertEqual(rec.delivery_count, 0)
+        tracker.mark_delivered(rec.alert_key)
+        rec2 = tracker._load(rec.alert_key)
+        self.assertEqual(rec2.delivery_count, 1)
+        tracker.mark_delivered(rec.alert_key)
+        rec3 = tracker._load(rec.alert_key)
+        self.assertEqual(rec3.delivery_count, 2)
+        tracker.close()

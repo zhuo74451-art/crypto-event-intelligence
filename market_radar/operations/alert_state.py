@@ -191,6 +191,17 @@ class AlertStateTracker:
     def close(self) -> None:
         self._conn.close()
 
+    def load_active_keys(self) -> set[str]:
+        """Load all non-resolved alert keys from SQLite."""
+        try:
+            rows = self._conn.execute(
+                "SELECT alert_key FROM alert_state WHERE state != ?",
+                (STATE_RESOLVED,)
+            ).fetchall()
+            return {row["alert_key"] for row in rows}
+        except Exception:
+            return set()
+
     def _load(self, alert_key: str) -> Optional[AlertStateRecord]:
         row = self._conn.execute(
             "SELECT * FROM alert_state WHERE alert_key = ?", (alert_key,)
@@ -307,8 +318,10 @@ class AlertStateTracker:
     def classify_batch(
         self,
         alerts: list[dict],
-        previous_alert_keys: set[str],
+        previous_alert_keys: Optional[set[str]] = None,
     ) -> dict[str, list[dict]]:
+        if previous_alert_keys is None:
+            previous_alert_keys = self.load_active_keys()
         """Classify a full batch of alerts into categories.
 
         Returns:
