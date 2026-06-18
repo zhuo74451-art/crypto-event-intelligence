@@ -102,6 +102,12 @@ class WhaleSnapshot:
         raw = f"snap:{address}:{coin}:{snapshot_time_utc}"
         return "w2:" + hashlib.sha256(raw.encode()).hexdigest()[:16]
 
+    @staticmethod
+    def compute_dedup_key(alert_type: str, address: str, coin: str) -> str:
+        """Stable dedup key -- no time component, no run-specific data."""
+        raw = f"dedup:{alert_type}:{address.lower()}:{coin.upper()}"
+        return "dk:" + hashlib.sha256(raw.encode()).hexdigest()[:16]
+
 
 @dataclass
 class WhalePositionChange:
@@ -144,6 +150,7 @@ class WhaleExposure:
     high_leverage_positions: list[dict] = field(default_factory=list)
     liquidation_distance_bands: Optional[dict] = None
     generated_at_utc: str = ""
+    dedup_key: str = ""
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -193,6 +200,8 @@ class WhaleAlertCandidate:
     message: str
     observed_value: Optional[float] = None
     generated_at_utc: str = ""
+    dedup_key: str = ""
+    dedup_key: str = ""
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -202,6 +211,16 @@ class WhaleAlertCandidate:
                    generated_at: str) -> str:
         raw = f"alr:{alert_type}:{address}:{coin}:{generated_at}"
         return "w2:" + hashlib.sha256(raw.encode()).hexdigest()[:16]
+    @staticmethod
+    def compute_dedup_key(alert_type: str, address: str, coin: str) -> str:
+        """Stable dedup key -- no time component, no run-specific data."""
+        raw = f"dedup:{alert_type}:{address.lower()}:{coin.upper()}"
+        return "dk:" + hashlib.sha256(raw.encode()).hexdigest()[:16]
+    @staticmethod
+    def compute_dedup_key(alert_type: str, address: str, coin: str) -> str:
+        """Stable dedup key -- no time component, no run-specific data."""
+        raw = f"dedup:{alert_type}:{address.lower()}:{coin.upper()}"
+        return "dk:" + hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
 @dataclass

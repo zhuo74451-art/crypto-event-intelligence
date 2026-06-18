@@ -467,6 +467,19 @@ def run_whale_mapper(
 
     # Generate alert candidates via W2 domain
     snapshots = [extract_snapshot(inp) for inp in valid_w2_inputs]
+    # Inject computed liquidation_distance_pct from domain snapshots into output positions
+    # (raw parsed dicts lack this field; extract_snapshot computes it)
+    snap_by_key: dict[str, dict] = {}
+    for snap in snapshots:
+        key = make_position_key(snap.address, snap.coin)
+        snap_by_key[key] = snapshot_to_dict(snap)
+    for p in raw_positions_serializable:
+        key = make_position_key(p.get("address", ""), p.get("coin", ""))
+        domain_snap = snap_by_key.get(key)
+        if domain_snap:
+            p["liquidation_distance_pct"] = domain_snap.get("liquidation_distance_pct")
+        else:
+            p["liquidation_distance_pct"] = None
     alert_candidates = generate_alert_candidates(
         snapshots=snapshots,
         changes=changes,
@@ -485,6 +498,12 @@ def run_whale_mapper(
     # ── Build results ──
     raw_positions_serializable = [dict(p) for p in marked_positions]
     changes_serializable = [c.to_dict() for c in changes]
+    # Set dedup_key on each alert candidate for cross-run dedup
+    for a in alert_candidates:
+        if not a.dedup_key:
+            a.dedup_key = WhaleAlertCandidate.compute_dedup_key(
+                a.alert_type, address, a.coin,
+            )
     alerts_serializable = [a.to_dict() for a in alert_candidates]
 
     src_detail_parts = [f"{len(marked_positions)} positions"]
