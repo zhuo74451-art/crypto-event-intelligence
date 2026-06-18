@@ -533,12 +533,12 @@ class TestClusteringEngine(unittest.TestCase):
     def test_different_title_different_event(self):
         """Different titles+assets → different events."""
         a = FeedItem(feed_id="fi_dc_a", source_type=FeedSourceType.NEWS,
-                     source_label="src", data_mode=FeedDataMode.LIVE,
+                     source_label="coindesk", data_mode=FeedDataMode.LIVE,
                      title="Fed keeps rates unchanged",
                      body="Federal Reserve holds interest rates steady.",
                      published_at="2026-06-17T10:00:00Z")
-        b = FeedItem(feed_id="fi_dc_b", source_type=FeedSourceType.NEWS,
-                     source_label="src", data_mode=FeedDataMode.LIVE,
+        b = FeedItem(feed_id="fi_dc_b", source_type=FeedSourceType.FLASH,
+                     source_label="hl_watcher", data_mode=FeedDataMode.LIVE,
                      title="Solana network halted due to consensus issue",
                      body="Solana validators halt block production.",
                      published_at="2026-06-17T11:00:00Z")
