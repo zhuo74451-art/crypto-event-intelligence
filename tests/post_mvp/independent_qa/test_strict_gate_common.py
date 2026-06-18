@@ -86,8 +86,24 @@ class TestCredentialsGate(GateTestBase):
 
 
 class TestArtifactGate(GateTestBase):
+    def test_hard_forbidden_db_in_fixtures(self):
+        """*.db rejected even in fixture dir."""
+        self.assert_violation(validate_runtime_artifacts(["tests/x/fixtures/state.db"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+
+    def test_hard_forbidden_sqlite_in_schemas(self):
+        self.assert_violation(validate_runtime_artifacts(["schemas/state.sqlite"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+
+    def test_hard_forbidden_db_in_evidence(self):
+        self.assert_violation(validate_runtime_artifacts(["artifacts/evidence/state.db"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+
+    def test_hard_forbidden_lock_in_candidate(self):
+        self.assert_violation(validate_runtime_artifacts(["artifacts/candidate/state.lock"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+
+    def test_hard_forbidden_feed_cursor_in_fixtures(self):
+        self.assert_violation(validate_runtime_artifacts(["data/fixtures/feed_cursor.json"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+
     def test_rejects_run_live(self):
-        self.assert_violation(validate_runtime_artifacts(["results/run_live.json"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+        self.assert_violation(validate_runtime_artifacts(["results/run_live.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
 
     def test_rejects_feed_cursor(self):
         self.assert_violation(validate_runtime_artifacts(["runs/feed_cursor.json"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
@@ -96,13 +112,28 @@ class TestArtifactGate(GateTestBase):
         self.assert_violation(validate_runtime_artifacts(["data/state.db"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
 
     def test_rejects_live_market(self):
-        self.assert_violation(validate_runtime_artifacts(["logs/live_market_response.json"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+        self.assert_violation(validate_runtime_artifacts(["logs/live_market_response.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
 
     def test_rejects_workbench_live(self):
-        self.assert_violation(validate_runtime_artifacts(["output/workbench_live.html"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+        self.assert_violation(validate_runtime_artifacts(["output/workbench_live.html"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
 
+    
+    def test_runtime_pattern_run_json(self):
+        self.assert_violation(validate_runtime_artifacts(["results/run_001.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
+
+    def test_runtime_pattern_whale_json(self):
+        self.assert_violation(validate_runtime_artifacts(["results/whale_positions.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
+
+    def test_runtime_pattern_market_json(self):
+        self.assert_violation(validate_runtime_artifacts(["logs/market_snapshot.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
+
+    def test_runtime_pattern_workbench_html(self):
+        self.assert_violation(validate_runtime_artifacts(["output/workbench_report.html"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
+
+    def test_runtime_pattern_live_response(self):
+        self.assert_violation(validate_runtime_artifacts(["data/live_market_response.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
     def test_rejects_stop(self):
-        self.assert_violation(validate_runtime_artifacts(["STOP"]), rule_id="STOP_MARKER")
+        self.assert_violation(validate_runtime_artifacts(["STOP"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
 
     def test_accepts_fixture(self):
         self.assert_clean(validate_runtime_artifacts(["tests/x/fixtures/data.json"]))
@@ -132,16 +163,37 @@ class TestOwnedPathsGate(GateTestBase):
 
 
 class TestFrozenRefsGate(GateTestBase):
+    W1_SHA = "22c088d7c7e9f77336056674248a539fdfa936d8"
+    W2_SHA = "25bddbfb994c851845eef4940338897094ccade7"
+    W3_SHA = "97e7310098a19ca11a7f28545e2d0a2cae89820f"
+    W4_SHA = "a9b04727bcea77c69524d6c1225933df2c86045f"
+    W5_SHA = "633606614695940f02a83bd0fce7695dbb469a65"
+
+    refs = {
+        "main": MAIN_SHA,
+        "workbench/post-mvp-integration-candidate-v1": CANDIDATE_SHA,
+        "workbench/post-mvp-whale-portfolio-intelligence-v1": W2_SHA,
+        "workbench/post-mvp-event-clustering-v1": W3_SHA,
+        "workbench/post-mvp-market-resilience-v1": W4_SHA,
+        "workbench/post-mvp-ops-audit-recovery-v1": W5_SHA,
+        "workbench/post-mvp-operator-workbench-v1": W1_SHA,
+    }
     def test_candidate_main_unchanged(self):
-        r = subprocess.run(["git", "ls-remote", "origin", "refs/heads/main",
-                          "refs/heads/workbench/post-mvp-integration-candidate-v1"], capture_output=True, text=True)
+        r = subprocess.run(["git", "ls-remote", "origin",
+                          "refs/heads/main",
+                          "refs/heads/workbench/post-mvp-integration-candidate-v1",
+                          "refs/heads/workbench/post-mvp-whale-portfolio-intelligence-v1",
+                          "refs/heads/workbench/post-mvp-event-clustering-v1",
+                          "refs/heads/workbench/post-mvp-market-resilience-v1",
+                          "refs/heads/workbench/post-mvp-ops-audit-recovery-v1",
+                          "refs/heads/workbench/post-mvp-operator-workbench-v1"], capture_output=True, text=True, cwd=PROJ)
         actual = {}
         for line in r.stdout.strip().split("\n"):
             parts = line.split()
             if len(parts) >= 2:
                 ref = parts[1].replace("refs/heads/", "")
                 actual[ref] = parts[0]
-        self.assert_clean(validate_frozen_refs(actual, {"main": MAIN_SHA, "workbench/post-mvp-integration-candidate-v1": CANDIDATE_SHA}))
+        self.assert_clean(validate_frozen_refs(actual, {"main": MAIN_SHA, "workbench/post-mvp-integration-candidate-v1": CANDIDATE_SHA,}))
 
     def test_detects_change(self):
         self.assert_violation(validate_frozen_refs({"main": "0"*40}, {"main": MAIN_SHA}), rule_id="FROZEN_REF_CHANGED")
@@ -172,7 +224,7 @@ class TestMutationGate(GateTestBase):
         finally: self.clean(td)
 
     def test_run_live_rejected(self):
-        self.assert_violation(validate_runtime_artifacts(["results/run_live.json"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+        self.assert_violation(validate_runtime_artifacts(["results/run_live.json"]), rule_id="RUNTIME_ARTIFACT_PATTERN")
 
     def test_feed_cursor_rejected(self):
         self.assert_violation(validate_runtime_artifacts(["runs/feed_cursor.json"]), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
@@ -203,7 +255,7 @@ class TestMutationGate(GateTestBase):
 
     def test_negative_temp_repo_run_live(self):
         td, f = self.make_repo({"results/run_live.json": "{}"})
-        try: self.assert_violation(validate_runtime_artifacts(f), rule_id="RUNTIME_ARTIFACT_FORBIDDEN")
+        try: self.assert_violation(validate_runtime_artifacts(f), rule_id="RUNTIME_ARTIFACT_PATTERN")
         finally: self.clean(td)
 
     def test_negative_temp_repo_secret(self):

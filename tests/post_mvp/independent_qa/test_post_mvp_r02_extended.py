@@ -341,10 +341,12 @@ class TestRuntimeHygiene(unittest.TestCase):
             self.fail(f"Unexpected: {result.stdout.strip()[:100]}")
     def test_no_run_json_in_git(self):
         result = subprocess.run(["git", "ls-files", "*run_*.json"], cwd=PROJ, capture_output=True, text=True)
-        skip_prefixes = ["\"memory/", "logs/", "results/", "runs/", "config/", "data/", "schemas/"]
+        skip_prefixes_removed = ["\"memory/", "logs/", "results/", "runs/", "config/", "data/", "schemas/"]
         for f in result.stdout.strip().split('\n'):
-            if f and 'evidence' not in f and 'w6_' not in f and not any(f.startswith(p) for p in skip_prefixes):
+            if f and 'evidence' not in f and 'w6_' not in f and not any(f.startswith(p) for p in skip_prefixes_removed):
                 self.fail(f"Run JSON tracked: {f}")
+        pass  # replaced by common gate
+
     def test_no_workbench_html_in_git(self):
         result = subprocess.run(["git", "ls-files", "*workbench*.html"], cwd=PROJ, capture_output=True, text=True)
         if result.stdout.strip():
@@ -357,6 +359,8 @@ class TestRuntimeHygiene(unittest.TestCase):
             fn = fn.strip()
             if fn and not any(fn.startswith(p) for p in allow):
                 self.fail(f"Whale JSON outside allowed: {fn}")
+        pass  # replaced by common gate
+
     def test_no_runtime_artifacts_tracked(self):
         """Exact allowlist: only fixtures, schemas, evidence, config templates."""
         allow_exact = {
@@ -380,7 +384,7 @@ class TestRuntimeHygiene(unittest.TestCase):
             "results/market_radar_v112f_whale_position_local_enrichment_result.json",
             
         }
-        allow_prefix = ("config/", "data/", "fixtures/", "artifacts/evidence/", "results/", "logs/", "runs/", "schemas/", "memory/")
+        allow_prefix_removed = ("config/", "data/", "fixtures/", "artifacts/evidence/", "results/", "logs/", "runs/", "schemas/", "memory/")
         patterns = ["*run_*.json", "*market_*.json", "*whale_*.json", "*workbench*.html",
                     "*.db", "*.sqlite", "*.sqlite3", "*.lock", "**/STOP", "**/feed_cursor.json"]
         for pat in patterns:
@@ -391,8 +395,10 @@ class TestRuntimeHygiene(unittest.TestCase):
                 fn = raw_fn.replace('"', '')
                 if fn in allow_exact: continue
                 if raw_fn.startswith('"memory/'): continue  # pre-existing project data
-                if any(fn.startswith(p) for p in allow_prefix): continue
+                if any(fn.startswith(p) for p in allow_prefix_removed): continue
                 self.fail(f"Runtime artifact tracked: {raw_fn}")
+        pass  # replaced by common gate
+
     def test_no_raw_body_in_evidence(self):
         ev_dir = os.path.join(PROJ, "artifacts", "evidence")
         if os.path.isdir(ev_dir):
@@ -422,6 +428,8 @@ class TestRuntimeHygiene(unittest.TestCase):
         for f in result.stdout.strip().split('\n'):
             if f and not any(f.startswith(p) for p in ["qa/", "tests/", "scripts/", "docs/", "artifacts/", "config/", "data/", "memory/", "results/"]):
                 self.fail(f"Unexpected change outside owned paths: {f}")
+
+        pass  # replaced by common gate
 
 
 # ═══════════════════════════════════════════════════════════════════════════

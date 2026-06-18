@@ -95,9 +95,19 @@ FORBIDDEN_FILENAMES = {
     "live_whale_response.json", "feed_cursor.json", "workbench_live.html",
 }
 
-FORBIDDEN_EXTENSIONS = (".db", ".sqlite", ".sqlite3", ".lock")
+# Hard-forbidden — rejected even in fixture/schema/evidence/candidate dirs
+HARD_FORBIDDEN_BASENAMES = {"STOP", "feed_cursor.json"}
+HARD_FORBIDDEN_EXTENSIONS = (".db", ".sqlite", ".sqlite3", ".lock")
 
-FORBIDDEN_PATTERNS = [r"**/STOP", r"**/feed_cursor.json"]
+# Runtime name patterns — only allowed in specific roots + exact_allowlist
+RUNTIME_NAME_PATTERNS: list[tuple[str, str]] = [
+    (r"^run_\d*.*\.json$", "run_*.json"),
+    (r"^market_\d*.*\.json$", "market_*.json"),
+    (r"^whale_\d*.*\.json$", "whale_*.json"),
+    (r"^workbench.*\.html$", "workbench*.html"),
+    (r"^live_.*response.*\.json$", "live_*response*.json"),
+    (r"^raw_.*response.*\.json$", "raw_*response*.json"),
+]
 
 
 def validate_runtime_artifacts(
@@ -110,59 +120,56 @@ def validate_runtime_artifacts(
 ) -> list[GateViolation]:
     """Validate that no runtime artifacts are tracked in git.
 
-    Args:
-        tracked_files: List of relative file paths from git ls-files.
-        exact_allowlist: Exact file paths that are allowed despite patterns.
-        fixture_roots: Directories allowed for test fixtures.
-        schema_roots: Directories allowed for JSON schemas.
-        evidence_roots: Directories allowed for QA evidence.
-        candidate_roots: Directories allowed for candidate manifests.
-
-    Returns:
-        List of GateViolation for each forbidden file.
+    Rules:
+    1. Hard-forbidden basenames/extensions rejected ANYWHERE (db, lock, STOP, feed_cursor)
+    2. Runtime name patterns rejected by default, allowed only in fixture/schema/evidence/candidate
+    3. Exact allowlist can exempt specific historic files from rule #2 (NOT rule #1)
     """
     if exact_allowlist is None:
         exact_allowlist = set()
     violations: list[GateViolation] = []
+    allowed_roots = fixture_roots + schema_roots + evidence_roots + candidate_roots
 
     for rel_path in tracked_files:
         basename = os.path.basename(rel_path)
 
-        # Check exact allowlist first
-        if rel_path in exact_allowlist:
-            continue
-
-        # Forbidden filenames — fail anywhere
-        if basename in FORBIDDEN_FILENAMES:
+        # Rule 1: Hard-forbidden — fail ANYWHERE, even with exact_allowlist
+        if basename in HARD_FORBIDDEN_BASENAMES:
             violations.append(GateViolation(
                 code="RUNTIME_ARTIFACT_FORBIDDEN", path_or_ref=rel_path,
-                message=f"Forbidden runtime artifact: {rel_path}",
+                message=f"Hard-forbidden file (rejected anywhere): {rel_path}",
                 severity="ERROR", rule_id="RUNTIME_ARTIFACT_FORBIDDEN",
             ))
             continue
 
-        # Forbidden extensions — only allowed in fixture/schema/evidence/candidate dirs
-        if rel_path.endswith(FORBIDDEN_EXTENSIONS):
-            allowed = False
-            for root in fixture_roots + schema_roots + evidence_roots + candidate_roots:
-                rel = rel_path
-                if rel.startswith(root):
-                    allowed = True
-                    break
-            if not allowed:
-                violations.append(GateViolation(
-                    code="RUNTIME_DB_LOCK", path_or_ref=rel_path,
-                    message=f"Forbidden file type in non-allowed path: {rel_path}",
-                    severity="ERROR", rule_id="RUNTIME_DB_LOCK",
-                ))
-
-        # STOP marker anywhere
-        if basename == "STOP":
+        if rel_path.endswith(HARD_FORBIDDEN_EXTENSIONS):
             violations.append(GateViolation(
-                code="STOP_MARKER", path_or_ref=rel_path,
-                message="STOP marker tracked in git",
-                severity="ERROR", rule_id="STOP_MARKER",
+                code="RUNTIME_ARTIFACT_FORBIDDEN", path_or_ref=rel_path,
+                message=f"Hard-forbidden extension (rejected anywhere): {rel_path}",
+                severity="ERROR", rule_id="RUNTIME_ARTIFACT_FORBIDDEN",
             ))
+            continue
+
+        # Check exact allowlist for remaining checks
+        if rel_path in exact_allowlist:
+            continue
+
+        # Rule 2: Runtime name patterns — only in allowed roots
+        import re as _re
+        matched_pattern = None
+        for pattern, desc in RUNTIME_NAME_PATTERNS:
+            if _re.search(pattern, basename):
+                matched_pattern = desc
+                break
+
+        if matched_pattern:
+            in_allowed_root = any(rel_path.startswith(r) for r in allowed_roots)
+            if not in_allowed_root:
+                violations.append(GateViolation(
+                    code="RUNTIME_ARTIFACT_PATTERN", path_or_ref=rel_path,
+                    message=f"Runtime artifact pattern '{matched_pattern}' outside allowed root: {rel_path}",
+                    severity="ERROR", rule_id="RUNTIME_ARTIFACT_PATTERN",
+                ))
 
     return violations
 
