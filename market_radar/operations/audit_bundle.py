@@ -68,6 +68,34 @@ def _hash_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _canonical_json(obj: Any) -> bytes:
+    """Deterministic canonical JSON encoding (sorted keys, no extra whitespace)."""
+    return json.dumps(obj, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+
+def _build_hash_chain(manifest: dict, prev_chain_hash: str = "") -> str:
+    """Build a hash chain from manifest contents.
+
+    Chain: SHA256(prev_chain_hash + SHA256(file_manifest_bytes))
+    """
+    import hashlib
+    m = hashlib.sha256()
+    if prev_chain_hash:
+        m.update(prev_chain_hash.encode("ascii"))
+    m.update(_canonical_json(manifest))
+    return m.hexdigest()
+
+
+def _redaction_report(data: list[dict]) -> dict:
+    """Report on what was redacted."""
+    redacted = set()
+    for item in data:
+        for k in item:
+            if isinstance(item[k], str) and item[k] == "[REDACTED]":
+                redacted.add(k)
+    return {"fields_redacted": sorted(redacted), "total_redacted_occurrences": len(redacted)}
+
+
 def export_audit_bundle(
     state_dir: str | Path,
     output_dir: str | Path,
@@ -113,6 +141,10 @@ def export_audit_bundle(
         rh_data.append(s)
     _write_json(od / "run_history.json", rh_data)
     manifest["files"].append("run_history.json")
+
+    # Redaction and exclusion report
+    redact_report = _redaction_report(rh_data)
+    excluded_fields = ["raw_api_response", "feed_body", "full_content"]
 
     # 3. parent_child_graph.json
     graph = {"parents": []}
@@ -177,10 +209,23 @@ def export_audit_bundle(
     (od / "SHA256SUMS").write_text(sha_content, encoding="utf-8")
     manifest["files"].append("SHA256SUMS")
 
-    # Final manifest with hash
-    bundle_hash = _hash_bytes(
-        json.dumps(manifest, sort_keys=True, ensure_ascii=False).encode()
-    )
+    # Redaction & exclusion metadata
+    manifest["redaction_report"] = redact_report
+    manifest["excluded_fields"] = excluded_fields
+
+    # Bundle ID (deterministic from content)
+    bundle_id = _hash_bytes(
+        _canonical_json(manifest.get("label", "")) +
+        _canonical_json(manifest.get("files", [])) +
+        _canonical_json(manifest.get("created_at_epoch", 0))
+    )[:16]
+    manifest["bundle_id"] = bundle_id
+
+    # Hash chain
+    manifest["hash_chain"] = _build_hash_chain(manifest)
+
+    # Final canonical manifest with hash
+    bundle_hash = _hash_bytes(_canonical_json(manifest))
     manifest["sha256"] = bundle_hash
     _write_json(od / "manifest.json", manifest)
 
