@@ -16,6 +16,7 @@ from pathlib import Path
 
 from market_radar.integration.models import IntegrationConfig
 from market_radar.integration.one_shot import run_one_shot
+from market_radar.integration.curated_url_resolver import resolve_curated_url
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -40,9 +41,8 @@ def build_parser() -> argparse.ArgumentParser:
                     help=argparse.SUPPRESS)
     p.add_argument("--feed-since", default=None,
                     help="Initial feed cursor (UTC ISO 8601) for first run.")
-    p.add_argument("--curated-base-url",
-                    default="http://43.98.174.247:8001/api/integration/curated",
-                    help="Curated API base URL.")
+    p.add_argument("--curated-base-url", default=None,
+                    help="Curated API base URL (default: env CURATED_BASE_URL or loopback).")
     p.add_argument("--feed-limit", type=int, default=100,
                     help="Feed items per page (1-500).")
     p.add_argument("--feed-max-items", type=int, default=500,
@@ -63,12 +63,15 @@ def main() -> int:
         print("ERROR: --no-send cannot be disabled. This program is read-only.", file=sys.stderr)
         return 1
 
+    # Resolve curated URL: CLI → env → default
+    curated_url = resolve_curated_url(cli_arg=args.curated_base_url)
+
     # Build CuratedFeedProvider for live-public mode
     provider = None
     if args.mode == "live-public":
         from market_radar.integration.curated_feed_provider import CuratedFeedProvider
         provider = CuratedFeedProvider(
-            base_url=args.curated_base_url,
+            base_url=curated_url,
             limit=args.feed_limit,
             max_items=args.feed_max_items,
             max_pages=args.curated_max_pages,
@@ -85,6 +88,7 @@ def main() -> int:
         no_send=True,
         feed_initial_since=args.feed_since,
         feed_enabled=(args.mode == "live-public"),
+        feed_base_url=curated_url,
     )
 
     result = run_one_shot(config, feed_provider=provider)

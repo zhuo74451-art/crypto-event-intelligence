@@ -97,6 +97,7 @@ class IntegrationConfig:
     feed_cursor_name: str = "published_at_backend"
     feed_cursor_state_file: str = "feed_cursor.json"
     feed_initial_since: Optional[str] = None
+    feed_base_url: str = ""  # Resolved curated API URL (recorded in manifest)
 
     def __post_init__(self) -> None:
         if not self.no_send:
@@ -136,6 +137,7 @@ class IntegrationRunResult:
     errors: list[str] = field(default_factory=list)
     ccxt_preflight: Optional[dict] = None
     feed_summary: Optional[dict] = None
+    alert_state: Optional[dict] = None  # new/persistent/changed/resolved breakdown
 
     def as_dict(self) -> dict[str, Any]:
         d: dict[str, Any] = {
@@ -171,6 +173,8 @@ class IntegrationRunResult:
             d["feed"] = self.feed.as_dict()
         if self.feed_summary:
             d["feed_summary"] = self.feed_summary
+        if self.alert_state:
+            d["alert_state"] = self.alert_state
         return d
 
 
