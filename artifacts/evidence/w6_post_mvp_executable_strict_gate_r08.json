@@ -1,0 +1,32 @@
+{
+  "document": "w6_post_mvp_executable_strict_gate_r08",
+  "ticket": "W6_EXECUTABLE_STRICT_GATE_R08",
+  "repair_base_commit": "b608dc36f472b9b59b7a2f1c3dfeb86a2863fa3d",
+  "w6_tested_commit": "95c2cc1ce0f6c3d005c3f87670b76db3bac6ea34",
+  "common_gate_module": "qa/post_mvp/executable_strict_gate.py",
+  "production_gate_users": [
+    "test_strict_gate_common.py (5 gate test classes)"
+  ],
+  "mutation_gate_users": [
+    "test_strict_gate_common.py::TestMutationGate (18 tests)"
+  ],
+  "original_tests": 169,
+  "new_tests": 42,
+  "total_tests": 211,
+  "credential_scan": "git ls-files, 9 patterns, 7 file types, market_radar/ scripts/ qa/ config/",
+  "artifact_allowlist": "exact file names + tests/fixtures/ schemas/ artifacts/evidence/ artifacts/candidate/",
+  "broad_prefixes_present": false,
+  "frozen_refs": {
+    "main": "a8fd827e",
+    "candidate": "9637a472"
+  },
+  "negative_cases": 12,
+  "positive_cases": 8,
+  "w6_passed": 211,
+  "w6_failed": 0,
+  "w6_skipped": 0,
+  "candidate_unchanged": true,
+  "main_unchanged": true,
+  "lanes_unchanged": true,
+  "final_decision": "POST_MVP_CANDIDATE_ACCEPTED_FOR_MAIN_REVIEW"
+}
