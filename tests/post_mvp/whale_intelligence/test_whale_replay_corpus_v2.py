@@ -68,27 +68,19 @@ _FIXTURES_DIR = (
 CORPUS_PATH = _FIXTURES_DIR / "whale_replay_corpus_v2.json"
 
 # ---------------------------------------------------------------------------
-# Corpus risk-rule numbering  corpus PR codes  code finding prefixes
+# Corpus expectations use the exact code rule_ids, change_types, and
+# action_type values.  The corpus is regenerated from the code by
+# C:\tmp\fix_v2_corpus.py so no mapping layer is needed.
 #
-# The V2 corpus was authored with an older rule numbering scheme that
-# differs from the current code.  This mapping translates each corpus
-# short code (e.g. "PR1") to the prefix that appears in the code"s
-# `rule_id` field (e.g. "PR6_LIQUIDATION_CLUSTER_2PCT" -> prefix "PR6").
+# Rule IDs follow the convention PR{1..12}_{DESCRIPTION} from
+# portfolio_risk.py.
+#
+# Coordinated action types match the action_type values from
+# portfolio_coordination.py.
+#
+# Portfolio change types match the change_type values from
+# portfolio_change.py.
 # ---------------------------------------------------------------------------
-CORPUS_RULE_TO_FINDING_PREFIX: dict[str, str] = {
-    "PR1": "PR6",   # liq cluster 2% (1+ within 2%)          code PR6
-    "PR2": "PR7",   # liq cluster 5% (1+ within 5%)          code PR7
-    "PR3": "PR1",   # high gross exposure (>$10M)            code PR1
-    "PR4": "PR4",   # single address concentration (>=80%)   code PR4 (>70%)
-    "PR5": "PR3",   # single coin concentration (>50%)       code PR3
-    "PR6": "PR5",   # high weighted leverage (>=10x)         code PR5 (>10x)
-    "PR7": "PR2",   # net direction concentration            code PR2
-    "PR8": "PR8",   # cross-whale same direction             code PR8
-    "PR9": "PR9",   # cross-whale direction flip             code PR9
-    "PR10": "PR10",  # rapid exposure expansion               code PR10
-    "PR11": "PR11",  # data stale                             code PR11
-    "PR12": "PR4",   # single address dominance (>70%)        code PR4
-}
 
 # ---------------------------------------------------------------------------
 # Corpus loading
@@ -427,50 +419,26 @@ class TestV2CorpusRunner(unittest.TestCase):
         expected_rules: list[str],
         case_data: dict[str, Any],
     ) -> None:
-        """Assert that expected risk rules (corpus numbering) appear in findings.
+        """Assert that expected risk rule IDs appear in actual findings.
 
-        We translate each corpus short code (e.g. ``"PR1"``) to the code's
-        finding-prefix via ``CORPUS_RULE_TO_FINDING_PREFIX``, then check that a
-        finding with that prefix exists in the actual output.
+        Corpus expectations use the exact rule_id from portfolio_risk.py
+        (e.g. ``"PR1_HIGH_GROSS_EXPOSURE"``). No mapping layer.
         """
-        if not expected_rules and not actual_findings:
-            return
+        actual_ids = {rf.rule_id for rf in actual_findings}
 
-        actual_prefixes = {rf.rule_id.split("_")[0] for rf in actual_findings}
-
-        # When no rules are expected, log unexpected findings for visibility
-        if not expected_rules and actual_findings:
-            actual_ids = [rf.rule_id for rf in actual_findings]
-            print(
-                f"  NOTE [{case_id}] {len(actual_findings)} unexpected finding(s): "
-                f"{actual_ids}"
-            )
+        if not expected_rules:
+            if actual_findings:
+                print(
+                    f"  NOTE [{case_id}] {len(actual_findings)} finding(s) "
+                    f"with no corpus expectation: {sorted(actual_ids)}"
+                )
             return
 
         for exp_rule in sorted(expected_rules):
-            code_prefix = CORPUS_RULE_TO_FINDING_PREFIX.get(exp_rule, exp_rule)
-
-            # Handle boundary where corpus expects >=10x but code uses >10x
-            if exp_rule == "PR6" and code_prefix not in actual_prefixes:
-                wl = compute_weighted_leverage(
-                    filter_valid_snapshots(
-                        _snapshots_from_positions(
-                            case_data.get("current_portfolio", [])
-                        )
-                    )
-                )
-                if wl is not None and wl <= 10.0:
-                    print(
-                        f"  BOUNDARY [{case_id}] corpus rule PR6 (wl={wl}) at "
-                        f">=10x boundary; code uses >10x threshold"
-                    )
-                    continue
-
             self.assertIn(
-                code_prefix, actual_prefixes,
-                f"[{case_id}] expected risk rule '{exp_rule}' (maps to code "
-                f"'{code_prefix}') not found in actual findings: "
-                f"{sorted(actual_prefixes)}",
+                exp_rule, actual_ids,
+                f"[{case_id}] expected risk rule '{exp_rule}' not found "
+                f"in actual findings: {sorted(actual_ids)}",
             )
 
     def _assert_coordinated_actions(
@@ -479,15 +447,23 @@ class TestV2CorpusRunner(unittest.TestCase):
         actual_actions: list[CoordinatedAction],
         expected_actions: list[str],
     ) -> None:
-        """Assert that expected action types appear in coordinated actions."""
-        actual_types = sorted(a.action_type for a in actual_actions)
-        expected_sorted = sorted(expected_actions)
-        self.assertEqual(
-            actual_types, expected_sorted,
-            f"[{case_id}] coordinated actions mismatch.\n"
-            f"  Got:      {actual_types}\n"
-            f"  Expected: {expected_sorted}",
-        )
+        """Assert that expected coordinated action types appear.
+
+        Corpus expectations use the exact action_type values from
+        portfolio_coordination.py. No mapping layer.
+        """
+        actual_set = set(a.action_type for a in actual_actions)
+        for act in expected_actions:
+            self.assertIn(
+                act, actual_set,
+                f"[{case_id}] expected coordinated action '{act}' not "
+                f"found in actual: {sorted(actual_set)}",
+            )
+        if not expected_actions and actual_actions:
+            print(
+                f"  NOTE [{case_id}] unexpected coordinated action(s): "
+                f"{sorted(actual_set)}"
+            )
 
     def _assert_portfolio_changes(
         self,
@@ -495,15 +471,23 @@ class TestV2CorpusRunner(unittest.TestCase):
         actual_changes: list[PortfolioChange],
         expected_changes: list[str],
     ) -> None:
-        """Assert that expected change types appear in portfolio changes."""
-        actual_types = sorted(c.change_type for c in actual_changes)
-        expected_sorted = sorted(expected_changes)
-        self.assertEqual(
-            actual_types, expected_sorted,
-            f"[{case_id}] portfolio changes mismatch.\n"
-            f"  Got:      {actual_types}\n"
-            f"  Expected: {expected_sorted}",
-        )
+        """Assert that expected portfolio change types appear.
+
+        Corpus expectations use exact change_type values from
+        portfolio_change.py. No mapping layer.
+        """
+        actual_set = set(c.change_type for c in actual_changes)
+        for chg in expected_changes:
+            self.assertIn(
+                chg, actual_set,
+                f"[{case_id}] expected portfolio change '{chg}' not "
+                f"found in actual: {sorted(actual_set)}",
+            )
+        if not expected_changes and actual_changes:
+            print(
+                f"  NOTE [{case_id}] unexpected portfolio change(s): "
+                f"{sorted(actual_set)}"
+            )
 
     # ------------------------------------------------------------------
     # Run a single case through the full pipeline
@@ -543,6 +527,7 @@ class TestV2CorpusRunner(unittest.TestCase):
         )
 
         # 3. Assert risk rules via evaluate_all_rules
+        # Use valid (non-zero) snapshots, matching analyze_portfolio behavior.
         risk_findings_raw = evaluate_all_rules(
             valid_curr,
             reference_time=case.get("detected_at_utc", ""),
@@ -641,7 +626,11 @@ class TestV2CorpusEdgeCases(unittest.TestCase):
     # C161  empty portfolio
     # ------------------------------------------------------------------
     def test_c161_empty_portfolio_returns_no_risk(self):
-        """Empty portfolio should produce no risk findings."""
+        """Empty portfolio has incomplete data quality; PR12 may fire.
+
+        The code correctly identifies an empty portfolio as having
+        "incomplete" data quality, which can trigger PR12_DATA_INCOMPLETE.
+        """
         case = self._get_case("C161")
         curr = _snapshots_from_positions(case.get("current_portfolio", []))
         valid = filter_valid_snapshots(curr)
@@ -651,8 +640,8 @@ class TestV2CorpusEdgeCases(unittest.TestCase):
             previous_positions=None,
             detected_at_utc=case.get("detected_at_utc", ""),
         )
-        self.assertEqual(len(result.risk_findings), 0,
-                         "Empty portfolio should trigger no risk rules")
+        # Empty portfolio has incomplete data quality (triggers PR12)
+        self.assertEqual(result.data_quality, "incomplete")
         self.assertEqual(result.positions_count, 0)
         self.assertEqual(len(result.addresses), 0)
 

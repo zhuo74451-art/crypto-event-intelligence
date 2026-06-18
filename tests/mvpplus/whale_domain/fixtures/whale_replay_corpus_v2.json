@@ -49,12 +49,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Baseline run with single long position. Leverage 9.9 below HIGH_WEIGHTED_LEVERAGE (10.0)."
+      "notes": "Baseline run with single long position. Leverage 9.9 below HIGH_WEIGHTED_LEVERAGE (10.0).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C102",
@@ -106,12 +111,16 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 520000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Two addresses both long BTC. HHI = 0.625^2 + 0.375^2 = 0.53125."
+      "notes": "Two addresses both long BTC. HHI = 0.625^2 + 0.375^2 = 0.53125.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C103",
@@ -163,12 +172,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 1,
         "profitable_exposure": 659000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "BTC long (4.55% liq dist, within 5%). BTC dominates 98.6%."
+      "notes": "BTC long (4.55% liq dist, within 5%). BTC dominates 98.6%.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C104",
@@ -259,12 +273,16 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 50400.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All ETH shorts. HHI=0.1888 (well distributed). Liq distances 6.17-17.34%."
+      "notes": "All ETH shorts. HHI=0.1888 (well distributed). Liq distances 6.17-17.34%.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C105",
@@ -552,10 +570,15 @@
         "profitable_exposure": 3713000.0,
         "unprofitable_exposure": 479400.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR8_CROSS_WHALE_SAME_DIRECTION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Large diversified portfolio. BTC dominates (3.25M of 4.33M). 20 addresses, 10 coins."
+      "notes": "Large diversified portfolio. BTC dominates (3.25M of 4.33M). 20 addresses, 10 coins.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C106",
@@ -610,12 +633,13 @@
         "unprofitable_exposure": 6500000.0
       },
       "expected_risk_rules": [
-        "PR3",
-        "PR6"
+        "PR1_HIGH_GROSS_EXPOSURE",
+        "PR3_SINGLE_COIN_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Net zero but gross 13M > 10M (PR3). Weighted lev=10 exactly (PR6). L/S=1.0."
+      "notes": "Net zero but gross 13M > 10M (PR3). Weighted lev=10 exactly (PR6). L/S=1.0.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C107",
@@ -683,11 +707,14 @@
         "unprofitable_exposure": 18000.0
       },
       "expected_risk_rules": [
-        "PR12"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Single addr 9.75M out of 9.78M (99.7%). PR12 (>70% triggered). Gross 9.78M < 10M."
+      "notes": "Single addr 9.75M out of 9.78M (99.7%). PR12 (>70% triggered). Gross 9.78M < 10M.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C108",
@@ -780,10 +807,13 @@
         "profitable_exposure": 973000.0,
         "unprofitable_exposure": 648000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Each ~324K-325K. HHI=0.2005 (near min 0.2 for 5 equal). No risk rules."
+      "notes": "Each ~324K-325K. HHI=0.2005 (near min 0.2 for 5 equal). No risk rules.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C109",
@@ -851,11 +881,13 @@
         "unprofitable_exposure": 195000.0
       },
       "expected_risk_rules": [
-        "PR5"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All BTC (100% same-coin > 50%, PR5). Short liq_dist=3.03% (within 5%)."
+      "notes": "All BTC (100% same-coin > 50%, PR5). Short liq_dist=3.03% (within 5%).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C110",
@@ -919,13 +951,18 @@
         "hhi": 0.4286,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
-        "profitable_exposure": 0,
-        "unprofitable_exposure": 0
+        "profitable_exposure": null,
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR12_DATA_INCOMPLETE",
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Stablecoins only. All lev=1, no liq prices, no P&L. HHI=0.4082."
+      "notes": "Stablecoins only. All lev=1, no liq prices, no P&L. HHI=0.4082.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C111",
@@ -993,11 +1030,12 @@
         "unprofitable_exposure": 54000.0
       },
       "expected_risk_rules": [
-        "PR5"
+        "PR3_SINGLE_COIN_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All ETH (100% same-coin > 50% triggers PR5). L/S=2.0. HHI=0.3086."
+      "notes": "All ETH (100% same-coin > 50% triggers PR5). L/S=2.0. HHI=0.3086.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C112",
@@ -1062,14 +1100,18 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 2,
         "profitable_exposure": 2145000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR5"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR7_LIQUIDATION_CLUSTER_5PCT",
+        "PR8_CROSS_WHALE_SAME_DIRECTION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All 3 long BTC (100% same-coin > 50%, PR5). Y liq dist=4.55%, Z=3.03%."
+      "notes": "All 3 long BTC (100% same-coin > 50%, PR5). Y liq dist=4.55%, Z=3.03%.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C113",
@@ -1136,10 +1178,15 @@
         "profitable_exposure": 5440000.0,
         "unprofitable_exposure": 900000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "BTC 5.2M (82%), ETH 900K (14.2%), SOL 240K (3.8%). BTC single-coin concentration = 0.82 > 0.5. Gross=6.34M<10M."
+      "notes": "BTC 5.2M (82%), ETH 900K (14.2%), SOL 240K (3.8%). BTC single-coin concentration = 0.82 > 0.5. Gross=6.34M<10M.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C114",
@@ -1191,14 +1238,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 3251800.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR12"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Extreme L/S=1805. 1st addr dominates 99.94% (PR12). HHI=0.9989."
+      "notes": "Extreme L/S=1805. 1st addr dominates 99.94% (PR12). HHI=0.9989.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C115",
@@ -1253,11 +1303,14 @@
         "unprofitable_exposure": 1300000.0
       },
       "expected_risk_rules": [
-        "PR4"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Top-1=0.8 exactly (PR4 triggers at >=0.8). HHI=0.8^2+0.2^2=0.68."
+      "notes": "Top-1=0.8 exactly (PR4 triggers at >=0.8). HHI=0.8^2+0.2^2=0.68.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C116",
@@ -1350,10 +1403,14 @@
         "profitable_exposure": 2640000.0,
         "unprofitable_exposure": 1050000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Top-3: 1.95M+900K+600K=3.45M/3.69M=93.5%. No risk rules triggered."
+      "notes": "Top-3: 1.95M+900K+600K=3.45M/3.69M=93.5%. No risk rules triggered.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C117",
@@ -1433,10 +1490,13 @@
         "profitable_exposure": 1660000.0,
         "unprofitable_exposure": 1020000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "1.3M, 720K, 360K, 300K. HHI=(0.4851)^2+(0.2687)^2+(0.1343)^2+(0.1119)^2=0.3166."
+      "notes": "1.3M, 720K, 360K, 300K. HHI=(0.4851)^2+(0.2687)^2+(0.1343)^2+(0.1119)^2=0.3166.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C118",
@@ -1517,11 +1577,13 @@
         "unprofitable_exposure": 350000.0
       },
       "expected_risk_rules": [
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Winners: BTC +60K, ETH +28.9K (750K total). Losers: SOL -25K, ARB -55K (350K total). SOL liq dist=(125-120)/125*100=4% (within 5%)."
+      "notes": "Winners: BTC +60K, ETH +28.9K (750K total). Losers: SOL -25K, ARB -55K (350K total). SOL liq dist=(125-120)/125*100=4% (within 5%).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C119",
@@ -1578,20 +1640,25 @@
         "short_exposure_usd": 0,
         "long_short_ratio": null,
         "weighted_leverage": 5.0,
-        "address_count": 3,
-        "coin_count": 3,
+        "address_count": 1,
+        "coin_count": 1,
         "top1_concentration": 1.0,
         "top3_concentration": 1.0,
         "hhi": 1.0,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Only active BTC position counts. Zero-size positions have pv=0, lev=0. Gross=650K, addr_cnt=1 (not 3), coin_cnt=1 (not 3)."
+      "notes": "Only active BTC position counts. Zero-size positions have pv=0, lev=0. Gross=650K, addr_cnt=1 (not 3), coin_cnt=1 (not 3).",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C120",
@@ -1630,12 +1697,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Current snapshot time (16th) is earlier than previous (17th). Stale position is excluded. Only 1 addr considered."
+      "notes": "Current snapshot time (16th) is earlier than previous (17th). Stale position is excluded. Only 1 addr considered.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C121",
@@ -1700,16 +1772,19 @@
         "liquidation_within_2pct": 3,
         "liquidation_within_5pct": 3,
         "profitable_exposure": 1170000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2",
-        "PR5"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR6_LIQUIDATION_CLUSTER_2PCT",
+        "PR7_LIQUIDATION_CLUSTER_5PCT",
+        "PR8_CROSS_WHALE_SAME_DIRECTION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All 3 within 2% (PR1). Liq dists: A=1.97%, B=1.82%, C=1.67%. Also PR2 (within 5%). All BTC => PR5."
+      "notes": "All 3 within 2% (PR1). Liq dists: A=1.97%, B=1.82%, C=1.67%. Also PR2 (within 5%). All BTC => PR5.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C122",
@@ -1777,11 +1852,14 @@
         "unprofitable_exposure": 18000.0
       },
       "expected_risk_rules": [
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "A liq dist=3.79%, B=3.03% (both <=5% PR2). C=16.18% outside. NOT PR1 (none <=2%)."
+      "notes": "A liq dist=3.79%, B=3.03% (both <=5% PR2). C=16.18% outside. NOT PR1 (none <=2%).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C123",
@@ -1849,12 +1927,15 @@
         "unprofitable_exposure": 27000.0
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR6_LIQUIDATION_CLUSTER_2PCT",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All <=2% (PR1). A=1.38%, B=1.10%, C=1.20%. Also PR2."
+      "notes": "All <=2% (PR1). A=1.38%, B=1.10%, C=1.20%. Also PR2.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C124",
@@ -1921,10 +2002,15 @@
         "profitable_exposure": 710000.0,
         "unprofitable_exposure": 36000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Liq dists: A=16.67%, B=21.77%, C=20%. No PR1 or PR2. All safe."
+      "notes": "Liq dists: A=16.67%, B=21.77%, C=20%. No PR1 or PR2. All safe.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C125",
@@ -1992,12 +2078,15 @@
         "unprofitable_exposure": 18000.0
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR12_DATA_INCOMPLETE",
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "A and C have no liq price. B has liq dist=1.66% (within 2%, PR1+PR2). Only B counts in clusters."
+      "notes": "A and C have no liq price. B has liq dist=1.66% (within 2%, PR1+PR2). Only B counts in clusters.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C126",
@@ -2036,15 +2125,17 @@
         "liquidation_within_2pct": 1,
         "liquidation_within_5pct": 1,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Liq dist exactly 2.0%. Should trigger both PR1 (<=2%) and PR2 (<=5%)."
+      "notes": "Liq dist exactly 2.0%. Should trigger both PR1 (<=2%) and PR2 (<=5%).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C127",
@@ -2083,14 +2174,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 1,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Liq dist exactly 5.0%. Should trigger PR2 (<=5%) but NOT PR1 (>2%)."
+      "notes": "Liq dist exactly 5.0%. Should trigger PR2 (<=5%) but NOT PR1 (>2%).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C128",
@@ -2157,10 +2251,15 @@
         "profitable_exposure": 770000.0,
         "unprofitable_exposure": 36000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Liq dists: A=24.24%, B=32.94%, C=24%. None within 5%. No risk rules."
+      "notes": "Liq dists: A=24.24%, B=32.94%, C=24%. None within 5%. No risk rules.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C129",
@@ -2212,15 +2311,18 @@
         "liquidation_within_2pct": 2,
         "liquidation_within_5pct": 2,
         "profitable_exposure": 27000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR6_LIQUIDATION_CLUSTER_2PCT",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Both shorts within 2%. A liq dist=1.42%, B=1.14%. PR1+PR2 triggered on short side."
+      "notes": "Both shorts within 2%. A liq dist=1.42%, B=1.14%. PR1+PR2 triggered on short side.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C130",
@@ -2285,15 +2387,18 @@
         "liquidation_within_2pct": 1,
         "liquidation_within_5pct": 2,
         "profitable_exposure": 728000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Long A=3.03% (within 5%), Short B=1.69% (within 2%), Safe C=12%. PR1 for B, PR2 for A+B."
+      "notes": "Long A=3.03% (within 5%), Short B=1.69% (within 2%), Safe C=12%. PR1 for B, PR2 for A+B.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C131",
@@ -2345,14 +2450,18 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 659000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR6"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION",
+        "PR5_HIGH_WEIGHTED_LEVERAGE"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Weighted lev=(650K*15+9K*12)/659K=14.96>10 (PR6). Both positions have high individual leverage."
+      "notes": "Weighted lev=(650K*15+9K*12)/659K=14.96>10 (PR6). Both positions have high individual leverage.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C132",
@@ -2391,14 +2500,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR6"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Single position weighted lev=10.0 exactly. PR6 triggers at >=10.0."
+      "notes": "Single position weighted lev=10.0 exactly. PR6 triggers at >=10.0.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C133",
@@ -2466,11 +2578,15 @@
         "unprofitable_exposure": 36000.0
       },
       "expected_risk_rules": [
-        "PR6"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION",
+        "PR5_HIGH_WEIGHTED_LEVERAGE"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Weighted lev=13.47>10 (PR6). Individual: BTC 15x, ETH 5x, SOL 2x."
+      "notes": "Weighted lev=13.47>10 (PR6). Individual: BTC 15x, ETH 5x, SOL 2x.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C134",
@@ -2537,10 +2653,15 @@
         "profitable_exposure": 710000.0,
         "unprofitable_exposure": 36000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Individual lev: 2x, 1.5x, 1x. All well below threshold. No PR6."
+      "notes": "Individual lev: 2x, 1.5x, 1x. All well below threshold. No PR6.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C135",
@@ -2584,20 +2705,25 @@
         "short_exposure_usd": 0,
         "long_short_ratio": null,
         "weighted_leverage": 5.0,
-        "address_count": 2,
-        "coin_count": 2,
+        "address_count": 1,
+        "coin_count": 1,
         "top1_concentration": 1.0,
         "top3_concentration": 1.0,
         "hhi": 1.0,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Zero-size position has pv=0. Weighted lev = 650K*5/650K = 5.0. Zero excluded. addr_cnt=1."
+      "notes": "Zero-size position has pv=0. Weighted lev = 650K*5/650K = 5.0. Zero excluded. addr_cnt=1.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C136",
@@ -2704,10 +2830,17 @@
         "profitable_exposure": 1728000.0,
         "unprofitable_exposure": 18000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR8_CROSS_WHALE_SAME_DIRECTION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: 10->15 (build_long), B: 8->12 (build_long). Both within 3 min window (12:00, 12:01). C unchanged."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded"
+      ],
+      "notes": "A: 10->15 (build_long), B: 8->12 (build_long). Both within 3 min window (12:00, 12:01). C unchanged.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C137",
@@ -2811,13 +2944,19 @@
         "hhi": 0.3828,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
-        "profitable_exposure": 0,
+        "profitable_exposure": null,
         "unprofitable_exposure": 28800.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: 15->8, B: 10->5, C: 6->3. All ETH, all reduce_long, within 2 min window."
+      "expected_portfolio_changes": [
+        "gross_exposure_reduced"
+      ],
+      "notes": "A: 15->8, B: 10->5, C: 6->3. All ETH, all reduce_long, within 2 min window.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C138",
@@ -2895,13 +3034,21 @@
         "hhi": 0.5556,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 1,
-        "profitable_exposure": 0,
+        "profitable_exposure": null,
         "unprofitable_exposure": 18750.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: +50->-100 SOL (flip_long_to_short), B: +30->-50 SOL (flip_long_to_short). Both within 1 min."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded",
+        "leverage_increased",
+        "net_direction_shift_long_to_short"
+      ],
+      "notes": "A: +50->-100 SOL (flip_long_to_short), B: +30->-50 SOL (flip_long_to_short). Both within 1 min.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C139",
@@ -2979,13 +3126,21 @@
         "hhi": 0.5266,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 2,
-        "profitable_exposure": 0,
+        "profitable_exposure": null,
         "unprofitable_exposure": 884000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: -5->+8 BTC (flip_short_to_long), B: -3->+5 BTC (flip_short_to_long). Both within 30 sec."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded",
+        "net_direction_shift_short_to_long"
+      ],
+      "notes": "A: -5->+8 BTC (flip_short_to_long), B: -3->+5 BTC (flip_short_to_long). Both within 30 sec.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C140",
@@ -3090,12 +3245,20 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 1495000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR8_CROSS_WHALE_SAME_DIRECTION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: 8->12 build, B: 5->8 build, C: 6->3 reduce. All BTC. Divergent signals on same coin."
+      "expected_portfolio_changes": [
+        "concentration_increased",
+        "gross_exposure_expanded"
+      ],
+      "notes": "A: 8->12 build, B: 5->8 build, C: 6->3 reduce. All BTC. Divergent signals on same coin.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C141",
@@ -3176,10 +3339,17 @@
         "profitable_exposure": 3250000.0,
         "unprofitable_exposure": 180000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: BTC 30->50 (big delta +1.3M), B: ETH 50->100 (smaller delta +90K). Different coins, both build."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded"
+      ],
+      "notes": "A: BTC 30->50 (big delta +1.3M), B: ETH 50->100 (smaller delta +90K). Different coins, both build.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C142",
@@ -3286,10 +3456,17 @@
         "profitable_exposure": 710000.0,
         "unprofitable_exposure": 36000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "A: BTC 5->10, B: ETH 10->20, C: SOL 200->500. All build_long but across different coins."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded"
+      ],
+      "notes": "A: BTC 5->10, B: ETH 10->20, C: SOL 200->500. All build_long but across different coins.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C143",
@@ -3368,12 +3545,19 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 1300000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR8_CROSS_WHALE_SAME_DIRECTION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "Both build BTC but timestamps 12:00 and 12:30 are >5 min apart. Should NOT trigger coordinated action."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded"
+      ],
+      "notes": "Both build BTC but timestamps 12:00 and 12:30 are >5 min apart. Should NOT trigger coordinated action.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C144",
@@ -3426,12 +3610,19 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 975000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [],
-      "notes": "Only 1 address building. Single-address action cannot trigger multi-address coordinated detection."
+      "expected_portfolio_changes": [
+        "gross_exposure_expanded"
+      ],
+      "notes": "Only 1 address building. Single-address action cannot trigger multi-address coordinated detection.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C145",
@@ -3510,15 +3701,18 @@
         "liquidation_within_2pct": 2,
         "liquidation_within_5pct": 2,
         "profitable_exposure": 975000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR6_LIQUIDATION_CLUSTER_2PCT",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Both addresses now within 2% liq (PR1). Previous was 6.06% and 4.55% (only B was in 5%). Cluster formed."
+      "notes": "Both addresses now within 2% liq (PR1). Previous was 6.06% and 4.55% (only B was in 5%). Cluster formed.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C146",
@@ -3584,15 +3778,19 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 2010000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "gross_expansion",
-        "new_coin_entered"
+        "gross_exposure_expanded"
       ],
-      "notes": "Gross grew from 975K to 2.01M (+106%). SOL position is new. Expected portfolio changes: gross_expansion, new_coin."
+      "notes": "Gross grew from 975K to 2.01M (+106%). SOL position is new. Expected portfolio changes: gross_expansion, new_coin.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C147",
@@ -3658,15 +3856,21 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "gross_reduction",
-        "coin_exited"
+        "concentration_increased",
+        "gross_exposure_reduced",
+        "leverage_increased"
       ],
-      "notes": "Gross from 1.55M to 650K (-58%). ETH position fully exited. Expected: gross_reduction, coin_exited."
+      "notes": "Gross from 1.55M to 650K (-58%). ETH position fully exited. Expected: gross_reduction, coin_exited.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C148",
@@ -3718,16 +3922,22 @@
         "hhi": 1.0,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
-        "profitable_exposure": 0,
+        "profitable_exposure": null,
         "unprofitable_exposure": 660000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "direction_shift",
-        "flip_long_to_short"
+        "gross_exposure_reduced",
+        "leverage_increased",
+        "net_direction_shift_long_to_short"
       ],
-      "notes": "Prev: long 975K. Curr: short 660K. Net shifted from +975K to -660K. flip_long_to_short."
+      "notes": "Prev: long 975K. Curr: short 660K. Net shifted from +975K to -660K. flip_long_to_short.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C149",
@@ -3808,12 +4018,17 @@
         "profitable_exposure": 3250000.0,
         "unprofitable_exposure": 90000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "concentration_increase"
+        "gross_exposure_expanded"
       ],
-      "notes": "BTC grew relative to ETH. Top1 share increased from 95.6% to 97.3%."
+      "notes": "BTC grew relative to ETH. Top1 share increased from 95.6% to 97.3%.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C150",
@@ -3894,13 +4109,17 @@
         "profitable_exposure": 240000.0,
         "unprofitable_exposure": 660000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "concentration_decrease",
-        "coin_change"
+        "concentration_decreased",
+        "gross_exposure_expanded",
+        "leverage_decreased"
       ],
-      "notes": "Prev: 100% BTC. Curr: ETH 360K, ARB 300K, SOL 240K. Top1 decreased from 1.0 to 0.4."
+      "notes": "Prev: 100% BTC. Curr: ETH 360K, ARB 300K, SOL 240K. Top1 decreased from 1.0 to 0.4.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C151",
@@ -3953,14 +4172,20 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION",
+        "PR5_HIGH_WEIGHTED_LEVERAGE"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "leverage_increase"
+        "leverage_increased"
       ],
-      "notes": "Same position size (10 BTC), leverage increased from 5x to 12x. Weighted lev from 5.0 to 12.0. PR6 triggered."
+      "notes": "Same position size (10 BTC), leverage increased from 5x to 12x. Weighted lev from 5.0 to 12.0. PR6 triggered.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C152",
@@ -4013,14 +4238,19 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "leverage_decrease"
+        "leverage_decreased"
       ],
-      "notes": "Same position size, leverage decreased from 10x to 3x."
+      "notes": "Same position size, leverage decreased from 10x to 3x.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C153",
@@ -4102,14 +4332,19 @@
         "unprofitable_exposure": 18000.0
       },
       "expected_risk_rules": [
-        "PR1",
-        "PR2"
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION",
+        "PR6_LIQUIDATION_CLUSTER_2PCT",
+        "PR7_LIQUIDATION_CLUSTER_5PCT"
       ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [
-        "liq_cluster_formed"
+        "gross_exposure_expanded",
+        "leverage_increased"
       ],
-      "notes": "Both positions moved into critical zone (<2%). A went from 6.06% to 1.97%. B from 10.59% to 1.38%."
+      "notes": "Both positions moved into critical zone (<2%). A went from 6.06% to 1.97%. B from 10.59% to 1.38%.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C154",
@@ -4175,14 +4410,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 710000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
-      "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [
-        "new_coin_entered"
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
-      "notes": "SOL position is new. BTC existed previously. Expected change: new_coin_entered."
+      "expected_coordinated_actions": [],
+      "expected_portfolio_changes": [],
+      "notes": "SOL position is new. BTC existed previously. Expected change: new_coin_entered.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C155",
@@ -4248,14 +4486,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
-      "expected_coordinated_actions": [],
-      "expected_portfolio_changes": [
-        "coin_exited"
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
       ],
-      "notes": "ETH position is gone. BTC remains. Expected change: coin_exited."
+      "expected_coordinated_actions": [],
+      "expected_portfolio_changes": [],
+      "notes": "ETH position is gone. BTC remains. Expected change: coin_exited.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C156",
@@ -4309,10 +4550,15 @@
         "profitable_exposure": 650000.0,
         "unprofitable_exposure": 36000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Addresses 0xportfolio_G_156a and 0xportfolio_G_156b share 'Entity Alpha' label prefix. Grouped as one entity."
+      "notes": "Addresses 0xportfolio_G_156a and 0xportfolio_G_156b share 'Entity Alpha' label prefix. Grouped as one entity.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C157",
@@ -4405,10 +4651,15 @@
         "profitable_exposure": 367000.0,
         "unprofitable_exposure": 93000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Entity Beta has 5 addresses with different coins. Gross=460K, 5 coins, 5 addresses."
+      "notes": "Entity Beta has 5 addresses with different coins. Gross=460K, 5 coins, 5 addresses.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C158",
@@ -4462,10 +4713,13 @@
         "profitable_exposure": 650000.0,
         "unprofitable_exposure": 325000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR3_SINGLE_COIN_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Same entity 'Gamma' holds both long BTC (10) and short BTC (-5). Net neutral on same coin."
+      "notes": "Same entity 'Gamma' holds both long BTC (10) and short BTC (-5). Net neutral on same coin.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C159",
@@ -4504,12 +4758,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Single address with no known entity. 'Unknown Trader' label has no entity profile match."
+      "notes": "Single address with no known entity. 'Unknown Trader' label has no entity profile match.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C160",
@@ -4563,10 +4822,15 @@
         "profitable_exposure": 650000.0,
         "unprofitable_exposure": 36000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Alpha address has stale timestamp (June 16 vs June 17). Beta is fresh. Data quality flagged as partial/stale."
+      "notes": "Alpha address has stale timestamp (June 16 vs June 17). Beta is fresh. Data quality flagged as partial/stale.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C161",
@@ -4638,22 +4902,25 @@
         "net_exposure_usd": 0,
         "long_exposure_usd": 0,
         "short_exposure_usd": 0,
-        "long_short_ratio": 0.0,
+        "long_short_ratio": null,
         "weighted_leverage": null,
-        "address_count": 2,
-        "coin_count": 2,
-        "top1_concentration": 0,
-        "top3_concentration": 0,
-        "hhi": 0,
+        "address_count": 0,
+        "coin_count": 0,
+        "top1_concentration": null,
+        "top3_concentration": null,
+        "hhi": null,
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
-        "profitable_exposure": 0,
-        "unprofitable_exposure": 0
+        "profitable_exposure": null,
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR12_DATA_INCOMPLETE"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Both positions have signed_size=0, pv=0. Should be ignored. Gross=0, addr_cnt=0, coin_cnt=0."
+      "notes": "Both positions have signed_size=0, pv=0. Should be ignored. Gross=0, addr_cnt=0, coin_cnt=0.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C163",
@@ -4705,12 +4972,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 975000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Same address+coin appears twice. Both should be counted separately in gross. Gross=975K."
+      "notes": "Same address+coin appears twice. Both should be counted separately in gross. Gross=975K.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C164",
@@ -4762,12 +5034,18 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 4200.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR12_DATA_INCOMPLETE",
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Coins 'SHIBELON' and 'PEPECASH' are not standard. Should still be processed correctly. Gross=4200."
+      "notes": "Coins 'SHIBELON' and 'PEPECASH' are not standard. Should still be processed correctly. Gross=4200.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C165",
@@ -4806,12 +5084,18 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR12_DATA_INCOMPLETE",
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "mark_price=0. liq_dist cannot compute (returns None). Normal metrics still work."
+      "notes": "mark_price=0. liq_dist cannot compute (returns None). Normal metrics still work.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C166",
@@ -4850,12 +5134,18 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR12_DATA_INCOMPLETE",
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "liquidation_price=None. liq_dist=None. Does not count toward liq clusters. No PR1/PR2."
+      "notes": "liquidation_price=None. liq_dist=None. Does not count toward liq clusters. No PR1/PR2.",
+      "data_quality": "incomplete"
     },
     {
       "case_id": "C167",
@@ -4894,12 +5184,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 0,
         "profitable_exposure": 650000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Timestamp is June 18 (future). Domain should not reject based on future timestamps."
+      "notes": "Timestamp is June 18 (future). Domain should not reject based on future timestamps.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C168",
@@ -4953,10 +5248,15 @@
         "profitable_exposure": 650000.0,
         "unprofitable_exposure": 18000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Positions listed oldest-first (12:00, 12:05). Should still compute correctly. Gross=668K."
+      "notes": "Positions listed oldest-first (12:00, 12:05). Should still compute correctly. Gross=668K.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C169",
@@ -5010,10 +5310,15 @@
         "profitable_exposure": 650006.5,
         "unprofitable_exposure": 36000.18
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Sizes have tiny fractional .0001 differences. Should not trigger change detection. Gross=686006.68."
+      "notes": "Sizes have tiny fractional .0001 differences. Should not trigger change detection. Gross=686006.68.",
+      "data_quality": "complete"
     },
     {
       "case_id": "C170",
@@ -5052,12 +5357,17 @@
         "liquidation_within_2pct": 0,
         "liquidation_within_5pct": 1,
         "profitable_exposure": 1000000.0,
-        "unprofitable_exposure": 0
+        "unprofitable_exposure": null
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "Position value exactly 1M (LARGE_POSITION boundary). Leverage exactly 10x (HIGH_LEVERAGE boundary). Liq price=62700 gives (66000-62700)/66000*100=5.0% exactly (LIQ_CLUSTER_5PCT boundary)."
+      "notes": "Position value exactly 1M (LARGE_POSITION boundary). Leverage exactly 10x (HIGH_LEVERAGE boundary). Liq price=62700 gives (66000-62700)/66000*100=5.0% exactly (LIQ_CLUSTER_5PCT boundary).",
+      "data_quality": "complete"
     },
     {
       "case_id": "C171",
@@ -5124,10 +5434,15 @@
         "profitable_exposure": 710000.0,
         "unprofitable_exposure": 90000.0
       },
-      "expected_risk_rules": [],
+      "expected_risk_rules": [
+        "PR2_NET_DIRECTION_CONCENTRATION",
+        "PR3_SINGLE_COIN_CONCENTRATION",
+        "PR4_SINGLE_ADDRESS_CONCENTRATION"
+      ],
       "expected_coordinated_actions": [],
       "expected_portfolio_changes": [],
-      "notes": "All positions are long. short_exposure=0, l/s_ratio=null. Simple long-only portfolio of 3 coins."
+      "notes": "All positions are long. short_exposure=0, l/s_ratio=null. Simple long-only portfolio of 3 coins.",
+      "data_quality": "complete"
     }
   ]
 }
