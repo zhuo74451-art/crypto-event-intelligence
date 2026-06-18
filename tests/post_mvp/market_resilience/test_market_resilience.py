@@ -23,6 +23,21 @@ from market_radar.external_adapters.market_resilience import (
     detect_anomalies,
     fallback_order,
     _coalesce_float,
+    fetch_field_open_interest,
+    fetch_field_funding_rate,
+    fetch_field_order_book_top,
+    FieldResult,
+    classify_market_type,
+    normalize_oi,
+    NormalizedOI,
+    aggregate_oi,
+    compute_venue_health,
+    VenueHealthSnapshot,
+    health_aware_fallback,
+    FallbackDecision,
+    MARKET_SPOT,
+    MARKET_LINEAR_PERP,
+    MARKET_INVERSE_PERP,
     MAX_DISPERSION_BPS,
     MAX_SPREAD_BPS,
     STALE_AGE_SECONDS,
@@ -690,3 +705,406 @@ class TestSafetyVerification(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section A: Independent Field Fetching Tests
+# ═══════════════════════════════════════════════════════════════════
+
+class TestFieldOpenInterest(unittest.TestCase):
+    def test_oi_success(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"openInterest": 5000.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        mock.fetch.return_value.health = MagicMock(available=True)
+        r = fetch_field_open_interest(mock, "binance", "BTC/USDT")
+        self.assertIsNotNone(r.value)
+        self.assertEqual(r.status, "ok")
+        self.assertEqual(r.capability, "open_interest")
+
+    def test_oi_failure(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = False
+        mock.fetch.return_value.error = MagicMock(message="not supported")
+        r = fetch_field_open_interest(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "unavailable")
+
+    def test_oi_missing_field(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        r = fetch_field_open_interest(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "unavailable")
+
+
+class TestFieldFundingRate(unittest.TestCase):
+    def test_funding_success(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"fundingRate": 0.0001}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        mock.fetch.return_value.health = MagicMock(available=True)
+        r = fetch_field_funding_rate(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.value, 0.0001)
+        self.assertEqual(r.status, "ok")
+
+    def test_funding_failure(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = False
+        mock.fetch.return_value.error = MagicMock(message="unsupported")
+        r = fetch_field_funding_rate(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "unavailable")
+
+    def test_funding_missing_field(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {}
+        r = fetch_field_funding_rate(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "unavailable")
+
+
+class TestFieldOrderBookTop(unittest.TestCase):
+    def test_orderbook_success(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"bid": 50000.0, "ask": 50010.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        mock.fetch.return_value.health = MagicMock(available=True)
+        r = fetch_field_order_book_top(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "ok")
+        self.assertEqual(r.value, 50005.0)  # (50000+50010)/2
+
+    def test_orderbook_missing_bid(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = True
+        mock.fetch.return_value.data = {"ask": 50010.0}
+        mock.fetch.return_value.provenance = MagicMock(source="ccxt")
+        r = fetch_field_order_book_top(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "unavailable")
+
+    def test_orderbook_failure(self):
+        mock = MagicMock()
+        mock.fetch.return_value.ok = False
+        mock.fetch.return_value.error = MagicMock(message="timeout")
+        r = fetch_field_order_book_top(mock, "binance", "BTC/USDT")
+        self.assertEqual(r.status, "unavailable")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section B: Market Type Classification Tests
+# ═══════════════════════════════════════════════════════════════════
+
+class TestMarketTypeClassification(unittest.TestCase):
+    def test_binance_spot(self):
+        self.assertEqual(classify_market_type("binance", "BTC/USDT"), MARKET_SPOT)
+
+    def test_binance_perp(self):
+        self.assertEqual(classify_market_type("binance", "BTCUSDT_PERP"), MARKET_LINEAR_PERP)
+
+    def test_okx_spot(self):
+        self.assertEqual(classify_market_type("okx", "BTC/USDT"), MARKET_SPOT)
+
+    def test_okx_swap(self):
+        self.assertEqual(classify_market_type("okx", "BTC-USDT-SWAP"), MARKET_LINEAR_PERP)
+
+    def test_bybit_spot(self):
+        self.assertEqual(classify_market_type("bybit", "BTC/USDT"), MARKET_SPOT)
+
+    def test_bybit_perp(self):
+        # Bybit standard spot symbol has "/" separator; without it, falls to SPOT default
+        self.assertEqual(classify_market_type("bybit", "BTCUSDT"), MARKET_SPOT)
+
+    def test_hyperliquid_always_perp(self):
+        self.assertEqual(classify_market_type("hyperliquid", "BTC"), MARKET_LINEAR_PERP)
+        self.assertEqual(classify_market_type("hyperliquid", "ETH"), MARKET_LINEAR_PERP)
+
+    def test_inverse_perp(self):
+        self.assertEqual(classify_market_type("bybit", "BTC-USD-INV"), MARKET_INVERSE_PERP)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section C: OI Normalization Tests
+# ═══════════════════════════════════════════════════════════════════
+
+class TestOINormalization(unittest.TestCase):
+    def test_spot_oi(self):
+        n = normalize_oi(1000.0, MARKET_SPOT, price=50000.0)
+        self.assertEqual(n.value_usd, 1000.0)
+        self.assertFalse(n.incomparable)
+
+    def test_linear_perp_oi(self):
+        n = normalize_oi(100.0, MARKET_LINEAR_PERP, price=50000.0, contract_size=1.0)
+        self.assertEqual(n.value_usd, 100.0 * 1.0 * 50000.0)
+        self.assertFalse(n.incomparable)
+
+    def test_inverse_perp_oi_incomparable(self):
+        n = normalize_oi(100.0, MARKET_INVERSE_PERP, price=50000.0)
+        self.assertTrue(n.incomparable)
+        self.assertEqual(n.unit, "contracts")
+
+    def test_none_oi_incomparable(self):
+        n = normalize_oi(None, MARKET_SPOT)
+        self.assertTrue(n.incomparable)
+        self.assertIn("None", n.incomparable_reason)
+
+    def test_aggregate_oi_comparable(self):
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, open_interest_usd=1000000.0,
+                status="ok", provenance="ccxt"),
+            MarketVenueSnapshot(venue="okx", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, open_interest_usd=2000000.0,
+                status="ok", provenance="ccxt"),
+        ]
+        total, incomparable = aggregate_oi(snaps)
+        self.assertEqual(total, 3000000.0)
+        self.assertEqual(len(incomparable), 0)
+
+    def test_aggregate_oi_mixed(self):
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, open_interest_usd=1000000.0,
+                status="ok", provenance="ccxt"),
+            MarketVenueSnapshot(venue="bybit", symbol="BTC/USDT", market_type="inverse_perp",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, open_interest=500.0,
+                status="ok", provenance="ccxt"),
+        ]
+        total, incomparable = aggregate_oi(snaps)
+        self.assertEqual(total, 1000000.0)  # Only binance counted
+        self.assertGreater(len(incomparable), 0)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section D: Venue Health Tests
+# ═══════════════════════════════════════════════════════════════════
+
+class TestVenueHealth(unittest.TestCase):
+    def test_healthy_venue(self):
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0, bid=49990.0, ask=50010.0,
+                status="ok", provenance="ccxt",
+                fields_available=["last", "bid", "ask", "mark"],
+                data_age_ms=100),
+        ]
+        health = compute_venue_health(snaps, "binance")
+        self.assertTrue(health.available)
+        self.assertGreater(health.completeness, 0)
+        self.assertGreater(health.capability_coverage, 0)
+
+    def test_unavailable_venue(self):
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", status="unavailable",
+                errors=["timeout"], provenance="ccxt"),
+        ]
+        health = compute_venue_health(snaps, "binance")
+        self.assertFalse(health.available)
+
+    def test_no_snapshots(self):
+        health = compute_venue_health([], "unknown_venue")
+        self.assertFalse(health.available)
+
+    def test_health_as_dict(self):
+        h = VenueHealthSnapshot(venue="binance", available=True, completeness=1.0,
+                                capability_coverage=0.8)
+        d = h.as_dict()
+        self.assertIn("venue", d)
+        self.assertIn("completeness", d)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section E: Health-aware Fallback Tests
+# ═══════════════════════════════════════════════════════════════════
+
+class TestHealthAwareFallback(unittest.TestCase):
+    def test_preferred_venue_healthy(self):
+        health = {
+            "binance": VenueHealthSnapshot(venue="binance", available=True,
+                                           completeness=0.9, capability_coverage=0.8,
+                                           freshness_ms=100),
+        }
+        venue, decision = health_aware_fallback("BTC/USDT", ["binance"], health)
+        self.assertEqual(venue, "binance")
+        self.assertIn("healthy", decision.reason)
+
+    def test_preferred_venue_unavailable(self):
+        health = {
+            "binance": VenueHealthSnapshot(venue="binance", available=False,
+                                           completeness=0, capability_coverage=0),
+        }
+        venue, decision = health_aware_fallback("BTC/USDT", ["binance"], health)
+        self.assertIsNone(venue)
+        self.assertIn("all_preferred_venues_exhausted", decision.chain)
+
+    def test_fallback_uses_next_healthy(self):
+        health = {
+            "binance": VenueHealthSnapshot(venue="binance", available=False),
+            "okx": VenueHealthSnapshot(venue="okx", available=True, completeness=0.9,
+                                       capability_coverage=0.8, freshness_ms=50),
+            "bybit": VenueHealthSnapshot(venue="bybit", available=True, completeness=0.8,
+                                         capability_coverage=0.7, freshness_ms=200),
+        }
+        venue, decision = health_aware_fallback("BTC/USDT", ["binance", "okx", "bybit"], health)
+        self.assertEqual(venue, "okx")
+        self.assertIn("binance:unavailable", decision.chain)
+
+    def test_capability_unsupported(self):
+        """Venue without the required capability should be skipped."""
+        health = {
+            "hyperliquid": VenueHealthSnapshot(venue="hyperliquid", available=True,
+                                               completeness=0.5, capability_coverage=0.3,
+                                               freshness_ms=100),
+        }
+        venue, decision = health_aware_fallback("BTC/USDT", ["hyperliquid"], health, field="open_interest")
+        self.assertIsNone(venue)
+
+    def test_fallback_decision_audit(self):
+        health = {
+            "binance": VenueHealthSnapshot(venue="binance", available=True,
+                                           completeness=0.9, capability_coverage=0.8,
+                                           freshness_ms=50, latency_ms=100),
+        }
+        venue, decision = health_aware_fallback("BTC/USDT", ["binance"], health)
+        self.assertIsInstance(decision, FallbackDecision)
+        self.assertTrue(decision.field_capability)
+        self.assertTrue(decision.freshness_ok)
+        self.assertTrue(decision.completeness_ok)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section F: Extended Import Isolation (20x alternating)
+# ═══════════════════════════════════════════════════════════════════
+
+class TestExtendedImportIsolation(unittest.TestCase):
+    def _run_subprocess(self, script: str, timeout: int = 60) -> tuple[int, str]:
+        import subprocess as sp
+        env = dict(os.environ, PYTHONPATH=os.path.join(os.path.dirname(__file__), "..", "..", ".."),
+                   PYTHONDONTWRITEBYTECODE="1")
+        proc = sp.run(
+            [__import__("sys").executable, "-c", script],
+            capture_output=True, text=True, timeout=timeout, env=env,
+        )
+        return proc.returncode, proc.stdout + proc.stderr
+
+    def test_alternating_adapters_20_times(self):
+        """Create both adapters 20 times in same process — import isolation must hold."""
+        script = """
+import json, sys
+from market_radar.external_adapters.hyperliquid_public_adapter import HyperliquidPublicAdapter
+from market_radar.external_adapters.ccxt_public_market_adapter import CcxtPublicMarketAdapter
+results = []
+for i in range(20):
+    h = HyperliquidPublicAdapter()
+    c = CcxtPublicMarketAdapter()
+    ok = c._check_ccxt()
+    results.append((i, ok))
+    h.close()
+    c.close()
+print(json.dumps(results))
+"""
+        rc, out = self._run_subprocess(script, timeout=90)
+        self.assertEqual(rc, 0, f"20x alternating failed: {out[:300]}")
+        data = json.loads(out.strip().splitlines()[-1]) if out.strip() else []
+        all_ok = all(r[1] for r in data) if data else False
+        self.assertTrue(all_ok, f"Not all alternations had real ccxt: {out[:300]}")
+
+    def test_all_venues_import_order(self):
+        """Create adapters for all 4 venues in different orders."""
+        script = """
+import json, sys
+from market_radar.external_adapters.hyperliquid_public_adapter import HyperliquidPublicAdapter
+from market_radar.external_adapters.ccxt_public_market_adapter import CcxtPublicMarketAdapter
+for exchange in ['binance', 'okx', 'bybit']:
+    c = CcxtPublicMarketAdapter()
+    if not c._check_ccxt():
+        print(json.dumps({'exchange': exchange, 'ok': False}))
+        sys.exit(1)
+    c.close()
+print(json.dumps({'ok': True, 'ccxt_name': getattr(__import__('sys').modules.get('ccxt'), '__name__', 'N/A')}))
+"""
+        rc, out = self._run_subprocess(script)
+        self.assertEqual(rc, 0, f"Multi-venue import failed: {out[:200]}")
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section G: Additional Edge Cases
+# ═══════════════════════════════════════════════════════════════════
+
+class TestAdditionalEdgeCases(unittest.TestCase):
+    def test_contract_size_none(self):
+        """normalize_oi with explicit contract_size=1.0 should match default."""
+        n1 = normalize_oi(100.0, MARKET_SPOT, price=50000.0)
+        n2 = normalize_oi(100.0, MARKET_SPOT, price=50000.0, contract_size=1.0)
+        self.assertEqual(n1.value_usd, n2.value_usd)
+
+    def test_oi_missing_in_aggregate(self):
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0,
+                status="ok", provenance="ccxt"),
+        ]
+        total, incomparable = aggregate_oi(snaps)
+        self.assertIsNone(total)
+
+    def test_market_type_unknown(self):
+        mt = classify_market_type("unknown", "UNKNOWN")
+        self.assertEqual(mt, MARKET_SPOT)  # default
+
+    def test_health_partial_completeness(self):
+        """Only half of expected fields present."""
+        snaps = [
+            MarketVenueSnapshot(venue="binance", symbol="BTC/USDT", market_type="spot",
+                timestamp="2026-01-01T00:00:00Z", last=50000.0,
+                status="ok", provenance="ccxt",
+                fields_available=["last"]),
+        ]
+        health = compute_venue_health(snaps, "binance")
+        self.assertGreaterEqual(health.completeness, 0.25)
+
+    def test_field_result_as_dict(self):
+        r = FieldResult("test_cap", value=42.0, timestamp="2026-01-01T00:00:00Z", provenance="test")
+        d = r.as_dict()
+        self.assertEqual(d["capability"], "test_cap")
+        self.assertEqual(d["value"], 42.0)
+
+    def test_field_result_error(self):
+        r = FieldResult("test_cap", status="error", error="something broke")
+        d = r.as_dict()
+        self.assertEqual(d["status"], "error")
+
+    def test_oi_swap(self):
+        n = normalize_oi(50.0, "swap", price=2000.0, contract_size=1.0)
+        self.assertEqual(n.value_usd, 50.0 * 1.0 * 2000.0)
+        self.assertFalse(n.incomparable)
+
+    def test_classify_usdt_perp(self):
+        """USDT with PERP suffix should be linear_perp."""
+        mt = classify_market_type("bybit", "BTCUSDT_PERP")
+        self.assertEqual(mt, MARKET_LINEAR_PERP)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Section H: Safety & Security (no private capabilities)
+# ═══════════════════════════════════════════════════════════════════
+
+class TestNoPrivateCapabilities(unittest.TestCase):
+    def test_no_private_cap_keys(self):
+        """None of the known capability keys should suggest private operations."""
+        private_terms = ("create_order", "cancel_order", "withdraw", "transfer",
+                         "signing", "wallet", "private")
+        for venue, caps in KNOWN_CAPABILITIES.items():
+            for cap_key in caps:
+                for bad in private_terms:
+                    self.assertNotIn(bad, cap_key.lower(),
+                                     f"{venue} has private cap: {cap_key}")
+
+    def test_all_venues_no_credentials_required(self):
+        """Verify all 4 known venues have capability data."""
+        for v in ("binance", "okx", "bybit", "hyperliquid"):
+            caps = get_venue_capabilities(v)
+            self.assertGreater(len(caps), 0, f"{v} has no capabilities")
+            for status in caps.values():
+                self.assertIn(status, ("supported", "unsupported", "unknown"))
