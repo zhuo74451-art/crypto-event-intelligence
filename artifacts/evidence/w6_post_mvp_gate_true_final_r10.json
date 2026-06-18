@@ -1,0 +1,17 @@
+{
+  "document": "w6_post_mvp_gate_true_final_r10",
+  "ticket": "W6_GATE_TRUE_FINAL_FIX_R10",
+  "repair_base_commit": "fea1d9202354ef611f505d62d8ec9f16371c262b",
+  "w6_tested_commit": "7738ac5508940d7b5ecfa47a4d9391fe94966c66",
+  "legacy_gate_removed": true,
+  "fixture_scope": "tests/**/fixtures/ required, not entire tests/",
+  "frozen_refs_checked": 7,
+  "total_tests": 223,
+  "w6_passed": 223,
+  "w6_failed": 0,
+  "w6_skipped": 0,
+  "candidate_unchanged": true,
+  "main_unchanged": true,
+  "lanes_unchanged": true,
+  "final_decision": "POST_MVP_CANDIDATE_ACCEPTED_FOR_MAIN_REVIEW"
+}
