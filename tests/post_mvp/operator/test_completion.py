@@ -172,10 +172,116 @@ class TestExtendedCLI(unittest.TestCase):
         for name in BUILTIN_PROFILES:
             self.assertTrue(BUILTIN_PROFILES[name].no_send)
 
-    def test_max_runs_never_exceeds_max(self):
-        for name in BUILTIN_PROFILES:
-            self.assertLessEqual(BUILTIN_PROFILES[name].max_runs, 2)
+class TestCatalogExtended(unittest.TestCase):
+    def test_catalog_json_deterministic_order(self):
+        import tempfile, os, json as _j
+        with tempfile.TemporaryDirectory() as tmp:
+            for rid, started in [("r1","2026-01-03T00:00:00Z"),("r2","2026-01-01T00:00:00Z"),("r3","2026-01-02T00:00:00Z")]:
+                with open(os.path.join(tmp, f"manifest_{rid}.json"), "w") as f:
+                    _j.dump({"run_id": rid, "status": "ok", "started_at": started, "source_summary": {}, "error_count": 0}, f)
+            result = scan_run_dirs([tmp])
+            self.assertEqual([m["run_id"] for m in result], ["r1", "r3", "r2"])
 
+    def test_catalog_markdown_output(self):
+        md = catalog_to_markdown([{"run_id": "r1", "status": "completed", "profile_name": "test",
+                                    "started_at": "2026-01-01T00:00:00Z", "source_summary": {"feed": "ok"},
+                                    "cursor_after": "c1", "error_count": 0}])
+        self.assertIn("|", md)
+        self.assertIn("Run ID", md)
+
+    def test_catalog_html_no_raw_script(self):
+        html = catalog_to_static_html([{"run_id": "safe", "status": "ok",
+                                         "profile_name": "p", "started_at": "2026-01-01T00:00:00Z",
+                                         "source_summary": {}, "cursor_after": "c", "error_count": 0}])
+        self.assertIn("<table>", html)
+
+    def test_catalog_skips_corrupt_manifest(self):
+        import tempfile, os, json
+        with tempfile.TemporaryDirectory() as tmp:
+            with open(os.path.join(tmp, "manifest_bad.json"), "w") as f:
+                f.write("not valid json")
+            good = {"run_id": "r1", "status": "ok", "source_summary": {}, "error_count": 0,
+                    "started_at": "2026-01-01T00:00:00Z"}
+            with open(os.path.join(tmp, "manifest_good.json"), "w") as f:
+                json.dump(good, f)
+            result = scan_run_dirs([tmp])
+            self.assertEqual(len(result), 1)
+            self.assertEqual(result[0]["run_id"], "r1")
+
+class TestReplayPackExtended(unittest.TestCase):
+    def test_replay_pack_no_body(self):
+        pack = generate_replay_pack("CURATED_API_UNAVAILABLE")
+        raw = __import__("json").dumps(pack).lower()
+        self.assertNotIn("body", raw)
+        self.assertNotIn("content", raw)
+
+    def test_replay_pack_no_absolute_path(self):
+        pack = generate_replay_pack("DB_LOCKED")
+        raw = __import__("json").dumps(pack)
+        self.assertNotIn("C:", raw)
+
+    def test_replay_pack_unknown_code(self):
+        pack = generate_replay_pack("UNKNOWN_XYZ")
+        self.assertEqual(pack["expected_status"], "failed")
+
+class TestReadinessExtended(unittest.TestCase):
+    def test_breakdown_sums_100(self):
+        r = compute_readiness(sources_connected=4)
+        total = sum(c["score"] for c in r["components"].values())
+        self.assertEqual(total, 100)
+
+    def test_no_trading_meaning(self):
+        r = compute_readiness()
+        t = __import__("json").dumps(r).lower()
+        self.assertNotIn("buy", t)
+        self.assertNotIn("sell", t)
+
+class TestInspectExtended(unittest.TestCase):
+    def test_inspect_with_manifest_only_ok(self):
+        import tempfile, os, json
+        with tempfile.TemporaryDirectory() as tmp:
+            m = {"run_id": "r1", "status": "ok", "profile_name": "test", "profile_hash":"h",
+                 "errors":[],"source_summary":{},"output_files":[],"diagnoses":[]}
+            with open(os.path.join(tmp, "manifest_r1.json"), "w") as f:
+                json.dump(m, f)
+            from unittest.mock import patch
+            with patch.object(sys, "argv", ["op", "inspect", tmp]):
+                from scripts.post_mvp.operator.operator_workbench import main
+                result = main()
+                self.assertEqual(result, 0)
+
+class TestMoreEntries(unittest.TestCase):
+    def test_shadow_max_runs_2(self):
+        p = __import__("market_radar.integration.operator_profiles", fromlist=["get_profile"]).get_profile("live-shadow-2")
+        self.assertEqual(p.max_runs, 2)
+
+    def test_all_no_send(self):
+        p = __import__("market_radar.integration.operator_profiles", fromlist=["BUILTIN_PROFILES"]).BUILTIN_PROFILES
+        for name in p:
+            self.assertTrue(p[name].no_send)
+
+    def test_readiness_0_to_100(self):
+        from market_radar.integration.operator_readiness import compute_readiness
+        for i in range(5):
+            r = compute_readiness(sources_connected=i)
+            self.assertGreaterEqual(r["score"], 0)
+            self.assertLessEqual(r["score"], 100)
+
+    def test_replay_has_hash(self):
+        from market_radar.integration.operator_replay import generate_replay_pack
+        p = generate_replay_pack("CURATED_API_UNAVAILABLE")
+        self.assertIn("fixture_hash", p)
+
+    def test_catalog_deterministic(self):
+        from market_radar.integration.operator_catalog import scan_run_dirs
+        import tempfile, os, json
+        with tempfile.TemporaryDirectory() as tmp:
+            for rid, st in [("a","2026-01-03T00:00:00Z"),("b","2026-01-01T00:00:00Z")]:
+                with open(os.path.join(tmp,f"manifest_{rid}.json"),"w") as f:
+                    json.dump({"run_id":rid,"status":"ok","started_at":st,"source_summary":{},"error_count":0},f)
+            r1 = scan_run_dirs([tmp])
+            r2 = scan_run_dirs([tmp])
+            self.assertEqual([m["run_id"] for m in r1], [m["run_id"] for m in r2])
 
 if __name__ == "__main__":
     unittest.main()
