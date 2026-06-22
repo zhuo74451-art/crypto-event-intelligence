@@ -10,13 +10,16 @@ completed_stages:
 - pipeline_build
 - report_generation
 - sample_pipeline_run
-current_stage: research_contracts_and_pipeline_complete
-head_sha: 2e53aa0
+- test_expansion
+- script_completion
+current_stage: full_lane_e_build_complete
+head_sha: d5d123d
 integrated_producers: []
 known_failures: []
-last_test_command: null
-last_test_result: null
-next_exact_action: monitor upstream lanes A-D for readiness, then integrate
+last_test_command: pytest tests/intelligence/research/ tests/intelligence/integration/
+last_test_result: 77 passed, 0 failed
+next_exact_action: 'Monitor upstream A-D; when all ready: lock SHAs, merge A→B→C→D,
+  re-run with real data'
 planning_mode_used: false
 producer_status:
   lane_a: manifest_mismatch_rejected
