@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IntegrationRunV1",
+  "type": "object",
+  "required": ["run_id", "base_sha", "producer_shas", "pipeline_version", "started_at_utc"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "base_sha": {"type": "string"},
+    "producer_shas": {"type": "object"},
+    "pipeline_version": {"type": "string"},
+    "contract_versions": {"type": "object"},
+    "compatibility_results_path": {"type": "string"},
+    "pipeline_result_path": {"type": "string"},
+    "claim_count": {"type": "integer"},
+    "edge_count": {"type": "integer"},
+    "conflict_count": {"type": "integer"},
+    "candidate_count": {"type": "integer"},
+    "dossier_count": {"type": "integer"},
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "completed_at_utc": {"type": "string", "format": "date-time"},
+    "resumed_from": {"type": "string"},
+    "idempotent_rerun": {"type": "boolean"},
+    "gate_results": {"type": "object"},
+    "status": {"type": "string", "enum": ["running", "completed", "failed", "aborted"]}
+  }
+}

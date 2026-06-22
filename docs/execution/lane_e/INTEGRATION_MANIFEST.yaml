@@ -1,0 +1,22 @@
+integration_version: 1.0.0
+integration_branch: integration/overnight-intelligence-v1
+sealed_base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+pipeline_version: 1.0.0
+contract_version: "2025-01-01"
+integrated_producers: []
+integration_status: bootstrap
+created_at_utc:
+research_contracts:
+  research_claim_v1: schemas/intelligence/research/research_claim_v1.schema.json
+  evidence_edge_v1: schemas/intelligence/research/evidence_edge_v1.schema.json
+  conflict_set_v1: schemas/intelligence/research/conflict_set_v1.schema.json
+  research_question_v1: schemas/intelligence/research/research_question_v1.schema.json
+  candidate_record_v1: schemas/intelligence/research/candidate_record_v1.schema.json
+  decision_record_v1: schemas/intelligence/research/decision_record_v1.schema.json
+  research_dossier_v1: schemas/intelligence/research/research_dossier_v1.schema.json
+
+integration_contracts:
+  producer_lock_v1: schemas/intelligence/integration/producer_lock_v1.schema.json
+  integration_run_v1: schemas/intelligence/integration/integration_run_v1.schema.json
+  compatibility_result_v1: schemas/intelligence/integration/compatibility_result_v1.schema.json
+  end_to_end_result_v1: schemas/intelligence/integration/end_to_end_result_v1.schema.json

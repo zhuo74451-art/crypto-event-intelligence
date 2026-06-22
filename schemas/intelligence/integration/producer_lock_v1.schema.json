@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProducerLockV1",
+  "type": "object",
+  "required": ["lane", "branch", "locked_sha", "readiness"],
+  "properties": {
+    "lane": {"type": "string", "enum": ["lane_a", "lane_b", "lane_c", "lane_d"]},
+    "branch": {"type": "string"},
+    "locked_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "manifest_path": {"type": "string"},
+    "manifest_sha256": {"type": "string"},
+    "base_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "readiness": {"type": "string", "enum": ["ready", "pending_check", "rejected_pending_repair", "not_available"]},
+    "artifact_hashes_verified": {"type": "boolean"},
+    "locked_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

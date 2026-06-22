@@ -1,0 +1,223 @@
+contracts:
+  # === Kernel Core Contracts ===
+  hypothesis_v1:
+    version: 1
+    owner_lane: kernel
+    schema_path: schemas/intelligence/kernel/hypothesis_v1.schema.json
+    python_contract_path: market_radar/intelligence/contracts/hypothesis.py
+    producer_artifact: intelligence_kernel
+    producer_sha: 5a5ca58
+    consumers: [lane_c, lane_d, lane_e]
+    compatibility_status: sealed
+    compatibility_notes: Core kernel contract — must not change
+    tests: tests/intelligence/test_hypothesis.py
+
+  arbitration_v1:
+    version: 1
+    owner_lane: kernel
+    schema_path: schemas/intelligence/kernel/arbitration_v1.schema.json
+    python_contract_path: market_radar/intelligence/contracts/arbitration.py
+    producer_artifact: intelligence_kernel
+    producer_sha: 5a5ca58
+    consumers: [lane_c, lane_d, lane_e]
+    compatibility_status: sealed
+    compatibility_notes: Core kernel contract — must not change
+    tests: tests/intelligence/test_arbitration.py
+
+  evidence_v1:
+    version: 1
+    owner_lane: kernel
+    schema_path: schemas/intelligence/kernel/evidence_v1.schema.json
+    python_contract_path: market_radar/intelligence/contracts/evidence.py
+    producer_artifact: intelligence_kernel
+    producer_sha: 5a5ca58
+    consumers: [lane_a, lane_b, lane_c, lane_d, lane_e]
+    compatibility_status: sealed
+    compatibility_notes: Core kernel contract — must not change
+    tests: tests/intelligence/test_evidence.py
+
+  assessment_v1:
+    version: 1
+    owner_lane: kernel
+    schema_path: schemas/intelligence/kernel/assessment_v1.schema.json
+    python_contract_path: market_radar/intelligence/contracts/assessment.py
+    producer_artifact: intelligence_kernel
+    producer_sha: 5a5ca58
+    consumers: [lane_c, lane_d, lane_e]
+    compatibility_status: sealed
+    compatibility_notes: Core kernel contract — must not change
+    tests: tests/intelligence/test_assessment.py
+
+  calibration_v1:
+    version: 1
+    owner_lane: kernel
+    schema_path: schemas/intelligence/kernel/calibration_v1.schema.json
+    python_contract_path: market_radar/intelligence/contracts/calibration.py
+    producer_artifact: intelligence_kernel
+    producer_sha: 5a5ca58
+    consumers: [lane_d, lane_e]
+    compatibility_status: sealed
+    compatibility_notes: Core kernel contract — must not change
+    tests: tests/intelligence/test_calibration.py
+
+  # === Lane A — Macro Evidence ===
+  macro_event_v1:
+    version: 1
+    owner_lane: lane_a
+    schema_path:
+    python_contract_path:
+    producer_artifact: historical_macro_evidence
+    producer_sha:
+    consumers: [lane_b, lane_c]
+    compatibility_status: pending_check
+    compatibility_notes:
+    tests:
+
+  # === Lane B — Market Data ===
+  market_window_v1:
+    version: 1
+    owner_lane: lane_b
+    schema_path:
+    python_contract_path:
+    producer_artifact: historical_market_data
+    producer_sha:
+    consumers: [lane_c]
+    compatibility_status: pending_check
+    compatibility_notes:
+    tests:
+
+  # === Lane C — Strategy Replay ===
+  replay_result_v1:
+    version: 1
+    owner_lane: lane_c
+    schema_path:
+    python_contract_path:
+    producer_artifact: strategy_replay
+    producer_sha:
+    consumers: [lane_d]
+    compatibility_status: pending_check
+    compatibility_notes:
+    tests:
+
+  # === Lane D — Validation ===
+  validation_result_v1:
+    version: 1
+    owner_lane: lane_d
+    schema_path:
+    python_contract_path:
+    producer_artifact: validation_walkforward
+    producer_sha:
+    consumers: [lane_e]
+    compatibility_status: pending_check
+    compatibility_notes:
+    tests:
+
+  # === Lane E — Research Intelligence ===
+  research_claim_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/research_claim_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Primary research claim contract — being created
+    tests:
+
+  evidence_edge_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/evidence_edge_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Evidence dependency graph edge contract — being created
+    tests:
+
+  conflict_set_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/conflict_set_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Conflict set contract — being created
+    tests:
+
+  research_question_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/research_question_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Research question contract — being created
+    tests:
+
+  candidate_record_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/candidate_record_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Candidate strategy contract — being created
+    tests:
+
+  decision_record_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/decision_record_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Decision record contract — being created
+    tests:
+
+  research_dossier_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/research/research_dossier_v1.schema.json
+    python_contract_path: market_radar/intelligence/research/contracts.py
+    producer_artifact: research_intelligence
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Research dossier contract — being created
+    tests:
+
+  # === Integration Contracts ===
+  producer_lock_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/integration/producer_lock_v1.schema.json
+    python_contract_path:
+    producer_artifact: integration
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Producer lock contract — being created
+    tests:
+
+  integration_run_v1:
+    version: 1
+    owner_lane: lane_e
+    schema_path: schemas/intelligence/integration/integration_run_v1.schema.json
+    python_contract_path:
+    producer_artifact: integration
+    producer_sha: 5a5ca58
+    consumers: []
+    compatibility_status: bootstrap
+    compatibility_notes: Integration run record contract — being created
+    tests:

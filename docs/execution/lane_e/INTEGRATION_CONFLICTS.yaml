@@ -1,0 +1,5 @@
+# Integration Conflicts Registry
+# Populated when git merge conflicts occur in producer-owned paths.
+# Empty on bootstrap — no merges have been attempted.
+
+conflicts: []

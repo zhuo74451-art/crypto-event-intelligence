@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CandidateRecordV1",
+  "type": "object",
+  "required": [
+    "candidate_id", "candidate_type", "candidate_name",
+    "candidate_status", "created_at_utc"
+  ],
+  "properties": {
+    "candidate_id": {"type": "string", "pattern": "^CD-[A-Z0-9]{16}$"},
+    "candidate_type": {"type": "string", "enum": ["directional_strategy", "regime_filter", "cross_asset_hedge", "event_cluster", "data_source", "validation_method"]},
+    "candidate_name": {"type": "string"},
+    "source_claim_ids": {"type": "array", "items": {"type": "string"}},
+    "source_conflict_ids": {"type": "array", "items": {"type": "string"}},
+    "source_validation_ids": {"type": "array", "items": {"type": "string"}},
+    "source_failed_experiment_ids": {"type": "array", "items": {"type": "string"}},
+    "strategy_family": {"type": "string"},
+    "asset_scope": {"type": "array", "items": {"type": "string"}},
+    "event_family_scope": {"type": "array", "items": {"type": "string"}},
+    "horizon_scope": {"type": "array", "items": {"type": "string"}},
+    "regime_scope": {"type": "array", "items": {"type": "string"}},
+    "candidate_status": {"type": "string", "enum": [
+      "proposed", "evidence_compiled", "validation_pending",
+      "historically_mixed", "historically_supported",
+      "holdout_failed", "rejected", "archived"
+    ]},
+    "maturity": {"type": "integer", "minimum": 0, "maximum": 5},
+    "historical_support": {"type": "string"},
+    "holdout_status": {"type": "string", "enum": ["not_tested", "pending", "passed", "failed", "inconclusive"]},
+    "calibration_status": {"type": "string", "enum": ["unavailable", "preliminary", "calibrated", "recalibrated"]},
+    "live_shadow_status": {"type": "string", "enum": ["not_deployed", "running", "paused", "stopped"]},
+    "required_followup": {"type": "array", "items": {"type": "string"}},
+    "rejection_reasons": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

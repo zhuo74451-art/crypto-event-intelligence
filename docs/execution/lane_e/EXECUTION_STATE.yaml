@@ -1,0 +1,24 @@
+autonomous_planning_mode_used: false
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+blockers: []
+branch: integration/overnight-intelligence-v1
+completed_stages:
+- bootstrap
+- contract_creation
+- pipeline_build
+current_stage: contracts_and_pipeline_built
+head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+integrated_producers: []
+known_failures: []
+last_test_command: null
+last_test_result: null
+next_exact_action: check upstream producers and integrate
+planning_mode_used: false
+producer_status:
+  lane_a: pending_or_not_checked
+  lane_b: pending_or_not_checked
+  lane_c: pending_or_not_checked
+  lane_d: pending_or_not_checked
+repository: zhuo74451-art/crypto-event-intelligence
+task: OVERNIGHT_LANE_E_RESEARCH_INTELLIGENCE_CONTINUOUS_INTEGRATION_V1
+uncommitted_files: []

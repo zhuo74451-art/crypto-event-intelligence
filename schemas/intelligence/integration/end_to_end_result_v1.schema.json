@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EndToEndResultV1",
+  "type": "object",
+  "required": ["run_id", "sample_label", "macro_event_count", "market_window_count", "replay_result_count", "validation_result_count", "status"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "sample_label": {"type": "string"},
+    "macro_event_count": {"type": "integer"},
+    "market_window_count": {"type": "integer"},
+    "replay_result_count": {"type": "integer"},
+    "validation_result_count": {"type": "integer"},
+    "claim_count": {"type": "integer"},
+    "edge_count": {"type": "integer"},
+    "conflict_count": {"type": "integer"},
+    "candidate_count": {"type": "integer"},
+    "dossier_count": {"type": "integer"},
+    "unresolved_references": {"type": "integer"},
+    "status": {"type": "string", "enum": ["passed", "failed", "partial"]},
+    "failures": {"type": "array", "items": {"type": "string"}},
+    "sample_status": {"type": "string", "enum": ["temporary_real_integration_sample", "production_integration"]},
+    "completed_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResearchDossierV1",
+  "type": "object",
+  "required": [
+    "dossier_id", "subject_type", "subject_id",
+    "current_claims", "open_questions", "candidate_status",
+    "generated_at_utc"
+  ],
+  "properties": {
+    "dossier_id": {"type": "string", "pattern": "^RD-[A-Z0-9]{16}$"},
+    "subject_type": {"type": "string", "enum": ["candidate", "strategy_family", "event_family", "regime", "research_question"]},
+    "subject_id": {"type": "string"},
+    "current_claims": {"type": "array", "items": {"type": "string"}},
+    "contested_claims": {"type": "array", "items": {"type": "string"}},
+    "contradicted_claims": {"type": "array", "items": {"type": "string"}},
+    "open_questions": {"type": "array", "items": {"type": "string"}},
+    "conflict_sets": {"type": "array", "items": {"type": "string"}},
+    "supporting_evidence": {"type": "array", "items": {"type": "string"}},
+    "opposing_evidence": {"type": "array", "items": {"type": "string"}},
+    "validation_summary": {"type": "string"},
+    "calibration_summary": {"type": "string"},
+    "failed_experiments": {"type": "array", "items": {"type": "string"}},
+    "candidate_status": {"type": "string"},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "next_required_evidence": {"type": "array", "items": {"type": "string"}},
+    "producer_locks": {"type": "object"},
+    "generated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

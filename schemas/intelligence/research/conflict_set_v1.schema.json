@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConflictSetV1",
+  "type": "object",
+  "required": [
+    "conflict_set_id", "conflict_key", "conflict_type",
+    "claim_ids", "conflict_status"
+  ],
+  "properties": {
+    "conflict_set_id": {"type": "string", "pattern": "^CS-[A-Z0-9]{16}$"},
+    "conflict_key": {"type": "string"},
+    "conflict_type": {"type": "string", "enum": [
+      "direction_conflict", "horizon_conflict", "regime_conflict",
+      "transmission_conflict", "source_conflict", "revision_conflict",
+      "validation_conflict", "calibration_conflict"
+    ]},
+    "claim_ids": {"type": "array", "items": {"type": "string"}},
+    "evidence_edge_ids": {"type": "array", "items": {"type": "string"}},
+    "asset": {"type": "string"},
+    "event_family": {"type": "string"},
+    "time_horizon": {"type": "string"},
+    "regime": {"type": "string"},
+    "valid_time_range": {"type": "object"},
+    "conflict_status": {"type": "string", "enum": ["open", "partially_resolved", "resolved_with_limits", "requires_new_evidence"]},
+    "resolution_status": {"type": "string", "enum": ["unresolved", "superseded_by_evidence", "invalidated", "accepted_uncertainty"]},
+    "resolution_rule": {"type": "string"},
+    "required_new_evidence": {"type": "array", "items": {"type": "string"}},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

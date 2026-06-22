@@ -1,0 +1,111 @@
+modules:
+  historical_macro:
+    owner_lane: lane_a
+    producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
+    producer_sha:
+    status: pending_check
+    contracts:
+      - macro_event_v1
+      - consensus_snapshot_v1
+      - revision_chain_v1
+      - point_in_time_snapshot_v1
+    inputs:
+      - data/historical_macro/events/
+      - data/historical_macro/consensus/
+      - data/historical_macro/revisions/
+    outputs:
+      - market_radar/intelligence/contracts/macro_event/
+    tests:
+      - tests/intelligence/historical_macro/
+    consumers:
+      - historical_market
+      - strategy_replay
+    last_verified_sha:
+
+  historical_market:
+    owner_lane: lane_b
+    producer_branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+    producer_sha:
+    status: pending_check
+    contracts:
+      - market_window_v1
+      - cross_asset_snapshot_v1
+      - derivatives_snapshot_v1
+      - market_reaction_label_v1
+    inputs:
+      - data/historical_market/prices/
+      - data/historical_market/derivatives/
+      - data/historical_market/windows/
+    outputs:
+      - market_radar/intelligence/contracts/market_window/
+    tests:
+      - tests/intelligence/historical_market/
+    consumers:
+      - strategy_replay
+      - validation
+    last_verified_sha:
+
+  strategy_replay:
+    owner_lane: lane_c
+    producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
+    producer_sha:
+    status: pending_check
+    contracts:
+      - strategy_definition_v1
+      - strategy_instance_v1
+      - replay_result_v1
+      - abstention_record_v1
+    inputs:
+      - market_radar/intelligence/contracts/macro_event/
+      - market_radar/intelligence/contracts/market_window/
+    outputs:
+      - market_radar/intelligence/contracts/replay/
+    tests:
+      - tests/intelligence/macro_strategy/
+    consumers:
+      - validation
+    last_verified_sha:
+
+  validation:
+    owner_lane: lane_d
+    producer_branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
+    producer_sha:
+    status: pending_check
+    contracts:
+      - validation_dataset_v1
+      - walkforward_result_v1
+      - calibration_artifact_v1
+      - failed_experiment_v1
+    inputs:
+      - market_radar/intelligence/contracts/replay/
+    outputs:
+      - market_radar/intelligence/contracts/validation/
+    tests:
+      - tests/intelligence/validation/
+    consumers:
+      - research_intelligence
+    last_verified_sha:
+
+  research_intelligence:
+    owner_lane: lane_e
+    producer_branch: integration/overnight-intelligence-v1
+    producer_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+    status: bootstrap
+    contracts:
+      - research_claim_v1
+      - evidence_edge_v1
+      - conflict_set_v1
+      - research_question_v1
+      - candidate_record_v1
+      - decision_record_v1
+      - research_dossier_v1
+    inputs:
+      - market_radar/intelligence/contracts/validation/
+    outputs:
+      - data/intelligence/research/
+      - data/intelligence/integration/
+    tests:
+      - tests/intelligence/research/
+      - tests/intelligence/integration/
+    consumers: []
+    last_verified_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1

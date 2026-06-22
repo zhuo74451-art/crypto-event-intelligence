@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResearchQuestionV1",
+  "type": "object",
+  "required": [
+    "question_id", "question_key", "question_text",
+    "status", "created_at_utc"
+  ],
+  "properties": {
+    "question_id": {"type": "string", "pattern": "^RQ-[A-Z0-9]{16}$"},
+    "question_key": {"type": "string"},
+    "question_text": {"type": "string"},
+    "linked_claim_ids": {"type": "array", "items": {"type": "string"}},
+    "linked_conflict_set_ids": {"type": "array", "items": {"type": "string"}},
+    "linked_candidate_ids": {"type": "array", "items": {"type": "string"}},
+    "missing_evidence": {"type": "array", "items": {"type": "string"}},
+    "required_data": {"type": "array", "items": {"type": "string"}},
+    "required_validation": {"type": "array", "items": {"type": "string"}},
+    "required_time_range": {"type": "object"},
+    "priority": {"type": "integer", "minimum": 0, "maximum": 5},
+    "status": {"type": "string", "enum": [
+      "open", "partially_answered", "blocked_by_data",
+      "blocked_by_validation", "answered_with_limits", "archived"
+    ]},
+    "owner_module": {"type": "string"},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "updated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

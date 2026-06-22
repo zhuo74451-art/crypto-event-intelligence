@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidenceEdgeV1",
+  "type": "object",
+  "required": [
+    "evidence_edge_id", "claim_id", "evidence_role",
+    "source_lane", "source_artifact_path", "source_record_id",
+    "observed_at_utc", "available_at_utc"
+  ],
+  "properties": {
+    "evidence_edge_id": {"type": "string", "pattern": "^EE-[A-Z0-9]{16}$"},
+    "claim_id": {"type": "string", "pattern": "^RC-[A-Z0-9]{16}$"},
+    "evidence_role": {"type": "string", "enum": ["supporting", "opposing", "qualifying", "invalidating", "missing"]},
+    "source_lane": {"type": "string", "enum": ["lane_a", "lane_b", "lane_c", "lane_d", "lane_e", "kernel", "external"]},
+    "source_artifact_path": {"type": "string"},
+    "source_record_id": {"type": "string"},
+    "source_sha256": {"type": "string"},
+    "producer_sha": {"type": "string"},
+    "evidence_type": {"type": "string", "enum": ["macro_event", "consensus", "revision", "price_reaction", "derivatives", "cross_asset", "replay_result", "abstention", "validation_result", "walkforward", "calibration", "failed_experiment", "holdout_result"]},
+    "independence_group": {"type": "string"},
+    "origin_group": {"type": "string"},
+    "observed_at_utc": {"type": "string", "format": "date-time"},
+    "available_at_utc": {"type": "string", "format": "date-time"},
+    "information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "point_in_time_quality": {"type": "string", "enum": ["confirmed_pit", "reconstructed", "estimated", "unknown"]},
+    "data_quality": {"type": "string", "enum": ["verified", "sampled", "estimated", "suspect"]},
+    "validation_status": {"type": "string", "enum": ["unvalidated", "cross_checked", "independently_verified"]},
+    "supports": {"type": "boolean"},
+    "contradicts": {"type": "boolean"},
+    "qualifies": {"type": "boolean"},
+    "limits": {"type": "boolean"},
+    "notes": {"type": "string"}
+  }
+}

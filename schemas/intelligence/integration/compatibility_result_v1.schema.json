@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompatibilityResultV1",
+  "type": "object",
+  "required": ["check_id", "lane", "check_name", "passed", "checked_at_utc"],
+  "properties": {
+    "check_id": {"type": "string"},
+    "lane": {"type": "string"},
+    "check_name": {"type": "string", "enum": [
+      "producer_base_sha_matches",
+      "producer_head_matches_manifest",
+      "artifact_hash_matches",
+      "schema_file_present",
+      "schema_version_supported",
+      "required_fields_present",
+      "consumer_expected_fields_present",
+      "timestamp_format_utc",
+      "deterministic_ids_present",
+      "duplicate_ids_absent",
+      "point_in_time_fields_present",
+      "evaluation_labels_separated_from_inputs",
+      "calibration_scope_bound",
+      "failed_experiments_preserved",
+      "abstention_records_preserved",
+      "kernel_contract_unchanged"
+    ]},
+    "passed": {"type": "boolean"},
+    "details": {"type": "string"},
+    "checked_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

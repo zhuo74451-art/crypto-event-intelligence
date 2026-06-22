@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResearchClaimV1",
+  "type": "object",
+  "required": [
+    "claim_id", "claim_key", "claim_type",
+    "subject", "predicate", "object",
+    "claim_status", "claim_scope", "maturity",
+    "generated_at_utc"
+  ],
+  "properties": {
+    "claim_id": {"type": "string", "pattern": "^RC-[A-Z0-9]{16}$"},
+    "claim_key": {"type": "string"},
+    "claim_type": {"type": "string", "enum": ["directional", "correlation", "regime_dependency", "transmission", "validation_result", "calibration_result", "failed_experiment_observation"]},
+    "subject": {"type": "string"},
+    "predicate": {"type": "string"},
+    "object": {"type": "string"},
+    "asset": {"type": "string"},
+    "sector": {"type": "string"},
+    "event_family": {"type": "string"},
+    "strategy_id": {"type": "string"},
+    "time_horizon": {"type": "string", "enum": ["intraday", "short_term", "medium_term", "long_term", "multi_horizon"]},
+    "regime": {"type": "string"},
+    "valid_from_utc": {"type": "string", "format": "date-time"},
+    "valid_to_utc": {"type": "string", "format": "date-time"},
+    "information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "claim_status": {"type": "string", "enum": ["observed", "supported", "contested", "contradicted", "insufficient_evidence", "stale", "superseded", "rejected"]},
+    "claim_scope": {"type": "string", "enum": ["historical_only", "walkforward", "holdout", "live_shadow"]},
+    "maturity": {"type": "integer", "minimum": 0, "maximum": 5},
+    "supporting_evidence_edge_ids": {"type": "array", "items": {"type": "string"}},
+    "opposing_evidence_edge_ids": {"type": "array", "items": {"type": "string"}},
+    "conflict_set_ids": {"type": "array", "items": {"type": "string"}},
+    "source_lane_refs": {"type": "array", "items": {"type": "string"}},
+    "point_in_time_quality": {"type": "string", "enum": ["confirmed_pit", "reconstructed", "estimated", "unknown"]},
+    "validation_status": {"type": "string", "enum": ["unvalidated", "historical_only", "walkforward_mixed", "walkforward_supported", "holdout_failed", "calibrated"]},
+    "calibration_status": {"type": "string", "enum": ["unavailable", "preliminary", "calibrated", "recalibrated"]},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "supersedes_claim_id": {"type": "string"},
+    "generated_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

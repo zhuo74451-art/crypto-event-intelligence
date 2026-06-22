@@ -1,0 +1,38 @@
+sealed_base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+
+producers:
+  lane_a:
+    branch: feat/overnight-lane-a-historical-macro-evidence-v1
+    locked_sha:
+    manifest_path:
+    manifest_sha256:
+    base_sha:
+    readiness: pending_check
+    artifact_hashes_verified: false
+
+  lane_b:
+    branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+    locked_sha:
+    manifest_path:
+    manifest_sha256:
+    base_sha:
+    readiness: pending_check
+    artifact_hashes_verified: false
+
+  lane_c:
+    branch: feat/overnight-lane-c-macro-strategy-replay-v1
+    locked_sha:
+    manifest_path:
+    manifest_sha256:
+    base_sha:
+    readiness: pending_check
+    artifact_hashes_verified: false
+
+  lane_d:
+    branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
+    locked_sha:
+    manifest_path:
+    manifest_sha256:
+    base_sha:
+    readiness: pending_check
+    artifact_hashes_verified: false

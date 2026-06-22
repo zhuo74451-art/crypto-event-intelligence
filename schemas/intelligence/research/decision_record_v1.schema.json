@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DecisionRecordV1",
+  "type": "object",
+  "required": [
+    "decision_id", "decision_type", "subject_id",
+    "previous_state", "new_state",
+    "made_at_utc", "made_by"
+  ],
+  "properties": {
+    "decision_id": {"type": "string", "pattern": "^DC-[A-Z0-9]{16}$"},
+    "decision_type": {"type": "string", "enum": ["claim_status_change", "candidate_status_change", "conflict_resolution_attempt", "validation_scope_change", "evidence_inclusion", "rejection"]},
+    "subject_id": {"type": "string"},
+    "previous_state": {"type": "string"},
+    "new_state": {"type": "string"},
+    "evidence_edge_ids": {"type": "array", "items": {"type": "string"}},
+    "validation_result_ids": {"type": "array", "items": {"type": "string"}},
+    "conflict_set_ids": {"type": "array", "items": {"type": "string"}},
+    "failed_experiment_ids": {"type": "array", "items": {"type": "string"}},
+    "rule_id": {"type": "string"},
+    "made_at_utc": {"type": "string", "format": "date-time"},
+    "made_by": {"type": "string", "enum": ["deterministic_rule", "human_owner", "integration_audit"]},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "reversible": {"type": "boolean"}
+  }
+}
