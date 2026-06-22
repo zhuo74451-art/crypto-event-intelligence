@@ -47,3 +47,5 @@ The pilot establishes source identity, timestamps, raw evidence or snapshot refe
 - `README.md`
 - `PROJECT_MAINLINE.md`
 - `docs/ARCHITECTURE.md`
+- `docs/INDEX.md`
+- `docs/PROJECT_STATUS.md`

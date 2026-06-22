@@ -46,6 +46,8 @@ AI 驱动的加密市场认知与有效信号系统。
 
 - [主线合同](PROJECT_MAINLINE.md)
 - [系统架构](docs/ARCHITECTURE.md)
+- [文档索引](docs/INDEX.md)
+- [项目状态](docs/PROJECT_STATUS.md)
 
 ## 基础验证
 

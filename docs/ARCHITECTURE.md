@@ -28,3 +28,11 @@ paper, report, or public trader material
 External acquisition, retrieval, archiving, and notification tools remain replaceable services or packages. Existing repository modules are retained only after a `RETAIN`, `ADAPT`, `QUARANTINE`, or `DELETE` review.
 
 Recurring monitoring, production publishing, and execution are disabled by default.
+
+## Intelligence Kernel V1
+
+The intelligence kernel () implements the first-generation
+cognition layer: contracts, engines, adapters, and serialization. It provides
+evidence state, event state, regime analysis, expectation gap, transmission
+paths, strategy lifecycle, arbitration, calibration guards, and market assessment.
+See .

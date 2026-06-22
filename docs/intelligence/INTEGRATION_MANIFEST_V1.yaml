@@ -1,0 +1,69 @@
+task: "INTELLIGENCE_KERNEL_FOUNDATION_V1"
+branch: "feat/intelligence-kernel-foundation-v1"
+base_sha: "fc9b76f8a3cfc84bc384b145bd93dda41006e68f"
+final_sha: ""
+
+goal_mode_used: false
+plan_mode_used: false
+
+owned_paths:
+  - market_radar/intelligence/
+  - schemas/intelligence/
+  - tests/intelligence/
+  - docs/intelligence/
+  - scripts/export_intelligence_schemas.py
+  - scripts/validate_intelligence_contracts.py
+
+changed_files:
+  added:
+    - market_radar/intelligence/__init__.py
+    - market_radar/intelligence/contracts/
+    - market_radar/intelligence/engines/
+    - market_radar/intelligence/adapters/
+    - market_radar/intelligence/serialization/
+    - market_radar/intelligence/errors/
+    - schemas/intelligence/v1/
+    - tests/intelligence/
+    - docs/intelligence/
+  modified:
+    - README.md
+    - PROJECT_MAINLINE.md
+    - docs/ARCHITECTURE.md
+
+contracts_produced:
+  - EvidenceItem, EvidenceBundle
+  - EventEntity, EventTransition
+  - RegimeDimension, RegimeSnapshot
+  - NumericExpectation, ExpectationGapResult
+  - TransmissionNode, TransmissionEdge, TransmissionGraph
+  - StrategyPack, StrategyInstance
+  - MarketHypothesis
+  - ArbitrationInput, ArbitrationOutput
+  - ConfidenceStatement, CalibrationArtifactRef
+  - MarketAssessment, HorizonDirectionAssessment
+
+interfaces_consumed:
+  - market_radar/shared/models.py
+
+legacy_adapters:
+  - LegacyObservationAdapter
+  - LegacySignalRegistryAdapter
+
+dependencies_added: []
+dependencies_removed: []
+
+database_changes: false
+external_services: false
+network_calls: false
+
+known_failures:
+  - node_ids same as baseline
+
+known_limitations:
+  - No real calibrator
+  - No macro strategies
+  - Legacy confidence not upgradable
+
+cross_lane_requests: []
+merge_order: "Post merge"
+rollback: "git revert to previous SHA"
