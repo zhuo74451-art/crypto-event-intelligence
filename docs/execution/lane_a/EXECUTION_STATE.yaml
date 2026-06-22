@@ -2,16 +2,29 @@ task: OVERNIGHT_LANE_A_HISTORICAL_MACRO_EVIDENCE_FACTORY_V1
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+head_sha: 7cbfb6e
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: bootstrap
-completed_stages: []
-next_exact_action: create macro evidence contracts
+current_stage: p1_official_release_dataset
+completed_stages:
+  - bootstrap
+  - contracts_and_providers
+  - p0_minimal_pipeline
+next_exact_action: write tests and commit
 last_test_command:
 last_test_result:
 known_failures: []
 blockers: []
-uncommitted_files: []
+uncommitted_files:
+  - data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
+  - data/intelligence/historical_macro/normalized/macro_source_snapshots_v1.jsonl
+  - data/intelligence/historical_macro/normalized/macro_release_events_v1.csv
+  - data/intelligence/historical_macro/indexes/macro_evidence_v1.sqlite
+  - data/intelligence/historical_macro/reports/pit_audit_v1.json
+  - data/intelligence/historical_macro/reports/pit_audit_v1.md
+  - data/intelligence/historical_macro/reports/coverage_report_v1.json
+  - data/intelligence/historical_macro/reports/coverage_report_v1.md
+  - data/intelligence/historical_macro/raw/bls/
+  - data/intelligence/historical_macro/raw/fred_alfred/

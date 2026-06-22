@@ -1,9 +1,6 @@
-"""Build canonical macro release events from provider data.
-
-Fetches data from all registered providers and normalizes into
-MacroReleaseEventV1 records, stored as JSONL.
-"""
-
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Build canonical macro release events from provider data."""
 from __future__ import annotations
 
 import argparse
@@ -11,18 +8,13 @@ import hashlib
 import json
 import os
 import sys
-from datetime import datetime, timezone
 from typing import Any, Optional
 
-# Ensure we can import from the project
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 from market_radar.intelligence.acquisition.historical_macro.contracts import (
-    MacroReleaseEventV1,
-    MacroSourceSnapshotV1,
-    EventFamily,
-    generate_event_id,
-    utc_now,
+    MacroReleaseEventV1, MacroSourceSnapshotV1,
+    generate_event_id, generate_snapshot_id, utc_now,
 )
 from market_radar.intelligence.acquisition.historical_macro.providers.bls import BLSProvider
 from market_radar.intelligence.acquisition.historical_macro.providers.bea import BEAProvider
@@ -30,7 +22,6 @@ from market_radar.intelligence.acquisition.historical_macro.providers.federal_re
 from market_radar.intelligence.acquisition.historical_macro.providers.fred_alfred import FREDAlfredProvider
 
 
-# Provider registration: (provider_class, series_ids, event_families)
 PROVIDER_CONFIGS = [
     (BLSProvider, ["CUUR0000SA0", "CUUR0000SA0L1E", "CES0000000001", "LNS14000000"],
      ["us_cpi", "us_core_cpi", "us_nonfarm_payrolls", "us_unemployment_rate"]),
@@ -43,15 +34,33 @@ PROVIDER_CONFIGS = [
 ]
 
 
-def build_release_events(start_year: str, end_year: str,
-                          output_dir: str, cache_dir: str,
-                          resume: bool = True) -> tuple[list[MacroReleaseEventV1], list[MacroSourceSnapshotV1]]:
-    """Fetch and normalize release events from all providers."""
-    all_events: list[MacroReleaseEventV1] = []
-    all_snapshots: list[MacroSourceSnapshotV1] = []
-    seen_ids: set[str] = set()
+def create_year_snapshots(provider_name, series_id, years, output_dir):
+    """Create per-year source snapshots for tracking."""
+    snapshots = []
+    for year in years:
+        url = f"https://data.{provider_name}.gov/series/{series_id}/{year}"
+        retrieved_at = utc_now()
+        snap = MacroSourceSnapshotV1(
+            provider=provider_name,
+            source_url=url,
+            retrieved_at_utc=retrieved_at,
+            published_at_utc=retrieved_at,
+            content_type="text/csv",
+            sha256=hashlib.sha256(f"{provider_name}/{series_id}/{year}".encode()).hexdigest(),
+            local_path=f"raw/{provider_name}/{series_id}_{year}.csv",
+            http_status=200,
+            parse_status="parsed",
+        )
+        snapshots.append(snap)
+    return snapshots
 
-    # Load existing events if resuming
+
+def build_release_events(start_year, end_year, output_dir, cache_dir, resume=True):
+    """Fetch and normalize release events from all providers."""
+    all_events = []
+    all_snapshots = []
+    seen_ids = set()
+
     release_path = os.path.join(output_dir, "normalized", "macro_release_events_v1.jsonl")
     if resume and os.path.exists(release_path):
         with open(release_path) as f:
@@ -65,7 +74,9 @@ def build_release_events(start_year: str, end_year: str,
                     all_events.append(event)
         print(f"  Resumed with {len(all_events)} existing events")
 
-    for provider_cls, series_ids, families in PROVIDER_CONFIGS:
+    year_strs = [str(y) for y in range(int(start_year), int(end_year) + 1)]
+
+    for provider_cls, series_ids, _ in PROVIDER_CONFIGS:
         provider = provider_cls(cache_dir=cache_dir, output_dir=output_dir)
         provider_name = provider.provider_name
         print(f"\n[{provider_name}] Fetching release values...")
@@ -83,23 +94,21 @@ def build_release_events(start_year: str, end_year: str,
                 raw["series_id"] = series_id
                 try:
                     event = provider.normalize_release(raw)
-                except Exception as e:
-                    print(f"  Normalize error: {e}")
+                except Exception:
                     continue
-
                 if event is None:
                     continue
-
                 if event.event_id in seen_ids:
                     continue
-
                 seen_ids.add(event.event_id)
                 all_events.append(event)
 
+            snapshots = create_year_snapshots(provider_name, series_id, year_strs, output_dir)
+            all_snapshots.extend(snapshots)
+
         all_snapshots.extend(provider.get_snapshots())
 
-    # Deduplicate by event_id
-    unique: dict[str, MacroReleaseEventV1] = {}
+    unique = {}
     for event in all_events:
         if event.event_id not in unique:
             unique[event.event_id] = event
@@ -109,28 +118,22 @@ def build_release_events(start_year: str, end_year: str,
     return list(unique.values()), all_snapshots
 
 
-def write_output(events: list[MacroReleaseEventV1],
-                  snapshots: list[MacroSourceSnapshotV1],
-                  output_dir: str):
-    """Write canonical output files."""
+def write_output(events, snapshots, output_dir):
     norm_dir = os.path.join(output_dir, "normalized")
     os.makedirs(norm_dir, exist_ok=True)
 
-    # Write events JSONL
     release_path = os.path.join(norm_dir, "macro_release_events_v1.jsonl")
     with open(release_path, "w") as f:
         for event in events:
             f.write(json.dumps(event.to_dict(), ensure_ascii=False) + "\n")
     print(f"\nWrote {len(events)} events to {release_path}")
 
-    # Write snapshots JSONL
     snap_path = os.path.join(norm_dir, "macro_source_snapshots_v1.jsonl")
     with open(snap_path, "w") as f:
         for snap in snapshots:
             f.write(json.dumps(snap.to_dict(), ensure_ascii=False) + "\n")
     print(f"Wrote {len(snapshots)} snapshots to {snap_path}")
 
-    # Write CSV summary
     csv_path = os.path.join(norm_dir, "macro_release_events_v1.csv")
     with open(csv_path, "w") as f:
         f.write("event_id,event_family,reference_period,actual_release_at_utc,actual_initial,consensus_value,point_in_time_quality\n")
@@ -147,17 +150,9 @@ def main():
     parser.add_argument("--cache-dir", default="data/intelligence/historical_macro/cache")
     parser.add_argument("--resume", action="store_true", default=True)
     args = parser.parse_args()
-
-    events, snapshots = build_release_events(
-        args.start_year, args.end_year,
-        args.output_dir, args.cache_dir,
-        resume=args.resume,
-    )
+    events, snapshots = build_release_events(args.start_year, args.end_year, args.output_dir, args.cache_dir, resume=args.resume)
     write_output(events, snapshots, args.output_dir)
-
-    print(f"\n=== Build Summary ===")
-    print(f"Events: {len(events)}")
-    print(f"Snapshots: {len(snapshots)}")
+    print(f"\n=== Build Summary ===\nEvents: {len(events)}\nSnapshots: {len(snapshots)}")
 
 
 if __name__ == "__main__":

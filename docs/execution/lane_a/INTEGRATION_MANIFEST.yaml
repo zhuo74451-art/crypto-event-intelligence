@@ -1,14 +1,14 @@
 producer_lane: lane_a_historical_macro_evidence
 producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
-producer_head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+producer_head_sha: 7cbfb6e
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
 
 contracts:
   release_events:
     path: data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
     schema: schemas/intelligence/historical_macro/macro_release_event_v1.schema.json
-    record_count: 0
-    sha256: ""
+    record_count: 1658
+    sha256: "d0f143888a6d863b2014fd40e09cde958b835f32940d1f963c8d3451a594875e"
   consensus_observations:
     path: data/intelligence/historical_macro/normalized/macro_consensus_observations_v1.jsonl
     schema: schemas/intelligence/historical_macro/macro_consensus_observation_v1.schema.json
@@ -21,15 +21,22 @@ contracts:
     sha256: ""
   sqlite_index:
     path: data/intelligence/historical_macro/indexes/macro_evidence_v1.sqlite
-    sha256: ""
+    sha256: "2c7a8884ba8b064415c62896f9f43d70d9cec3f306b45c6dadf488420a69a2fa"
 
 coverage:
-  start_date: ""
-  end_date: ""
-  event_families: []
-  official_release_records: 0
+  start_date: "2010-01"
+  end_date: "2026-12"
+  event_families:
+    - us_cpi
+    - us_core_cpi
+    - us_nonfarm_payrolls
+    - us_unemployment_rate
+    - us_core_pce
+    - us_fomc_rate_decision
+  official_release_records: 1658
   non_missing_consensus_events: 0
-  pit_quality_distribution: {}
+  pit_quality_distribution:
+    missing: 1658
 
 consumer_notes:
   - use actual_initial for historical replay
