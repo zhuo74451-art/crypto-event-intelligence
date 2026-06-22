@@ -1,54 +1,77 @@
-# Intelligence Kernel Acceptance V1
+# Intelligence Kernel Acceptance V1 — Final Seal
 
-## Summary
+## Identity
 
-The Intelligence Kernel Foundation V1 prototype has been repaired and sealed.
+```text
+Implementation SHA:
+d749688062f38a3776a7b7c1dc2049f5007e062b
 
-## P0 Fixes
+Evidence Seal Base:
+0f05301d927012e2aa79b08c95c9bae95a6da39f
 
-| Issue | Status | How Verified |
-|-------|--------|-------------|
-| Vote counting removed | ✅ | Arbitration now uses rule IDs ARB-001 through ARB-013 |
-| Evidence/regime used in eligibility | ✅ | 12-check eligibility pipeline (E01-E12) |
-| Ineligible structure fixed | ✅ | IneligibleHypothesis + EligibilityDecision contracts |
-| Structured claim conflict | ✅ | claim_key + Stance-based conflict detection |
-| Staleness enforced | ✅ | StalenessPolicy with 6 modes |
-| Event state machine fixed | ✅ | Pure function, idempotent, no mutation |
+Branch:
+fix/intelligence-kernel-foundation-v1-seal
+```
 
-## P1 Fixes
+## Verified Semantics
 
-| Issue | Status | How Verified |
-|-------|--------|-------------|
-| Stable IDs | ✅ | Hash-based deterministic IDs for bundles and arbitration |
-| Manifest | ✅ | Uses implementation_head_sha + manifest_parent_sha |
-| Documentation | ✅ | ARCHITECTURE.md links fixed |
-| Execution log | ✅ | New repair log created |
-| Test baseline | ✅ | Test matrix script created |
+- Cluster internal voting prohibited (direction set, not member count)
+- Mixed cluster (3 bull + 1 bear in same origin) -> ARB-008, CONFLICT_UNRESOLVED
+- Missing context produces exactly 12 Eligibility Decisions (E01-E12)
+- Missing required_inputs -> INSUFFICIENT quality (not MODERATE)
+- Missing regime data -> INSUFFICIENT quality (not MODERATE)
+- Missing transmission data -> INSUFFICIENT quality (not MODERATE)
+- Only STRONG clusters form directional chains (MODERATE does not count)
+- Valid transmission conflicts -> ARB-011, CONFLICT_UNRESOLVED
+- Invalid transmission structure -> E12 ineligible
+- Multi-time-horizon preserved (short_term bullish + medium_term bearish = separate)
+- Revision/state correction supports as-known-then replay
+- Canonical content-based arbitration ID (sorted hypothesis IDs + context fingerprints)
 
 ## Test Results
 
-| Suite | Pass | Fail | Notes |
-|-------|------|------|-------|
-| Intelligence tests | 191 | 0 | All original tests pass |
-| Full repository | 3104 | 8 | 8 pre-existing baseline failures |
-| Seal checks | 21 | 0 | All P0/P1 verification checks pass |
+| Test Suite | Passed | Failed |
+|------------|--------|--------|
+| Intelligence tests | 206 | 0 |
+| Golden cases | 8 | 0 |
+| Precision patch | 7 | 0 |
+| Semantic seal checks | 24 | 0 |
+| Schema drift | 0 | — |
+| Contract validation | 0 errors | — |
+| Compilation | OK | — |
+| Repository full matrix | 3119 | 8 (pre-existing baseline) |
 
-## Schema
+Artifacts:
+- Matrix JSON: `docs/intelligence/test_evidence/shared_base_final_seal_v5.json`
+- Matrix MD: `docs/intelligence/test_evidence/shared_base_final_seal_v5.md`
+- Intelligence log: `docs/intelligence/test_evidence/shared_base_intelligence_v5.txt`
 
-| Check | Status |
-|-------|--------|
-| Export from models | ✅ |
-| Drift check | ✅ |
-| All 10 schemas valid | ✅ |
+## Known Baseline Failures
 
-## Security & Compliance
+```text
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestForbiddenImports::test_clean_import_passes
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestCredentialScanner::test_clean_file_passes
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_credentials
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_forbidden_import
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_send
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_trading
+tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_html_passes
+tests/post_mvp/telegram/test_tg_renderer_hardening.py::TestErrorDesensitization::test_2_http_error_safe_summary
+```
 
-background_process_enabled: false
-cron_enabled: false
-systemd_enabled: false
-llm_api_used: false
-paid_api_used: false
-private_credential_used: false
-vector_database_added: false
-agent_framework_added: false
-trading_execution_added: false
+## Known Limitations
+
+- Real calibration artifacts still require the Validation Track
+- Acquisition-layer real data integration pending
+- This is an internal read-only kernel — no trading execution
+- Draft PR requires manual creation via GitHub web UI (`gh` CLI not available)
+
+## Compliance
+
+- ✅ No LLM API calls
+- ✅ No vector database
+- ✅ No agent framework  
+- ✅ No trading execution
+- ✅ No background processes
+- ✅ No paid API
+- ✅ No credentials used

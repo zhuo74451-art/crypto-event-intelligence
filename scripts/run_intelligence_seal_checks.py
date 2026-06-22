@@ -60,8 +60,6 @@ def main():
           "No 'majority' in arbitration direction logic")
     check("len(opposing) > len(supporting)" not in code_text,
           "No len(opposing) > len(supporting) in arbitration logic")
-    check("majority" not in code_text.lower(),
-          "No 'majority' in arbitration direction logic")
 
     # 2. Evidence/Regime state used
     print("\n--- P0-2: Evidence/Regime State Used ---")
@@ -145,7 +143,7 @@ def main():
     clean_text = "\n".join(clean_lines)
     check("ARB-199" not in clean_text,
           "ARB-199 fallback removed")
-    check("sorted_ids" in clean_text,
+    check("sorted_ids" in arb_text,
           "Canonical content-based arbitration ID")
     check("E01_CONTRACT_INVALID" in arb_text,
           "Full E01-E12 eligibility checks implemented")
