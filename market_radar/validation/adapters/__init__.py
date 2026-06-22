@@ -1,0 +1,1 @@
+"""Integration stubs and adapters."""
