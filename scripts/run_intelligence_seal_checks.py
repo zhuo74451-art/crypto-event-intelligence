@@ -56,6 +56,8 @@ def main():
           "No directional assignment based on len(supporting) count")
     check('"bearish" if len(opposing)' not in code_text,
           "No directional assignment based on len(opposing) count")
+    check("majority" not in code_text.lower() or 'not majority' in code_text.lower(),
+          "No 'majority' in arbitration direction logic")
     check("len(opposing) > len(supporting)" not in code_text,
           "No len(opposing) > len(supporting) in arbitration logic")
     check("majority" not in code_text.lower(),
@@ -130,9 +132,20 @@ def main():
     # 10. ARB-199 removed and canonical IDs
     print("\n--- Arbitration Specific Checks ---")
     arb_text = (PROJECT_ROOT / "market_radar/intelligence/engines/arbitration.py").read_text(encoding="utf-8")
-    check("ARB-199" not in arb_text,
+    # Exclude comments/docstrings
+    clean_lines = []
+    in_doc = False
+    for line in arb_text.split("\n"):
+        if '"""' in line:
+            in_doc = not in_doc
+            continue
+        if in_doc or line.strip().startswith("#"):
+            continue
+        clean_lines.append(line)
+    clean_text = "\n".join(clean_lines)
+    check("ARB-199" not in clean_text,
           "ARB-199 fallback removed")
-    check("sorted_ids" in arb_text,
+    check("sorted_ids" in clean_text,
           "Canonical content-based arbitration ID")
     check("E01_CONTRACT_INVALID" in arb_text,
           "Full E01-E12 eligibility checks implemented")

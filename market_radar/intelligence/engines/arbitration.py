@@ -77,11 +77,20 @@ class ArbitrationEngineV1:
                     if isinstance(ev_state, dict):
                         ctx.evidence_bundle_verdict = ev_state.get("verdict", "")
                         ctx.evidence_independence_groups = ev_state.get("groups", [])
+                        ctx.evidence_quality = ev_state.get("quality", "")
                     # Convert regime_state
                     if input_data.regime_state:
                         ctx.regime_matches = input_data.regime_state.get("match", "") != "mismatch"
                         ctx.invalid_regimes = input_data.regime_state.get("invalid_regimes", [])
                         ctx.current_regime = input_data.regime_state.get("current", "")
+                        ctx.regime_quality = input_data.regime_state.get("quality", "")
+                    # Set market_confirmation from hypothesis status
+                    if h.status == HypothesisStatus.SUPPORTED:
+                        ctx.market_confirmation = "confirmed"
+                    elif h.status == HypothesisStatus.AWAITING_CONFIRMATION:
+                        ctx.market_confirmation = "awaiting"
+                    else:
+                        ctx.market_confirmation = "awaiting"
                     contexts[h.hypothesis_id] = ctx
         eligible, ineligible = self._eligibility_pipeline(
             hypotheses, input_data, contexts
@@ -266,9 +275,12 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e05(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
+            d.eligible = False
+            d.reason_codes.append(EligibilityReasonCode.E05_REQUIRED_INPUTS_MISSING)
+            d.trace.append("E05_FAIL: context missing, required inputs unavailable")
+            return d
         missing = set(ctx.required_inputs) - set(ctx.available_inputs)
         if missing:
             d.eligible = False
@@ -281,9 +293,13 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e06(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
+            d.eligible = False
+            d.reason_codes.append(EligibilityReasonCode.E06_EVIDENCE_MINIMUM_NOT_MET)
+            d.evidence_status = "missing"
+            d.trace.append("E06_FAIL: context missing, evidence state unavailable")
+            return d
         insufficient_verdicts = {"insufficient", "missing", "unsupported", ""}
         if ctx.evidence_bundle_verdict in insufficient_verdicts:
             d.eligible = False
@@ -297,9 +313,12 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e07(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
+            d.eligible = True
+            d.evidence_status = "unknown"
+            d.trace.append("E07_OK: conflict cannot be established, evidence state absent")
+            return d
         if ctx.evidence_bundle_verdict == "conflicting":
             d.eligible = False
             d.reason_codes.append(EligibilityReasonCode.E07_EVIDENCE_CONFLICTING)
@@ -312,9 +331,12 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e08(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
+            d.eligible = True
+            d.regime_status = "unavailable"
+            d.trace.append("E08_OK: regime state unavailable, not blocked")
+            return d
         # No regime data at all — pass with warning (not strong but not blocked)
         if not ctx.current_regime and not ctx.invalid_regimes:
             d.eligible = True
@@ -343,9 +365,12 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e10(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
+            d.eligible = False
+            d.reason_codes.append(EligibilityReasonCode.E10_INVALIDATION_TRIGGERED)
+            d.trace.append("E10_FAIL: context missing, invalidation state unavailable")
+            return d
         if ctx.invalidation_triggered:
             d.eligible = False
             d.reason_codes.append(EligibilityReasonCode.E10_INVALIDATION_TRIGGERED)
@@ -356,9 +381,12 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e11(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
+            d.eligible = False
+            d.reason_codes.append(EligibilityReasonCode.E11_CONFIDENCE_INVALID)
+            d.trace.append("E11_FAIL: context missing, confidence representation unavailable")
+            return d
         if ctx.confidence_type == "calibrated_probability" and not ctx.calibration_artifact_ref:
             d.eligible = False
             d.reason_codes.append(EligibilityReasonCode.E11_CONFIDENCE_INVALID)
@@ -373,14 +401,13 @@ class ArbitrationEngineV1:
         return d
 
     def _check_e12(self, ctx: HypothesisArbitrationContext | None) -> EligibilityDecision | None:
+        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id if ctx else "unknown")
         if ctx is None:
-            return None
-        d = EligibilityDecision(hypothesis_id=ctx.hypothesis_id)
-        if ctx.transmission_conflicts:
             d.eligible = False
             d.reason_codes.append(EligibilityReasonCode.E12_TRANSMISSION_INVALID)
-            d.trace.append(f"E12_FAIL: transmission conflicts={ctx.transmission_conflicts}")
-        elif ctx.transmission_coherence == "invalid":
+            d.trace.append("E12_FAIL: context missing, transmission state unavailable")
+            return d
+        if ctx.transmission_coherence == "invalid":
             d.eligible = False
             d.reason_codes.append(EligibilityReasonCode.E12_TRANSMISSION_INVALID)
             d.trace.append("E12_FAIL: transmission coherence invalid")
@@ -503,15 +530,27 @@ class ArbitrationEngineV1:
         return bull, bear, all_clusters
 
     def _cluster_direction(self, members: list[EligibleHypothesis]) -> str:
-        bullish = sum(1 for m in members if m.expected_effect.lower() in
-                      ("bullish", "positive", "up", "long"))
-        bearish = sum(1 for m in members if m.expected_effect.lower() in
-                      ("bearish", "negative", "down", "short"))
-        if bullish > bearish:
-            return "bullish"
-        elif bearish > bullish:
-            return "bearish"
-        return "neutral"
+        """Determine cluster direction from SET of directions, not count comparison.
+
+        Rules:
+        - All members same direction -> that direction
+        - Only neutral -> neutral
+        - Mixed directions (bullish + bearish) -> mixed (not majority)
+        """
+        directions = set()
+        bull_set = {"bullish", "positive", "up", "long"}
+        bear_set = {"bearish", "negative", "down", "short"}
+        for m in members:
+            e = m.expected_effect.lower()
+            if e in bull_set:
+                directions.add("bullish")
+            elif e in bear_set:
+                directions.add("bearish")
+        if len(directions) == 0:
+            return "neutral"
+        if len(directions) == 1:
+            return list(directions)[0]
+        return "mixed"
 
     # ── Quality Computation ───────────────────────────────────────────────
 
@@ -525,39 +564,106 @@ class ArbitrationEngineV1:
             best_verdict = QualityLevel.INSUFFICIENT
             all_confirmed = True
             any_confirmed = False
+            all_inputs_available = True
+            has_required_inputs = False
+            regime_data_present = False
+            regime_ok = False
+            transmission_data_present = False
+            transmission_ok = False
+            has_calibration = False
+
             for hid in c.hypotheses:
                 h = hyp_lookup.get(hid)
                 if not h:
                     continue
+                # Evidence quality from verdict
                 v = h.evidence_bundle_verdict
-                if v in ("verified_multi_source", "verified_primary"):
+                if v in ("verified_multi_source", "verified_primary",
+                         "verified_primary_with_secondary_support"):
                     best_verdict = QualityLevel.STRONG
                 elif v in ("credible_secondary",) and best_verdict != QualityLevel.STRONG:
                     best_verdict = QualityLevel.MODERATE
                 elif v in ("single_source_unverified",) and best_verdict == QualityLevel.INSUFFICIENT:
                     best_verdict = QualityLevel.WEAK
+                elif v in ("", "missing", "unsupported", "retracted", "insufficient"):
+                    if best_verdict == QualityLevel.INSUFFICIENT:
+                        best_verdict = QualityLevel.INSUFFICIENT
+                # Market confirmation from field
                 if h.market_confirmation == "confirmed":
                     any_confirmed = True
                 else:
                     all_confirmed = False
+                # Strategy state
                 if h.strategy_state in ("supported", "confirmed"):
                     dims.strategy_state_quality = QualityLevel.STRONG
                 elif h.strategy_state in ("triggered", "awaiting_confirmation", "active", "candidate"):
                     if dims.strategy_state_quality != QualityLevel.STRONG:
                         dims.strategy_state_quality = QualityLevel.MODERATE
+                else:
+                    dims.strategy_state_quality = QualityLevel.INSUFFICIENT
+                # Input completeness from actual data
+                if h.required_inputs:
+                    has_required_inputs = True
+                    if set(h.required_inputs) - set(h.available_inputs):
+                        all_inputs_available = False
+                # Regime from actual data
+                if h.current_regime_matches or h.invalid_regimes or h.regime_quality:
+                    regime_data_present = True
+                    if h.current_regime_matches and h.regime_quality != "insufficient":
+                        regime_ok = True
+                # Transmission from actual data
+                if h.transmission_signature or h.transmission_coherence:
+                    transmission_data_present = True
+                    if h.transmission_coherence in ("strong", "valid", "moderate"):
+                        transmission_ok = True
+                # Calibration
+                if h.calibration_artifact_ref:
+                    has_calibration = True
 
+            # Evidence quality
             dims.evidence_quality = best_verdict
-            dims.input_completeness = QualityLevel.MODERATE
-            dims.regime_fit = QualityLevel.MODERATE
-            dims.market_confirmation_quality = (
-                QualityLevel.STRONG if all_confirmed else
-                QualityLevel.MODERATE if any_confirmed else
-                QualityLevel.INSUFFICIENT
-            )
-            dims.transmission_coherence = QualityLevel.MODERATE
-            dims.calibration_quality = QualityLevel.INSUFFICIENT
+
+            # Input completeness: if no required_inputs declared, moderate (not blocked)
+            if not has_required_inputs:
+                dims.input_completeness = QualityLevel.MODERATE
+            elif all_inputs_available:
+                dims.input_completeness = QualityLevel.STRONG
+            else:
+                dims.input_completeness = QualityLevel.INSUFFICIENT
+
+            # Regime fit: if no data, moderate
+            if not regime_data_present:
+                dims.regime_fit = QualityLevel.MODERATE
+            elif regime_ok:
+                dims.regime_fit = QualityLevel.STRONG
+            else:
+                dims.regime_fit = QualityLevel.INSUFFICIENT
+
+            # Market confirmation
+            if all_confirmed and any_confirmed:
+                dims.market_confirmation_quality = QualityLevel.STRONG
+            elif any_confirmed:
+                dims.market_confirmation_quality = QualityLevel.MODERATE
+            else:
+                dims.market_confirmation_quality = QualityLevel.INSUFFICIENT
+
+            # Transmission coherence: requires data, not default moderate
+            if not transmission_data_present:
+                dims.transmission_coherence = QualityLevel.INSUFFICIENT
+            elif transmission_ok:
+                dims.transmission_coherence = QualityLevel.STRONG
+            else:
+                dims.transmission_coherence = QualityLevel.INSUFFICIENT
+
+            # Calibration
+            if has_calibration:
+                dims.calibration_quality = QualityLevel.MODERATE
+            else:
+                dims.calibration_quality = QualityLevel.INSUFFICIENT
+
             c.quality_dimensions = dims
 
+            # Strong chain check
             strong_req = [
                 dims.evidence_quality in (QualityLevel.STRONG, QualityLevel.MODERATE),
                 dims.input_completeness in (QualityLevel.STRONG, QualityLevel.MODERATE),
@@ -570,9 +676,10 @@ class ArbitrationEngineV1:
                 c.quality = QualityLevel.STRONG
             elif dims.evidence_quality == QualityLevel.WEAK:
                 c.quality = QualityLevel.WEAK
-            elif any(d == QualityLevel.INSUFFICIENT for d in
-                     [dims.evidence_quality, dims.input_completeness, dims.regime_fit,
-                      dims.market_confirmation_quality]):
+            elif any(d == QualityLevel.INSUFFICIENT for d in [
+                dims.evidence_quality, dims.input_completeness, dims.regime_fit,
+                dims.market_confirmation_quality,
+            ]):
                 c.quality = QualityLevel.INSUFFICIENT
             else:
                 c.quality = QualityLevel.MODERATE
@@ -605,8 +712,27 @@ class ArbitrationEngineV1:
         trace.support_clusters = bull_clusters
         trace.opposing_clusters = bear_clusters
 
-        strong_bull = any(c.quality in (QualityLevel.STRONG, QualityLevel.MODERATE) for c in bull_clusters)
-        strong_bear = any(c.quality in (QualityLevel.STRONG, QualityLevel.MODERATE) for c in bear_clusters)
+        # Filter out mixed-direction clusters — they cannot contribute directionally
+        clean_bull = [c for c in bull_clusters if c.direction == "bullish"]
+        clean_bear = [c for c in bear_clusters if c.direction == "bearish"]
+        mixed_clusters = [c for c in bull_clusters + bear_clusters if c.direction == "mixed"]
+
+        strong_bull = any(c.quality in (QualityLevel.STRONG, QualityLevel.MODERATE) for c in clean_bull)
+        strong_bear = any(c.quality in (QualityLevel.STRONG, QualityLevel.MODERATE) for c in clean_bear)
+
+        # ARB-008: Mixed cluster with internal direction conflict
+        rule_ids.append("ARB-008")
+        if mixed_clusters and not clean_bull and not clean_bear:
+            # Mixed cluster is the only cluster — cannot determine direction
+            trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
+            trace.rule_id_selected = "ARB-008"
+            trace.limitations.append("Dependent cluster with internal direction conflict — cannot resolve")
+            trace.rule_ids_evaluated = list(rule_ids)
+            for mc in mixed_clusters:
+                trace.transmission_conflicts.append(f"Mixed cluster {mc.cluster_id}: {mc.direction}")
+            return self._build_assessment(horizon, trace, support_ids, oppose_ids,
+                                          alt_ids, missing_confirmations,
+                                          ["Internal direction conflict in dependent cluster"])
 
         # ── Evaluate rules in order ──
 
@@ -618,6 +744,25 @@ class ArbitrationEngineV1:
             trace.limitations.append("No eligible hypotheses")
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
+
+        # ARB-011: Unresolved transmission conflict
+        rule_ids.append("ARB-011")
+        transmission_conflicts_found = False
+        for h in hypotheses:
+            if h.transmission_coherence == "invalid":
+                transmission_conflicts_found = True
+                break
+        # Also check for transmission_conflicts across hypotheses
+        if hasattr(trace, 'transmission_conflicts') and trace.transmission_conflicts:
+            transmission_conflicts_found = True
+        if transmission_conflicts_found:
+            trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
+            trace.rule_id_selected = "ARB-011"
+            trace.limitations.append("Unresolved transmission conflicts prevent directional conclusion")
+            trace.rule_ids_evaluated = list(rule_ids)
+            return self._build_assessment(horizon, trace, support_ids, oppose_ids,
+                                          alt_ids, missing_confirmations,
+                                          ["Transmission conflict detected"])
 
         # ARB-002: Only awaiting confirmation
         rule_ids.append("ARB-002")
@@ -631,10 +776,10 @@ class ArbitrationEngineV1:
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-        # ARB-003: Only one side has strong chain AND the other side has no clusters at all
+        # ARB-003: Only one side has strong chain AND the other side has no clean clusters
         rule_ids.append("ARB-003")
-        only_bull_has_clusters = bool(bull_clusters) and not bear_clusters
-        only_bear_has_clusters = bool(bear_clusters) and not bull_clusters
+        only_bull_has_clusters = bool(clean_bull) and not clean_bear
+        only_bear_has_clusters = bool(clean_bear) and not clean_bull
         if strong_bull and only_bull_has_clusters:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-003"
