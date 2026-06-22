@@ -1,10 +1,89 @@
-task: INTELLIGENCE_KERNEL_ARBITRATION_FINAL_SEAL_V2
-branch: fix/intelligence-kernel-foundation-v1-seal
-base_sha: 54807787a1471a57f56901469438b5d5d6f19de0
-head_sha: 54807787a1471a57f56901469438b5d5d6f19de0
-goal_mode_used: false
-plan_mode_used: false
-current_milestone: "1-add-context-contract"
-next_exact_action: "Add HypothesisArbitrationContext to arbitration.py contracts"
-tests_last_run: "199 passed, 8 golden"
-known_failures: "8 pre-existing baseline"
+task: INTELLIGENCE_KERNEL_ARBITRATION_PRECISION_PATCH_V3
+verdict: all_checks_passed
+
+project:
+  local_path: C:\Users\zhuo7\Desktop\市场信号\crypto-event-intelligence
+  github_url: https://github.com/zhuo74451-art/crypto-event-intelligence
+
+git:
+  required_start_sha: 1f809128f03a0909880c198ba2f4389dcb24e040
+  branch: fix/intelligence-kernel-foundation-v1-seal
+  implementation_head_sha: 895b8020d2d64b1645c89be6cb12a68820e22b6b
+  final_local_sha: df06082587a3db5d6384a2012f43fade356119f3
+  final_remote_sha: df06082587a3db5d6384a2012f43fade356119f3
+  local_remote_equal: true
+  commits: 3 (code patch + test update + doc)
+
+mode:
+  goal_mode_used: false
+  plan_mode_used: false
+
+cluster_direction:
+  member_count_comparison_removed: true
+  mixed_direction_cluster_supported: true
+  internal_conflict_preserved: true
+  mixed_cluster_cannot_directional: true
+  test_node_ids:
+    - TestClusterDirection::test_cluster_direction_no_member_majority
+    - TestClusterDirection::test_three_bull_one_bear_same_origin_is_mixed
+    - TestClusterDirection::test_pure_bull_cluster_is_bullish
+    - TestClusterDirection::test_pure_bear_cluster_is_bearish
+
+eligibility:
+  decisions_per_hypothesis: 12
+  missing_context_ineligible: true
+  no_checks_skipped: true
+  legacy_data_not_invented: true
+  test_node_ids:
+    - TestEligibilityCompleteness::test_missing_context_produces_12_decisions
+    - TestEligibilityCompleteness::test_missing_context_is_ineligible
+    - TestEligibilityCompleteness::test_all_12_decisions_have_trace_entries
+
+quality:
+  evidence_from_context: true
+  input_completeness_from_context: true
+  regime_fit_from_context: true
+  confirmation_from_context: true
+  transmission_from_context: true
+  calibration_from_context: true
+  fixed_placeholder_levels_removed: true
+  test_node_ids:
+    - TestQualityMapping::test_missing_transmission_is_not_moderate
+    - TestQualityMapping::test_complete_context_produces_strong_chain
+    - TestQualityMapping::test_one_insufficient_blocks_strong_chain
+
+arb011:
+  executable_path_present: true
+  valid_conflict_selects_arb011: true
+  invalid_contract_fails_e12: true
+  precedes_directional_rules: true
+  test_node_ids:
+    - TestArb011::test_transmission_conflict_selects_arb011
+    - TestArb011::test_invalid_transmission_fails_e12
+
+tests:
+  intelligence_passed: 212
+  intelligence_failed: 0
+  precision_patch_passed: 13
+  golden_passed: 8
+  seal_checks_passed: 24
+  repository_passed: 3112
+  repository_failed: 8
+  repository_skipped: 3
+  repository_timeouts: 0
+  failed_node_ids: [8 pre-existing baseline]
+  new_failure_node_ids: []
+  new_timeout_node_ids: []
+
+security:
+  cross_lane_files_touched: []
+  network_calls_added: false
+  paid_api_used: false
+  llm_api_used: false
+  background_process_added: false
+  trading_execution_added: false
+  wallet_or_secret_touched: false
+
+remaining_limitations:
+  - Draft PR requires GitHub CLI ('gh' not available)
+  - Real calibration artifacts require validation track
