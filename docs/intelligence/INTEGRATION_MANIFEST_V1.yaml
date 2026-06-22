@@ -1,44 +1,37 @@
 task: INTELLIGENCE_KERNEL_FOUNDATION_V1_REPAIR_AND_SEAL
-original_base_sha: fc9b76f8a3cfc84bc384b145bd93dda41006e68f
+repository: zhuo74451-art/crypto-event-intelligence
+github_url: https://github.com/zhuo74451-art/crypto-event-intelligence
+
+original_main_sha: fc9b76f8a3cfc84bc384b145bd93dda41006e68f
 original_kernel_sha: 6808ebac499011d3904be1783f2e751d6f0af14c
 repair_branch: fix/intelligence-kernel-foundation-v1-seal
 
 implementation_head_sha: ""
-manifest_parent_sha: 6808ebac499011d3904be1783f2e751d6f0af14c
+manifest_parent_sha: ""
 final_branch_sha_reported_externally: true
 
 goal_mode_used: false
 plan_mode_used: false
 
-contracts:
-  - evidence.py (Stance, StalenessPolicy, EvidenceDecisionTrace, structured claim)
-  - arbitration.py (EligibilityDecision, IneligibleHypothesis, support clusters)
-  - event.py (STATE_CORRECTION, transitions history)
-  - assessment.py (unchanged)
-  - calibration.py (unchanged)
-
-engines:
-  - evidence_resolver.py (structured conflict, staleness, verdict rules, trace)
-  - event_state_machine.py (pure function, idempotent, no mutation)
-  - arbitration.py (12-check eligibility, rule-based verdict, NO vote counting)
-  - strategy_lifecycle.py (unchanged)
-
-schemas: 10 schemas exported, no drift
+golden_cases:
+  expected: 8
+  passed: 8
+  failed: 0
 
 tests:
-  intelligence: 191 passed
-  full: 3104 passed, 8 failed (pre-existing baseline)
+  intelligence: 199 passed (191 original + 8 golden)
+  seal_checks: 21 passed, 0 failed
+  schema_drift: 0
 
 known_failures:
-  - QA framework: TestForbiddenImports, TestCredentialScanner, TestSyntheticSafeTargetPass (4 tests)
-  - Telegram renderer: test_2_http_error_safe_summary
-  - All 8 are pre-existing baseline failures
+  - test_qa_foundation.py::TestForbiddenImports::test_clean_import_passes
+  - test_qa_foundation.py::TestCredentialScanner::test_clean_file_passes
+  - test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_credentials
+  - test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_forbidden_import
+  - test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_send
+  - test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_trading
+  - test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_html_passes
+  - test_tg_renderer_hardening.py::TestErrorDesensitization::test_2_http_error_safe_summary
 
-known_timeouts: none
-known_limitations:
-  - No real calibration artifacts (requires validation track)
-  - No formal acquisition layer integration
-  - Legacy adapters still lossy for some fields
-
-merge_readiness: ready_for_review
+merge_readiness: ready_for_integration_review
 rollback: git checkout main && git branch -D fix/intelligence-kernel-foundation-v1-seal
