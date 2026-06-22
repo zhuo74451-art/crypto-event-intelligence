@@ -1,0 +1,76 @@
+task: "POINT_IN_TIME_ACQUISITION_AND_EVIDENCE_V1"
+branch: "feat/point-in-time-acquisition-evidence-v1"
+base_sha: "fc9b76f8a3cfc84bc384b145bd93dda41006e68f"
+final_sha: ""
+
+goal_mode_used: false
+plan_mode_used: false
+
+owned_paths:
+  - "market_radar/acquisition/"
+  - "schemas/acquisition/"
+  - "tests/acquisition/"
+  - "docs/acquisition/"
+  - "fixtures/acquisition/"
+  - "scripts/export_acquisition_schemas.py"
+  - "scripts/validate_acquisition_contracts.py"
+  - "scripts/run_acquisition_pilot_once.py"
+
+contracts_produced:
+  - "SourceContract (10 sources registered)"
+  - "FiveTimestamps (published_at, effective_at, updated_at, first_seen_at, retrieved_at)"
+  - "TimestampEvidence, TimestampQuality, TimestampAnomaly"
+  - "RawDocument"
+  - "NormalizedObservation (NO market direction fields)"
+  - "ObservationStatus"
+  - "RevisionRecord, RevisionType (10 types), RevisionLineage"
+  - "AcquisitionError (25 error codes)"
+  - "HealthStatus, HealthIndicator, SourceHealthReport"
+  - "DriftSeverity, ParserDriftReport"
+  - "ReplayMode, ReplayQuery, ReplayResult"
+
+adapters_produced:
+  - "BaseAcquisitionAdapter (ABC)"
+  - "RssAdapter"
+  - "SecEdgarAdapter"
+  - "FederalRegisterAdapter"
+  - "FederalReserveAdapter"
+  - "GitHubReleasesAdapter"
+  - "GitHubSecurityAdvisoriesAdapter"
+  - "StaticHtmlAdapter"
+
+services_only_stubbed:
+  - "ChangedetectionClientProtocol (FakeChangedetectionClient)"
+  - "ArchiveClientProtocol (FakeArchiveBoxClient)"
+  - "NotificationClientProtocol (DryRunNotificationClient)"
+
+dependencies_added:
+  - "httpx (BSD-3-Clause) — HTTP transport"
+  - "trafilatura (Apache-2.0) — HTML extraction (optional)"
+  - "feedparser (MIT) — RSS parsing"
+  - "PyYAML (MIT) — YAML registry loading"
+
+licenses:
+  - "BSD-3-Clause"
+  - "Apache-2.0"
+  - "MIT"
+
+real_network_sources: 0 (dry-run only)
+real_sample_count: 0 (fixture)
+fixture_count: 8 observations across 4 sources
+
+background_processes: false
+paid_apis: false
+credentials_used: false
+
+acquisition_tests_passed: 90
+final_tests: "acquisition: 90 passed"
+
+known_limitations:
+  - "Live network pilot requires API endpoint access"
+  - "BLS and BEA require free API keys"
+  - "PDF OCR not implemented"
+  - "Changedetection/ArchiveBox/Apprise are stubs only"
+  - "No persistent database (file-based storage only)"
+
+integration_requests: []
