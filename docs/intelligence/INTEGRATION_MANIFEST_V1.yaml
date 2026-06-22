@@ -1,69 +1,44 @@
-task: "INTELLIGENCE_KERNEL_FOUNDATION_V1"
-branch: "feat/intelligence-kernel-foundation-v1"
-base_sha: "fc9b76f8a3cfc84bc384b145bd93dda41006e68f"
-final_sha: ""
+task: INTELLIGENCE_KERNEL_FOUNDATION_V1_REPAIR_AND_SEAL
+original_base_sha: fc9b76f8a3cfc84bc384b145bd93dda41006e68f
+original_kernel_sha: 6808ebac499011d3904be1783f2e751d6f0af14c
+repair_branch: fix/intelligence-kernel-foundation-v1-seal
+
+implementation_head_sha: ""
+manifest_parent_sha: 6808ebac499011d3904be1783f2e751d6f0af14c
+final_branch_sha_reported_externally: true
 
 goal_mode_used: false
 plan_mode_used: false
 
-owned_paths:
-  - market_radar/intelligence/
-  - schemas/intelligence/
-  - tests/intelligence/
-  - docs/intelligence/
-  - scripts/export_intelligence_schemas.py
-  - scripts/validate_intelligence_contracts.py
+contracts:
+  - evidence.py (Stance, StalenessPolicy, EvidenceDecisionTrace, structured claim)
+  - arbitration.py (EligibilityDecision, IneligibleHypothesis, support clusters)
+  - event.py (STATE_CORRECTION, transitions history)
+  - assessment.py (unchanged)
+  - calibration.py (unchanged)
 
-changed_files:
-  added:
-    - market_radar/intelligence/__init__.py
-    - market_radar/intelligence/contracts/
-    - market_radar/intelligence/engines/
-    - market_radar/intelligence/adapters/
-    - market_radar/intelligence/serialization/
-    - market_radar/intelligence/errors/
-    - schemas/intelligence/v1/
-    - tests/intelligence/
-    - docs/intelligence/
-  modified:
-    - README.md
-    - PROJECT_MAINLINE.md
-    - docs/ARCHITECTURE.md
+engines:
+  - evidence_resolver.py (structured conflict, staleness, verdict rules, trace)
+  - event_state_machine.py (pure function, idempotent, no mutation)
+  - arbitration.py (12-check eligibility, rule-based verdict, NO vote counting)
+  - strategy_lifecycle.py (unchanged)
 
-contracts_produced:
-  - EvidenceItem, EvidenceBundle
-  - EventEntity, EventTransition
-  - RegimeDimension, RegimeSnapshot
-  - NumericExpectation, ExpectationGapResult
-  - TransmissionNode, TransmissionEdge, TransmissionGraph
-  - StrategyPack, StrategyInstance
-  - MarketHypothesis
-  - ArbitrationInput, ArbitrationOutput
-  - ConfidenceStatement, CalibrationArtifactRef
-  - MarketAssessment, HorizonDirectionAssessment
+schemas: 10 schemas exported, no drift
 
-interfaces_consumed:
-  - market_radar/shared/models.py
-
-legacy_adapters:
-  - LegacyObservationAdapter
-  - LegacySignalRegistryAdapter
-
-dependencies_added: []
-dependencies_removed: []
-
-database_changes: false
-external_services: false
-network_calls: false
+tests:
+  intelligence: 191 passed
+  full: 3104 passed, 8 failed (pre-existing baseline)
 
 known_failures:
-  - node_ids same as baseline
+  - QA framework: TestForbiddenImports, TestCredentialScanner, TestSyntheticSafeTargetPass (4 tests)
+  - Telegram renderer: test_2_http_error_safe_summary
+  - All 8 are pre-existing baseline failures
 
+known_timeouts: none
 known_limitations:
-  - No real calibrator
-  - No macro strategies
-  - Legacy confidence not upgradable
+  - No real calibration artifacts (requires validation track)
+  - No formal acquisition layer integration
+  - Legacy adapters still lossy for some fields
 
-cross_lane_requests: []
-merge_order: "Post merge"
-rollback: "git revert to previous SHA"
+merge_readiness: ready_for_review
+rollback: git checkout main && git branch -D fix/intelligence-kernel-foundation-v1-seal

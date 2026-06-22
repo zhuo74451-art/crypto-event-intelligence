@@ -4,6 +4,9 @@
     "arbitration_id": {
       "default": ""
     },
+    "arbitration_status": {
+      "default": "all_horizons_insufficient"
+    },
     "as_of_time": {},
     "asset": {
       "default": ""
@@ -12,17 +15,12 @@
       "default": "ArbitrationOutput"
     },
     "created_at": {},
-    "eligible_count": {
-      "default": 0
-    },
+    "eligible_hypotheses": {},
     "global_verdict": {
       "default": "insufficient_evidence"
     },
     "horizon_assessments": {},
-    "ineligible_count": {
-      "default": 0
-    },
-    "ineligible_reasons": {},
+    "ineligible_hypotheses": {},
     "schema_version": {
       "default": "1.0.0"
     },
@@ -40,9 +38,9 @@
     "sector",
     "horizon_assessments",
     "global_verdict",
-    "eligible_count",
-    "ineligible_count",
-    "ineligible_reasons"
+    "arbitration_status",
+    "eligible_hypotheses",
+    "ineligible_hypotheses"
   ],
   "title": "ArbitrationOutput",
   "type": "object",

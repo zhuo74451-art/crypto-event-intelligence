@@ -31,7 +31,8 @@
     },
     "title": {
       "default": ""
-    }
+    },
+    "transitions": {}
   },
   "required": [
     "contract_name",
@@ -50,7 +51,8 @@
     "revision_of",
     "reversal_of",
     "evidence_bundle_id",
-    "effective_scope"
+    "effective_scope",
+    "transitions"
   ],
   "title": "EventEntity",
   "type": "object",

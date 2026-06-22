@@ -1,8 +1,8 @@
 """Evidence contracts — evidence items, bundles, and verification status."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Optional
 
@@ -32,6 +32,23 @@ class EvidenceQualityReason(str, Enum):
     TIME_ANOMALY = "time_anomaly"
 
 
+class Stance(str, Enum):
+    SUPPORTS = "supports"
+    CONTRADICTS = "contradicts"
+    NEUTRAL = "neutral"
+    REPORTS = "reports"
+    UNKNOWN = "unknown"
+
+
+class EvidenceAvailability(str, Enum):
+    AVAILABLE = "available"
+    MISSING = "missing"
+    CONFLICTING = "conflicting"
+    STALE = "stale"
+    RETRACTED = "retracted"
+    UNSUPPORTED = "unsupported"
+
+
 @dataclass
 class EvidenceItem(ContractBase):
     """A single piece of evidence from a source."""
@@ -40,6 +57,12 @@ class EvidenceItem(ContractBase):
 
     evidence_id: str = ""
     claim: str = ""
+    claim_key: str = ""
+    claim_subject: str = ""
+    claim_predicate: str = ""
+    claim_value: str = ""
+    stance: Stance = Stance.UNKNOWN
+
     source_id: str = ""
     source_role: str = ""
 
@@ -63,6 +86,44 @@ class EvidenceItem(ContractBase):
         super().__post_init__()
         if isinstance(self.verification_status, str):
             self.verification_status = VerificationStatus(self.verification_status)
+        if isinstance(self.stance, str):
+            self.stance = Stance(self.stance)
+
+
+@dataclass
+class StalenessPolicy:
+    """Configuration for evidence staleness evaluation."""
+    policy_type: str = "never_expires"
+    max_age_days: int = 30
+    override_expires_at: Optional[str] = None
+    event_state_family: str = ""
+
+    def describe(self) -> str:
+        if self.policy_type == "never_expires":
+            return "Evidence never expires"
+        if self.policy_type == "explicit_expires_at":
+            return f"Expires at: {self.override_expires_at or 'not set'}"
+        return f"Max age: {self.max_age_days} days via {self.policy_type}"
+
+
+@dataclass
+class EvidenceResolutionPolicy:
+    """Configuration for evidence resolution behavior."""
+    staleness: StalenessPolicy = field(default_factory=StalenessPolicy)
+    require_independence_group: bool = False
+    min_primary_sources_for_multi: int = 2
+
+
+@dataclass
+class EvidenceDecisionTrace:
+    """Machine-readable trace of the evidence resolution process."""
+    rule_ids_applied: list[str] = field(default_factory=list)
+    included_evidence: list[str] = field(default_factory=list)
+    excluded_evidence: list[str] = field(default_factory=list)
+    independence_groups: list[str] = field(default_factory=list)
+    conflicts: list[dict] = field(default_factory=list)
+    staleness_decisions: dict[str, str] = field(default_factory=dict)
+    final_rule_id: str = ""
 
 
 @dataclass
@@ -93,6 +154,7 @@ class EvidenceBundle(ContractBase):
     items: list[EvidenceItem] = field(default_factory=list)
     status: BundleStatus = field(default_factory=BundleStatus)
     bundle_verdict: VerificationStatus = VerificationStatus.INSUFFICIENT
+    decision_trace: EvidenceDecisionTrace = field(default_factory=EvidenceDecisionTrace)
 
     def __post_init__(self):
         super().__post_init__()
@@ -100,3 +162,5 @@ class EvidenceBundle(ContractBase):
             self.bundle_verdict = VerificationStatus(self.bundle_verdict)
         if isinstance(self.status, dict):
             self.status = BundleStatus(**self.status)
+        if isinstance(self.decision_trace, dict):
+            self.decision_trace = EvidenceDecisionTrace(**self.decision_trace)

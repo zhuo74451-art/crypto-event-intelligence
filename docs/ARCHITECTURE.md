@@ -31,8 +31,8 @@ Recurring monitoring, production publishing, and execution are disabled by defau
 
 ## Intelligence Kernel V1
 
-The intelligence kernel () implements the first-generation
+The intelligence kernel (`market_radar/intelligence/`) implements the first-generation
 cognition layer: contracts, engines, adapters, and serialization. It provides
 evidence state, event state, regime analysis, expectation gap, transmission
 paths, strategy lifecycle, arbitration, calibration guards, and market assessment.
-See .
+See `docs/intelligence/INTELLIGENCE_KERNEL_FOUNDATION_V1.md`.

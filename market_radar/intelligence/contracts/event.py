@@ -35,6 +35,7 @@ class TransitionType(str, Enum):
     REVERSAL = "reversal"
     EXPIRY = "expiry"
     CORRECTION = "correction"
+    STATE_CORRECTION = "state_correction"
 
 
 @dataclass
@@ -58,6 +59,7 @@ class EventEntity(ContractBase):
     reversal_of: Optional[str] = None
     evidence_bundle_id: Optional[str] = None
     effective_scope: dict[str, Any] = field(default_factory=dict)
+    transitions: list[EventTransition] = field(default_factory=list)
 
     def __post_init__(self):
         super().__post_init__()

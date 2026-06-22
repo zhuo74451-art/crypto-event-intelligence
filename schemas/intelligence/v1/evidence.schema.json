@@ -8,6 +8,18 @@
     "claim": {
       "default": ""
     },
+    "claim_key": {
+      "default": ""
+    },
+    "claim_predicate": {
+      "default": ""
+    },
+    "claim_subject": {
+      "default": ""
+    },
+    "claim_value": {
+      "default": ""
+    },
     "content_hash": {
       "default": ""
     },
@@ -44,6 +56,9 @@
     "source_role": {
       "default": ""
     },
+    "stance": {
+      "default": "unknown"
+    },
     "updated_at": {},
     "verification_status": {
       "default": "insufficient"
@@ -56,6 +71,11 @@
     "as_of_time",
     "evidence_id",
     "claim",
+    "claim_key",
+    "claim_subject",
+    "claim_predicate",
+    "claim_value",
+    "stance",
     "source_id",
     "source_role",
     "published_at",
