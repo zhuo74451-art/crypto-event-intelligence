@@ -1,0 +1,17 @@
+task: OVERNIGHT_LANE_A_HISTORICAL_MACRO_EVIDENCE_FACTORY_V1
+repository: zhuo74451-art/crypto-event-intelligence
+branch: feat/overnight-lane-a-historical-macro-evidence-v1
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+
+planning_mode_used: false
+autonomous_planning_mode_used: false
+
+current_stage: bootstrap
+completed_stages: []
+next_exact_action: create macro evidence contracts
+last_test_command:
+last_test_result:
+known_failures: []
+blockers: []
+uncommitted_files: []

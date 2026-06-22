@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacroConsensusObservationV1",
+  "description": "A single consensus observation for a macro release event, sourced from a specific provider at a specific time.",
+  "type": "object",
+  "required": [
+    "consensus_observation_id", "event_id",
+    "source_name", "source_url",
+    "published_at_utc", "observed_at_utc",
+    "consensus_value", "consensus_unit",
+    "estimate_type", "point_in_time_quality"
+  ],
+  "properties": {
+    "consensus_observation_id": {"type": "string", "pattern": "^[a-f0-9]{24}$"},
+    "event_id": {"type": "string", "pattern": "^[a-f0-9]{24}$"},
+    "source_name": {"type": "string"},
+    "source_url": {"type": "string", "format": "uri"},
+    "published_at_utc": {"type": "string", "format": "date-time"},
+    "observed_at_utc": {"type": "string", "format": "date-time"},
+    "consensus_value": {"type": "number"},
+    "consensus_unit": {"type": "string"},
+    "estimate_type": {"type": "string", "enum": ["consensus_median", "consensus_mean", "single_analyst", "range_midpoint", "survey", "market_implied", "official_forecast"]},
+    "point_in_time_quality": {"type": "string", "enum": ["strict_archived_pre_event", "verified_pre_event_media", "reconstructed_multi_source", "single_source_reconstructed", "missing"]},
+    "archive_method": {"type": "string"},
+    "content_hash": {"type": "string"},
+    "independence_group": {"type": "string"},
+    "notes": {"type": "string"}
+  }
+}

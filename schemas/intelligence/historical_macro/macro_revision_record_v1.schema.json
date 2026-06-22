@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacroRevisionRecordV1",
+  "description": "A single revision to a previously published macro-economic release value.",
+  "type": "object",
+  "required": [
+    "revision_id",
+    "event_id",
+    "series_id",
+    "reference_period",
+    "revision_published_at_utc",
+    "previous_value",
+    "revised_value",
+    "revision_sequence",
+    "source_url",
+    "first_seen_at_utc"
+  ],
+  "properties": {
+    "revision_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "series_id": {
+      "type": "string"
+    },
+    "reference_period": {
+      "type": "string",
+      "pattern": "^\\d{4}-(Q[1-4]|\\d{2})$"
+    },
+    "revision_published_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "previous_value": {
+      "type": "number"
+    },
+    "revised_value": {
+      "type": "number"
+    },
+    "revision_sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "content_hash": {
+      "type": "string"
+    },
+    "first_seen_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

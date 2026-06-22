@@ -1,0 +1,39 @@
+producer_lane: lane_a_historical_macro_evidence
+producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
+producer_head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+
+contracts:
+  release_events:
+    path: data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
+    schema: schemas/intelligence/historical_macro/macro_release_event_v1.schema.json
+    record_count: 0
+    sha256: ""
+  consensus_observations:
+    path: data/intelligence/historical_macro/normalized/macro_consensus_observations_v1.jsonl
+    schema: schemas/intelligence/historical_macro/macro_consensus_observation_v1.schema.json
+    record_count: 0
+    sha256: ""
+  revision_records:
+    path: data/intelligence/historical_macro/normalized/macro_revision_records_v1.jsonl
+    schema: schemas/intelligence/historical_macro/macro_revision_record_v1.schema.json
+    record_count: 0
+    sha256: ""
+  sqlite_index:
+    path: data/intelligence/historical_macro/indexes/macro_evidence_v1.sqlite
+    sha256: ""
+
+coverage:
+  start_date: ""
+  end_date: ""
+  event_families: []
+  official_release_records: 0
+  non_missing_consensus_events: 0
+  pit_quality_distribution: {}
+
+consumer_notes:
+  - use actual_initial for historical replay
+  - use prior_as_known_then rather than latest revision
+  - consensus_value may be null
+  - missing consensus requires abstention or explicit downgrade
+  - never use retrieved_at as publication time

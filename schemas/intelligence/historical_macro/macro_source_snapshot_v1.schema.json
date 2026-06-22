@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacroSourceSnapshotV1",
+  "description": "Metadata about a raw source fetch \u2014 URL, timing, status, hash, and parse outcome.",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "provider",
+    "source_url",
+    "retrieved_at_utc",
+    "published_at_utc",
+    "content_type",
+    "sha256",
+    "http_status"
+  ],
+  "properties": {
+    "snapshot_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "bls",
+        "bea",
+        "federal_reserve",
+        "fred_alfred",
+        "public_consensus"
+      ]
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "retrieved_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "published_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string"
+    },
+    "local_path": {
+      "type": "string"
+    },
+    "http_status": {
+      "type": "integer"
+    },
+    "license_note": {
+      "type": "string"
+    },
+    "parse_status": {
+      "type": "string",
+      "enum": [
+        "parsed",
+        "partial",
+        "failed",
+        "pending"
+      ]
+    },
+    "parse_error": {
+      "type": "string"
+    }
+  }
+}
