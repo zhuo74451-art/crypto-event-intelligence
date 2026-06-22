@@ -2,13 +2,13 @@
 
 AI 驱动的加密市场认知与有效信号系统。
 
-本仓库的唯一产品方向由 [`PROJECT_MAINLINE.md`](PROJECT_MAINLINE.md) 定义。此前的 Crypto Event Intelligence、Week 1、Signal Spine、事件归因阶段计划、Personal-Use RC1 和旧交接路线均已失效。
+本仓库的唯一产品方向由 [`PROJECT_MAINLINE.md`](PROJECT_MAINLINE.md) 定义。此前的 Crypto Event Intelligence、Week 1、Signal Spine、事件归因阶段计划、Personal-Use RC1 和旧交接路线均不再具有规划权。
 
 ## 目标
 
 系统持续理解宏观、政策、新闻、市场结构、资金与仓位、链上行为、稳定币、项目基本面、注意力和叙事，并把交易员方法、科研成果、官方资料与历史市场结果编译成可验证策略组件。
 
-最终输出少量具备以下内容的市场影响判断：
+正式判断需要包含：
 
 - 方向或证据不足；
 - 影响资产与时间尺度；
@@ -40,28 +40,12 @@ AI 驱动的加密市场认知与有效信号系统。
 
 ## 当前实施边界
 
-第一项开发是一次性、只读、可重放的来源与证据Pilot：
-
-- SEC / EDGAR；
-- Congress.gov / Federal Register；
-- Federal Reserve / FRED / BLS / BEA；
-- GitHub Releases / Security Advisories；
-- Trafilatura正文抽取；
-- changedetection.io变化检测合同；
-- ArchiveBox证据归档合同；
-- Apprise通知合同。
-
-该Pilot只产出标准化Observation和来源健康证据。默认不启用后台循环、付费接口、生产发送或订单执行。
+第一项开发是一次性、只读、可重放的来源与证据Pilot，优先覆盖监管、法案、宏观和安全来源。该Pilot只产出标准化Observation和来源健康证据。默认不启用后台循环、付费接口、生产发送或订单执行。
 
 ## 当前正式文档
 
 - [主线合同](PROJECT_MAINLINE.md)
-- [项目概览](docs/PROJECT_OVERVIEW.md)
 - [系统架构](docs/ARCHITECTURE.md)
-- [当前状态](docs/PROJECT_STATUS.md)
-- [文档索引](docs/INDEX.md)
-- [底座采用矩阵](research/intelligence/foundations/FOUNDATION_ADOPTION_MATRIX_V1.yaml)
-- [来源采集合同](market_radar/acquisition/contracts/SOURCE_ACQUISITION_CONTRACT_V1.yaml)
 
 ## 基础验证
 
