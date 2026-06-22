@@ -1,27 +1,25 @@
-task: OVERNIGHT_LANE_A_HISTORICAL_MACRO_EVIDENCE_FACTORY_V1
+task: LANE_A_VERIFIED_MACRO_RELEASE_EVIDENCE_REPAIR_V2
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: ded2ce0780b3581e4ba827fca328e3fac6f6b40d
+head_sha: 8262729
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: complete
+current_stage: verified_macro_evidence_ready_for_consumers
 completed_stages:
   - bootstrap
   - contracts_and_providers
-  - p0_minimal_pipeline
-  - p1_official_release_dataset
-  - tests_and_validation
+  - verified_release_calendar
+  - verified_release_events
+  - legacy_migration
+  - revision_chains
+  - consensus_observations
+  - tests_validation
   - documentation
-next_exact_action: push and create draft PR
-last_test_command: pytest tests/intelligence/historical_macro/
+
+last_test_command: pytest tests/intelligence/historical_macro/ -q
 last_test_result: 66 passed, 0 failed
 known_failures: []
-blockers:
-  - BEA direct API requires registration key (data obtained via FRED)
-  - Federal Reserve historical pages changed URL structure (data obtained via FRED)
-  - Pre-event consensus gathering is P2 scope
-  - Revision chain building is P2 scope
-uncommitted_files: []
+blockers: []
