@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Data Availability Record",
+  "description": "Tracks when each data element was available to the model",
+  "type": "object",
+  "properties": {
+    "record_id": { "type": "string" },
+    "entity_id": { "type": "string" },
+    "field_name": { "type": "string" },
+    "value_ref": { "type": "string" },
+    "event_time": { "type": "string", "format": "date-time" },
+    "published_at": { "type": "string", "format": "date-time" },
+    "first_seen_at": { "type": "string", "format": "date-time" },
+    "retrieved_at": { "type": "string", "format": "date-time" },
+    "available_to_model_at": { "type": "string", "format": "date-time" },
+    "revision_id": { "type": "string" },
+    "source_id": { "type": "string" },
+    "availability_quality": { "type": "string" }
+  },
+  "required": ["record_id", "entity_id", "field_name", "value_ref", "event_time"]
+}

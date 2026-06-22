@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Validation Dataset",
+  "description": "Schema for an immutable validation dataset",
+  "type": "object",
+  "properties": {
+    "dataset_id": { "type": "string" },
+    "dataset_version": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "observation_cutoff_policy": { "type": "string" },
+    "label_maturity_policy": { "type": "string" },
+    "source_manifest": { "$ref": "#/definitions/DatasetManifest" },
+    "available_from": { "type": "string", "format": "date-time" },
+    "available_until": { "type": "string", "format": "date-time" },
+    "point_in_time_mode": { "type": "string", "enum": ["strict_as_known_then", "reconstructed_with_limits", "fixture_only"] },
+    "known_leakage_risks": { "type": "array", "items": { "type": "string" } },
+    "known_measurement_risks": { "type": "array", "items": { "type": "string" } },
+    "known_missingness": { "type": "array", "items": { "type": "string" } },
+    "fingerprint": { "type": "string" }
+  },
+  "required": ["dataset_id", "dataset_version", "created_at", "point_in_time_mode"],
+  "definitions": {
+    "DatasetManifest": {
+      "type": "object",
+      "properties": {
+        "source_manifest": { "type": "array", "items": { "$ref": "#/definitions/SourceManifestEntry" } },
+        "event_manifest": { "type": "array", "items": { "$ref": "#/definitions/EventManifestEntry" } }
+      }
+    },
+    "SourceManifestEntry": {
+      "type": "object",
+      "properties": {
+        "source_id": { "type": "string" },
+        "source_type": { "type": "string" },
+        "retrieval_timestamps": { "type": "array", "items": { "type": "string" } },
+        "content_hashes": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["source_id", "source_type"]
+    },
+    "EventManifestEntry": {
+      "type": "object",
+      "properties": {
+        "event_cluster_id": { "type": "string" },
+        "primary_source_id": { "type": "string" },
+        "event_type": { "type": "string" },
+        "assets": { "type": "array", "items": { "type": "string" } },
+        "revision_count": { "type": "integer" }
+      },
+      "required": ["event_cluster_id", "primary_source_id", "event_type"]
+    }
+  }
+}

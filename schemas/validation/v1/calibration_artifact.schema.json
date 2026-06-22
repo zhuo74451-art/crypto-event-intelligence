@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Calibration Artifact",
+  "description": "Calibration mapping from scores to calibrated probabilities",
+  "type": "object",
+  "properties": {
+    "calibration_artifact_id": { "type": "string" },
+    "method": { "type": "string", "enum": ["none", "histogram_binning", "platt_scaling", "isotonic_regression", "temperature_scaling"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "model_id": { "type": "string" },
+    "strategy_candidate_id": { "type": "string" },
+    "dataset_id": { "type": "string" },
+    "fit_period": { "type": "string" },
+    "sample_size": { "type": "integer", "minimum": 0 },
+    "input_score_type": { "type": "string" },
+    "output_probability_type": { "type": "string" },
+    "parameters": { "type": "object" },
+    "artifact_fingerprint": { "type": "string" }
+  },
+  "required": ["calibration_artifact_id", "method", "created_at"]
+}

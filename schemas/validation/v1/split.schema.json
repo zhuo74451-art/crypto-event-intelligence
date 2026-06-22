@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Split Specification",
+  "description": "Time series split specification for validation experiments",
+  "type": "object",
+  "properties": {
+    "split_id": { "type": "string" },
+    "method": { "type": "string", "enum": ["chronological_holdout", "rolling_window", "expanding_window", "purged", "group_aware"] },
+    "train_start": { "type": "string", "format": "date-time" },
+    "train_end": { "type": "string", "format": "date-time" },
+    "validation_start": { "type": "string", "format": "date-time" },
+    "validation_end": { "type": "string", "format": "date-time" },
+    "test_start": { "type": "string", "format": "date-time" },
+    "test_end": { "type": "string", "format": "date-time" },
+    "n_folds": { "type": "integer", "minimum": 1 },
+    "window_size": { "type": "string" },
+    "step_size": { "type": "string" },
+    "purge_window": { "type": "string" },
+    "embargo": { "type": "string" },
+    "group_columns": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["split_id", "method", "train_start", "train_end"]
+}

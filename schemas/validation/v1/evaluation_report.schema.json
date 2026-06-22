@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Evaluation Report",
+  "description": "Complete evaluation report for an experiment",
+  "type": "object",
+  "properties": {
+    "experiment_identity": { "type": "object" },
+    "data_identity": { "type": "object" },
+    "code_identity": { "type": "object" },
+    "split_summary": { "type": "object" },
+    "sample_summary": { "type": "object" },
+    "baseline_results": { "type": "object" },
+    "candidate_results": { "type": "object" },
+    "metric_intervals": { "type": "array", "items": { "type": "object" } },
+    "calibration": { "type": "object" },
+    "abstention": { "type": "object" },
+    "regime_slices": { "type": "array", "items": { "type": "object" } },
+    "multiple_testing": { "type": "object" },
+    "robustness": { "type": "array", "items": { "type": "object" } },
+    "known_limitations": { "type": "array", "items": { "type": "string" } },
+    "promotion_recommendation": { "type": "string" }
+  },
+  "required": ["experiment_identity", "data_identity", "code_identity"]
+}

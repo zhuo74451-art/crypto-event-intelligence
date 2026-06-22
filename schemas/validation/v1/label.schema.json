@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Validation Label",
+  "description": "A ground truth label for validation with maturity tracking",
+  "type": "object",
+  "properties": {
+    "event_id": { "type": "string" },
+    "horizon": { "type": "string" },
+    "label_type": { "type": "string", "enum": ["return", "direction", "volatility", "drawdown", "event_outcome"] },
+    "raw_return": { "type": "number" },
+    "log_return": { "type": "number" },
+    "abnormal_return": { "type": "number" },
+    "direction": { "type": "string", "enum": ["up", "down", "flat", "unknown"] },
+    "label_status": { "type": "string", "enum": ["immature", "mature", "disputed", "unavailable"] },
+    "matures_at": { "type": "string", "format": "date-time" },
+    "computed_at": { "type": "string", "format": "date-time" },
+    "label_source": { "type": "string" }
+  },
+  "required": ["event_id", "horizon", "label_type"]
+}
