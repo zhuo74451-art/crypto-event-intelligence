@@ -1,0 +1,83 @@
+# Integration Manifest V1
+
+```yaml
+task: HISTORICAL_VALIDATION_AND_CALIBRATION_WORKBENCH_V1
+branch: feat/historical-validation-calibration-workbench-v1
+base_sha: fc9b76f8a3cfc84bc384b145bd93dda41006e68f
+final_sha: f9ee7ef1f9dcceb29d9e7062057123a78146752f
+
+goal_mode_used: false
+plan_mode_used: false
+
+owned_paths:
+  - market_radar/validation/
+  - experiments/validation/
+  - schemas/validation/
+  - tests/validation/
+  - docs/validation/
+  - fixtures/validation/
+  - scripts/validation/
+
+changed_files:
+  - market_radar/validation/ (entire module tree)
+  - schemas/validation/v1/ (10 schema files)
+  - tests/validation/ (4 test files, 229 tests)
+  - scripts/validation/ (2 script files)
+  - docs/validation/ (11+ documentation files)
+
+cross_lane_files_touched: []
+
+contracts_produced:
+  - ValidationEventIdentity, EventCluster, DuplicateReason
+  - DatasetIdentity, DatasetSpecification, DatasetManifest
+  - DataAvailabilityRecord, Observation
+  - ReturnLabel, DirectionLabel, VolatilityLabel, DrawdownLabel, EventOutcomeLabel
+  - SplitSpecification, SplitFold, WalkForwardSpecification, WalkForwardFold
+  - PredictionRecord, PredictionSet
+  - ExperimentSpecification, ExperimentRegistration, TrialRecord, ReproducibilityManifest
+  - CalibrationArtifact
+  - BaselineSpecification (B1-B10)
+  - ExperimentReport
+  - 21 error types with stable codes
+
+baselines_produced: B1 (Neutral), B2 (Random), B3 (Event Type Prior)
+metrics_produced: Classification, Probabilistic, Calibration, Abstention
+split_methods: Chronological, Rolling, Expanding, Purged, Walk-Forward
+calibration_methods: NoCalibration, HistogramBinning, PlattScaling
+abstention_metrics: Coverage, AbstentionRate, SelectiveAccuracy, Risk-Coverage Curve
+
+demo_dataset: Not yet built (requires real data connection)
+golden_experiments: Framework ready, placeholder implementations
+
+dependencies_added: None (uses stdlib + existing packages)
+licenses: N/A (no new dependencies)
+
+baseline_tests: 2913 passed, 8 failed, 3 skipped (same failures)
+validation_tests: 229 passed, 0 failed
+full_final_tests: Same as baseline (no new failures)
+
+known_failures:
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestForbiddenImports::test_clean_import_passes
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestCredentialScanner::test_clean_file_passes
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_credentials
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_forbidden_import
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_send
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_file_no_trading
+  - tests/mvpplus/independent_qa/test_qa_foundation.py::TestSyntheticSafeTargetPass::test_clean_html_passes
+  - tests/post_mvp/telegram/test_tg_renderer_hardening.py::TestErrorDesensitization::test_2_http_error_safe_summary
+
+known_limitations:
+  - No real dataset connected yet (requires acquisition layer integration)
+  - Demo dataset not built (requires real or synthetic data pipeline)
+  - Full B1-B10 baseline implementations incomplete (B4-B10 need strategy-specific logic)
+  - WalkForwardRunner not fully integrated with experiment registry
+  - Calibration artifact persistence not implemented
+  - Schema validation scripts partially implemented (jsonschema import needed)
+
+integration_requests:
+  - Acquisition layer: Provide published_at, effective_at, first_seen_at, available_to_model_at fields
+  - Intelligence kernel: Provide ValidationPredictionRecord contract
+  - Research strategy layer: Provide ResearchHypothesis and StrategyCandidateProposal
+
+rollback: git checkout main && git branch -D feat/historical-validation-calibration-workbench-v1
+```
