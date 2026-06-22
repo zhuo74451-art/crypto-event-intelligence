@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://research-intelligence/v1/schemas/SplitSpec.json",
+  "title": "SplitSpec",
+  "description": "Specification of train/validation/test splits.",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string"
+    },
+    "train_ratio": {
+      "type": "number"
+    },
+    "val_ratio": {
+      "type": "number"
+    },
+    "test_ratio": {
+      "type": "number"
+    },
+    "shuffle": {
+      "type": "boolean"
+    },
+    "seed": {
+      "type": "integer"
+    }
+  }
+}

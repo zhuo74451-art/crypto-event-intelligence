@@ -1,0 +1,314 @@
+# Strategy Seeds V1
+# schema_version: research_intelligence_v1
+
+- strategy_seed_id: SS-001
+  name: "S1 Macro Liquidity Regime"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-macro-001", "CL-macro-002"]
+  counter_claim_ids: ["CL-macro-neg-001"]
+  strategy_family: "macro_regime"
+  domains: ["D02_macro_liquidity_and_cross_asset_regime"]
+  assets: ["BTC", "ETH"]
+  time_horizons: ["1w", "1m", "3m"]
+  regime_scope: "all"
+  thesis: "Bitcoin's relationship with macro variables (rates, DXY, liquidity) is regime-dependent, not static. Strategy categorizes market into liquidity regimes and applies conditional directional tilts while explicitly abstaining when regime is ambiguous."
+  information_edge: "Most market participants treat BTC-macro correlation as static. Real edge comes from detecting regime shifts early and adjusting exposure before consensus forms."
+  causal_mechanism: "Global liquidity conditions affect crypto through: (1) risk appetite channel - easing increases willingness to hold risky assets, (2) USD liquidity channel - dollar weakness supports BTC, (3) real rate channel - low real rates reduce opportunity cost of holding non-yielding assets."
+  required_inputs: ["US10Y real rate", "DXY", "central bank balance sheet", "global liquidity index", "BTC price", "cross-asset correlation matrix"]
+  optional_inputs: ["VIX", "credit spreads", "EM flow data", "commodity indices"]
+  context_conditions: "Evaluate at weekly frequency. Regime classification requires minimum 3 months of data for stability."
+  trigger_conditions: "Regime classification changes OR macro variable crosses 2-standard-deviation threshold"
+  confirmation_conditions: "Correlation pattern matches historical regime behavior AND cross-asset class confirms (e.g., equities and BTC move together in risk-on)"
+  bullish_logic: "Risk-on regime with expanding liquidity -> long crypto exposure. Recession-easing with weak growth -> cautious long (cyclical sensitivity doubtful)."
+  bearish_logic: "Risk-off regime with contracting liquidity -> reduce exposure or hedge. Tightening with strong growth -> may still be negative for crypto."
+  neutral_logic: "Balanced or uncertain regime -> size down."
+  abstention_logic: "ABSTAIN when: (1) regime classification is ambiguous (<60% probability), (2) conflicting signals across macro variables, (3) transition period where old regime is ending but new regime not confirmed, (4) data revision risk is high (early NFP/CPI readings)."
+  priced_in_method: "Check asset price has not already moved >50% of expected range for the regime. Use survey-based expectations for macro data."
+  crowding_method: "Monitor positioning surveys, futures basis, and correlation compression. Crowded if unanimous bullish positioning in risk-on regime."
+  transmission_hypothesis: "Liquidity -> risk appetite -> BTC flows -> price"
+  invalidation_conditions: "Regime classification reverts within 2 weeks. Cross-asset correlations deviate from historical patterns for >1 month. Macro variables reverse direction."
+  expiry_conditions: "Regime change detected OR 3 months without position"
+  known_failure_modes: ["Late regime detection (regime already priced)", "False regime signal during volatile but trendless markets", "Structural breaks making historical patterns irrelevant"]
+  counterexamples: "2023 H1: BTC rallied despite tight monetary policy (ETF anticipation was overriding macro)"
+  data_requirements: "Weekly regime classification data, cross-asset correlation matrices"
+  label_requirements: "Forward 1-month BTC return, regime classification accuracy"
+  point_in_time_requirements: "Macro data has publication lags - must use vintages"
+  validation_requirements: "Walk-forward test: train regime classifier on expanding window, test on next period"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-002
+  name: "S2 Scheduled Event Surprise"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-event-001", "CL-event-002"]
+  counter_claim_ids: []
+  strategy_family: "event_driven"
+  domains: ["D01_crypto_asset_pricing_and_event_response"]
+  assets: ["BTC", "ETH"]
+  time_horizons: ["30min", "1h", "24h"]
+  regime_scope: "all"
+  thesis: "Scheduled macro events (FOMC, CPI, NFP) create tradable opportunities when actual results deviate sufficiently from consensus expectations, but only when the surprise is large enough to overcome noise and concurrent events."
+  information_edge: "Edge comes from: (1) accurate pre-event expectation measurement (not just consensus surveys), (2) understanding crypto-specific transmission vs traditional markets, (3) avoiding false signals from data revisions."
+  causal_mechanism: "Pre-event positioning reflects expectations. Surprise forces re-pricing across all risk assets including crypto. First move is mechanical, confirmation requires sustained follow-through."
+  required_inputs: ["Event time", "consensus estimate", "actual result", "BTC price pre/post", "market regime", "positioning before event"]
+  optional_inputs: ["Options implied move", "correlation with SPX during event"]
+  context_conditions: "Event must be scheduled and have reliable consensus estimate. ABSTAIN if no reliable expectation available."
+  trigger_conditions: "|actual - consensus| > 1.5 standard deviations of historical surprises"
+  confirmation_conditions: "Price moves in expected direction within 30 minutes AND holds for >1 hour. Volume confirms, not just thin order book."
+  bullish_logic: "Positive surprise (easing, lower inflation) + risk-on context -> long crypto. Larger surprises -> larger expected moves."
+  bearish_logic: "Negative surprise (tightening, higher inflation) + risk-off context -> short or hedge."
+  neutral_logic: "Surprise within normal range -> no trade. ABSTAIN regardless if concurrent major events."
+  abstention_logic: "ABSTAIN when: (1) no reliable pre-event consensus, (2) data revision probability high (early CPI prints), (3) concurrent events interfere, (4) surprise is <1.5 sigma, (5) market is closed or illiquid for crypto."
+  priced_in_method: "Compare pre-event price to options-implied move. If price already reflects >70% of typical surprise range, expect diminished response."
+  crowding_method: "If positioning surveys show extreme one-sidedness pre-event, post-event move may be muted (crowded trade)."
+  transmission_hypothesis: "Surprise -> rate expectation shift -> DXY move -> BTC reaction"
+  invalidation_conditions: "Price reverses within 2 hours. Concurrent event dominates (e.g., geopolitical flash). Data revision later removes the surprise."
+  expiry_conditions: "24 hours after event OR price returns to pre-event level"
+  known_failure_modes: ["False signal from thin liquidity during Asian session", "Data revisions removing the ex-post surprise", "Crypto decoupling from macro despite surprise"]
+  counterexamples: "Aug 2023 CPI: lower inflation but BTC sold off due to concurrent Treasury refunding announcement"
+  data_requirements: "Event calendar with consensus, actual values, historical revision data"
+  label_requirements: "Post-event return direction and magnitude"
+  point_in_time_requirements: "Only use initial release, not revised data - must be point-in-time"
+  validation_requirements: "Out-of-sample: train on first half of events, test on second half"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-003
+  name: "S3 Regulation & State Transition"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-reg-001", "CL-reg-002"]
+  counter_claim_ids: []
+  strategy_family: "catalyst"
+  domains: ["D12_law_regulation_and_geopolitics"]
+  assets: ["BTC", "ETH", "SOL"]
+  time_horizons: ["1d", "1w", "1m"]
+  regime_scope: "all"
+  thesis: "Regulatory news only materially affects prices when it changes the expected regulatory state or the probability of that state occurring. Strategy tracks regulatory proposals through their lifecycle stages and assesses priced-in vs surprise."
+  information_edge: "Most market participants react to headlines without distinguishing proposal from law. Edge comes from maintaining a regulatory state machine with probability updates."
+  causal_mechanism: "Regulation affects crypto through: (1) access restrictions (trading, custody), (2) compliance costs, (3) legality certainty, (4) institutional participation barriers. Each stage has different market impact."
+  required_inputs: ["Regulatory event type and stage", "probability estimate", "scope estimate", "enforcement certainty", "market positioning", "BTC/ETH price"]
+  optional_inputs: ["Political prediction markets", "lobbying expenditure data", "congressional calendar"]
+  context_conditions: "Active regulatory jurisdiction. Only trade on concrete actions, not rumors."
+  trigger_conditions: "Regulatory state machine transitions: proposal introduced, scheduled for vote, passed committee, full chamber vote, signed, effective, enforced, repealed/canceled."
+  confirmation_conditions: "Price moves in expected direction AND volume confirms AND related assets (e.g., COIN, MSTR) confirm"
+  bullish_logic: "Failed enforcement action, favorable bill advancing, regulatory clarity improving, SEC dropping case -> positive for crypto."
+  bearish_logic: "New enforcement action, unfavorable legislation, ban proposal, restrictive guidance -> negative."
+  neutral_logic: "Routine updates, extended comment periods, no change in probability."
+  abstention_logic: "ABSTAIN when: (1) event is only a proposal with low passage probability (<30%), (2) unable to estimate pre-event priced-in probability, (3) rumor without official source, (4) scope unclear, (5) enforcement mechanism uncertain."
+  priced_in_method: "Use pre-event price and prediction market/event study to infer priced-in probability. If price has not moved despite high probability, news may be discounted."
+  crowding_method: "Monitor social media and KOL sentiment for crowding. If unanimous bullish on regulatory news, move may be priced."
+  transmission_hypothesis: "Regulatory action -> probability update -> market re-pricing"
+  invalidation_conditions: "Event fails to pass, delayed indefinitely, or enforcement not materialized within expected timeframe. Opposite of expected direction within 1 week."
+  expiry_conditions: "30 days after event OR next regulatory action supersedes"
+  known_failure_modes: ["Confusing proposal for law", "Amplifying minor/non-binding statements", "Ignoring jurisdiction differences", "Assuming uniform impact across all crypto assets"]
+  counterexamples: "2021 SEC Chair nomination hearings -> aggressive rhetoric but no immediate market impact"
+  data_requirements: "Regulatory timeline database with stages and dates"
+  label_requirements: "Direction and magnitude of price move post-event"
+  point_in_time_requirements: "Event timestamps and probability estimates must be recorded before outcomes"
+  validation_requirements: "Event study with expected vs unexpected classification"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-004
+  name: "S4 Catalyst Continuation / Episodic Pivot"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-catalyst-001"]
+  counter_claim_ids: []
+  strategy_family: "momentum"
+  domains: ["D01_crypto_asset_pricing_and_event_response"]
+  assets: ["BTC", "ETH", "SOL"]
+  time_horizons: ["1d", "1w", "2w"]
+  regime_scope: "all"
+  thesis: "A major unexpected catalyst combined with real fundamental change, confirmed by spot market price and volume, not fully priced, and not solely derivatives-driven, can produce a sustained directional move."
+  information_edge: "Most participants treat all catalysts equally. Edge comes from distinguishing (1) real fundamental change from noise, (2) derivative-only pumps from spot-confirmed moves, (3) priced-in from fresh."
+  causal_mechanism: "Catalyst -> reassessment of asset value -> spot buying -> attention cascade -> further price discovery -> potential reflexivity."
+  required_inputs: ["Catalyst description", "price before/after", "volume profile", "spot vs perpetual volume split", "funding rate", "open interest change"]
+  optional_inputs: ["Social volume spike", "on-chain exchange flow", "option implied vol"]
+  context_conditions: "Catalyst must be unexpected (not in consensus) and represent real fundamental change (protocol upgrade, partnership, adoption, not just speculation)."
+  trigger_conditions: "Price breaks prior 1-month range on catalyst day. Volume >2x average. Spot volume share >50% of total."
+  confirmation_conditions: "Price continues in direction for >1 day. Volume remains elevated. No gap fill within 3 days."
+  bullish_logic: "Positive fundamental catalyst + spot confirmation + not fully priced -> long with trend."
+  bearish_logic: "Negative fundamental catalyst + no support -> short or avoid."
+  neutral_logic: "No clear catalyst or mixed signals."
+  abstention_logic: "ABSTAIN when: (1) catalyst is purely speculative (meme, rumor), (2) move driven only by derivatives (spot volume <30%), (3) gap immediately fills, (4) liquidity insufficient for intended position size, (5) attention spike but price reverses."
+  priced_in_method: "Check if price had already moved significantly before catalyst. Compare to historical catalyst move sizes."
+  crowding_method: "Social volume extreme + funding rate extreme + OI extreme -> crowded."
+  transmission_hypothesis: "Catalyst -> spot buying -> attention -> further buying -> potential reflexivity or exhaustion"
+  invalidation_conditions: "Gap fills (price returns to pre-catalyst level). Volume dries up. Trend fails to continue. Contradictory catalyst emerges."
+  expiry_conditions: "2 weeks OR trend exhaustion OR new catalyst supersedes"
+  known_failure_modes: ["Jump to wrong conclusion about catalyst meaning", "Overtrading noise as catalyst", "Ignoring liquidity thresholds", "Holding through gap fill"]
+  counterexamples: "2023 XRP ruling: +70% in hours but gave back most gains within days"
+  data_requirements: "Event database, price/volume data, catalyst classification"
+  label_requirements: "Sustained vs reversed catalyst classification"
+  point_in_time_requirements: "All data must be as known at catalyst time"
+  validation_requirements: "Catalyst classification accuracy, sustained move prediction"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-005
+  name: "S5 Forced Flow & Whale Intent"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-whale-001", "CL-flow-001"]
+  counter_claim_ids: ["CL-whale-neg-001"]
+  strategy_family: "flow"
+  domains: ["D08_onchain_actor_and_whale_intent", "D05_derivatives_positioning_and_forced_flow"]
+  assets: ["BTC", "ETH"]
+  time_horizons: ["1h", "1d", "1w"]
+  regime_scope: "all"
+  thesis: "Large flow signals (exchange inflows/outflows, OI changes, liquidation clusters) must be decomposed by identity, intent, market depth, and historical patterns before they have directional meaning. Raw signals are highly ambiguous."
+  information_edge: "Market participants treat exchange inflows as automatic sell signals. Edge comes from (1) identifying sender identity, (2) assessing historical behavior of sender, (3) measuring available liquidity to absorb the flow, (4) distinguishing internal transfers from genuine flows."
+  causal_mechanism: "Large holder intent -> order placement -> market impact (if large relative to depth) -> attention cascade."
+  required_inputs: ["Wallet address", "entity label (if available)", "transfer size", "exchange address", "market depth at exchange", "historical behavior of sender", "BTC/ETH price"]
+  optional_inputs: ["OTC desk activity", "custody flow data", "funding rate"]
+  context_conditions: "Flow must be meaningful relative to market depth (>0.1% of daily volume). Entity label must be point-in-time verifiable."
+  trigger_conditions: "Exchange inflow >1000 BTC from labeled address OR exchange outflow >5000 BTC OR single OI change >2% of total OI."
+  confirmation_conditions: "Price moves in expected direction AND other metrics confirm (funding rate, volume)"
+  bullish_logic: "Large outflow from exchange + entity has history of holding + outflow not to another exchange -> bullish. OI increase + positive funding + rising price -> new longs -> confirmation."
+  bearish_logic: "Large inflow to exchange + entity known for selling + not internal transfer -> bearish. OI increase + negative funding + falling price -> new shorts -> bearish."
+  neutral_logic: "Internal transfer detected, entity unknown, flow size small relative to depth."
+  abstention_logic: "ABSTAIN when: (1) cannot identify sender entity, (2) flow is likely internal transfer (same-exchange wallets), (3) market depth cannot absorb the flow (too thin), (4) historical behavior of sender is unknown, (5) conflicting signals (inflow + outflow simultaneously large)."
+  priced_in_method: "Check if price already moved >50% of typical impact range for given flow size."
+  crowding_method: "Monitor if multiple large flows in same direction within short period (herding)."
+  transmission_hypothesis: "Whale intent -> flow -> market impact (if depth constrained) -> attention"
+  invalidation_conditions: "Flow reverses within 24h. Entity label turns out to be incorrect. Price diverges from flow direction within 2h."
+  expiry_conditions: "1 week OR flow absorbed/executed"
+  known_failure_modes: ["Entity labeling error (wrong person/group)", "OTC flow invisible on-chain", "Internal transfer misidentified as genuine flow", "Address reuse across unrelated entities"]
+  counterexamples: "2020 March: massive exchange inflows that were panic selling vs 2021: inflows from miners that were routine treasury management"
+  data_requirements: "Entity-labeled wallet database, exchange address clusters, market depth data"
+  label_requirements: "Post-flow price direction and magnitude"
+  point_in_time_requirements: "Entity labels must be point-in-time (addresses change ownership)"
+  validation_requirements: "Flow classification accuracy (genuine vs internal), directional prediction"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-006
+  name: "S6 Attention & Narrative Reflexivity"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-attn-001"]
+  counter_claim_ids: []
+  strategy_family: "sentiment"
+  domains: ["D09_attention_sentiment_and_narrative"]
+  assets: ["BTC", "ETH", "SOL", "meme"]
+  time_horizons: ["1d", "1w"]
+  regime_scope: "all"
+  thesis: "Early organic attention growth can confirm and extend a trend, while extreme attention (especially bot-driven) signals crowding and potential reversal. Narrative propagation accelerates price moves but eventually leads to reflexivity."
+  information_edge: "Most participants treat all attention as trend confirmation. Edge comes from (1) distinguishing organic from bot-driven attention, (2) identifying narrative lifecycle stage, (3) detecting crowding before reversal."
+  causal_mechanism: "Catalyst/price move -> organic attention -> narrative formation -> attention cascade -> further price move -> reflexivity -> exhaustion -> reversal."
+  required_inputs: ["Social volume", "sentiment score", "bot detection metrics", "engagement quality", "price", "volume"]
+  optional_inputs: ["Platform-specific data (X, Reddit, Telegram)", "KOL mention tracking", "search trend data"]
+  context_conditions: "Asset must have sufficient liquidity. Attention spike must be >2x baseline and sustained >6h."
+  trigger_conditions: "Attention volume >3x 30-day average AND sentiment significantly positive/negative AND bot score <0.3 (organic)."
+  confirmation_conditions: "Price confirms direction. Volume confirms. If price diverges from attention direction, treat as reversal signal."
+  bullish_logic: "Organic attention spike + price confirmation + not crowded -> continuation long."
+  bearish_logic: "Organic negative attention + price confirmation -> short or avoid. Extreme bot-driven attention + price parabolic -> prepare for reversal short."
+  neutral_logic: "Mixed sentiment, low attention, or bot-dominated."
+  abstention_logic: "ABSTAIN when: (1) bot score >0.5 (inorganic attention), (2) attention spike driven by one-sided KOL (possible paid promotion), (3) attention not confirmed by price/volume, (4) platform-specific manipulation suspected, (5) unable to estimate organic vs inorganic ratio."
+  priced_in_method: "If price has already moved >3 standard deviations on attention alone, most of the move is likely priced."
+  crowding_method: "Extreme attention + extreme funding + extreme OI -> crowded. When retail enters after large move, exit."
+  transmission_hypothesis: "Catalyst -> price -> attention -> more price -> reflexivity OR exhaustion"
+  invalidation_conditions: "Price reverses. Attention collapses. Bot score jumps (organic -> inorganic). Conflicting narrative emerges."
+  expiry_conditions: "2 weeks OR attention returns to baseline OR price reverses >50% of attention-driven move"
+  known_failure_modes: ["Confusing bot activity for organic demand", "Ignoring platform algorithm changes affecting attention metrics", "Overtrading meme coins with manipulated attention", "Narrative trap (wrong story driving price)"]
+  counterexamples: "2021 DOGE pump: bot attention dominated, but price continued due to real retail demand"
+  data_requirements: "Social media API data, bot detection model, engagement metrics"
+  label_requirements: "Forward return direction post-attention-spike"
+  point_in_time_requirements: "Social data timestamped. Bot detection must not use future data."
+  validation_requirements: "Organic vs bot-driven classification accuracy. Attention -> return predictive power."
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-007
+  name: "S7 Structural Bottleneck"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-bottleneck-001"]
+  counter_claim_ids: []
+  strategy_family: "fundamental"
+  domains: ["D07_token_supply_dilution_and_value_capture", "D10_protocol_fundamentals_and_developer_networks"]
+  assets: ["ETH", "SOL", "LINK", "AAVE"]
+  time_horizons: ["1m", "3m", "6m"]
+  regime_scope: "bullish_trend"
+  thesis: "Long-term demand growth collides with supply-side bottlenecks, creating structural value for the bottleneck owner. The key is identifying genuine bottlenecks (not transitory) and ensuring the asset captures the bottleneck value through its tokenomics."
+  information_edge: "Most participants identify bottlenecks late (after price run). Edge comes from (1) early identification of supply-demand imbalance, (2) deep analysis of value capture mechanism, (3) understanding second and third order bottleneck effects."
+  causal_mechanism: "Demand growth -> supply constraint -> bottleneck -> price increase -> further demand (reflexivity) -> competition/alternative -> bottleneck decay."
+  required_inputs: ["Protocol demand metric (users, TVL, tx volume)", "supply metric (block space, staked supply, available liquidity)", "concentration metric (Gini, HHI)", "value capture metric (fee revenue, burn rate)", "expansion cost/difficulty"]
+  optional_inputs: ["Competitor analysis", "substitute technology assessment", "developer activity"]
+  context_conditions: "Market in demand-growth phase. Bottleneck identified as structural (not temporary supply disruption)."
+  trigger_conditions: "Protocol demand growth >50% YoY AND supply growth <20% AND value capture >$1M/year fee revenue to token holders."
+  confirmation_conditions: "Fees/burn rate increasing. User growth continuing. Supply growth constrained. No viable substitute emerged."
+  bullish_logic: "Demand growth + supply constraint + value capture -> buy and hold during bottleneck phase."
+  bearish_logic: "Bottleneck breaches -> collapse scenario. Otherwise not applicable as a short thesis for this strategy."
+  neutral_logic: "Bottleneck not yet formed or already resolved."
+  abstention_logic: "ABSTAIN when: (1) bottleneck is transitory (weather, regulatory), (2) no value capture mechanism (bottleneck benefits others), (3) substitute technology exists and is viable, (4) expansion is cheap and fast, (5) demand growth is speculative not organic."
+  priced_in_method: "Compare current valuation (P/E, P/S, MC/TVL) to bottleneck period multiples."
+  crowding_method: "Check if multiple funds/KOLs have identified the same bottleneck. If unanimous, may be priced."
+  transmission_hypothesis: "Demand growth -> bottleneck -> value capture -> token price"
+  invalidation_conditions: "Demand growth stalls. Supply expands unexpectedly. Viable substitute appears. Value capture mechanism fails (governance vote to remove burn)."
+  expiry_conditions: "Bottleneck resolved OR 6 months without materialization"
+  known_failure_modes: ["Bottleneck is only in trader imagination, not in actual supply-demand", "Token fails to capture bottleneck value", "Expansion occurs faster than expected", "Competing protocol solves bottleneck differently"]
+  counterexamples: "Ethereum 2021: fee burn created deflationary narrative but demand was frothy and L2 expansion ultimately solved the bottleneck"
+  data_requirements: "Protocol KPIs, on-chain usage metrics, fee data, supply schedule"
+  label_requirements: "Post-bottleneck price return"
+  point_in_time_requirements: "All metrics point-in-time, before bottleneck resolves"
+  validation_requirements: "Bottleneck identification accuracy, value capture verification"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false
+
+- strategy_seed_id: SS-008
+  name: "S8 Post-Bottleneck Survivor"
+  version: "1"
+  origin_type: "internal"
+  origin_refs: []
+  claim_ids: ["CL-survivor-001"]
+  counter_claim_ids: []
+  strategy_family: "value"
+  domains: ["D10_protocol_fundamentals_and_developer_networks", "D07_token_supply_dilution_and_value_capture"]
+  assets: ["ETH", "SOL", "LINK"]
+  time_horizons: ["3m", "12m"]
+  regime_scope: "all"
+  thesis: "After a structural bottleneck is identified by the market and priced, the focus shifts to which protocols can sustain competitive advantage post-expansion. Survivors have pricing power, switching costs, network effects, and strong value capture that persists after bottleneck resolves."
+  information_edge: "Most participants sell the entire sector after a bottleneck resolves. Edge comes from identifying protocols whose competitive moats persist beyond the specific bottleneck."
+  causal_mechanism: "Bottleneck discovery -> competition/expansion -> margin compression -> weaker players exit -> survivors gain market share -> structural advantage."
+  required_inputs: ["Protocol market share trend", "revenue/margin post-bottleneck", "developer retention", "user retention", "switching cost analysis", "network effect metrics"]
+  optional_inputs: ["Governance quality", "community strength", "brand recognition"]
+  context_conditions: "Bottleneck phase past peak. Competition has emerged. Market has re-priced post-bottleneck."
+  trigger_conditions: "Post-bottleneck revenue decline stabilizes AND market share stabilizing/increasing AND developer count stable AND user retention >60%."
+  confirmation_conditions: "Revenue per user stabilizing. Development activity continues. Competitors not gaining share."
+  bullish_logic: "Post-bottleneck survivor with pricing power, network effects, and stable value capture -> accumulate."
+  bearish_logic: "Post-bottleneck protocol with no moat, declining revenue, losing users -> avoid."
+  neutral_logic: "Uncertain whether current survivors will persist."
+  abstention_logic: "ABSTAIN when: (1) bottleneck was the only moat, (2) no pricing power post-expansion, (3) users are leaving for substitutes, (4) value capture was dependent on bottleneck rents, (5) expansion has collapsed margins below sustainability."
+  priced_in_method: "Compare current valuation to pre-bottleneck and peak-bottleneck multiples."
+  crowding_method: "If survivor thesis is unanimous in crypto media, may be partially priced."
+  transmission_hypothesis: "Bottleneck resolve -> margin compression -> market share consolidation -> survivor premium"
+  invalidation_conditions: "Market share declining. Revenue per user declining. Developer exodus. Better substitute emerges."
+  expiry_conditions: "12 months without thesis confirmation OR structural change invalidates moat"
+  known_failure_modes: ["Misidentifying temporary resilience for structural moat", "Underestimating speed of technological substitution", "Assuming brand loyalty in crypto markets", "Overpaying for survival premium"]
+  counterexamples: "Ethereum post-2021: many predicted death from L2s/L1s but ETH maintained dominant TVL share"
+  data_requirements: "Revenue per user, market share trends, developer retention data, switching cost analysis"
+  label_requirements: "Post-bottleneck long-term return"
+  point_in_time_requirements: "All data must look forward from the post-bottleneck date"
+  validation_requirements: "Survivor identification accuracy, long-term return prediction"
+  source_verification_status: "unverified"
+  research_status: "unverified"
+  production_eligible: false

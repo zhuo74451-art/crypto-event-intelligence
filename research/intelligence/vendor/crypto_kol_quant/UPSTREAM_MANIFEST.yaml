@@ -1,0 +1,9 @@
+### UPSTREAM_MANIFEST
+upstream_repo: 0xquqi/crypto-kol-quant
+default_branch: main
+upstream_commit: UNKNOWN
+retrieved_at: UNKNOWN
+license_present: false
+adoption_mode: reference_only
+code_copy_allowed: false
+data_copy_allowed: false

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://research-intelligence/v1/schemas/LabelSpec.json",
+  "title": "LabelSpec",
+  "description": "Specification of labels / target variable.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "column": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "label_type": {
+      "type": "string"
+    }
+  }
+}

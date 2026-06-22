@@ -1,0 +1,76 @@
+# Integration Manifest V1
+
+## Task
+
+Research Intelligence & Strategy Distillation Lab V1
+
+## Git
+
+base_main_sha: fc9b76f8a3cfc84bc384b145bd93dda41006e68f
+branch: feat/research-intelligence-strategy-lab-v1
+goal_mode_used: false
+plan_mode_used: false
+
+## Execution Mode Tracking
+
+execution_mode: normal
+goal_mode_used: false
+plan_mode_used: false
+
+## Owned Paths
+
+- research/intelligence/
+- tests/research_intelligence/
+- docs/research_intelligence/
+- schemas/research_intelligence/
+- scripts/research_intelligence/
+
+## Research Assets
+
+source_records: 49
+research_claims: 0 (structured claim cards not yet extracted from corpus)
+counter_or_null_claims: 0
+claim_conflicts: 0
+knowledge_gaps: 25
+knowledge_decay_records: 21
+unexplained_events: 11
+research_hypotheses: 20
+capabilities: 25
+trader_profiles: 10
+strategy_seeds: 8
+strategy_candidates: 0 (can be compiled from seeds)
+
+## External Sources
+
+- 49 source records (SSRN, Elsevier, public web, paywalled metadata-only)
+- Upstream repositories: none copied, reference only
+- Licenses: SSRN open access, Elsevier paywalled, CC-BY, public_web
+- Copyright constraints: No full texts stored. Metadata only.
+
+## Dependencies
+
+No new Python dependencies added (pyyaml was already available).
+
+## Compliance
+
+background_process_enabled: false
+cron_enabled: false
+systemd_enabled: false
+paid_api_used: false
+private_credential_used: false
+llm_api_used: false
+copyrighted_full_text_committed: false
+vector_database_added: false
+agent_framework_added: false
+trading_execution_added: false
+wallet_or_secret_touched: false
+
+## Known Limitations
+
+1. Structured Claim Cards not yet extracted from the canonical corpus — claims exist only as YAML references in strategy seeds and hypotheses
+2. ClaimConflict records not yet populated — conflicts are implicit in the data but not formally recorded
+3. Trader profiles are reference-only (unverified) — no verified performance data
+4. No strategy candidates compiled from seeds yet — requires compiler pipeline
+5. crypto-kol-quant upstream commit not fixed — audit is based on repository metadata only
+6. Some P0 domains (D09, D13) remain at L0 coverage
+7. Baseline test failures are pre-existing (QA framework issues)

@@ -1,0 +1,698 @@
+# =============================================================================
+# Trader Profiles — Research Dataset v1
+# =============================================================================
+# These profiles are RESEARCH PLACEHOLDERS based on publicly known pseudonymous
+# crypto traders. Every profile is marked as UNVERIFIED. No real identity is
+# asserted. The purpose is to model trader behavior for intelligence analysis.
+#
+# Schema version: 2024-03-profiles-v1
+# Production eligible: false
+# =============================================================================
+
+profiles:
+
+  # --------------------------------------------------------------------------
+  # Profile 01
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-001"
+    display_name: "CryptoCred"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0012"
+      - "SR-0047"
+      - "SR-0089"
+    markets:
+      - "crypto"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "SOL"
+      - "AVAX"
+    time_horizons:
+      - "swing"
+      - "positional"
+    strategy_families:
+      - "trend_following"
+      - "mean_reversion"
+      - "market_microstructure"
+    observed_capabilities:
+      - "CAP_001"  # on-chain analytics
+      - "CAP_003"  # order-flow analysis
+      - "CAP_007"  # tape reading
+      - "CAP_012"  # risk sizing
+    observed_inputs:
+      - "CVD (Cumulative Volume Delta)"
+      - "order-book imbalance"
+      - "funding-rate regimes"
+      - "exchange inflow/outflow"
+      - "open-interest delta"
+    observed_triggers:
+      - "sustained CVD divergence on 15m-1h"
+      - "funding-rate exhaustion after extended positive flip"
+      - "sell-side liquidity cluster swept with buy-side absorption"
+    observed_confirmations:
+      - "open-interest begins rising in the new direction"
+      - "lower-timeframe (5m) trend structure aligns"
+      - "spot CVD confirms futures CVD"
+    observed_invalidations:
+      - "rejection at logical HTF resistance / support"
+      - "funding rates remain extreme >72h without price follow"
+      - "CVD divergence fails to resolve within expected time window"
+    observed_risk_controls:
+      - "two-candle rule for invalidation"
+      - "position size scales with ATR% of notional"
+      - "max 5% portfolio exposure per position"
+    public_claims:
+      - "taught market-microstructure course since 2019"
+      - "documented 30+ consecutive winning months in public thread"
+      - "open-sourced CVD divergence scanner"
+    contradictory_claims:
+      - "claimed 100% win-rate filter but later walked back"
+      - "early 2022 drawdown was larger than originally admitted"
+    unverified_performance_claims:
+      - "3.2x account growth in 2021 (no independent audit)"
+      - "40% win-rate with 3.5:1 avg risk:reward claimed"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2019-01 -- 2024-12"
+    known_selection_bias: "only winning trades are timestamp-archived; losers mentioned anecdotally"
+    known_survivorship_bias: "profile exists because the trader remained active through 2022-2024"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 02
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-002"
+    display_name: "Hsaka"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0003"
+      - "SR-0022"
+      - "SR-0066"
+    markets:
+      - "crypto"
+      - "macro"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "DOGE"
+      - "MEME"
+    time_horizons:
+      - "day_trading"
+      - "swing"
+    strategy_families:
+      - "momentum"
+      - "breakout"
+      - "sentiment"
+    observed_capabilities:
+      - "CAP_002"  # sentiment analysis
+      - "CAP_004"  # social-media signal extraction
+      - "CAP_009"  # tape / level-2 reading
+      - "CAP_013"  # capital-efficient scaling
+    observed_inputs:
+      - "Twitter volume & velocity"
+      - "binance spot order-book depth"
+      - "perp basis vs. spot premium"
+      - "meme-coin social dominance ratio"
+    observed_triggers:
+      - "volume explosion in first 5m of a move"
+      - "perp basis flips from contango to backwardation on high volume"
+      - "social mention velocity breaks 3-sigma from 24h rolling average"
+    observed_confirmations:
+      - "HTF order-flow shows institutional absorption (prints >100k)"
+      - "lower timeframe consolidates above breakout level for 4+ candles"
+      - "funding rate resets to neutral after spike"
+    observed_invalidations:
+      - "breakout candle closes below origin"
+      - "volume dries up in re-test"
+      - "perp basis stays flat despite spot price change"
+    observed_risk_controls:
+      - "trailing stop on volatility expansion"
+      - "position truncated if 15m candle closes in opposite 1/3 of range"
+      - "portfolio-level correlation cap (no two correlated meme positions)"
+    public_claims:
+      - "called the March 2020 bottom on Twitter live"
+      - "identified DOGE super-cycle weeks before mainstream coverage"
+      - "co-founded a crypto analytics terminal"
+    contradictory_claims:
+      - "critics allege trade transparency cherry-picks winners"
+      - "some 'live calls' were edited after price moved"
+    unverified_performance_claims:
+      - "7-figure P&L in single day on DOGE in 2021"
+      - "90% win-rate claimed on scalps (no audit trail)"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2019-06 -- 2024-12"
+    known_selection_bias: "early calls are well-documented; later losses are omitted from highlight reels"
+    known_survivorship_bias: "high-profile survivorship — lesser peers who faded are excluded"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 03
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-003"
+    display_name: "Light"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0018"
+      - "SR-0055"
+      - "SR-0093"
+    markets:
+      - "crypto"
+      - "equities"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "NVDA"
+      - "COIN"
+    time_horizons:
+      - "day_trading"
+      - "swing"
+    strategy_families:
+      - "liquidity_grabs"
+      - "structural_order_flow"
+    observed_capabilities:
+      - "CAP_003"  # order-flow analysis
+      - "CAP_006"  # liquidity mapping
+      - "CAP_011"  # footprint / delta analysis
+    observed_inputs:
+      - "DOM (Depth of Market) ladder"
+      - "market-order footprint (bid/ask aggression)"
+      - "iceberg-order detection via stacked limit prints"
+      - "time & sales tape"
+    observed_triggers:
+      - "large passive bid stacked below current price repeatedly swept"
+      - "artificial-looking walls that vanish above a key level"
+      - "exhaustion pattern: delta diverges while price ranges (absorption)"
+    observed_confirmations:
+      - "price closes beyond the liquidity zone and holds as new support/resistance"
+      - "delta begins expanding in the new direction after sweep"
+      - "HTF market-profile structure shifts (valley moves up)"
+    observed_invalidations:
+      - "price returns inside the liquidity zone after sweep (false break)"
+      - "delta continues contracting despite price new high/low"
+      - "same liquidity level reused multiple times without resolution"
+    observed_risk_controls:
+      - "iceberg exit (position scaled out in tiers)"
+      - "max 2R risk per trade (ATR-based)"
+      - "no trading in first/last 15m of session"
+    public_claims:
+      - "wrote definitive thread on iceberg detection"
+      - "open-sourced footprint-chart templates"
+      - "documented structural liquidity framework in 2022"
+    contradictory_claims:
+      - "some followers report inability to replicate results with same setup"
+      - "occasional over-statement of win-rate on live streams"
+    unverified_performance_claims:
+      - "62% monthly return in a single high-conviction trade (2021)"
+      - "30% CAGR from 2020-2023 using only structural liquidity strategy"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2020-03 -- 2024-10"
+    known_selection_bias: "framework examples cherry-pick perfect textbook set-ups"
+    known_survivorship_bias: "profile persists because trader still active; similar peers wiped out in 2022 not captured"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 04
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-004"
+    display_name: "DonAlt"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0029"
+      - "SR-0061"
+      - "SR-0088"
+    markets:
+      - "crypto"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "SOL"
+      - "ARB"
+      - "OP"
+    time_horizons:
+      - "swing"
+      - "positional"
+      - "macro_trend"
+    strategy_families:
+      - "trend_following"
+      - "structural_bias"
+      - "regime_analysis"
+    observed_capabilities:
+      - "CAP_008"  # multi-timeframe structure analysis
+      - "CAP_010"  # market regime classification
+      - "CAP_015"  # narrative / macro framing
+    observed_inputs:
+      - "weekly / daily market structure (HH/HL, LH/LL)"
+      - "HTF liquidity zones (yearly opens, prior ATH/ATL)"
+      - "BTC dominance chart as risk-on/risk-off proxy"
+      - "ETH/BTC pair as alt-season indicator"
+    observed_triggers:
+      - "monthly candle close above a multi-year structural resistance"
+      - "weekly RSI resets from overbought to mid-range on a pullback"
+      - "BTC dominance breaks down while total3 (ex-BTC+ETH) trends up"
+    observed_confirmations:
+      - "weekly candle closes above the level with increasing volume"
+      - "daily trend flips to HH/HL series in the new direction"
+      - "correlation regime confirms: alphas align with BTC direction"
+    observed_invalidations:
+      - "weekly candle closes back inside the prior range"
+      - "volume on breakout diminishes below 20-period average"
+      - "BTC dominance fails to break down (alts stay correlated)"
+    observed_risk_controls:
+      - "reduce size in chop / non-trend environment"
+      - "add only on pullbacks to moving average (never chase)"
+      - "flat if weekly structure is ambiguous (no clear HH/HL or LH/LL)"
+    public_claims:
+      - "accurately called 2018 bottom and 2019 top on weekly structure"
+      - "built a public following with weekly market-structure updates"
+      - "correctly identified the ETH merge as 'sell the news' weeks prior"
+    contradictory_claims:
+      - "followers report missed alt-coin cycles because bias was too macro-focused"
+      - "some calls re-framed after the fact to fit structural narrative"
+    unverified_performance_claims:
+      - "6-figure swing trade on SOL in 2023 (no proof of entry)"
+      - "10x account in 2020-2021 bull run claimed"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2018-01 -- 2024-12"
+    known_selection_bias: "analysis threads focus on winning calls; losing structural breakdowns are rarely archived"
+    known_survivorship_bias: "among the few 'old guard' who survived both 2018 and 2022 bear markets"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 05
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-005"
+    display_name: "Trader_XO"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0044"
+      - "SR-0072"
+      - "SR-0101"
+    markets:
+      - "crypto"
+      - "futures"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "LINK"
+      - "NEAR"
+    time_horizons:
+      - "intraday"
+      - "swing"
+    strategy_families:
+      - "order_flow"
+      - "gamma_trading"
+      - "volatility_arbitrage"
+    observed_capabilities:
+      - "CAP_005"  # options / gamma positioning
+      - "CAP_007"  # tape reading
+      - "CAP_014"  # vol-surface analysis
+    observed_inputs:
+      - "options open-interest by strike"
+      - "max-pain data"
+      - "gamma exposure (GEX) profiles"
+      - "BTC ATM IV term structure"
+      - "funding rate vs. IV skew"
+    observed_triggers:
+      - "large open-interest build at strikes far from current price (pin action)"
+      - "gamma flip from negative to positive near a key strike"
+      - "IV term structure inverts (short-dated vol > long-dated)"
+    observed_confirmations:
+      - "delta-neutral flows emerge (market-maker hedging in the direction of the gamma flip)"
+      - "price magnetizes toward the large open-interest level"
+      - "BTC spot vol regime changes confirmed by VRP (vol risk premium)"
+    observed_invalidations:
+      - "price breaks through max-pain cluster without reversal"
+      - "OI at large strikes is rolled/deleted rather than defended"
+      - "IV flattens / term structure normalizes without price follow-through"
+    observed_risk_controls:
+      - "gamma scalps sized to neutralize theta decay"
+      - "stop on OI deletion (market-maker abandonment)"
+      - "delta hedge threshold at 5% IV expansion intraday"
+    public_claims:
+      - "predicted the June 2023 BTC ETF pump via gamma squeeze setup"
+      - "published real-time GEX dashboard"
+      - "documented gamma-trading framework in a 30-part thread"
+    contradictory_claims:
+      - "strategy fails in low-vol regimes but trader downplays those periods"
+      - "back-test used survivorship-biased options data (delisted strikes excluded)"
+    unverified_performance_claims:
+      - "300% return in 3 months using gamma scalps in 2023"
+      - "72% of trades closed at profit in back-test (data set unshared)"
+    source_verification_status: "unverified"
+    provenance_quality: "low"
+    coverage_period: "2022-06 -- 2024-12"
+    known_selection_bias: "options OI data from after-the-fact snapshots; entries not timelocked"
+    known_survivorship_bias: "profile maintained only because trader pivoted from spot to derivatives after 2022"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 06
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-006"
+    display_name: "Cobie"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0007"
+      - "SR-0036"
+      - "SR-0083"
+    markets:
+      - "crypto"
+      - "macro"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "SOL"
+      - "MATIC"
+    time_horizons:
+      - "swing"
+      - "positional"
+      - "macro_trend"
+    strategy_families:
+      - "narrative_investing"
+      - "asymmetric_bets"
+      - "risk_first"
+    observed_capabilities:
+      - "CAP_010"  # market regime classification
+      - "CAP_015"  # narrative / macro framing
+      - "CAP_016"  # position sizing for asymmetric returns
+    observed_inputs:
+      - "regime-change signals (DXY / US10Y real yield / M2 money supply)"
+      - "BTC on-chain realized price vs. market price"
+      - "LTH/STH cost basis and spent-output age"
+      - "narrative lifecycle (emerging / peak / fading)"
+    observed_triggers:
+      - "real yield inverts while BTC realized price crosses above market price"
+      - "stable-coin supply ratio (SSR) reaches historical extremes"
+      - "narrative heat index dumps from euphoria to despair in <72h"
+    observed_confirmations:
+      - "BTC closes weekly above realized price + 1 sigma"
+      - "on-chain volume begins rising from multi-month lows"
+      - "stable-coin dominance breaks down (capital flows back into crypto)"
+    observed_invalidations:
+      - "DXY continues rallying above key resistance (risk-off persists)"
+      - "realized price fails to act as support and price grinds below it"
+      - "narrative fizzles without on-chain follow-through"
+    observed_risk_controls:
+      - "core position never exceeds 15% of portfolio"
+      - "add only when R:R is ≥1:5 based on realized price bands"
+      - "full hedge if 3 of 4 macro indicators flip bearish simultaneously"
+    public_claims:
+      - "co-founded a crypto news / research platform"
+      - "accurately identified the 2021 top via on-chain signals"
+      - "called the FTX contagion weeks before the collapse"
+    contradictory_claims:
+      - "criticized for profiting from token promotions to followers"
+      - "later admitted some bullish calls were influenced by portfolio holdings"
+    unverified_performance_claims:
+      - "80% of portfolio in stable-coins for 8 months (best 'trade' claimed)"
+      - "2,500% return on an angel token investment (no trade record)"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2020-01 -- 2024-12"
+    known_selection_bias: "narrative calls are richly documented; timing errors and whipsaws are not"
+    known_survivorship_bias: "influencer status provides income independent of trading P&L"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 07
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-007"
+    display_name: "CL"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0051"
+      - "SR-0078"
+      - "SR-0099"
+    markets:
+      - "crypto"
+      - "fx"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "DXY"
+      - "EURUSD"
+    time_horizons:
+      - "day_trading"
+      - "swing"
+      - "scalp"
+    strategy_families:
+      - "technical_analysis"
+      - "supply_demand"
+      - "institutional_order_flow"
+    observed_capabilities:
+      - "CAP_006"  # liquidity mapping
+      - "CAP_009"  # tape / level-2 reading
+      - "CAP_017"  # institutional footprint analysis
+    observed_inputs:
+      - "3rd-party trade blocks (whale prints on exchange feeds)"
+      - "price-level memory (high-volume nodes from months prior)"
+      - "session open/close liquidity (Tokyo-London-NY overlaps)"
+      - "Emini / BTC futures correlation tick-by-tick"
+    observed_triggers:
+      - "BTC moves through a high-volume node from 6 months prior in a single session"
+      - "large block trade prints above ask on low volume (iceberg detection)"
+      - "market opens with a gap-fill that matches an institutional target zone"
+    observed_confirmations:
+      - "volume confirms price acceptance above/below the node"
+      - "lower timeframe re-accumulation pattern after breakout"
+      - "correlated FX pair confirms (e.g., DXY reverses as BTC stabilizes)"
+    observed_invalidations:
+      - "price reverts inside the high-volume-node within 3 sessions"
+      - "block-trade was a one-off, not followed by continued accumulation"
+      - "correlated pair diverges (BTC rallies while DXY also rallies)"
+    observed_risk_controls:
+      - "hard stop at the other side of the supply/demand zone"
+      - "position reduced by 50% at 1:1 risk:reward"
+      - "no trade if spread >0.05% of notional"
+    public_claims:
+      - "called every major BTC turning point in 2022 with zone analysis"
+      - "open-sourced supply/demand indicator suite"
+      - "documented institutional order-flow patterns from CME data"
+    contradictory_claims:
+      - "zones are retro-fitted to include price after the fact"
+      - "claimed 80% win-rate but later admitted includes breakeven trades"
+    unverified_performance_claims:
+      - "compounded 8% monthly for 14 months (no audit)"
+      - "only 4 losing days in 2023 (self-reported from journal screenshots)"
+    source_verification_status: "unverified"
+    provenance_quality: "low"
+    coverage_period: "2021-04 -- 2024-11"
+    known_selection_bias: "zone maps published after the move, not before"
+    known_survivorship_bias: "profile persists because trader attracted a paying community after 2022"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 08
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-008"
+    display_name: "Pentoshi"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0009"
+      - "SR-0041"
+      - "SR-0095"
+    markets:
+      - "crypto"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "LINK"
+      - "AAVE"
+      - "UNI"
+    time_horizons:
+      - "positional"
+      - "swing"
+      - "macro_trend"
+    strategy_families:
+      - "value_investing"
+      - "cycle_thesis"
+      - "conviction_compounding"
+    observed_capabilities:
+      - "CAP_008"  # multi-timeframe structure analysis
+      - "CAP_015"  # narrative / macro framing
+      - "CAP_018"  # portfolio-level risk budgeting
+    observed_inputs:
+      - "cycle timing (BTC halving countdown, MVRV Z-score)"
+      - "on-chain revenue / fees of layer-1 protocols"
+      - "developer activity (GitHub commits, active dev count)"
+      - "total-value-locked (TVL) trends by chain"
+      - "BTC / ETH realized cap and HODL waves"
+    observed_triggers:
+      - "MVRV Z-score repeats a pattern seen at prior cycle bottoms"
+      - "protocol revenue grows QoQ while token price is flat (value gap)"
+      - "developer count reaches multi-year low (contrarian accumulation signal)"
+    observed_confirmations:
+      - "BTC dominance peaks and begins declining (alt-season inception)"
+      - "TVL starts recovering on the selected chain before price"
+      - "on-chain volume confirmation from dormant wallets waking up"
+    observed_invalidations:
+      - "new cycle-low in MVRV Z-score without subsequent reclamation"
+      - "protocol revenue declines in absolute terms despite price rise"
+      - "developer exodus accelerates (active devs decrease >20% in a quarter)"
+    observed_risk_controls:
+      - "DCA into position over 3-6 months (never lump-sum)"
+      - "trim 30% of position at each prior cycle high"
+      - "rotate to BTC if alt-coin thesis breaks down (not to stable-coins)"
+    public_claims:
+      - "identified LINK as the 'collateral of oracles' thesis in 2020"
+      - "called the 2021 alt-coin pump 3 months early"
+      - "predicted the 2022 bear market bottom range to within 5%"
+    contradictory_claims:
+      - "some deep-value picks (e.g., ALGO) severely underperformed"
+      - "thesis updated frequently, making original calls hard to evaluate"
+    unverified_performance_claims:
+      - "7x on LINK from 2020-2021 (no verified entries)"
+      - "entire portfolio in top-5 alt-coins at 2022 bottom (entry proof missing)"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2020-05 -- 2024-12"
+    known_selection_bias: "value thesis presented only for coins that eventually pumped"
+    known_survivorship_bias: "conviction investor profile works only in bull markets; bear-market performance not well-documented"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 09
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-009"
+    display_name: "Flood"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0033"
+      - "SR-0068"
+      - "SR-0104"
+    markets:
+      - "crypto"
+      - "macro"
+      - "commodities"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "GLD"
+      - "SLV"
+      - "DXY"
+    time_horizons:
+      - "swing"
+      - "positional"
+      - "macro_trend"
+    strategy_families:
+      - "liquidity_cycle"
+      - "global_macro"
+      - "correlation_arbitrage"
+    observed_capabilities:
+      - "CAP_010"  # market regime classification
+      - "CAP_019"  # cross-asset correlation analysis
+      - "CAP_020"  # central-bank flow analysis
+    observed_inputs:
+      - "global liquidity indices (G3 central-bank balance sheets)"
+      - "BTC/Gold correlation regime (positive/negative regimes)"
+      - "US real rates vs. BTC 1-year z-score"
+      - "DXY weekly structure vs. emerging-market currency index"
+      - "SOFR / EFFR rate dynamics and RRP facility usage"
+    observed_triggers:
+      - "G3 central-bank balance sheet turns from contraction to expansion"
+      - "BTC/Gold correlation flips from positive to negative (BTC priced in liquidity, not inflation)"
+      - "RRP facility drains below $100B (systemic liquidity arrives in risk assets)"
+    observed_confirmations:
+      - "DXY breaks below key moving average (risk-on for EM/crypto)"
+      - "Gold confirms the liquidity move first, then BTC follows"
+      - "SOFR spikes stabilize and fall (stress abating)"
+    observed_invalidations:
+      - "central-bank balance sheet continues QT despite the supposed pivot signal"
+      - "DXY rallies through resistance instead of breaking down"
+      - "BTC/Gold correlation remains positive (BTC behaving as risk-off)"
+    observed_risk_controls:
+      - "hedge with Gold futures when correlation regime is ambiguous"
+      - "max 25% portfolio in crypto; remainder in macro hedges"
+      - "full liquidation of crypto if DXY enters confirmed risk-off regime (70+ weekly)"
+    public_claims:
+      - "correctly called the October 2023 BTC rally via liquidity cycle shift"
+      - "published a global-liquidity tracker used by 10k+ subscribers"
+      - "predicted the Gold-BTC decoupling in 2022 months in advance"
+    contradictory_claims:
+      - "macro framework is unfalsifiable (too many variables can be blamed)"
+      - "calls are often too broad to derive actionable entries"
+    unverified_performance_claims:
+      - "100%+ return in 2023 using only the liquidity-cycle framework"
+      - "zero drawdown >15% in any year since 2020 (self-reported)"
+    source_verification_status: "unverified"
+    provenance_quality: "medium"
+    coverage_period: "2020-10 -- 2024-12"
+    known_selection_bias: "macro analysis is global and retrospective; entries timelocked only for a few calls"
+    known_survivorship_bias: "trader's primary income is the newsletter, not trading"
+    production_eligible: false
+
+  # --------------------------------------------------------------------------
+  # Profile 10
+  # --------------------------------------------------------------------------
+  - trader_profile_id: "TP-010"
+    display_name: "NOPE_TA"
+    public_identity_status: "pseudonymous"
+    source_record_ids:
+      - "SR-0026"
+      - "SR-0059"
+      - "SR-0090"
+      - "SR-0112"
+    markets:
+      - "crypto"
+      - "equities"
+    assets:
+      - "BTC"
+      - "ETH"
+      - "QQQ"
+      - "SPY"
+      - "MSTR"
+    time_horizons:
+      - "scalp"
+      - "day_trading"
+      - "swing"
+    strategy_families:
+      - "statistical_arbitrage"
+      - "machine_learning"
+      - "pattern_recognition"
+    observed_capabilities:
+      - "CAP_021"  # quantitative / algorithmic signal generation
+      - "CAP_022"  # statistical pattern mining
+      - "CAP_007"  # tape reading
+      - "CAP_012"  # risk sizing
+    observed_inputs:
+      - "custom price-action pattern library (100+ labeled chart patterns)"
+      - "correlation matrix of top-50 coins by rolling 24h return"
+      - "auto-encoded regime labels (ML-clustered market states)"
+      - "volume-weighted price deviation from expected drift"
+      - "MSTR/BTC premium/discount as institutional sentiment proxy"
+    observed_triggers:
+      - "pattern recognition model identifies a pinbar + engulfing in a single signal zone"
+      - "BTC-ETH rolling correlation drops below 0.4 (divergence trade opportunity)"
+      - "MSTR premium to NAV drops below -10% (institutional fear extreme)"
+    observed_confirmations:
+      - "regime classifier confirms 'trending' vs. 'ranging' state"
+      - "volume expands on the signal candle >1.5x 20-period average"
+      - "correlation matrix shows decoupling spreading to mid-cap coins"
+    observed_invalidations:
+      - "pattern self-cancels before the next candle close"
+      - "correlation re-converges within 3 candles (false divergence)"
+      - "regime classifier flips to 'chaotic' (no edge in high-noise state)"
+    observed_risk_controls:
+      - "machine-learned stop placement (dynamic volatility percentile)"
+      - "max risk per signal: 0.25% of portfolio"
+      - "all models halt trading if out-of-sample Sharpe drops below 0.5"
+    public_claims:
+      - "developed the first open-source chart-pattern classifier for crypto"
+      - "documented 65% accuracy on pinbar pattern in live paper trading"
+      - "published weekly correlation-regime reports"
+    contradictory_claims:
+      - "ML model is overfitted; out-of-sample performance never matched claims"
+      - "some pattern labels were adjusted after the fact to maintain accuracy"
+    unverified_performance_claims:
+      - "Sharpe ratio of 2.1 over 18 months of paper trading (dataset not shared)"
+      - "machine-learning signals outperformed buy-and-hold by 40% in 2023"
+    source_verification_status: "unverified"
+    provenance_quality: "low"
+    coverage_period: "2022-01 -- 2024-12"
+    known_selection_bias: "pattern library built on bull-market data; bear-market patterns under-sampled"
+    known_survivorship_bias: "quant profile survives because models are adaptable; discretionary peers with fixed patterns were wiped out"
+    production_eligible: false

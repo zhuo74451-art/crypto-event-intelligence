@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://research-intelligence/v1/schemas/BaselineSpec.json",
+  "title": "BaselineSpec",
+  "description": "Specification of a baseline model for comparison.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "model_type": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

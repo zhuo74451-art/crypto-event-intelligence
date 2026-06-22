@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://research-intelligence/v1/schemas/ResearchError.json",
+  "title": "ResearchError",
+  "description": "Base exception for all research intelligence errors.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "detail": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
