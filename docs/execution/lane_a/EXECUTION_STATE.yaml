@@ -2,29 +2,26 @@ task: OVERNIGHT_LANE_A_HISTORICAL_MACRO_EVIDENCE_FACTORY_V1
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: 7cbfb6e
+head_sha: ded2ce0780b3581e4ba827fca328e3fac6f6b40d
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: p1_official_release_dataset
+current_stage: complete
 completed_stages:
   - bootstrap
   - contracts_and_providers
   - p0_minimal_pipeline
-next_exact_action: write tests and commit
-last_test_command:
-last_test_result:
+  - p1_official_release_dataset
+  - tests_and_validation
+  - documentation
+next_exact_action: push and create draft PR
+last_test_command: pytest tests/intelligence/historical_macro/
+last_test_result: 66 passed, 0 failed
 known_failures: []
-blockers: []
-uncommitted_files:
-  - data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
-  - data/intelligence/historical_macro/normalized/macro_source_snapshots_v1.jsonl
-  - data/intelligence/historical_macro/normalized/macro_release_events_v1.csv
-  - data/intelligence/historical_macro/indexes/macro_evidence_v1.sqlite
-  - data/intelligence/historical_macro/reports/pit_audit_v1.json
-  - data/intelligence/historical_macro/reports/pit_audit_v1.md
-  - data/intelligence/historical_macro/reports/coverage_report_v1.json
-  - data/intelligence/historical_macro/reports/coverage_report_v1.md
-  - data/intelligence/historical_macro/raw/bls/
-  - data/intelligence/historical_macro/raw/fred_alfred/
+blockers:
+  - BEA direct API requires registration key (data obtained via FRED)
+  - Federal Reserve historical pages changed URL structure (data obtained via FRED)
+  - Pre-event consensus gathering is P2 scope
+  - Revision chain building is P2 scope
+uncommitted_files: []
