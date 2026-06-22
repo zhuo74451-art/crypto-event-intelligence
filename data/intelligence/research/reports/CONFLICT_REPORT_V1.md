@@ -1,19 +1,23 @@
 # Conflict Report V1
-Generated: 2026-06-22T10:19:22Z
+Generated: 2026-06-22T10:26:46Z
 
-**Total Conflict Sets**: 3
+**Total Conflict Sets**: 4
 
 ## Conflict Details
 
-- **CS-1B49241EF67C3F53** (direction_conflict)
-  - Key: CONFLICT::us_cpi_positive_surprise::btc_1h_direction::cpi::short_term::inflation_dominant
+- **CS-7B0896BBEB8D5ACC** (direction_conflict)
+  - Key: CONFLICT::us_cpi_surprise::BTC_intraday_up::us_cpi::intraday::inflation_dominant
   - Status: open
-  - Claims: RC-BAF6588A2EBA08C3, RC-60BC06A78883EDC0
-- **CS-CAB24FA5E6520E62** (direction_conflict)
-  - Key: CONFLICT::nonfarm_payrolls_positive_surprise::btc_short_term_direction::employment::short_term::growth
+  - Claims: RC-D471E6846F498628, RC-80CE39DD8628CF80
+- **CS-8CDEA557342313F8** (direction_conflict)
+  - Key: CONFLICT::us_cpi_surprise::ETH_short_term_up::us_cpi::short_term::growth
   - Status: open
-  - Claims: RC-1C3F7AC11D75ACEF, RC-8B581B4A0B4A1937
-- **CS-0E9F68EE87A8A086** (direction_conflict)
-  - Key: CONFLICT::fed_rate_decision_dovish::eth_medium_term_direction::central_bank::medium_term::tightening
+  - Claims: RC-9DB72D38A172E2F0, RC-0BBA9FAA1B0A8EB9
+- **CS-BD849D81F323AC81** (direction_conflict)
+  - Key: CONFLICT::us_cpi_surprise::BTC_medium_term_up::us_cpi::medium_term::tightening
   - Status: open
-  - Claims: RC-5856E1AF070D392B, RC-EDCE7C39DC9B5CB8
+  - Claims: RC-D9D5FEFD7C9429EC, RC-82CDC52C0870199F
+- **CS-8740FD140139CA05** (direction_conflict)
+  - Key: CONFLICT::us_cpi_surprise::ETH_long_term_up::us_cpi::long_term::neutral
+  - Status: open
+  - Claims: RC-B6DD46C5173E34F4, RC-2F4238CF3523E5DA

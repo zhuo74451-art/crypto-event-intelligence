@@ -1,11 +1,11 @@
 # Evidence Graph Report V1
-Generated: 2026-06-22T10:19:22Z
+Generated: 2026-06-22T10:26:46Z
 
-**Total Evidence Edges**: 12
+**Total Evidence Edges**: 200
 
 ## Role Distribution
 
 | Role | Count |
 |------|-------|
-| opposing | 7 |
-| supporting | 5 |
+| opposing | 67 |
+| supporting | 133 |
