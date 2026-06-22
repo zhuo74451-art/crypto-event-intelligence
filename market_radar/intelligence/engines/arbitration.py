@@ -288,6 +288,7 @@ class ArbitrationEngineV1:
             trace.final_verdict = VerdictState.INSUFFICIENT_EVIDENCE
             trace.rule_id_selected = "ARB-001"
             trace.limitations.append("No eligible hypotheses")
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations, [])
 
@@ -297,6 +298,7 @@ class ArbitrationEngineV1:
             trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
             trace.rule_id_selected = "ARB-005"
             trace.limitations.append("Both sides have strong evidence")
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations,
                                           ["Strong evidence on both sides"])
@@ -308,6 +310,7 @@ class ArbitrationEngineV1:
                 trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
                 trace.rule_id_selected = "ARB-007"
                 trace.limitations.append("Evidence bundle conflicting")
+                trace.rule_ids_evaluated = list(rule_ids)
                 return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                               alt_ids, missing_confirmations,
                                               ["Evidence bundle is conflicting"])
@@ -322,6 +325,7 @@ class ArbitrationEngineV1:
             trace.final_verdict = VerdictState.WAIT_FOR_CONFIRMATION
             trace.rule_id_selected = "ARB-010"
             trace.limitations.append("Only derivatives confirmation available")
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations, [])
 
@@ -334,6 +338,7 @@ class ArbitrationEngineV1:
         if only_awaiting:
             trace.final_verdict = VerdictState.WAIT_FOR_CONFIRMATION
             trace.rule_id_selected = "ARB-002"
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations, [])
 
@@ -347,6 +352,7 @@ class ArbitrationEngineV1:
             trace.rule_id_selected = "ARB-004"
             trace.direction = "bearish"
             trace.limitations.append("Strong independent bearish evidence overrides weaker bullish consensus")
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations, [])
 
@@ -356,6 +362,7 @@ class ArbitrationEngineV1:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-003"
             trace.direction = "bullish"
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations, [])
 
@@ -363,6 +370,7 @@ class ArbitrationEngineV1:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-003"
             trace.direction = "bearish"
+            trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                           alt_ids, missing_confirmations, [])
 
@@ -394,7 +402,7 @@ class ArbitrationEngineV1:
             trace.rule_id_selected = "ARB-001"
             trace.direction = "neutral"
 
-        trace.rule_ids_evaluated = rule_ids
+        trace.rule_ids_evaluated = list(rule_ids)
         return self._build_assessment(horizon, trace, support_ids, oppose_ids,
                                       alt_ids, missing_confirmations, [])
 
@@ -426,13 +434,14 @@ class ArbitrationEngineV1:
         self, horizon: str, trace: HorizonDecisionTrace,
         support_ids: list[str], oppose_ids: list[str],
         alt_ids: list[str], missing_conf: list[str],
-        conflicts: list[str],
+        conflicts: list[str], rule_ids: list[str] | None = None,
     ) -> HorizonAssessment:
         """Build a HorizonAssessment from the rule outputs."""
         direction = trace.direction if trace.direction != "neutral" else "neutral"
 
         # Determine direction_basis from rule
         basis = trace.rule_id_selected if trace.rule_id_selected else "no_rule_matched"
+        trace.rule_ids_evaluated = rule_ids or trace.rule_ids_evaluated or []
 
         return HorizonAssessment(
             horizon=horizon,
