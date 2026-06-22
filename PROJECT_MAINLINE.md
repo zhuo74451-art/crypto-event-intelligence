@@ -1,117 +1,49 @@
 # Crypto Market Cognition & Signal OS — Mainline Contract
 
-## Authority
+This file is the canonical direction for `main`.
 
-This file is the canonical product-direction contract for `main`.
+Earlier roadmaps, handoff packets, RC1 plans, phase plans, and product-positioning documents do not define current work. Historical release evidence may remain only as a record of earlier commits.
 
-It supersedes every earlier roadmap, handoff packet, RC1 plan, personal-use release plan, phase plan, and product-positioning document in this repository. Historical release evidence may remain for audit purposes, but it has no planning authority.
+## Product
 
-When code, tests, reports, branches, pull requests, or old documentation conflict with this contract, this contract wins until it is explicitly replaced on `main`.
+Build an AI-first crypto market research and intelligence system that combines:
 
-## Product Definition
+1. a multi-domain market world model;
+2. point-in-time evidence and source health;
+3. research claims, conflicts, and knowledge decay;
+4. structured strategy distillation;
+5. historical and shadow validation;
+6. calibrated assessments with an explicit insufficient-evidence state.
 
-Build an AI-first crypto market cognition and effective-signal system that:
+## Existing Repository
 
-1. maintains a multi-domain model of the crypto market;
-2. identifies material changes in news, policy, macro, market structure, positioning, on-chain activity, fundamentals, attention, and narrative;
-3. distils reusable decision methods from strong traders, research papers, official reports, and high-quality industry research;
-4. evaluates each candidate signal through evidence, expectation gap, transmission path, market confirmation, crowding, time horizon, historical reliability, and invalidation conditions;
-5. outputs a small number of evidence-backed market-impact judgements and risk/observation guidance.
+Current modules are engineering candidates. Each module must be reviewed as one of:
 
-The product may express directional market impact, volatility risk, relative strength, crowding, or conditions to wait for. It does not place orders, sign transactions, operate wallets, promise returns, or provide unqualified buy/sell instructions.
+- retain;
+- adapt;
+- quarantine;
+- remove.
 
-## Canonical Output
+Previous release labels, fixed test counts, or old documentation do not determine the future product.
 
-Every production-grade judgement must support:
+## Rules
 
-- `direction`: bullish / bearish / volatility_up / neutral / insufficient_evidence;
-- `assets_or_sectors`;
-- `time_horizon`;
-- `event_state`;
-- `evidence_summary`;
-- `expectation_gap`;
-- `transmission_path`;
-- `market_confirmation`;
-- `priced_in_estimate`;
-- `crowding_state`;
-- `alternative_explanations`;
-- `invalidation_conditions`;
-- calibrated `confidence`;
-- source and point-in-time provenance.
-
-`INSUFFICIENT_EVIDENCE` is a valid and necessary result.
-
-## Five Core Subsystems
-
-### 1. Market World Model
-
-Covers macro/liquidity, cross-asset regime, regulation, geopolitics, spot and derivatives microstructure, stablecoins, on-chain actors, DeFi mechanisms, token supply, fundamentals, security dependencies, attention, narrative, and data quality.
-
-### 2. Research Intelligence & Cognitive Coverage
-
-Maintains research claim cards, conflicting evidence, knowledge decay, unexplained events, canonical research corpus, and candidate hypotheses. A paper or article does not become production truth without validation.
-
-### 3. Trader Strategy Distillation & Strategy Registry
-
-Converts public trader material into structured strategy seeds, then into testable hypotheses. It does not create personality-roleplay agents or accept self-reported performance as proof.
-
-### 4. Signal Arbitration & Calibration
-
-Combines relevant strategies by regime, horizon, evidence quality, and historical reliability. It does not use simple majority voting or one opaque universal score.
-
-### 5. Evidence Acquisition & Source Health
-
-Uses replaceable adapters and services for official APIs, RSS, page-change detection, structured crawling, academic discovery, content extraction, evidence archiving, and notifications. Acquisition is infrastructure, not the product brain.
-
-## Existing Repository Treatment
-
-The current repository is an engineering substrate, not a product definition.
-
-Existing event normalization, registry, deduplication, price backfill, run history, audit, market readers, whale-domain code, rendering, and operator utilities are retained only when they support the new mainline. Every module is subject to one of four decisions:
-
-- `RETAIN`: directly supports the new contract;
-- `ADAPT`: useful substrate but semantics must change;
-- `QUARANTINE`: preserve temporarily while evidence is gathered;
-- `DELETE`: old-direction code, duplicated implementation, or unjustified complexity.
-
-Passing old tests or appearing in an old release report is not sufficient reason to retain a component.
-
-## Development Rules
-
-1. New work lands against the current `main` contract, not against historical phases.
-2. Prefer mature open-source packages, isolated services, and thin adapters over custom infrastructure.
-3. Preserve point-in-time evidence and five timestamps: published, effective, updated, first-seen, retrieved.
-4. Separate facts, interpretations, hypotheses, and validated strategy components.
-5. No strategy claim enters production without historical out-of-sample testing and real-time shadow evidence.
-6. Technical indicators are supporting market-state features unless incremental value is proven.
-7. No daemon, cron, systemd service, paid API, production send, or long-running monitor is enabled without explicit approval.
-8. Each execution round returns evidence before the next execution task is assigned.
+1. New work follows this contract, not historical phases.
+2. Prefer mature packages, isolated services, and thin adapters.
+3. Preserve published, effective, updated, first-seen, and retrieved times.
+4. Separate facts, interpretations, hypotheses, and validated components.
+5. Require historical out-of-sample and real-time shadow evidence before production use.
+6. Do not enable recurring services, paid interfaces, production publishing, or execution without explicit approval.
+7. Return execution evidence before assigning the next implementation task.
 
 ## Current Implementation Boundary
 
-The immediate implementation target is a read-only, one-shot acquisition and evidence pilot for:
+The immediate target is a one-shot, read-only acquisition and evidence pilot for regulatory, legislative, macroeconomic, software-release, and security sources.
 
-- SEC / EDGAR;
-- Congress.gov and Federal Register;
-- Federal Reserve / FRED / BLS / BEA;
-- GitHub Releases and Security Advisories;
-- Trafilatura extraction;
-- changedetection.io integration contract;
-- ArchiveBox evidence contract;
-- Apprise notification contract.
+The pilot establishes source identity, timestamps, raw evidence or snapshot references, content hashes, fallback evidence, source health, and normalized observations.
 
-The pilot produces normalized observations and source-health evidence only. It does not produce trading recommendations or enable recurring monitoring.
+## Current Canonical Documents
 
-## Canonical Supporting Contracts
-
-- `research/intelligence/foundations/FOUNDATION_ADOPTION_MATRIX_V1.yaml`
-- `market_radar/acquisition/contracts/SOURCE_ACQUISITION_CONTRACT_V1.yaml`
-- `market_radar/acquisition/contracts/source_contract.schema.json`
-- `market_radar/acquisition/contracts/normalized_observation.schema.json`
-- `docs/PROJECT_OVERVIEW.md`
+- `README.md`
+- `PROJECT_MAINLINE.md`
 - `docs/ARCHITECTURE.md`
-- `docs/PROJECT_STATUS.md`
-
-## Historical Material Policy
-
-Historical release and audit evidence may be used to verify what existed at an earlier commit. It must not be used to infer the current roadmap, acceptance criteria, product identity, or next action.
