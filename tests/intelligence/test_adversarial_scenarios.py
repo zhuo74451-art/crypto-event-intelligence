@@ -75,8 +75,9 @@ class TestAdversarial:
     def test_short_term_bullish_long_term_bearish(self):
         """Same event: short-term bullish, long-term bearish — must be
         separate assessments, not a contradiction."""
+        from tests.intelligence.test_arbitration import make_arb_input
         engine = ArbitrationEngineV1()
-        inp = ArbitrationInput(asset="BTC", hypotheses=[
+        inp = make_arb_input("BTC", [
             MarketHypothesis(
                 hypothesis_id="hyp_short", event_id="evt_001",
                 strategy_instance_id="sti_001",
@@ -99,8 +100,9 @@ class TestAdversarial:
     def test_three_low_quality_vs_one_high_quality(self):
         """Three low-quality strategies supporting vs one high-quality opposing
         — should not vote, should preserve the conflict."""
+        from tests.intelligence.test_arbitration import make_arb_input
         engine = ArbitrationEngineV1()
-        inp = ArbitrationInput(asset="BTC", hypotheses=[
+        inp = make_arb_input("BTC", [
             MarketHypothesis(
                 hypothesis_id="high_quality", event_id="evt_001",
                 strategy_instance_id="sti_high",
