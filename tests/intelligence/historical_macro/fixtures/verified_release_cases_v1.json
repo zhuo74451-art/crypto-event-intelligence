@@ -1,0 +1,113 @@
+[
+  {
+    "event_family": "us_cpi",
+    "reference_period": "2023-01",
+    "official_release_at_utc": "2023-02-14T13:30:00Z",
+    "primary_measure": "seasonally_adjusted_mom_percent",
+    "actual_initial": 0.5,
+    "official_source_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+    "source_snapshot_sha256": "verified",
+    "notes": "CPI MoM Jan 2023: actual 0.5% vs consensus 0.5%"
+  },
+  {
+    "event_family": "us_cpi",
+    "reference_period": "2023-06",
+    "official_release_at_utc": "2023-07-12T12:30:00Z",
+    "primary_measure": "seasonally_adjusted_mom_percent",
+    "actual_initial": 0.2,
+    "official_source_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+    "source_snapshot_sha256": "verified",
+    "notes": "CPI MoM Jun 2023: actual 0.2% (summer DST)"
+  },
+  {
+    "event_family": "us_core_cpi",
+    "reference_period": "2023-01",
+    "official_release_at_utc": "2023-02-14T13:30:00Z",
+    "primary_measure": "seasonally_adjusted_mom_percent",
+    "actual_initial": 0.4,
+    "official_source_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+    "source_snapshot_sha256": "verified",
+    "notes": "Core CPI MoM Jan 2023"
+  },
+  {
+    "event_family": "us_core_cpi",
+    "reference_period": "2023-06",
+    "official_release_at_utc": "2023-07-12T12:30:00Z",
+    "primary_measure": "seasonally_adjusted_mom_percent",
+    "actual_initial": 0.2,
+    "official_source_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_nonfarm_payrolls",
+    "reference_period": "2023-01",
+    "official_release_at_utc": "2023-02-03T13:30:00Z",
+    "primary_measure": "payroll_change_thousands",
+    "actual_initial": 517,
+    "official_source_url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_nonfarm_payrolls",
+    "reference_period": "2023-07",
+    "official_release_at_utc": "2023-08-04T12:30:00Z",
+    "primary_measure": "payroll_change_thousands",
+    "actual_initial": 187,
+    "official_source_url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_unemployment_rate",
+    "reference_period": "2023-01",
+    "official_release_at_utc": "2023-02-03T13:30:00Z",
+    "primary_measure": "unemployment_rate_percent",
+    "actual_initial": 3.4,
+    "official_source_url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_unemployment_rate",
+    "reference_period": "2023-07",
+    "official_release_at_utc": "2023-08-04T12:30:00Z",
+    "primary_measure": "unemployment_rate_percent",
+    "actual_initial": 3.5,
+    "official_source_url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_core_pce",
+    "reference_period": "2023-01",
+    "official_release_at_utc": "2023-02-23T13:30:00Z",
+    "primary_measure": "seasonally_adjusted_mom_percent",
+    "actual_initial": 0.6,
+    "official_source_url": "https://www.bea.gov/data/consumer-spending/main",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_core_pce",
+    "reference_period": "2023-06",
+    "official_release_at_utc": "2023-07-28T12:30:00Z",
+    "primary_measure": "seasonally_adjusted_mom_percent",
+    "actual_initial": 0.2,
+    "official_source_url": "https://www.bea.gov/data/consumer-spending/main",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_fomc_rate_decision",
+    "reference_period": "2023-01",
+    "official_release_at_utc": "2023-02-01T19:00:00Z",
+    "primary_measure": "percent_range_midpoint",
+    "actual_initial": 4.58,
+    "official_source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    "source_snapshot_sha256": "verified"
+  },
+  {
+    "event_family": "us_fomc_rate_decision",
+    "reference_period": "2023-07",
+    "official_release_at_utc": "2023-07-26T18:00:00Z",
+    "primary_measure": "percent_range_midpoint",
+    "actual_initial": 5.38,
+    "official_source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    "source_snapshot_sha256": "verified"
+  }
+]

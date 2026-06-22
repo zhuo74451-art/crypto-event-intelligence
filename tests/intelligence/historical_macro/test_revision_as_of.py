@@ -16,7 +16,6 @@ class TestRevisionAsOf:
     def setup_method(self):
         self.event = MacroReleaseEventV1(
             event_family="us_cpi",
-            series_id="CUUR0000SA0",
             reference_period="2023-01",
             actual_release_at_utc="2023-02-14T13:30:00Z",
             actual_initial=6.4,

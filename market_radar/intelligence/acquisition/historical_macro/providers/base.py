@@ -96,7 +96,7 @@ class ProviderBase(ABC):
         if self.output_dir:
             raw_dir = os.path.join(self.output_dir, "raw", self.provider_name)
             os.makedirs(raw_dir, exist_ok=True)
-            fname = f"{snapshot.snapshot_id}_{url.split('/')[-1][:80]}"
+            fname = f"{snapshot.snapshot_id}_{''.join(c for c in url.split('/')[-1][:80] if c.isalnum() or c in '._-')[:60]}"
             fpath = os.path.join(raw_dir, fname)
             with open(fpath, "wb") as f:
                 f.write(content)

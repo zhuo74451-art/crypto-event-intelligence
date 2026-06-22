@@ -6,6 +6,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 from market_radar.intelligence.acquisition.historical_macro.contracts import (
+    generate_logical_event_key,
     generate_event_id,
     generate_consensus_observation_id,
     generate_revision_id,
@@ -15,40 +16,40 @@ from market_radar.intelligence.acquisition.historical_macro.contracts import (
 
 class TestEventID:
     def test_same_input_same_id(self):
-        id1 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
-        id2 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
+        id1 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
+        id2 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
         assert id1 == id2
 
     def test_input_order_independence(self):
         # Same payload in different order is caught by the function signature
-        id1 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
-        id2 = generate_event_id("us", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
+        id1 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
+        id2 = generate_event_id(generate_logical_event_key("us", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
         # Country normalization: US vs us -> both become US
         assert id1 == id2
 
     def test_different_release_time_different_id(self):
-        id1 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
-        id2 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-15T13:30:00Z")
+        id1 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
+        id2 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-15T13:30:00Z")
         assert id1 != id2
 
     def test_different_period_different_id(self):
-        id1 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
-        id2 = generate_event_id("US", "us_cpi", "2023-02", "2023-03-14T13:30:00Z")
+        id1 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
+        id2 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-02"), "2023-03-14T13:30:00Z")
         assert id1 != id2
 
     def test_different_family_different_id(self):
-        id1 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
-        id2 = generate_event_id("US", "us_core_cpi", "2023-01", "2023-02-14T13:30:00Z")
+        id1 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
+        id2 = generate_event_id(generate_logical_event_key("US", "us_core_cpi", "2023-01"), "2023-02-14T13:30:00Z")
         assert id1 != id2
 
     def test_output_is_24_hex_chars(self):
-        eid = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
+        eid = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
         assert len(eid) == 24
         assert all(c in "0123456789abcdef" for c in eid)
 
     def test_country_case_insensitive(self):
-        id1 = generate_event_id("US", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
-        id2 = generate_event_id("us", "us_cpi", "2023-01", "2023-02-14T13:30:00Z")
+        id1 = generate_event_id(generate_logical_event_key("US", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
+        id2 = generate_event_id(generate_logical_event_key("us", "us_cpi", "2023-01"), "2023-02-14T13:30:00Z")
         assert id1 == id2
 
 

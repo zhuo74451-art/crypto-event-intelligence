@@ -1,44 +1,39 @@
 # Coverage Report V1
 
-Total Events: 1658
-Total Revisions: 0
-Consensus Observations: 0
+Total Events: 640
+Total Revisions: 102
+Consensus Observations: 120
 
 ## By Event Family
 
 | Family | Count |
 |--------|-------|
-| us_core_cpi | 316 |
-| us_core_pce | 196 |
-| us_cpi | 316 |
-| us_fomc_rate_decision | 197 |
-| us_nonfarm_payrolls | 317 |
-| us_unemployment_rate | 316 |
+| us_core_cpi | 113 |
+| us_core_pce | 112 |
+| us_cpi | 113 |
+| us_fomc_rate_decision | 76 |
+| us_nonfarm_payrolls | 113 |
+| us_unemployment_rate | 113 |
 
 ## By Year
 
 | Year | Count |
 |------|-------|
-| 2010 | 110 |
-| 2011 | 120 |
-| 2012 | 120 |
-| 2013 | 120 |
-| 2014 | 120 |
-| 2015 | 120 |
-| 2016 | 120 |
-| 2017 | 120 |
-| 2018 | 120 |
-| 2019 | 120 |
-| 2020 | 76 |
-| 2021 | 72 |
-| 2022 | 72 |
-| 2023 | 72 |
-| 2024 | 72 |
-| 2025 | 69 |
-| 2026 | 35 |
+| 2017 | 63 |
+| 2018 | 68 |
+| 2019 | 68 |
+| 2020 | 68 |
+| 2021 | 68 |
+| 2022 | 68 |
+| 2023 | 68 |
+| 2024 | 68 |
+| 2025 | 68 |
+| 2026 | 33 |
 
 ## Quality Distribution
 
 | Quality | Count |
 |---------|-------|
-| missing | 1658 |
+| missing | 527 |
+| single_source_reconstructed | 106 |
+| verified_pre_event_media | 7 |

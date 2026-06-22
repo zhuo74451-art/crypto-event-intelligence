@@ -1,45 +1,39 @@
 {
   "records_by_event_family": {
-    "us_core_cpi": 316,
-    "us_core_pce": 196,
-    "us_cpi": 316,
-    "us_fomc_rate_decision": 197,
-    "us_nonfarm_payrolls": 317,
-    "us_unemployment_rate": 316
+    "us_core_cpi": 113,
+    "us_core_pce": 112,
+    "us_cpi": 113,
+    "us_fomc_rate_decision": 76,
+    "us_nonfarm_payrolls": 113,
+    "us_unemployment_rate": 113
   },
   "records_by_year": {
-    "2010": 110,
-    "2011": 120,
-    "2012": 120,
-    "2013": 120,
-    "2014": 120,
-    "2015": 120,
-    "2016": 120,
-    "2017": 120,
-    "2018": 120,
-    "2019": 120,
-    "2020": 76,
-    "2021": 72,
-    "2022": 72,
-    "2023": 72,
-    "2024": 72,
-    "2025": 69,
-    "2026": 35
+    "2017": 63,
+    "2018": 68,
+    "2019": 68,
+    "2020": 68,
+    "2021": 68,
+    "2022": 68,
+    "2023": 68,
+    "2024": 68,
+    "2025": 68,
+    "2026": 33
   },
   "records_by_provider": {
-    "FRED, Federal Reserve Bank of St. Louis": 1178,
-    "U.S. Bureau of Labor Statistics": 480
+    "U.S. Bureau of Labor Statistics": 640
   },
   "consensus_quality_distribution": {
-    "missing": 1658
+    "missing": 527,
+    "single_source_reconstructed": 106,
+    "verified_pre_event_media": 7
   },
-  "revision_coverage": 0,
-  "consensus_observations": 0,
-  "missing_consensus_count": 1658,
-  "events_with_consensus": 0,
+  "revision_coverage": 102,
+  "consensus_observations": 120,
+  "missing_consensus_count": 527,
+  "events_with_consensus": 113,
   "quarantined_count": 0,
   "pit_violation_count": 0,
   "duplicate_count": 0,
   "source_failure_count": 0,
-  "total_events": 1658
+  "total_events": 640
 }

@@ -8,7 +8,7 @@ import os
 import sqlite3
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 from market_radar.intelligence.acquisition.historical_macro.contracts import (
     MacroReleaseEventV1, MacroConsensusObservationV1, MacroRevisionRecordV1,
 )

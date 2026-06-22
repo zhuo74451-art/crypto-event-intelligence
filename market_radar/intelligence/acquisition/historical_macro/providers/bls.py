@@ -171,11 +171,7 @@ class BLSProvider(ProviderBase):
         return None
 
     def _estimate_release_date(self, year: str, period: str) -> str:
-        """Estimate release date for BLS data.
-
-        BLS typically releases CPI around 8:30 AM ET on the scheduled date.
-        For simplicity, we use the middle of the month following the reference period.
-        """
+        return ""
         if period.startswith("M"):
             month = int(period[1:])
             # CPI is usually released in the month following the reference month
@@ -186,5 +182,5 @@ class BLSProvider(ProviderBase):
                 release_year += 1
             # Approximate to the 10th-15th of the release month
             release_day = min(month, 20)
-            return f"{release_year}-{release_month:02d}-{release_day:02d}T13:30:00Z"
+        return ""
         return ""

@@ -1,0 +1,30 @@
+# Legacy Migration Report V1
+
+Timestamp: 2026-06-22T10:32:23Z
+
+## Migration Reasons
+
+- estimated_release_times
+- latest_values_not_verified_initial
+- cross_provider_logical_duplicates
+- incorrect_fomc_event_semantics
+- synthetic_snapshot_metadata
+
+## Legacy Files
+
+- legacy_macro_release_events_v1.jsonl
+- legacy_macro_release_events_v1.csv
+- legacy_macro_source_snapshots_v1.jsonl
+
+## Record Counts
+
+- release_events: 1658
+- source_snapshots: 226
+
+## Analysis
+
+- Families: {"us_cpi": 316, "us_core_cpi": 316, "us_nonfarm_payrolls": 317, "us_unemployment_rate": 316, "us_core_pce": 196, "us_fomc_rate_decision": 197}
+- Total events: 1658
+- Estimated release times: 1658
+- FEDFUNDS as FOMC: 197
+- Synthetic snapshots: 68

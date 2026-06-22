@@ -1,31 +1,28 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "MacroReleaseEventV1",
-  "description": "A scheduled macro-economic release event with actual value, prior, revision status, and consensus expectation.",
+  "description": "A canonical macro-economic release event with verified time and measure semantics \u2014 V2.",
   "type": "object",
   "required": [
     "event_id",
+    "logical_event_key",
     "event_family",
-    "series_id",
     "country",
-    "currency",
     "reference_period",
-    "scheduled_release_at_utc",
     "actual_release_at_utc",
-    "first_seen_at_utc",
-    "retrieved_at_utc",
-    "actual_initial",
-    "actual_initial_unit",
-    "prior_as_known_then",
-    "prior_revised_latest",
-    "revision_status",
-    "official_source_name",
-    "official_source_url",
-    "as_known_then_cutoff_utc",
-    "current_best_generated_at_utc"
+    "release_time_quality",
+    "release_time_verified",
+    "actual_value_status",
+    "measure_type",
+    "event_alignment_eligible",
+    "strategy_replay_eligible"
   ],
   "properties": {
     "event_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "logical_event_key": {
       "type": "string",
       "pattern": "^[a-f0-9]{24}$"
     },
@@ -67,13 +64,32 @@
       "type": "string",
       "format": "date-time"
     },
-    "first_seen_at_utc": {
+    "release_time_timezone": {
       "type": "string",
-      "format": "date-time"
+      "default": "America/New_York"
     },
-    "retrieved_at_utc": {
+    "release_time_quality": {
       "type": "string",
-      "format": "date-time"
+      "enum": [
+        "verified_official_release_page",
+        "verified_official_calendar",
+        "verified_official_archive",
+        "reconstructed_official_date_only",
+        "estimated_unusable",
+        "missing"
+      ]
+    },
+    "release_time_verified": {
+      "type": "boolean"
+    },
+    "release_time_source_url": {
+      "type": "string"
+    },
+    "release_time_source_snapshot_id": {
+      "type": "string"
+    },
+    "event_alignment_eligible": {
+      "type": "boolean"
     },
     "actual_initial": {
       "type": [
@@ -83,6 +99,31 @@
     },
     "actual_initial_unit": {
       "type": "string"
+    },
+    "actual_value_status": {
+      "type": "string",
+      "enum": [
+        "verified_initial_from_release",
+        "derived_from_verified_release_table",
+        "current_latest_only",
+        "reconstructed_with_limits",
+        "missing"
+      ]
+    },
+    "measure_type": {
+      "type": "string"
+    },
+    "primary_measure": {
+      "type": "string"
+    },
+    "secondary_measures": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "strategy_replay_eligible": {
+      "type": "boolean"
     },
     "prior_as_known_then": {
       "type": [
@@ -148,6 +189,15 @@
         "missing"
       ]
     },
+    "consensus_aggregation_method": {
+      "type": "string"
+    },
+    "consensus_independence_groups": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "surprise_raw": {
       "type": [
         "number",
@@ -177,6 +227,20 @@
     "current_best_generated_at_utc": {
       "type": "string",
       "format": "date-time"
+    },
+    "first_seen_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "retrieved_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "provider_observation_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "data_quality_flags": {
       "type": "array",

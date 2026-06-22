@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacroReleaseObservationV1",
+  "description": "A single provider's observation of a macro release. Multiple observations may correspond to one canonical event.",
+  "type": "object",
+  "required": [
+    "observation_id",
+    "event_id",
+    "logical_event_key",
+    "provider",
+    "series_id"
+  ],
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "logical_event_key": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{24}$"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "bls",
+        "bea",
+        "federal_reserve",
+        "fred_alfred",
+        "public_consensus"
+      ]
+    },
+    "series_id": {
+      "type": "string"
+    },
+    "source_record_id": {
+      "type": "string"
+    },
+    "observed_value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "measure_type": {
+      "type": "string"
+    },
+    "source_snapshot_id": {
+      "type": "string"
+    },
+    "observation_quality": {
+      "type": "string",
+      "enum": [
+        "verified_initial",
+        "derived",
+        "current_latest",
+        "reconstructed",
+        "missing"
+      ]
+    },
+    "retrieved_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

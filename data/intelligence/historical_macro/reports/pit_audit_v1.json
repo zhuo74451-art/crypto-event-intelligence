@@ -1,18 +1,18 @@
 {
-  "audit_timestamp": "2026-06-22T09:57:29Z",
-  "event_count": 1658,
-  "observation_count": 0,
-  "revision_count": 0,
-  "snapshot_count": 226,
+  "audit_timestamp": "2026-06-22T10:41:03Z",
+  "event_count": 640,
+  "observation_count": 120,
+  "revision_count": 102,
+  "snapshot_count": 204,
   "total_violations": 0,
   "quarantined_count": 0,
   "results": {
     "consensus_before_release": {
-      "pass": 1658,
+      "pass": 640,
       "fail": 0
     },
     "published_before_release": {
-      "pass": 0,
+      "pass": 120,
       "fail": 0
     },
     "first_seen_before_retrieved": {
@@ -32,7 +32,7 @@
       "fail": 0
     },
     "missing_consensus_stays_null": {
-      "pass": 1658,
+      "pass": 527,
       "fail": 0
     },
     "quality_not_mislabeled": {
@@ -40,11 +40,11 @@
       "fail": 0
     },
     "source_hash_present": {
-      "pass": 226,
+      "pass": 204,
       "fail": 0
     },
     "no_duplicate_event_ids": {
-      "pass": 1658,
+      "pass": 640,
       "fail": 0
     }
   }

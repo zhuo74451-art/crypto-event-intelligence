@@ -127,7 +127,7 @@ class TestRealSampleContract:
         if not os.path.exists(RELEASE_EVENTS_PATH):
             return
         from market_radar.intelligence.acquisition.historical_macro.contracts import (
-            generate_event_id,
+            generate_event_id, generate_logical_event_key,
         )
         mismatches = 0
         count = 0
@@ -137,12 +137,12 @@ class TestRealSampleContract:
                 if not line:
                     continue
                 ev = json.loads(line)
-                eid = generate_event_id(
+                lek = generate_logical_event_key(
                     ev.get("country", "US"),
                     ev.get("event_family", ""),
                     ev.get("reference_period", ""),
-                    ev.get("actual_release_at_utc", ""),
                 )
+                eid = generate_event_id(lek, ev.get("actual_release_at_utc", ""))
                 if eid != ev.get("event_id"):
                     mismatches += 1
                 count += 1

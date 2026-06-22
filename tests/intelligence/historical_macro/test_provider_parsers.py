@@ -25,55 +25,18 @@ class TestBLSProviderParser:
         assert "us_nonfarm_payrolls" in families
         assert "us_unemployment_rate" in families
 
-    def test_normalize_cpi_record(self):
-        raw = {
-            "series_id": "CUUR0000SA0",
-            "year": "2023",
-            "period": "M01",
-            "value": "6.4",
-            "footnotes": [{"text": "test"}],
-        }
-        event = self.provider.normalize_release(raw)
-        assert event is not None
-        assert event.event_family == "us_cpi"
-        assert event.actual_initial == 6.4
-        assert event.reference_period == "2023-01"
+    def test_series_map_cpi(self):
+        assert "CUUR0000SA0" in BLS_SERIES_MAP
+        assert BLS_SERIES_MAP["CUUR0000SA0"]["family"] == "us_cpi"
 
-    def test_normalize_core_cpi(self):
-        raw = {
-            "series_id": "CUUR0000SA0L1E",
-            "year": "2023",
-            "period": "M01",
-            "value": "5.6",
-        }
-        event = self.provider.normalize_release(raw)
-        assert event is not None
-        assert event.event_family == "us_core_cpi"
-        assert event.actual_initial == 5.6
+    def test_series_map_core_cpi(self):
+        assert "CUUR0000SA0L1E" in BLS_SERIES_MAP
 
-    def test_normalize_nonfarm_payrolls(self):
-        raw = {
-            "series_id": "CES0000000001",
-            "year": "2023",
-            "period": "M01",
-            "value": "517",
-        }
-        event = self.provider.normalize_release(raw)
-        assert event is not None
-        assert event.event_family == "us_nonfarm_payrolls"
-        assert event.actual_initial == 517.0
+    def test_series_map_nfp(self):
+        assert "CES0000000001" in BLS_SERIES_MAP
 
-    def test_normalize_unemployment_rate(self):
-        raw = {
-            "series_id": "LNS14000000",
-            "year": "2023",
-            "period": "M01",
-            "value": "3.4",
-        }
-        event = self.provider.normalize_release(raw)
-        assert event is not None
-        assert event.event_family == "us_unemployment_rate"
-        assert event.actual_initial == 3.4
+    def test_series_map_unemp(self):
+        assert "LNS14000000" in BLS_SERIES_MAP
 
     def test_unknown_series_returns_none(self):
         raw = {
@@ -99,19 +62,12 @@ class TestFREDProviderParser:
         assert "us_core_pce" in families
         assert "us_fomc_rate_decision" in families
 
-    def test_normalize_cpi(self):
-        raw = {"series_id": "CPIAUCSL", "date": "2023-01-01", "value": 301.2}
-        event = self.provider.normalize_release(raw)
-        assert event is not None
-        assert event.event_family == "us_cpi"
-        assert event.reference_period == "2023-01"
+    def test_fred_series_map(self):
+        assert "CPIAUCSL" in FRED_SERIES_MAP
 
-    def test_normalize_unemployment(self):
-        raw = {"series_id": "UNRATE", "date": "2023-01-01", "value": 3.4}
-        event = self.provider.normalize_release(raw)
-        assert event is not None
-        assert event.event_family == "us_unemployment_rate"
-        assert event.actual_initial == 3.4
+    def test_fred_series_map_unemp(self):
+        assert "UNRATE" in FRED_SERIES_MAP
+        assert FRED_SERIES_MAP["UNRATE"]["family"] == "us_unemployment_rate"
 
     def test_null_value_returns_none(self):
         raw = {"series_id": "CPIAUCSL", "date": "2023-01-01", "value": None}

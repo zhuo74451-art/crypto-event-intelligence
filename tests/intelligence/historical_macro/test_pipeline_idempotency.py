@@ -37,7 +37,7 @@ class TestPipelineIdempotency:
                     seen.add(ev["event_id"])
         # Simulate adding new events (should not conflict with existing)
         from market_radar.intelligence.acquisition.historical_macro.contracts import (
-            generate_event_id,
+            generate_event_id, generate_logical_event_key,
         )
-        new_id = generate_event_id("US", "us_cpi", "2026-06", "2026-07-15T13:30:00Z")
+        new_id = generate_event_id(generate_logical_event_key("US", "us_cpi", "2026-06"), "2026-07-15T13:30:00Z")
         assert new_id not in seen, "New event ID conflicts with existing"
