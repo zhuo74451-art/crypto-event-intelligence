@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceHealth",
+  "description": "Health monitoring schema for acquisition sources, covering availability, latency, error rates, parser drift, and overall status.",
+  "type": "object",
+  "required": ["source_id", "source_health_report"],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "description": "Identifies the source contract whose health is being reported."
+    },
+    "source_health_report": {
+      "$ref": "#/$defs/SourceHealthReport"
+    },
+    "health_indicators": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/HealthIndicator"
+      },
+      "description": "List of individual health indicators composing the overall report."
+    },
+    "parser_drift_reports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ParserDriftReport"
+      },
+      "description": "Parser drift reports tracking schema evolution and extraction quality."
+    }
+  },
+  "$defs": {
+    "SourceHealthReport": {
+      "title": "SourceHealthReport",
+      "description": "Aggregated health report for a source at a point in time.",
+      "type": "object",
+      "required": ["source_id", "status", "checked_at"],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "description": "Source contract identifier."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["healthy", "degraded", "unhealthy", "unknown"],
+          "description": "Overall health status of the source."
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 UTC timestamp of the health check."
+        },
+        "latency_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Measured response latency in milliseconds."
+        },
+        "error_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Fraction of requests resulting in errors (0..1)."
+        },
+        "uptime_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Uptime percentage over the reporting window."
+        },
+        "last_successful_fetch": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the last successful fetch from this source."
+        },
+        "consecutive_failures": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of consecutive fetch failures."
+        }
+      }
+    },
+    "HealthIndicator": {
+      "title": "HealthIndicator",
+      "description": "A single measurable health indicator for a source.",
+      "type": "object",
+      "required": ["name", "value", "status"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Indicator name (e.g. 'response_time', 'parse_success_rate')."
+        },
+        "value": {
+          "description": "Numeric or string value of the indicator.",
+          "oneOf": [
+            {"type": "number"},
+            {"type": "string"}
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pass", "warn", "fail"],
+          "description": "Threshold-based status for this indicator."
+        },
+        "threshold": {
+          "description": "Threshold used to determine the status.",
+          "oneOf": [
+            {"type": "number"},
+            {"type": "string"}
+          ]
+        },
+        "measured_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this indicator was measured."
+        }
+      }
+    },
+    "ParserDriftReport": {
+      "title": "ParserDriftReport",
+      "description": "Report on parser drift — changes in source structure that cause extraction mismatches.",
+      "type": "object",
+      "required": ["parser_id", "detected_at", "drift_severity"],
+      "properties": {
+        "parser_id": {
+          "type": "string",
+          "description": "Identifier of the parser being monitored."
+        },
+        "detected_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the drift was detected."
+        },
+        "drift_severity": {
+          "type": "string",
+          "enum": ["none", "minor", "moderate", "major", "critical"],
+          "description": "Estimated severity of the schema drift."
+        },
+        "expected_schema_hash": {
+          "type": "string",
+          "description": "Hash of the previously known/expected schema."
+        },
+        "actual_schema_hash": {
+          "type": "string",
+          "description": "Hash of the newly observed schema."
+        },
+        "diff_summary": {
+          "type": "string",
+          "description": "Human-readable summary of structural differences."
+        },
+        "affected_fields": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Field paths that changed between expected and actual schemas."
+        },
+        "automatically_adapted": {
+          "type": "boolean",
+          "description": "Whether the parser was able to auto-adapt to the drift."
+        }
+      }
+    }
+  }
+}

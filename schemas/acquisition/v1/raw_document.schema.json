@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RawDocument",
+  "description": "The original unmodified document fetched from the source, together with acquisition metadata.",
+  "type": "object",
+  "required": ["document_id", "source_id", "fetch_timestamp", "raw_content"],
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Unique identifier for this raw document instance."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Identifies the source contract that produced this document."
+    },
+    "fetch_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of when the document was fetched."
+    },
+    "raw_content": {
+      "type": "string",
+      "description": "The unaltered body of the fetched document (JSON, HTML, plain text, etc.)."
+    },
+    "content_type": {
+      "type": "string",
+      "description": "MIME type or format hint for the raw content (e.g. 'application/json', 'text/html')."
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "Cryptographic hash (e.g. SHA-256) of the raw content for integrity checks."
+    },
+    "fetch_metadata": {
+      "type": "object",
+      "description": "Arbitrary key-value pairs capturing fetch context (e.g. HTTP status, latency).",
+      "additionalProperties": true
+    },
+    "size_bytes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Size of the raw content in bytes."
+    }
+  }
+}

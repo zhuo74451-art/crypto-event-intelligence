@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Revision",
+  "description": "Revision tracking schema capturing the full lineage and change history of acquisition artifacts.",
+  "type": "object",
+  "required": ["revision_record"],
+  "properties": {
+    "revision_record": {
+      "$ref": "#/$defs/RevisionRecord",
+      "description": "The primary revision metadata for this artifact."
+    },
+    "revision_lineage": {
+      "$ref": "#/$defs/RevisionLineage",
+      "description": "Optional lineage connecting this revision to its predecessors."
+    }
+  },
+  "$defs": {
+    "RevisionRecord": {
+      "title": "RevisionRecord",
+      "description": "Metadata about a single revision of an acquisition artifact.",
+      "type": "object",
+      "required": ["revision_id", "artifact_id", "revision_number", "created_at", "change_summary"],
+      "properties": {
+        "revision_id": {
+          "type": "string",
+          "description": "Unique identifier for this revision.",
+          "examples": ["rev_abc123def"]
+        },
+        "artifact_id": {
+          "type": "string",
+          "description": "Identifier of the artifact being revised.",
+          "examples": ["src_etherscan_tx"]
+        },
+        "revision_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Monotonically increasing revision counter for the artifact."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 UTC timestamp of when this revision was created."
+        },
+        "change_summary": {
+          "type": "string",
+          "description": "Human-readable summary of what changed in this revision."
+        },
+        "author": {
+          "type": "string",
+          "description": "User, service, or automation that created this revision."
+        },
+        "checksum": {
+          "type": "string",
+          "description": "Hash of the artifact content at this revision (e.g. SHA-256)."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional revision metadata (e.g. review status, approvals).",
+          "additionalProperties": true
+        }
+      }
+    },
+    "RevisionLineage": {
+      "title": "RevisionLineage",
+      "description": "Chain of ancestor revisions connecting the current state back to the original artifact.",
+      "type": "object",
+      "required": ["root_revision_id", "ancestors"],
+      "properties": {
+        "root_revision_id": {
+          "type": "string",
+          "description": "The original revision from which this lineage descends."
+        },
+        "ancestors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["revision_id", "revision_number"],
+            "properties": {
+              "revision_id": {
+                "type": "string",
+                "description": "Ancestor revision identifier."
+              },
+              "revision_number": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Revision number of the ancestor."
+              },
+              "branch": {
+                "type": "string",
+                "description": "Optional branch or fork label."
+              }
+            }
+          },
+          "description": "Ordered list of ancestor revisions from most recent to root."
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of steps from this revision back to the root."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceContract",
+  "description": "Acquisition source contract schema",
+  "type": "object",
+  "required": ["source_id", "source_name", "authority_tier"],
+  "properties": {
+    "source_id": {"type": "string", "minLength": 1},
+    "source_name": {"type": "string"},
+    "source_version": {"type": "string"},
+    "authority_tier": {"type": "string", "enum": ["primary_official", "specialized_independent", "secondary_media", "social_unverified", "derived_dataset"]},
+    "roles": {"type": "array", "items": {"type": "string"}},
+    "primary_method": {"type": "string"},
+    "timeout_seconds": {"type": "number"},
+    "enabled": {"type": "boolean"},
+    "support_status": {"type": "string"}
+  }
+}

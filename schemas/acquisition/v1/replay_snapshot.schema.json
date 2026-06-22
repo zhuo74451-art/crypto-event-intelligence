@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReplaySnapshot",
+  "description": "Replay query and result schema for acquisition snapshots — allows re-running past acquisitions against current normalization or emitting historical results.",
+  "type": "object",
+  "required": ["replay_query"],
+  "properties": {
+    "replay_query": {
+      "$ref": "#/$defs/ReplayQuery"
+    },
+    "replay_result": {
+      "$ref": "#/$defs/ReplayResult"
+    }
+  },
+  "$defs": {
+    "ReplayQuery": {
+      "title": "ReplayQuery",
+      "description": "Parameters to identify and constrain the set of historical acquisitions to replay.",
+      "type": "object",
+      "required": ["replay_id", "time_range"],
+      "properties": {
+        "replay_id": {
+          "type": "string",
+          "description": "Unique identifier for this replay operation.",
+          "examples": ["replay_20250615_001"]
+        },
+        "time_range": {
+          "type": "object",
+          "required": ["start", "end"],
+          "properties": {
+            "start": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Inclusive start of the replay time window."
+            },
+            "end": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Inclusive end of the replay time window."
+            }
+          },
+          "description": "Time window for the replay (ISO 8601 UTC)."
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Optional filter: only replay acquisitions from these source contracts."
+        },
+        "event_types": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Optional filter: only replay acquisitions matching these event types."
+        },
+        "max_results": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of results to return."
+        },
+        "replay_mode": {
+          "type": "string",
+          "enum": ["re_normalize", "re_fetch", "dry_run"],
+          "description": "Mode of replay: re-run normalization, re-fetch from source, or dry-run validation."
+        }
+      }
+    },
+    "ReplayResult": {
+      "title": "ReplayResult",
+      "description": "The outcome of a single replay operation, including metadata, errors, and produced observations.",
+      "type": "object",
+      "required": ["replay_id", "status", "completed_at", "total_processed"],
+      "properties": {
+        "replay_id": {
+          "type": "string",
+          "description": "Matches the ReplayQuery.replay_id this result corresponds to."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["completed", "partial", "failed"],
+          "description": "Overall status of the replay operation."
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the replay completed."
+        },
+        "total_processed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of raw documents processed during replay."
+        },
+        "observations_produced": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of new or updated observations emitted."
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "document_id": {"type": "string"},
+              "error_message": {"type": "string"},
+              "error_type": {"type": "string"}
+            }
+          },
+          "description": "List of errors encountered during replay."
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Wall-clock duration of the replay in milliseconds."
+        },
+        "snapshot_id": {
+          "type": "string",
+          "description": "If persisted, the ID of the snapshot that captured this result."
+        }
+      }
+    }
+  }
+}

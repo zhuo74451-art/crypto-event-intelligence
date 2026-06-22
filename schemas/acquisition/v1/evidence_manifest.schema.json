@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidenceManifest",
+  "description": "Evidence manifest that provides chain-of-custody for acquisition artifacts — tracking provenance, integrity, and audit trails from source ingestion through normalization.",
+  "type": "object",
+  "required": ["manifest_id", "artifact_id", "created_at", "provenance_chain"],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "description": "Unique identifier for this evidence manifest.",
+      "examples": ["evm_abc123"]
+    },
+    "artifact_id": {
+      "type": "string",
+      "description": "Identifier of the artifact this manifest provides evidence for."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of manifest creation."
+    },
+    "provenance_chain": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProvenanceLink"
+      },
+      "description": "Ordered list of provenance links forming the chain of custody."
+    },
+    "integrity_checksums": {
+      "type": "object",
+      "description": "Cryptographic checksums of the artifact content at each stage.",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "examples": [
+        {"raw": "sha256:abcd...", "normalized": "sha256:ef01..."}
+      ]
+    },
+    "witness_signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "witness_id": {"type": "string"},
+          "signature": {"type": "string"},
+          "signed_at": {"type": "string", "format": "date-time"}
+        }
+      },
+      "description": "Digital signatures from witnesses attesting to the artifact's integrity."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional contextual metadata for the manifest.",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "ProvenanceLink": {
+      "title": "ProvenanceLink",
+      "description": "A single step in the provenance chain, documenting transformation or transfer of the artifact.",
+      "type": "object",
+      "required": ["step_id", "actor", "action", "timestamp"],
+      "properties": {
+        "step_id": {
+          "type": "string",
+          "description": "Unique identifier for this provenance step."
+        },
+        "actor": {
+          "type": "string",
+          "description": "Entity (service, process, person) that performed the action."
+        },
+        "action": {
+          "type": "string",
+          "description": "Description of the action (e.g. 'fetched', 'normalized', 'persisted')."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this action occurred."
+        },
+        "input_checksum": {
+          "type": "string",
+          "description": "Checksum of the input before the action."
+        },
+        "output_checksum": {
+          "type": "string",
+          "description": "Checksum of the output after the action."
+        },
+        "details": {
+          "type": "object",
+          "description": "Action-specific details (e.g. HTTP status, transformation parameters).",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

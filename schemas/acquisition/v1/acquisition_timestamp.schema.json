@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AcquisitionTimestamp",
+  "description": "Rich timestamp schema with five distinct timestamp roles and optional evidence chain.",
+  "type": "object",
+  "required": ["five_timestamps"],
+  "properties": {
+    "five_timestamps": {
+      "description": "Five-timestamp model capturing the full acquisition lifecycle.",
+      "type": "object",
+      "required": ["collected_at", "normalized_at", "persisted_at", "observed_at", "source_published_at"],
+      "properties": {
+        "collected_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Moment the raw document was fetched from the source."
+        },
+        "normalized_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Moment the raw document was transformed into a NormalizedObservation."
+        },
+        "persisted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Moment the artifact was written to persistent storage."
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Business-effective timestamp — when the event was perceived as happening."
+        },
+        "source_published_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Original publication timestamp as declared by the source."
+        }
+      }
+    },
+    "timestamp_evidence": {
+      "description": "Optional chain-of-custody evidence for each timestamp to support audit and replay.",
+      "type": "object",
+      "properties": {
+        "collected_evidence": {
+          "$ref": "#/$defs/TimestampEvidence"
+        },
+        "normalized_evidence": {
+          "$ref": "#/$defs/TimestampEvidence"
+        },
+        "persisted_evidence": {
+          "$ref": "#/$defs/TimestampEvidence"
+        },
+        "observed_evidence": {
+          "$ref": "#/$defs/TimestampEvidence"
+        },
+        "source_published_evidence": {
+          "$ref": "#/$defs/TimestampEvidence"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "TimestampEvidence": {
+      "title": "TimestampEvidence",
+      "description": "Verifiable evidence for a single timestamp value, including source clock skew, reliability, and trace ID.",
+      "type": "object",
+      "required": ["value", "source"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp value being attested."
+        },
+        "source": {
+          "type": "string",
+          "description": "Origin of the timestamp (e.g. 'source_header', 'http_response', 'system_clock', 'extracted')."
+        },
+        "reliability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score (0..1) indicating how trustworthy this timestamp is."
+        },
+        "clock_skew_ms": {
+          "type": "integer",
+          "description": "Measured or estimated clock skew in milliseconds between the observer and the source at collection time."
+        },
+        "trace_id": {
+          "type": "string",
+          "description": "Distributed tracing ID linking this timestamp evidence across the pipeline."
+        }
+      }
+    }
+  }
+}

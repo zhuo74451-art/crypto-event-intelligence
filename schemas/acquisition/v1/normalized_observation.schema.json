@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NormalizedObservation",
+  "description": "A normalized observation produced from a raw document, capturing structured event data without sentiment or signal scoring.",
+  "type": "object",
+  "required": ["observation_id", "source_id", "document_id", "event_type", "normalized_at", "data"],
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "description": "Unique identifier for this observation."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Identifies the source contract that produced the raw document."
+    },
+    "document_id": {
+      "type": "string",
+      "description": "Reference to the RawDocument from which this observation was derived."
+    },
+    "event_type": {
+      "type": "string",
+      "description": "The type of event observed (e.g. 'announcement', 'governance_proposal', 'market_data')."
+    },
+    "normalized_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of when this observation was created."
+    },
+    "data": {
+      "type": "object",
+      "description": "Structured payload of the observation. Schema varies by event_type.",
+      "additionalProperties": true
+    },
+    "chains": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Blockchain chain identifiers this observation is relevant to."
+    },
+    "tokens": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Token symbols or addresses mentioned in the observation."
+    },
+    "protocols": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Protocol or platform names referenced."
+    },
+    "entities": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Named entities (organizations, individuals, DAOs) extracted from the source."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Confidence score (0..1) of the extraction accuracy."
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Arbitrary classification tags applied to this observation."
+    }
+  }
+}

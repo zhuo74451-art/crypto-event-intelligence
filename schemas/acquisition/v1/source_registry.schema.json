@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceRegistry",
+  "description": "A registry of all source contracts used in acquisition. Each entry references a SourceContract definition.",
+  "type": "array",
+  "items": {
+    "$ref": "source_contract.schema.json"
+  },
+  "uniqueItems": true
+}
