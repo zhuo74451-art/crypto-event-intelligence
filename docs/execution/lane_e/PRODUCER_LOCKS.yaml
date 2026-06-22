@@ -1,38 +1,34 @@
-sealed_base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-
 producers:
   lane_a:
+    artifact_hashes_verified: false
+    base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
     branch: feat/overnight-lane-a-historical-macro-evidence-v1
-    locked_sha:
-    manifest_path:
-    manifest_sha256:
-    base_sha:
-    readiness: pending_check
-    artifact_hashes_verified: false
-
+    locked_sha: 7cbfb6e4413b253ec51ec4e85c4444e8b9565a4d
+    manifest_path: docs/execution/lane_a/INTEGRATION_MANIFEST.yaml
+    manifest_sha256: null
+    readiness: rejected_pending_repair
   lane_b:
+    artifact_hashes_verified: false
+    base_sha: null
     branch: feat/overnight-lane-b-historical-market-cross-asset-v1
-    locked_sha:
-    manifest_path:
-    manifest_sha256:
-    base_sha:
+    locked_sha: null
+    manifest_path: null
+    manifest_sha256: null
     readiness: pending_check
-    artifact_hashes_verified: false
-
   lane_c:
+    artifact_hashes_verified: false
+    base_sha: null
     branch: feat/overnight-lane-c-macro-strategy-replay-v1
-    locked_sha:
-    manifest_path:
-    manifest_sha256:
-    base_sha:
+    locked_sha: null
+    manifest_path: null
+    manifest_sha256: null
     readiness: pending_check
-    artifact_hashes_verified: false
-
   lane_d:
-    branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
-    locked_sha:
-    manifest_path:
-    manifest_sha256:
-    base_sha:
-    readiness: pending_check
     artifact_hashes_verified: false
+    base_sha: null
+    branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
+    locked_sha: null
+    manifest_path: null
+    manifest_sha256: null
+    readiness: pending_check
+sealed_base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
