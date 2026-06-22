@@ -1,0 +1,28 @@
+{
+  "sealed_base_sha": "5a5ca58253479403f65ec726016d1ca9b91703d1",
+  "producer_shas": {
+    "lane_a": "7cbfb6e4413b253ec51ec4e85c4444e8b9565a4d",
+    "lane_b": null,
+    "lane_c": null,
+    "lane_d": null
+  },
+  "pipeline_version": "1.0.0",
+  "contract_versions": {
+    "research_claim_v1": "1",
+    "evidence_edge_v1": "1"
+  },
+  "run_id": "RUN-e1bc25b9566da5a5032a2212f16c616c",
+  "status": "running",
+  "compatibility_results_path": null,
+  "pipeline_result_path": null,
+  "claim_count": 0,
+  "edge_count": 0,
+  "conflict_count": 0,
+  "candidate_count": 0,
+  "dossier_count": 0,
+  "started_at_utc": "2026-06-22T10:19:53Z",
+  "completed_at_utc": null,
+  "resumed_from": null,
+  "idempotent_rerun": false,
+  "gate_results": null
+}

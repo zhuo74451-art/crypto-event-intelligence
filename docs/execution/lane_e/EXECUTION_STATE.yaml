@@ -1,24 +1,28 @@
 autonomous_planning_mode_used: false
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-blockers: []
+blockers:
+- 'Lane A: manifest SHA 7cbfb6e ≠ HEAD 1c42a54 — rejected_pending_repair per §27'
+- 'Lanes B/C/D: remote branches not found upstream'
 branch: integration/overnight-intelligence-v1
 completed_stages:
 - bootstrap
 - contract_creation
 - pipeline_build
-current_stage: contracts_and_pipeline_built
-head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+- report_generation
+- sample_pipeline_run
+current_stage: research_contracts_and_pipeline_complete
+head_sha: 2e53aa0
 integrated_producers: []
 known_failures: []
 last_test_command: null
 last_test_result: null
-next_exact_action: check upstream producers and integrate
+next_exact_action: monitor upstream lanes A-D for readiness, then integrate
 planning_mode_used: false
 producer_status:
-  lane_a: pending_or_not_checked
-  lane_b: pending_or_not_checked
-  lane_c: pending_or_not_checked
-  lane_d: pending_or_not_checked
+  lane_a: manifest_mismatch_rejected
+  lane_b: remote_branch_not_found
+  lane_c: remote_branch_not_found
+  lane_d: remote_branch_not_found
 repository: zhuo74451-art/crypto-event-intelligence
 task: OVERNIGHT_LANE_E_RESEARCH_INTELLIGENCE_CONTINUOUS_INTEGRATION_V1
 uncommitted_files: []
