@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "arbitration_id": {
+      "default": ""
+    },
+    "as_of_time": {},
+    "asset": {
+      "default": ""
+    },
+    "contract_name": {
+      "default": "ArbitrationOutput"
+    },
+    "created_at": {},
+    "eligible_count": {
+      "default": 0
+    },
+    "global_verdict": {
+      "default": "insufficient_evidence"
+    },
+    "horizon_assessments": {},
+    "ineligible_count": {
+      "default": 0
+    },
+    "ineligible_reasons": {},
+    "schema_version": {
+      "default": "1.0.0"
+    },
+    "sector": {
+      "default": ""
+    }
+  },
+  "required": [
+    "contract_name",
+    "schema_version",
+    "created_at",
+    "as_of_time",
+    "arbitration_id",
+    "asset",
+    "sector",
+    "horizon_assessments",
+    "global_verdict",
+    "eligible_count",
+    "ineligible_count",
+    "ineligible_reasons"
+  ],
+  "title": "ArbitrationOutput",
+  "type": "object",
+  "version": "1.0.0"
+}

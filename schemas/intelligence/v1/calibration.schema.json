@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "as_of_time": {},
+    "basis": {
+      "default": ""
+    },
+    "calibration_artifact": {},
+    "confidence_type": {
+      "default": "qualitative"
+    },
+    "contract_name": {
+      "default": "ConfidenceStatement"
+    },
+    "created_at": {},
+    "probability_value": {},
+    "production_probability": {},
+    "schema_version": {
+      "default": "1.0.0"
+    },
+    "value": {
+      "default": "medium"
+    }
+  },
+  "required": [
+    "contract_name",
+    "schema_version",
+    "created_at",
+    "as_of_time",
+    "confidence_type",
+    "value",
+    "basis",
+    "probability_value",
+    "calibration_artifact",
+    "production_probability"
+  ],
+  "title": "ConfidenceStatement",
+  "type": "object",
+  "version": "1.0.0"
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "abstention_logic": {
+      "default": ""
+    },
+    "applicable_assets": {},
+    "as_of_time": {},
+    "bearish_logic": {
+      "default": ""
+    },
+    "bullish_logic": {
+      "default": ""
+    },
+    "calibration_status": {
+      "default": "uncalibrated"
+    },
+    "confirmation_conditions": {},
+    "context_conditions": {},
+    "contract_name": {
+      "default": "StrategyPack"
+    },
+    "counterexamples": {},
+    "created_at": {},
+    "crowding_method": {
+      "default": ""
+    },
+    "expiry_conditions": {},
+    "historical_validation_status": {
+      "default": "unverified"
+    },
+    "information_edge": {
+      "default": ""
+    },
+    "invalid_regimes": {},
+    "invalidation_conditions": {},
+    "known_failure_modes": {},
+    "market_domains": {},
+    "name": {
+      "default": ""
+    },
+    "neutral_logic": {
+      "default": ""
+    },
+    "optional_inputs": {},
+    "origin": {},
+    "priced_in_method": {
+      "default": ""
+    },
+    "regime_adjustments": {},
+    "required_inputs": {},
+    "schema_version": {
+      "default": "1.0.0"
+    },
+    "shadow_validation_status": {
+      "default": "unverified"
+    },
+    "strategy_family": {
+      "default": ""
+    },
+    "strategy_id": {
+      "default": ""
+    },
+    "thesis": {
+      "default": ""
+    },
+    "time_horizons": {},
+    "transmission_template": {
+      "default": ""
+    },
+    "trigger_conditions": {},
+    "valid_regimes": {},
+    "version": {
+      "default": "1.0.0"
+    }
+  },
+  "required": [
+    "contract_name",
+    "schema_version",
+    "created_at",
+    "as_of_time",
+    "strategy_id",
+    "name",
+    "version",
+    "origin",
+    "strategy_family",
+    "market_domains",
+    "applicable_assets",
+    "time_horizons",
+    "thesis",
+    "information_edge",
+    "required_inputs",
+    "optional_inputs",
+    "valid_regimes",
+    "invalid_regimes",
+    "regime_adjustments",
+    "context_conditions",
+    "trigger_conditions",
+    "confirmation_conditions",
+    "bullish_logic",
+    "bearish_logic",
+    "neutral_logic",
+    "abstention_logic",
+    "priced_in_method",
+    "crowding_method",
+    "transmission_template",
+    "invalidation_conditions",
+    "expiry_conditions",
+    "known_failure_modes",
+    "counterexamples",
+    "historical_validation_status",
+    "shadow_validation_status",
+    "calibration_status"
+  ],
+  "title": "StrategyPack",
+  "type": "object",
+  "version": "1.0.0"
+}

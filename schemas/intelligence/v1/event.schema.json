@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "as_of_time": {},
+    "assets": {},
+    "contract_name": {
+      "default": "EventEntity"
+    },
+    "created_at": {},
+    "current_state": {
+      "default": "unknown"
+    },
+    "effective_scope": {},
+    "entities": {},
+    "event_family": {
+      "default": "generic"
+    },
+    "event_id": {
+      "default": ""
+    },
+    "evidence_bundle_id": {},
+    "parent_event_id": {},
+    "previous_state": {},
+    "reversal_of": {},
+    "revision_of": {},
+    "schema_version": {
+      "default": "1.0.0"
+    },
+    "state_version": {
+      "default": 1
+    },
+    "title": {
+      "default": ""
+    }
+  },
+  "required": [
+    "contract_name",
+    "schema_version",
+    "created_at",
+    "as_of_time",
+    "event_id",
+    "event_family",
+    "title",
+    "entities",
+    "assets",
+    "current_state",
+    "previous_state",
+    "state_version",
+    "parent_event_id",
+    "revision_of",
+    "reversal_of",
+    "evidence_bundle_id",
+    "effective_scope"
+  ],
+  "title": "EventEntity",
+  "type": "object",
+  "version": "1.0.0"
+}

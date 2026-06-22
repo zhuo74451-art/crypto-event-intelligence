@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "affected_assets": {},
+    "affected_sectors": {},
+    "alternative_explanations": {},
+    "as_of_time": {},
+    "causal_thesis": {
+      "default": ""
+    },
+    "confidence_statement": {},
+    "contract_name": {
+      "default": "MarketHypothesis"
+    },
+    "contradicting_evidence": {},
+    "created_at": {},
+    "event_id": {
+      "default": ""
+    },
+    "expected_effect": {
+      "default": ""
+    },
+    "expires_at": {},
+    "hypothesis_id": {
+      "default": ""
+    },
+    "invalidation_conditions": {},
+    "regime_context": {
+      "default": ""
+    },
+    "schema_version": {
+      "default": "1.0.0"
+    },
+    "status": {
+      "default": "candidate"
+    },
+    "strategy_instance_id": {
+      "default": ""
+    },
+    "supporting_evidence": {},
+    "time_horizon": {
+      "default": ""
+    },
+    "transmission_graph_ref": {
+      "default": ""
+    }
+  },
+  "required": [
+    "contract_name",
+    "schema_version",
+    "created_at",
+    "as_of_time",
+    "hypothesis_id",
+    "event_id",
+    "strategy_instance_id",
+    "affected_assets",
+    "affected_sectors",
+    "time_horizon",
+    "regime_context",
+    "causal_thesis",
+    "transmission_graph_ref",
+    "supporting_evidence",
+    "contradicting_evidence",
+    "expected_effect",
+    "alternative_explanations",
+    "invalidation_conditions",
+    "status",
+    "confidence_statement",
+    "expires_at"
+  ],
+  "title": "MarketHypothesis",
+  "type": "object",
+  "version": "1.0.0"
+}
