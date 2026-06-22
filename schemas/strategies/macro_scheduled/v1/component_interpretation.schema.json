@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "ComponentInterpretation",
+  "properties": {
+    "component_id": {"type": "string"},
+    "release_event_id": {"type": "string"},
+    "interpretation": {"type": "string"},
+    "significance": {"type": "string"},
+    "conflict_with": {"type": "string"}
+  },
+  "required": ["component_id","release_event_id"]
+}

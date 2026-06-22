@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CalendarEventRecord",
+  "type": "object",
+  "properties": {
+    "calendar_event_id": {"type": "string", "description": "Unique event identifier"},
+    "release_family": {"type": "string", "enum": ["cpi_headline","cpi_core","nonfarm_payrolls","unemployment_rate","core_pce","fomc_rate_decision","fomc_statement"]},
+    "scheduled_release_time": {"type": "string", "format": "date-time"},
+    "source_timezone": {"type": "string", "default": "America/New_York"},
+    "expected_components": {"type": "array", "items": {"type": "string"}},
+    "release_authority": {"type": "string"},
+    "calendar_source": {"type": "string"},
+    "calendar_first_seen_at": {"type": "string", "format": "date-time"},
+    "calendar_updated_at": {"type": "string", "format": "date-time"},
+    "rescheduled_from": {"type": "string"},
+    "status": {"type": "string", "enum": ["scheduled","rescheduled","released","delayed","cancelled","unknown"]}
+  },
+  "required": ["calendar_event_id","release_family","scheduled_release_time","status"]
+}

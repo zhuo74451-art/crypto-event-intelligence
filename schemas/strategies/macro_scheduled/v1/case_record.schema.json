@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "CaseRecord",
+  "properties": {
+    "case_id": {"type": "string"},
+    "event": {"type": "object"},
+    "expectation": {"type": "object"},
+    "actual": {"type": "object"},
+    "assessment": {"type": "object"},
+    "regime": {"type": "object"}
+  },
+  "required": ["case_id","event"]
+}

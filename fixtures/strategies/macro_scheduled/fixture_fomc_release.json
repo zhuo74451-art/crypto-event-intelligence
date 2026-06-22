@@ -1,0 +1,22 @@
+[
+  {
+    "synthetic": true,
+    "calendar_event_id": "fomc_2024_01",
+    "release_family": "fomc_rate_decision",
+    "scheduled_release_time": "2024-01-31T14:00:00",
+    "status": "released",
+    "expectation": {"captured_at": "2024-01-30T12:00:00", "expected_value": 5.50, "component_id": "rate_decision"},
+    "actual": {"component_id": "rate_decision", "actual_value": 5.50, "published_at": "2024-01-31T14:00:00"}
+  },
+  {
+    "synthetic": true,
+    "calendar_event_id": "fomc_2024_03_dovish",
+    "release_family": "fomc_statement",
+    "scheduled_release_time": "2024-03-20T14:00:00",
+    "status": "released",
+    "expectation": {"captured_at": "2024-03-19T12:00:00", "expected_value": 5.50, "component_id": "rate_decision"},
+    "actual": {"component_id": "rate_decision", "actual_value": 5.50, "published_at": "2024-03-20T14:00:00"},
+    "prior_statement": "Inflation remains elevated. The Committee is prepared to adjust policy.",
+    "current_statement": "Inflation has eased. The Committee will be patient."
+  }
+]

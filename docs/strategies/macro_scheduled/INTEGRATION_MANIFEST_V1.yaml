@@ -1,0 +1,29 @@
+task: "MACRO_SCHEDULED_EVENT_INTELLIGENCE_V1"
+branch: "feat/macro-scheduled-event-intelligence-v1"
+base_sha: "fc9b76f8a3cfc84bc384b145bd93dda41006e68f"
+goal_mode_used: false
+plan_mode_used: false
+owned_paths:
+  - market_radar/domains/macro/
+  - market_radar/strategies/macro_scheduled/
+  - schemas/strategies/macro_scheduled/
+  - tests/strategies/macro_scheduled/
+  - docs/strategies/macro_scheduled/
+  - fixtures/strategies/macro_scheduled/
+  - research/datasets/macro_scheduled/
+  - scripts/strategies/macro_scheduled/
+  - artifacts/macro_scheduled_pilot_v1/
+event_families:
+  - CPI_HEADLINE, CPI_CORE, NONFARM_PAYROLLS, UNEMPLOYMENT_RATE
+  - CORE_PCE, FOMC_RATE_DECISION, FOMC_STATEMENT
+strategy_versions: ["macro_scheduled_strategy_v1.0.0"]
+case_count: 20
+historical_event_count: 9
+synthetic_count: 9
+contracts_produced: 19
+macro_strategy_tests_passed: 282
+macro_strategy_tests_failed: 0
+baseline_failures_unchanged: true
+paid_apis: false
+credentials: false
+llm_used: false

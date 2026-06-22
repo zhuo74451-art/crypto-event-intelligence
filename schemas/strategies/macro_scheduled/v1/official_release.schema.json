@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OfficialReleaseRecord",
+  "type": "object",
+  "properties": {
+    "release_event_id": {"type": "string"},
+    "component_id": {"type": "string"},
+    "actual_value": {"type": "number"},
+    "prior_value": {"type": "number"},
+    "revised_prior_value": {"type": "number"},
+    "unit": {"type": "string"},
+    "seasonal_adjustment": {"type": "string"},
+    "observation_period": {"type": "string"},
+    "published_at": {"type": "string", "format": "date-time"},
+    "first_seen_at": {"type": "string", "format": "date-time"},
+    "source_document_ref": {"type": "string"},
+    "revision_status": {"type": "string"}
+  },
+  "required": ["release_event_id","component_id","actual_value","published_at"]
+}

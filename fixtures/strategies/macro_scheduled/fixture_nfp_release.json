@@ -1,0 +1,31 @@
+[
+  {
+    "synthetic": true,
+    "calendar_event_id": "nfp_2024_01",
+    "release_family": "nonfarm_payrolls",
+    "scheduled_release_time": "2024-01-05T08:30:00",
+    "status": "released",
+    "expectation": {"captured_at": "2024-01-04T12:00:00", "expected_value": 170.0, "component_id": "payroll_change"},
+    "actual": {"component_id": "payroll_change", "actual_value": 216.0, "published_at": "2024-01-05T08:30:00"}
+  },
+  {
+    "synthetic": true,
+    "calendar_event_id": "nfp_strong_with_revision",
+    "release_family": "nonfarm_payrolls",
+    "scheduled_release_time": "2024-02-02T08:30:00",
+    "status": "released",
+    "expectation": {"captured_at": "2024-02-01T12:00:00", "expected_value": 180.0, "component_id": "payroll_change"},
+    "actual": {"component_id": "payroll_change", "actual_value": 353.0, "published_at": "2024-02-02T08:30:00"},
+    "prior_month_revision": -120.0
+  },
+  {
+    "synthetic": true,
+    "calendar_event_id": "nfp_weak_with_wage_growth",
+    "release_family": "nonfarm_payrolls",
+    "scheduled_release_time": "2024-03-08T08:30:00",
+    "status": "released",
+    "expectation": {"captured_at": "2024-03-07T12:00:00", "expected_value": 200.0, "component_id": "payroll_change"},
+    "actual": {"component_id": "payroll_change", "actual_value": 150.0, "published_at": "2024-03-08T08:30:00"},
+    "wages": {"component_id": "average_hourly_earnings", "actual_value": 0.4}
+  }
+]

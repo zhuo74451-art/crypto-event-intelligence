@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MacroSurprise",
+  "type": "object",
+  "properties": {
+    "release_event_id": {"type": "string"},
+    "component_surprises": {"type": "object"},
+    "composite": {"type": "object"},
+    "computed_at": {"type": "string"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["release_event_id","component_surprises"]
+}

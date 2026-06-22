@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExpectationSnapshot",
+  "type": "object",
+  "properties": {
+    "expectation_snapshot_id": {"type": "string"},
+    "release_event_id": {"type": "string"},
+    "component_id": {"type": "string"},
+    "captured_at": {"type": "string", "format": "date-time"},
+    "valid_for_release_time": {"type": "string", "format": "date-time"},
+    "expected_value": {"type": "number"},
+    "expected_low": {"type": "number"},
+    "expected_high": {"type": "number"},
+    "median": {"type": "number"},
+    "mean": {"type": "number"},
+    "dispersion": {"type": "number"},
+    "respondent_count": {"type": "integer"},
+    "unit": {"type": "string"},
+    "seasonal_adjustment": {"type": "string"},
+    "annualization": {"type": "string"},
+    "source_type": {"type": "string"},
+    "quality": {"type": "string", "enum": ["strong","moderate","weak","insufficient","reconstructed","conflicting"]}
+  },
+  "required": ["expectation_snapshot_id","release_event_id","component_id","captured_at"]
+}
