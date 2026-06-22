@@ -125,6 +125,7 @@ class EligibleHypothesis:
     market_confirmation: str = ""
     transmission_signature: str = ""
     transmission_coherence: str = ""
+    transmission_conflicts: list[str] = field(default_factory=list)
     expected_effect: str = ""
     alternative_explanations: list[str] = field(default_factory=list)
     invalidation_conditions: list[str] = field(default_factory=list)
@@ -220,6 +221,7 @@ class HorizonDecisionTrace:
     ineligible_hypotheses: list[IneligibleHypothesis] = field(default_factory=list)
     support_clusters: list[HypothesisSupportCluster] = field(default_factory=list)
     opposing_clusters: list[HypothesisSupportCluster] = field(default_factory=list)
+    mixed_clusters: list[HypothesisSupportCluster] = field(default_factory=list)
     rule_ids_evaluated: list[str] = field(default_factory=list)
     rule_id_selected: str = ""
     evidence_summary: str = ""

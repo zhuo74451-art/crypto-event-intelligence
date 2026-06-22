@@ -112,9 +112,9 @@ class ArbitrationEngineV1:
         horizon_assessments = []
         for horizon, group in sorted(horizon_groups.items()):
             # Build clusters and compute quality
-            bull_clusters, bear_clusters, all_members = self._cluster_hypotheses(group)
-            self._compute_cluster_qualities(bull_clusters + bear_clusters, group)
-            assessment = self._assess_horizon(horizon, group, bull_clusters, bear_clusters)
+            bull_clusters, bear_clusters, mixed_clusters, all_clusters = self._cluster_hypotheses(group)
+            self._compute_cluster_qualities(all_clusters, group)
+            assessment = self._assess_horizon(horizon, group, bull_clusters, bear_clusters, mixed_clusters)
             horizon_assessments.append(assessment)
 
         # Determine arbitration status and global verdict
@@ -443,6 +443,7 @@ class ArbitrationEngineV1:
             market_confirmation=ctx.market_confirmation or "",
             transmission_signature=ctx.transmission_signature or "",
             transmission_coherence=ctx.transmission_coherence or "",
+            transmission_conflicts=list(ctx.transmission_conflicts),
             expected_effect=h.expected_effect,
             alternative_explanations=list(h.alternative_explanations),
             invalidation_conditions=list(h.invalidation_conditions),
@@ -460,7 +461,8 @@ class ArbitrationEngineV1:
 
     def _cluster_hypotheses(
         self, hypotheses: list[EligibleHypothesis],
-    ) -> tuple[list[HypothesisSupportCluster], list[HypothesisSupportCluster], list[EligibleHypothesis]]:
+    ) -> tuple[list[HypothesisSupportCluster], list[HypothesisSupportCluster],
+               list[HypothesisSupportCluster], list[HypothesisSupportCluster]]:
         """Cluster hypotheses using union-find, then split by direction."""
         n = len(hypotheses)
         parent = list(range(n))
@@ -527,7 +529,8 @@ class ArbitrationEngineV1:
         # Split by direction
         bull = [c for c in all_clusters if c.direction in ("bullish", "positive", "up", "long")]
         bear = [c for c in all_clusters if c.direction in ("bearish", "negative", "down", "short")]
-        return bull, bear, all_clusters
+        mixed = [c for c in all_clusters if c.direction == "mixed"]
+        return bull, bear, mixed, all_clusters
 
     def _cluster_direction(self, members: list[EligibleHypothesis]) -> str:
         """Determine cluster direction from SET of directions, not count comparison.
@@ -564,8 +567,8 @@ class ArbitrationEngineV1:
             best_verdict = QualityLevel.INSUFFICIENT
             all_confirmed = True
             any_confirmed = False
-            all_inputs_available = True
             has_required_inputs = False
+            all_inputs_available = True
             regime_data_present = False
             regime_ok = False
             transmission_data_present = False
@@ -576,7 +579,6 @@ class ArbitrationEngineV1:
                 h = hyp_lookup.get(hid)
                 if not h:
                     continue
-                # Evidence quality from verdict
                 v = h.evidence_bundle_verdict
                 if v in ("verified_multi_source", "verified_primary",
                          "verified_primary_with_secondary_support"):
@@ -588,12 +590,10 @@ class ArbitrationEngineV1:
                 elif v in ("", "missing", "unsupported", "retracted", "insufficient"):
                     if best_verdict == QualityLevel.INSUFFICIENT:
                         best_verdict = QualityLevel.INSUFFICIENT
-                # Market confirmation from field
                 if h.market_confirmation == "confirmed":
                     any_confirmed = True
                 else:
                     all_confirmed = False
-                # Strategy state
                 if h.strategy_state in ("supported", "confirmed"):
                     dims.strategy_state_quality = QualityLevel.STRONG
                 elif h.strategy_state in ("triggered", "awaiting_confirmation", "active", "candidate"):
@@ -601,88 +601,52 @@ class ArbitrationEngineV1:
                         dims.strategy_state_quality = QualityLevel.MODERATE
                 else:
                     dims.strategy_state_quality = QualityLevel.INSUFFICIENT
-                # Input completeness from actual data
+                # Input completeness: undeclared = insufficient
                 if h.required_inputs:
                     has_required_inputs = True
                     if set(h.required_inputs) - set(h.available_inputs):
                         all_inputs_available = False
-                # Regime from actual data
+                # Regime: missing data = insufficient
                 if h.current_regime_matches or h.invalid_regimes or h.regime_quality:
                     regime_data_present = True
                     if h.current_regime_matches and h.regime_quality != "insufficient":
                         regime_ok = True
-                # Transmission from actual data
+                # Transmission: missing data = insufficient
                 if h.transmission_signature or h.transmission_coherence:
                     transmission_data_present = True
                     if h.transmission_coherence in ("strong", "valid", "moderate"):
                         transmission_ok = True
-                # Calibration
                 if h.calibration_artifact_ref:
                     has_calibration = True
 
-            # Evidence quality
             dims.evidence_quality = best_verdict
-
-            # Input completeness: if no required_inputs declared, moderate (not blocked)
-            if not has_required_inputs:
-                dims.input_completeness = QualityLevel.MODERATE
-            elif all_inputs_available:
-                dims.input_completeness = QualityLevel.STRONG
-            else:
-                dims.input_completeness = QualityLevel.INSUFFICIENT
-
-            # Regime fit: if no data, moderate
-            if not regime_data_present:
-                dims.regime_fit = QualityLevel.MODERATE
-            elif regime_ok:
-                dims.regime_fit = QualityLevel.STRONG
-            else:
-                dims.regime_fit = QualityLevel.INSUFFICIENT
-
-            # Market confirmation
-            if all_confirmed and any_confirmed:
-                dims.market_confirmation_quality = QualityLevel.STRONG
-            elif any_confirmed:
-                dims.market_confirmation_quality = QualityLevel.MODERATE
-            else:
-                dims.market_confirmation_quality = QualityLevel.INSUFFICIENT
-
-            # Transmission coherence: requires data, not default moderate
-            if not transmission_data_present:
-                dims.transmission_coherence = QualityLevel.INSUFFICIENT
-            elif transmission_ok:
-                dims.transmission_coherence = QualityLevel.STRONG
-            else:
-                dims.transmission_coherence = QualityLevel.INSUFFICIENT
-
-            # Calibration
-            if has_calibration:
-                dims.calibration_quality = QualityLevel.MODERATE
-            else:
-                dims.calibration_quality = QualityLevel.INSUFFICIENT
-
+            dims.input_completeness = QualityLevel.INSUFFICIENT if (not has_required_inputs or not all_inputs_available) else QualityLevel.STRONG
+            dims.regime_fit = QualityLevel.INSUFFICIENT if (not regime_data_present or not regime_ok) else QualityLevel.STRONG
+            dims.market_confirmation_quality = (
+                QualityLevel.STRONG if (all_confirmed and any_confirmed) else
+                QualityLevel.MODERATE if any_confirmed else
+                QualityLevel.INSUFFICIENT
+            )
+            dims.transmission_coherence = QualityLevel.INSUFFICIENT if (not transmission_data_present or not transmission_ok) else QualityLevel.STRONG
+            dims.calibration_quality = QualityLevel.MODERATE if has_calibration else QualityLevel.INSUFFICIENT
             c.quality_dimensions = dims
 
-            # Strong chain check
-            strong_req = [
-                dims.evidence_quality in (QualityLevel.STRONG, QualityLevel.MODERATE),
-                dims.input_completeness in (QualityLevel.STRONG, QualityLevel.MODERATE),
-                dims.strategy_state_quality in (QualityLevel.STRONG, QualityLevel.MODERATE),
-                dims.regime_fit in (QualityLevel.STRONG, QualityLevel.MODERATE),
-                dims.transmission_coherence in (QualityLevel.STRONG, QualityLevel.MODERATE),
-                dims.market_confirmation_quality in (QualityLevel.STRONG, QualityLevel.MODERATE),
-            ]
-            if all(strong_req):
-                c.quality = QualityLevel.STRONG
-            elif dims.evidence_quality == QualityLevel.WEAK:
-                c.quality = QualityLevel.WEAK
-            elif any(d == QualityLevel.INSUFFICIENT for d in [
-                dims.evidence_quality, dims.input_completeness, dims.regime_fit,
+            # Strong chain: ALL critical dimensions must be STRONG
+            critical = [
+                dims.evidence_quality,
+                dims.input_completeness,
+                dims.strategy_state_quality,
+                dims.regime_fit,
+                dims.transmission_coherence,
                 dims.market_confirmation_quality,
-            ]):
+            ]
+            if all(d == QualityLevel.STRONG for d in critical):
+                c.quality = QualityLevel.STRONG
+            elif any(d == QualityLevel.INSUFFICIENT for d in critical):
                 c.quality = QualityLevel.INSUFFICIENT
             else:
-                c.quality = QualityLevel.MODERATE
+                c.quality = QualityLevel.WEAK
+
 
     # ── Horizon Assessment (Rule-based, STRICT, no ARB-199) ───────────────
 
@@ -691,13 +655,12 @@ class ArbitrationEngineV1:
         hypotheses: list[EligibleHypothesis],
         bull_clusters: list[HypothesisSupportCluster],
         bear_clusters: list[HypothesisSupportCluster],
+        mixed_clusters: list[HypothesisSupportCluster] | None = None,
     ) -> HorizonAssessment:
         trace = HorizonDecisionTrace(horizon=horizon)
         rule_ids = []
-
         for h in hypotheses:
             trace.eligible_hypotheses.append(h.hypothesis_id)
-
         support_ids = [h.hypothesis_id for h in hypotheses
                        if h.expected_effect.lower() in ("bullish", "positive", "up", "long")]
         oppose_ids = [h.hypothesis_id for h in hypotheses
@@ -708,179 +671,130 @@ class ArbitrationEngineV1:
             h.hypothesis_id for h in hypotheses
             if not h.market_confirmation or h.market_confirmation == "awaiting"
         ]
-
         trace.support_clusters = bull_clusters
         trace.opposing_clusters = bear_clusters
-
-        # Filter out mixed-direction clusters — they cannot contribute directionally
+        trace.mixed_clusters = mixed_clusters or []
         clean_bull = [c for c in bull_clusters if c.direction == "bullish"]
         clean_bear = [c for c in bear_clusters if c.direction == "bearish"]
-        mixed_clusters = [c for c in bull_clusters + bear_clusters if c.direction == "mixed"]
+        strong_bull = any(c.quality == QualityLevel.STRONG for c in clean_bull)
+        strong_bear = any(c.quality == QualityLevel.STRONG for c in clean_bear)
 
-        strong_bull = any(c.quality in (QualityLevel.STRONG, QualityLevel.MODERATE) for c in clean_bull)
-        strong_bear = any(c.quality in (QualityLevel.STRONG, QualityLevel.MODERATE) for c in clean_bear)
-
-        # ARB-008: Mixed cluster with internal direction conflict
-        rule_ids.append("ARB-008")
-        if mixed_clusters and not clean_bull and not clean_bear:
-            # Mixed cluster is the only cluster — cannot determine direction
-            trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
-            trace.rule_id_selected = "ARB-008"
-            trace.limitations.append("Dependent cluster with internal direction conflict — cannot resolve")
-            trace.rule_ids_evaluated = list(rule_ids)
-            for mc in mixed_clusters:
-                trace.transmission_conflicts.append(f"Mixed cluster {mc.cluster_id}: {mc.direction}")
-            return self._build_assessment(horizon, trace, support_ids, oppose_ids,
-                                          alt_ids, missing_confirmations,
-                                          ["Internal direction conflict in dependent cluster"])
-
-        # ── Evaluate rules in order ──
-
-        # ARB-001: No eligible hypotheses
+        # ARB-001
         rule_ids.append("ARB-001")
         if not hypotheses:
             trace.final_verdict = VerdictState.INSUFFICIENT_EVIDENCE
             trace.rule_id_selected = "ARB-001"
-            trace.limitations.append("No eligible hypotheses")
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-        # ARB-011: Unresolved transmission conflict
+        # ARB-008: Mixed cluster always blocks directional
+        rule_ids.append("ARB-008")
+        if mixed_clusters:
+            trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
+            trace.rule_id_selected = "ARB-008"
+            for mc in mixed_clusters:
+                trace.limitations.append(f"Mixed cluster {mc.cluster_id}: internal direction conflict")
+            trace.rule_ids_evaluated = list(rule_ids)
+            return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations,
+                                          ["Internal direction conflict"])
+
+        # ARB-011: Transmission conflicts
         rule_ids.append("ARB-011")
-        transmission_conflicts_found = False
+        all_conflicts = []
         for h in hypotheses:
-            if h.transmission_coherence == "invalid":
-                transmission_conflicts_found = True
-                break
-        # Also check for transmission_conflicts across hypotheses
-        if hasattr(trace, 'transmission_conflicts') and trace.transmission_conflicts:
-            transmission_conflicts_found = True
-        if transmission_conflicts_found:
+            if hasattr(h, 'transmission_conflicts') and h.transmission_conflicts:
+                all_conflicts.extend(h.transmission_conflicts)
+        if all_conflicts:
             trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
             trace.rule_id_selected = "ARB-011"
-            trace.limitations.append("Unresolved transmission conflicts prevent directional conclusion")
+            trace.transmission_conflicts = list(set(all_conflicts))
             trace.rule_ids_evaluated = list(rule_ids)
-            return self._build_assessment(horizon, trace, support_ids, oppose_ids,
-                                          alt_ids, missing_confirmations,
-                                          ["Transmission conflict detected"])
+            return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations,
+                                          [f"Transmission conflict: {c}" for c in set(all_conflicts)])
 
-        # ARB-002: Only awaiting confirmation
+        # ARB-002
         rule_ids.append("ARB-002")
-        only_awaiting = (
-            all(h.market_confirmation in ("awaiting", "") for h in hypotheses)
-            if hypotheses else False
-        )
+        only_awaiting = all(h.market_confirmation in ("awaiting", "") for h in hypotheses) if hypotheses else False
         if only_awaiting:
             trace.final_verdict = VerdictState.WAIT_FOR_CONFIRMATION
             trace.rule_id_selected = "ARB-002"
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-        # ARB-003: Only one side has strong chain AND the other side has no clean clusters
+        # ARB-003
         rule_ids.append("ARB-003")
-        only_bull_has_clusters = bool(clean_bull) and not clean_bear
-        only_bear_has_clusters = bool(clean_bear) and not clean_bull
-        if strong_bull and only_bull_has_clusters:
+        only_bull = bool(clean_bull) and not clean_bear
+        only_bear = bool(clean_bear) and not clean_bull
+        if strong_bull and only_bull:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-003"
             trace.direction = "bullish"
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
-        if strong_bear and only_bear_has_clusters:
+        if strong_bear and only_bear:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-003"
             trace.direction = "bearish"
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-        # ARB-004: Strong vs weak (opposite side only weak clusters)
+        # ARB-004
         rule_ids.append("ARB-004")
-        has_weak_bull = bool(bull_clusters) and not strong_bull
-        has_weak_bear = bool(bear_clusters) and not strong_bear
-        if strong_bull and has_weak_bear:
+        weak_bull = bool(bull_clusters) and not strong_bull
+        weak_bear = bool(bear_clusters) and not strong_bear
+        if strong_bull and weak_bear:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-004"
             trace.direction = "bullish"
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
-        if strong_bear and has_weak_bull:
+        if strong_bear and weak_bull:
             trace.final_verdict = VerdictState.DIRECTIONAL_AVAILABLE
             trace.rule_id_selected = "ARB-004"
             trace.direction = "bearish"
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-        # ARB-005: Both sides have strong evidence
+        # ARB-005
         rule_ids.append("ARB-005")
         if strong_bull and strong_bear:
             trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
             trace.rule_id_selected = "ARB-005"
-            trace.limitations.append("Both sides have strong evidence")
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations,
                                           ["Strong evidence on both sides"])
 
-        # ARB-007: Evidence bundle conflicting
+        # ARB-007
         rule_ids.append("ARB-007")
         for h in hypotheses:
             if h.evidence_bundle_verdict == "conflicting":
                 trace.final_verdict = VerdictState.CONFLICT_UNRESOLVED
                 trace.rule_id_selected = "ARB-007"
-                trace.limitations.append("Evidence bundle conflicting")
                 trace.rule_ids_evaluated = list(rule_ids)
                 return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations,
                                               ["Evidence bundle is conflicting"])
 
-        # ARB-010: Only derivatives confirmation
+        # ARB-010
         rule_ids.append("ARB-010")
-        all_derivatives = (
-            all(h.market_confirmation in ("derivatives_only", "awaiting", "") for h in hypotheses)
-            if hypotheses else False
-        )
-        if all_derivatives and not strong_bull and not strong_bear:
+        all_deriv = all(h.market_confirmation in ("derivatives_only", "awaiting", "") for h in hypotheses) if hypotheses else False
+        if all_deriv and not strong_bull and not strong_bear:
             trace.final_verdict = VerdictState.WAIT_FOR_CONFIRMATION
             trace.rule_id_selected = "ARB-010"
-            trace.limitations.append("Only derivatives confirmation available")
             trace.rule_ids_evaluated = list(rule_ids)
             return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-        # ARB-013: No calibration artifact
+        # ARB-013
         rule_ids.append("ARB-013")
-        has_cal = any(h.calibration_artifact_ref for h in hypotheses)
-        if not has_cal:
-            trace.limitations.append("No calibration artifact — confidence limited")
+        if not any(h.calibration_artifact_ref for h in hypotheses):
+            trace.limitations.append("No calibration artifact -- confidence limited")
 
-        # Default: INSUFFICIENT_EVIDENCE (NO ARB-199)
+        # Default INSUFFICIENT (no ARB-199)
         trace.final_verdict = VerdictState.INSUFFICIENT_EVIDENCE
         trace.rule_id_selected = "ARB-001"
         trace.direction = "neutral"
-        trace.limitations.append("No rule matched — default insufficient evidence")
         trace.rule_ids_evaluated = list(rule_ids)
         return self._build_assessment(horizon, trace, support_ids, oppose_ids, alt_ids, missing_confirmations, [])
 
-    def _build_assessment(
-        self, horizon: str, trace: HorizonDecisionTrace,
-        support_ids: list[str], oppose_ids: list[str],
-        alt_ids: list[str], missing_conf: list[str],
-        conflicts: list[str],
-    ) -> HorizonAssessment:
-        direction = trace.direction if trace.direction != "neutral" else "neutral"
-        basis = trace.rule_id_selected if trace.rule_id_selected else "no_rule_matched"
-        trace.rule_ids_evaluated = trace.rule_ids_evaluated or []
-        return HorizonAssessment(
-            horizon=horizon,
-            direction=direction,
-            direction_basis=basis,
-            supporting_hypotheses=support_ids,
-            opposing_hypotheses=oppose_ids,
-            alternative_hypotheses=alt_ids,
-            unresolved_conflicts=conflicts,
-            missing_confirmations=missing_conf,
-            verdict=trace.final_verdict,
-            decision_trace=trace,
-        )
-
-    # ── Canonical Arbitration ID ──────────────────────────────────────────
 
     def _generate_arbitration_id(
         self, inp: ArbitrationInput,
@@ -904,7 +818,29 @@ class ArbitrationEngineV1:
         h = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:24]
         return f"arb_{h}"
 
-    # ── Global Status ─────────────────────────────────────────────────────
+
+    def _build_assessment(
+        self, horizon: str, trace: HorizonDecisionTrace,
+        support_ids: list[str], oppose_ids: list[str],
+        alt_ids: list[str], missing_conf: list[str],
+        conflicts: list[str],
+    ) -> HorizonAssessment:
+        direction = trace.direction if trace.direction != "neutral" else "neutral"
+        basis = trace.rule_id_selected if trace.rule_id_selected else "no_rule_matched"
+        trace.rule_ids_evaluated = trace.rule_ids_evaluated or []
+        return HorizonAssessment(
+            horizon=horizon,
+            direction=direction,
+            direction_basis=basis,
+            supporting_hypotheses=support_ids,
+            opposing_hypotheses=oppose_ids,
+            alternative_hypotheses=alt_ids,
+            unresolved_conflicts=conflicts,
+            missing_confirmations=missing_conf,
+            verdict=trace.final_verdict,
+            decision_trace=trace,
+        )
+
 
     def _determine_arbitration_status(
         self, assessments: list[HorizonAssessment],

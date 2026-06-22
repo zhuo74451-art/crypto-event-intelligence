@@ -57,10 +57,13 @@ def make_arb_input(asset: str, hyps: list[dict],
                 strategy_instance_id=h_dict.get("strategy_instance_id", ""),
                 evidence_bundle_verdict="verified_multi_source",
                 regime_matches=True,
+                regime_quality="strong",
+                current_regime="normal",
                 market_confirmation=conf,
                 evidence_independence_groups=[f"group_{hid}"],
                 required_inputs=["price", "volume"],
                 available_inputs=["price", "volume"],
+                transmission_coherence="strong",
             )
     return ArbitrationInput(
         asset=asset,
