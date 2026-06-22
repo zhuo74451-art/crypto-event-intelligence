@@ -53,18 +53,33 @@ class ArbitrationStatus(str, Enum):
 # ── Eligibility ────────────────────────────────────────────────────────────
 
 class EligibilityReasonCode(str, Enum):
-    CONTRACT_VALID = "E01_contract_valid"
-    ASSET_SCOPE_MISMATCH = "E02_asset_scope_mismatch"
-    HORIZON_UNRECOGNIZED = "E03_horizon_unrecognized"
-    STRATEGY_STATE_INELIGIBLE = "E04_strategy_state_ineligible"
-    REQUIRED_INPUTS_MISSING = "E05_required_inputs_missing"
-    EVIDENCE_MINIMUM_NOT_MET = "E06_evidence_minimum_not_met"
-    EVIDENCE_CONFLICTING = "E07_evidence_conflicting"
-    REGIME_INVALID = "E08_regime_invalid"
-    HYPOTHESIS_EXPIRED = "E09_hypothesis_expired"
-    INVALIDATION_TRIGGERED = "E10_invalidation_triggered"
-    CONFIDENCE_INVALID = "E11_confidence_invalid"
-    TRANSMISSION_INVALID = "E12_transmission_invalid"
+    # New FAIL-semantic codes (preferred)
+    E01_CONTRACT_INVALID = "E01_contract_invalid"
+    E02_ASSET_SCOPE_MISMATCH = "E02_asset_scope_mismatch"
+    E03_HORIZON_UNRECOGNIZED = "E03_horizon_unrecognized"
+    E04_STRATEGY_STATE_INELIGIBLE = "E04_strategy_state_ineligible"
+    E05_REQUIRED_INPUTS_MISSING = "E05_required_inputs_missing"
+    E06_EVIDENCE_MINIMUM_NOT_MET = "E06_evidence_minimum_not_met"
+    E07_EVIDENCE_CONFLICTING = "E07_evidence_conflicting"
+    E08_REGIME_INVALID = "E08_regime_invalid"
+    E09_HYPOTHESIS_EXPIRED = "E09_hypothesis_expired"
+    E10_INVALIDATION_TRIGGERED = "E10_invalidation_triggered"
+    E11_CONFIDENCE_INVALID = "E11_confidence_invalid"
+    E12_TRANSMISSION_INVALID = "E12_transmission_invalid"
+
+    # Legacy backward-compatible aliases
+    CONTRACT_VALID = "E01_contract_valid"  # deprecated
+    ASSET_SCOPE_MISMATCH = "E02_asset_scope_mismatch"  # deprecated
+    HORIZON_UNRECOGNIZED = "E03_horizon_unrecognized"  # deprecated
+    STRATEGY_STATE_INELIGIBLE = "E04_strategy_state_ineligible"  # deprecated
+    REQUIRED_INPUTS_MISSING = "E05_required_inputs_missing"  # deprecated
+    EVIDENCE_MINIMUM_NOT_MET = "E06_evidence_minimum_not_met"  # deprecated
+    EVIDENCE_CONFLICTING = "E07_evidence_conflicting"  # deprecated
+    REGIME_INVALID = "E08_regime_invalid"  # deprecated
+    HYPOTHESIS_EXPIRED = "E09_hypothesis_expired"  # deprecated
+    INVALIDATION_TRIGGERED = "E10_invalidation_triggered"  # deprecated
+    CONFIDENCE_INVALID = "E11_confidence_invalid"  # deprecated
+    TRANSMISSION_INVALID = "E12_transmission_invalid"  # deprecated
 
 
 @dataclass
@@ -131,17 +146,40 @@ class IneligibleHypothesis:
         return codes
 
 
-# ── Support Clustering ────────────────────────────────────────────────────
+# ── Hypothesis Arbitration Context ─────────────────────────────────────────
 
 @dataclass
-class HypothesisSupportCluster:
-    """A cluster of related hypotheses sharing origin or evidence."""
-    hypotheses: list[str] = field(default_factory=list)
-    origin_groups: list[str] = field(default_factory=list)
+class HypothesisArbitrationContext:
+    """Full context snapshot for a single hypothesis under arbitration."""
+    hypothesis_id: str = ""
+    strategy_id: str = ""
+    strategy_instance_id: str = ""
+    strategy_origin_group: str = ""
+    strategy_state: str = ""
+    asset_scope: list[str] = field(default_factory=list)
+    sector_scope: str = ""
+    time_horizon: str = ""
+    required_inputs: list[str] = field(default_factory=list)
+    available_inputs: list[str] = field(default_factory=list)
+    evidence_bundle_verdict: str = ""
+    evidence_quality: str = ""
     evidence_independence_groups: list[str] = field(default_factory=list)
-    transmission_signatures: set[str] = field(default_factory=set)
-    quality: QualityLevel = QualityLevel.INSUFFICIENT
-    direction: str = ""
+    valid_regimes: list[str] = field(default_factory=list)
+    invalid_regimes: list[str] = field(default_factory=list)
+    current_regime: str = ""
+    regime_matches: bool = False
+    regime_quality: str = ""
+    market_confirmation: str = ""
+    market_confirmation_quality: str = ""
+    derivatives_only: bool = False
+    transmission_signature: str = ""
+    transmission_coherence: str = ""
+    transmission_conflicts: list[str] = field(default_factory=list)
+    invalidation_triggered: bool = False
+    invalidation_reasons: list[str] = field(default_factory=list)
+    confidence_type: str = ""
+    calibration_artifact_ref: str = ""
+    calibration_compatible: bool = False
 
 
 # ── Quality dimensions ────────────────────────────────────────────────────
@@ -155,6 +193,21 @@ class QualityDimensions:
     transmission_coherence: QualityLevel = QualityLevel.INSUFFICIENT
     calibration_quality: QualityLevel = QualityLevel.INSUFFICIENT
     input_completeness: QualityLevel = QualityLevel.INSUFFICIENT
+
+
+# ── Support Clustering ────────────────────────────────────────────────────
+
+@dataclass
+class HypothesisSupportCluster:
+    """A cluster of related hypotheses sharing origin or evidence."""
+    cluster_id: str = ""
+    hypotheses: list[str] = field(default_factory=list)
+    origin_groups: list[str] = field(default_factory=list)
+    evidence_independence_groups: list[str] = field(default_factory=list)
+    transmission_signatures: set[str] = field(default_factory=set)
+    quality: QualityLevel = QualityLevel.INSUFFICIENT
+    quality_dimensions: QualityDimensions = field(default_factory=QualityDimensions)
+    direction: str = ""
 
 
 # ── Decision Trace ─────────────────────────────────────────────────────────
@@ -218,8 +271,9 @@ class ArbitrationInput(ContractBase):
     asset: str = ""
     sector: str = ""
     hypotheses: list[dict] = field(default_factory=list)
-    evidence_state: dict = field(default_factory=dict)
-    regime_state: dict = field(default_factory=dict)
+    evidence_state: dict = field(default_factory=dict)      # LEGACY: use hypothesis_contexts instead
+    regime_state: dict = field(default_factory=dict)        # LEGACY: use hypothesis_contexts instead
+    hypothesis_contexts: dict[str, HypothesisArbitrationContext] = field(default_factory=dict)
 
 
 @dataclass

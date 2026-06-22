@@ -127,6 +127,16 @@ def main():
     check("passed" in result.stderr or "passed" in result.stdout,
           "Intelligence tests still pass")
 
+    # 10. ARB-199 removed and canonical IDs
+    print("\n--- Arbitration Specific Checks ---")
+    arb_text = (PROJECT_ROOT / "market_radar/intelligence/engines/arbitration.py").read_text(encoding="utf-8")
+    check("ARB-199" not in arb_text,
+          "ARB-199 fallback removed")
+    check("sorted_ids" in arb_text,
+          "Canonical content-based arbitration ID")
+    check("E01_CONTRACT_INVALID" in arb_text,
+          "Full E01-E12 eligibility checks implemented")
+
     # Summary
     print(f"\n=== Results: {PASS} passed, {FAIL} failed ===")
     if FAIL > 0:
