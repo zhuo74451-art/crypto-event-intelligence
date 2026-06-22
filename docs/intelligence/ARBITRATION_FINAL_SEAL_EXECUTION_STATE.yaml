@@ -1,0 +1,10 @@
+task: INTELLIGENCE_KERNEL_ARBITRATION_FINAL_SEAL_V2
+branch: fix/intelligence-kernel-foundation-v1-seal
+base_sha: 54807787a1471a57f56901469438b5d5d6f19de0
+head_sha: 54807787a1471a57f56901469438b5d5d6f19de0
+goal_mode_used: false
+plan_mode_used: false
+current_milestone: "1-add-context-contract"
+next_exact_action: "Add HypothesisArbitrationContext to arbitration.py contracts"
+tests_last_run: "199 passed, 8 golden"
+known_failures: "8 pre-existing baseline"
