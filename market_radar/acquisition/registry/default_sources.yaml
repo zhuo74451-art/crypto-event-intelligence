@@ -1,0 +1,278 @@
+- source_id: sec-edgar
+  source_name: SEC EDGAR Company Filings
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - authoritative_evidence
+  - discovery
+  content_types:
+  - filing
+  - report
+  languages:
+  - en
+  jurisdictions:
+  - US
+  market_domains:
+  - equity
+  - regulatory
+  primary_method: http_json_api
+  expected_content_type: application/json
+  timeout_seconds: 60.0
+  published_time_available: true
+  updated_time_available: false
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: sec
+  enabled: true
+  support_status: active
+  description: SEC EDGAR company submissions and filings
+- source_id: federal-register
+  source_name: U.S. Federal Register
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - authoritative_evidence
+  - discovery
+  - expectation
+  content_types:
+  - regulation
+  - notice
+  - rule
+  languages:
+  - en
+  jurisdictions:
+  - US
+  market_domains:
+  - regulatory
+  primary_method: http_json_api
+  expected_content_type: application/json
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: true
+  effective_time_available: true
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: federal-register
+  enabled: true
+  support_status: active
+  description: Federal Register API for regulations, notices, and rules
+- source_id: federal-reserve-press
+  source_name: Federal Reserve Press Releases
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - authoritative_evidence
+  - expectation
+  content_types:
+  - press_release
+  - statement
+  languages:
+  - en
+  jurisdictions:
+  - US
+  market_domains:
+  - monetary_policy
+  - regulatory
+  primary_method: rss
+  expected_content_type: application/rss+xml
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: false
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: fed
+  enabled: true
+  support_status: active
+  description: Federal Reserve press release RSS feed
+- source_id: bls-public
+  source_name: Bureau of Labor Statistics
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - authoritative_evidence
+  - expectation
+  content_types:
+  - economic_data
+  - report
+  languages:
+  - en
+  jurisdictions:
+  - US
+  market_domains:
+  - macroeconomics
+  - employment
+  primary_method: http_json_api
+  expected_content_type: application/json
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: false
+  effective_time_available: true
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: bls
+  enabled: true
+  support_status: active
+  description: BLS public API for economic data series
+- source_id: bea-public
+  source_name: Bureau of Economic Analysis
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - authoritative_evidence
+  - expectation
+  content_types:
+  - economic_data
+  - report
+  languages:
+  - en
+  jurisdictions:
+  - US
+  market_domains:
+  - macroeconomics
+  - gdp
+  primary_method: http_json_api
+  expected_content_type: application/json
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: false
+  effective_time_available: true
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: bea
+  enabled: true
+  support_status: active
+  description: BEA public API for GDP and economic accounts data
+- source_id: github-releases
+  source_name: GitHub Releases
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - discovery
+  - research
+  content_types:
+  - release
+  - changelog
+  languages:
+  - en
+  jurisdictions: []
+  market_domains:
+  - software
+  - blockchain
+  - defi
+  primary_method: github_api
+  expected_content_type: application/json
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: true
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: github
+  enabled: true
+  support_status: active
+  description: GitHub Releases API for software releases
+- source_id: github-security-advisories
+  source_name: GitHub Security Advisories
+  source_version: 1.0.0
+  authority_tier: primary_official
+  roles:
+  - discovery
+  - research
+  content_types:
+  - security_advisory
+  - cve
+  languages:
+  - en
+  jurisdictions: []
+  market_domains:
+  - security
+  - software
+  primary_method: github_api
+  expected_content_type: application/json
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: true
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: github
+  enabled: true
+  support_status: active
+  description: GitHub Security Advisories API for CVEs and security alerts
+- source_id: generic-rss
+  source_name: Generic Official RSS
+  source_version: 1.0.0
+  authority_tier: secondary_media
+  roles:
+  - discovery
+  content_types:
+  - article
+  - news
+  languages:
+  - en
+  jurisdictions: []
+  market_domains: []
+  primary_method: rss
+  expected_content_type: application/rss+xml
+  timeout_seconds: 30.0
+  published_time_available: true
+  updated_time_available: true
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: ''
+  enabled: true
+  support_status: active
+  description: Generic RSS feed reader for official sources
+- source_id: generic-html
+  source_name: Generic Official Static HTML
+  source_version: 1.0.0
+  authority_tier: secondary_media
+  roles:
+  - discovery
+  content_types:
+  - page
+  - article
+  languages:
+  - en
+  jurisdictions: []
+  market_domains: []
+  primary_method: static_html
+  expected_content_type: text/html
+  timeout_seconds: 30.0
+  published_time_available: false
+  updated_time_available: false
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: ''
+  enabled: true
+  support_status: active
+  description: Generic static HTML page fetcher
+- source_id: fixture-source
+  source_name: Test Fixture Source
+  source_version: 1.0.0
+  authority_tier: derived_dataset
+  roles:
+  - research
+  content_types:
+  - fixture
+  - test
+  languages:
+  - en
+  jurisdictions: []
+  market_domains: []
+  primary_method: fixture
+  expected_content_type: application/json
+  timeout_seconds: 10.0
+  published_time_available: false
+  updated_time_available: false
+  effective_time_available: false
+  preserve_raw_payload: true
+  content_hash_required: true
+  independence_group: ''
+  enabled: true
+  support_status: testing
+  description: Test fixture source for development and testing
