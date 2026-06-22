@@ -6,7 +6,7 @@ false confident output.
 
 import pytest
 from market_radar.intelligence.contracts.evidence import (
-    EvidenceItem, VerificationStatus,
+    EvidenceItem, VerificationStatus, Stance,
 )
 from market_radar.intelligence.contracts.event import (
     EventEntity, EventState, EventTransition, TransitionType,
@@ -57,12 +57,16 @@ class TestAdversarial:
         assert bundle.bundle_verdict != VerificationStatus.VERIFIED_PRIMARY
 
     def test_conflicting_primary_sources(self):
-        """Two primary sources contradicting each other should resolve to CONFLICTING."""
+        """Two primary sources contradicting each other on same claim key should resolve to CONFLICTING."""
         resolver = EvidenceResolverV1()
         items = [
-            EvidenceItem(evidence_id="evi_a", claim="Approved", source_id="src_a",
+            EvidenceItem(evidence_id="evi_a", claim="Approved", claim_key="approval_status",
+                          claim_subject="BTC ETF", claim_predicate="status", claim_value="approved",
+                          stance=Stance.SUPPORTS, source_id="src_a",
                           independence_group="gov_a", is_primary=True),
-            EvidenceItem(evidence_id="evi_b", claim="Rejected", source_id="src_b",
+            EvidenceItem(evidence_id="evi_b", claim="Rejected", claim_key="approval_status",
+                          claim_subject="BTC ETF", claim_predicate="status", claim_value="rejected",
+                          stance=Stance.CONTRADICTS, source_id="src_b",
                           independence_group="gov_b", is_primary=True),
         ]
         bundle = resolver.resolve(items)

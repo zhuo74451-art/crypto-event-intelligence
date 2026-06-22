@@ -14,14 +14,23 @@ def make_event(eid="evt_001", state=EventState.RUMOR, family="generic"):
     return EventEntity(event_id=eid, event_family=family, current_state=state)
 
 
+def apply(sm, event, to_state, **kwargs):
+    """Helper: apply transition and return the updated event."""
+    result = sm.transition(event, to_state, **kwargs)
+    return result.updated_event, result
+
+
 class TestEventStateMachine:
     def test_legal_progression(self):
         sm = EventStateMachineV1()
         event = make_event()
-        tx = sm.transition(event, EventState.PROPOSED, reason="Official proposal")
-        assert event.current_state == EventState.PROPOSED
-        assert tx.transition_type == TransitionType.PROGRESSION
-        assert event.state_version == 2
+        result = sm.transition(event, EventState.PROPOSED, reason="Official proposal")
+        updated = result.updated_event
+        assert updated.current_state == EventState.PROPOSED
+        assert result.transition.transition_type == TransitionType.PROGRESSION
+        assert updated.state_version == 2
+        # Input is not mutated
+        assert event.current_state == EventState.RUMOR
 
     def test_illegal_jump_raises(self):
         sm = EventStateMachineV1()
@@ -33,62 +42,84 @@ class TestEventStateMachine:
     def test_idempotent_transition(self):
         sm = EventStateMachineV1()
         event = make_event(state=EventState.APPROVED)
-        tx = sm.transition(event, EventState.APPROVED)
-        assert event.current_state == EventState.APPROVED
-        assert tx.from_state == EventState.APPROVED
-        assert tx.to_state == EventState.APPROVED
+        # First call creates the transition (not idempotent)
+        result1 = sm.transition(event, EventState.APPROVED)
+        ev1 = result1.updated_event
+        assert ev1.current_state == EventState.APPROVED
+        assert result1.transition.from_state == EventState.APPROVED
+        assert result1.transition.to_state == EventState.APPROVED
+        # Second call with same transition IS idempotent
+        result2 = sm.transition(ev1, EventState.APPROVED)
+        assert result2.idempotent is True
 
     def test_revision_allowed_always(self):
         sm = EventStateMachineV1()
         event = make_event(state=EventState.COMPLETED, family="regulatory")
-        tx = sm.transition(event, EventState.APPROVED,
-                           transition_type=TransitionType.REVISION,
-                           reason="Correction: status was misreported")
-        assert event.current_state == EventState.APPROVED
-        assert tx.transition_type == TransitionType.REVISION
+        result = sm.transition(event, EventState.COMPLETED,
+                               transition_type=TransitionType.REVISION,
+                               reason="Correction: status was misreported")
+        updated = result.updated_event
+        # Revision does NOT change state by default; to_state must equal current state
+        assert updated.current_state == EventState.COMPLETED
+        assert result.transition.transition_type == TransitionType.REVISION
+        assert result.transition.to_state == EventState.COMPLETED
 
     def test_delay_transition(self):
         sm = EventStateMachineV1()
         event = make_event(state=EventState.SCHEDULED)
-        tx = sm.transition(event, EventState.DELAYED,
-                           transition_type=TransitionType.DELAY)
-        assert event.current_state == EventState.DELAYED
+        result = sm.transition(event, EventState.DELAYED,
+                               transition_type=TransitionType.DELAY)
+        updated = result.updated_event
+        assert updated.current_state == EventState.DELAYED
+        assert result.transition.transition_type == TransitionType.DELAY
 
     def test_partial_reversal(self):
         sm = EventStateMachineV1()
-        event = make_event(state=EventState.EFFECTIVE)
-        tx = sm.transition(event, EventState.PARTIALLY_REVERSED,
-                           transition_type=TransitionType.PARTIAL_REVERSAL)
-        assert event.current_state == EventState.PARTIALLY_REVERSED
+        event = make_event(state=EventState.APPROVED)
+        result = sm.transition(event, EventState.UNDER_REVIEW,
+                               transition_type=TransitionType.PARTIAL_REVERSAL)
+        updated = result.updated_event
+        assert updated.current_state == EventState.UNDER_REVIEW
+        assert result.transition.transition_type == TransitionType.PARTIAL_REVERSAL
 
     def test_full_reversal(self):
         sm = EventStateMachineV1()
         event = make_event(state=EventState.EFFECTIVE)
-        tx = sm.transition(event, EventState.REVERSED,
-                           transition_type=TransitionType.REVERSAL)
-        assert event.current_state == EventState.REVERSED
+        result = sm.transition(event, EventState.REVERSED,
+                               transition_type=TransitionType.REVERSAL)
+        updated = result.updated_event
+        assert updated.current_state == EventState.REVERSED
+        assert result.transition.transition_type == TransitionType.REVERSAL
 
     def test_expiry(self):
         sm = EventStateMachineV1()
         event = make_event(state=EventState.ANNOUNCED)
-        tx = sm.transition(event, EventState.EXPIRED,
-                           transition_type=TransitionType.EXPIRY)
-        assert event.current_state == EventState.EXPIRED
+        result = sm.transition(event, EventState.EXPIRED,
+                               transition_type=TransitionType.EXPIRY)
+        updated = result.updated_event
+        assert updated.current_state == EventState.EXPIRED
+        assert result.transition.transition_type == TransitionType.EXPIRY
 
     def test_unknown_to_rumor(self):
         sm = EventStateMachineV1()
         event = make_event(state=EventState.UNKNOWN)
-        tx = sm.transition(event, EventState.RUMOR)
-        assert event.current_state == EventState.RUMOR
+        result = sm.transition(event, EventState.RUMOR)
+        updated = result.updated_event
+        assert updated.current_state == EventState.RUMOR
+        assert result.transition.to_state == EventState.RUMOR
 
     def test_transition_history_append_only(self):
         sm = EventStateMachineV1()
         event = make_event()
-        t1 = sm.transition(event, EventState.PROPOSED)
-        t2 = sm.transition(event, EventState.ANNOUNCED)
-        assert event.state_version == 3
-        assert t1.to_state == EventState.PROPOSED
-        assert t2.to_state == EventState.ANNOUNCED
+        r1 = sm.transition(event, EventState.PROPOSED)
+        ev1 = r1.updated_event
+        r2 = sm.transition(ev1, EventState.ANNOUNCED)
+        ev2 = r2.updated_event
+        assert ev2.state_version == 3
+        assert r1.transition.to_state == EventState.PROPOSED
+        assert r2.transition.to_state == EventState.ANNOUNCED
+        # Original input not mutated
+        assert event.state_version == 1
 
     def test_as_of_reconstruction(self):
         sm = EventStateMachineV1()
@@ -143,8 +174,10 @@ class TestEventStateMachine:
         )
         sm.register_family(config)
         event = make_event(state=EventState.PROPOSED, family="custom")
-        tx = sm.transition(event, EventState.APPROVED)
-        assert event.current_state == EventState.APPROVED
+        result = sm.transition(event, EventState.APPROVED)
+        updated = result.updated_event
+        assert updated.current_state == EventState.APPROVED
+        assert result.transition.to_state == EventState.APPROVED
 
     def test_custom_family_rejects_unknown(self):
         sm = EventStateMachineV1()
@@ -167,10 +200,14 @@ class TestEventStateMachine:
             EventState.EFFECTIVE, EventState.EXECUTING,
             EventState.COMPLETED,
         ]
+        ev = event
         for s in states:
-            sm.transition(event, s)
-        assert event.current_state == EventState.COMPLETED
-        assert event.state_version == len(states) + 1  # +1 for initial state
+            result = sm.transition(ev, s)
+            ev = result.updated_event
+        assert ev.current_state == EventState.COMPLETED
+        assert ev.state_version == len(states) + 1  # +1 for initial state
+        # Original input not mutated
+        assert event.current_state == EventState.RUMOR
 
     def test_terminal_expired_no_outgoing(self):
         sm = EventStateMachineV1()

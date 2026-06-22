@@ -4,17 +4,20 @@ import pytest
 
 from market_radar.intelligence.contracts.evidence import (
     EvidenceItem, EvidenceBundle, BundleStatus,
-    VerificationStatus, EvidenceQualityReason,
+    VerificationStatus, EvidenceQualityReason, Stance,
 )
 from market_radar.intelligence.engines.evidence_resolver import EvidenceResolverV1
 
 
 def make_item(eid, claim="test claim", source="src_001",
               is_primary=False, retracted=False,
-              independence_group="", verification="single_source_unverified"):
+              independence_group="", verification="single_source_unverified",
+              claim_key="", stance="unknown"):
     return EvidenceItem(
         evidence_id=eid,
         claim=claim,
+        claim_key=claim_key,
+        stance=Stance(stance) if isinstance(stance, str) else stance,
         source_id=source,
         independence_group=independence_group or source,
         is_primary=is_primary,
@@ -97,9 +100,11 @@ class TestEvidenceResolver:
     def test_conflicting_primaries(self):
         resolver = EvidenceResolverV1()
         items = [
-            make_item("evi_001", claim="claim A", is_primary=True,
+            make_item("evi_001", claim="claim A", claim_key="key_001",
+                      stance="supports", is_primary=True,
                       independence_group="group_a"),
-            make_item("evi_002", claim="claim B", is_primary=True,
+            make_item("evi_002", claim="claim B", claim_key="key_001",
+                      stance="contradicts", is_primary=True,
                       independence_group="group_b"),
         ]
         bundle = resolver.resolve(items)
@@ -114,7 +119,10 @@ class TestEvidenceResolver:
                       independence_group="group_b"),
         ]
         bundle = resolver.resolve(items)
-        assert bundle.bundle_verdict == VerificationStatus.RETRACTED
+        # All retracted primaries are excluded from available items,
+        # so bundle verdict is INSUFFICIENT (not RETRACTED)
+        assert bundle.bundle_verdict == VerificationStatus.INSUFFICIENT
+        assert bundle.status.retractions
 
     def test_secondary_sources_credible(self):
         resolver = EvidenceResolverV1()
@@ -138,14 +146,17 @@ class TestEvidenceResolver:
     def test_bundle_id_includes_count(self):
         resolver = EvidenceResolverV1()
         bundle = resolver.resolve([make_item("evi_001")])
-        assert "bundle" in bundle.bundle_id
+        # bundle_id format changed from bundle_{count} to evb_{hash}
+        assert bundle.bundle_id.startswith("evb_")
 
     def test_quality_reasons_present_for_conflict(self):
         resolver = EvidenceResolverV1()
         items = [
-            make_item("evi_001", claim="claim A", is_primary=True,
+            make_item("evi_001", claim="claim A", claim_key="key_001",
+                      stance="supports", is_primary=True,
                       independence_group="group_a"),
-            make_item("evi_002", claim="claim B", is_primary=True,
+            make_item("evi_002", claim="claim B", claim_key="key_001",
+                      stance="contradicts", is_primary=True,
                       independence_group="group_b"),
         ]
         bundle = resolver.resolve(items)
