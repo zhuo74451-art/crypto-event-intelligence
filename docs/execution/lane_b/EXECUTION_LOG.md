@@ -55,3 +55,32 @@ Next: Begin P0 — contracts, schemas, providers
 - Cross-asset matrix CSV not yet generated (needs Lane A events)
 
 Next: Commit and push all work.
+
+## 2026-06-23 UTC — Pilot V2 Complete
+
+### Lane A Lock
+- 12 verified events consumed from Lane A (6 families x 2)
+- Artifact hash: ba93cce3 (manifest recorded e3d26291 — manifest recording error)
+- PRODUCER_LOCK.yaml documented both hashes and discrepancy note
+
+### Pilot V2 Outputs
+- 24 event-asset windows (12 events x 2 crypto assets)
+- 72 reaction labels (12 events x 2 assets x 3 horizons: 1h/4h/24h)
+- 120 cross-asset context rows (12 events x 10 series) — daily context only
+- 24 funding context rows (12 events x 2 assets)
+- 4 SQLite tables with indexes
+
+### Integrity
+- 0 future leakage violations
+- 0 temporary event IDs
+- 0 duplicate label IDs
+- 0 one-minute or five-minute precision claims
+- Max alignment error: ≤ 60 minutes (1h bars)
+
+### Tests
+- 165 passing (120 original + 45 new pilot tests)
+- 0 new failures
+
+### Next
+- Lane C can consume pilot outputs
+- Full historical macro alignment deferred until Lane A full coverage

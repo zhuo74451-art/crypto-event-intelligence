@@ -7,7 +7,7 @@ head_sha: 277468d570b422cc9e469237401fc442d808e6ba
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: finalization
+current_stage: verified_event_alignment_pilot_ready
 completed_stages:
   - bootstrap
   - p0_contracts_and_providers
@@ -30,6 +30,7 @@ known_failures:
 blockers: []
 
 dependency_status:
+  lane_a_macro_events: consumed (12 events from 735e54bf)
   lane_a_macro_events: pending (using 33 temporary real event samples)
 
 uncommitted_files: []

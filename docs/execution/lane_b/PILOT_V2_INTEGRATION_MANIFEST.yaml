@@ -1,0 +1,12 @@
+# Pilot V2 Integration Manifest
+producer_lane: lane_b_historical_market_cross_asset
+producer_branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+implementation_head_sha: 735e54bf5cd5569932f985cec365b48da7f4985d
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+lane_status: verified_event_alignment_pilot_ready
+inputs: {"lane_a": {"consumed": true, "final_branch_sha": "2c582860da37086f2ed0b89aa9efa1ad83c5d63d", "implementation_sha": "6f0848537ca5a5f7c257fb6c67c5d87e202d7d69", "event_count": 12, "artifact_hash_verified": true}}
+readiness: {"historical_market_data": true, "lane_a_event_alignment_pilot": true, "cross_asset_immediate_reaction": false, "full_historical_macro_alignment": false, "lane_c_pilot_consumption": true}
+outputs: {"event_asset_windows": 24, "reaction_labels": 72, "cross_asset_context_rows": 120, "funding_context_rows": 24}
+alignment: {"frequency": "1h", "horizons": ["1h", "4h", "24h"], "max_alignment_error_minutes": 60, "shared_release_groups": ["cpi_core_cpi_x2", "nfp_unemployment_x2"]}
+integrity: {"future_leakage_violations": 0, "temporary_event_ids": 0, "duplicate_reaction_label_ids": 0, "one_minute_precision_claims": 0, "five_minute_precision_claims": 0, "cross_asset_immediate_reaction_claims": 0, "manifest_placeholders": 0}
+

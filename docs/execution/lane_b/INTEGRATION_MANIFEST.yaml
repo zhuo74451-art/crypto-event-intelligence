@@ -1,14 +1,14 @@
 producer_lane: lane_b_historical_market_cross_asset
 producer_branch: feat/overnight-lane-b-historical-market-cross-asset-v1
-producer_head_sha: 277468d570b422cc9e469237401fc442d808e6ba
+producer_head_sha: 735e54bf5cd5569932f985cec365b48da7f4985d
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
 inputs:
   lane_a_macro_events:
-    consumed: false
-    producer_branch: null
-    producer_sha: null
-    artifact_path: null
-    artifact_sha256: null
+    consumed: true
+    producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
+    producer_sha: 2c582860da37086f2ed0b89aa9efa1ad83c5d63d
+    artifact_path: pilot_v2/lane_a_input/macro_release_events_v1.jsonl
+    artifact_sha256: ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c
     pending_reason: Lane A not yet available; using 33 temporary real event samples
 contracts:
   market_bars:
@@ -56,10 +56,14 @@ coverage:
   - 1h
   - 1d
   - 8h
-  event_windows: 264
+  event_windows: 24
   data_quality_distribution:
     exact_archived_market_data: 134438
     exact_public_api_retrieval: 43472
+    computed_from_archived_bars: 192
+  reaction_labels: 72
+  cross_asset_context: 120
+  funding_context: 24
 consumer_notes:
 - market labels describe observed movement, not strategy direction
 - proxy instruments must remain marked as proxy
