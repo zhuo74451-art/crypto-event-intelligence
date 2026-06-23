@@ -1,6 +1,6 @@
 producer_lane: lane_b_historical_market_cross_asset
 producer_branch: feat/overnight-lane-b-historical-market-cross-asset-v1
-producer_head_sha: CHANGE_ME
+producer_head_sha: 277468d570b422cc9e469237401fc442d808e6ba
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
 inputs:
   lane_a_macro_events:
