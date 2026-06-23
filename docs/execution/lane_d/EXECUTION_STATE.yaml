@@ -27,3 +27,4 @@ readiness:
   full_walkforward: false
   drift_inference: false
   causal_inference: false
+seal_parent_sha: affe0fed7a53d13d8fdfb38496a99d4b6a1879f9
