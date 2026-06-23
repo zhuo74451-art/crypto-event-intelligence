@@ -1,30 +1,25 @@
-task: OVERNIGHT_LANE_D_VALIDATION_WALKFORWARD_CALIBRATION_V1
+task: LANE_D_VERIFIED_SMALL_SAMPLE_VALIDATION_AUDIT_PILOT_V2
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
-base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+required_start_sha: 466fdfc343513abb5f6cdcad69f9637b541debfc
+head_sha: be85b7a9be3a23f4c9747cbc74523dc5cce09009
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: p0_complete_ready_to_commit
-completed_stages:
-  - contracts_and_schemas
-  - core_implementations
-  - state_files
-  - tests_passing_30_of_30
-  - schemas_9_of_9
-  - reports_3_of_12
+current_stage: validation_pilot_complete
+lane_status: verified_small_sample_validation_audit_ready
 
-next_exact_action: commit P0 and push
-last_test_command: python -X utf8 -m pytest tests/intelligence/validation/ -v
-last_test_result: 30 passed in 0.10s
-known_failures: []
-blockers: []
+inputs:
+  lane_c:
+    final_sha: 72984d8b0fe17dc188239c3c050e082c180853b4
+    locked: true
 
-dependency_status:
-  lane_a: pending_or_not_checked
-  lane_b: pending_or_not_checked
-  lane_c: pending_or_not_checked
-
-uncommitted_files: []
+readiness:
+  validation_audit_pilot: true
+  lane_e_pilot_consumption: true
+  probability_calibration: false
+  statistical_significance: false
+  full_walkforward: false
+  drift_inference: false
+  causal_inference: false
