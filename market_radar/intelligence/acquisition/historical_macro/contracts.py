@@ -577,6 +577,8 @@ class MacroSourceSnapshotV1:
     license_note: str = ""
     parse_status: str = "pending"
     parse_error: str = ""
+    parser_version: str = ""
+    snapshot_class: str = ""
 
     def __post_init__(self):
         if not self.snapshot_id:

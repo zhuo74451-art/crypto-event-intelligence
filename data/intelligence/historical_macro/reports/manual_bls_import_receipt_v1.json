@@ -1,0 +1,30 @@
+[
+  {
+    "file": "cpi_02142023.html",
+    "size": 1364925,
+    "sha256": "26d1d4f7337680915acfcceecb9e23f78c9e032d1f5e2dae8d7fecdac01b7064",
+    "all_targets_found": true,
+    "has_bls_header": true
+  },
+  {
+    "file": "cpi_08102023.html",
+    "size": 1367358,
+    "sha256": "fb8250cfe6b57291215e09b0c60285ac4e381e4c8c4d0625d98a7bb399f9943b",
+    "all_targets_found": true,
+    "has_bls_header": true
+  },
+  {
+    "file": "empsit_02032023.html",
+    "size": 1080720,
+    "sha256": "912dac754c0de23c334dbae812873345361fea3769cff11fba0c4c02d4e19595",
+    "all_targets_found": true,
+    "has_bls_header": true
+  },
+  {
+    "file": "empsit_08042023.html",
+    "size": 1066153,
+    "sha256": "e1584403ea36d85f44df62db7d6a6d13dff66010f80221995287ff9483062fab",
+    "all_targets_found": true,
+    "has_bls_header": true
+  }
+]
