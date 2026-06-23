@@ -1,0 +1,278 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-12-01T22:00:00Z",
+  "instruments": [
+    {
+      "instrument_id": "binance_spot_btcusdt",
+      "canonical_name": "Binance BTC/USDT Spot",
+      "symbol": "BTCUSDT",
+      "venue": "binance",
+      "asset_class": "crypto",
+      "instrument_type": "spot",
+      "currency": "USDT",
+      "timezone": "UTC",
+      "trading_hours": "24/7",
+      "calendar": "continuous",
+      "exact_or_proxy": "exact",
+      "valid_from": "2017-08-17",
+      "valid_to": "",
+      "provider_symbols": {
+        "binance_public_archive": "BTCUSDT"
+      },
+      "notes": "Binance spot BTC/USDT"
+    },
+    {
+      "instrument_id": "binance_spot_ethusdt",
+      "canonical_name": "Binance ETH/USDT Spot",
+      "symbol": "ETHUSDT",
+      "venue": "binance",
+      "asset_class": "crypto",
+      "instrument_type": "spot",
+      "currency": "USDT",
+      "timezone": "UTC",
+      "trading_hours": "24/7",
+      "calendar": "continuous",
+      "exact_or_proxy": "exact",
+      "valid_from": "2017-08-17",
+      "valid_to": "",
+      "provider_symbols": {
+        "binance_public_archive": "ETHUSDT"
+      },
+      "notes": "Binance spot ETH/USDT"
+    },
+    {
+      "instrument_id": "binance_futures_btcusdt_perp",
+      "canonical_name": "Binance BTC/USDT Perp",
+      "symbol": "BTCUSDT",
+      "venue": "binance",
+      "asset_class": "crypto",
+      "instrument_type": "perp_future",
+      "currency": "USDT",
+      "timezone": "UTC",
+      "trading_hours": "24/7",
+      "calendar": "continuous",
+      "exact_or_proxy": "exact",
+      "valid_from": "2019-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "binance_public_api": "BTCUSDT"
+      },
+      "notes": "Binance perp BTC/USDT"
+    },
+    {
+      "instrument_id": "binance_futures_ethusdt_perp",
+      "canonical_name": "Binance ETH/USDT Perp",
+      "symbol": "ETHUSDT",
+      "venue": "binance",
+      "asset_class": "crypto",
+      "instrument_type": "perp_future",
+      "currency": "USDT",
+      "timezone": "UTC",
+      "trading_hours": "24/7",
+      "calendar": "continuous",
+      "exact_or_proxy": "exact",
+      "valid_from": "2019-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "binance_public_api": "ETHUSDT"
+      },
+      "notes": "Binance perp ETH/USDT"
+    },
+    {
+      "instrument_id": "yahoo_sp500_index",
+      "canonical_name": "S&P 500 Index",
+      "symbol": "SP500",
+      "venue": "yahoo_finance",
+      "asset_class": "equities",
+      "instrument_type": "index",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "09:30-16:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "exact",
+      "valid_from": "1950-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "^GSPC"
+      },
+      "notes": "S&P 500 from Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_nasdaq_composite",
+      "canonical_name": "NASDAQ Composite",
+      "symbol": "NASDAQ",
+      "venue": "yahoo_finance",
+      "asset_class": "equities",
+      "instrument_type": "index",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "09:30-16:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "exact",
+      "valid_from": "1971-02-05",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "^IXIC"
+      },
+      "notes": "NASDAQ from Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_gold_futures",
+      "canonical_name": "Gold Futures",
+      "symbol": "GOLD",
+      "venue": "yahoo_finance",
+      "asset_class": "commodities",
+      "instrument_type": "commodity_future",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "18:00-17:00 ET",
+      "calendar": "commodity_hours",
+      "exact_or_proxy": "proxy",
+      "proxy_for": "spot_gold",
+      "valid_from": "1975-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "GC=F"
+      },
+      "notes": "Gold futures proxy"
+    },
+    {
+      "instrument_id": "yahoo_us_dollar_index",
+      "canonical_name": "DXY",
+      "symbol": "DXY",
+      "venue": "yahoo_finance",
+      "asset_class": "fx",
+      "instrument_type": "index",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "08:00-17:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "exact",
+      "valid_from": "1973-03-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "DX-Y.NYB"
+      },
+      "notes": "DXY from Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_us10y_yield",
+      "canonical_name": "CBOE 10Y Yield",
+      "symbol": "US10Y",
+      "venue": "yahoo_finance",
+      "asset_class": "rates",
+      "instrument_type": "yield",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "08:00-17:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "proxy",
+      "proxy_for": "fred_dgs10",
+      "valid_from": "2000-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "^TNX"
+      },
+      "notes": "10Y yield via Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_us5y_yield",
+      "canonical_name": "CBOE 5Y Yield",
+      "symbol": "US5Y",
+      "venue": "yahoo_finance",
+      "asset_class": "rates",
+      "instrument_type": "yield",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "08:00-17:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "proxy",
+      "proxy_for": "fred_dgs5",
+      "valid_from": "2000-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "^FVX"
+      },
+      "notes": "5Y yield via Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_us30y_yield",
+      "canonical_name": "CBOE 30Y Yield",
+      "symbol": "US30Y",
+      "venue": "yahoo_finance",
+      "asset_class": "rates",
+      "instrument_type": "yield",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "08:00-17:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "proxy",
+      "proxy_for": "fred_dgs30",
+      "valid_from": "2000-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "^TYX"
+      },
+      "notes": "30Y yield via Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_vix_index",
+      "canonical_name": "VIX Index",
+      "symbol": "VIX",
+      "venue": "yahoo_finance",
+      "asset_class": "macro",
+      "instrument_type": "index",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "09:30-16:00 ET",
+      "calendar": "US_business_days",
+      "exact_or_proxy": "proxy",
+      "proxy_for": "cboe_vix",
+      "valid_from": "2004-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "^VIX"
+      },
+      "notes": "VIX via Yahoo"
+    },
+    {
+      "instrument_id": "yahoo_silver_futures",
+      "canonical_name": "Silver Futures",
+      "symbol": "SILVER",
+      "venue": "yahoo_finance",
+      "asset_class": "commodities",
+      "instrument_type": "commodity_future",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "18:00-17:00 ET",
+      "calendar": "commodity_hours",
+      "exact_or_proxy": "proxy",
+      "proxy_for": "spot_silver",
+      "valid_from": "1986-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "SI=F"
+      },
+      "notes": "Silver futures proxy"
+    },
+    {
+      "instrument_id": "yahoo_wti_crude",
+      "canonical_name": "WTI Crude Oil",
+      "symbol": "WTI",
+      "venue": "yahoo_finance",
+      "asset_class": "commodities",
+      "instrument_type": "commodity_future",
+      "currency": "USD",
+      "timezone": "US/Eastern",
+      "trading_hours": "18:00-17:00 ET",
+      "calendar": "commodity_hours",
+      "exact_or_proxy": "exact",
+      "valid_from": "1983-01-01",
+      "valid_to": "",
+      "provider_symbols": {
+        "yahoo_finance": "CL=F"
+      },
+      "notes": "WTI Crude from Yahoo"
+    }
+  ]
+}

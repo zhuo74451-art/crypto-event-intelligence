@@ -1,0 +1,107 @@
+{
+  "rows_by_instrument": {
+    "binance_spot_btcusdt": 67219,
+    "binance_spot_ethusdt": 67219,
+    "yahoo_wti_crude": 2884,
+    "yahoo_us_dollar_index": 2886,
+    "yahoo_us5y_yield": 2883,
+    "yahoo_gold_futures": 2883,
+    "yahoo_sp500_index": 2884,
+    "yahoo_nasdaq_composite": 2884,
+    "yahoo_silver_futures": 2883,
+    "yahoo_us10y_yield": 2883,
+    "yahoo_us30y_yield": 2883,
+    "yahoo_vix_index": 2885
+  },
+  "rows_by_interval": {
+    "1h": 129050,
+    "1d": 34226
+  },
+  "rows_by_year": {
+    "2017": 9338,
+    "2018": 20636,
+    "2019": 20714,
+    "2020": 20796,
+    "2021": 20744,
+    "2022": 20760,
+    "2023": 20748,
+    "2024": 20820,
+    "2014": 10,
+    "2015": 2520,
+    "2016": 2510,
+    "2025": 2508,
+    "2026": 1172
+  },
+  "rows_by_provider": {
+    "binance_public_archive": 134438,
+    "yahoo_finance": 28838
+  },
+  "coverage_start_by_instrument": {
+    "binance_spot_btcusdt": "2017-08-17T00:00:00Z",
+    "binance_spot_ethusdt": "2017-08-17T00:00:00Z",
+    "yahoo_wti_crude": "2014-12-31T00:00:00Z",
+    "yahoo_us_dollar_index": "2014-12-31T00:00:00Z",
+    "yahoo_us5y_yield": "2014-12-31T00:00:00Z",
+    "yahoo_gold_futures": "2014-12-31T00:00:00Z",
+    "yahoo_sp500_index": "2014-12-31T00:00:00Z",
+    "yahoo_nasdaq_composite": "2014-12-31T00:00:00Z",
+    "yahoo_silver_futures": "2014-12-31T00:00:00Z",
+    "yahoo_us10y_yield": "2014-12-31T00:00:00Z",
+    "yahoo_us30y_yield": "2014-12-31T00:00:00Z",
+    "yahoo_vix_index": "2014-12-31T00:00:00Z"
+  },
+  "coverage_end_by_instrument": {
+    "binance_spot_btcusdt": "2024-12-31T23:00:00Z",
+    "binance_spot_ethusdt": "2024-12-31T23:00:00Z",
+    "yahoo_wti_crude": "2026-06-23T00:00:00Z",
+    "yahoo_us_dollar_index": "2026-06-23T00:00:00Z",
+    "yahoo_us5y_yield": "2026-06-22T00:00:00Z",
+    "yahoo_gold_futures": "2026-06-23T00:00:00Z",
+    "yahoo_sp500_index": "2026-06-22T00:00:00Z",
+    "yahoo_nasdaq_composite": "2026-06-22T00:00:00Z",
+    "yahoo_silver_futures": "2026-06-23T00:00:00Z",
+    "yahoo_us10y_yield": "2026-06-22T00:00:00Z",
+    "yahoo_us30y_yield": "2026-06-22T00:00:00Z",
+    "yahoo_vix_index": "2026-06-22T00:00:00Z"
+  },
+  "gap_count_by_instrument": {},
+  "proxy_instruments": [],
+  "lower_frequency_fallbacks": [],
+  "event_windows_by_family": {
+    "fomc_rate_decision": 184,
+    "cpi_release": 40,
+    "nonfarm_payrolls": 24,
+    "sec_decision": 8,
+    "banking_crisis": 8
+  },
+  "labels_by_horizon": {
+    "1m": 264,
+    "5m": 264,
+    "15m": 264,
+    "30m": 264,
+    "1h": 264,
+    "4h": 264,
+    "1d": 264
+  },
+  "derivative_coverage": {
+    "binance_futures_btcusdt_perp": 7434,
+    "binance_futures_ethusdt_perp": 7200
+  },
+  "quarantine_count": 0,
+  "audit_violation_count": 0,
+  "provider_failure_count": 0,
+  "instruments": [
+    "binance_spot_btcusdt",
+    "binance_spot_ethusdt",
+    "yahoo_wti_crude",
+    "yahoo_us_dollar_index",
+    "yahoo_us5y_yield",
+    "yahoo_gold_futures",
+    "yahoo_sp500_index",
+    "yahoo_nasdaq_composite",
+    "yahoo_silver_futures",
+    "yahoo_us10y_yield",
+    "yahoo_us30y_yield",
+    "yahoo_vix_index"
+  ]
+}
