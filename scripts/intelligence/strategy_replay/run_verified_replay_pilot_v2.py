@@ -1,16 +1,19 @@
+#!/usr/bin/env python
 """Unified entry point for verified replay pilot V3 — full clean rebuild.
-Orchestrates: clean -> prepare -> decide -> seal -> evaluate -> seal-check -> sqlite -> audit -> report.
+Supports --output-dir for test isolation.
 """
 import subprocess, sys, pathlib, json, hashlib, shutil
 
-WORKTREE = pathlib.Path(r"C:\Users\zhuo7\Desktop\crypto-event-intelligence-worktrees\lane-c-macro-strategy-replay-v1")
-SD = WORKTREE / "scripts" / "intelligence" / "strategy_replay"
-OUT = WORKTREE / "data" / "intelligence" / "strategy_replay" / "pilot_v2"
-INDEX_DIR = WORKTREE / "data" / "intelligence" / "strategy_replay" / "indexes"
+DEFAULT_WORKTREE = pathlib.Path(r"C:\Users\zhuo7\Desktop\crypto-event-intelligence-worktrees\lane-c-macro-strategy-replay-v1")
+DEFAULT_SD = DEFAULT_WORKTREE / "scripts" / "intelligence" / "strategy_replay"
+DEFAULT_OUT = DEFAULT_WORKTREE / "data" / "intelligence" / "strategy_replay" / "pilot_v2"
+DEFAULT_INDEX_DIR = DEFAULT_WORKTREE / "data" / "intelligence" / "strategy_replay" / "indexes"
 
 
-def run(cmd):
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(WORKTREE))
+def run(cmd, cwd=None):
+    if cwd is None:
+        cwd = DEFAULT_WORKTREE
+    result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(cwd))
     if result.stdout:
         print(result.stdout[-400:] if len(result.stdout) > 400 else result.stdout)
     if result.returncode != 0:
@@ -23,7 +26,23 @@ def sha256(path):
     return hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()
 
 
-def run_pipeline(clean=True):
+def run_pipeline(clean=True, output_dir=None, worktree=None):
+    if worktree is None:
+        worktree = DEFAULT_WORKTREE
+    if output_dir is None:
+        out = DEFAULT_OUT
+        index_dir = DEFAULT_INDEX_DIR
+        sd = DEFAULT_SD
+    else:
+        out = pathlib.Path(output_dir)
+        index_dir = out / ".." / "indexes"
+        sd = worktree / "scripts" / "intelligence" / "strategy_replay"
+
+    out.mkdir(parents=True, exist_ok=True)
+    index_dir.mkdir(parents=True, exist_ok=True)
+    upstream_dir = out / "upstream"
+    upstream_dir.mkdir(parents=True, exist_ok=True)
+
     print("=" * 60)
     print("LANE C — VERIFIED REPLAY PILOT V3")
     print("=" * 60)
@@ -35,55 +54,63 @@ def run_pipeline(clean=True):
                      "strategy_hypotheses_v2.jsonl", "kernel_input_packages_v2.jsonl",
                      "abstention_records_v2.jsonl", "evaluation_outcomes_v1.jsonl",
                      "strategy_evaluations_v1.jsonl", "baseline_evaluations_v1.jsonl",
-                     "decision_seal_v1.json", "pilot_integrity_audit_v3.json",
+                     "decision_seal_v1.json",   # pilot_integrity_audit_v3.json is committed - not cleaned
                      "pilot_replay_report_v3.json", "pilot_replay_report_v3.md"]:
-            p = OUT / name
+            p = out / name
             if p.exists(): p.unlink()
-        db = INDEX_DIR / "strategy_replay_pilot_v2.sqlite"
+        db = index_dir / "strategy_replay_pilot_v2.sqlite"
         if db.exists(): db.unlink()
         print("  Clean complete.")
 
     print("\n--- Stage 1: Prepare inputs ---")
-    run([sys.executable, "-X", "utf8", str(SD / "prepare_verified_pilot_inputs_v3.py")])
+    run([sys.executable, "-X", "utf8", str(sd / "prepare_verified_pilot_inputs_v3.py"),
+         "--output-dir", str(out)], cwd=worktree)
 
     print("\n--- Stage 2: Build decisions ---")
-    run([sys.executable, "-X", "utf8", str(SD / "build_pilot_decisions_v2.py")])
+    run([sys.executable, "-X", "utf8", str(sd / "build_pilot_decisions_v2.py"),
+         "--output-dir", str(out)], cwd=worktree)
 
     print("\n--- Stage 3: Seal decisions ---")
     seal = {
-        "decision_inputs_sha256": sha256(OUT / "decision_inputs_v1.jsonl"),
-        "hypotheses_sha256": sha256(OUT / "strategy_hypotheses_v2.jsonl"),
-        "replay_results_sha256": sha256(OUT / "strategy_replay_results_v2.jsonl"),
-        "producer_locks_sha256": sha256(OUT / "upstream" / "PRODUCER_LOCKS.yaml"),
+        "decision_inputs_sha256": sha256(out / "decision_inputs_v1.jsonl"),
+        "hypotheses_sha256": sha256(out / "strategy_hypotheses_v2.jsonl"),
+        "replay_results_sha256": sha256(out / "strategy_replay_results_v2.jsonl"),
+        "producer_locks_sha256": sha256(out / "upstream" / "PRODUCER_LOCKS.yaml"),
         "sealed_before_evaluation": True,
     }
-    (OUT / "decision_seal_v1.json").write_text(json.dumps(seal, indent=2), encoding="utf-8")
+    (out / "decision_seal_v1.json").write_text(json.dumps(seal, indent=2), encoding="utf-8")
     print(f"  Decision seal written.")
 
     print("\n--- Stage 4: Evaluate ---")
-    run([sys.executable, "-X", "utf8", str(SD / "evaluate_pilot_decisions_v2.py")])
+    run([sys.executable, "-X", "utf8", str(sd / "evaluate_pilot_decisions_v2.py"),
+         "--output-dir", str(out)], cwd=worktree)
 
     print("\n--- Stage 5: Verify seal ---")
     current = {
-        "decision_inputs_sha256": sha256(OUT / "decision_inputs_v1.jsonl"),
-        "hypotheses_sha256": sha256(OUT / "strategy_hypotheses_v2.jsonl"),
-        "replay_results_sha256": sha256(OUT / "strategy_replay_results_v2.jsonl"),
+        "decision_inputs_sha256": sha256(out / "decision_inputs_v1.jsonl"),
+        "hypotheses_sha256": sha256(out / "strategy_hypotheses_v2.jsonl"),
+        "replay_results_sha256": sha256(out / "strategy_replay_results_v2.jsonl"),
     }
     original = {k: v for k, v in seal.items() if k != "sealed_before_evaluation" and k != "producer_locks_sha256"}
     assert current == original, f"Seal violation! Decision outputs changed during evaluation."
     print("  Seal intact.")
 
     print("\n--- Stage 6: Build SQLite ---")
-    run([sys.executable, "-X", "utf8", str(SD / "build_sqlite_index.py")])
+    run([sys.executable, "-X", "utf8", str(sd / "build_sqlite_index.py"),
+         "--output-dir", str(out)], cwd=worktree)
 
     print("\n--- Stage 7: Run audits ---")
-    run([sys.executable, "-X", "utf8", str(SD / "audit_replay_leakage.py"),
-         "--results", str(OUT / "strategy_replay_results_v2.jsonl"),
-         "--hypotheses", str(OUT / "strategy_hypotheses_v2.jsonl")])
-    run([sys.executable, "-X", "utf8", str(SD / "audit_abstention_integrity.py"),
-         "--abstentions", str(OUT / "macro_abstention_records_v1.jsonl")])
-    run([sys.executable, "-X", "utf8", str(SD / "audit_kernel_packages.py"),
-         "--packages", str(OUT / "kernel_input_packages_v2.jsonl")])
+    run([sys.executable, "-X", "utf8", str(sd / "audit_replay_leakage.py"),
+         "--results", str(out / "strategy_replay_results_v2.jsonl"),
+         "--hypotheses", str(out / "strategy_hypotheses_v2.jsonl"),
+         "--decision-inputs", str(out / "decision_inputs_v1.jsonl"),
+         "--horizon-windows", str(out / "upstream" / "lane_b_horizon_windows_v3.jsonl"),
+         "--decision-seal", str(out / "decision_seal_v1.json"),
+         "--evaluation-outcomes", str(out / "evaluation_outcomes_v1.jsonl")])
+    run([sys.executable, "-X", "utf8", str(sd / "audit_abstention_integrity.py"),
+         "--abstentions", str(out / "macro_abstention_records_v1.jsonl")])
+    run([sys.executable, "-X", "utf8", str(sd / "audit_kernel_packages.py"),
+         "--packages", str(out / "kernel_input_packages_v2.jsonl")])
     print("  All audits passed.")
 
     print("\n--- Stage 8: Reports ---")
@@ -96,21 +123,20 @@ def run_pipeline(clean=True):
         "full_historical_coverage": False,
         "counts": {
             "canonical_macro_events": 12,
-            "release_units": len([json.loads(l) for l in (OUT / "release_units_v1.jsonl").read_text("utf-8").strip().splitlines()]),
-            "decision_units": len([json.loads(l) for l in (OUT / "decision_inputs_v1.jsonl").read_text("utf-8").strip().splitlines()]),
-            "macro_abstentions": len([json.loads(l) for l in (OUT / "macro_abstention_records_v1.jsonl").read_text("utf-8").strip().splitlines()]),
+            "release_units": len([json.loads(l) for l in (out / "release_units_v1.jsonl").read_text("utf-8").strip().splitlines()]),
+            "decision_units": len([json.loads(l) for l in (out / "decision_inputs_v1.jsonl").read_text("utf-8").strip().splitlines()]),
+            "macro_abstentions": len([json.loads(l) for l in (out / "macro_abstention_records_v1.jsonl").read_text("utf-8").strip().splitlines()]),
             "macro_directional_hypotheses": 0,
-            "replay_results": len([json.loads(l) for l in (OUT / "strategy_replay_results_v2.jsonl").read_text("utf-8").strip().splitlines()]),
-            "hypotheses": len([json.loads(l) for l in (OUT / "strategy_hypotheses_v2.jsonl").read_text("utf-8").strip().splitlines()]),
-            "kernel_packages": len([json.loads(l) for l in (OUT / "kernel_input_packages_v2.jsonl").read_text("utf-8").strip().splitlines()]),
-            "evaluation_outcomes": len([json.loads(l) for l in (OUT / "evaluation_outcomes_v1.jsonl").read_text("utf-8").strip().splitlines()]),
-            "strategy_evaluations": len([json.loads(l) for l in (OUT / "strategy_evaluations_v1.jsonl").read_text("utf-8").strip().splitlines()]),
-            "baseline_evaluations": len([json.loads(l) for l in (OUT / "baseline_evaluations_v1.jsonl").read_text("utf-8").strip().splitlines()]),
+            "replay_results": len([json.loads(l) for l in (out / "strategy_replay_results_v2.jsonl").read_text("utf-8").strip().splitlines()]),
+            "hypotheses": len([json.loads(l) for l in (out / "strategy_hypotheses_v2.jsonl").read_text("utf-8").strip().splitlines()]),
+            "kernel_packages": len([json.loads(l) for l in (out / "kernel_input_packages_v2.jsonl").read_text("utf-8").strip().splitlines()]),
+            "evaluation_outcomes": len([json.loads(l) for l in (out / "evaluation_outcomes_v1.jsonl").read_text("utf-8").strip().splitlines()]),
+            "strategy_evaluations": len([json.loads(l) for l in (out / "strategy_evaluations_v1.jsonl").read_text("utf-8").strip().splitlines()]),
+            "baseline_evaluations": len([json.loads(l) for l in (out / "baseline_evaluations_v1.jsonl").read_text("utf-8").strip().splitlines()]),
         },
     }
-    (OUT / "pilot_replay_report_v3.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (out / "pilot_replay_report_v3.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
 
-    # Markdown summary
     c = report["counts"]
     md = f"""# Pilot Replay Report V3
 
@@ -141,7 +167,7 @@ def run_pipeline(clean=True):
 | Strategy evaluations | {c["strategy_evaluations"]} |
 | Baseline evaluations | {c["baseline_evaluations"]} |
 """
-    (OUT / "pilot_replay_report_v3.md").write_text(md, encoding="utf-8")
+    (out / "pilot_replay_report_v3.md").write_text(md, encoding="utf-8")
 
     print(f"\nPIPELINE COMPLETE. Counts: {json.dumps(c)}")
     return report
@@ -151,5 +177,7 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-clean", action="store_true")
+    parser.add_argument("--output-dir", default=None, help="Output directory (default: pilot_v2)")
+    parser.add_argument("--worktree", default=None, help="Worktree root (default: lane-c worktree)")
     args = parser.parse_args()
-    run_pipeline(clean=not args.no_clean)
+    run_pipeline(clean=not args.no_clean, output_dir=args.output_dir, worktree=args.worktree)

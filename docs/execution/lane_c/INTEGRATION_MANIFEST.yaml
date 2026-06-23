@@ -1,7 +1,6 @@
 producer_lane: lane_c_macro_strategy_replay
 producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
 artifact_implementation_sha: da98a83fc8072f1411749412d159b34c77937b19
-producer_head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
 base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
 inputs:
   lane_a:
@@ -16,8 +15,8 @@ inputs:
     cross_asset_context: 120
     funding_context: 24
 readiness:
-  verified_replay_pilot: true
-  lane_d_pilot_consumption: true
+  verified_replay_pilot: false
+  lane_d_pilot_consumption: false
   calibration: false
   walkforward: false
   full_historical_replay: false

@@ -1,7 +1,8 @@
 producer_lane: lane_c_macro_strategy_replay
 producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
 artifact_implementation_sha: da98a83fc8072f1411749412d159b34c77937b19
-producer_head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
+audit_implementation_sha: TO_BE_FILLED_AFTER_COMMIT
+audit_evidence_commit_sha: TO_BE_FILLED_AFTER_COMMIT
 base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
 lane_status: verified_small_sample_replay_pilot_ready
 inputs:
@@ -17,8 +18,8 @@ inputs:
     cross_asset_context: 120
     funding_context: 24
 readiness:
-  verified_replay_pilot: true
-  lane_d_pilot_consumption: true
+  verified_replay_pilot: false
+  lane_d_pilot_consumption: false
   calibration: false
   walkforward: false
   full_historical_replay: false
@@ -106,17 +107,36 @@ outputs:
     path: data/intelligence/strategy_replay/indexes/strategy_replay_pilot_v2.sqlite
     sha256: 43f0e3c6e014053360ab3ff7523e80d81873c750796d04af61962b8634555cf0
     byte_count: 245760
-    record_count: 0
+    document_count: 1
     hash_basis: git_object_bytes
     hash_basis_commit: da98a83fc8072f1411749412d159b34c77937b19
+    table_row_counts:
+      release_units: 8
+      decision_inputs: 16
+      macro_abstentions: 12
+      replay_results: 28
+      hypotheses: 32
+      kernel_packages: 16
+      evaluation_outcomes: 32
+      strategy_evaluations: 32
+      baseline_evaluations: 128
+      producer_locks: 5
 audit_outputs:
-  integrity_audit:
-    path: data/intelligence/strategy_replay/pilot_v2/pilot_integrity_audit_v3.json
-    sha256: 3eb0077ba4cc779912abe1a4453bcfc8aec7eec9c238c87113e5affc87fd65d9
+  integrity_audit_v4:
+    path: data/intelligence/strategy_replay/pilot_v2/pilot_integrity_audit_v4.json
     document_count: 1
-  integrity_audit_md:
-    path: data/intelligence/strategy_replay/pilot_v2/pilot_integrity_audit_v3.md
-    sha256: ffb05b2d3491c57a2aabcfe2fc19407aa681c81b0b7c6b6cccd3ed6e1283e525
+  integrity_audit_v4_md:
+    path: data/intelligence/strategy_replay/pilot_v2/pilot_integrity_audit_v4.md
     document_count: 1
-audit_evidence_commit_sha: 27d03e23db1b1e768ab3420774b88ebe697a6de0
-final_manifest_commit: reported_externally_after_commit
+counts:
+  canonical_macro_events: 12
+  unique_release_units: 8
+  decision_units: 16
+  macro_abstention_records: 12
+  macro_directional_hypotheses: 0
+  reaction_results: 28
+  reaction_hypotheses: 32
+  evaluation_outcomes: 32
+  strategy_evaluations: 32
+  baseline_evaluations: 128
+  kernel_packages: 16

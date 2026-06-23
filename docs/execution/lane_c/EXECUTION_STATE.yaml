@@ -1,14 +1,13 @@
-task: LANE_C_ARTIFACT_HASH_AUDIT_EVIDENCE_RESEAL_V4
+task: LANE_C_LEAKAGE_AUDIT_HARDENING_FINAL_CONSUMER_SEAL_V5
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-c-macro-strategy-replay-v1
-required_start_sha: fe8e2dfc59dde83573ab7d3e7d315b3065b6b92f
+required_start_sha: 0c70f50937658e78c2d093be7a4ef745b764122f
 artifact_implementation_sha: da98a83fc8072f1411749412d159b34c77937b19
-audit_evidence_commit_sha: 27d03e23db1b1e768ab3420774b88ebe697a6de0
-current_stage: pilot_v3_evidence_resealed
-lane_status: verified_small_sample_replay_pilot_ready
+current_stage: leakage_audit_hardening
+lane_status: artifact_hashes_valid_audit_unsealed
 readiness:
-  verified_replay_pilot: true
-  lane_d_pilot_consumption: true
+  verified_replay_pilot: false
+  lane_d_pilot_consumption: false
   calibration: false
   walkforward: false
   full_historical_replay: false
