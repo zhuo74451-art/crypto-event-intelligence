@@ -1,0 +1,18 @@
+{
+  "method": "release_unit_cluster_bootstrap_with_replacement",
+  "algorithm_version": "3.0.0",
+  "cluster_count": 8,
+  "resamples": 10000,
+  "seed": 20260623,
+  "inferential_use": false,
+  "minimum_sampled_row_count": 32,
+  "maximum_sampled_row_count": 32,
+  "duplicate_cluster_draws_observed": true,
+  "descriptive_interval": {
+    "median": 62.5,
+    "lower_bound": 37.5,
+    "upper_bound": 84.38
+  },
+  "statistical_significance_supported": false,
+  "cluster_count_insufficient": true
+}

@@ -9,8 +9,8 @@ inputs:
     locked: true
 
 readiness:
-  validation_audit_pilot: true
-  lane_e_pilot_consumption: true
+  validation_audit_pilot: false
+  lane_e_pilot_consumption: false
   probability_calibration: false
   statistical_significance: false
   full_walkforward: false

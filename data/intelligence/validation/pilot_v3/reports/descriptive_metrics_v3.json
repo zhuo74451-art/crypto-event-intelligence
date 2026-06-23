@@ -1,0 +1,17 @@
+{
+  "overall": {
+    "correct": 20,
+    "incorrect": 12,
+    "neutral": 0,
+    "directional_accuracy": {
+      "numerator": 20,
+      "denominator": 32,
+      "rate": 0.625
+    },
+    "coverage": {
+      "numerator": 32,
+      "denominator": 32,
+      "rate": 1.0
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "unavailable",
+  "reason_codes": [
+    "no_pre_registered_significance_tests",
+    "eight_independent_release_units_only"
+  ],
+  "raw_p_values": [],
+  "adjusted_p_values": []
+}

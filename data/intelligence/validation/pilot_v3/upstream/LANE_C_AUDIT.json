@@ -1,0 +1,24 @@
+{
+  "artifact_hash_basis_commit": "da98a83fc8072f1411749412d159b34c77937b19",
+  "audited_at_utc": "2026-06-23T00:00:00.000Z",
+  "leakage_audit": {
+    "process_exit_code": 0,
+    "results_checked": 28,
+    "hypotheses_checked": 32,
+    "decision_inputs_checked": 16,
+    "horizon_windows_indexed": 72,
+    "evaluation_outcomes_checked": 32,
+    "violation_count": 0
+  },
+  "abstention_audit": {
+    "process_exit_code": 0,
+    "records_checked": 12,
+    "violation_count": 0
+  },
+  "kernel_package_audit": {
+    "process_exit_code": 0,
+    "packages_checked": 16,
+    "violation_count": 0
+  },
+  "overall_verdict": "pass"
+}

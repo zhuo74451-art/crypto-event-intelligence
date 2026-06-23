@@ -1,0 +1,26 @@
+{
+  "independent_release_units": 8,
+  "directional_rows": 32,
+  "walkforward_test_rows": 16,
+  "walkforward_folds": 4,
+  "probability_calibration_supported": false,
+  "statistical_significance_supported": false,
+  "full_walkforward_supported": false,
+  "causal_inference_supported": false,
+  "production_trading_use_supported": false,
+  "descriptive": {
+    "correct": 20,
+    "incorrect": 12,
+    "neutral": 0,
+    "directional_accuracy": {
+      "numerator": 20,
+      "denominator": 32,
+      "rate": 0.625
+    },
+    "coverage": {
+      "numerator": 32,
+      "denominator": 32,
+      "rate": 1.0
+    }
+  }
+}

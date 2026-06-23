@@ -1,0 +1,5 @@
+{
+  "method": "expanding_window",
+  "folds": 4,
+  "total_test_rows": 16
+}

@@ -1,0 +1,12 @@
+{"abstention_id": "abstain_2c6a4908353c49ee", "event_id": "5f655c496aa7e9329a30ebd8", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_core_pce", "validation_row_id": "val_abs_045161a4c0fd8011"}
+{"abstention_id": "abstain_d85cf6330ad46c07", "event_id": "4359a724e2dedacabdd99d89", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_unemployment_rate", "validation_row_id": "val_abs_2e14906cf8d8a41f"}
+{"abstention_id": "abstain_d870d222e47a7291", "event_id": "a9ff1dfd8ce6670e9ec71b62", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_cpi", "validation_row_id": "val_abs_3bb36563d4b654f4"}
+{"abstention_id": "abstain_cc90e01d8702ed24", "event_id": "7e32e8a4cae6d55ac378d8ee", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_nonfarm_payrolls", "validation_row_id": "val_abs_48385a171037259b"}
+{"abstention_id": "abstain_faeb6502ea3b8056", "event_id": "01f9fabf73d59cefa4885529", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_cpi", "validation_row_id": "val_abs_679e88bf611dffdf"}
+{"abstention_id": "abstain_4efe2b4fc69954e5", "event_id": "2a478bce205dafb81c7a03a8", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_fomc_rate_decision", "validation_row_id": "val_abs_690730e05d6ae69f"}
+{"abstention_id": "abstain_8d5097f2917dfe0a", "event_id": "4b8dd1456483c78871ab5807", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_core_cpi", "validation_row_id": "val_abs_83e3be6e36d7a740"}
+{"abstention_id": "abstain_61b389d239ed64dd", "event_id": "afe872ac7bdc2a8cd947b16a", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_fomc_rate_decision", "validation_row_id": "val_abs_9128940a83c0a2a3"}
+{"abstention_id": "abstain_4bde955c6e4f55b4", "event_id": "0cdfa508b4fa0a9e96529b83", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_core_cpi", "validation_row_id": "val_abs_a96c75efeb38b9fc"}
+{"abstention_id": "abstain_5a6f3ce58fb53839", "event_id": "cbdd95098a023cdeb899cf80", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_unemployment_rate", "validation_row_id": "val_abs_bd6abd64c6044338"}
+{"abstention_id": "abstain_8d7d2138468f7bf0", "event_id": "8f97ba8b3c889d477c00202b", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_core_pce", "validation_row_id": "val_abs_d55cdbcef72dfb23"}
+{"abstention_id": "abstain_d1a0e6c86620d75d", "event_id": "08df7c99be5653e1e0ebb5a8", "reason_codes": ["consensus_missing"], "strategy_id": "strat_us_nonfarm_payrolls", "validation_row_id": "val_abs_fdb8f53759092f21"}

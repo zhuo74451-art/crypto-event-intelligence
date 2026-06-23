@@ -7,8 +7,8 @@ head_sha: be85b7a9be3a23f4c9747cbc74523dc5cce09009
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: validation_pilot_complete
-lane_status: verified_small_sample_validation_audit_ready
+current_stage: validation_evidence_repair
+lane_status: dataset_built_evidence_unsealed
 
 inputs:
   lane_c:
@@ -16,8 +16,8 @@ inputs:
     locked: true
 
 readiness:
-  validation_audit_pilot: true
-  lane_e_pilot_consumption: true
+  validation_audit_pilot: false
+  lane_e_pilot_consumption: false
   probability_calibration: false
   statistical_significance: false
   full_walkforward: false

@@ -1,0 +1,2 @@
+{"available_evidence": "8", "component": "significance_testing", "experiment_id": "exp_formal_significance_testing", "reason_codes": ["only_eight_independent_units"], "required_evidence": "min_24_independent_units", "retry_condition": "min_24_release_units", "status": "unavailable"}
+{"available_evidence": "none", "component": "calibration", "experiment_id": "exp_probability_calibration", "reason_codes": ["no_probability_scores"], "required_evidence": "probability_scores", "retry_condition": "probability_scores_available_and_min_24_independent_units", "status": "unavailable"}
