@@ -1,0 +1,7 @@
+{
+  "reclassification_timestamp": "2026-06-23T00:00:00Z",
+  "total_snapshots_reclassified": 2,
+  "snapshot_class": "provider_raw_api_response",
+  "counts_as_official_release_evidence": false,
+  "destination": "data/intelligence/historical_macro/quarantine/provider_raw_series_snapshots_v1"
+}
