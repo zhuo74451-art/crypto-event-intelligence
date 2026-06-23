@@ -2,12 +2,12 @@ task: OVERNIGHT_LANE_B_HISTORICAL_MARKET_CROSS_ASSET_FACTORY_V1
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-b-historical-market-cross-asset-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: 277468d570b422cc9e469237401fc442d808e6ba
+head_sha: 2b69017bf7d78e8be8e1b067cbade17d8d6d4742
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: verified_event_alignment_pilot_ready
+current_stage: pilot_v3_structurally_corrected
 completed_stages:
   - bootstrap
   - p0_contracts_and_providers
@@ -17,20 +17,20 @@ completed_stages:
   - p2_event_windows_and_labels
   - p3_quality_audit
   - p4_tests_and_docs
+  - pilot_v2_event_alignment
+  - pilot_v3_structurally_corrected
 
-next_exact_action: commit and push
+next_exact_action: pilot_v3_complete
 
 last_test_command: python -X utf8 -m pytest tests/intelligence/historical_market/ -q
-last_test_result: 120 passed in 0.22s
+last_test_result: 237 passed in 0.5s
 
 known_failures:
-  - 3 WTI negative price bars (April 2020 oil crash - historically accurate)
-  - 6028 interval gaps (expected for daily cross-asset data with weekends/holidays)
+  - Lane A manifest hash mismatch (recorded e3d26291, actual ba93cce3)
 
 blockers: []
 
 dependency_status:
-  lane_a_macro_events: consumed (12 events from 735e54bf)
-  lane_a_macro_events: pending (using 33 temporary real event samples)
+  lane_a_macro_events: consumed (12 events, lane_a hash mismatch blocks lane_c)
 
 uncommitted_files: []
