@@ -17,7 +17,7 @@ inputs:
     funding_context: 24
 readiness:
   verified_replay_pilot: true
-  lane_d_pilot_consumption: false
+  lane_d_pilot_consumption: true
   calibration: false
   walkforward: false
   full_historical_replay: false

@@ -18,7 +18,7 @@ inputs:
     funding_context: 24
 readiness:
   verified_replay_pilot: true
-  lane_d_pilot_consumption: false
+  lane_d_pilot_consumption: true
   calibration: false
   walkforward: false
   full_historical_replay: false
@@ -118,3 +118,5 @@ audit_outputs:
     path: data/intelligence/strategy_replay/pilot_v2/pilot_integrity_audit_v3.md
     sha256: ffb05b2d3491c57a2aabcfe2fc19407aa681c81b0b7c6b6cccd3ed6e1283e525
     document_count: 1
+audit_evidence_commit_sha: 27d03e23db1b1e768ab3420774b88ebe697a6de0
+final_manifest_commit: reported_externally_after_commit
