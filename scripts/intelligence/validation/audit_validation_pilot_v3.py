@@ -19,6 +19,8 @@ def audit(pilot_dir):
         "evaluations/leave_one_release_unit_out_v3.jsonl", "failed_experiments/failed_experiments_v3.jsonl",
         "reports/descriptive_metrics_v3.json", "reports/validation_pilot_report_v3.json",
         "bootstrap/cluster_bootstrap_summary_v3.json", "indexes/validation_pilot_v3.sqlite",
+        "calibration/calibration_status_v3.json", "multiple_testing/multiple_testing_status_v3.json",
+        "drift/drift_status_v3.json",
     ]
     missing = [a for a in REQUIRED if not (out / a).exists()]
     if missing:
