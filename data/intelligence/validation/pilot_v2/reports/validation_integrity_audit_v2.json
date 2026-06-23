@@ -1,0 +1,22 @@
+{
+  "overall_verdict": "pass",
+  "leakage_audit": {
+    "release_unit_split_across_folds": 0,
+    "temporal_overlap_violations": 0,
+    "unknown_release_unit_ids": 0,
+    "unknown_decision_unit_ids": 0,
+    "hypotheses_without_evaluation": 0,
+    "evaluations_without_hypothesis": 0,
+    "future_outcome_used_in_strategy_input": 0,
+    "violation_count": 0
+  },
+  "abstention_audit": {
+    "macro_abstention_records": 12,
+    "macro_directional_outputs": 0
+  },
+  "dataset_audit": {
+    "directional_rows": 32,
+    "independent_release_units": 8,
+    "duplicate_validation_row_ids": 0
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "unavailable",
+  "calibration_method": "none",
+  "reason_codes": [
+    "no_probability_scores",
+    "insufficient_independent_release_units"
+  ],
+  "brier_score": null,
+  "ece": null,
+  "reliability_bins": []
+}

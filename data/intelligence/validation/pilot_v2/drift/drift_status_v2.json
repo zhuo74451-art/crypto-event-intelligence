@@ -1,0 +1,9 @@
+{
+  "status": "unavailable",
+  "reason_codes": [
+    "no_stable_reference_period",
+    "only_eight_release_units"
+  ],
+  "psi": null,
+  "ks_statistic": null
+}

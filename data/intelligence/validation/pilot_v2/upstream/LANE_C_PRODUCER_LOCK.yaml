@@ -1,0 +1,74 @@
+# Lane C Producer Lock — Lane D Pilot V2
+producer_final_sha: 72984d8b0fe17dc188239c3c050e082c180853b4
+locked_at_utc: 2026-07-14T18:00:00Z
+
+release_units_v1.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/release_units_v1.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "839c351923f74df6aed1452a509ce601b229c9d11e859649cd818b8099563319"
+  copied_sha256: "839c351923f74df6aed1452a509ce601b229c9d11e859649cd818b8099563319"
+  source_and_copy_equal: "True"
+  record_count: "8"
+decision_inputs_v1.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/decision_inputs_v1.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "8c5c381da3db927bb1978f690c487d43a90494e3b7f14e7ade1142a67f7fe25d"
+  copied_sha256: "8c5c381da3db927bb1978f690c487d43a90494e3b7f14e7ade1142a67f7fe25d"
+  source_and_copy_equal: "True"
+  record_count: "16"
+macro_abstention_records_v1.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/macro_abstention_records_v1.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "00502ef1efe78ac8c91fd21cc6ce28196b9210e2c02217176890ebd0ebe88758"
+  copied_sha256: "00502ef1efe78ac8c91fd21cc6ce28196b9210e2c02217176890ebd0ebe88758"
+  source_and_copy_equal: "True"
+  record_count: "12"
+strategy_replay_results_v2.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/strategy_replay_results_v2.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "7ce14c4944c66c9368edfba634e9a34d8390dfa38ea00bc499501c70748b4722"
+  copied_sha256: "7ce14c4944c66c9368edfba634e9a34d8390dfa38ea00bc499501c70748b4722"
+  source_and_copy_equal: "True"
+  record_count: "28"
+strategy_hypotheses_v2.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/strategy_hypotheses_v2.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "c466faea271f4e1a3bc8d95a7eb5302d9a0affe560ab239fe8256324c10410c9"
+  copied_sha256: "c466faea271f4e1a3bc8d95a7eb5302d9a0affe560ab239fe8256324c10410c9"
+  source_and_copy_equal: "True"
+  record_count: "32"
+kernel_input_packages_v2.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/kernel_input_packages_v2.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "d50e0c2897154fbe4b0712999ec06f2526b06b141fa277819abfda15011291c2"
+  copied_sha256: "d50e0c2897154fbe4b0712999ec06f2526b06b141fa277819abfda15011291c2"
+  source_and_copy_equal: "True"
+  record_count: "16"
+evaluation_outcomes_v1.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/evaluation_outcomes_v1.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "1820e4dfed0d200241c46a548e81abf9d632e5c495ef1f080f004896e6d39c33"
+  copied_sha256: "1820e4dfed0d200241c46a548e81abf9d632e5c495ef1f080f004896e6d39c33"
+  source_and_copy_equal: "True"
+  record_count: "32"
+strategy_evaluations_v1.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/strategy_evaluations_v1.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "e639c41a16f5812935e59c3545bc09e810c07c3289e10efd948d3f305a234a80"
+  copied_sha256: "e639c41a16f5812935e59c3545bc09e810c07c3289e10efd948d3f305a234a80"
+  source_and_copy_equal: "True"
+  record_count: "32"
+baseline_evaluations_v1.jsonl:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/baseline_evaluations_v1.jsonl"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "ce4ecd08c0dff10c8dab28d807a7dcd7a4db98e2054eb9789bb2c67eba2f66f3"
+  copied_sha256: "ce4ecd08c0dff10c8dab28d807a7dcd7a4db98e2054eb9789bb2c67eba2f66f3"
+  source_and_copy_equal: "True"
+  record_count: "128"
+decision_seal_v1.json:
+  artifact_path: "data/intelligence/strategy_replay/pilot_v2/decision_seal_v1.json"
+  producer_final_sha: "72984d8b0fe17dc188239c3c050e082c180853b4"
+  actual_git_object_sha256: "3b1b05159a786adc86fa288bd4c23960d6d453308df5b7cc8106d2211e83c9e1"
+  copied_sha256: "3b1b05159a786adc86fa288bd4c23960d6d453308df5b7cc8106d2211e83c9e1"
+  source_and_copy_equal: "True"
+  record_count: "1"

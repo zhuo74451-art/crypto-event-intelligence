@@ -1,0 +1,8 @@
+{"accuracy_change_from_full_sample": -5.36, "correct": 16, "directional_accuracy": 57.14, "excluded_release_unit_id": "ru_527433df79a19011", "incorrect": 12, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": -1.79, "correct": 17, "directional_accuracy": 60.71, "excluded_release_unit_id": "ru_5cf779ef1e1a92b3", "incorrect": 11, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": -5.36, "correct": 16, "directional_accuracy": 57.14, "excluded_release_unit_id": "ru_6f27037dbf10f0a7", "incorrect": 12, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": 1.79, "correct": 18, "directional_accuracy": 64.29, "excluded_release_unit_id": "ru_b743daa817710672", "incorrect": 10, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": 1.79, "correct": 18, "directional_accuracy": 64.29, "excluded_release_unit_id": "ru_c704ac02a3c27670", "incorrect": 10, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": 8.93, "correct": 20, "directional_accuracy": 71.43, "excluded_release_unit_id": "ru_cba82d51a0362651", "incorrect": 8, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": -5.36, "correct": 16, "directional_accuracy": 57.14, "excluded_release_unit_id": "ru_d4e03b057a0c6398", "incorrect": 12, "remaining_release_units": 7, "remaining_rows": 28}
+{"accuracy_change_from_full_sample": 5.36, "correct": 19, "directional_accuracy": 67.86, "excluded_release_unit_id": "ru_f04af372cc75c72a", "incorrect": 9, "remaining_release_units": 7, "remaining_rows": 28}

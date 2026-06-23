@@ -1,0 +1,4 @@
+{"baseline_correct": 0, "baseline_id": "always_abstain", "baseline_only_correct": 0, "both_correct": 0, "both_incorrect": 0, "coverage": 32, "paired_rows": 32, "strategy_correct": 0, "strategy_only_correct": 0}
+{"baseline_correct": 22, "baseline_id": "always_bearish", "baseline_only_correct": 12, "both_correct": 10, "both_incorrect": 0, "coverage": 0, "paired_rows": 32, "strategy_correct": 20, "strategy_only_correct": 10}
+{"baseline_correct": 10, "baseline_id": "always_bullish", "baseline_only_correct": 0, "both_correct": 10, "both_incorrect": 12, "coverage": 0, "paired_rows": 32, "strategy_correct": 20, "strategy_only_correct": 10}
+{"baseline_correct": 12, "baseline_id": "reverse_first_reaction", "baseline_only_correct": 12, "both_correct": 0, "both_incorrect": 0, "coverage": 0, "paired_rows": 32, "strategy_correct": 20, "strategy_only_correct": 20}

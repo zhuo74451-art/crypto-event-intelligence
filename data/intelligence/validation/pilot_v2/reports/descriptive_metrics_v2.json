@@ -1,0 +1,79 @@
+{
+  "overall": {
+    "correct": 20,
+    "incorrect": 12,
+    "neutral": 0,
+    "directional_accuracy_pct": 62.5,
+    "directional_numerator": 20,
+    "directional_denominator": 32,
+    "coverage_numerator": 32,
+    "coverage_denominator": 32,
+    "coverage_pct": 100.0
+  },
+  "by_asset": {
+    "ETH": {
+      "correct": 9,
+      "incorrect": 7,
+      "neutral": 0
+    },
+    "BTC": {
+      "correct": 11,
+      "incorrect": 5,
+      "neutral": 0
+    }
+  },
+  "by_horizon": {
+    "continuation_to_4h": {
+      "correct": 10,
+      "incorrect": 6,
+      "neutral": 0
+    },
+    "continuation_to_24h": {
+      "correct": 10,
+      "incorrect": 6,
+      "neutral": 0
+    }
+  },
+  "by_release_unit": {
+    "ru_6f27037dbf10f0a7": {
+      "correct": 4,
+      "incorrect": 0,
+      "neutral": 0
+    },
+    "ru_f04af372cc75c72a": {
+      "correct": 1,
+      "incorrect": 3,
+      "neutral": 0
+    },
+    "ru_b743daa817710672": {
+      "correct": 2,
+      "incorrect": 2,
+      "neutral": 0
+    },
+    "ru_cba82d51a0362651": {
+      "correct": 0,
+      "incorrect": 4,
+      "neutral": 0
+    },
+    "ru_c704ac02a3c27670": {
+      "correct": 2,
+      "incorrect": 2,
+      "neutral": 0
+    },
+    "ru_d4e03b057a0c6398": {
+      "correct": 4,
+      "incorrect": 0,
+      "neutral": 0
+    },
+    "ru_5cf779ef1e1a92b3": {
+      "correct": 3,
+      "incorrect": 1,
+      "neutral": 0
+    },
+    "ru_527433df79a19011": {
+      "correct": 4,
+      "incorrect": 0,
+      "neutral": 0
+    }
+  }
+}

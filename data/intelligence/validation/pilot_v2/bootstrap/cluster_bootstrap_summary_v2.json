@@ -1,0 +1,14 @@
+{
+  "method": "release_unit_cluster_bootstrap",
+  "cluster_count": 8,
+  "resamples": 10000,
+  "seed": 20260623,
+  "inferential_use": false,
+  "descriptive_interval": {
+    "median": 62.5,
+    "lower_bound": 43.75,
+    "upper_bound": 81.25
+  },
+  "statistical_significance_supported": false,
+  "cluster_count_insufficient": true
+}

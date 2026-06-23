@@ -1,0 +1,20 @@
+{
+  "macro_coverage": {
+    "numerator": 0,
+    "denominator": 12,
+    "rate": 0.0
+  },
+  "macro_abstention_rate": {
+    "numerator": 12,
+    "denominator": 12,
+    "rate": 1.0
+  },
+  "reason_breakdown": {
+    "consensus_missing": 12
+  },
+  "reaction_strategy_coverage": {
+    "numerator": 32,
+    "denominator": 32,
+    "rate": 1.0
+  }
+}
