@@ -14,3 +14,14 @@ ALL_MACRO_STRATEGIES = {
     "us_core_pce": get_core_pce(),
     "us_fomc_rate_decision": get_fomc(),
 }
+
+from .regulation_event import get_strategy_definition as get_regulation
+from .catalyst_event import get_strategy_definition as get_catalyst
+from .forced_flow import get_strategy_definition as get_forced_flow
+
+# Vertical expansion strategies (exploratory maturity)
+ALL_VERTICAL_STRATEGIES = {
+    "regulation_event": get_regulation(),
+    "catalyst_event": get_catalyst(),
+    "forced_flow": get_forced_flow(),
+}
