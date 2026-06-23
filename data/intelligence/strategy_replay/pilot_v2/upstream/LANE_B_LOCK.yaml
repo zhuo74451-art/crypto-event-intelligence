@@ -1,0 +1,38 @@
+producer_lane: lane_b_historical_market_cross_asset
+producer_branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+implementation_head_sha: 1ba2bd653e135f10aee91cc10d569a2c9531ed81
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+lane_status: verified_event_alignment_pilot_ready
+
+inputs:
+  lane_a:
+    consumed: true
+    producer_final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
+    producer_implementation_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
+    event_count: 12
+    manifest_artifact_hash_match: true
+    source_and_copy_equal: true
+    producer_lock_status: locked
+
+readiness:
+  crypto_alignment_pilot: true
+  cross_asset_context: true
+  full_historical_macro_alignment: false
+  lane_c_pilot_consumption: True
+
+counts:
+  macro_events: 12
+  event_asset_pairs: 24
+  horizon_window_records: 72
+  reaction_label_records: 72
+  cross_asset_context_records: 120
+  funding_context_records: 24
+
+integrity:
+  future_leakage_violations: 0
+  temporary_event_ids: 0
+  duplicate_reaction_label_ids: 0
+  one_minute_precision_claims: 0
+  five_minute_precision_claims: 0
+  cross_asset_immediate_reaction_claims: 0
+  manifest_placeholders: 0

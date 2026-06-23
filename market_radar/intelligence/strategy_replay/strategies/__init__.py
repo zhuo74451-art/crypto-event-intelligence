@@ -25,3 +25,5 @@ ALL_VERTICAL_STRATEGIES = {
     "catalyst_event": get_catalyst(),
     "forced_flow": get_forced_flow(),
 }
+
+from .post_release_reaction_continuation import get_strategy_definition as get_post_release

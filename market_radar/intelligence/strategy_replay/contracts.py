@@ -221,6 +221,12 @@ class StrategyReplayResultV1:
     warnings: list[str] = field(default_factory=list)
     quality_flags: list[str] = field(default_factory=list)
     provenance_refs: list[str] = field(default_factory=list)
+    decision_unit_id: str = ""
+    release_unit_id: str = ""
+    constituent_event_ids: list[str] = field(default_factory=list)
+    asset: str = ""
+    hypothesis_ids: list[str] = field(default_factory=list)
+    source_refs: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -240,6 +246,7 @@ class AbstentionRecordV1:
     information_cutoff_utc: str = ""
     evidence_refs: list[str] = field(default_factory=list)
     resume_conditions: list[str] = field(default_factory=list)
+    source_refs: list[str] = field(default_factory=list)
 
 
 @dataclass

@@ -1,0 +1,43 @@
+# Producer Locks — Lane C Pilot V2
+# Generated: 2026-07-14T14:00:00Z
+
+lane_a_macro_release_events_v1.jsonl:
+  producer: "lane_a"
+  producer_final_sha: "9aaabc82f34141e6797d3f92b773d5c463ad99b8"
+  artifact_path: "data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl"
+  git_object_sha256: "ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c"
+  copied_sha256: "ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c"
+  source_and_copy_equal: true
+  record_count: "12"
+lane_b_horizon_windows_v3.jsonl:
+  producer: "lane_b"
+  producer_final_sha: "ec8952b600ffceebeabcb50ac11e3b182e76c5e2"
+  artifact_path: "data/intelligence/historical_market/pilot_v3/horizon_windows_v3.jsonl"
+  git_object_sha256: "78ec78d07e8c3d472ec0879c6d31bca5eab46552738c3668372f9f1c76713af9"
+  copied_sha256: "78ec78d07e8c3d472ec0879c6d31bca5eab46552738c3668372f9f1c76713af9"
+  source_and_copy_equal: true
+  record_count: "72"
+lane_b_reaction_labels_v3.jsonl:
+  producer: "lane_b"
+  producer_final_sha: "ec8952b600ffceebeabcb50ac11e3b182e76c5e2"
+  artifact_path: "data/intelligence/historical_market/pilot_v3/reaction_labels_v3.jsonl"
+  git_object_sha256: "d6fe7afa2932364b43dab96bdd8e362e1cedd2ec5e6c705bc8e17d62a2bf4aa5"
+  copied_sha256: "d6fe7afa2932364b43dab96bdd8e362e1cedd2ec5e6c705bc8e17d62a2bf4aa5"
+  source_and_copy_equal: true
+  record_count: "72"
+lane_b_cross_asset_context_v3.jsonl:
+  producer: "lane_b"
+  producer_final_sha: "ec8952b600ffceebeabcb50ac11e3b182e76c5e2"
+  artifact_path: "data/intelligence/historical_market/pilot_v3/cross_asset_context_v3.jsonl"
+  git_object_sha256: "5169eebd5465d806cfdaba7de468c3559acfbabb7d58de4918d206fc35635de6"
+  copied_sha256: "5169eebd5465d806cfdaba7de468c3559acfbabb7d58de4918d206fc35635de6"
+  source_and_copy_equal: true
+  record_count: "120"
+lane_b_funding_context_v3.jsonl:
+  producer: "lane_b"
+  producer_final_sha: "ec8952b600ffceebeabcb50ac11e3b182e76c5e2"
+  artifact_path: "data/intelligence/historical_market/pilot_v3/funding_context_v3.jsonl"
+  git_object_sha256: "d4474c329cf0352342b1ccd35d97291a66f18aab194dabe57d9e638efb0c1cd4"
+  copied_sha256: "d4474c329cf0352342b1ccd35d97291a66f18aab194dabe57d9e638efb0c1cd4"
+  source_and_copy_equal: true
+  record_count: "24"

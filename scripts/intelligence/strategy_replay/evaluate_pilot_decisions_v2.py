@@ -1,0 +1,247 @@
+"""Evaluate pilot decisions V2 — Stage 2: reads sealed hypotheses then computes outcomes.
+Uses incremental returns from 1h endpoint, not pre-event baseline.
+"""
+import json, hashlib, pathlib
+
+WORKTREE = pathlib.Path(r"C:\Users\zhuo7\Desktop\crypto-event-intelligence-worktrees\lane-c-macro-strategy-replay-v1")
+OUT = WORKTREE / "data" / "intelligence" / "strategy_replay" / "pilot_v2"
+UP = OUT / "upstream"
+
+EPSILON_PCT = 0.001
+
+
+def load_jsonl(path):
+    return [json.loads(l) for l in path.read_text("utf-8").strip().splitlines() if l]
+
+
+def write_jsonl(records, path, sort_key=None):
+    if sort_key:
+        records = sorted(records, key=lambda r: r.get(sort_key, ""))
+    tmp = path.with_suffix(".tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        for r in records:
+            f.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
+    tmp.replace(path)
+
+
+def run_evaluation():
+    # Step 1: Read sealed hypotheses (phase separation enforcement)
+    hypotheses = load_jsonl(OUT / "strategy_hypotheses_v2.jsonl")
+    results = load_jsonl(OUT / "strategy_replay_results_v2.jsonl")
+    decision_inputs = load_jsonl(OUT / "decision_inputs_v1.jsonl")
+    horizon_windows = load_jsonl(UP / "lane_b_horizon_windows_v3.jsonl")
+
+    print(f"Read {len(hypotheses)} sealed hypotheses")
+    print(f"Read {len(results)} sealed results")
+    print(f"Read {len(decision_inputs)} decision inputs")
+
+    # Index decision inputs
+    du_by_id = {d["decision_unit_id"]: d for d in decision_inputs}
+
+    # Index horizon windows by (event_id, symbol, nominal_horizon) for 4h and 24h
+    window_index = {}
+    for w in horizon_windows:
+        window_index[(w["event_id"], w["symbol"], w["nominal_horizon"])] = w
+
+    outcomes = []
+    evaluations = []
+
+    for hyp in hypotheses:
+        if hyp.get("confidence_type") != "exploratory":
+            continue  # Only evaluate post-release continuation hypotheses
+
+        hyp_id = hyp["hypothesis_id"]
+        si_id = hyp["strategy_instance_id"]
+        horizon = hyp["time_horizon"]  # continuation_to_4h or continuation_to_24h
+        expected_effect = hyp["expected_effect"]
+        asset = hyp["asset"]
+        eid_combined = hyp["event_id"]
+
+        # Find the decision unit for this hypothesis
+        # Find from the result that has these hypothesis_ids
+        matching_results = [r for r in results if hyp_id in r.get("hypotheses", [])]
+        if not matching_results:
+            continue
+
+        res = matching_results[0]
+        du_id = res.get("decision_unit_id", "")
+        du = du_by_id.get(du_id, {})
+        constituent_eids = du.get("constituent_event_ids", [eid_combined])
+        signal_endpoint_price = du.get("signal_endpoint_price", 0)
+        signal_endpoint_time = du.get("signal_endpoint_time_utc", "")
+
+        # Determine nominal horizon
+        if horizon == "continuation_to_4h":
+            target_nh = "4h"
+        elif horizon == "continuation_to_24h":
+            target_nh = "24h"
+        else:
+            continue
+
+        # Get the target window to find endpoint price
+        asset_symbol = f"{asset}USDT"
+        # Use the first constituent event for window lookup
+        first_eid = constituent_eids[0] if constituent_eids else eid_combined
+        target_key = (first_eid, asset_symbol, target_nh)
+        target_win = window_index.get(target_key)
+
+        if not target_win or signal_endpoint_price == 0:
+            continue
+
+        target_endpoint_price = target_win.get("post_bar_close", target_win.get("endpoint_price", 0))
+        if target_endpoint_price == 0:
+            continue
+
+        # Compute incremental return from 1h endpoint (NOT from pre-event baseline)
+        incremental_return_pct = (target_endpoint_price / signal_endpoint_price - 1) * 100
+
+        # Direction
+        if incremental_return_pct > EPSILON_PCT:
+            outcome_dir = "positive"
+        elif incremental_return_pct < -EPSILON_PCT:
+            outcome_dir = "negative"
+        else:
+            outcome_dir = "neutral"
+
+        # Evaluation
+        if outcome_dir == "neutral":
+            correctness = "neutral_outcome"
+        elif (expected_effect == "bullish" and outcome_dir == "positive") or \
+             (expected_effect == "bearish" and outcome_dir == "negative"):
+            correctness = "correct"
+        else:
+            correctness = "incorrect"
+
+        outcome = {
+            "outcome_id": f"outcome_{hyp_id}",
+            "decision_unit_id": du_id,
+            "release_unit_id": du.get("release_unit_id", ""),
+            "asset": asset,
+            "evaluation_horizon": target_nh,
+            "hypothesis_id": hyp_id,
+            "outcome_start_time_utc": signal_endpoint_time,
+            "outcome_end_time_utc": target_win.get("endpoint_price_time_utc", ""),
+            "outcome_start_price": signal_endpoint_price,
+            "outcome_end_price": target_endpoint_price,
+            "incremental_return_pct": round(incremental_return_pct, 6),
+            "outcome_direction": outcome_dir,
+            "source_window_ids": [target_win.get("window_id", "")],
+            "precision_class": "coarse_hourly_alignment",
+        }
+        outcomes.append(outcome)
+
+        evaluation = {
+            "evaluation_id": f"eval_{hyp_id}",
+            "hypothesis_id": hyp_id,
+            "strategy_id": "strat_post_release_reaction_continuation_v1",
+            "decision_unit_id": du_id,
+            "asset": asset,
+            "time_horizon": horizon,
+            "expected_effect": expected_effect,
+            "outcome_direction": outcome_dir,
+            "incremental_return_pct": round(incremental_return_pct, 6),
+            "correctness": correctness,
+            "precision_class": "coarse_hourly_alignment",
+        }
+        evaluations.append(evaluation)
+
+    # Baseline evaluations
+    baseline_defs = [
+        ("always_bullish", "bullish"),
+        ("always_bearish", "bearish"),
+        ("reverse_first_reaction", None),  # Special handling
+        ("always_abstain", None),
+    ]
+
+    baseline_evaluations = []
+    for du in decision_inputs:
+        du_id = du["decision_unit_id"]
+        for horizon_nh in ["4h", "24h"]:
+            for base_id, base_dir in baseline_defs:
+                if base_id == "always_abstain":
+                    be = {
+                        "evaluation_id": f"be_{base_id}_{du_id}_{horizon_nh}",
+                        "baseline_id": base_id,
+                        "decision_unit_id": du_id,
+                        "asset": du["asset"],
+                        "horizon": horizon_nh,
+                        "correctness": "abstained",
+                        "precision_class": "coarse_hourly_alignment",
+                    }
+                    baseline_evaluations.append(be)
+                    continue
+
+                if base_id == "reverse_first_reaction":
+                    signal_dir = du.get("signal_direction", "neutral")
+                    expected = "bullish" if signal_dir == "negative" else "bearish" if signal_dir == "positive" else "neutral"
+                else:
+                    expected = base_dir
+
+                if expected == "neutral":
+                    correctness = "neutral_outcome"
+                    baseline_evaluations.append({
+                        "evaluation_id": f"be_{base_id}_{du_id}_{horizon_nh}",
+                        "baseline_id": base_id, "decision_unit_id": du_id,
+                        "asset": du["asset"], "horizon": horizon_nh,
+                        "correctness": correctness, "precision_class": "coarse_hourly_alignment",
+                    })
+                    continue
+
+                # Find the 1h endpoint price from decision input
+                btc_pre = du.get("signal_endpoint_price", 0)
+                if btc_pre == 0:
+                    continue
+
+                # Get target window endpoint
+                first_eid = du["constituent_event_ids"][0]
+                asset_sym = f"{du['asset']}USDT"
+                target_win = window_index.get((first_eid, asset_sym, horizon_nh))
+                if not target_win:
+                    continue
+
+                target_end = target_win.get("post_bar_close", target_win.get("endpoint_price", 0))
+                if target_end == 0:
+                    continue
+
+                inc_return = (target_end / btc_pre - 1) * 100
+                odir = "positive" if inc_return > EPSILON_PCT else "negative" if inc_return < -EPSILON_PCT else "neutral"
+
+                if odir == "neutral":
+                    correctness = "neutral_outcome"
+                elif (expected == "bullish" and odir == "positive") or (expected == "bearish" and odir == "negative"):
+                    correctness = "correct"
+                else:
+                    correctness = "incorrect"
+
+                baseline_evaluations.append({
+                    "evaluation_id": f"be_{base_id}_{du_id}_{horizon_nh}",
+                    "baseline_id": base_id, "decision_unit_id": du_id,
+                    "asset": du["asset"], "horizon": horizon_nh,
+                    "correctness": correctness, "precision_class": "coarse_hourly_alignment",
+                })
+
+    # Write
+    write_jsonl(outcomes, OUT / "evaluation_outcomes_v1.jsonl", sort_key="outcome_id")
+    write_jsonl(evaluations, OUT / "strategy_evaluations_v1.jsonl", sort_key="evaluation_id")
+    write_jsonl(baseline_evaluations, OUT / "baseline_evaluations_v1.jsonl", sort_key="evaluation_id")
+
+    # Summary
+    correct = sum(1 for e in evaluations if e["correctness"] == "correct")
+    incorrect = sum(1 for e in evaluations if e["correctness"] == "incorrect")
+    neutral = sum(1 for e in evaluations if e["correctness"] == "neutral_outcome")
+    print(f"\\nEvaluation complete:")
+    print(f"  Outcomes: {len(outcomes)}")
+    print(f"  Strategy evaluations: {len(evaluations)} (correct={correct}, incorrect={incorrect}, neutral={neutral})")
+    print(f"  Baseline evaluations: {len(baseline_evaluations)}")
+
+    return {
+        "outcomes": len(outcomes),
+        "evaluations": len(evaluations),
+        "baseline_evaluations": len(baseline_evaluations),
+        "correct": correct, "incorrect": incorrect, "neutral": neutral,
+    }
+
+
+if __name__ == "__main__":
+    result = run_evaluation()
+    print(json.dumps(result, indent=2))
