@@ -3,14 +3,16 @@ repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-c-macro-strategy-replay-v1
 required_start_sha: 0c70f50937658e78c2d093be7a4ef745b764122f
 artifact_implementation_sha: da98a83fc8072f1411749412d159b34c77937b19
-current_stage: leakage_audit_hardening
-lane_status: artifact_hashes_valid_audit_unsealed
+current_stage: pilot_v5_evidence_resealed
+lane_status: verified_small_sample_replay_pilot_ready
 readiness:
-  verified_replay_pilot: false
-  lane_d_pilot_consumption: false
+  verified_replay_pilot: true
+  lane_d_pilot_consumption: true
   calibration: false
   walkforward: false
   full_historical_replay: false
   causal_inference_supported: false
-known_failures:
-blockers:
+known_failures: None
+blockers: None
+audit_implementation_sha: d6ec1b526a60607500559449030974a292f20994
+audit_evidence_commit_sha: d6ec1b526a60607500559449030974a292f20994

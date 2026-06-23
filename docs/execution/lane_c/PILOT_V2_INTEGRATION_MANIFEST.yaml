@@ -1,8 +1,8 @@
 producer_lane: lane_c_macro_strategy_replay
 producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
 artifact_implementation_sha: da98a83fc8072f1411749412d159b34c77937b19
-audit_implementation_sha: TO_BE_FILLED_AFTER_COMMIT
-audit_evidence_commit_sha: TO_BE_FILLED_AFTER_COMMIT
+audit_implementation_sha: d6ec1b526a60607500559449030974a292f20994
+audit_evidence_commit_sha: d6ec1b526a60607500559449030974a292f20994
 base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
 lane_status: verified_small_sample_replay_pilot_ready
 inputs:
@@ -18,8 +18,8 @@ inputs:
     cross_asset_context: 120
     funding_context: 24
 readiness:
-  verified_replay_pilot: false
-  lane_d_pilot_consumption: false
+  verified_replay_pilot: true
+  lane_d_pilot_consumption: true
   calibration: false
   walkforward: false
   full_historical_replay: false
@@ -140,3 +140,4 @@ counts:
   strategy_evaluations: 32
   baseline_evaluations: 128
   kernel_packages: 16
+final_manifest_commit: reported_externally_after_commit
