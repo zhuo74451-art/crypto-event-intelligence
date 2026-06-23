@@ -78,3 +78,6 @@ counts:
   walkforward_test_rows: 16
   baseline_evaluation_records: 128
   leave_one_unit_out_records: 8
+status: superseded
+superseded_by: PILOT_V3_INTEGRATION_MANIFEST.yaml
+lane_e_consumable: false

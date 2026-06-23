@@ -1,0 +1,115 @@
+producer_lane: lane_d_validation_audit
+producer_branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
+required_start_sha: be8137266e7403df6845c7d539ee29e0eac4082d
+artifact_implementation_sha: 3dc73d61848d2c1b20c11160c12057109a042f1d
+hash_basis: git_object_bytes
+hash_basis_commit: 3dc73d61848d2c1b20c11160c12057109a042f1d
+
+producer:
+  lane_c_sha: 72984d8b0fe17dc188239c3c050e082c180853b4
+  hashes_verified: true
+  counts_verified: true
+  yaml_types_verified: true
+
+counts:
+  directional_rows: 32
+  abstention_rows: 12
+  independent_release_units: 8
+  walkforward_folds: 4
+  walkforward_test_rows: 16
+  baseline_evaluation_records: 128
+  failed_experiments: 6
+
+audit:
+  independent_script: audit_validation_pilot_v3.py
+  verdict: pass
+  exit_code: 0
+  fault_injection_categories_passed: 6
+
+outputs:
+  producer_lock:
+    path: data/intelligence/validation/pilot_v3/upstream/LANE_C_PRODUCER_LOCK.yaml
+    sha256: 689493bc50df92e64f0adaaf18d4d2e4384ba9239a795e52d503b4a5143b98fa
+    byte_count: 3923
+    record_count: 1
+  directional_dataset:
+    path: data/intelligence/validation/pilot_v3/datasets/directional_validation_dataset_v3.jsonl
+    sha256: f681b96d3525c36871d677fb868cc65ed3b77db0c15983d908e47674dc4c2f7e
+    byte_count: 32808
+    record_count: 32
+  macro_abstention_dataset:
+    path: data/intelligence/validation/pilot_v3/datasets/macro_abstention_dataset_v3.jsonl
+    sha256: 69914888a18236856c308a3929b546137a8e5b45b4b3c34abbe2630e6037e46f
+    byte_count: 2576
+    record_count: 12
+  split_manifest:
+    path: data/intelligence/validation/pilot_v3/splits/split_manifest_v3.json
+    sha256: 9cb8f1e00af94db9fac925d60998fd2936ff9a7e0c0711cf93feeffd3806a5f1
+    byte_count: 77
+    record_count: 1
+  fold_evaluations:
+    path: data/intelligence/validation/pilot_v3/folds/walkforward_fold_evaluations_v3.jsonl
+    sha256: 5ce7a7c99a8566129ecde3bf6aa36d2fbd1cc681fbb8e29096bcf4990a876304
+    byte_count: 1502
+    record_count: 4
+  baseline_comparisons:
+    path: data/intelligence/validation/pilot_v3/baselines/paired_baseline_comparison_v3.jsonl
+    sha256: 9cfadedff673573ad7e53b7ff7732bff692f8c59a45f54d5bfab90d568df1ac7
+    byte_count: 1443
+    record_count: 4
+  leave_one_unit_out:
+    path: data/intelligence/validation/pilot_v3/evaluations/leave_one_release_unit_out_v3.jsonl
+    sha256: 3f67f107450b693af6bab9baf4d7f20449a1e5ec0f8f00c3a28b0dfe5b2852d2
+    byte_count: 1682
+    record_count: 8
+  failed_experiments:
+    path: data/intelligence/validation/pilot_v3/failed_experiments/failed_experiments_v3.jsonl
+    sha256: 95b2f01a539bfa13da0b5044e31aa66ab7dea8745102080ea03b7e9e29d1732b
+    byte_count: 1673
+    record_count: 6
+  descriptive_metrics:
+    path: data/intelligence/validation/pilot_v3/reports/descriptive_metrics_v3.json
+    sha256: 1d33eeb6d2d9bb3ff2912e399957ddcee3e3121e34744b657f91f1982616ce23
+    byte_count: 291
+    record_count: 1
+  validation_report:
+    path: data/intelligence/validation/pilot_v3/reports/validation_pilot_report_v3.json
+    sha256: 01f34a3bb08ce1937831386c7b9023ea47bd5316645f8dc3f6dbfa8aaab34bf8
+    byte_count: 637
+    record_count: 1
+  integrity_audit:
+    path: data/intelligence/validation/pilot_v3/reports/validation_integrity_audit_v3.json
+    sha256: da11f1d09e957ccf33a15d2415533c591479ee5413a83efa1d1a5a8c5b84dc1c
+    byte_count: 1046
+    record_count: 1
+  bootstrap_summary:
+    path: data/intelligence/validation/pilot_v3/bootstrap/cluster_bootstrap_summary_v3.json
+    sha256: dda3e9294af82e1e191e5aa5ce93eec3222668afac41abda32d3d499a961deb2
+    byte_count: 508
+    record_count: 1
+  sqlite_index:
+    path: data/intelligence/validation/pilot_v3/indexes/validation_pilot_v3.sqlite
+    sha256: eadb07f3974bf4a55c02c9f44297badbd145f6100a6ed43da316829471fd2ac9
+    byte_count: 53248
+    record_count: 1
+  sqlite_index:
+    path: data/intelligence/validation/pilot_v3/indexes/validation_pilot_v3.sqlite
+    sha256: eadb07f3974bf4a55c02c9f44297badbd145f6100a6ed43da316829471fd2ac9
+    table_row_counts:
+      producer_locks: table_not_found
+      directional_validation: 32
+      macro_abstentions: 12
+      split_manifest: table_not_found
+      fold_evaluations: 4
+      baseline_comparisons: 4
+      leave_one_unit_out: 8
+      failed_experiments: 6
+
+readiness:
+  validation_audit_pilot: true
+  lane_e_pilot_consumption: true
+  probability_calibration: false
+  statistical_significance: false
+  full_walkforward: false
+  drift_inference: false
+  causal_inference: false

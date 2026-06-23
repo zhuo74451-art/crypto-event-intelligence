@@ -1,23 +1,27 @@
-task: LANE_D_VERIFIED_SMALL_SAMPLE_VALIDATION_AUDIT_PILOT_V2
+task: LANE_D_VALIDATION_EVIDENCE_FAIL_CLOSED_REPAIR_V3
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
-required_start_sha: 466fdfc343513abb5f6cdcad69f9637b541debfc
-head_sha: be85b7a9be3a23f4c9747cbc74523dc5cce09009
+required_start_sha: be8137266e7403df6845c7d539ee29e0eac4082d
+artifact_implementation_sha: 3dc73d61848d2c1b20c11160c12057109a042f1d
+head_sha: 3dc73d61848d2c1b20c11160c12057109a042f1d
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: validation_evidence_repair
-lane_status: dataset_built_evidence_unsealed
+current_stage: v3_sealed
+lane_status: verified_small_sample_validation_audit_ready
 
-inputs:
+current_manifest: PILOT_V3_INTEGRATION_MANIFEST.yaml
+
+producer:
   lane_c:
-    final_sha: 72984d8b0fe17dc188239c3c050e082c180853b4
-    locked: true
+    sha: 72984d8b0fe17dc188239c3c050e082c180853b4
+    hashes_verified: true
+    counts_verified: true
 
 readiness:
-  validation_audit_pilot: false
-  lane_e_pilot_consumption: false
+  validation_audit_pilot: true
+  lane_e_pilot_consumption: true
   probability_calibration: false
   statistical_significance: false
   full_walkforward: false
