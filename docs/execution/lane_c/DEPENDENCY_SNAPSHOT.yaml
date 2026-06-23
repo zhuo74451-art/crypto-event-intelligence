@@ -2,8 +2,8 @@
 
 ## Lane A (Historical Macro Evidence)
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
-checked_at_utc: null
-available: false
+checked_at_utc: "2026-07-14T12:00:00Z"
+available: true
 consumed: false
 expected_artifacts:
   - data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
