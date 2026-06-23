@@ -1,0 +1,23 @@
+# Pilot V3 Report
+
+- event_count: 12
+- event_asset_pairs: 24
+- horizon_window_records: 72
+- reaction_label_records: 72
+- cross_asset_context_records: 120
+- funding_context_records: 24
+- sqlite_horizon_windows: 72
+- sqlite_reaction_labels: 72
+- sqlite_cross_asset_context: 120
+- sqlite_funding_context: 24
+- precision_class: coarse_hourly_alignment
+- max_horizon_alignment_error_minutes: 59.98
+- windows_missing_alignment_metadata: 0
+- labels_missing_window_reference: 0
+- records_missing_shared_release_group: 24
+- cross_asset_crypto_duplicates: 0
+- cross_asset_future_value_used_as_previous: 0
+- file_sqlite_count_mismatches: 0
+- report_manifest_count_mismatches: 0
+- stale_state_fields: 0
+- manifest_placeholders: 0
