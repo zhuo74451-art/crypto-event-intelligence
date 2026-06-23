@@ -1,0 +1,21 @@
+{
+  "status": "verified_small_sample_replay_pilot",
+  "causal_inference_supported": false,
+  "probability_supported": false,
+  "calibration_supported": false,
+  "walkforward_supported": false,
+  "full_historical_coverage": false,
+  "counts": {
+    "canonical_macro_events": 12,
+    "release_units": 8,
+    "decision_units": 16,
+    "macro_abstentions": 12,
+    "macro_directional_hypotheses": 0,
+    "replay_results": 28,
+    "hypotheses": 32,
+    "kernel_packages": 16,
+    "evaluation_outcomes": 32,
+    "strategy_evaluations": 32,
+    "baseline_evaluations": 128
+  }
+}

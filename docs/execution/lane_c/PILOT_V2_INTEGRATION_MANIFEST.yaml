@@ -16,8 +16,8 @@ inputs:
     cross_asset_context: 120
     funding_context: 24
 readiness:
-  verified_replay_pilot: true
-  lane_d_pilot_consumption: true
+  verified_replay_pilot: false
+  lane_d_pilot_consumption: false
   calibration: false
   walkforward: false
   full_historical_replay: false

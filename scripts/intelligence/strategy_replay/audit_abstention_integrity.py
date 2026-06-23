@@ -1,5 +1,6 @@
 """Audit abstention records for completeness."""
 import json, sys, argparse
+
 REQUIRED = ["abstention_id", "event_id", "strategy_id", "reason_codes", "information_cutoff_utc"]
 
 
@@ -26,4 +27,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     result = check_abstentions(args.abstentions)
     print(json.dumps(result, indent=2))
-    sys.exit(1 if result["violation_count"] > 0 else 0)
+    if result["violation_count"] > 0:
+        sys.exit(1)

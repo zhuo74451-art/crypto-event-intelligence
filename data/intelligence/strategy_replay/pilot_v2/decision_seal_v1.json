@@ -1,0 +1,7 @@
+{
+  "decision_inputs_sha256": "d1c80ac549bbbb72a32c76425a759118c494f0fdf25c0aa3e80a5e4f82e8c29f",
+  "hypotheses_sha256": "04e5db903ae3172b490e922e5e29b3d7286afe360bdbb21840fd7f9ed160d607",
+  "replay_results_sha256": "7774b7627fa018e59afe1ec81ddf45abfb3851470489950438b92504c1c4ea8e",
+  "producer_locks_sha256": "b376a0fa6d69d73646fbe6ce26751b4df9079f2d082dbcd4defd9e7a9e770251",
+  "sealed_before_evaluation": true
+}

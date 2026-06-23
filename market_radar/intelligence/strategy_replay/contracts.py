@@ -203,6 +203,17 @@ class StrategyHypothesisV1:
     confidence_type: str = "directional"
     calibration_artifact_ref: str = ""
     limitations: list[str] = field(default_factory=list)
+    release_unit_id: str = ""
+    constituent_event_ids: list[str] = field(default_factory=list)
+    event_families: list[str] = field(default_factory=list)
+    decision_unit_id: str = ""
+    decision_cutoff_utc: str = ""
+    signal_window_id: str = ""
+    signal_direction: str = ""
+    signal_return_pct: Optional[float] = None
+    signal_endpoint_time_utc: str = ""
+    signal_endpoint_price: Optional[float] = None
+    precision_class: str = ""
 
 
 @dataclass
