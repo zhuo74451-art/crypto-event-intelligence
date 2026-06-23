@@ -1,0 +1,65 @@
+producer_lane: lane_c_macro_strategy_replay
+producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
+producer_head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+
+inputs:
+  lane_a:
+    consumed: false
+    producer_sha: null
+    artifact_hashes: {}
+  lane_b:
+    consumed: false
+    producer_sha: null
+    artifact_hashes: {}
+
+contracts:
+  strategy_definitions:
+    path: null
+    schema: null
+    record_count: 0
+    sha256: null
+  replay_results:
+    path: null
+    schema: null
+    record_count: 0
+    sha256: null
+  baseline_results:
+    path: null
+    schema: null
+    record_count: 0
+    sha256: null
+  hypotheses:
+    path: null
+    schema: null
+    record_count: 0
+    sha256: null
+  abstentions:
+    path: null
+    schema: null
+    record_count: 0
+    sha256: null
+  kernel_packages:
+    path: null
+    schema: null
+    record_count: 0
+    sha256: null
+
+coverage:
+  events: 0
+  event_families: 0
+  strategy_instances: 0
+  hypotheses: 0
+  abstentions: 0
+  kernel_packages: 0
+  baseline_results: 0
+  date_start: null
+  date_end: null
+
+consumer_notes:
+  - replay outputs are deterministic historical strategy states
+  - evaluation labels must remain separate from strategy inputs
+  - probability fields are unavailable until calibration artifacts exist
+  - abstention records must remain in validation datasets
+  - exploratory vertical strategies must not be mixed with macro maturity
+  - kernel packages preserve multi-horizon and transmission conflicts

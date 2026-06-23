@@ -1,0 +1,24 @@
+# Dependency Snapshot — Lane C
+
+## Lane A (Historical Macro Evidence)
+branch: feat/overnight-lane-a-historical-macro-evidence-v1
+checked_at_utc: null
+available: false
+consumed: false
+expected_artifacts:
+  - data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
+  - data/intelligence/historical_macro/normalized/macro_consensus_observations_v1.jsonl
+  - data/intelligence/historical_macro/normalized/macro_revision_records_v1.jsonl
+  - docs/execution/lane_a/INTEGRATION_MANIFEST.yaml
+
+## Lane B (Historical Market Cross-Asset)
+branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+checked_at_utc: null
+available: false
+consumed: false
+expected_artifacts:
+  - data/intelligence/historical_market/event_windows/event_market_windows_v1.jsonl.gz
+  - data/intelligence/historical_market/event_windows/market_reaction_labels_v1.jsonl
+  - data/intelligence/historical_market/event_windows/event_cross_asset_matrix_v1.csv
+  - data/intelligence/historical_market/normalized/derivative_snapshots_v1.jsonl.gz
+  - docs/execution/lane_b/INTEGRATION_MANIFEST.yaml

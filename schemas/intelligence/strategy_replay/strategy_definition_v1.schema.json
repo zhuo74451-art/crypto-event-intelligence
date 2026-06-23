@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "strategy_definition_v1.schema.json",
+  "title": "StrategyDefinitionV1",
+  "description": "Canonical definition for a macro strategy family in the replay system.",
+  "type": "object",
+  "required": ["strategy_id", "strategy_version", "strategy_family", "strategy_name", "supported_event_families", "supported_assets", "supported_horizons", "required_macro_fields", "required_market_fields", "required_regime_fields", "required_confirmation_fields", "valid_regimes", "invalid_regimes", "trigger_rules", "confirmation_rules", "invalidation_rules", "expiration_rules", "abstention_rules", "transmission_paths", "alternative_explanations", "known_failure_modes", "confidence_representation", "calibration_required_for_probability"],
+  "properties": {
+    "strategy_id": {"type": "string", "pattern": "^strat_[a-z0-9_]+$"},
+    "strategy_version": {"type": "string", "pattern": "^\d+\.\d+\.\d+$"},
+    "strategy_family": {"type": "string"},
+    "strategy_name": {"type": "string"},
+    "supported_event_families": {"type": "array", "items": {"type": "string"}},
+    "supported_assets": {"type": "array", "items": {"type": "string"}},
+    "supported_horizons": {"type": "array", "items": {"type": "string", "enum": ["intraday", "short_term", "medium_term", "long_term"]}},
+    "required_macro_fields": {"type": "array", "items": {"type": "string"}},
+    "required_market_fields": {"type": "array", "items": {"type": "string"}},
+    "required_regime_fields": {"type": "array", "items": {"type": "string"}},
+    "required_confirmation_fields": {"type": "array", "items": {"type": "string"}},
+    "valid_regimes": {"type": "array", "items": {"type": "string"}},
+    "invalid_regimes": {"type": "array", "items": {"type": "string"}},
+    "trigger_rules": {"type": "object", "additionalProperties": {"type": "string"}},
+    "confirmation_rules": {"type": "object", "additionalProperties": {"type": "string"}},
+    "invalidation_rules": {"type": "object", "additionalProperties": {"type": "string"}},
+    "expiration_rules": {"type": "object", "additionalProperties": {"type": "string"}},
+    "abstention_rules": {"type": "array", "items": {"type": "string"}},
+    "transmission_paths": {"type": "array", "items": {"type": "string"}},
+    "alternative_explanations": {"type": "array", "items": {"type": "string"}},
+    "known_failure_modes": {"type": "array", "items": {"type": "string"}},
+    "confidence_representation": {"type": "string"},
+    "calibration_required_for_probability": {"type": "boolean"}
+  }
+}

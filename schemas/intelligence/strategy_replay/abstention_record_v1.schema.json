@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "abstention_record_v1.schema.json",
+  "title": "AbstentionRecordV1",
+  "description": "Record of a strategy abstaining from generating hypotheses for a given event.",
+  "type": "object",
+  "required": ["abstention_id", "event_id", "strategy_id", "strategy_instance_id", "reason_codes", "information_cutoff_utc"],
+  "properties": {
+    "abstention_id": {"type": "string"},
+    "event_id": {"type": "string"},
+    "strategy_id": {"type": "string"},
+    "strategy_instance_id": {"type": "string"},
+    "reason_codes": {"type": "array", "items": {"type": "string"}},
+    "information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "missing_inputs": {"type": "array", "items": {"type": "string"}},
+    "conflicting_inputs": {"type": "array", "items": {"type": "string"}},
+    "point_in_time_quality": {"type": "string"},
+    "market_data_quality": {"type": "string"},
+    "consensus_quality": {"type": "string"},
+    "regime_quality": {"type": "string"},
+    "transmission_quality": {"type": "string"},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

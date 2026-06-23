@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "strategy_replay_input_v1.schema.json",
+  "title": "StrategyReplayInputV1",
+  "description": "Point-in-time input snapshot for a single replay evaluation.",
+  "type": "object",
+  "required": ["replay_input_id", "event_id", "event_family", "event_time_utc", "available_information_cutoff_utc", "data_quality", "point_in_time_quality", "source_refs"],
+  "properties": {
+    "replay_input_id": {"type": "string"},
+    "event_id": {"type": "string"},
+    "event_family": {"type": "string"},
+    "event_time_utc": {"type": "string", "format": "date-time"},
+    "available_information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "data_quality": {"type": "string"},
+    "point_in_time_quality": {"type": "string"},
+    "source_refs": {"type": "array", "items": {"type": "string"}},
+    "macro_release_record": {"type": "object"},
+    "macro_consensus_record": {"type": "object"},
+    "macro_revision_state_as_of_cutoff": {"type": "object"},
+    "market_window_as_of_cutoff": {"type": "object"},
+    "cross_asset_state_as_of_cutoff": {"type": "object"},
+    "derivatives_state_as_of_cutoff": {"type": "object"},
+    "regime_state_as_of_cutoff": {"type": "object"},
+    "missing_fields": {"type": "array", "items": {"type": "string"}}
+  }
+}

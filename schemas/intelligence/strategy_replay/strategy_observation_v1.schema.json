@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "strategy_observation_v1.schema.json",
+  "title": "StrategyObservationV1",
+  "description": "Record of a single strategy observation during replay evaluation.",
+  "type": "object",
+  "required": ["observation_id", "strategy_id", "event_id", "observed_at_utc", "information_cutoff_utc", "macro_surprise", "macro_surprise_quality", "pre_event_market_state", "first_reaction_state", "available_inputs"],
+  "properties": {
+    "observation_id": {"type": "string"},
+    "strategy_id": {"type": "string"},
+    "event_id": {"type": "string"},
+    "observed_at_utc": {"type": "string", "format": "date-time"},
+    "information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "macro_surprise": {"type": "object"},
+    "macro_surprise_quality": {"type": "string"},
+    "pre_event_market_state": {"type": "object"},
+    "first_reaction_state": {"type": "object"},
+    "available_inputs": {"type": "object"},
+    "prior_revision_context": {"type": "object"},
+    "cross_asset_confirmation": {"type": "object"},
+    "derivatives_confirmation": {"type": "object"},
+    "regime_state": {"type": "object"},
+    "missing_inputs": {"type": "array", "items": {"type": "string"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

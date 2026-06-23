@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "kernel_input_package_v1.schema.json",
+  "title": "KernelInputPackageV1",
+  "description": "Package of all hypotheses, evidence, and state for kernel execution.",
+  "type": "object",
+  "required": ["kernel_package_id", "event_id", "hypotheses", "hypothesis_contexts", "evidence_state", "regime_state", "source_strategy_ids", "information_cutoff_utc", "contract_versions"],
+  "properties": {
+    "kernel_package_id": {"type": "string"},
+    "event_id": {"type": "string"},
+    "hypotheses": {"type": "array", "items": {"type": "string"}},
+    "hypothesis_contexts": {"type": "object"},
+    "evidence_state": {"type": "object"},
+    "regime_state": {"type": "object"},
+    "source_strategy_ids": {"type": "array", "items": {"type": "string"}},
+    "information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "contract_versions": {"type": "object"},
+    "asset": {"type": "string"},
+    "sector": {"type": "string"},
+    "source_replay_result_ids": {"type": "array", "items": {"type": "string"}},
+    "quality_flags": {"type": "array", "items": {"type": "string"}}
+  }
+}

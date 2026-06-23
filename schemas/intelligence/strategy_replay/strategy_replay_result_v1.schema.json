@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "strategy_replay_result_v1.schema.json",
+  "title": "StrategyReplayResultV1",
+  "description": "Result of running a strategy replay for a single event.",
+  "type": "object",
+  "required": ["replay_result_id", "event_id", "strategy_id", "strategy_instance_id", "replay_status", "strategy_state", "generated_at_utc", "provenance_refs"],
+  "properties": {
+    "replay_result_id": {"type": "string"},
+    "event_id": {"type": "string"},
+    "strategy_id": {"type": "string"},
+    "strategy_instance_id": {"type": "string"},
+    "replay_status": {"type": "string"},
+    "strategy_state": {"type": "object"},
+    "generated_at_utc": {"type": "string", "format": "date-time"},
+    "provenance_refs": {"type": "array", "items": {"type": "string"}},
+    "hypotheses": {"type": "array", "items": {"type": "string"}},
+    "abstention_record_id": {"type": "string"},
+    "kernel_package_id": {"type": "string"},
+    "available_information_cutoff_utc": {"type": "string", "format": "date-time"},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "quality_flags": {"type": "array", "items": {"type": "string"}}
+  }
+}
