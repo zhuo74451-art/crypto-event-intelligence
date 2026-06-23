@@ -1,0 +1,26 @@
+{
+  "pilot_version": "pilot_v2",
+  "started_at_utc": "2026-06-23T05:13:21Z",
+  "report_generated_at_utc": "2026-06-23T05:13:21Z",
+  "event_count": 12,
+  "asset_count": 2,
+  "horizons": [
+    "1h",
+    "4h",
+    "24h"
+  ],
+  "expected_windows": 72,
+  "actual_windows": 72,
+  "expected_labels": 72,
+  "actual_labels": 72,
+  "cross_asset_records": 24,
+  "funding_records": 24,
+  "assertions_passed": true,
+  "output_files": {
+    "event_windows": "data/intelligence/historical_market/pilot_v2/event_asset_windows_v2.jsonl",
+    "reaction_labels": "data/intelligence/historical_market/pilot_v2/market_reaction_labels_v2.jsonl",
+    "cross_asset_context": "data/intelligence/historical_market/pilot_v2/cross_asset_context_v2.jsonl",
+    "funding_context": "data/intelligence/historical_market/pilot_v2/funding_context_v2.jsonl",
+    "sqlite_database": "data/intelligence/historical_market/indexes/historical_market_v1.sqlite"
+  }
+}

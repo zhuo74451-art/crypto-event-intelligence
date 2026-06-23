@@ -1,0 +1,14 @@
+# Lane A Producer Lock
+# Generated: 2026-06-23T04:15:26Z
+
+producer_lane: lane_a
+producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
+producer_final_sha: 2c582860da37086f2ed0b89aa9efa1ad83c5d63d
+producer_implementation_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
+manifest_sha256: e3d2629177eea33c020272b8268798d2250d19aca2cc2fb4b7f177778cc4f6d9
+events_artifact_sha256: ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c
+manifest_hash_note: WARNING: Manifest recorded hash does not match file content. File blob f851ab2a confirmed identical at both Lane A commits. This is a manifest recording error.
+event_count: 12
+consumed_at_utc: 2026-06-23T04:15:26Z
+event_families: {"us_cpi": 2, "us_core_cpi": 2, "us_nonfarm_payrolls": 2, "us_unemployment_rate": 2, "us_core_pce": 2, "us_fomc_rate_decision": 2}
+shared_release_groups: {"01f9fabf73d59cefa4885529": {"group_id": "c704ac02a3c27670", "group_size": 2, "release_time": "2023-02-14T13:30:00Z"}, "4b8dd1456483c78871ab5807": {"group_id": "c704ac02a3c27670", "group_size": 2, "release_time": "2023-02-14T13:30:00Z"}, "a9ff1dfd8ce6670e9ec71b62": {"group_id": "cba82d51a0362651", "group_size": 2, "release_time": "2023-08-10T12:30:00Z"}, "0cdfa508b4fa0a9e96529b83": {"group_id": "cba82d51a0362651", "group_size": 2, "release_time": "2023-08-10T12:30:00Z"}, "7e32e8a4cae6d55ac378d8ee": {"group_id": "5cf779ef1e1a92b3", "group_size": 2, "release_time": "2023-02-03T13:30:00Z"}, "cbdd95098a023cdeb899cf80": {"group_id": "5cf779ef1e1a92b3", "group_size": 2, "release_time": "2023-02-03T13:30:00Z"}, "08df7c99be5653e1e0ebb5a8": {"group_id": "b743daa817710672", "group_size": 2, "release_time": "2023-08-04T12:30:00Z"}, "4359a724e2dedacabdd99d89": {"group_id": "b743daa817710672", "group_size": 2, "release_time": "2023-08-04T12:30:00Z"}}
