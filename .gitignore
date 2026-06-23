@@ -23,3 +23,5 @@ __pycache__/
 results/
 data/signal_registry.json*
 data/signal_registry*.json
+data/intelligence/historical_macro/raw/
+data/intelligence/historical_macro/cache/

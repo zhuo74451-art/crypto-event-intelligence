@@ -1,0 +1,35 @@
+{
+  "forensic_cleanup_timestamp": "2026-06-23T02:53:24Z",
+  "formal_counts": {
+    "release_events": 0,
+    "consensus_observations": 0,
+    "revision_records": 0,
+    "source_snapshots": 39
+  },
+  "quarantine_counts": {
+    "estimated_calendar": 675,
+    "estimated_unusable_events": 640,
+    "current_latest_values": 0,
+    "unsupported_fomc": 0,
+    "unverified_consensus": 120,
+    "unverified_revisions": 102
+  },
+  "integrity": {
+    "estimated_release_events_in_formal_dataset": 0,
+    "reconstructed_dates_marked_verified": 0,
+    "current_latest_marked_initial": 0,
+    "generic_consensus_urls": 0,
+    "consensus_without_snapshot": 0,
+    "revision_without_snapshot": 0,
+    "fomc_without_statement_snapshot": 0,
+    "snapshot_hash_mismatches": 0,
+    "manifest_count_mismatches": 0,
+    "manifest_hash_mismatches": 0
+  },
+  "readiness": {
+    "event_alignment": false,
+    "strategy_replay": false,
+    "consensus_replay": false,
+    "revision_replay": false
+  }
+}

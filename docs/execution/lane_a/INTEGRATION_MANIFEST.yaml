@@ -1,46 +1,45 @@
 producer_lane: lane_a_historical_macro_evidence
 producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
-producer_head_sha: 7cbfb6e
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+implementation_head_sha: <final_sha_to_be_filled>
 
-contracts:
-  release_events:
-    path: data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
-    schema: schemas/intelligence/historical_macro/macro_release_event_v1.schema.json
-    record_count: 1658
-    sha256: "d0f143888a6d863b2014fd40e09cde958b835f32940d1f963c8d3451a594875e"
-  consensus_observations:
-    path: data/intelligence/historical_macro/normalized/macro_consensus_observations_v1.jsonl
-    schema: schemas/intelligence/historical_macro/macro_consensus_observation_v1.schema.json
-    record_count: 0
-    sha256: ""
-  revision_records:
-    path: data/intelligence/historical_macro/normalized/macro_revision_records_v1.jsonl
-    schema: schemas/intelligence/historical_macro/macro_revision_record_v1.schema.json
-    record_count: 0
-    sha256: ""
-  sqlite_index:
-    path: data/intelligence/historical_macro/indexes/macro_evidence_v1.sqlite
-    sha256: "2c7a8884ba8b064415c62896f9f43d70d9cec3f306b45c6dadf488420a69a2fa"
+readiness:
+  event_alignment: false
+  strategy_replay: false
+  consensus_replay: false
+  revision_replay: false
 
-coverage:
-  start_date: "2010-01"
-  end_date: "2026-12"
-  event_families:
-    - us_cpi
-    - us_core_cpi
-    - us_nonfarm_payrolls
-    - us_unemployment_rate
-    - us_core_pce
-    - us_fomc_rate_decision
-  official_release_records: 1658
-  non_missing_consensus_events: 0
-  pit_quality_distribution:
-    missing: 1658
+formal_counts:
+  release_events: 0
+  release_observations: 1151
+  consensus_observations: 0
+  revision_records: 0
+  source_snapshots: 39
 
-consumer_notes:
-  - use actual_initial for historical replay
-  - use prior_as_known_then rather than latest revision
-  - consensus_value may be null
-  - missing consensus requires abstention or explicit downgrade
-  - never use retrieved_at as publication time
+quarantine_counts:
+  estimated_calendar: 1
+  estimated_unusable: 640
+  current_latest_values: 0
+  unsupported_fomc: 0
+  unverified_consensus: 120
+  unverified_revisions: 102
+
+integrity:
+  estimated_release_events_in_formal_dataset: 0
+  reconstructed_dates_marked_verified: 0
+  current_latest_marked_initial: 0
+  generic_consensus_urls: 0
+  consensus_without_snapshot: 0
+  revision_without_snapshot: 0
+  fomc_without_statement_snapshot: 0
+  snapshot_hash_mismatches: 0
+  manifest_count_mismatches: 0
+  manifest_hash_mismatches: 0
+
+file_hashes:
+  release_events_sha256: ""
+  observations_sha256: "1486fb982bb32f5e4d0ca4dc91e1be55086c6643caeabb30bded978b12f74042"
+  consensus_sha256: ""
+  revisions_sha256: ""
+  snapshots_sha256: "6f2e173fb7b5659512c835dc368bef6abc827c2138a4c9f827fac242095e8d15"
+  sqlite_sha256: "06d9a8d419fe80e6d46dfa80e74dbf07ac7e0df14144e7cfd9abf63342774d61"
