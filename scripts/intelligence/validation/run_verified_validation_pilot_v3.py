@@ -73,6 +73,7 @@ def run_pipeline(lane_c_sha, output_dir, repo_root, clean=True):
             "decision_cutoff_utc": h.get("decision_cutoff_utc", ""),
             "outcome_start_time_utc": o.get("outcome_start_time_utc", ""),
             "outcome_end_time_utc": o.get("outcome_end_time_utc", ""),
+            "precision_class": h.get("precision_class", "coarse_hourly_alignment"),
             "signal_window_id": h.get("signal_window_id", ""),
             "target_window_id": o.get("target_window_id", ""),
             "dependency_cluster_id": rid,
@@ -226,14 +227,30 @@ def run_pipeline(lane_c_sha, output_dir, repo_root, clean=True):
 
     print("--- Stage 9: Failed experiments ---")
     fe = [
-        {"experiment_id": "exp_probability_calibration", "component": "calibration",
-         "status": "unavailable", "reason_codes": ["no_probability_scores"],
-         "required_evidence": "probability_scores", "available_evidence": "none",
-         "retry_condition": "probability_scores_available_and_min_24_independent_units"},
-        {"experiment_id": "exp_formal_significance_testing", "component": "significance_testing",
-         "status": "unavailable", "reason_codes": ["only_eight_independent_units"],
-         "required_evidence": "min_24_independent_units", "available_evidence": "8",
-         "retry_condition": "min_24_release_units"}]
+        {"experiment_id": "naive_random_row_split", "status": "rejected",
+         "reason_codes": ["violates_release_unit_independence", "pseudoreplication"],
+         "evidence_refs": ["validation:release_unit_is_independence_unit"],
+         "prohibited_claim": "independent_sample_size_greater_than_8"},
+        {"experiment_id": "unclustered_row_bootstrap", "status": "rejected",
+         "reason_codes": ["ignores_cluster_structure", "inflated_precision"],
+         "evidence_refs": ["validation:cluster_bootstrap_multiplicity"],
+         "prohibited_claim": "bootstrap_confidence_intervals_from_32_rows"},
+        {"experiment_id": "probability_claim_without_probability_scores", "status": "rejected",
+         "reason_codes": ["no_probability_scores", "exploratory_confidence_type"],
+         "evidence_refs": ["calibration/calibration_status_v3.json"],
+         "prohibited_claim": "probability_of_correct_direction"},
+        {"experiment_id": "significance_claim_with_insufficient_release_units", "status": "rejected",
+         "reason_codes": ["only_8_independent_units", "min_24_required"],
+         "evidence_refs": ["validation:independent_release_units"],
+         "prohibited_claim": "statistical_significance_of_accuracy"},
+        {"experiment_id": "full_walkforward_claim_on_partial_folds", "status": "rejected",
+         "reason_codes": ["only_4_folds_on_8_units", "expanding_window_not_rolling"],
+         "evidence_refs": ["splits/split_manifest_v3.json"],
+         "prohibited_claim": "stable_walkforward_performance"},
+        {"experiment_id": "causal_claim_from_observational_pilot", "status": "rejected",
+         "reason_codes": ["observational_study", "no_counterfactual", "confounding_by_macro_regime"],
+         "evidence_refs": ["reports/validation_pilot_report_v3.json"],
+         "prohibited_claim": "macro_news_causes_btc_reaction_continuation"}]
     write_jsonl(fe, out / "failed_experiments" / "failed_experiments_v3.jsonl", sort_key="experiment_id")
 
     print("--- Stage 10: SQLite ---")
