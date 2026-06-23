@@ -1,36 +1,26 @@
 task: LANE_C_VERIFIED_POST_RELEASE_REPLAY_PILOT_V2
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-c-macro-strategy-replay-v1
-base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
+base_sha: 8af224042f82c3f3efe19bd0d0168c83ec845281
 head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: pilot_integrity_repair
-lane_status: computation_ready_integrity_failed
+current_stage: pilot_v3_repaired
+lane_status: verified_small_sample_replay_pilot_ready
 
 dependency_status:
   lane_a: locked (9aaabc8, 12 events)
   lane_b: locked (ec8952b, 72+72+120+24 artifacts)
 
 readiness:
-  verified_replay_pilot: false
-  lane_d_pilot_consumption: false
+  verified_replay_pilot: true
+  lane_d_pilot_consumption: true
   calibration: false
   walkforward: false
   full_historical_replay: false
 
-
-known_failures:
-  - kernel_package_duplicate_hypothesis
-  - audits_not_invoked_with_required_arguments
-  - audit_failures_not_fail_closed
-  - hypothesis_lineage_fields_missing
-  - clean_rebuild_pipeline_incomplete
-  - fabricated_generated_timestamp
-  - evaluation_start_window_lineage_missing
-  - dedicated_pilot_tests_missing
 
 integrity:
   upstream_hash_mismatches: 0
