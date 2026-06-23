@@ -196,23 +196,15 @@ def audit(pilot_dir):
     except Exception as e:
         reasons["sqlite_error"] = str(e)
 
-    # Verdict — explicit invariant list
-    invariant_checks = [
-        "missing_artifacts", "producer_sha_mismatch", "producer_hash_mismatch",
-        "producer_record_count_mismatch", "producer_yaml_type_invalid",
-        "directional_row_count", "duplicate_validation_row_id",
-        "missing_precision_class_rows", "independent_release_units",
-        "unknown_release_unit_ids", "decision_cutoff_after_outcome_start",
-        "failed_experiments_count", "failed_experiment_ids_mismatch",
-        "total_test_rows", "walkforward_release_unit_leakage",
-        "bootstrap_min_rows", "bootstrap_max_rows",
-        "bootstrap_multiplicity_not_preserved",
-        "baseline_pairing_mismatch", "baseline_coverage_mismatch",
-        "sqlite_count_mismatch",
-    ]
-    present = [k for k in invariant_checks if k in reasons]
-    reasons["overall_verdict"] = "fail" if present else "pass"
-    reasons["failed_invariants"] = present
+    # Verdict — every key in reasons (except metadata) is a failure
+    metadata_keys = {"overall_verdict", "failed_invariants", "producer_sha",
+                      "directional_rows", "independent_release_units",
+                      "total_test_rows",
+                      "failed_experiment_ids", "bootstrap_min_rows",
+                      "bootstrap_max_rows", "bootstrap_multiplicity_ok"}
+    failed_invariants = sorted(k for k in reasons if k not in metadata_keys)
+    reasons["overall_verdict"] = "fail" if failed_invariants else "pass"
+    reasons["failed_invariants"] = failed_invariants
 
     # Write report
     rp = out / "reports" / "validation_integrity_audit_v3.json"

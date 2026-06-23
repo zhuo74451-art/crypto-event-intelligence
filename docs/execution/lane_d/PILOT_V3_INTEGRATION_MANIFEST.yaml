@@ -79,8 +79,8 @@ outputs:
     record_count: 1
   integrity_audit:
     path: data/intelligence/validation/pilot_v3/reports/validation_integrity_audit_v3.json
-    sha256: da11f1d09e957ccf33a15d2415533c591479ee5413a83efa1d1a5a8c5b84dc1c
-    byte_count: 1046
+    sha256: 5e34f30eee9ab4f4e99d5ebe45eccbae4ed86052e1d8f68b1a0d08a82018d0d6
+    byte_count: 61
     record_count: 1
   bootstrap_summary:
     path: data/intelligence/validation/pilot_v3/bootstrap/cluster_bootstrap_summary_v3.json
