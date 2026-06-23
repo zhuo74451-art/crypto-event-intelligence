@@ -347,6 +347,8 @@ class MacroReleaseEventV1:
     release_time_source_url: str = ""
     release_time_source_snapshot_id: str = ""
     event_alignment_eligible: bool = False
+    release_time_text_anchor: str = ""
+    value_text_anchor: str = ""
 
     # Values
     actual_initial: Optional[float] = None
@@ -389,6 +391,8 @@ class MacroReleaseEventV1:
     current_best_generated_at_utc: str = ""
     first_seen_at_utc: str = ""
     retrieved_at_utc: str = ""
+    parser_version: str = ""
+    value_source_snapshot_id: str = ""
     provider_observation_refs: list[str] = field(default_factory=list)
     data_quality_flags: list[str] = field(default_factory=list)
     provenance_refs: list[str] = field(default_factory=list)
@@ -442,6 +446,7 @@ class MacroReleaseEventV1:
 
 @dataclass
 class MacroReleaseObservationV1:
+    observation_class: str = ""
     """A single provider observation of a macro release.
 
     Multiple observations may correspond to one canonical event.

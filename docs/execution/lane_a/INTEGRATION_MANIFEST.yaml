@@ -1,38 +1,52 @@
 producer_lane: lane_a_historical_macro_evidence
 producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-implementation_head_sha: <final_sha_to_be_filled>
+implementation_head_sha: <fill_after_commit>
 
 readiness:
-  official_release_pilot: true
-  event_alignment: pilot_only
-  strategy_replay: pilot_only
+  official_release_pilot: false
+  event_alignment: blocklist
+  strategy_replay: unavailable
   consensus_replay: false
   revision_replay: false
   full_historical_coverage: false
 
 formal_counts:
-  release_events: 12
-  release_observations: 12
+  release_events: 4
+  release_observations: 4
   consensus_observations: 0
   revision_records: 0
-  source_snapshots: 0
+  source_snapshots: 4
 
 integrity:
-  estimated_release_events: 0
-  reconstructed_dates_marked_verified: 0
-  current_series_marked_initial: 0
-  generic_source_urls: 0
+  exact_value_mismatches: 0
+  events_without_snapshot_reference: 0
   missing_snapshot_files: 0
   snapshot_hash_mismatches: 0
-  missing_text_anchors: 0
-  duplicate_event_ids: 0
-  manifest_count_mismatches: 0
-  manifest_hash_mismatches: 0
+  missing_release_time_anchors: 0
+  missing_value_anchors: 0
+  series_derived_formal_values: 0
+  manifest_placeholders: 1
+
+blocked_cases:
+  - source_url: https://www.bls.gov/news.release/archives/cpi_02142023.htm
+    http_status: 403
+    parser_error: Access Denied - BLS WAF blocks all automated requests
+    missing_fields: [snapshot, event, observation]
+  - source_url: https://www.bls.gov/news.release/archives/cpi_08102023.htm
+    http_status: 403
+    parser_error: BLS WAF blocks all automated requests
+    missing_fields: [snapshot, event, observation]
+  - source_url: https://www.bls.gov/news.release/archives/empsit_02032023.htm
+    http_status: 403
+    parser_error: BLS WAF blocks all automated requests
+    missing_fields: [snapshot, event, observation]
+  - source_url: https://www.bls.gov/news.release/archives/empsit_08042023.htm
+    http_status: 403
+    parser_error: BLS WAF blocks all automated requests
+    missing_fields: [snapshot, event, observation]
 
 file_hashes:
-  release_events_sha256: "a61dc13ca83adb99b05ad5890d8ddc93afcd2eddb6a8c026a5413c79a36e045b"
-  observations_sha256: "46e1a2ffa8e6dc51a22b839d86dff0110a58100c84e1ad139dcf8e8812da0067"
-  consensus_sha256: ""
-  revisions_sha256: ""
-  snapshots_sha256: ""
+  release_events_sha256: "13423c29807b8cd2e745c001a348c9028f16250cc05f1607553b17fc95fd14a3"
+  observations_sha256: "3cbb1d006070350710c427ec39ff894dcba7ec5dc835eef08ba68f62c8656a57"
+  snapshots_sha256: "85a1aa0a1ce74b6c7c02a53ffd5b71036e8a5dbccd8ed750b30b5baa0257f527"
