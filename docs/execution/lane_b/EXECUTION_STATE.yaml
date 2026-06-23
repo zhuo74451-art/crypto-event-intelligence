@@ -1,36 +1,18 @@
-task: OVERNIGHT_LANE_B_HISTORICAL_MARKET_CROSS_ASSET_FACTORY_V1
+task: LANE_B_LANE_A_PRODUCER_RELOCK_AND_CONSUMER_UNBLOCK_V4
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-b-historical-market-cross-asset-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: 2b69017bf7d78e8be8e1b067cbade17d8d6d4742
-
+head_sha: 1ba2bd653e135f10aee91cc10d569a2c9531ed81
 planning_mode_used: false
 autonomous_planning_mode_used: false
-
-current_stage: pilot_v3_structurally_corrected
-completed_stages:
-  - bootstrap
-  - p0_contracts_and_providers
-  - p0_real_minimum_data
-  - p1_continuous_market_data
-  - p1_derivatives_history
-  - p2_event_windows_and_labels
-  - p3_quality_audit
-  - p4_tests_and_docs
-  - pilot_v2_event_alignment
-  - pilot_v3_structurally_corrected
-
-next_exact_action: pilot_v3_complete
-
-last_test_command: python -X utf8 -m pytest tests/intelligence/historical_market/ -q
-last_test_result: 237 passed in 0.5s
-
-known_failures:
-  - Lane A manifest hash mismatch (recorded e3d26291, actual ba93cce3)
-
-blockers: []
-
+current_stage: lane_a_producer_relocked
+lane_status: verified_event_alignment_pilot_ready
 dependency_status:
-  lane_a_macro_events: consumed (12 events, lane_a hash mismatch blocks lane_c)
-
+  lane_a_macro_events: locked
+  lane_a_final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
+  lane_a_artifact_hash_match: true
+lane_c_pilot_consumption_allowed: true
+known_failures: []
+blockers: []
+next_exact_action: await_lane_c_pilot_consumption_instruction
 uncommitted_files: []

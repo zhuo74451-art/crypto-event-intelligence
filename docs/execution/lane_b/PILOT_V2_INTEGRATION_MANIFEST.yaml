@@ -10,3 +10,5 @@ outputs: {"event_asset_windows": 24, "reaction_labels": 72, "cross_asset_context
 alignment: {"frequency": "1h", "horizons": ["1h", "4h", "24h"], "max_alignment_error_minutes": 60, "shared_release_groups": ["cpi_core_cpi_x2", "nfp_unemployment_x2"]}
 integrity: {"future_leakage_violations": 0, "temporary_event_ids": 0, "duplicate_reaction_label_ids": 0, "one_minute_precision_claims": 0, "five_minute_precision_claims": 0, "cross_asset_immediate_reaction_claims": 0, "manifest_placeholders": 0}
 
+
+superseded_by: PILOT_V3_INTEGRATION_MANIFEST.yaml

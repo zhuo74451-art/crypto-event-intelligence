@@ -1,0 +1,16 @@
+# Lane A Producer Lock V4
+producer_lane: lane_a_historical_macro_evidence
+producer_branch: feat/overnight-lane-a-historical-macro-evidence-v1
+producer_final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
+producer_implementation_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
+manifest_path: docs/execution/lane_a/INTEGRATION_MANIFEST.yaml
+manifest_bytes_sha256: c1aeac8a1c0b21229ba087d03e792659c0ba17c324a526062d99dd05a6e6d167
+artifact_path: data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
+manifest_recorded_artifact_sha256: ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c
+actual_git_object_artifact_sha256: ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c
+copied_artifact_sha256: ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c
+manifest_artifact_hash_match: True
+source_and_copy_equal: True
+record_count: 12
+producer_lock_status: locked
+locked_at_utc: 2026-06-23T06:54:09Z
