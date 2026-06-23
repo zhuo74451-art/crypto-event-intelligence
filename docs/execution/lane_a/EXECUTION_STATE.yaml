@@ -1,34 +1,30 @@
-task: LANE_A_OFFICIAL_SOURCE_FORENSIC_REBUILD_V3
+task: LANE_A_OFFICIAL_RELEASE_EVIDENCE_PILOT_V4
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: 4568bb46e22ea931ddec87aa5b05168751c6b942
+forensic_cleanup_sha: 3572fa5ff43798630e8e520211283ee5490a8a63
+head_sha: 3572fa5ff43798630e8e520211283ee5490a8a63
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: official_source_forensic_rebuild_complete
-lane_status: evidence_integrity_failed
-downstream_consumption_allowed: false
+current_stage: official_release_pilot_complete
+lane_status: official_release_pilot_ready_for_manual_review
+downstream_consumption_allowed: pilot_only
 
 completed_stages:
   - contracts_and_schemas
-  - provider_framework
-  - legacy_migration_v1
   - forensic_cleanup_v3
-  - forensic_integrity_tests
-  - honest_manifest_rebuild
+  - official_release_pilot_build
 
-known_failures:
-  - estimated release calendar marked as verified (quarantined)
-  - reconstructed dates marked event-alignment eligible (quarantined)
-  - hardcoded consensus without exact source artifacts (quarantined)
-  - current time-series values treated as historical initial values (quarantined)
-  - stale integration manifest (rebuilding)
-  - unsupported FOMC decisions without statement snapshots (quarantined)
-  - revision records without official snapshot proof (quarantined)
-
-next_exact_action: commit forensic cleanup and push
 last_test_command: pytest tests/intelligence/historical_macro/ -q
 last_test_result: 74 passed, 0 failed
-blockers: []
+next_exact_action: commit pilot data and push
+blockers:
+  - BLS.gov blocks direct HTTP access (403). Using cached BLS API responses as source.
+  - BEA PDF URLs returned 404. Using cached BEA news release HTML page.
+  - FOMC statements require fraction-to-decimal parsing (4-1/2 -> 4.50).
+  - CPI/Core CPI values derived from BLS API index levels (derived_from_verified_release_table).
+  - PCE values from BEA page parser need manual verification.
+  - Unemployment rate from FRED cached CSV (BLS API rate-limited).
+  - All 12 events pending owner manual review before consumption.

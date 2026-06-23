@@ -4,42 +4,35 @@ base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
 implementation_head_sha: <final_sha_to_be_filled>
 
 readiness:
-  event_alignment: false
-  strategy_replay: false
+  official_release_pilot: true
+  event_alignment: pilot_only
+  strategy_replay: pilot_only
   consensus_replay: false
   revision_replay: false
+  full_historical_coverage: false
 
 formal_counts:
-  release_events: 0
-  release_observations: 1151
+  release_events: 12
+  release_observations: 12
   consensus_observations: 0
   revision_records: 0
-  source_snapshots: 39
-
-quarantine_counts:
-  estimated_calendar: 1
-  estimated_unusable: 640
-  current_latest_values: 0
-  unsupported_fomc: 0
-  unverified_consensus: 120
-  unverified_revisions: 102
+  source_snapshots: 0
 
 integrity:
-  estimated_release_events_in_formal_dataset: 0
+  estimated_release_events: 0
   reconstructed_dates_marked_verified: 0
-  current_latest_marked_initial: 0
-  generic_consensus_urls: 0
-  consensus_without_snapshot: 0
-  revision_without_snapshot: 0
-  fomc_without_statement_snapshot: 0
+  current_series_marked_initial: 0
+  generic_source_urls: 0
+  missing_snapshot_files: 0
   snapshot_hash_mismatches: 0
+  missing_text_anchors: 0
+  duplicate_event_ids: 0
   manifest_count_mismatches: 0
   manifest_hash_mismatches: 0
 
 file_hashes:
-  release_events_sha256: ""
-  observations_sha256: "1486fb982bb32f5e4d0ca4dc91e1be55086c6643caeabb30bded978b12f74042"
+  release_events_sha256: "a61dc13ca83adb99b05ad5890d8ddc93afcd2eddb6a8c026a5413c79a36e045b"
+  observations_sha256: "46e1a2ffa8e6dc51a22b839d86dff0110a58100c84e1ad139dcf8e8812da0067"
   consensus_sha256: ""
   revisions_sha256: ""
-  snapshots_sha256: "6f2e173fb7b5659512c835dc368bef6abc827c2138a4c9f827fac242095e8d15"
-  sqlite_sha256: "06d9a8d419fe80e6d46dfa80e74dbf07ac7e0df14144e7cfd9abf63342774d61"
+  snapshots_sha256: ""
