@@ -1,65 +1,36 @@
 producer_lane: lane_c_macro_strategy_replay
 producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
-producer_head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+producer_head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
+base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
 
 inputs:
   lane_a:
-    consumed: false
-    producer_sha: null
-    artifact_hashes: {}
+    consumed: true
+    producer_final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
+    event_count: 12
+    locked: true
   lane_b:
-    consumed: false
-    producer_sha: null
-    artifact_hashes: {}
+    consumed: true
+    producer_final_sha: ec8952b600ffceebeabcb50ac11e3b182e76c5e2
+    locked: true
+    artifact_counts:
+      horizon_windows: 72
+      reaction_labels: 72
+      cross_asset_context: 120
+      funding_context: 24
 
-contracts:
-  strategy_definitions:
-    path: null
-    schema: null
-    record_count: 0
-    sha256: null
-  replay_results:
-    path: null
-    schema: null
-    record_count: 0
-    sha256: null
-  baseline_results:
-    path: null
-    schema: null
-    record_count: 0
-    sha256: null
-  hypotheses:
-    path: null
-    schema: null
-    record_count: 0
-    sha256: null
-  abstentions:
-    path: null
-    schema: null
-    record_count: 0
-    sha256: null
-  kernel_packages:
-    path: null
-    schema: null
-    record_count: 0
-    sha256: null
-
-coverage:
-  events: 0
-  event_families: 0
-  strategy_instances: 0
-  hypotheses: 0
-  abstentions: 0
-  kernel_packages: 0
-  baseline_results: 0
-  date_start: null
-  date_end: null
+readiness:
+  verified_replay_pilot: true
+  lane_d_pilot_consumption: true
+  calibration: false
+  walkforward: false
+  full_historical_replay: false
 
 consumer_notes:
-  - replay outputs are deterministic historical strategy states
-  - evaluation labels must remain separate from strategy inputs
-  - probability fields are unavailable until calibration artifacts exist
-  - abstention records must remain in validation datasets
-  - exploratory vertical strategies must not be mixed with macro maturity
-  - kernel packages preserve multi-horizon and transmission conflicts
+  - All macro strategies abstained (no consensus in pilot data)
+  - Post-release continuation strategy is exploratory pilot
+  - Evaluation uses incremental returns from 1h endpoint
+  - No probability or calibration claims
+  - No causal inference supported
+  - Baseline evaluations include always_bullish, always_bearish,
+    reverse_first_reaction, always_abstain

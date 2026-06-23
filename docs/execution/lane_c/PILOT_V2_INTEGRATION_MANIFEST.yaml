@@ -1,0 +1,81 @@
+producer_lane: lane_c_macro_strategy_replay
+producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
+producer_head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
+base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
+lane_status: verified_small_sample_replay_pilot_ready
+inputs:
+  lane_a:
+    final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
+    locked: true
+    events: 12
+  lane_b:
+    final_sha: ec8952b600ffceebeabcb50ac11e3b182e76c5e2
+    locked: true
+    horizon_windows: 72
+    reaction_labels: 72
+    cross_asset_context: 120
+    funding_context: 24
+readiness:
+  verified_replay_pilot: true
+  lane_d_pilot_consumption: true
+  calibration: false
+  walkforward: false
+  full_historical_replay: false
+  causal_inference_supported: false
+  probability_supported: false
+outputs:
+  producer_locks:
+    path: data/intelligence/strategy_replay/pilot_v2/upstream/PRODUCER_LOCKS.yaml
+    sha256: e0e67c4841b04fb921998511e0ae685a300d7699986161348093a5bd94e01bc4
+    record_count: 0
+  release_units:
+    path: data/intelligence/strategy_replay/pilot_v2/release_units_v1.jsonl
+    sha256: 36419dc27320f552fd9f84d620658ea3b2f64b580855c01fa64f1aaa5d49b8c1
+    record_count: 8
+  decision_inputs:
+    path: data/intelligence/strategy_replay/pilot_v2/decision_inputs_v1.jsonl
+    sha256: f6fc27e2de082435bbdb2d0c7deb7ab1e189e3e4848a70136af528311368d100
+    record_count: 16
+  macro_abstentions:
+    path: data/intelligence/strategy_replay/pilot_v2/macro_abstention_records_v1.jsonl
+    sha256: c66c4ab7ea1390a580553cadc9f4ff67b2c1fb7437bda7fd9091df0db8a4284f
+    record_count: 12
+  replay_results:
+    path: data/intelligence/strategy_replay/pilot_v2/strategy_replay_results_v2.jsonl
+    sha256: 5440f17e856f5506f81e76b982cd660a24720a79124b7dfaf3afd05396ee6e49
+    record_count: 28
+  hypotheses:
+    path: data/intelligence/strategy_replay/pilot_v2/strategy_hypotheses_v2.jsonl
+    sha256: 05be66994668e4bf27bf17c17335b4ef8f2e5cdae1f1b74e1490a0555b7005cb
+    record_count: 32
+  kernel_packages:
+    path: data/intelligence/strategy_replay/pilot_v2/kernel_input_packages_v2.jsonl
+    sha256: f0d7337db983bbeeee509e9ddaaab7674747a7156c3e49fbcaeddee8297e5019
+    record_count: 16
+  evaluation_outcomes:
+    path: data/intelligence/strategy_replay/pilot_v2/evaluation_outcomes_v1.jsonl
+    sha256: 1993eaad57c3bf3562b7d0429186d9ffcae946cc16e7c9d2f940ce133d63999c
+    record_count: 32
+  strategy_evaluations:
+    path: data/intelligence/strategy_replay/pilot_v2/strategy_evaluations_v1.jsonl
+    sha256: 689066ff141ee8e0bf50375f2c90206d9500fdc8c26af3a36eb087cfdd1d6a5b
+    record_count: 32
+  baseline_evaluations:
+    path: data/intelligence/strategy_replay/pilot_v2/baseline_evaluations_v1.jsonl
+    sha256: 6fdb8ad8f156818a3c1d4f158c71f8ae90b15a312fd77ad09f707c03039c7c01
+    record_count: 128
+  sqlite_index:
+    path: data/intelligence/strategy_replay/indexes/strategy_replay_pilot_v2.sqlite
+    sha256: 0f7537c4d50a777574ef11bdd59fcf7a889f5eb60e138c3d1d295310f53d1f43
+counts:
+  canonical_macro_events: 12
+  unique_release_units: 8
+  decision_units: 16
+  macro_abstention_records: 12
+  macro_directional_hypotheses: 0
+  reaction_results: 28
+  reaction_hypotheses: 32
+  evaluation_outcomes: 32
+  strategy_evaluations: 32
+  baseline_evaluations: 128
+  kernel_packages: 16

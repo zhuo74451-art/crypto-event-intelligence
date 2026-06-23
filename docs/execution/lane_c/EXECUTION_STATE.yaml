@@ -1,22 +1,45 @@
-task: OVERNIGHT_LANE_C_MACRO_STRATEGY_REPLAY_VERTICAL_EXPANSION_V1
+task: LANE_C_VERIFIED_POST_RELEASE_REPLAY_PILOT_V2
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-c-macro-strategy-replay-v1
-base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-head_sha: ecb7d1d759c13bd5072be26ac10a636ac5626944
+base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
+head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: awaiting_upstream_data
-completed_stages: [bootstrap, p0_contracts, p1_strategies, tests, commit_push]
-next_exact_action: commit and push
-last_test_command:
-last_test_result:
-known_failures: []
-blockers: []
+current_stage: pilot_v2_verified
+lane_status: verified_small_sample_replay_pilot_ready
 
 dependency_status:
-  lane_a: available_1658_events_no_consensus
-  lane_b: branch_not_found
+  lane_a: locked (9aaabc8, 12 events)
+  lane_b: locked (ec8952b, 72+72+120+24 artifacts)
 
-uncommitted_files: []
+readiness:
+  verified_replay_pilot: true
+  lane_d_pilot_consumption: true
+  calibration: false
+  walkforward: false
+  full_historical_replay: false
+
+integrity:
+  upstream_hash_mismatches: 0
+  shared_release_market_conflicts: 0
+  macro_directional_hypotheses: 0
+  future_horizon_reads_during_decision: 0
+  outcomes_using_pre_event_baseline: 0
+  hypotheses_with_probability: 0
+  file_sqlite_count_mismatches: 0
+  duplicate_ids: 0
+
+counts:
+  canonical_macro_events: 12
+  unique_release_units: 8
+  decision_units: 16
+  macro_abstention_records: 12
+  macro_directional_hypotheses: 0
+  reaction_results: 28
+  reaction_hypotheses: 32
+  evaluation_outcomes: 32
+  strategy_evaluations: 32
+  baseline_evaluations: 128
+  kernel_packages: 16
