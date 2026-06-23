@@ -3,7 +3,7 @@ repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
 required_start_sha: be8137266e7403df6845c7d539ee29e0eac4082d
 artifact_implementation_sha: 3dc73d61848d2c1b20c11160c12057109a042f1d
-head_sha: 3dc73d61848d2c1b20c11160c12057109a042f1d
+artifact_head_sha: 3dc73d61848d2c1b20c11160c12057109a042f1d
 
 planning_mode_used: false
 autonomous_planning_mode_used: false

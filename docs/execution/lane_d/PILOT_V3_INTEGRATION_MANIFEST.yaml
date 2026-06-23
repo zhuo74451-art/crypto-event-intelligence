@@ -92,9 +92,6 @@ outputs:
     sha256: eadb07f3974bf4a55c02c9f44297badbd145f6100a6ed43da316829471fd2ac9
     byte_count: 53248
     record_count: 1
-  sqlite_index:
-    path: data/intelligence/validation/pilot_v3/indexes/validation_pilot_v3.sqlite
-    sha256: eadb07f3974bf4a55c02c9f44297badbd145f6100a6ed43da316829471fd2ac9
     table_row_counts:
       producer_locks: table_not_found
       directional_validation: 32
@@ -104,7 +101,6 @@ outputs:
       baseline_comparisons: 4
       leave_one_unit_out: 8
       failed_experiments: 6
-
 readiness:
   validation_audit_pilot: true
   lane_e_pilot_consumption: true

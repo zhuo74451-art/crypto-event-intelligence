@@ -1,4 +1,4 @@
-import subprocess, sys, pathlib, shutil, tempfile, yaml
+import subprocess, sys, pathlib, shutil, tempfile, json
 
 SD = pathlib.Path(__file__).parents[3] / "scripts" / "intelligence" / "validation"
 VD3 = pathlib.Path(__file__).parents[3] / "data" / "intelligence" / "validation" / "pilot_v3"
@@ -7,11 +7,17 @@ VD3 = pathlib.Path(__file__).parents[3] / "data" / "intelligence" / "validation"
 def test_producer_count_fail():
     with tempfile.TemporaryDirectory() as tmp:
         d = pathlib.Path(tmp) / "pilot_v3"
-        shutil.copytree(str(VD3), str(d))
+        shutil.copytree(str(VD3), str(d), ignore=shutil.ignore_patterns("validation_pilot_v3.sqlite"))
+
+        import yaml
         lock = d / "upstream" / "LANE_C_PRODUCER_LOCK.yaml"
         data = yaml.safe_load(lock.read_text("utf-8"))
         data["artifacts"]["release_units_v1.jsonl"]["record_count"] = 99
         lock.write_text(yaml.dump(data, default_flow_style=False), encoding="utf-8")
+
         r = subprocess.run([sys.executable, "-X", "utf8", str(SD / "audit_validation_pilot_v3.py"),
                             "--pilot-dir", str(d)], capture_output=True, text=True)
-        assert r.returncode != 0, "Should fail on producer count mismatch"
+        output = r.stdout; result = json.loads(output.split(chr(10)+chr(10))[0]) if output.strip().startswith("{") else {}
+        assert r.returncode != 0, f"Expected non-zero exit, got {r.returncode}"
+        assert result.get("overall_verdict") == "fail", f"Expected verdict=fail, got {result.get('overall_verdict')}"
+        assert "producer_record_count_mismatch" in result.get("failed_invariants", []) or "producer_record_count_mismatch" in result,             f"Expected reason code 'producer_record_count_mismatch' not found in {list(result.keys())}"

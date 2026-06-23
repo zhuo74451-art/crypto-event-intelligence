@@ -1,33 +1,4 @@
 {
-  "missing_artifacts": [],
-  "producer_sha": "72984d8b0fe17dc188239c3c050e082c180853b4",
-  "producer_sha_fail": 0,
-  "producer_hash_fail": 0,
-  "producer_count_fail": 0,
-  "producer_yaml_type_fail": 0,
-  "directional_rows": 32,
-  "duplicate_row_ids": 0,
-  "rows_missing_precision_class": 0,
-  "independent_release_units": 8,
-  "unknown_release_unit_ids": 0,
-  "decision_cutoff_after_outcome_start": 0,
-  "failed_experiments_count": 6,
-  "failed_experiment_ids": [
-    "causal_claim_from_observational_pilot",
-    "full_walkforward_claim_on_partial_folds",
-    "naive_random_row_split",
-    "probability_claim_without_probability_scores",
-    "significance_claim_with_insufficient_release_units",
-    "unclustered_row_bootstrap"
-  ],
-  "release_unit_split_fail": 0,
-  "total_test_rows": 16,
-  "bootstrap_min_rows": 32,
-  "bootstrap_max_rows": 32,
-  "bootstrap_multiplicity_ok": true,
-  "baseline_pair_fail": 0,
-  "baseline_coverage_fail": 0,
-  "sqlite_fail": 0,
   "overall_verdict": "pass",
-  "serious_keys": []
+  "failed_invariants": []
 }
