@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/intelligence/historical_market/market_reaction_label_v1.schema.json",
+  "title": "MarketReactionLabelV1",
+  "description": "Multi-horizon market reaction label for an event.",
+  "type": "object",
+  "required": [
+    "label_id", "event_id", "instrument_id", "event_time_utc",
+    "label_availability", "data_quality", "calculation_version"
+  ],
+  "properties": {
+    "label_id": {"type": "string", "pattern": "^[a-f0-9]{24}$"},
+    "event_id": {"type": "string"},
+    "instrument_id": {"type": "string"},
+    "event_time_utc": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "return_1m": {"type": "number"},
+    "return_5m": {"type": "number"},
+    "return_15m": {"type": "number"},
+    "return_30m": {"type": "number"},
+    "return_1h": {"type": "number"},
+    "return_4h": {"type": "number"},
+    "return_1d": {"type": "number"},
+    "realized_vol_pre_1h": {"type": "number", "minimum": 0},
+    "realized_vol_post_1h": {"type": "number", "minimum": 0},
+    "volume_zscore": {"type": "number"},
+    "max_favorable_excursion_1h": {"type": "number"},
+    "max_adverse_excursion_1h": {"type": "number"},
+    "funding_change_1h": {"type": "number"},
+    "open_interest_change_1h": {"type": "number"},
+    "basis_change_1h": {"type": "number"},
+    "direction_5m": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+    "direction_1h": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+    "direction_1d": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+    "label_availability": {"type": "string", "enum": ["full", "partial", "minimal", "missing"]},
+    "data_quality": {"type": "string"},
+    "quality_flags": {"type": "array", "items": {"type": "string"}},
+    "calculation_version": {"type": "string"}
+  }
+}

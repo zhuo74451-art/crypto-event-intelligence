@@ -1,25 +1,9 @@
-# Local secrets must never be committed or copied into docs/results.
-config/local_secrets.ps1
-config/*.local.ps1
-.env
-.env.*
-
-# Keys & certs
-*.key
-*.pem
-*.p12
-*.pfx
-
-# Runtime noise
-__pycache__/
+# Lane B — Historical Market Data (generated/cache only)
+data/intelligence/historical_market/cache/**
+data/intelligence/historical_market/raw/**
+data/intelligence/historical_market/quarantine/**
+data/intelligence/historical_market/indexes/*.sqlite
 *.pyc
+__pycache__/
+.reasonix/
 .pytest_cache/
-.DS_Store
-*.log
-
-# IDE
-.vscode/settings.json
-.idea/
-results/
-data/signal_registry.json*
-data/signal_registry*.json

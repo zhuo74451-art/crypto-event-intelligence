@@ -1,0 +1,73 @@
+producer_lane: lane_b_historical_market_cross_asset
+producer_branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+producer_head_sha: CHANGE_ME
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+inputs:
+  lane_a_macro_events:
+    consumed: false
+    producer_branch: null
+    producer_sha: null
+    artifact_path: null
+    artifact_sha256: null
+    pending_reason: Lane A not yet available; using 33 temporary real event samples
+contracts:
+  market_bars:
+    path: data/intelligence/historical_market/normalized/market_bars_v1.jsonl.gz
+    schema: schemas/intelligence/historical_market/market_bar_v1.schema.json
+    record_count: 163276
+    sha256: 80e260afc3ead74a8ee71023ff394c938c96c7fcb818471cfb628a862bebda1e
+  derivative_snapshots:
+    path: data/intelligence/historical_market/normalized/derivative_snapshots_v1.jsonl.gz
+    schema: schemas/intelligence/historical_market/derivative_snapshot_v1.schema.json
+    record_count: 14634
+    sha256: bb6af58f8c0dfb935d83bd28f9442a3bd1cefd35c924a6cbce7396b8b4cf504c
+  reaction_labels:
+    path: data/intelligence/historical_market/event_windows/market_reaction_labels_v1.jsonl
+    schema: schemas/intelligence/historical_market/market_reaction_label_v1.schema.json
+    record_count: 264
+    sha256: 825cb1af2089584d0f6eb292bfb6ed78e4087ddc9c36c5f6e1da39d00aa05e17
+  cross_asset_matrix:
+    path: data/intelligence/historical_market/event_windows/event_cross_asset_matrix_v1.csv
+    record_count: 0
+    sha256: null
+    notes: Not yet generated - needs Lane A events
+  sqlite_index:
+    path: data/intelligence/historical_market/indexes/historical_market_v1.sqlite
+    sha256: see_git_lfs_placeholder
+coverage:
+  instruments:
+  - binance_spot_btcusdt
+  - binance_spot_ethusdt
+  - binance_futures_btcusdt_perp
+  - binance_futures_ethusdt_perp
+  - yahoo_sp500_index
+  - yahoo_nasdaq_composite
+  - yahoo_gold_futures
+  - yahoo_us_dollar_index
+  - yahoo_us10y_yield
+  - yahoo_us5y_yield
+  - yahoo_us30y_yield
+  - yahoo_vix_index
+  - yahoo_silver_futures
+  - yahoo_wti_crude
+  date_start: '2014-12-31'
+  date_end: '2026-06-23'
+  intervals:
+  - 1h
+  - 1d
+  - 8h
+  event_windows: 264
+  data_quality_distribution:
+    exact_archived_market_data: 134438
+    exact_public_api_retrieval: 43472
+consumer_notes:
+- market labels describe observed movement, not strategy direction
+- proxy instruments must remain marked as proxy
+- closed-market missing values must not be forward-filled
+- exact and lower-frequency observations must not be mixed silently
+- unavailable derivatives fields remain null
+- event_time must come from the macro evidence producer
+- FRED not available (network blocked); Yahoo Finance yields used as proxies
+- Cross-asset matrix CSV not yet generated - needs Lane A events
+- Treasury yields via ^TNX/^FVX/^TYX are proxies for FRED DGS series
+- WTI negative prices (April 2020) are historically accurate, not errors

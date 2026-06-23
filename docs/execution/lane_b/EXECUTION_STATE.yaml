@@ -1,0 +1,35 @@
+task: OVERNIGHT_LANE_B_HISTORICAL_MARKET_CROSS_ASSET_FACTORY_V1
+repository: zhuo74451-art/crypto-event-intelligence
+branch: feat/overnight-lane-b-historical-market-cross-asset-v1
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+head_sha: CHANGE_ME
+
+planning_mode_used: false
+autonomous_planning_mode_used: false
+
+current_stage: finalization
+completed_stages:
+  - bootstrap
+  - p0_contracts_and_providers
+  - p0_real_minimum_data
+  - p1_continuous_market_data
+  - p1_derivatives_history
+  - p2_event_windows_and_labels
+  - p3_quality_audit
+  - p4_tests_and_docs
+
+next_exact_action: commit and push
+
+last_test_command: python -X utf8 -m pytest tests/intelligence/historical_market/ -q
+last_test_result: 120 passed in 0.22s
+
+known_failures:
+  - 3 WTI negative price bars (April 2020 oil crash - historically accurate)
+  - 6028 interval gaps (expected for daily cross-asset data with weekends/holidays)
+
+blockers: []
+
+dependency_status:
+  lane_a_macro_events: pending (using 33 temporary real event samples)
+
+uncommitted_files: []

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/intelligence/historical_market/source_snapshot_v1.schema.json",
+  "title": "SourceSnapshotV1",
+  "description": "Provenance record for a data retrieval operation.",
+  "type": "object",
+  "required": [
+    "source_snapshot_id", "source_provider", "url", "retrieved_at_utc",
+    "source_data_type", "success"
+  ],
+  "properties": {
+    "source_snapshot_id": {"type": "string", "pattern": "^[a-f0-9]{24}$"},
+    "source_provider": {"type": "string"},
+    "url": {"type": "string"},
+    "retrieved_at_utc": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "source_data_type": {"type": "string"},
+    "success": {"type": "boolean"},
+    "error_message": {"type": "string"},
+    "byte_size": {"type": "integer", "minimum": 0},
+    "content_hash": {"type": "string"},
+    "record_count": {"type": "integer", "minimum": 0},
+    "headers_sent": {"type": "object", "additionalProperties": {"type": "string"}}
+  }
+}

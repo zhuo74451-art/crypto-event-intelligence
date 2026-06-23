@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhuo74451-art/crypto-event-intelligence/schemas/intelligence/historical_market/instrument_registry_v1.schema.json",
+  "title": "InstrumentRegistryV1",
+  "description": "Registry entry for a market instrument.",
+  "type": "object",
+  "required": [
+    "instrument_id", "canonical_name", "symbol", "venue", "asset_class", "instrument_type", "currency",
+    "exact_or_proxy", "valid_from"
+  ],
+  "properties": {
+    "instrument_id": {"type": "string"},
+    "canonical_name": {"type": "string"},
+    "symbol": {"type": "string"},
+    "venue": {"type": "string"},
+    "asset_class": {"type": "string"},
+    "instrument_type": {"type": "string"},
+    "currency": {"type": "string"},
+    "timezone": {"type": "string"},
+    "trading_hours": {"type": "string"},
+    "calendar": {"type": "string"},
+    "exact_or_proxy": {"type": "string", "enum": ["exact", "proxy"]},
+    "proxy_for": {"type": "string"},
+    "valid_from": {"type": "string", "format": "date"},
+    "valid_to": {"type": "string", "format": "date"},
+    "provider_symbols": {"type": "object", "additionalProperties": {"type": "string"}},
+    "notes": {"type": "string"}
+  }
+}
