@@ -23,3 +23,29 @@ __pycache__/
 results/
 data/signal_registry.json*
 data/signal_registry*.json
+
+# Lane D — validation artifacts
+data/intelligence/validation/datasets/
+data/intelligence/validation/splits/
+data/intelligence/validation/folds/
+data/intelligence/validation/evaluations/
+data/intelligence/validation/baselines/
+data/intelligence/validation/calibration/
+data/intelligence/validation/bootstrap/
+data/intelligence/validation/multiple_testing/
+data/intelligence/validation/drift/
+data/intelligence/validation/abstention/
+data/intelligence/validation/failed_experiments/
+data/intelligence/validation/reports/
+data/intelligence/validation/cache/
+data/intelligence/validation/quarantine/
+data/intelligence/validation/indexes/
+data/intelligence/validation/*.sqlite
+data/intelligence/validation/*.db
+data/intelligence/validation/configs/*.json
+
+# Lane D — intermediate and large files
+**/validation/**/*.csv
+**/validation/**/*.parquet
+**/validation/**/temp_*
+.reasonix/

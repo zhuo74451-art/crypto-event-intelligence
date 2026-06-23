@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ValidationDatasetV1",
+  "type": "object",
+  "properties": {
+    "dataset_id": {
+      "type": "string"
+    },
+    "dataset_version": {
+      "type": "string"
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "producer_shas": {
+      "type": "object"
+    },
+    "event_count": {
+      "type": "integer"
+    },
+    "event_families": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "date_start": {
+      "type": "string"
+    },
+    "date_end": {
+      "type": "string"
+    },
+    "feature_cutoff_policy": {
+      "type": "string"
+    },
+    "label_availability_policy": {
+      "type": "string"
+    },
+    "point_in_time_policy": {
+      "type": "string"
+    },
+    "revision_policy": {
+      "type": "string"
+    },
+    "records_path": {
+      "type": "string"
+    },
+    "records_sha256": {
+      "type": "string"
+    },
+    "schema_path": {
+      "type": "string"
+    },
+    "quality_distribution": {
+      "type": "object"
+    },
+    "missingness_distribution": {
+      "type": "object"
+    },
+    "abstention_count": {
+      "type": "integer"
+    },
+    "quarantined_count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "dataset_id",
+    "event_count",
+    "date_start",
+    "date_end"
+  ]
+}

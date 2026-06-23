@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CalibrationArtifactV1",
+  "type": "object",
+  "properties": {
+    "calibration_artifact_id": {
+      "type": "string"
+    },
+    "strategy_id": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "brier_score": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "expected_calibration_error": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "sample_count": {
+      "type": "integer"
+    },
+    "minimum_sample_requirement": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "calibration_artifact_id",
+    "strategy_id"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BaselineEvaluationV1",
+  "type": "object",
+  "properties": {
+    "evaluation_id": {
+      "type": "string"
+    },
+    "baseline_id": {
+      "type": "string"
+    },
+    "baseline_name": {
+      "type": "string"
+    },
+    "coverage": {
+      "type": "number"
+    },
+    "abstention_rate": {
+      "type": "number"
+    },
+    "directional_accuracy": {
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "evaluation_id",
+    "baseline_id"
+  ]
+}

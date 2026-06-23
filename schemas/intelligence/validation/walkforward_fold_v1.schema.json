@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WalkforwardFoldV1",
+  "type": "object",
+  "properties": {
+    "fold_id": {
+      "type": "string"
+    },
+    "fold_index": {
+      "type": "integer"
+    },
+    "train_start": {
+      "type": "string"
+    },
+    "train_end": {
+      "type": "string"
+    },
+    "test_start": {
+      "type": "string"
+    },
+    "test_end": {
+      "type": "string"
+    },
+    "train_count": {
+      "type": "integer"
+    },
+    "test_count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "fold_id",
+    "fold_index"
+  ]
+}

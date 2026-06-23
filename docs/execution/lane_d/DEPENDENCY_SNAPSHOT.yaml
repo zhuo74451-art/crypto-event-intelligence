@@ -1,0 +1,33 @@
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+
+lane_a_available: false
+lane_b_available: false
+lane_c_available: false
+lane_c_branch: feat/overnight-lane-c-macro-strategy-replay-v1
+
+local_contracts:
+  - market_radar/intelligence/validation/__init__.py
+  - market_radar/intelligence/validation/contracts.py
+  - market_radar/intelligence/validation/dataset_builder.py
+  - market_radar/intelligence/validation/dependency_graph.py
+  - market_radar/intelligence/validation/splitter.py
+  - market_radar/intelligence/validation/walkforward.py
+  - market_radar/intelligence/validation/baselines.py
+  - market_radar/intelligence/validation/bootstrap.py
+  - market_radar/intelligence/validation/multiple_testing.py
+  - market_radar/intelligence/validation/calibration.py
+  - market_radar/intelligence/validation/abstention_analysis.py
+  - market_radar/intelligence/validation/drift_analysis.py
+  - market_radar/intelligence/validation/leakage_audit.py
+
+pipeline_scripts:
+  - scripts/intelligence/validation/run_lane_d_pipeline.py
+
+tests:
+  - tests/intelligence/validation/test_contracts.py
+  - tests/intelligence/validation/test_chronological_split.py
+  - tests/intelligence/validation/test_components.py
+
+test_count: 30
+test_passing: 30

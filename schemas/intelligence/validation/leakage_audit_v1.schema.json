@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LeakageAuditV1",
+  "type": "object",
+  "properties": {
+    "audit_id": {
+      "type": "string"
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "checks": {
+      "type": "object"
+    },
+    "violations": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "audit_id",
+    "passed"
+  ]
+}

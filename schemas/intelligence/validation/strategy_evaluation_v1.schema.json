@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StrategyEvaluationV1",
+  "type": "object",
+  "properties": {
+    "evaluation_id": {
+      "type": "string"
+    },
+    "strategy_id": {
+      "type": "string"
+    },
+    "coverage": {
+      "type": "number"
+    },
+    "abstention_rate": {
+      "type": "number"
+    },
+    "directional_accuracy": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "calibration_status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "evaluation_id",
+    "strategy_id"
+  ]
+}

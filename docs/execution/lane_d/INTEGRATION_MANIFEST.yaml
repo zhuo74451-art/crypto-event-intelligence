@@ -1,0 +1,66 @@
+producer_lane: lane_d_validation_walkforward_calibration
+producer_branch: feat/overnight-lane-d-validation-walkforward-calibration-v1
+producer_head_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
+
+inputs:
+  lane_a:
+    consumed: false
+    producer_sha: ""
+    artifact_hashes: {}
+  lane_b:
+    consumed: false
+    producer_sha: ""
+    artifact_hashes: {}
+  lane_c:
+    consumed: false
+    producer_sha: ""
+    artifact_hashes: {}
+
+contracts:
+  validation_dataset:
+    path: data/intelligence/validation/datasets/validation_dataset_v1.jsonl
+    schema: schemas/intelligence/validation/validation_dataset_v1.schema.json
+    record_count: 0
+    sha256: ""
+  split_manifest:
+    path: data/intelligence/validation/splits/split_manifest_v1.json
+    schema: schemas/intelligence/validation/split_manifest_v1.schema.json
+    sha256: ""
+  strategy_evaluations:
+    path: data/intelligence/validation/evaluations/strategy_evaluations_v1.jsonl
+    schema: schemas/intelligence/validation/strategy_evaluation_v1.schema.json
+    record_count: 0
+    sha256: ""
+  baseline_evaluations:
+    path: data/intelligence/validation/baselines/baseline_evaluations_v1.jsonl
+    schema: schemas/intelligence/validation/baseline_evaluation_v1.schema.json
+    record_count: 0
+    sha256: ""
+  calibration_artifacts:
+    path: data/intelligence/validation/calibration/calibration_artifacts_v1.jsonl
+    schema: schemas/intelligence/validation/calibration_artifact_v1.schema.json
+    record_count: 0
+    sha256: ""
+  failed_experiments:
+    path: data/intelligence/validation/failed_experiments/failed_experiments_v1.jsonl
+    schema: schemas/intelligence/validation/failure_experiment_v1.schema.json
+    record_count: 0
+    sha256: ""
+
+evidence:
+  walkforward_folds: 0
+  holdout_events: 0
+  bootstrap_resamples: 0
+  adjusted_tests: 0
+  calibration_artifacts: 0
+  leakage_violations: 0
+  failed_experiments: 0
+
+consumer_notes:
+  - evaluation labels remain separate from strategy inputs
+  - walk-forward results must be read with confidence intervals
+  - uncalibrated confidence must not be displayed as probability
+  - failed experiments remain part of the evidence
+  - low-quality Point-in-Time subsets must remain separately visible
+  - historical support does not replace live shadow evidence

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StatisticalEvidenceV1",
+  "type": "object",
+  "properties": {
+    "evidence_id": {
+      "type": "string"
+    },
+    "strategy_id": {
+      "type": "string"
+    },
+    "bootstrap_resamples": {
+      "type": "integer"
+    },
+    "bootstrap_ci": {
+      "type": "object"
+    },
+    "adjusted_p_value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "sufficient_sample": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "evidence_id"
+  ]
+}

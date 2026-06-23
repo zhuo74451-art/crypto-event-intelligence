@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SplitManifestV1",
+  "type": "object",
+  "properties": {
+    "split_manifest_id": {
+      "type": "string"
+    },
+    "dataset_id": {
+      "type": "string"
+    },
+    "split_method": {
+      "type": "string"
+    },
+    "train_start": {
+      "type": "string"
+    },
+    "train_end": {
+      "type": "string"
+    },
+    "validation_start": {
+      "type": "string"
+    },
+    "validation_end": {
+      "type": "string"
+    },
+    "holdout_start": {
+      "type": "string"
+    },
+    "holdout_end": {
+      "type": "string"
+    },
+    "purge_window": {
+      "type": "string"
+    },
+    "embargo_window": {
+      "type": "string"
+    },
+    "overlap_checks": {
+      "type": "object"
+    },
+    "leakage_checks": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "split_manifest_id",
+    "dataset_id",
+    "split_method"
+  ]
+}
