@@ -1,26 +1,27 @@
-task: LANE_A_MANUAL_BLS_SNAPSHOT_IMPORT_AND_PILOT_SEAL_V6
+task: LANE_A_GIT_OBJECT_HASH_RESEAL_V7
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-required_start_sha: 14ecdf1e311055852a5c4ce5930a9d153e84283f
 implementation_head_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
-head_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
+required_start_sha: 2c582860da37086f2ed0b89aa9efa1ad83c5d63d
+head_sha: 2c582860da37086f2ed0b89aa9efa1ad83c5d63d
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: pilot_sealed
-lane_status: official_release_pilot_ready_for_manual_review
+current_stage: git_object_hash_resealed
+lane_status: official_release_pilot_hash_repaired
 downstream_consumption_allowed: pilot_only
 
 completed_stages:
-  - contracts_and_schemas
-  - forensic_cleanup_v3
   - manual_bls_snapshot_import
-  - pilot_build
-  - pilot_seal
+  - official_release_pilot
+  - git_object_hash_reseal
 
 known_failures: []
 blockers: []
 last_test_command: pytest tests/intelligence/historical_macro/ -q
 last_test_result: 80 passed, 0 failed
+
+consumer_note:
+  lane_b_must_relock_to_new_final_branch_sha: true

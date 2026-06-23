@@ -32,6 +32,25 @@ integrity:
   duplicate_event_ids: 0
 
 file_hashes:
-  release_events_sha256: "e3d2629177eea33c020272b8268798d2250d19aca2cc2fb4b7f177778cc4f6d9"
-  observations_sha256: "ba924ad8d096f355708ad4e3ffd5deb1c51580e0513e291d5a4a23468264b6f4"
-  snapshots_sha256: "9e3596ebf6473d5b51827fa8c69f5450ef93cba978839bf963f6a2cd1adad64d"
+  hash_basis: git_object_bytes
+  hash_basis_commit: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
+
+  release_events:
+    path: data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl
+    record_count: 12
+    sha256: "ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c"
+
+  release_observations:
+    path: data/intelligence/historical_macro/normalized/macro_release_observations_v1.jsonl
+    record_count: 12
+    sha256: "8d1da8d98bd32e5fbbd64784deb73dc07fbd0228aa54104d5e8d150c625152bd"
+
+  source_snapshots:
+    path: data/intelligence/historical_macro/normalized/macro_source_snapshots_v1.jsonl
+    record_count: 8
+    sha256: "dca05c7cc31d243937bce111cfec6fbd31d43c2ab49ade5952c4331e3dfb2976"
+
+consumer_notes:
+  - lane_b_must_relock_to_new_final_branch_sha: true
+  - all manifest hashes computed from git object bytes at implementation_head_sha
+  - hash_basis: git_object_bytes (not working tree files)

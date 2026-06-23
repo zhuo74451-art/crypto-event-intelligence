@@ -1,0 +1,32 @@
+{
+  "task": "LANE_A_GIT_OBJECT_HASH_RESEAL_V7",
+  "implementation_head_sha": "6f0848537ca5a5f7c257fb6c67c5d87e202d7d69",
+  "previous_final_branch_sha": "2c582860da37086f2ed0b89aa9efa1ad83c5d63d",
+  "artifacts": {
+    "release_events": {
+      "path": "data/intelligence/historical_macro/normalized/macro_release_events_v1.jsonl",
+      "corrected_git_object_sha256": "ba93cce3ca298fdb48ecf690247ad449b57a0afe826f8832b587498c8f62fc1c",
+      "byte_count": 25554,
+      "record_count": 12,
+      "git_object_hash_match": true
+    },
+    "release_observations": {
+      "path": "data/intelligence/historical_macro/normalized/macro_release_observations_v1.jsonl",
+      "corrected_git_object_sha256": "8d1da8d98bd32e5fbbd64784deb73dc07fbd0228aa54104d5e8d150c625152bd",
+      "byte_count": 5866,
+      "record_count": 12,
+      "git_object_hash_match": true
+    },
+    "source_snapshots": {
+      "path": "data/intelligence/historical_macro/normalized/macro_source_snapshots_v1.jsonl",
+      "corrected_git_object_sha256": "dca05c7cc31d243937bce111cfec6fbd31d43c2ab49ade5952c4331e3dfb2976",
+      "byte_count": 5332,
+      "record_count": 8,
+      "git_object_hash_match": true
+    }
+  },
+  "data_files_modified": false,
+  "event_contents_modified": false,
+  "observation_contents_modified": false,
+  "snapshot_contents_modified": false
+}
