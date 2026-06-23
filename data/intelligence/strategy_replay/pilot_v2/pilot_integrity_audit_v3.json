@@ -1,0 +1,38 @@
+{
+  "artifact_hash_basis_commit": "da98a83fc8072f1411749412d159b34c77937b19",
+  "audited_at_utc": "2025-06-23T00:00:00.000Z",
+  "leakage_audit": {
+    "process_exit_code": 0,
+    "records_checked": 28,
+    "hypotheses_checked": 0,
+    "violation_count": 0
+  },
+  "abstention_audit": {
+    "process_exit_code": 0,
+    "records_checked": 12,
+    "violation_count": 0
+  },
+  "kernel_package_audit": {
+    "process_exit_code": 0,
+    "packages_checked": 16,
+    "violation_count": 0
+  },
+  "kernel_packages": {
+    "total": 16,
+    "packages_with_duplicate_hypothesis": 0,
+    "packages_missing_4h": 0,
+    "packages_missing_24h": 0
+  },
+  "hypothesis_lineage": {
+    "total": 32,
+    "missing_fields": 0
+  },
+  "outcome_lineage": {
+    "total": 32,
+    "missing_signal_window_ref": 0,
+    "missing_target_window_ref": 0,
+    "missing_source_window_ids": 0,
+    "has_signal_and_target": 32
+  },
+  "overall_verdict": "pass"
+}

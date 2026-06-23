@@ -1,36 +1,32 @@
 producer_lane: lane_c_macro_strategy_replay
 producer_branch: feat/overnight-lane-c-macro-strategy-replay-v1
+artifact_implementation_sha: da98a83fc8072f1411749412d159b34c77937b19
 producer_head_sha: b7adb0ff7f0c7fdea31754db7ee43879f87c3009
 base_sha: 693c736a09d8600bf3aa7d1f976d66e3376c5b0a
-
 inputs:
   lane_a:
-    consumed: true
-    producer_final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
-    event_count: 12
+    final_sha: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
     locked: true
+    events: 12
   lane_b:
-    consumed: true
-    producer_final_sha: ec8952b600ffceebeabcb50ac11e3b182e76c5e2
+    final_sha: ec8952b600ffceebeabcb50ac11e3b182e76c5e2
     locked: true
-    artifact_counts:
-      horizon_windows: 72
-      reaction_labels: 72
-      cross_asset_context: 120
-      funding_context: 24
-
+    horizon_windows: 72
+    reaction_labels: 72
+    cross_asset_context: 120
+    funding_context: 24
 readiness:
   verified_replay_pilot: true
-  lane_d_pilot_consumption: true
+  lane_d_pilot_consumption: false
   calibration: false
   walkforward: false
   full_historical_replay: false
-
+  causal_inference_supported: false
+  probability_supported: false
 consumer_notes:
   - All macro strategies abstained (no consensus in pilot data)
   - Post-release continuation strategy is exploratory pilot
   - Evaluation uses incremental returns from 1h endpoint
   - No probability or calibration claims
   - No causal inference supported
-  - Baseline evaluations include always_bullish, always_bearish,
-    reverse_first_reaction, always_abstain
+  - Baseline evaluations include always_bullish, always_bearish, reverse_first_reaction, always_abstain
