@@ -1,33 +1,26 @@
-task: LANE_A_SNAPSHOT_LINKED_OFFICIAL_CASE_CORRECTION_V5
+task: LANE_A_MANUAL_BLS_SNAPSHOT_IMPORT_AND_PILOT_SEAL_V6
 repository: zhuo74451-art/crypto-event-intelligence
 branch: feat/overnight-lane-a-historical-macro-evidence-v1
 base_sha: 5a5ca58253479403f65ec726016d1ca9b91703d1
-required_start_sha: 50d1ed3c1c6ff6c92fa08bbe67955de6799b3cfc
-head_sha: 50d1ed3c1c6ff6c92fa08bbe67955de6799b3cfc
+required_start_sha: 14ecdf1e311055852a5c4ce5930a9d153e84283f
+implementation_head_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
+head_sha: 6f0848537ca5a5f7c257fb6c67c5d87e202d7d69
 
 planning_mode_used: false
 autonomous_planning_mode_used: false
 
-current_stage: snapshot_linked_case_correction
-lane_status: official_release_pilot_rejected
-downstream_consumption_allowed: false
-
-known_failures:
-  - formal source snapshot count is zero
-  - release-time source references are empty
-  - official document hashes are empty
-  - BLS API series values were treated as release values
-  - several published values do not match official releases
-  - manifest implementation SHA remains unresolved
-  - BLS.gov blocks all HTTP requests (403 Access Denied)
+current_stage: pilot_sealed
+lane_status: official_release_pilot_ready_for_manual_review
+downstream_consumption_allowed: pilot_only
 
 completed_stages:
   - contracts_and_schemas
   - forensic_cleanup_v3
+  - manual_bls_snapshot_import
+  - pilot_build
+  - pilot_seal
 
-next_exact_action: attempt BLS page downloads, save BEA/FOMC snapshots
-blockers:
-  - BLS.gov returns 403 for all URLs (cpi_*, empsit_*) via Python, curl, and likely all external requests
-  - 4 of 8 official pages are inaccessible
-  - Spec requires all 8 pages for completion
-  - Cannot use BLS API time series as release values
+known_failures: []
+blockers: []
+last_test_command: pytest tests/intelligence/historical_macro/ -q
+last_test_result: 80 passed, 0 failed
