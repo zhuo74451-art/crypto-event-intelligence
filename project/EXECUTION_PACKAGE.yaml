@@ -1,0 +1,503 @@
+version: '1.0'
+status: compiled_blocked_runtime
+artifact: EXECUTION_PACKAGE
+runtime_compatibility: blocked
+source:
+  project_brain: project/PROJECT_BRAIN.md
+  project_plan: project/PROJECT_PLAN.md
+  package_ordering: project/PACKAGE_ORDERING.yaml
+  base_repository: zhuo74451-art/crypto-event-intelligence
+  base_sha: a6b5baf1e0d5060b5375ce12c68e04ee547efb88
+  planning_ref: planning/stage5-a-d-lane-e-unattended-v1
+  lane_refs:
+    lane_a: 9aaabc82f34141e6797d3f92b773d5c463ad99b8
+    lane_b: ec8952b600ffceebeabcb50ac11e3b182e76c5e2
+    lane_c: 72984d8b0fe17dc188239c3c050e082c180853b4
+    lane_d: a6b5baf1e0d5060b5375ce12c68e04ee547efb88
+    lane_e_candidate: 8dfa3231826707df188be7152c34f00062b3606e
+intent_trace:
+  outcomes:
+  - OUT-001
+  - OUT-002
+  - OUT-003
+  - OUT-004
+  - OUT-005
+  constraints:
+  - CON-001
+  - CON-002
+  - CON-003
+  - CON-004
+  - CON-005
+  - CON-006
+  - CON-007
+  - CON-008
+  - CON-009
+  - CON-010
+  decisions:
+  - DEC-002
+  - DEC-003
+  - DEC-004
+  - DEC-005
+  - DEC-006
+  - DEC-007
+  - DEC-009
+  - DEC-010
+  risks:
+  - RISK-001
+  - RISK-002
+  - RISK-003
+  - RISK-004
+  - RISK-005
+  - RISK-006
+  - RISK-007
+  - RISK-008
+  no_go:
+  - NOGO-001
+  - NOGO-002
+  - NOGO-003
+  - NOGO-004
+  - NOGO-005
+  - NOGO-006
+execution_strategy:
+  preferred_executor: reasonix
+  executor_mode: auto
+  persistent_goal: false
+  run_shape: task_graph
+  unattended_mode: pure
+  activation_surface: reasonix_ui
+  runtime_controller: humanthink_autodev
+  reasonix_desktop_role: activate_only
+  reasonix_cli_context: current_node_only
+  credentials_mode: preconfigured_required
+  max_total_attempts: 17
+  owner_manual_midrun_steps: 0
+  executor_may_decompose: false
+  executor_may_expand_scope: false
+  executor_may_reorder_packages: false
+  expected_window_minutes: 480
+  finalization_reserve_minutes: 72
+milestones:
+- id: MS-001
+  packages:
+  - WP-001
+  gate: GATE-COMPAT
+- id: MS-002
+  packages:
+  - WP-002
+  - WP-003
+  gate: WP-003 accepted
+- id: MS-003
+  packages:
+  - WP-004
+  - WP-005
+  gate: WP-005 accepted
+- id: MS-004
+  packages:
+  - WP-006
+  - WP-007
+  gate: GATE-INTEGRATION-AUDIT
+- id: MS-005
+  packages:
+  - WP-008
+  - WP-009
+  - WP-010
+  gate: GATE-FINAL-ACCEPTANCE
+work_package_contract:
+  full_contract_location: project/work_packages/<WP-ID>.md
+  required_fields:
+  - execution_mode
+  - checkpoint_mode
+  - continuation_mode
+  - artifact_mode
+  - workspace_mode
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - max_attempts
+  - timeout_minutes
+  - stop_conditions
+  - handoff_evidence
+  reasonix_cli_input: active_work_order_plus_hot_context_only
+work_packages:
+- id: WP-001
+  milestone_id: MS-001
+  sequence: 1
+  work_order: project/work_packages/WP-001.md
+  execution_mode: audit_readonly
+  checkpoint_mode: artifact_only
+  continuation_mode: gpt_gate
+  artifact_mode: runtime_store
+  workspace_mode: temporary_clone
+  max_attempts: 2
+  timeout_minutes: 75
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-002
+  milestone_id: MS-002
+  sequence: 2
+  work_order: project/work_packages/WP-002.md
+  execution_mode: modify
+  checkpoint_mode: commit
+  continuation_mode: automatic
+  artifact_mode: project_tracked
+  workspace_mode: current_worktree
+  max_attempts: 2
+  timeout_minutes: 75
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-003
+  milestone_id: MS-002
+  sequence: 3
+  work_order: project/work_packages/WP-003.md
+  execution_mode: modify
+  checkpoint_mode: commit
+  continuation_mode: automatic
+  artifact_mode: project_tracked
+  workspace_mode: current_worktree
+  max_attempts: 2
+  timeout_minutes: 75
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-004
+  milestone_id: MS-003
+  sequence: 4
+  work_order: project/work_packages/WP-004.md
+  execution_mode: modify
+  checkpoint_mode: commit
+  continuation_mode: automatic
+  artifact_mode: project_tracked
+  workspace_mode: current_worktree
+  max_attempts: 2
+  timeout_minutes: 90
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-005
+  milestone_id: MS-003
+  sequence: 5
+  work_order: project/work_packages/WP-005.md
+  execution_mode: modify
+  checkpoint_mode: commit
+  continuation_mode: automatic
+  artifact_mode: project_tracked
+  workspace_mode: current_worktree
+  max_attempts: 2
+  timeout_minutes: 90
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-006
+  milestone_id: MS-004
+  sequence: 6
+  work_order: project/work_packages/WP-006.md
+  execution_mode: audit_readonly
+  checkpoint_mode: artifact_only
+  continuation_mode: gpt_gate
+  artifact_mode: runtime_store
+  workspace_mode: clean_worktree
+  max_attempts: 1
+  timeout_minutes: 90
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-007
+  milestone_id: MS-004
+  sequence: 7
+  work_order: project/work_packages/WP-007.md
+  execution_mode: modify
+  checkpoint_mode: commit
+  continuation_mode: automatic
+  artifact_mode: project_tracked
+  workspace_mode: current_worktree
+  max_attempts: 2
+  timeout_minutes: 75
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-008
+  milestone_id: MS-005
+  sequence: 8
+  work_order: project/work_packages/WP-008.md
+  execution_mode: validation_only
+  checkpoint_mode: artifact_only
+  continuation_mode: gpt_gate
+  artifact_mode: runtime_store
+  workspace_mode: temporary_clone
+  max_attempts: 1
+  timeout_minutes: 90
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-009
+  milestone_id: MS-005
+  sequence: 9
+  work_order: project/work_packages/WP-009.md
+  execution_mode: modify
+  checkpoint_mode: commit
+  continuation_mode: automatic
+  artifact_mode: project_tracked
+  workspace_mode: current_worktree
+  max_attempts: 1
+  timeout_minutes: 45
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+- id: WP-010
+  milestone_id: MS-005
+  sequence: 10
+  work_order: project/work_packages/WP-010.md
+  execution_mode: validation_only
+  checkpoint_mode: artifact_only
+  continuation_mode: gpt_gate
+  artifact_mode: runtime_store
+  workspace_mode: temporary_clone
+  max_attempts: 1
+  timeout_minutes: 75
+  contract_source: work_order
+  required_contract_fields:
+  - allowed_paths
+  - forbidden_paths
+  - forbidden_actions
+  - deterministic_verification
+  - stop_conditions
+  - handoff_evidence
+task_graph:
+  entry_work_package_id: WP-001
+  common_terminal_policy:
+    id: COMMON-WP-TERMINALS
+    results:
+      hard_blocked: HARD_BLOCKED
+      replan_required: REPLAN_AFFECTED_SLICE
+      scope_conflict: SCOPE_CONFLICT
+      budget_exhausted: BUDGET_EXHAUSTED
+      aborted_limit_reached: ABORTED_LIMIT_REACHED
+  work_package_transitions:
+    WP-001:
+      accepted: GATE-COMPAT
+      accepted_no_change: GATE-COMPAT
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+    WP-002:
+      accepted: WP-003
+      accepted_no_change: WP-003
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+    WP-003:
+      accepted: WP-004
+      accepted_no_change: WP-004
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+    WP-004:
+      accepted: WP-005
+      accepted_no_change: WP-005
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+    WP-005:
+      accepted: WP-006
+      accepted_no_change: WP-006
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMOON-WP-TERMINALS
+    WP-007:
+      accepted: WP-008
+      accepted_no_change: WP-008
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMOON-WP-TERMINALS
+    WP-008:
+      accepted: GATE-MILESTONE-VALIDATION
+      accepted_no_change: GATE-MILESTONE-VALIDATION
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+    WP-009:
+      accepted: WP-010
+      accepted_no_change: WP-010
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+    WP-010:
+      accepted: GATE-FINAL-ACCEPTANCE
+      accepted_no_change: GATE-FINAL-ACCEPTANCE
+      owner_required: OWNER-GATE-EXCEPTION
+      common_terminal_policy: COMMON-WP-TERMINALS
+  gpt_gate_contracts:
+    GATE-COMPAT:
+      input_evidence:
+      - WP-001/compatibility_audit.json
+      - WP-001/reuse_matrix.yaml
+      - WP-001/conflict_inventory.yaml
+      allowed_decisions:
+        continue_with_bounded_repairs: WP-002
+        skip_repairs_proceed_to_producer_lock: WP-003
+        replan_affected_slice: REPLAN_AFFECTED_SLICE
+        owner_required: OWNER-GATE-EXCEPTION
+        hard_blocked: HARD_BLOCKED
+      may_change_scope: false
+      output_contract: project/runtime/effective_WP-002.yaml
+    GATE-INTEGRATION-AUDIT:
+      input_evidence:
+      - WP-006/integration_audit.json
+      - WP-006/falsification_report.md
+      - WP-006/rebuild_comparison.json
+      allowed_decisions:
+        repair_required: WP-007
+        no_change_required: WP-008
+        replan_affected_slice: REPLAN_AFFECTED_SLICE
+        owner_required: OWNER-GATE-EXCEPTION
+        hard_blocked: HARD_BLOCKED
+      may_change_scope: false
+      output_contract: project/runtime/effective_WP-007.yaml
+    GATE-MILESTONE-VALIDATION:
+      input_evidence:
+      - WP-008/clean_validation.json
+      - WP-008/reproducibility.json
+      - WP-008/evidence_manifest.json
+      allowed_decisions:
+        validation_accepted: WP-009
+        done_with_limitations: DONE_WITH_LIMITATIONS
+        replan_affected_slice: REPLAN_AFFECTED_SLICE
+        owner_required: OWNER-GATE-EXCEPTION
+        hard_blocked: HARD_BLOCKED
+      may_change_scope: false
+      output_contract: .humanthink/runtime/${RUN_ID}/gates/GATE-MILESTONE-VALIDATION.json
+    GATE-FINAL-ACCEPTANCE:
+      input_evidence:
+      - WP-010/post_seal_acceptance.json
+      - WP-010/final_report.md
+      - WP-010/evidence_manifest.json
+      allowed_decisions:
+        project_completed: PROJECT_COMPLETED
+        done_with_limitations: DONE_WITH_LIMITATIONS
+        replan_affected_slice: REPLAN_AFFECTED_SLICE
+        owner_required: OWNER-GATE-EXCEPTION
+        hard_blocked: HARD_BLOCKED
+      may_change_scope: false
+      output_contract: .humanthink/runtime/${RUN_ID}/gates/GATE-FINAL-ACCEPTANCE.json
+  owner_gate:
+    id: OWNER-GATE-EXCEPTION
+    triggers:
+    - project_identity_or_value_boundary_change
+    - approved_scope_expansion
+    - production_or_external_publication
+    - credential_or_fund_or_order_operation
+    - deletion_or_irreversible_action
+    - no_safe_reversible_default
+    - material_cost_risk_or_lock_in_choice
+    ordinary_failure_allowed: false
+    result: OWNER_DECISION_REQUIRED
+  terminal_states:
+  - PROJECT_COMPLETED
+  - DONE_WITH_LIMITATIONS
+  - OWNER_DECISION_REQUIRED
+  - HARD_BLOCKED
+  - REPLAN_AFFECTED_SLICE
+  - SCOPE_CONFLICT
+  - BUDGET_EXHAUSTED
+  - ABORTED_LIMIT_REACHED
+  retry_policy:
+    graph_retry_edges: false
+    source: work_package.max_attempts
+    after_exhaustion: aborted_limit_reached
+compilation_audit:
+  coverage_complete: true
+  scope_overflow: []
+  orphan_tasks: []
+  dependency_cycles: []
+  transition_conflicts: []
+  unhandled_nonterminal_results: []
+  unbounded_cycles: []
+  packages_outside_reasonix_granularity: []
+  checkpoint_policy_conflicts: []
+  gpt_gate_contract_gaps: []
+  owner_gate_overuse: []
+  manual_midrun_steps: 0
+  activation_envelope_complete: false
+  runtime_compatibility: blocked
+runtime_blockers:
+- id: RUNTIME-001
+  fact: HumanThink main at e68705594eaf824922e92c731c41a661b880d673 does not contain the Autodev runtime.
+  required: Publish a reviewed runtime release.
+- id: RUNTIME-002
+  fact: 'Draft PR #3 installs ht-autodev and exposes no humanthink-autodev activate command.'
+  required: Implement and validate the exact stable activation interface.
+- id: RUNTIME-003
+  fact: The alpha CLI runs one package file and cannot load a planning ref plus project/EXECUTION_PACKAGE.yaml.
+  required: Add package loading, schema validation, planning-ref resolution, and project lock.
+- id: RUNTIME-004
+  fact: The alpha graph does not dispatch this declarative task graph, GPT gates, Owner gate, or terminal contracts.
+  required: Implement the declarative dispatcher and gates.
+- id: RUNTIME-005
+  fact: No verified adapter sends only the active node and hot context to Reasonix CLI.
+  required: Implement current-node-only dispatch.
+- id: RUNTIME-006
+  fact: No end-to-end test proves activation receipt, automatic transitions, finite retry, recovery, no-change closure, gate routing, notification,
+    and stop behavior.
+  required: Pass an end-to-end compatibility suite.
+- id: RUNTIME-007
+  fact: Local project path and preconfigured credentials are not verifiable from GitHub.
+  required: Pass activation preflight without exposing secrets.
+activation:
+  required: true
+  output: project/REASONIX_UI_ACTIVATION.md
+  stable_command: humanthink-autodev activate
+  reasonix_ui_role: activate_only
+  envelope_emitted: false
+  activation_allowed: false
+compilation_result:
+  ready_for_current_run: false
+  ready_for_unattended_activation: false
+  first_package_id: WP-001
+  blocking_reasons:
+  - RUNTIME-001
+  - RUNTIME-002
+  - RUNTIME-003
+  - RUNTIME-004
+  - RUNTIME-005
+  - RUNTIME-006
+  - RUNTIME-007
