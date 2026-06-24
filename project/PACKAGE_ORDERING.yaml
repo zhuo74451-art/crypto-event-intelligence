@@ -1,0 +1,183 @@
+version: '1.0'
+status: compiled_blocked_runtime
+repository: zhuo74451-art/crypto-event-intelligence
+planning_ref: planning/stage5-a-d-lane-e-unattended-v1
+base_sha: a6b5baf1e0d5060b5375ce12c68e04ee547efb88
+entry_node: WP-001
+normal_order:
+- WP-001
+- GATE-COMPAT
+- WP-002?
+- WP-003
+- WP-004
+- WP-005
+- WP-006
+- GATE-INTEGRATION-AUDIT
+- WP-007?
+- WP-008
+- GATE-MILESTONE-VALIDATION
+- WP-009
+- WP-010
+- GATE-FINAL-ACCEPTANCE
+conditional_skips:
+- condition: GATE-COMPAT=skip_repairs_proceed_to_producer_lock
+  skip:
+  - WP-002
+  next: WP-003
+- condition: GATE-INTEGRATION-AUDIT=no_change_required
+  skip:
+  - WP-007
+  next: WP-008
+node_types:
+  work_packages:
+  - WP-001
+  - WP-002
+  - WP-003
+  - WP-004
+  - WP-005
+  - WP-006
+  - WP-007
+  - WP-008
+  - WP-009
+  - WP-010
+  gpt_gates:
+  - GATE-COMPAT
+  - GATE-INTEGRATION-AUDIT
+  - GATE-MILESTONE-VALIDATION
+  - GATE-FINAL-ACCEPTANCE
+  owner_gates:
+  - OWNER-GATE-EXCEPTION
+  terminal_states:
+  - PROJECT_COMPLETED
+  - DONE_WITH_LIMITATIONS
+  - OWNER_DECISION_REQUIRED
+  - HARD_BLOCKED
+  - REPLAN_AFFECTED_SLICE
+  - SCOPE_CONFLICT
+  - BUDGET_EXHAUSTED
+  - ABORTED_LIMIT_REACHED
+dependencies:
+- node: WP-001
+  depends_on: []
+- node: GATE-COMPAT
+  depends_on:
+  - WP-001
+- node: WP-002
+  depends_on:
+  - GATE-COMPAT continue route
+- node: WP-003
+  depends_on:
+  - WP-002 or GATE-COMPAT skip route
+- node: WP-004
+  depends_on:
+  - WP-003
+- node: WP-005
+  depends_on:
+  - WP-004
+- node: WP-006
+  depends_on:
+  - WP-005
+- node: GATE-INTEGRATION-AUDIT
+  depends_on:
+  - WP-006
+- node: WP-007
+  depends_on:
+  - GATE-INTEGRATION-AUDIT repair route
+- node: WP-008
+  depends_on:
+  - WP-007 or GATE-INTEGRATION-AUDIT no-change route
+- node: GATE-MILESTONE-VALIDATION
+  depends_on:
+  - WP-008
+- node: WP-009
+  depends_on:
+  - GATE-MILESTONE-VALIDATION validation_accepted
+- node: WP-010
+  depends_on:
+  - WP-009
+- node: GATE-FINAL-ACCEPTANCE
+  depends_on:
+  - WP-010
+write_ownership:
+- path_group: integration_and_research_code
+  owners:
+  - WP-002
+  - WP-004
+  - WP-007
+  policy: sequential_only
+- path_group: producer_locks
+  owners:
+  - WP-003
+  policy: exclusive
+- path_group: generated_research_artifacts
+  owners:
+  - WP-005
+  - WP-007
+  policy: sequential_only_and_only_when_logically_changed
+- path_group: final_seal_documents
+  owners:
+  - WP-009
+  policy: exclusive
+- path_group: runtime_audit_artifacts
+  owners:
+  - WP-001
+  - WP-006
+  - WP-008
+  - WP-010
+  policy: runtime_store_only
+transition_audit:
+  entry_count: 1
+  conflicts: []
+  unhandled_results: []
+  cycles: []
+  manual_midrun_steps: 0
+  ordinary_progression: automatic
+  finite_retry: package_internal_only
+  terminal_stop_required: true
+coverage_audit:
+  approved_outcomes:
+  - OUT-001
+  - OUT-002
+  - OUT-003
+  - OUT-004
+  - OUT-005
+  covered_by:
+    OUT-001:
+    - WP-001
+    - GATE-COMPAT
+    OUT-002:
+    - WP-002
+    - WP-003
+    OUT-003:
+    - WP-004
+    - WP-005
+    OUT-004:
+    - WP-006
+    - WP-007
+    - WP-008
+    OUT-005:
+    - WP-009
+    - WP-010
+    - GATE-FINAL-ACCEPTANCE
+  orphan_packages: []
+  scope_overflow: []
+  deferred_work_in_graph: []
+package_fit_audit:
+  reasonix_baseline_minutes: 20-90
+  packages_outside_baseline: []
+  checkpoint_mismatches: []
+  read_only_write_conflicts: []
+  packages_missing_deterministic_verification: []
+  packages_missing_stop_conditions: []
+  packages_missing_handoff_evidence: []
+  result: pass_static_contract
+runtime_compatibility: blocked
+activation_allowed: false
+blocking_reasons:
+- RUNTIME-001
+- RUNTIME-002
+- RUNTIME-003
+- RUNTIME-004
+- RUNTIME-005
+- RUNTIME-006
+- RUNTIME-007
