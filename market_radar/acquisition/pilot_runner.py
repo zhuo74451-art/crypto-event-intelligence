@@ -49,10 +49,12 @@ def _import_sources():
     )
     from market_radar.acquisition.sources.congress import acquire_congress
     from market_radar.acquisition.sources.bls import acquire_bls
+    from market_radar.acquisition.sources.github_releases import acquire_github_releases
     SOURCE_REGISTRY["cisa"] = acquire_cisa_kev
     SOURCE_REGISTRY["sec"] = acquire_sec_press_releases
     SOURCE_REGISTRY["congress"] = acquire_congress
     SOURCE_REGISTRY["bls"] = acquire_bls
+    SOURCE_REGISTRY["github_releases"] = acquire_github_releases
 
 
 def run_pilot(context: dict[str, Any]) -> dict[str, Any]:
