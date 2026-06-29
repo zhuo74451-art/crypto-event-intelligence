@@ -48,9 +48,11 @@ def _import_sources():
         acquire_sec_press_releases,
     )
     from market_radar.acquisition.sources.congress import acquire_congress
+    from market_radar.acquisition.sources.bls import acquire_bls
     SOURCE_REGISTRY["cisa"] = acquire_cisa_kev
     SOURCE_REGISTRY["sec"] = acquire_sec_press_releases
     SOURCE_REGISTRY["congress"] = acquire_congress
+    SOURCE_REGISTRY["bls"] = acquire_bls
 
 
 def run_pilot(context: dict[str, Any]) -> dict[str, Any]:

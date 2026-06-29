@@ -50,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def resolve_sources(raw: str) -> list[str]:
     if raw == "all":
-        return ["cisa", "sec", "congress"]
+        return ["cisa", "sec", "congress", "bls"]
     return [s.strip() for s in raw.split(",")]
 
 
