@@ -14,6 +14,7 @@ from typing import Any, Dict, List, Optional
 from market_radar.acquisition.contracts import (
     AcquisitionResult,
     ObservationStub,
+    RawEvidenceArtifact,
 )
 from market_radar.acquisition.evidence import build_evidence_entries
 from market_radar.acquisition.storage import (
@@ -89,6 +90,16 @@ def run_pilot(context: dict[str, Any]) -> dict[str, Any]:
     output_root.mkdir(parents=True, exist_ok=True)
     write_telemetry(output_root, "run_started", {"run_id": run_id, "mode": mode, "sources": source_ids})
 
+    # Map source IDs to fixture files for replay mode
+    FIXTURE_DIR = Path(__file__).parents[2] / "tests" / "fixtures" / "acquisition"
+    FIXTURE_MAP = {
+        "cisa": FIXTURE_DIR / "cisa_kev_sample.json",
+        "sec": FIXTURE_DIR / "sec_press_releases_sample.xml",
+        "congress": FIXTURE_DIR / "congress_sample.xml",
+        "bls": FIXTURE_DIR / "bls_sample.json",
+        "github_releases": FIXTURE_DIR / "github_releases_sample.json",
+    }
+
     for sid in source_ids:
         acquire_fn = SOURCE_REGISTRY.get(sid)
         if not acquire_fn:
@@ -100,12 +111,21 @@ def run_pilot(context: dict[str, Any]) -> dict[str, Any]:
             kwargs = {"limit": limit, "timeout": timeout}
             if sid == "sec":
                 kwargs["user_agent"] = sec_user_agent
+            kwargs["output_dir"] = output_dir_str
+            kwargs["mode"] = mode
+            if mode == "replay" and sid in FIXTURE_MAP:
+                kwargs["replay_file"] = str(FIXTURE_MAP[sid])
             result = acquire_fn(**kwargs)
             results.append(result)
             total_observations += len(result.observations)
 
-            # Write raw evidence bytes
+            # Write raw evidence bytes (main artifact)
             write_raw_evidence(output_root, result.source_id, result.raw_bytes, result.artifact)
+
+            # Write additional artifacts (e.g. per-feed Congress artifacts)
+            for extra_artifact in result.artifact_group:
+                extra_bytes = result.artifact_group_bytes.get(extra_artifact.relative_path, None)
+                write_raw_evidence(output_root, result.source_id, extra_bytes, extra_artifact)
 
             # Write fetch metadata
             write_fetch_metadata(output_root, result.fetch_metadata.to_dict())
@@ -240,7 +260,7 @@ def observation_stub_to_observation(
         evidence=evidence_links,
         data_quality=data_quality,
         observation_fingerprint=observation_fingerprint,
-        event_dedup_key=observation_fingerprint,
+        event_dedup_key=sha256_short(stub.title + ":" + stub.event_time, n=12),
         ingestion_status=ingestion_status,
         source_refs=source_refs,
         risk_notes=[],

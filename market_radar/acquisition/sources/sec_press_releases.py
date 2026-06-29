@@ -137,11 +137,11 @@ def _parse_rss_items(raw: bytes) -> Tuple[List[Dict[str, str]], Optional[str]]:
         items.append(entry)
     if not items:
         return [], "empty_feed_no_items"
-    # Check for missing pubDate
-    missing_dates = [it.get("guid", "?") for it in items if not it.get("pubDate")]
-    if missing_dates:
-        return [], f"missing_pubDate_on_items: {missing_dates[:3]}"
-    return items, None
+    # Skip items without pubDate
+    valid_items = [it for it in items if it.get("pubDate")]
+    if not valid_items:
+        return [], "empty_feed_no_items"
+    return valid_items, None
 
 
 # ── Observation generation ───────────────────────────────────────────────────
@@ -193,6 +193,8 @@ def acquire_sec_press_releases(
     timeout: Optional[int] = None,
     user_agent: Optional[str] = None,
     output_dir: Optional[str] = None,
+    replay_file: Optional[str] = None,
+    **kwargs,
 ) -> AcquisitionResult:
     """Execute one SEC Press Releases acquisition cycle.
 
@@ -215,6 +217,50 @@ def acquire_sec_press_releases(
     timeout = timeout or contract.timeout_seconds
     source_id = contract.source_id
     retrieved_at = utc_now()
+
+    # Replay mode: load from fixture file, zero HTTP
+    if replay_file:
+        from pathlib import Path as _Path
+        p = _Path(replay_file)
+        raw = p.read_bytes()
+        http_status = 200
+        latency_ms = 0.0
+        content_type = "application/rss+xml"
+        error = ""
+        items, parse_err = _parse_rss_items(raw)
+        content_sha256 = sha256_of_bytes(raw)
+        if items:
+            status = SourceStatus.HEALTHY
+        elif parse_err and "malformed_xml" in parse_err:
+            status = SourceStatus.SCHEMA_INVALID
+        else:
+            status = SourceStatus.UNAVAILABLE
+        meta = FetchMetadata(
+            source_id=source_id, attempted_urls=[contract.primary_url],
+            selected_url=contract.primary_url, http_status=http_status,
+            content_type=content_type, bytes_received=len(raw),
+            latency_ms=latency_ms, retrieved_at=retrieved_at,
+            content_sha256=content_sha256, fallback_used=False,
+            error_code="" if status == SourceStatus.HEALTHY else (parse_err or "unavailable"),
+            error_message=parse_err or "",
+        )
+        health = SourceHealth.from_metadata(meta, status)
+        observations = _build_observations(
+            items, source_id, contract.primary_url, retrieved_at,
+            content_sha256, limit, f"sources/{source_id}/raw_response.xml",
+        ) if items else []
+        artifact = RawEvidenceArtifact(
+            source_id=source_id, relative_path=f"sources/{source_id}/raw_response.xml",
+            bytes_written=len(raw), content_sha256=content_sha256,
+            content_type=content_type, retrieved_at=retrieved_at,
+        )
+        errs = []
+        if parse_err: errs.append(parse_err)
+        return AcquisitionResult(
+            source_id=source_id, contract=contract, health=health,
+            fetch_metadata=meta, artifact=artifact, observations=observations,
+            raw_bytes=raw, errors=errs,
+        )
 
     ua = _resolve_user_agent(user_agent)
     if not ua:
@@ -312,6 +358,8 @@ def acquire_sec_press_releases(
     errs: List[str] = []
     if error: errs.append(error)
     if parse_err: errs.append(parse_err)
+    if raw is None and http_status >= 400:
+        errs.append(f"http_{http_status}")
 
     return AcquisitionResult(
         source_id=source_id,

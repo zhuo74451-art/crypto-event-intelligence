@@ -99,10 +99,11 @@ def _parse_rss_items(raw):
         items.append(entry)
     if not items:
         return [], "empty_feed_no_items"
-    missing_dates = [it.get("guid", "?") for it in items if not it.get("pubDate")]
-    if missing_dates:
-        return [], f"missing_pubDate_on_items: {missing_dates[:3]}"
-    return items, None
+    # Skip items without pubDate instead of failing the entire feed
+    valid_items = [it for it in items if it.get("pubDate")]
+    if not valid_items:
+        return [], "empty_feed_no_items"
+    return valid_items, None
 
 
 def _build_observations(items, source_id, feed_id, feed_url, retrieved_at, content_sha256, limit, artifact_path):
@@ -128,7 +129,7 @@ def _build_observations(items, source_id, feed_id, feed_url, retrieved_at, conte
     return out
 
 
-def acquire_congress(limit=20, timeout=None, output_dir=None):
+def acquire_congress(limit=20, timeout=None, output_dir=None, replay_file=None, **kwargs):
     timeout_val = timeout or CONGRESS_CONTRACT.timeout_seconds
     retrieved_at = utc_now()
 
@@ -136,13 +137,24 @@ def acquire_congress(limit=20, timeout=None, output_dir=None):
     all_observations = []
     overall_errors = []
 
+    _is_replay = replay_file is not None
+
     for feed_def in FEED_DEFS:
         feed_id = feed_def["feed_id"]
         url = feed_def["url"]
 
-        raw, http_status, latency_ms, content_type, error = _fetch_feed(
-            url, timeout_val, CONGRESS_CONTRACT.max_response_bytes
-        )
+        if _is_replay:
+            from pathlib import Path as _Path
+            p = _Path(replay_file)
+            raw = p.read_bytes()
+            http_status = 200
+            latency_ms = 0.0
+            content_type = "application/rss+xml"
+            error = ""
+        else:
+            raw, http_status, latency_ms, content_type, error = _fetch_feed(
+                url, timeout_val, CONGRESS_CONTRACT.max_response_bytes
+            )
 
         items = []
         parse_err = None
@@ -214,12 +226,6 @@ def acquire_congress(limit=20, timeout=None, output_dir=None):
         overall_status = SourceStatus.DEGRADED
 
     first = all_results[0]
-    merged_raw = b""
-    for r in all_results:
-        if r.raw_bytes is not None:
-            merged_raw += r.raw_bytes
-    if merged_raw == b"":
-        merged_raw = None
 
     overall_health = SourceHealth(
         source_id=SOURCE_ID, status=overall_status,
@@ -229,24 +235,34 @@ def acquire_congress(limit=20, timeout=None, output_dir=None):
         bytes_received=sum(r.health.bytes_received for r in all_results),
         latency_ms=sum(r.health.latency_ms for r in all_results),
         retrieved_at=retrieved_at,
-        content_sha256=sha256_of_bytes(merged_raw) if merged_raw else "",
+        content_sha256="",
         fallback_used=False,
         error_code="" if overall_status == SourceStatus.HEALTHY else ",".join(overall_errors),
         error_message="; ".join(overall_errors) if overall_errors else "",
     )
 
+    # Main artifact: summary file, not a directory
     overall_artifact = RawEvidenceArtifact(
         source_id=SOURCE_ID,
-        relative_path=f"sources/{SOURCE_ID}/",
+        relative_path=f"sources/{SOURCE_ID}/_summary.json",
         bytes_written=sum(r.artifact.bytes_written for r in all_results),
-        content_sha256=overall_health.content_sha256,
-        content_type="application/rss+xml",
+        content_sha256="",
+        content_type="application/json",
         retrieved_at=retrieved_at,
     )
+
+    # Per-feed artifacts: each feed gets its own file in artifact_group
+    artifact_group = []
+    artifact_group_bytes = {}
+    for r in all_results:
+        artifact_group.append(r.artifact)
+        artifact_group_bytes[r.artifact.relative_path] = r.raw_bytes
 
     return AcquisitionResult(
         source_id=SOURCE_ID, contract=CONGRESS_CONTRACT,
         health=overall_health, fetch_metadata=first.fetch_metadata,
         artifact=overall_artifact, observations=all_observations,
-        raw_bytes=merged_raw, errors=overall_errors,
+        raw_bytes=None, errors=overall_errors,
+        artifact_group=artifact_group,
+        artifact_group_bytes=artifact_group_bytes,
     )

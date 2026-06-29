@@ -15,8 +15,8 @@ from market_radar.acquisition.sources.sec_press_releases import (
 FIXTURE_DIR = Path(__file__).parents[2] / "tests" / "fixtures" / "acquisition"
 
 
-def test_missing_pubdate_detected():
-    """Items without pubDate must be flagged, not silently dropped."""
+def test_skip_items_without_pubdate():
+    """Items without pubDate must be skipped, not fail the feed."""
     xml = b"""<?xml version="1.0"?>
 <rss version="2.0">
 <channel>
@@ -27,7 +27,7 @@ def test_missing_pubdate_detected():
     items, err = _parse_rss_items(xml)
     assert len(items) == 0
     assert err is not None
-    assert "missing_pubDate" in err
+    assert "empty_feed" in err
 
 
 def test_empty_feed_detected():

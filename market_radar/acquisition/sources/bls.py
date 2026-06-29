@@ -150,14 +150,23 @@ def _build_observations(data, source_id, selected_url, retrieved_at, content_sha
     return obs_list
 
 
-def acquire_bls(limit=20, timeout=None, series_ids=None, output_dir=None):
+def acquire_bls(limit=20, timeout=None, series_ids=None, output_dir=None, replay_file=None, **kwargs):
     timeout_val = timeout or BLS_CONTRACT.timeout_seconds
     series = series_ids or DEFAULT_SERIES
     retrieved_at = utc_now()
 
-    raw, http_status, latency_ms, content_type, error = _fetch_bls(
-        series, timeout_val, BLS_CONTRACT.max_response_bytes
-    )
+    if replay_file:
+        from pathlib import Path as _Path
+        p = _Path(replay_file)
+        raw = p.read_bytes()
+        http_status = 200
+        latency_ms = 0.0
+        content_type = "application/json"
+        error = ""
+    else:
+        raw, http_status, latency_ms, content_type, error = _fetch_bls(
+            series, timeout_val, BLS_CONTRACT.max_response_bytes
+        )
 
     content_sha256 = sha256_of_bytes(raw) if raw else ""
     parsed = None

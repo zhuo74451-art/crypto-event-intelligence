@@ -215,6 +215,9 @@ class AcquisitionResult:
     observations: List[ObservationStub] = field(default_factory=list)
     raw_bytes: Optional[bytes] = None
     errors: List[str] = field(default_factory=list)
+    artifact_group: List[RawEvidenceArtifact] = field(default_factory=list)
+    artifact_group_bytes: Dict[str, Optional[bytes]] = field(default_factory=dict)
+    """Per-artifact raw bytes keyed by relative_path."""
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -225,6 +228,8 @@ class AcquisitionResult:
             "artifact": self.artifact.to_dict(),
             "observations": [o.to_dict() for o in self.observations],
             "errors": self.errors,
+            "artifact_group": [a.to_dict() for a in self.artifact_group],
+            "artifact_group_bytes_keys": list(self.artifact_group_bytes.keys()),
         }
 
 

@@ -116,7 +116,7 @@ def _build_observations(data, source_id, repo, selected_url, retrieved_at, conte
     return obs_list
 
 
-def acquire_github_releases(limit=20, timeout=None, repos=None, output_dir=None):
+def acquire_github_releases(limit=20, timeout=None, repos=None, output_dir=None, replay_file=None, **kwargs):
     timeout_val = timeout or RELEASES_CONTRACT.timeout_seconds
     repo_list = repos or DEFAULT_REPOS
     retrieved_at = utc_now()
@@ -127,9 +127,19 @@ def acquire_github_releases(limit=20, timeout=None, repos=None, output_dir=None)
 
     for repo in repo_list:
         url = f"https://api.github.com/repos/{repo}/releases"
-        raw, http_status, latency_ms, content_type, error, resp_headers = _fetch_releases(
-            repo, timeout_val, RELEASES_CONTRACT.max_response_bytes
-        )
+        if replay_file:
+            from pathlib import Path as _Path
+            p = _Path(replay_file)
+            raw = p.read_bytes()
+            http_status = 200
+            latency_ms = 0.0
+            content_type = "application/json"
+            error = ""
+            resp_headers = {"Content-Type": "application/json", "X-RateLimit-Limit": "60", "X-RateLimit-Remaining": "59", "X-RateLimit-Reset": "0"}
+        else:
+            raw, http_status, latency_ms, content_type, error, resp_headers = _fetch_releases(
+                repo, timeout_val, RELEASES_CONTRACT.max_response_bytes
+            )
 
         content_sha256 = sha256_of_bytes(raw) if raw else ""
         parsed = None
@@ -185,6 +195,8 @@ def acquire_github_releases(limit=20, timeout=None, repos=None, output_dir=None)
         errs = []
         if error: errs.append(error)
         if parse_err: errs.append(parse_err)
+        if raw is None and http_status >= 400:
+            errs.append(f"http_{http_status}")
 
         all_results.append(AcquisitionResult(
             source_id=SOURCE_ID, contract=RELEASES_CONTRACT,
@@ -228,17 +240,25 @@ def acquire_github_releases(limit=20, timeout=None, repos=None, output_dir=None)
 
     overall_artifact = RawEvidenceArtifact(
         source_id=SOURCE_ID,
-        relative_path=f"sources/{SOURCE_ID}/",
+        relative_path=f"sources/{SOURCE_ID}/_summary.json",
         bytes_written=sum(r.artifact.bytes_written for r in all_results),
         content_sha256=overall_health.content_sha256,
         content_type="application/json",
         retrieved_at=retrieved_at,
     )
 
+    artifact_group = []
+    artifact_group_bytes = {}
+    for r in all_results:
+        artifact_group.append(r.artifact)
+        artifact_group_bytes[r.artifact.relative_path] = r.raw_bytes
+
     return AcquisitionResult(
         source_id=SOURCE_ID, contract=RELEASES_CONTRACT,
         health=overall_health,
         fetch_metadata=first.fetch_metadata if first else FetchMetadata(source_id=SOURCE_ID),
         artifact=overall_artifact, observations=all_observations,
-        raw_bytes=merged_raw, errors=overall_errors,
+        raw_bytes=None, errors=overall_errors,
+        artifact_group=artifact_group,
+        artifact_group_bytes=artifact_group_bytes,
     )

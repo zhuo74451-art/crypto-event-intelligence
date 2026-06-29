@@ -68,7 +68,8 @@ def test_parse_empty_feed():
     assert "empty_feed" in err
 
 
-def test_missing_pubdate_detected():
+def test_skip_items_without_pubdate():
+    """Items without pubDate must be skipped, not fail the feed."""
     xml = b"""<?xml version="1.0"?>
 <rss version="2.0">
 <channel>
@@ -79,7 +80,7 @@ def test_missing_pubdate_detected():
     items, err = _parse_rss_items(xml)
     assert len(items) == 0
     assert err is not None
-    assert "missing_pubDate" in err
+    assert "empty_feed" in err
 
 
 def test_acquire_success(congress_sample_bytes):

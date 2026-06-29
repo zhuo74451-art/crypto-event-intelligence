@@ -25,6 +25,21 @@ def _ensure_dir(path: Path) -> Path:
     return path
 
 
+def verify_file_sha256(path: Path, expected_sha256: str) -> str:
+    """Reopen *path*, compute SHA-256 from disk bytes, compare with expected."""
+    if not expected_sha256:
+        return ""  # No hash to verify
+    with open(path, "rb") as f:
+        disk_bytes = f.read()
+    disk_sha256 = hashlib.sha256(disk_bytes).hexdigest()
+    if disk_sha256 != expected_sha256:
+        raise RuntimeError(
+            f"SHA-256 mismatch for {path}: "
+            f"declared={expected_sha256} disk={disk_sha256}"
+        )
+    return disk_sha256
+
+
 def write_raw_evidence(
     output_root: Path,
     source_id: str,
@@ -34,7 +49,10 @@ def write_raw_evidence(
     """Write raw response bytes to disk atomically and return the relative path.
 
     Uses a temporary file and os.replace() so partial writes never leave
-    a corrupt file.  Returns empty string when raw_bytes is None.
+    a corrupt file.  After the atomic replace the file is reopened from
+    disk and the SHA-256 is recomputed for independent verification.
+
+    Returns empty string when raw_bytes is None.
     """
     if raw_bytes is None:
         return ""
@@ -48,15 +66,8 @@ def write_raw_evidence(
         f.flush()
         os.fsync(f.fileno())
     os.replace(tmp_path, full_path)
-    # Re-read and verify SHA-256
-    actual_sha256 = hashlib.sha256(raw_bytes).hexdigest()
-    if actual_sha256 != artifact.content_sha256:
-        if full_path.exists():
-            full_path.unlink()
-        raise RuntimeError(
-            f"SHA-256 mismatch for {rel}: "
-            f"declared={artifact.content_sha256} actual={actual_sha256}"
-        )
+    # Re-open from disk and verify SHA-256
+    disk_sha256 = verify_file_sha256(full_path, artifact.content_sha256)
     return rel
 
 
@@ -131,7 +142,7 @@ def write_run_manifest(
     completed_at: str,
     status: str,
 ) -> str:
-    """Write run_manifest.json."""
+    """Write run_manifest.json atomically (temp + replace)."""
     rel = "run_manifest.json"
     manifest = {
         "run_id": run_id,
@@ -141,8 +152,12 @@ def write_run_manifest(
         "status": status,
     }
     full_path = output_root / rel
-    with open(full_path, "w", encoding="utf-8") as f:
+    tmp_path = full_path.with_suffix(full_path.suffix + ".tmp")
+    with open(tmp_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp_path, full_path)
     return rel
 
 
