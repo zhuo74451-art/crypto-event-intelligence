@@ -87,20 +87,21 @@ def run_pilot(context: dict[str, Any]) -> dict[str, Any]:
     errors: List[str] = []
     total_observations = 0
 
-    # Output directory isolation check
-    run_manifest_path = output_root / "run_manifest.json"
-    if run_manifest_path.exists():
-        import json as _json
+    # Strict output-directory isolation
+    # Reject any non-empty directory before any telemetry or evidence is written.
+    if output_root.exists():
+        # Check if directory is non-empty (ignore . and .. on all platforms)
+        is_empty = True
         try:
-            with open(str(run_manifest_path), "r", encoding="utf-8") as _f:
-                _prev = _json.load(_f)
-            _prev_status = _prev.get("status", "")
-            if _prev_status in ("ok", "degraded"):
-                e_msg = "Output directory already contains a completed run (status=" + str(_prev_status) + ", run_id=" + str(_prev.get('run_id', '?')) + "). Use a different --output directory."
-                raise RuntimeError(e_msg)
-            errors.append("incomplete_run_detected at " + str(run_manifest_path))
-        except _json.JSONDecodeError:
-            errors.append("corrupt_run_manifest at " + str(run_manifest_path))
+            # List entries; on some platforms scandir may raise
+            for _ in output_root.iterdir():
+                is_empty = False
+                break
+        except (PermissionError, OSError):
+            is_empty = False
+        if not is_empty:
+            em = "OUTPUT_DIRECTORY_NOT_EMPTY: " + str(output_root) + " is not empty. Use a different --output directory."
+            raise RuntimeError(em)
 
     output_root.mkdir(parents=True, exist_ok=True)
     write_telemetry(output_root, "run_started", {"run_id": run_id, "mode": mode, "sources": source_ids})

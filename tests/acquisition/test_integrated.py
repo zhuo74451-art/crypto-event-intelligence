@@ -204,7 +204,7 @@ def test_completed_dir_rejected(tmp_path):
         r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
         r.headers = {"Content-Type": "application/json"}
         mg.return_value = r
-        with pytest.raises(RuntimeError, match="completed run"):
+        with pytest.raises(RuntimeError, match="OUTPUT_DIRECTORY_NOT_EMPTY"):
             run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
 
 
@@ -219,7 +219,7 @@ def test_degraded_dir_rejected(tmp_path):
         r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
         r.headers = {"Content-Type": "application/json"}
         mg.return_value = r
-        with pytest.raises(RuntimeError, match="completed run"):
+        with pytest.raises(RuntimeError, match="OUTPUT_DIRECTORY_NOT_EMPTY"):
             run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
 
 
@@ -234,3 +234,70 @@ def test_empty_dir_allowed(tmp_path):
         mg.return_value = r
         result = run_pilot({"run_id": "fr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(fresh)}})
     assert result["status"] == "ok"
+
+
+def test_failed_dir_rejected(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from market_radar.acquisition.storage import write_run_manifest
+    from unittest import mock
+    import pytest
+    write_run_manifest(tmp_path, "prev_fail", ["cisa"], "t1", "t2", "failed")
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        with pytest.raises(RuntimeError, match="OUTPUT_DIRECTORY_NOT_EMPTY"):
+            run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
+
+
+def test_corrupt_manifest_dir_rejected(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from unittest import mock
+    import pytest
+    (tmp_path / "run_manifest.json").write_text("not valid json{{")
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        with pytest.raises(RuntimeError, match="OUTPUT_DIRECTORY_NOT_EMPTY"):
+            run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
+
+
+def test_nonempty_no_manifest_rejected(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from unittest import mock
+    import pytest
+    (tmp_path / "some_evidence.bin").write_bytes(b"pretend evidence")
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        with pytest.raises(RuntimeError, match="OUTPUT_DIRECTORY_NOT_EMPTY"):
+            run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
+
+
+def test_rejection_leaves_files_unchanged(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from unittest import mock
+    import pytest, hashlib
+    original_data = b"original evidence bytes"
+    orig_hash = hashlib.sha256(original_data).hexdigest()
+    (tmp_path / "evidence.bin").write_bytes(original_data)
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        with pytest.raises(RuntimeError):
+            run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
+    # Verify existing files are byte-for-byte unchanged
+    assert (tmp_path / "evidence.bin").read_bytes() == original_data, "file was modified"
+    assert hashlib.sha256((tmp_path / "evidence.bin").read_bytes()).hexdigest() == orig_hash, "hash changed"
+    # Verify no new files were created by run_pilot
+    dir_contents = list(tmp_path.iterdir())
+    assert len(dir_contents) == 1, f"expected only evidence.bin, got {dir_contents}"
+
+
