@@ -1,0 +1,44 @@
+{
+  "title": "Known Exploited Vulnerabilities Catalog",
+  "catalogVersion": "2026.06.29",
+  "dateReleased": "2026-06-29T00:00:00Z",
+  "count": 3,
+  "vulnerabilities": [
+    {
+      "cveID": "CVE-2026-0001",
+      "vendorProject": "Test Vendor",
+      "product": "Test Product",
+      "vulnerabilityName": "Test Vulnerability One",
+      "dateAdded": "2026-06-01",
+      "shortDescription": "A test vulnerability for fixture purposes.",
+      "requiredAction": "Apply updates per vendor instructions.",
+      "dueDate": "2026-07-01",
+      "knownRansomwareCampaignUse": "Known",
+      "notes": "https://example.com/notes1"
+    },
+    {
+      "cveID": "CVE-2026-0002",
+      "vendorProject": "Another Vendor",
+      "product": "Another Product",
+      "vulnerabilityName": "Test Vulnerability Two",
+      "dateAdded": "2026-06-15",
+      "shortDescription": "Second test vulnerability.",
+      "requiredAction": "Isolate and patch.",
+      "dueDate": "2026-07-15",
+      "knownRansomwareCampaignUse": "Unknown",
+      "notes": ""
+    },
+    {
+      "cveID": "CVE-2026-0003",
+      "vendorProject": "Third Vendor",
+      "product": "Third Product",
+      "vulnerabilityName": "Test Vulnerability Three",
+      "dateAdded": "2026-05-15",
+      "shortDescription": "Third test vulnerability.",
+      "requiredAction": "Apply workarounds.",
+      "dueDate": "2026-06-15",
+      "knownRansomwareCampaignUse": "Not Known",
+      "notes": ""
+    }
+  ]
+}
