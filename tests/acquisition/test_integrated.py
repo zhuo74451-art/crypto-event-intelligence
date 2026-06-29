@@ -154,3 +154,83 @@ def test_windows_chinese_path(tmp_path):
     assert result == "chinese 测试文件.bin"
     assert (chinese_dir / "chinese 测试文件.bin").exists()
     assert (chinese_dir / "chinese 测试文件.bin").read_bytes() == data
+
+
+# Congress Evidence Manifest linkage
+
+
+def test_congress_manifest_per_feed_paths(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from unittest import mock
+    import json, hashlib
+    fixture_path = FIXTURE_DIR / "congress_sample.xml"
+    with mock.patch("requests.get") as mg:
+        resp = mock.MagicMock()
+        resp.status_code = 200
+        resp.content = fixture_path.read_bytes()
+        resp.headers = {"Content-Type": "application/rss+xml"}
+        mg.return_value = resp
+        result = run_pilot({"run_id": "ct", "config": {"sources": ["congress"], "limit": 3, "output_dir": str(tmp_path), "mode": "live"}})
+    assert result["status"] == "ok"
+    mp = tmp_path / "evidence_manifest.jsonl"
+    assert mp.exists()
+    raw = mp.read_text(encoding="utf-8").strip()
+    lines = [x for x in raw.split(chr(10)) if x]
+    assert len(lines) > 0
+    for line in lines:
+        entry = json.loads(line)
+        ap = entry.get("raw_artifact_path", "")
+        assert "_summary.json" not in ap, "points to summary instead of per-feed XML"
+        assert ap.endswith(".xml"), f"non-XML: {ap}"
+        dp = tmp_path / ap
+        assert dp.exists(), f"not on disk: {dp}"
+        dh = hashlib.sha256(dp.read_bytes()).hexdigest()
+        mh = entry.get("raw_artifact_sha256", "")
+        if mh:
+            assert dh == mh, f"SHA mismatch: disk={dh} manifest={mh}"
+
+
+# Output directory isolation
+
+
+def test_completed_dir_rejected(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from market_radar.acquisition.storage import write_run_manifest
+    from unittest import mock
+    import pytest
+    write_run_manifest(tmp_path, "prev", ["cisa"], "t1", "t2", "ok")
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        with pytest.raises(RuntimeError, match="completed run"):
+            run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
+
+
+def test_degraded_dir_rejected(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from market_radar.acquisition.storage import write_run_manifest
+    from unittest import mock
+    import pytest
+    write_run_manifest(tmp_path, "prev", ["cisa"], "t1", "t2", "degraded")
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        with pytest.raises(RuntimeError, match="completed run"):
+            run_pilot({"run_id": "nr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(tmp_path)}})
+
+
+def test_empty_dir_allowed(tmp_path):
+    from market_radar.acquisition.pilot_runner import run_pilot
+    from unittest import mock
+    fresh = tmp_path / "fresh"
+    with mock.patch("requests.get") as mg:
+        r = mock.MagicMock()
+        r.status_code = 200; r.content = (FIXTURE_DIR / "cisa_kev_sample.json").read_bytes()
+        r.headers = {"Content-Type": "application/json"}
+        mg.return_value = r
+        result = run_pilot({"run_id": "fr", "config": {"sources": ["cisa"], "limit": 3, "output_dir": str(fresh)}})
+    assert result["status"] == "ok"
