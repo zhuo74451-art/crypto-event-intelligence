@@ -31,7 +31,7 @@ class InputInventory:
 
 def load_observations(path: Path) -> Tuple[List[ValidatedObservation], InputInventory]:
     """Load and validate observations.jsonl."""
-    from market_radar.shared.models import Observation
+    from market_radar.shared.models import Observation, DataSourceType, DataQuality, ObservationStatus
     inventory = InputInventory()
     obs_list: List[ValidatedObservation] = []
     seen_ids: set = set()
@@ -44,7 +44,28 @@ def load_observations(path: Path) -> Tuple[List[ValidatedObservation], InputInve
         inventory.total_observations += 1
         try:
             d = json.loads(line)
-            obs = Observation.from_dict(d) if hasattr(Observation, "from_dict") else Observation(**d)
+            # Handle both acquisition JSONL format and direct Observation format
+            if "normalized_payload" in d:
+                # Direct from acquisition pipeline - rebuild as Observation
+                obs = Observation(
+                    observation_id=d.get("observation_id", ""),
+                    source=d.get("source", ""),
+                    source_type=DataSourceType(d.get("source_type", "free_public_api")),
+                    observed_at=d.get("observed_at", ""),
+                    event_time=d.get("event_time"),
+                    affected_assets=list(d.get("affected_assets", [])),
+                    normalized_payload=dict(d.get("normalized_payload", {})),
+                    raw_provenance=dict(d.get("raw_provenance", {})),
+                    evidence=list(d.get("evidence", [])),
+                    data_quality=DataQuality(d.get("data_quality", "unverified")),
+                    observation_fingerprint=d.get("observation_fingerprint", ""),
+                    event_dedup_key=d.get("event_dedup_key", ""),
+                    ingestion_status=ObservationStatus(d.get("ingestion_status", "raw")),
+                    source_refs=list(d.get("source_refs", [])),
+                    risk_notes=list(d.get("risk_notes", [])),
+                )
+            else:
+                obs = Observation(**d)
             vo = ValidatedObservation(observation=obs, source_origin=SourceOrigin.FIXTURE)
             if obs.observation_id in seen_ids:
                 inventory.duplicate_ids += 1
