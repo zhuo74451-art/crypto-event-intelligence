@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Presented to President</title>
+<item>
+<title>H.R. 1234 - Test Bill</title>
+<link>https://www.congress.gov/bill/119th-congress/house-bill/1234</link>
+<guid>hr1234-119</guid>
+<pubDate>Mon, 15 Jun 2026 14:00:00 -0400</pubDate>
+<description>A test bill presented to the president.</description>
+</item>
+<item>
+<title>S. 567 - Another Test Bill</title>
+<link>https://www.congress.gov/bill/119th-congress/senate-bill/567</link>
+<guid>s567-119</guid>
+<pubDate>Tue, 16 Jun 2026 10:30:00 -0400</pubDate>
+<description>Another test bill description.</description>
+</item>
+<item>
+<title>H.R. 890 - Border Security Bill</title>
+<link>https://www.congress.gov/bill/119th-congress/house-bill/890</link>
+<guid>hr890-119</guid>
+<pubDate>Wed, 17 Jun 2026 09:00:00 -0400</pubDate>
+<description>Border security bill description.</description>
+</item>
+</channel>
+</rss>
