@@ -114,7 +114,8 @@ class EventStore:
             if existing:
                 prev_json = existing["state_json"]
                 new_dict = _strip_runtime(state.to_dict())
-                if _canonical_json(new_dict) == _canonical_json(json.loads(prev_json)):
+                prev_dict = _strip_runtime(json.loads(prev_json))
+                if _canonical_json(new_dict) == _canonical_json(prev_dict):
                     return False
                 new_rev = existing["revision"] + 1
                 state.revision = new_rev
