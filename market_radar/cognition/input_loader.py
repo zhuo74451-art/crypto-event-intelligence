@@ -1,4 +1,4 @@
-"""Input loader — validates acquisition output for cognition processing."""
+"""Input loader -- validates acquisition output for cognition processing."""
 
 from __future__ import annotations
 import json, hashlib
@@ -11,7 +11,7 @@ from market_radar.cognition.contracts import SourceOrigin, sha256_id
 
 @dataclass
 class ValidatedObservation:
-    observation: Any  # market_radar.shared.models.Observation
+    observation: Any
     source_origin: SourceOrigin = SourceOrigin.FIXTURE
     valid: bool = True
     rejection_reason: str = ""
@@ -29,8 +29,14 @@ class InputInventory:
     errors: List[str] = field(default_factory=list)
 
 
-def load_observations(path: Path) -> Tuple[List[ValidatedObservation], InputInventory]:
-    """Load and validate observations.jsonl."""
+def load_observations(path: Path, mode: str = "replay") -> Tuple[List[ValidatedObservation], InputInventory]:
+    """Load and validate observations.jsonl.
+
+    Args:
+        path: Path to observations.jsonl.
+        mode: "replay" (default), "live", or "fixture".
+              Controls source_origin assignment.
+    """
     from market_radar.shared.models import Observation, DataSourceType, DataQuality, ObservationStatus
     inventory = InputInventory()
     obs_list: List[ValidatedObservation] = []
@@ -38,6 +44,15 @@ def load_observations(path: Path) -> Tuple[List[ValidatedObservation], InputInve
     if not path.exists():
         inventory.errors.append(f"observations file not found: {path}")
         return [], inventory
+
+    # Map mode to source origin
+    origin_map = {
+        "live": SourceOrigin.LIVE,
+        "replay": SourceOrigin.REPLAY,
+        "fixture": SourceOrigin.FIXTURE,
+    }
+    default_origin = origin_map.get(mode, SourceOrigin.FIXTURE)
+
     for line in path.read_text(encoding="utf-8").strip().split(chr(10)):
         if not line.strip():
             continue
@@ -46,7 +61,6 @@ def load_observations(path: Path) -> Tuple[List[ValidatedObservation], InputInve
             d = json.loads(line)
             # Handle both acquisition JSONL format and direct Observation format
             if "normalized_payload" in d:
-                # Direct from acquisition pipeline - rebuild as Observation
                 obs = Observation(
                     observation_id=d.get("observation_id", ""),
                     source=d.get("source", ""),
@@ -66,16 +80,26 @@ def load_observations(path: Path) -> Tuple[List[ValidatedObservation], InputInve
                 )
             else:
                 obs = Observation(**d)
-            vo = ValidatedObservation(observation=obs, source_origin=SourceOrigin.FIXTURE)
+
+            # Determine source_origin from data or mode
+            raw_origin = d.get("source_origin", "")
+            if raw_origin in ("live", "replay", "fixture", "degraded"):
+                origin = SourceOrigin(raw_origin)
+            else:
+                origin = default_origin
+
+            vo = ValidatedObservation(observation=obs, source_origin=origin)
             if obs.observation_id in seen_ids:
                 inventory.duplicate_ids += 1
                 vo.valid = False
                 vo.rejection_reason = "duplicate_observation_id"
             seen_ids.add(obs.observation_id)
+
             if vo.valid:
                 inventory.valid_observations += 1
             else:
                 inventory.rejected_observations += 1
+            inventory.source_origins[origin.value] = inventory.source_origins.get(origin.value, 0) + 1
             obs_list.append(vo)
         except Exception as e:
             inventory.rejected_observations += 1

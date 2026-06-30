@@ -8,7 +8,7 @@ from market_radar.cognition.contracts import EventState, EventRevision, SourceCo
 from market_radar.cognition.contracts import ExpectationState, MarketSnapshot
 from market_radar.cognition.contracts import ConfirmationState, TransmissionPath, Assessment, Abstention
 from market_radar.cognition.contracts import EventStatus, Verdict, ExpectationType, AbstentionCode, utc_now, sha256_id
-from market_radar.cognition.input_loader import load_observations, InputInventory
+from market_radar.cognition.input_loader import load_observations, load_evidence_manifest, verify_evidence_hash, InputInventory
 from market_radar.cognition.event_grouper import group_observations
 from market_radar.cognition.event_store import EventStore
 from market_radar.cognition.expectation import calculate_gap, detect_stale
@@ -64,7 +64,7 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
     # S1: Input validation
     sr = make_sr("input_validation")
     obs_path = input_path / "observations.jsonl"
-    obs_list, inventory = load_observations(obs_path)
+    obs_list, inventory = load_observations(obs_path, mode=mode)
     result.inventory = inventory
     rej_path = str(output_root / "rejected_observations.jsonl")
     with open(rej_path, "w") as rf:
@@ -75,6 +75,19 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
     sr.errors.extend(inventory.errors)
     result.stages["input_validation"] = sr
     all_errors.extend(inventory.errors)
+    # Evidence manifest loading
+    ev_manifest_path = input_path / "evidence_manifest.jsonl"
+    if ev_manifest_path.exists():
+        ev_entries, ev_errors = load_evidence_manifest(ev_manifest_path)
+        inventory.evidence_files_checked = len(ev_entries)
+        for entry in ev_entries:
+            err = verify_evidence_hash(input_path, entry)
+            if err:
+                inventory.evidence_hash_mismatches += 1
+                inventory.errors.append(f"evidence_hash: {err}")
+                if strict:
+                    all_errors.append(f"strict mode: {err}")
+        sr.outputs.append(str(ev_manifest_path))
     if inventory.valid_observations == 0:
         result.status = "failed"; result.errors = all_errors; return result
     
@@ -137,6 +150,8 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
     sr = make_sr("market_snapshots")
     snapshots = []
     sp = input_path / "market_snapshots.jsonl"
+
+    # Load existing snapshots from fixture/input
     if sp.exists():
         for line in sp.read_text().strip().split(chr(10)):
             if line.strip():
@@ -150,6 +165,20 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
                     snapshots.append(ms)
                 except:
                     pass
+
+    # In live mode, attempt to use MarketSnapshotProvider
+    if mode == "live" and assets:
+        try:
+            from market_radar.cognition.market_snapshot import MarketSnapshotProvider
+            provider = MarketSnapshotProvider()
+            for ev in events:
+                for asset in (assets or ["BTC", "ETH"]):
+                    ms = provider.fetch_snapshot(ev.event_id, asset, as_of=as_of)
+                    if ms:
+                        snapshots.append(ms)
+        except Exception as e:
+            all_errors.append(f"live_market_data: {e}")
+
     result.snapshots = snapshots
     sp_out = str(output_root / "market_snapshots.jsonl")
     with open(sp_out, "w") as f:
@@ -167,8 +196,9 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
             cd = evaluate_price_direction(snap.pre_event_ref, snap.price, 1.0)
             cd.event_id = ev.event_id
             confirmations.append(cd)
-            if snap.volume_24h and snap.pre_event_ref:
-                cv = evaluate_volume_expansion(snap.volume_24h, snap.pre_event_ref * 0.001, 1.5)
+            if snap.volume_24h:
+                vol_baseline = snap.pre_event_ref if snap.pre_event_ref else snap.volume_24h
+                cv = evaluate_volume_expansion(snap.volume_24h, vol_baseline, 1.5)
                 cv.event_id = ev.event_id
                 confirmations.append(cv)
     result.confirmations = confirmations
@@ -183,10 +213,22 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
     for ev in events:
         old = ev.status
         has_c = any(c.verdict == Verdict.CONTRADICTS.value for c in confirmations if c.event_id == ev.event_id)
-        if has_c and ev.status not in (EventStatus.CONTRADICTED.value, EventStatus.INVALIDATED.value, EventStatus.RESOLVED.value):
+        has_s = any(c.verdict == Verdict.SUPPORTS.value for c in confirmations if c.event_id == ev.event_id)
+
+        if ev.status in (EventStatus.RESOLVED.value,):
+            pass  # terminal state
+        elif ev.status == EventStatus.CONTRADICTED.value and has_c:
+            # Stay contradicted unless new evidence resolves it
+            pass
+        elif old == EventStatus.CONTRADICTED.value and not has_c:
+            ev.status = EventStatus.INVALIDATED.value
+        elif has_c and ev.status not in (EventStatus.CONTRADICTED.value, EventStatus.INVALIDATED.value, EventStatus.RESOLVED.value):
             ev.status = EventStatus.CONTRADICTED.value
+        elif ev.status == EventStatus.CANDIDATE.value and has_s:
+            ev.status = EventStatus.ACTIVE.value
         elif ev.status == EventStatus.CANDIDATE.value:
             ev.status = EventStatus.ACTIVE.value
+
         if old != ev.status:
             store.upsert_event(ev)
             r = EventRevision(revision_id=sha256_id(["rev",ev.event_id,str(ev.revision)]), event_id=ev.event_id, revision=ev.revision, previous_status=old, new_status=ev.status, reason="lifecycle")
