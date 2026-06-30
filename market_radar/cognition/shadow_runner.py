@@ -93,11 +93,11 @@ def run_shadow(
     as_of: Optional[str] = None,
 ) -> Dict[str, Any]:
     """One-shot shadow runner that processes a directory batch."""
-    from market_radar.cognition.orchestrator import run_cognition
+    from market_radar.cognition.program_runner import run_program
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Run cognition
-    result = run_cognition(
+    # Run integrated program
+    result = run_program(
         input_path=input_dir,
         output_root=output_dir,
         run_id=run_id,
@@ -105,9 +105,10 @@ def run_shadow(
         as_of=as_of,
     )
 
-    # Build evaluation
+    # Build evaluation from cognition results
+    cog = getattr(result, 'cognition', None) or result
     eval_report = build_evaluation_report(
-        result.events, result.assessments, result.abstentions,
+        cog.events, cog.assessments, cog.abstentions,
         as_of=as_of,
     )
 
@@ -115,17 +116,18 @@ def run_shadow(
     with open(str(output_dir / "evaluation_report.json"), "w") as f:
         json.dump(eval_report, f, indent=2)
     with open(str(output_dir / "input_inventory.json"), "w") as f:
-        if hasattr(result, "inventory") and result.inventory:
-            json.dump(result.inventory.__dict__, f, indent=2)
+        inv = getattr(getattr(result, 'cognition', None), 'inventory', None) or getattr(result, 'inventory', None)
+        if inv:
+            json.dump(inv.__dict__, f, indent=2)
         else:
             json.dump({"status": "no_inventory"}, f)
 
     return {
         "run_id": run_id,
         "status": result.status,
-        "events": len(result.events),
-        "assessments": len(result.assessments),
-        "abstentions": len(result.abstentions),
+        "events": len(getattr(getattr(result, 'cognition', None), 'events', []) or getattr(result, 'events', [])),
+        "assessments": len(getattr(getattr(result, 'cognition', None), 'assessments', []) or getattr(result, 'assessments', [])),
+        "abstentions": len(getattr(getattr(result, 'cognition', None), 'abstentions', []) or getattr(result, 'abstentions', [])),
         "evaluation": eval_report,
         "output_dir": str(output_dir),
     }

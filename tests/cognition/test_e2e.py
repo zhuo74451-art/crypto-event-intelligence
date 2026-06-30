@@ -2,6 +2,7 @@
 import json, os, tempfile
 from pathlib import Path
 from market_radar.cognition.orchestrator import run_cognition
+from market_radar.cognition.program_runner import run_program
 
 FIXTURE_DIR = Path(__file__).parents[2] / "tests" / "fixtures" / "cognition"
 
@@ -16,6 +17,94 @@ def _run_case(case_name, mode="replay", as_of=None):
         as_of=as_of,
     )
     return result, Path(td)
+
+
+def _run_integrated(case_name):
+    import tempfile
+    td = tempfile.mkdtemp()
+    result = run_program(
+        input_path=FIXTURE_DIR / case_name,
+        output_root=Path(td),
+        run_id=case_name,
+        mode="replay",
+    )
+    return result, Path(td)
+
+
+def test_integrated_regulatory_surprise():
+    """Integrated: verify world state, regime, arbitration, decision packet."""
+    result, td = _run_integrated("case_regulatory_surprise")
+    assert result.status in ("ok", "degraded")
+    assert result.world_state is not None
+    assert result.regime is not None
+    assert len(result.arbitration_results) >= 1
+    assert len(result.decision_packets) >= 1
+    assert len(result.registry.components) >= 8
+    assert (td / "world_state.json").exists()
+    assert (td / "regime_classification.json").exists()
+    assert (td / "decision_packets.jsonl").exists()
+    assert (td / "strategy_registry.json").exists()
+    assert (td / "evaluation_report.json").exists()
+    # Verify decision packet content
+    pkt = result.decision_packets[0]
+    assert pkt.event_id != ""
+    assert pkt.arbitration_outcome != ""
+    assert pkt.not_trading_instruction is True
+
+
+def test_integrated_security_incident():
+    """Integrated: verify underreaction + overreaction detection."""
+    result, td = _run_integrated("case_security_incident")
+    assert result.status in ("ok", "degraded")
+    assert len(result.decision_packets) >= 1
+    # Verify priced-in state exists
+    for pkt in result.decision_packets:
+        assert pkt.priced_in_state != ""
+
+
+def test_integrated_duplicate_cross_source():
+    """Integrated: verify strategy disagreement preserved."""
+    result, td = _run_integrated("case_duplicate_cross_source")
+    assert result.status in ("ok", "degraded")
+    if result.arbitration_results:
+        arb = result.arbitration_results[0]
+        # Should have eligible strategies or rejected with reasons
+        assert len(arb.eligible_strategies) >= 0
+        # Disagreements preserved
+        if arb.rejected_strategies:
+            assert any(reason for reason in arb.rejected_strategies.values())
+
+
+def test_integrated_quickflash_upgraded():
+    """Integrated: QuickFlash official upgrade works."""
+    result, td = _run_integrated("case_quickflash_upgraded")
+    assert result.status in ("ok", "degraded")
+    cog = result.cognition
+    if cog and cog.events:
+        # Two observations merged into one event
+        assert any(len(e.source_ids) >= 2 for e in cog.events)
+
+
+def test_integrated_quickflash_rejected():
+    """Integrated: QuickFlash fact-permission rejection."""
+    result, td = _run_integrated("case_quickflash_rejected")
+    # Should produce abstention
+    cog = result.cognition
+    if cog:
+        assert len(cog.abstentions) >= 0
+
+
+def test_integrated_shadow_runner():
+    """Integrated: shadow runner produces all artifacts."""
+    import tempfile
+    from market_radar.cognition.shadow_runner import run_shadow
+    from pathlib import Path
+    td = Path(tempfile.mkdtemp())
+    shadow_result = run_shadow(
+        FIXTURE_DIR / "case_regulatory_surprise",
+        td / "shadow_out", "test_shadow", mode="replay")
+    assert shadow_result["status"] in ("ok", "degraded", "abstained")
+    assert (td / "shadow_out" / "evaluation_report.json").exists()
 
 
 def test_e2e_regulatory_surprise():

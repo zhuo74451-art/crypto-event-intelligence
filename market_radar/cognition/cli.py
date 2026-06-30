@@ -1,9 +1,9 @@
-"""Cognition CLI - calls orchestrator."""
+"""Cognition CLI - calls integrated program runner."""
 from __future__ import annotations
 import argparse, json, sys, uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from market_radar.cognition.orchestrator import run_cognition
+from market_radar.cognition.program_runner import run_program
 from market_radar.cognition.contracts import utc_now
 
 def build_parser():
@@ -35,7 +35,7 @@ def main(argv=None):
     if not input_path.exists():
         print(f"Input not found: {input_path}")
         return 1
-    result = run_cognition(
+    result = run_program(
         input_path=input_path,
         output_root=output_root,
         run_id=run_id,
@@ -46,16 +46,18 @@ def main(argv=None):
     )
     print(f"Run: {run_id}")
     print(f"Status: {result.status}")
-    print(f"Events: {len(result.events)}")
-    print(f"Assessments: {len(result.assessments)}")
-    print(f"Abstentions: {len(result.abstentions)}")
+    print(f"Events: {len(result.cognition.events) if result.cognition else 0}")
+    print(f"Assessments: {len(result.cognition.assessments) if result.cognition else 0}")
+    print(f"Abstentions: {len(result.cognition.abstentions) if result.cognition else 0}")
+    print(f"Decision packets: {len(result.decision_packets)}")
+    print(f"Strategies registered: {len(result.registry.components) if result.registry else 0}")
     print(f"Output: {output_root}")
-    for sn, s in result.stages.items():
+    for sn, s in (result.cognition.stages if result.cognition else {}).items():
         print(f"  {sn}: {s.status} ({len(s.outputs)} outputs)")
     if result.errors:
         for e in result.errors[:5]:
             print(f"  Error: {e}")
-    return 0 if result.status in ("ok", "degraded", "abstained") else 1
+    return 0 if result.status in ("ok", "degraded", "abstained", "partial") else 1
 
 if __name__ == "__main__":
     sys.exit(main())
