@@ -47,16 +47,14 @@ def test_duplicate_cross_source_grouping():
     obs_list, inv, events, conflicts = _run_case("case_duplicate_cross_source")
     assert inv.valid_observations == 2
     # Same dedup_key => same event group
-    if len(events) == 1:
-        assert len(events[0].observation_ids) == 2
-        assert len(events[0].source_ids) >= 2
+    assert len(events) == 1, f'Expected 1 event for same dedup_key, got {len(events)}'
+    assert len(events[0].observation_ids) == 2
+    assert len(events[0].source_ids) >= 2
 
 def test_ambiguous_dates_kept_separate():
     """Case 6: Same title on different dates must remain separate events."""
     obs_list, inv, events, conflicts = _run_case("case_ambiguous_dates")
     assert inv.valid_observations == 2
     # Different dedup_keys => separate events
-    assert len(events) >= 1
-    # Should have at least 2 events if exact matching works
-    if len(events) >= 2:
-        assert events[0].event_dedup_key != events[1].event_dedup_key
+    assert len(events) >= 2, f'Expected 2 events for different dates, got {len(events)}'
+    assert events[0].event_dedup_key != events[1].event_dedup_key
