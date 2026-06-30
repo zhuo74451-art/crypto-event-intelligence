@@ -66,13 +66,13 @@ def test_integrated_duplicate_cross_source():
     """Integrated: verify strategy disagreement preserved."""
     result, td = _run_integrated("case_duplicate_cross_source")
     assert result.status in ("ok", "degraded")
-    if result.arbitration_results:
-        arb = result.arbitration_results[0]
-        # Should have eligible strategies or rejected with reasons
-        assert len(arb.eligible_strategies) >= 0
+    arb = result.arbitration_results[0] if result.arbitration_results else None
+    if arb:
+        assert isinstance(arb.eligible_strategies, list)
         # Disagreements preserved
         if arb.rejected_strategies:
-            assert any(reason for reason in arb.rejected_strategies.values())
+            reasons = list(arb.rejected_strategies.values())
+            assert any(r for r in reasons), f"Empty rejection reason: {reasons}"
 
 
 def test_integrated_quickflash_upgraded():
@@ -80,9 +80,11 @@ def test_integrated_quickflash_upgraded():
     result, td = _run_integrated("case_quickflash_upgraded")
     assert result.status in ("ok", "degraded")
     cog = result.cognition
-    if cog and cog.events:
-        # Two observations merged into one event
-        assert any(len(e.source_ids) >= 2 for e in cog.events)
+    assert cog is not None, "No cognition result"
+    assert cog.events, "No events generated"
+    # Two observations merged into one event with 2+ sources
+    merged = [e for e in cog.events if len(e.source_ids) >= 2]
+    assert len(merged) >= 1, f"Expected merged event with 2+ sources, got {[e.source_ids for e in cog.events]}"
 
 
 def test_integrated_quickflash_rejected():
@@ -91,7 +93,7 @@ def test_integrated_quickflash_rejected():
     # Should produce abstention
     cog = result.cognition
     if cog:
-        assert len(cog.abstentions) >= 0
+        pass  # abstention checked in separate test
 
 
 def test_integrated_shadow_runner():

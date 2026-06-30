@@ -16,10 +16,11 @@ from market_radar.cognition.world_builder import (
     build_world_state, build_regime_classification, classify_priced_in,
 )
 from market_radar.cognition.strategy_library import get_all_strategy_specs
+from market_radar.cognition.strategy_evaluators import evaluate_all as evaluate_all_strategies
 from market_radar.cognition.strategy_components import (
     StrategyRegistry, MarketDecisionPacket,
 )
-from market_radar.cognition.arbitration_engine import register_strategies, arbitrate
+from market_radar.cognition.arbitration_engine import register_strategies, arbitrate_with_evaluations
 from market_radar.cognition.decision_pipeline import build_decision_packet
 from market_radar.cognition.shadow_runner import build_evaluation_report
 from market_radar.cognition.contracts import utc_now
@@ -103,18 +104,37 @@ def run_program(input_path, output_root, run_id, mode="replay",
                                 if s.event_id == ev.event_id), None),
             "funding_rate": btc_data.funding_rate if btc_data else None,
             "open_interest": btc_data.open_interest if btc_data else None,
+            "btc_return_24h": btc_data.return_24h if btc_data else None,
+            "eth_return_24h": None,
+            "exchange_netflow": None,
+            "stablecoin_liquidity": None,
+            "unlock_amount": None,
+            "circulating_supply": None,
+            "incident_severity": None,
+            "affected_tvl": None,
         }
 
-        arb = arbitrate(ws, ev.event_id, ev.status, gap, market_verdict,
-                        has_conflicts, available_vars, registry=registry)
-        result.arbitration_results.append(arb)
+        # Execute all 8 strategy evaluators as code
+        strategy_evals = evaluate_all_strategies(available_vars)
 
-        pre_event_movement = None
+        # Determine priced-in state
+        pi_label = "indeterminate"
         snap = next((s for s in cog.snapshots if s.event_id == ev.event_id), None)
         if snap and snap.pre_event_ref and snap.price and snap.pre_event_ref != 0:
             pre_event_movement = ((snap.price - snap.pre_event_ref)
                                   / snap.pre_event_ref) * 100.0
-        pi_label, _ = classify_priced_in(pre_event_movement, gap)
+            pi_label, _ = classify_priced_in(pre_event_movement, gap)
+
+        # Arbitration consumes strategy evaluation records
+        arb = arbitrate_with_evaluations(
+            evaluations=strategy_evals,
+            world_state=ws,
+            event_id=ev.event_id,
+            regime_label=regime.risk_label if regime else "",
+            priced_in_label=pi_label,
+            has_source_conflicts=has_conflicts,
+        )
+        result.arbitration_results.append(arb)
 
         pkt = build_decision_packet(ev, ws, regime, arb, gap, market_verdict,
                                     pi_label, [])

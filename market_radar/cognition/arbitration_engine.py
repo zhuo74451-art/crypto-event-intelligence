@@ -12,6 +12,7 @@ from market_radar.cognition.strategy_components import (
     StrategySpec, RegisteredComponent, StrategyRegistry,
     ArbitrationResult, ArbitrationOutcome, StrategyStatus,
 )
+from market_radar.cognition.strategy_evaluators import StrategyEvaluation
 from market_radar.cognition.world_model import MarketWorldState, RegimeClassification
 
 
@@ -104,6 +105,63 @@ def arbitrate(
         result.overall_confidence = round(
             sum(result.confidence_decomposition.values()) / max(len(result.confidence_decomposition), 1), 2)
 
+    return result
+
+
+
+def arbitrate_with_evaluations(
+    evaluations: List[StrategyEvaluation],
+    world_state,
+    event_id: str,
+    regime_label: str = "",
+    priced_in_label: str = "",
+    has_source_conflicts: bool = False,
+) -> ArbitrationResult:
+    """Arbitrate using pre-computed strategy evaluation records."""
+    result = ArbitrationResult(
+        event_id=event_id,
+        arbitration_id=_sha256_id(["arb", event_id]),
+        as_of=world_state.as_of if hasattr(world_state, 'as_of') else "",
+    )
+    for ev in evaluations:
+        if ev.status == "eligible":
+            result.eligible_strategies.append(ev.strategy_id)
+            result.support_reasons.setdefault(ev.strategy_id, []).extend(ev.reason_codes)
+            if ev.trigger_result:
+                result.support_reasons[ev.strategy_id].append("trigger_met")
+            if ev.confirmation_result:
+                result.support_reasons[ev.strategy_id].append("confirmation_met")
+        elif ev.status == "abstained":
+            result.rejected_strategies[ev.strategy_id] = "abstained: " + "; ".join(ev.reason_codes)
+            result.missing_inputs.setdefault(ev.strategy_id, []).extend(ev.missing_variables)
+        else:
+            result.rejected_strategies[ev.strategy_id] = "rejected: " + "; ".join(ev.reason_codes)
+
+    # Determine outcome using priced-in and conflict state
+    if not result.eligible_strategies:
+        result.outcome = ArbitrationOutcome.INSUFFICIENT_EVIDENCE.value
+        result.selected_observation_stance = ArbitrationOutcome.ABSTAIN.value
+    elif priced_in_label in ("mostly_priced",):
+        result.outcome = ArbitrationOutcome.MONITOR.value
+        result.selected_observation_stance = "monitor_priced_in"
+    elif has_source_conflicts:
+        result.outcome = ArbitrationOutcome.MONITOR.value
+        result.selected_observation_stance = "monitor_pending_resolution"
+    else:
+        result.outcome = ArbitrationOutcome.ACTIONABLE_WATCH.value
+        result.selected_observation_stance = ArbitrationOutcome.ACTIONABLE_WATCH.value
+
+    # Calculate confidence from evaluation data
+    n_eligible = len(result.eligible_strategies)
+    n_total = n_eligible + len(result.rejected_strategies)
+    if n_total > 0:
+        result.confidence_decomposition = {
+            "eligibility_ratio": round(n_eligible / max(n_total, 1), 2),
+            "priced_in_adjustment": 0.1 if priced_in_label == "mostly_priced" else (
+                0.0 if priced_in_label == "unpriced" else 0.05),
+        }
+        result.overall_confidence = round(
+            sum(result.confidence_decomposition.values()) / max(len(result.confidence_decomposition), 1), 3)
     return result
 
 
