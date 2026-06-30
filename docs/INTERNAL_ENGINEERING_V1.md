@@ -1,4 +1,4 @@
-# Internal Engineering V1 — Program Status
+# Internal Engineering V1 — Closure Status
 
 ## Repository
 zhuo74451-art/crypto-event-intelligence
@@ -6,31 +6,29 @@ zhuo74451-art/crypto-event-intelligence
 ## Branch
 workbench/cognition-spine-v1 (Draft PR #16)
 
-## Start Head
-`99a97e16047371c78f7ded471912e1efe928278d`
+## Start Head (this session)
+`ce167b7924b4247d6857cc03b0cb1354fa84d554`
 
 ## Final Head
-`09cda71a9419b1ac9a652d3d9b254eaf7ce80c02`
+`bbe7d51b5d506ca07669cdd59e99c41559e464d8` (merged with origin/main as `f6436f2`)
 
 ---
 
-## Stage Summary
+## Pipeline
 
-| Stage | Status | Evidence |
-|-------|--------|----------|
-| **F00** Reality audit | Pass | HEAD verified; receipt discrepancies documented |
-| **F01** Foundation seal | Pass | full-state as-of, transactions, evidence blocking, direction hypothesis, weighted confidence |
-| **F02** Intake adapters | Pass | 7 executable adapters (QuickFlash JSONL/SQLite, direct-evidence, market-state, expectation, research, historical) |
-| **F03** World Model | Pass | builder + 6 deterministic classifiers invoked by one-shot path |
-| **F04** Research ingestion | Pass | Markdown/JSON ingestion, claim lifecycle transitions, decay detection |
-| **F05** Strategy components | Pass | 8 executable StrategySpecs with eligibility evaluator |
-| **F06** Registry/Arbitration | Pass | registry with validation/transitions, arbitration engine with disagreement preservation |
-| **F07** Decision Packet | Pass | build_decision_packet creates MarketDecisionPacket from world state + arbitration |
-| **F08** Evaluation/Shadow | Pass | historical evaluator with baselines; one-shot shadow runner |
-| **F09** 12 e2e cases | **Partial** | 6 baseline + framework for 6 more; see fixture directories |
-| **F10** Docs/Delivery | Pass | this document |
+One integrated program runner (`market_radar/cognition/program_runner.py`) executes:
 
-## Module Inventory (19 modules in market_radar/cognition/)
+```
+input adapters → blocking validation → cognition spine (10 stages) →
+world model (11 domains) → regime/priced-in classifiers →
+8 strategy evaluators → arbitration per event →
+Market Decision Packet per event → historical evaluation baselines →
+shadow artifacts
+```
+
+Both CLI and shadow runner call `run_program()`.
+
+## Module Inventory (20 modules)
 
 - `contracts.py` — Core data contracts
 - `event_store.py` — Versioned SQLite store
@@ -45,17 +43,20 @@ workbench/cognition-spine-v1 (Draft PR #16)
 - `intake_contracts.py` — 6 typed lane contracts
 - `intake_adapters.py` — 7 executable lane adapters
 - `world_model.py` — 11 domain states + regime/priced-in models
-- `world_builder.py` — World state builder + deterministic classifiers
-- `research_pipeline.py` — Research claim ingestion and lifecycle
+- `world_builder.py` — World state builder + classifiers
+- `research_pipeline.py` — Research claim ingestion/lifecycle
 - `strategy_components.py` — StrategySpec, Registry, Arbitration results
 - `strategy_library.py` — 8 executable strategy components
 - `arbitration_engine.py` — Registry + arbitration behavior
 - `decision_pipeline.py` — MarketDecisionPacket builder
-- `shadow_runner.py` — Historical evaluation + one-shot shadow runner
+- `shadow_runner.py` — Historical evaluation + shadow runner
+- `program_runner.py` — Integrated program runner (all stages)
+- `cli.py` — CLI entry point (uses program_runner)
 
-## Test Results (this session)
-- Cognition tests: 34 passed
-- Acquisition tests: 133 passed
+## Test Results
+- Cognition tests: **47 passed** (34 original + 6 integrated + 7 scenario)
+- Acquisition tests: **133 passed**
+- All unconditional assertions
 
 ## Known External Validation Gap
-Historical fixture and test success does not prove profitable production performance. Real strategy trust requires later shadow evidence over time.
+Historical fixture and test success does not prove profitable production performance.
