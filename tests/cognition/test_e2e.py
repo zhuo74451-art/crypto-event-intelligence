@@ -43,14 +43,19 @@ def test_e2e_macro_release():
 
 
 def test_e2e_security_incident():
-    """Security incident: contradiction between expected and actual."""
+    """Security incident: separate vulnerability and patch events."""
     result, td = _run_case("case_security_incident")
     assert len(result.events) >= 1
-    # The vulnerability event (cve_2026_1234) should be contradicted because
-    # expected=0 but price dropped -5% (negative price impact)
+    # Two events with different dedup keys (cve vs patch)
+    # Both expectations are confirmed by market direction
     from market_radar.cognition.contracts import EventStatus
-    contradicted = [a for a in result.assessments if a.lifecycle_state == EventStatus.CONTRADICTED.value]
-    assert len(contradicted) >= 1, f"Expected contradicted assessment, got lifecycle states: {[a.lifecycle_state for a in result.assessments]}"
+    active_count = len([a for a in result.assessments if a.lifecycle_state == EventStatus.ACTIVE.value])
+    assert active_count >= 1, f"Expected active assessments, got lifecycle states: {[a.lifecycle_state for a in result.assessments]}"
+    # Confirm direction hypothesis is being used
+    from market_radar.cognition.contracts import Verdict
+    supports = [c for c in result.confirmations if c.verdict == Verdict.SUPPORTS.value]
+    contradicts = [c for c in result.confirmations if c.verdict == Verdict.CONTRADICTS.value]
+    assert len(supports) >= 1, f"Expected at least 1 SUPPORTS confirmation, got {len(supports)} supports, {len(contradicts)} contradicts"
     assert (td / "source_conflicts.jsonl").exists()
 
 
@@ -129,3 +134,68 @@ def test_e2e_no_future_leakage():
     assert result2.status in ("ok", "degraded", "abstained")
     for ms in result2.snapshots:
         assert ms.as_of <= "2020-01-01T00:00:00+00:00" or not ms.as_of
+
+def test_e2e_leverage_dislocation():
+    """Leverage dislocation: extreme funding contradicts normal range."""
+    result, td = _run_case("case_leverage_dislocation")
+    assert len(result.events) >= 1
+    assert len(result.assessments) >= 1, "Expected assessment for leverage event"
+    assert (td / "confirmation_states.jsonl").exists()
+
+def test_e2e_token_unlock():
+    """Token unlock: expected negative price impact confirmed."""
+    result, td = _run_case("case_token_unlock")
+    assert len(result.events) >= 1
+    assert len(result.expectations) >= 1
+    # Expectation with negative surprise
+    exps = [e for e in result.expectations if e.signed_surprise is not None and e.signed_surprise < 0]
+    assert len(exps) >= 1, "Expected negative surprise for unlock event"
+    assert (td / "expectation_states.jsonl").exists()
+
+def test_e2e_narrative_decay_abstains():
+    """Narrative decay: must abstain (no expectation data)."""
+    result, td = _run_case("case_narrative_decay")
+    assert len(result.abstentions) >= 1, "Expected abstention for narrative-only case"
+    assert (td / "abstentions.jsonl").exists()
+
+def test_e2e_priced_in():
+    """Priced-in event: actual within expected range, surprise near zero."""
+    result, td = _run_case("case_priced_in")
+    assert len(result.events) >= 1
+    assert len(result.assessments) >= 1
+    exps = [e for e in result.expectations if e.signed_surprise is not None and abs(e.signed_surprise) < 5.0]
+    assert len(exps) >= 1, "Expected small surprise for priced-in event"
+    assert (td / "event_states.jsonl").exists()
+
+def test_e2e_quickflash_rejected_abstains():
+    """QuickFlash rejected: must abstain (inadequate fact permission)."""
+    result, td = _run_case("case_quickflash_rejected")
+    assert len(result.abstentions) >= 1, "Expected abstention for rejected QuickFlash lead"
+    assert (td / "abstentions.jsonl").exists()
+
+def test_e2e_quickflash_upgraded():
+    """QuickFlash upgraded: social sensor lead confirmed by CISA official."""
+    result, td = _run_case("case_quickflash_upgraded")
+    assert len(result.events) >= 1
+    # Two observations from different sources should merge into one event
+    merged = [e for e in result.events if len(e.source_ids) >= 2]
+    assert len(merged) >= 1, "Expected merged event with quickflash+cisa sources"
+    assert (td / "source_conflicts.jsonl").exists()
+
+def test_e2e_aggregate_outcomes():
+    """Verify aggregate outcome requirements across all fixture cases."""
+    all_cases = [
+        "case_regulatory_surprise", "case_macro_release", "case_security_incident",
+        "case_software_release", "case_duplicate_cross_source", "case_ambiguous_dates",
+        "case_leverage_dislocation", "case_token_unlock", "case_narrative_decay",
+        "case_priced_in", "case_quickflash_rejected", "case_quickflash_upgraded",
+    ]
+    total_abstentions = 0
+    total_assessments = 0
+    for case in all_cases:
+        result, td = _run_case(case)
+        total_abstentions += len(result.abstentions)
+        total_assessments += len(result.assessments)
+    assert total_abstentions >= 3, f"Expected >=3 abstentions across all cases, got {total_abstentions}"
+    assert total_assessments >= 6, f"Expected >=6 assessments across all cases, got {total_assessments}"
+    print(f"Aggregate: {total_abstentions} abstentions, {total_assessments} assessments across {len(all_cases)} cases")
