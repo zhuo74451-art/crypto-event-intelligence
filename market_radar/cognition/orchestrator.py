@@ -86,7 +86,9 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
                 inventory.evidence_hash_mismatches += 1
                 inventory.errors.append(f"evidence_hash: {err}")
                 if strict:
-                    all_errors.append(f"strict mode: {err}")
+                    err_msg = f"strict mode: {err}"
+                    all_errors.append(err_msg)
+                    inventory.errors.append(err_msg)
         sr.outputs.append(str(ev_manifest_path))
     if inventory.valid_observations == 0:
         result.status = "failed"; result.errors = all_errors; return result
@@ -104,17 +106,19 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
     finish_sr(sr, "complete", [ev_path, cf_path])
     result.stages["event_grouping"] = sr
     
-    # S3: Store
+    # S3: Store (wrapped in transaction)
     sr = make_sr("event_store")
     db_path = str(output_root / "cognition.db")
     store = EventStore(db_path)
     result.store = store
     revisions = []
-    for ev in events:
-        store.upsert_event(ev)
-        r = EventRevision(revision_id=sha256_id(["rev",ev.event_id,"1"]), event_id=ev.event_id, revision=1, new_status=ev.status, reason="created", timestamp=utc_now())
-        store.add_revision(r)
-        revisions.append(r)
+    with store.transaction():
+        for ev in events:
+            store.upsert_event(ev)
+            ev_json = json.dumps(ev.to_dict())
+            r = EventRevision(revision_id=sha256_id(["rev",ev.event_id,"1"]), event_id=ev.event_id, revision=1, new_status=ev.status, reason="created", timestamp=utc_now())
+            store.add_revision(r, state_json=ev_json)
+            revisions.append(r)
     result.revisions = revisions
     rv_path = str(output_root / "event_revisions.jsonl")
     with open(rv_path, "w") as f:
@@ -159,6 +163,15 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
                     d = json.loads(line)
                     ms = MarketSnapshot.from_dict(d)
                     if as_of and ms.as_of and ms.as_of > as_of:
+                        # Emit leakage record instead of silent skip
+                        leakage_path = str(output_root / "future_leakage_events.jsonl")
+                        with open(leakage_path, "a") as lf:
+                            lf.write(json.dumps({
+                                "event_id": ms.event_id, "snapshot_as_of": ms.as_of,
+                                "blocked_by_as_of": as_of,
+                                "reason": "FUTURE_LEAKAGE_RISK"
+                            }) + chr(10))
+                        all_errors.append(f"future_leakage: snapshot {ms.snapshot_id} at {ms.as_of} > as_of {as_of}")
                         continue
                     if ms.event_id in [e.event_dedup_key for e in events]:
                         ms.event_id = next(e.event_id for e in events if e.event_dedup_key == ms.event_id)
@@ -193,7 +206,14 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
         for snap in snapshots:
             if snap.event_id != ev.event_id:
                 continue
-            cd = evaluate_price_direction(snap.pre_event_ref, snap.price, 1.0)
+            # Find expectation for this event to set direction hypothesis
+            exp_for_ev = next((e for e in expectations if e.event_id == ev.event_id), None)
+            direction_hypothesis = "positive"
+            if exp_for_ev and exp_for_ev.signed_surprise is not None:
+                direction_hypothesis = "positive" if exp_for_ev.signed_surprise > 0 else "negative"
+            elif exp_for_ev and exp_for_ev.expectation_type == ExpectationType.UNAVAILABLE.value:
+                direction_hypothesis = "neutral"
+            cd = evaluate_price_direction(snap.pre_event_ref, snap.price, 1.0, direction_hypothesis=direction_hypothesis)
             cd.event_id = ev.event_id
             confirmations.append(cd)
             if snap.volume_24h:
@@ -231,8 +251,9 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
 
         if old != ev.status:
             store.upsert_event(ev)
+            ev_json_lc = json.dumps(ev.to_dict())
             r = EventRevision(revision_id=sha256_id(["rev",ev.event_id,str(ev.revision)]), event_id=ev.event_id, revision=ev.revision, previous_status=old, new_status=ev.status, reason="lifecycle")
-            store.add_revision(r)
+            store.add_revision(r, state_json=ev_json_lc)
             result.revisions.append(r)
     finish_sr(sr, "complete")
     result.stages["lifecycle"] = sr
@@ -273,8 +294,18 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
         if dirs:
             mv = dirs[0]
         gap = exp.signed_surprise if exp and exp.signed_surprise is not None else None
-        cc = {"direction": 0.3 if mv != Verdict.UNAVAILABLE.value else 0.0, "expectation": 0.3 if ea else 0.0, "sources": 0.2, "volume": 0.2}
-        a = build_assessment(eid, ev.title, ev.status, gap, mv, cc, [p.path_id for p in paths], ev.observation_ids)
+        # Weighted confidence: direction signal > expectation > sources > volume
+        # Each dimension must be justified by evidence; absence of evidence reduces weight
+        dir_w = 0.35 if mv != Verdict.UNAVAILABLE.value else 0.0
+        exp_w = 0.35 if ea and gap is not None else 0.0
+        src_w = 0.20 if hc else 0.15
+        vol_w = 0.15 if any(c.verdict != Verdict.UNAVAILABLE.value for c in confs if c.dimension == "volume_expansion") else 0.0
+        # Monotonic: confidence cannot increase when evidence is removed
+        cc = {"direction": dir_w, "expectation": exp_w, "sources": src_w, "volume": vol_w}
+        # If contradiction exists, cap confidence
+        if any(c.verdict == Verdict.CONTRADICTS.value for c in confs):
+            cc = {k: v * 0.5 for k, v in cc.items()}
+        a = build_assessment(eid, ev.title, ev.status, gap, mv, cc, [p.path_id for p in paths], ev.observation_ids, has_conflict=hc)
         assessments.append(a)
     result.assessments = assessments
     result.abstentions = abstentions

@@ -77,6 +77,7 @@ class EventStore:
             new_status TEXT,
             reason TEXT,
             timestamp TEXT NOT NULL,
+            state_json TEXT NOT NULL DEFAULT '{}',
             FOREIGN KEY (event_id) REFERENCES event_states(event_id) ON DELETE CASCADE
         );
         CREATE TABLE IF NOT EXISTS source_conflicts (
@@ -148,37 +149,50 @@ class EventStore:
         return [EventState.from_dict(json.loads(r[0])) for r in rows]
 
     def get_event_as_of(self, event_id: str, as_of_timestamp: str) -> Optional[EventState]:
-        """Return the EventState as it appeared at *as_of_timestamp*."""
-        rows = self.conn.execute(
-            "SELECT revision, state_json FROM event_states WHERE event_id=?", (event_id,)
-        ).fetchall()
-        if not rows:
-            return None
-        current = EventState.from_dict(json.loads(rows[0]["state_json"]))
-        revs = self.conn.execute(
-            "SELECT revision, new_status, timestamp FROM event_revisions WHERE event_id=? ORDER BY revision DESC",
-            (event_id,),
-        ).fetchall()
-        target_status = current.status
-        for r in revs:
-            if r["timestamp"] and r["timestamp"] <= as_of_timestamp:
-                break
-            if r["new_status"]:
-                target_status = r["new_status"]
-        state = EventState.from_dict(current.to_dict())
-        state.status = target_status
-        return state
+        """Return the full EventState as it appeared at *as_of_timestamp*.
 
-    def add_revision(self, rev: EventRevision) -> None:
+        Uses the state_json snapshot stored with each revision.
+        Returns the state at the latest revision with timestamp <= as_of.
+        Before any revision, returns the initial state.
+        """
+        # Fetch current to know event exists
+        current = self.conn.execute(
+            "SELECT state_json FROM event_states WHERE event_id=?", (event_id,)
+        ).fetchone()
+        if not current:
+            return None
+
+        # Find the latest revision at or before as_of with full state
+        rev = self.conn.execute(
+            "SELECT revision, state_json FROM event_revisions "
+            "WHERE event_id=? AND timestamp <= ? ORDER BY revision DESC LIMIT 1",
+            (event_id, as_of_timestamp),
+        ).fetchone()
+
+        if rev:
+            try:
+                return EventState.from_dict(json.loads(rev["state_json"]))
+            except (json.JSONDecodeError, TypeError):
+                pass
+
+        # No revision before as_of -- return initial state
+        initial = EventState.from_dict(json.loads(current["state_json"]))
+        initial.revision = 0
+        return initial
+
+    def add_revision(self, rev: EventRevision, state_json: str = "{}") -> None:
+        """Append a revision row with the full state snapshot."""
         with self._lock:
             self.conn.execute(
-                "INSERT OR IGNORE INTO event_revisions VALUES (?,?,?,?,?,?,?)",
-                (rev.revision_id, rev.event_id, rev.revision, rev.previous_status, rev.new_status, rev.reason, rev.timestamp or utc_now()),
+                "INSERT OR IGNORE INTO event_revisions VALUES (?,?,?,?,?,?,?,?)",
+                (rev.revision_id, rev.event_id, rev.revision,
+                 rev.previous_status, rev.new_status, rev.reason,
+                 rev.timestamp or utc_now(), state_json),
             )
 
     def get_revisions(self, event_id: str) -> List[EventRevision]:
         rows = self.conn.execute(
-            "SELECT * FROM event_revisions WHERE event_id=? ORDER BY revision", (event_id,)
+            "SELECT revision_id, event_id, revision, previous_status, new_status, reason, timestamp FROM event_revisions WHERE event_id=? ORDER BY revision", (event_id,)
         ).fetchall()
         return [
             EventRevision(

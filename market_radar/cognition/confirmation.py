@@ -6,6 +6,7 @@ def evaluate_price_direction(
     pre_price: Optional[float],
     post_price: Optional[float],
     threshold_pct: float = 1.0,
+    direction_hypothesis: str = "positive",
 ) -> ConfirmationState:
     state = ConfirmationState(dimension="price_direction")
     if pre_price is None or post_price is None or pre_price == 0:
@@ -18,12 +19,18 @@ def evaluate_price_direction(
     if abs(change_pct) < threshold_pct:
         state.verdict = Verdict.NEUTRAL.value
         state.reason_code = "change_below_threshold"
-    elif change_pct > 0:
+    elif direction_hypothesis == "positive" and change_pct > 0:
         state.verdict = Verdict.SUPPORTS.value
-        state.reason_code = "positive_direction"
+        state.reason_code = "positive_matches_hypothesis"
+    elif direction_hypothesis == "negative" and change_pct < 0:
+        state.verdict = Verdict.SUPPORTS.value
+        state.reason_code = "negative_matches_hypothesis"
+    elif direction_hypothesis == "neutral":
+        state.verdict = Verdict.NEUTRAL.value
+        state.reason_code = "no_direction_hypothesis"
     else:
         state.verdict = Verdict.CONTRADICTS.value
-        state.reason_code = "negative_direction"
+        state.reason_code = "movement_contradicts_hypothesis"
     return state
 
 def evaluate_volume_expansion(
