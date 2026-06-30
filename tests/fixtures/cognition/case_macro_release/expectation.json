@@ -1,0 +1,10 @@
+{
+  "bls_cpi_20260615": {
+    "expected": 3.0,
+    "actual": 3.2,
+    "range_low": 2.8,
+    "range_high": 3.2,
+    "baseline_source": "economist_survey",
+    "baseline_timestamp": "2026-06-14T00:00:00+00:00"
+  }
+}

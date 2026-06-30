@@ -1,11 +1,9 @@
-"""Cognition Spine V1 CLI."""
+"""Cognition CLI - calls orchestrator."""
 from __future__ import annotations
 import argparse, json, sys, uuid
 from datetime import datetime, timezone
 from pathlib import Path
-from market_radar.cognition.event_store import EventStore
-from market_radar.cognition.event_grouper import group_observations
-from market_radar.cognition.input_loader import load_observations, load_evidence_manifest
+from market_radar.cognition.orchestrator import run_cognition
 from market_radar.cognition.contracts import utc_now
 
 def build_parser():
@@ -27,26 +25,37 @@ def main(argv=None):
     output_root = Path(output_dir)
     if output_root.exists():
         is_empty = True
-        for _ in output_root.iterdir(): is_empty = False; break
+        for _ in output_root.iterdir():
+            is_empty = False
+            break
         if not is_empty:
-            print(f"OUTPUT_DIRECTORY_NOT_EMPTY: {output_root}"); return 1
-    output_root.mkdir(parents=True, exist_ok=True)
+            print(f"OUTPUT_DIRECTORY_NOT_EMPTY: {output_root}")
+            return 1
     input_path = Path(args.input)
-    if not input_path.exists(): print(f"Input not found: {input_path}"); return 1
-    obs_path = input_path / "observations.jsonl"
-    obs_list, inventory = load_observations(obs_path)
-    print(f"Loaded {inventory.valid_observations} valid / {inventory.rejected_observations} rejected")
-    events, conflicts = group_observations(obs_list)
-    print(f"Grouped {len(events)} events, {len(conflicts)} conflicts")
-    db_path = str(output_root / "cognition.db")
-    store = EventStore(db_path)
-    for ev in events: store.upsert_event(ev)
-    for cf in conflicts: store.add_conflict(cf)
-    with open(output_root / "run_manifest.json", "w") as f: json.dump({"run_id": run_id, "started_at": utc_now(), "completed_at": utc_now(), "status": "ok", "mode": args.mode, "stages": ["load","group","store"]}, f, indent=2)
-    with open(output_root / "event_states.jsonl", "w") as f:
-        for ev in events: f.write(json.dumps(ev.to_dict()) + chr(10))
-    with open(output_root / "source_conflicts.jsonl", "w") as f:
-        for cf in conflicts: f.write(json.dumps(cf.to_dict()) + chr(10))
-    print(f"Output: {output_root}"); print(f"Events: {len(events)}"); print(f"Conflicts: {len(conflicts)}")
-    return 0
-if __name__ == "__main__": sys.exit(main())
+    if not input_path.exists():
+        print(f"Input not found: {input_path}")
+        return 1
+    result = run_cognition(
+        input_path=input_path,
+        output_root=output_root,
+        run_id=run_id,
+        mode=args.mode,
+        as_of=args.as_of or None,
+        strict=args.strict,
+        assets=[a.strip() for a in args.assets.split(",")] if args.assets else None,
+    )
+    print(f"Run: {run_id}")
+    print(f"Status: {result.status}")
+    print(f"Events: {len(result.events)}")
+    print(f"Assessments: {len(result.assessments)}")
+    print(f"Abstentions: {len(result.abstentions)}")
+    print(f"Output: {output_root}")
+    for sn, s in result.stages.items():
+        print(f"  {sn}: {s.status} ({len(s.outputs)} outputs)")
+    if result.errors:
+        for e in result.errors[:5]:
+            print(f"  Error: {e}")
+    return 0 if result.status in ("ok", "degraded", "abstained") else 1
+
+if __name__ == "__main__":
+    sys.exit(main())

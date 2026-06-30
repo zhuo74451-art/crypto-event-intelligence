@@ -1,0 +1,2 @@
+{"snapshot_id": "snap_s1", "event_id": "cve_2026_1234", "as_of": "2026-05-20T11:00:00+00:00", "provider": "fixture", "asset": "ETH", "price": 3200.0, "pre_event_ref": 3400.0, "volume_24h": 15000000000.0}
+{"snapshot_id": "snap_s2", "event_id": "cve_2026_1234_patch", "as_of": "2026-05-21T09:00:00+00:00", "provider": "fixture", "asset": "ETH", "price": 3450.0, "pre_event_ref": 3380.0, "volume_24h": 12000000000.0}

@@ -8,8 +8,9 @@ def calculate_gap(
     range_low: Optional[float] = None,
     range_high: Optional[float] = None,
 ) -> ExpectationState:
-    state = ExpectationState(expectation_type=ExpectationType.UNAVAILABLE.value)
+    state = ExpectationState()
     if expected is not None and actual is not None:
+        state.expectation_type = ExpectationType.CONSENSUS_VALUE.value
         state.expected_value = expected
         state.actual_reported_value = actual
         state.signed_surprise = actual - expected

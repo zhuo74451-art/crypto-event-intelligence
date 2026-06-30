@@ -1,0 +1,14 @@
+{
+  "cve_2026_1234": {
+    "expected": 0.0,
+    "actual": -5.0,
+    "baseline_source": "market_implied",
+    "baseline_timestamp": "2026-05-19T00:00:00+00:00"
+  },
+  "cve_2026_1234_patch": {
+    "expected": 0.0,
+    "actual": 2.0,
+    "baseline_source": "market_implied",
+    "baseline_timestamp": "2026-05-20T00:00:00+00:00"
+  }
+}
