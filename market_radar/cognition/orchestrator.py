@@ -173,7 +173,7 @@ def run_cognition(input_path, output_root, run_id, mode="replay", as_of=None, st
             provider = MarketSnapshotProvider()
             for ev in events:
                 for asset in (assets or ["BTC", "ETH"]):
-                    ms = provider.fetch_snapshot(ev.event_id, asset, as_of=as_of)
+                    ms = provider.fetch_snapshot(asset, as_of=as_of)
                     if ms:
                         snapshots.append(ms)
         except Exception as e:
