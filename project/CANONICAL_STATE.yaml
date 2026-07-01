@@ -1,61 +1,70 @@
-version: "1.0"
-status: candidate_pending_merge
+version: "1.1"
+status: active
 canonical_ref: main
-state_branch: project/canonical-mainline-v1
-canonical_fingerprint: 1abdfb3c3897547dc2c82e3eda77e1b122865b4a69e9016bbf377a5a637a1f5f
-fingerprint_basis: "crypto-market-cognition-signal-os|internal-research|no-trading|canonical-mainline-v1|2026-07-01"
+canonical_fingerprint: fee25c45f25753c758b4842c36a36e9406ec0fafb6269af50a5bc5b7b0b84eb1
+fingerprint_basis: "crypto-market-cognition-signal-os|autonomous-thesis-portfolio|limited-autonomous-discovery|no-trading|2026-07-01"
 
 project:
   name: Crypto Market Cognition & Signal OS
+  operating_name: Autonomous Market Cognition Operator
   repository: zhuo74451-art/crypto-event-intelligence
   responsibility: >-
-    Convert point-in-time evidence, market state, expectations, research claims,
-    and strategy components into calibrated internal market assessments with an
-    explicit insufficient-evidence state.
-  primary_user: owner_researcher
+    Autonomously discover, verify, interpret, prioritize, update, weaken,
+    invalidate, and archive crypto-market theses and their affected assets,
+    while preserving evidence, uncertainty, counterarguments, and explicit
+    abstention.
+  primary_user: owner_governor
+  daily_human_judgment_required: false
   not_a_trading_system: true
 
 session:
-  bootstrap_mode: resume
-  discussion_stage: 4
-  rhythm: convergence
-  current_delivery_mode: MIGRATION_OR_RECOVERY
-  next_delivery_mode: HARDENING
+  bootstrap_mode: reopen
+  discussion_stage: 1
+  rhythm: exploration
+  current_delivery_mode: DISCOVERY_EXPERIMENT
   action_qualification: BOUNDED
 
 accepted_state:
-  - The product is an internal crypto market research and intelligence system.
-  - Facts, interpretations, hypotheses, and validated strategy components stay separate.
-  - QuickFlash remains a separate broad-recall acquisition provider.
-  - Market-signal consumes contracted QuickFlash outputs and may gather direct evidence independently.
-  - Assessments must allow abstention and insufficient evidence.
-  - Historical and real-time shadow evidence are required before strategy trust.
-  - Trading, wallet actions, paid APIs, recurring services, and production publishing are disabled by default.
+  - The first product responsibility is market judgment, not copy trading or order advice.
+  - The first user outcomes are autonomous research prioritization and autonomous watchlist creation.
+  - The system operates without routine human judgment in the daily loop.
+  - AI or bounded agents decide evidence sufficiency, event identity, importance, thesis creation, affected assets, time horizon, priced-in state, priority, next evidence, and lifecycle transitions.
+  - Ordinary uncertainty is handled through abstention, evidence gathering, scheduled review, downgrade, invalidation, or archive instead of asking the owner.
+  - Limited autonomous discovery of new themes and assets is allowed inside the crypto-market, public-data, cost, and risk boundaries.
+  - The owner retains governance, budget, credential, production, publishing, wallet, trading, and stop authority.
+  - The central business object is an autonomous thesis portfolio with explicit attention states.
+  - Events are entry evidence; themes and theses are persistent interpretation objects.
+  - Historical and real-time shadow evidence are required before trusting autonomous judgment quality.
 
 candidate_state:
   - ref: workbench/cognition-spine-v1
     pr: 16
-    classification: internal_prototype_plus_executable_strategies
-    accepted_as_engineering_v1: false
+    classification: engineering_candidate_for_reassessment
+    accepted_as_current_product: false
     reason: >-
-      The branch contains useful cognition, world-model, strategy, arbitration,
-      and packet components, but strict intake, research, baselines, shadow
-      artifacts, and integrated-case proof remain incomplete.
+      The branch contains reusable cognition components, but it was designed
+      around one-shot packets and must later be audited against autonomous
+      discovery, thesis lifecycle, attention allocation, agent responsibility,
+      recovery, and unattended operation.
 
 migration_state:
-  old_pc_checkpoint_issue: 21
   mac_path: /Users/zhuo/Desktop/市场信号/crypto-event-intelligence
+  operational_enough_for_product_discussion: true
   cutover_complete: false
-  sole_active_executor: pending
+  blocks_product_thinking: false
+  preferred_executor: mac
 
-next_business_node:
-  id: canonical_and_environment_cutover
-  completion_requires:
-    - canonical state-only change merged to main
-    - old-PC checkpoint accepted
-    - Mac checkout synced and validated
-    - one active execution environment
-    - future work base contains this fingerprint
+current_business_node:
+  id: autonomous_judgment_foundation
+  work: >-
+    Define exactly what the autonomous system must judge, how it knows whether
+    it may judge, how agents divide responsibility, how theses evolve, and how
+    risk and attention budgets constrain discovery.
+  explicitly_not_current:
+    - migration perfection
+    - immediate PR 16 closure
+    - direct feature implementation
+    - trading action design
 
 read_order:
   - README.md
@@ -66,12 +75,4 @@ read_order:
   - project/DISCUSSION_STATE.yaml
   - project/DECISION_REGISTER.yaml
   - project/LEARNING_QUEUE.yaml
-  - open PRs and execution issues
-
-historical_routes:
-  status: superseded_or_historical
-  includes:
-    - Crypto Event Intelligence bot framing
-    - Week 1 release framing
-    - Personal-Use RC1 framing
-    - isolated acquisition-pilot planning authority
+  - open PRs and execution evidence
