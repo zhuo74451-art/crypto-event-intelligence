@@ -1,94 +1,80 @@
-version: "1.1"
+version: "1.2"
 status: active
 
 signals:
   - id: LEARN-001
     status: active
     type: executor_claim_vs_remote_evidence
-    observation: >-
-      Executor receipts repeatedly labeled contracts, fixture smoke tests, or
-      partial integration as complete Engineering V1.
-    implication: >-
-      Remote Head, diff, runtime calls, outputs, and semantic tests must be
-      inspected before accepting stage completion.
+    observation: Executor receipts and branch documents repeatedly labelled structural or fixture progress as complete Engineering V1.
+    implication: Inspect remote code paths, state behavior and semantic tests before accepting completion.
     behavior_change: none_without_validation
 
   - id: LEARN-002
     status: active
     type: canonical_state_drift
-    observation: >-
-      Accepted project direction and later implementation history accumulated
-      outside main while the canonical entry retained an earlier product model.
-    implication: >-
-      Accepted identity, responsibility, autonomy, boundary, and planning changes
-      must be synchronized to main during the same discussion cycle when writes
-      are available.
+    observation: Accepted project direction accumulated outside main while canonical files remained stale.
+    implication: Synchronize accepted responsibility and planning changes during the same discussion cycle.
     behavior_change: immediate_canonical_sync
 
   - id: LEARN-003
     status: active
     type: migration_overweight
-    observation: >-
-      Migration hygiene temporarily displaced the real work of thinking through
-      the project, defining autonomy, and planning the next product generation.
-    implication: >-
-      Supporting environment work must not become the business node when the
-      environment is already operational enough for product reasoning.
+    observation: Migration hygiene temporarily displaced product thinking.
+    implication: Supporting environment work cannot become the business node when discussion can proceed.
     behavior_change: migration_nonblocking_for_discussion
 
   - id: LEARN-004
     status: active
     type: github_write_incident
-    observation: >-
-      A placeholder file was accidentally created and immediately removed during
-      remote inspection, leaving two no-diff commits on an execution branch.
-    implication: >-
-      Inspection and mutation paths remain separate; every repository write needs
-      an explicit artifact, intended state change, and ref.
+    observation: A placeholder file was accidentally created and removed during remote inspection.
+    implication: Separate inspection and mutation; every write needs an explicit artifact and intended ref.
     behavior_change: strict_write_preflight
 
   - id: LEARN-005
     status: active
     type: product_responsibility_reopen
-    observation: >-
-      The owner rejected a passive market-assessment tool and required a fully
-      unattended system that performs routine judgments itself.
-    implication: >-
-      The central object changes from one-shot packets to an autonomous thesis
-      portfolio with discovery, lifecycle, attention, risk, and resource control.
+    observation: The owner required a fully unattended system instead of a passive assessment tool.
+    implication: The central object is an autonomous thesis portfolio with discovery, lifecycle, risk and resource control.
     behavior_change: reopen_stage_1_before_code_audit
 
   - id: LEARN-006
     status: active
     type: owner_loop_removal
-    observation: >-
-      The owner does not want to decide routine importance, direction, follow-up,
-      or watchlist inclusion.
-    implication: >-
-      Ordinary uncertainty must produce machine actions such as evidence work,
-      abstention, review, downgrade, invalidation, or archive. Owner escalation is
-      reserved for governance and high-risk external effects.
+    observation: Routine importance, direction, follow-up and watchlist decisions must not return to the owner.
+    implication: Ordinary uncertainty produces machine actions and only governance exceptions escalate.
     behavior_change: unattended_default
 
   - id: LEARN-007
     status: active
     type: autonomous_discovery_permission
-    observation: >-
-      The owner allows the system to discover new themes and asset observations
-      outside a static initial list.
-    implication: >-
-      Discovery needs explicit crypto-domain scope, approved evidence, cost and
-      attention ceilings, mechanism requirements, exit conditions, and no silent
-      authority expansion.
+    observation: New themes and assets may be discovered outside a static initial list.
+    implication: Discovery requires scope, evidence, cost, attention, mechanism and exit boundaries.
     behavior_change: limited_autonomous_discovery
 
   - id: LEARN-008
-    status: candidate
+    status: active
     type: delivery_cost
-    observation: >-
-      Repeated micro-closure rounds on an outdated product model increased context
-      recovery, owner operations, and semantic drift.
-    implication: >-
-      Lock the autonomous responsibility model, audit existing code once, then
-      compile one bounded complete delivery route rather than continuing local patches.
-    behavior_change: shadow_until_responsibility_audit
+    observation: Repeated micro-closure on an outdated product model increased operations and drift.
+    implication: Audit once and compile one smallest complete route rather than patching the old architecture.
+    behavior_change: responsibility_audit_before_delivery
+
+  - id: LEARN-009
+    status: active
+    type: documentation_freshness_correction
+    observation: An earlier foundation note treated DBOS local workflow state as SQLite-capable, while current official material describes a Postgres-backed runtime.
+    implication: Infrastructure and package assumptions must be rechecked against current primary documentation before becoming accepted architecture.
+    behavior_change: dependency_claim_requires_current_primary_evidence
+
+  - id: LEARN-010
+    status: active
+    type: role_topology_separation
+    observation: Six judgment responsibilities were initially at risk of becoming six model agents.
+    implication: Responsibility ownership does not imply process count; the smallest accepted semantic topology currently has two bounded passes.
+    behavior_change: roles_do_not_imply_agents
+
+  - id: LEARN-011
+    status: active
+    type: prototype_completion_mismatch
+    observation: PR 16 contains useful contracts and fixtures but its active path remains one-shot, heuristic and packet-centered.
+    implication: Do not merge and patch the prototype into the core; port only individually audited assets.
+    behavior_change: component_quarry_not_product_base
