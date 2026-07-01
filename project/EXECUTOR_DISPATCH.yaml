@@ -1,0 +1,43 @@
+version: "1.0"
+status: active
+project: Crypto Market Cognition & Signal OS
+repository: zhuo74451-art/crypto-event-intelligence
+local_path: /Users/zhuo/Desktop/市场信号/crypto-event-intelligence
+executor: Reasonix
+mode: Auto
+goal_mode: disabled
+
+current_dispatch:
+  node: stage2_foundation_spike_repair
+  issue: 25
+  pr: 26
+  branch: audit/stage2-foundation-spike
+  instruction_source: latest_issue_comment
+  instruction_id: STAGE2-FOUNDATION-SPIKE-REPAIR-002
+  reviewed_head: 524f08a08975655b4d3b3eeae57edabcb524ca61
+  action: repair_same_branch_and_pr
+  terminal_behavior: stop_after_exact_receipt
+
+prohibited:
+  - new_branch
+  - new_pr
+  - product_behavior_change
+  - postgres_install_or_start
+  - daemon_or_scheduler
+  - real_or_paid_model_call
+  - pr_16_change_or_merge
+  - main_merge_by_executor
+
+completion_gate:
+  - focused_tests_zero_failures
+  - git_diff_check_pass
+  - canonical_files_not_regressed
+  - exact_final_head_reported
+  - final_receipt_on_issue_25
+
+post_execution:
+  integration_owner: GPT
+  action: independently_review_exact_head
+  accepted_result: direct_merge_to_main
+  rejected_result: repair_same_pr
+  owner_confirmation_required: false
