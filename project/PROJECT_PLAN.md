@@ -2,204 +2,159 @@
 
 ## Planning rule
 
-The project advances through one active responsibility at a time. Internal checkpoints are not user delivery. New engineering work must start from a base that contains the canonical fingerprint in `project/CANONICAL_STATE.yaml`.
+The project advances through one active responsibility at a time. New engineering work must start from a base containing the canonical fingerprint in `project/CANONICAL_STATE.yaml`.
 
-The current route is not migration-first and not implementation-first. The system responsibility is defined first, then the existing repository is audited against it.
+## Stage 1 — Autonomous responsibility foundation
 
-## Phase 0 — Autonomous judgment foundation
+**Status:** Accepted  
+**Action qualification:** `BOUNDED`
 
+Completed:
+
+- unattended product responsibility and owner-governance boundary;
+- broad discovery with strict active admission;
+- judgment inventory J01-J22 and L0-L3 authority;
+- thesis lifecycle and attention policy;
+- risk, claim, confidence and abstention constitution;
+- replay, live-shadow, adversarial and recovery validation design;
+- baselines, thresholds and stop rules.
+
+Stage 1 supports repository and prior-art audit. It does not prove implementation, operational value or profitability.
+
+---
+
+## Stage 2 — External prior art challenge and repository audit
+
+**Status:** Active  
 **Delivery mode:** `DISCOVERY_EXPERIMENT`
 
 ### Result
 
-A complete responsibility model defines what the autonomous system must judge, when it may judge, which role owns each judgment, how uncertainty is handled, and how theses consume machine attention over time.
+Identify the smallest reliable implementation route by comparing mature foundations, challenging unnecessary complexity and classifying existing repository components.
 
-### Required discussion closure
+### Workstream A — Mature foundations
 
-1. define the complete judgment inventory;
-2. separate deterministic evidence rules from semantic model decisions;
-3. define Evidence Gate, Thesis, Risk, Arbitration, Lifecycle, and Resource Governor responsibilities;
-4. define thesis, theme, asset-exposure, and attention-state contracts;
-5. define create, strengthen, weaken, invalidate, archive, and reopen transitions;
-6. define limited autonomous discovery boundaries;
-7. define risk, counterevidence, fact permission, and abstention rules;
-8. define machine-attention, retrieval, model-call, retry, and review budgets;
-9. define governance exceptions, stop behavior, and recovery ownership;
-10. define what the owner receives and what must remain silent.
+Evaluate adopt, adapt, reference or reject decisions for:
 
-### Exit conditions
+- durable workflow and scheduling;
+- event sourcing and state machines;
+- evidence provenance and content addressing;
+- entity resolution and graph relationships;
+- research and retrieval systems;
+- structured model gateways;
+- abstention and calibration methods;
+- time-aware evaluation and leakage prevention;
+- observability, resource accounting and kill controls.
 
-- daily human judgment is absent from the normal loop;
-- every AI judgment has an authority boundary and fallback;
-- ordinary uncertainty never blocks on the owner;
-- new-theme and new-asset discovery has explicit scope and resource limits;
-- thesis lifecycle and revision evidence are complete;
-- the system cannot silently become a trading or public-advice product;
-- the responsibility model can be used to audit current code.
+### Workstream B — Simpler architecture challenge
 
----
+Compare:
 
-## Phase 1 — Existing repository responsibility audit
+1. deterministic pipeline plus one semantic model;
+2. deterministic pipeline plus Thesis and Risk passes;
+3. the full bounded-role model;
+4. event-only watchlist;
+5. persistent thesis lifecycle without directional judgment.
 
-**Delivery mode:** `HARDENING`
+The least complex design wins when it preserves evidence integrity, abstention, lifecycle maintenance, recovery and owner outcomes.
 
-### Result
+### Workstream C — Existing repository audit
 
-Every existing module, test, document, branch claim, and runtime path is classified against the accepted autonomous cognition responsibility.
+Inspect `main`, Draft PR #16, tests, artifacts and real runtime entrypoints.
 
-### Audit classes
+Classify every relevant component:
 
-- `RETAIN` — already serves the accepted responsibility;
-- `ADAPT` — useful foundation but needs bounded changes;
-- `QUARANTINE` — may contain useful evidence but must leave the active path;
-- `REMOVE` — conflicts with the product or adds unjustified complexity;
-- `MISSING` — required responsibility has no real implementation.
+- `RETAIN`;
+- `ADAPT`;
+- `QUARANTINE`;
+- `REMOVE`;
+- `MISSING`.
 
-### Required audit surfaces
+Required outputs:
 
-- acquisition and source evidence;
-- event identity and history;
-- expectation and market confirmation;
-- world-state dependencies;
-- research claims;
-- strategy components;
-- arbitration;
-- decision packets;
-- historical evaluation;
-- shadow operation;
-- unattended state machine;
-- thesis lifecycle;
-- autonomous discovery;
-- attention and resource governance;
-- failure recovery and stop behavior.
-
-### Output
-
+- external-foundation comparison;
+- simplest viable architecture;
 - active-path map;
 - responsibility coverage matrix;
-- retain/adapt/quarantine/remove register;
-- missing-capability list;
-- code and test deletion candidates;
-- revised engineering sequence.
+- component classification register;
+- obsolete code and test candidates;
+- missing capabilities;
+- engineering dependency graph;
+- first complete delivery slice.
 
-No implementation begins until this audit shows the smallest complete route.
+No product implementation begins during Stage 2.
 
 ---
 
-## Phase 2 — Autonomous cognition core
+## Stage 3 — Autonomous cognition core
 
-**Delivery mode:** `COMPLETE_DELIVERY`
+**Status:** Pending Stage 2
 
 ### Result
 
-One integrated internal system autonomously consumes approved evidence, maintains a bounded thesis portfolio, and produces only material state changes or governance exceptions.
+One integrated internal system consumes approved evidence, maintains a bounded thesis portfolio and emits only material changes or governance exceptions.
 
-### Required capabilities
+Required capability groups:
 
-1. complete evidence and event contracts;
-2. persistent thesis and revision store;
-3. structured semantic-role interfaces;
-4. create, link, update, downgrade, invalidate, archive, and reopen transitions;
-5. asset and theme exposure mapping;
-6. priced-in and time-horizon reasoning;
-7. counterevidence and disagreement preservation;
-8. automatic evidence follow-up and review scheduling;
-9. autonomous discovery inside configured scope;
-10. attention and cost budget enforcement;
-11. deterministic fallback and abstention;
-12. status, stop, resume, and recovery actions;
-13. concise owner-facing change summaries;
-14. no trading, wallet, or public publishing behavior.
+- evidence and event integrity;
+- persistent thesis and revision state;
+- structured semantic decisions with deterministic fallbacks;
+- legal lifecycle transitions;
+- exposure, horizon, priced-in and risk reasoning;
+- follow-up evidence and review scheduling;
+- attention and resource enforcement;
+- status, stop, resume and recovery;
+- sparse owner summaries;
+- no trade, wallet or public-advice behavior.
 
-### Acceptance envelope
-
-- no manual judgment is needed in the normal path;
-- all high-impact transitions are auditable;
-- duplicate or weak evidence does not create active theses;
-- unsupported causal claims are rejected or narrowed;
-- bounded agents cannot exceed their authority;
-- system loops terminate or defer safely;
-- restarts preserve thesis state and pending checks;
-- owner notifications are material and sparse;
-- resource budgets are enforced;
-- failure can be stopped and recovered without repository surgery.
-
-### Explicit non-claims
-
-This phase does not establish profitable trading, production publishing, or universal market understanding.
+Acceptance requires no routine human judgment, auditable transitions, safe loop termination, restart persistence and enforceable resource limits.
 
 ---
 
-## Phase 3 — Longitudinal shadow validation
+## Stage 4 — Longitudinal shadow validation
 
-**Delivery mode:** `DISCOVERY_EXPERIMENT`
-
-### Hypothesis
-
-The autonomous thesis portfolio allocates machine attention better than simple event ranking, price-only ranking, and one-shot analysis while avoiding false confidence.
-
-### Design
-
-- run over a bounded period and bounded case count;
-- use only approved public or contracted inputs;
-- retain every thesis revision and evidence reference;
-- compare autonomous behavior with simpler baselines;
-- no trading, wallet, public publishing, or unapproved paid interface;
-- owner does not review every case during operation.
-
-### Measures
-
-- important-event recall;
-- weak-evidence rejection;
-- thesis creation precision;
-- useful new-theme discovery;
-- asset-exposure quality;
-- update and invalidation quality;
-- abstention quality;
-- false-confidence rate;
-- attention budget efficiency;
-- duplicate research avoided;
-- owner notification precision;
-- recovery success;
-- comparison with event-only, price-only, and one-shot baselines.
-
-### Decision rules
-
-- continue when autonomy creates material judgment value without unacceptable false confidence or resource waste;
-- adapt when the responsibility is useful but one or more roles, budgets, or evidence paths fail;
-- reduce scope when discovery or strategy interpretation adds no value over a simpler thesis lifecycle;
-- stop any path that repeatedly creates unsupported certainty or cannot be safely bounded.
-
----
-
-## Phase 4 — Owner-facing autonomous operation
-
-**Delivery mode:** `USABLE_INCREMENT`
+**Status:** Pending Stage 3
 
 ### Result
 
-The owner receives a sparse stream of material thesis changes, high-priority observations, invalidations, and true governance exceptions while the system manages routine work independently.
+Demonstrate whether the autonomous thesis portfolio creates better cognition and attention allocation than event-only, price-only and one-shot baselines.
 
-### Eligible work
+Required evidence:
 
-- high-priority thesis change summaries;
-- active attention portfolio;
+- at least 120 point-in-time replay cases;
+- at least 21 calendar days and 100 qualified live-shadow cases;
+- adversarial and recovery tests;
+- complete revision histories and resource accounting;
+- integrity gates and metric thresholds from `LONGITUDINAL_VALIDATION_PLAN.md`.
+
+Decision outcomes are continue, change, reduce scope or stop.
+
+---
+
+## Stage 5 — Owner-facing autonomous operation
+
+**Status:** Pending Stage 4
+
+### Result
+
+The owner receives a sparse stream of high-value thesis changes, invalidations and true governance exceptions while routine work remains unattended.
+
+Eligible work:
+
+- active thesis portfolio;
 - evidence and revision drill-down;
-- system health and resource usage;
+- health and resource views;
 - pending catalysts and checks;
-- invalidation and learning summaries;
-- exact status, stop, resume, and recovery controls.
+- exact status, stop, resume and recovery controls.
 
-### Deferred
+Still excluded:
 
 - copy trading;
-- buy or sell instructions;
-- leverage, sizing, or execution;
-- public recommendations;
-- wallet operations;
-- unlimited discovery;
-- generalized platform abstractions unrelated to current responsibility.
+- entries, exits, leverage, sizing or return promises;
+- wallet and order execution;
+- public investment recommendations;
+- unlimited discovery or model calls.
 
 ## Current active node
 
-Only Phase 0 is active. The existing codebase is not yet being upgraded. Phase 1 starts after the autonomous responsibility model is locked. Phase 2 starts after the responsibility audit. Later phases require evidence from the preceding phase.
+Only Stage 2 is active. The next accepted output is an evidence-backed prior-art and repository audit, not new product code.
