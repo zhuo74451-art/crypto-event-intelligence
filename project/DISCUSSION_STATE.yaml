@@ -1,0 +1,59 @@
+version: "1.0"
+status: active
+business_project: Crypto Market Cognition & Signal OS
+repository: zhuo74451-art/crypto-event-intelligence
+bootstrap_mode: resume
+stage: 4
+stage_name: reality_alignment_and_acceptance
+rhythm: convergence
+stage_progress: near_exit
+canonical_state: ACCEPTED_NOT_INTEGRATED
+delivery_mode: MIGRATION_OR_RECOVERY
+action_qualification: BOUNDED
+
+current_business_node: canonical_and_environment_cutover
+core_question: >-
+  How do we make main and the Mac the only trustworthy project state before
+  resuming Engineering V1 work?
+
+facts:
+  - main contains the accepted product identity but an outdated immediate implementation boundary.
+  - Draft PR #16 contains a candidate cognition and strategy prototype.
+  - PR #16 is not independently accepted as strict Internal Engineering V1.
+  - Issue #21 for the old-PC checkpoint is open.
+  - the Mac checkout exists and core cognition/acquisition suites pass locally.
+  - full-suite Mac compatibility and environment setup remain unfinished.
+
+locked_decisions:
+  - use a state-only branch and PR to synchronize canonical project state.
+  - keep PR #16 Draft and candidate.
+  - do not launch new feature work before migration and canonical integration pass.
+  - the Mac becomes the sole execution environment after cutover.
+  - continue using Reasonix Auto with persistent Goal disabled for finite work orders.
+
+rejected_routes:
+  - treating PR #16 as canonical memory while it remains unmerged.
+  - continuing from the old acquisition-pilot boundary as though later work did not exist.
+  - merging PR #16 solely because local tests are green.
+  - keeping both Windows and Mac active on the same branch.
+  - expanding into trading, public publishing, or recurring operation.
+
+critical_unknowns:
+  - whether the old PC has legitimate unpushed project changes.
+  - whether the three Mac full-suite failures disappear under a supported Python or require a narrow compatibility patch.
+  - which PR #16 components will survive strict Engineering V1 closure unchanged.
+
+stage_exit:
+  - canonical state-only PR merged to main
+  - old-PC checkpoint accepted
+  - Mac cutover accepted
+  - next work base contains canonical fingerprint
+  - no unresolved active-path blocker
+
+next_continue_meaning: >-
+  Verify the state-only PR and migration evidence, then compile Phase 1
+  Internal Engineering V1 hardening from the canonical base.
+
+owner_action_required: >-
+  Explicit merge authorization for the state-only PR after review; no other
+  product decision is currently required.
