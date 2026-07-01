@@ -1,197 +1,130 @@
 # Stage 2 External Foundation Comparison
 
-**Status:** Accepted first-pass decision  
-**Scope:** generic runtime, state, semantic gateway, provenance, evaluation and observability capabilities
+**Status:** Active, pending compatibility spike
 
 ## Decision summary
 
-| Responsibility | Preferred route | Decision |
+| Responsibility | Preferred route | Current decision |
 |---|---|---|
-| Durable unattended workflow | DBOS Python | ADOPT for first complete slice |
-| Distributed high-scale orchestration | Temporal | RESERVE; do not adopt initially |
-| Data-pipeline deployment and experiments | Prefect | REFERENCE only |
-| Structured semantic output | Pydantic AI plus Pydantic models | ADOPT as thin model gateway |
-| Thesis lifecycle validation | python-statemachine | ADOPT behind local transition service |
-| Application persistence | SQLAlchemy 2.x plus Alembic | ADOPT |
-| Full event-sourcing framework | eventsourcing package | REJECT for first slice |
-| Evidence provenance model | W3C PROV concepts plus local hashed records | ADAPT concepts; do not add RDF stack |
-| Dataset lineage backend | OpenLineage | REJECT for first slice |
+| Durable unattended workflow | DBOS Python | CONDITIONAL CANDIDATE |
+| Distributed orchestration | Temporal | RESERVE |
+| Batch evaluation and data flows | Prefect | REFERENCE |
+| Structured semantic output | Pydantic AI and Pydantic | ADOPT after compatibility check |
+| Lifecycle validation | python-statemachine | ADOPT after comparison with a table validator |
+| Application persistence | SQLAlchemy and Alembic | ADOPT |
+| Full event-sourcing framework | eventsourcing package | REJECT initially |
+| Provenance vocabulary | W3C PROV concepts in relational records | ADAPT |
+| Dataset lineage backend | OpenLineage | REJECT initially |
 | Agent graph runtime | LangGraph | REJECT for core path |
 | Traces and metrics | OpenTelemetry Python | ADOPT |
-| Log transport through OpenTelemetry | OpenTelemetry Logs | DEFER; Python logs remain less mature than traces and metrics |
-| Evaluation | custom point-in-time runner plus standard statistical metrics | ADOPT minimal local implementation |
+| Evaluation | local point-in-time runner and standard metrics | ADOPT minimal route |
 
-## Durable workflow decision
+## Important correction
 
-### DBOS — selected
+Current DBOS documentation and package metadata describe a Postgres-backed runtime. The earlier assumption that current DBOS could use SQLite as its workflow database without additional infrastructure is not accepted.
 
-Why it fits the first internal deployment:
+DBOS remains the leading candidate because it offers durable workflows, recovery, waiting, scheduling and programmatic management without a separate orchestration server, but it requires a database service boundary that conflicts with the current no-background-service default unless separately approved.
 
-- Python-native durable workflows and steps;
-- automatic recovery from the last completed step;
-- durable sleep for future review times;
-- workflow timeouts, retry limits, cancel, resume and status inspection;
-- SQLite works without setup for local development;
-- Postgres is the recommended production path;
-- no separate orchestration server is required for the local open-source path;
-- current project is a single-owner internal system before any distributed scale requirement.
+No Postgres installation or background service is authorized during Stage 2.
 
-Required constraints:
+## Python compatibility
 
-- DBOS owns workflow progress, not domain truth;
-- thesis and evidence state remain in the application database;
-- every external or database-writing step is idempotent;
-- application and workflow versions are recorded in every run;
-- Conductor or another hosted control plane is not required for the first slice;
-- production migration to Postgres is a later evidence-based decision.
+The current stable releases of DBOS, Pydantic AI, python-statemachine and Alembic require Python 3.10 or later. The known Mac system Python 3.9.6 is insufficient.
 
-### Temporal — reserved
+Stage 2 may use an isolated Python 3.11 or 3.12 environment. It must not replace or modify the macOS system Python.
 
-Temporal has stronger multi-node, long-running and operational guarantees, but introduces a Temporal service, workers, deterministic workflow constraints and higher operating complexity.
+## Durable workflow candidates
 
-Use Temporal only if later evidence shows a need for:
+### DBOS — conditional candidate
 
-- multiple active executors;
-- large workflow volume;
-- cross-service signals and task queues;
-- stricter distributed recovery;
-- operational scale that exceeds the DBOS single-application model.
+Strengths:
 
-### Prefect — not the cognition runtime
+- durable workflows and steps;
+- recovery from completed checkpoints;
+- durable waits and scheduling;
+- retries, timeouts and programmatic workflow management;
+- no separate workflow orchestration server beyond Postgres.
 
-Prefect is valuable for scheduled data flows and evaluation jobs. It is not selected as the core thesis-lifecycle runtime because the project needs durable per-thesis waits, exact state transitions and recovery semantics rather than primarily deployment-oriented data orchestration.
+Unresolved requirements:
 
-It may later run offline replay or bulk evaluation jobs if that is simpler than the core runtime.
+- Postgres installation and operating burden;
+- exact local-process startup and shutdown path;
+- compatibility with application transactions and idempotency;
+- recovery behavior under the project's injected failures;
+- whether the value exceeds a smaller local scheduler and explicit job ledger.
 
-## Semantic execution decision
+DBOS is adopted only after a bounded compatibility spike and a later explicit decision on the database-service boundary.
 
-### Pydantic AI — selected as a gateway, not an agent society
+### Temporal — reserve
 
-Use Pydantic AI only for:
+Temporal remains the high-scale distributed alternative but requires a Temporal service, workers and more operational structure. It is not justified for the first internal slice.
 
-- provider abstraction, including OpenAI-compatible providers such as DeepSeek and Ollama;
-- validated structured outputs;
-- bounded output repair;
-- usage accounting and hard call limits;
-- test and function models for deterministic tests.
+### Prefect — reference
 
-Do not use:
+Prefect may support replay or bulk evaluation jobs. It does not currently own the per-thesis lifecycle because that decision requires evidence about persistent waits, exact transition ownership and recovery complexity.
 
-- autonomous tool-selection loops;
-- free-form memory;
-- subagent societies;
-- model-controlled workflow or lifecycle transitions.
+### Minimal local runtime — mandatory comparison
 
-The accepted architecture uses two semantic passes:
+The spike must compare DBOS against a smaller route:
 
-1. `THESIS_SYNTHESIS` — mechanism, exposure, horizon, expectations, priced-in interpretation and missing links;
-2. `RISK_CHALLENGE` — counterevidence, alternative explanations, hidden assumptions, falsification and claim narrowing.
+- SQLAlchemy job and review-intent tables;
+- one foreground scheduler process;
+- idempotent claim-and-lock execution;
+- explicit retry and checkpoint records;
+- operator start, status, stop and resume commands.
 
-Both passes may initially use the same configured model with different contracts. A second independent model becomes optional validation infrastructure, not an architectural requirement.
+This route is not assumed correct. It is the complexity baseline DBOS must beat.
 
-## Lifecycle validation decision
+## Semantic gateway
 
-Use `python-statemachine` as a small validation layer for the accepted legal state graph.
+Pydantic AI is selected only as a thin gateway for validated structured outputs, provider abstraction, bounded retries, test models and usage accounting.
 
-The application database remains authoritative. The library validates transition legality and catches unreachable or invalid state definitions; it does not persist state or choose transitions.
+The accepted semantic topology remains two passes:
 
-The transition service must additionally enforce:
+1. Thesis Synthesis;
+2. Risk Challenge.
 
-- expected prior version;
-- evidence and judgment references;
-- actor or rule version;
-- idempotency key;
-- checkpoint before commit;
-- append-only revision after commit.
+There is no free-form agent conversation, model-controlled state transition or autonomous tool loop.
 
-## Persistence decision
+## Lifecycle validation
 
-Adopt SQLAlchemy and Alembic rather than continuing raw `sqlite3` schema strings.
+`python-statemachine` is the preferred library candidate for legal-transition validation. The compatibility spike must compare it with a small table-driven validator. The application database remains authoritative in either route.
 
-Initial database route:
+## Application persistence
 
-- SQLite with WAL for the local internal slice;
-- explicit foreign keys and unique idempotency constraints;
-- append-only evidence, event, claim and thesis-revision tables;
-- separate current-state projections for efficient reads;
-- Alembic migrations reviewed and tested;
-- a later Postgres migration only when concurrency or DBOS production needs justify it.
+SQLAlchemy and Alembic replace new raw SQLite schema strings.
 
-Do not adopt a full event-sourcing library initially. The required domain is broader than one aggregate model and already needs evidence, workflow, review, notification and evaluation records. A small explicit append-only ledger is easier to audit.
+The application domain may begin on SQLite with WAL for the isolated local slice, but the workflow runtime database is a separate decision. If DBOS is accepted, Postgres may become a shared or separate database only after transaction ownership and service operation are explicitly designed.
 
-## Provenance decision
+Required domain storage:
 
-Use W3C PROV concepts as a vocabulary:
+- append-only evidence, event, claim and thesis revisions;
+- current-state projections;
+- optimistic versions and idempotency constraints;
+- review intents, notification decisions and resource usage;
+- explicit provenance relationships.
 
-- Entity — evidence artifact, event revision, thesis revision or output;
-- Activity — retrieval, normalization, semantic judgment, arbitration, transition or evaluation;
-- Agent — source, deterministic rule, model configuration or executor;
-- derivation and usage edges — explicit links between inputs and outputs.
+## Provenance and observability
 
-Implement these concepts in local relational tables and hashes. Do not add RDF, a graph database or an OpenLineage backend in the first slice.
+W3C PROV concepts are adapted into local relational records and hashes. No RDF, graph database or OpenLineage backend is needed initially.
 
-OpenLineage is optimized for dataset and job lineage across data platforms. The current internal thesis system needs claim-level provenance and would gain more complexity than value.
+OpenTelemetry traces and metrics are adopted for retrieval, model, transition, recovery and resource spans. Structured JSON application logs remain the initial logging route.
 
-## Observability decision
+## Evaluation
 
-Adopt OpenTelemetry for:
+A local deterministic evaluator owns project-specific replay, leakage, abstention, attention, lifecycle, recovery and resource metrics. Generic packages may compute statistics but do not define project semantics.
 
-- workflow and semantic-pass traces;
-- retrieval, model, transition and recovery spans;
-- counters and latency histograms;
-- resource-budget attributes;
-- correlation by run, event, thesis and revision IDs.
+## Dependency and license rule
 
-Keep structured JSON application logs and existing manifests initially. OpenTelemetry Python traces and metrics are stable; log signal maturity is lower.
-
-## Evaluation decision
-
-Do not adopt an agent-evaluation platform as the source of truth.
-
-Build a small deterministic evaluator that:
-
-- freezes manifests and configurations;
-- performs walk-forward point-in-time replay;
-- prevents future evidence;
-- runs the accepted baselines;
-- calculates classification, abstention, attention, recovery and resource metrics;
-- produces machine-readable and Markdown reports.
-
-Standard statistical packages may compute metrics, but project-specific claim, lifecycle and leakage semantics remain local contracts.
-
-## License and operational notes
-
-Selected first-slice dependencies use permissive licenses:
-
-- DBOS Python — MIT;
-- Pydantic AI — MIT;
-- python-statemachine — MIT;
-- SQLAlchemy and Alembic — MIT;
-- OpenTelemetry Python — Apache 2.0.
-
-Dependency versions must be pinned with lock and license records before implementation.
-
-## External evidence reviewed
-
-Primary documentation and repositories reviewed on 2026-07-01:
-
-- DBOS workflows, recovery, management, timeouts, durable sleep and architecture;
-- Temporal durable execution and Python SDK;
-- Prefect deployments and retry behavior;
-- Pydantic AI structured outputs, validation, retries and provider support;
-- python-statemachine definition validation;
-- SQLAlchemy SQLite behavior and Alembic migrations;
-- W3C PROV data model;
-- OpenLineage object model;
-- OpenTelemetry Python status and instrumentation.
+Before implementation, accepted versions must be pinned with hashes or a lock file, Python requirements and license records. Current candidate libraries use permissive licenses, but version and transitive dependency evidence must be captured by the compatibility spike.
 
 ## Reopen conditions
 
-Reopen this comparison if:
+Reopen the foundation choice when:
 
-- DBOS cannot recover the project’s review and lifecycle workflows under injected failure;
-- SQLite cannot support the required concurrency or integrity;
-- Pydantic AI cannot reliably validate outputs from the chosen low-cost provider;
-- transition-library integration adds more complexity than a table-driven validator;
-- operational evidence requires distributed Temporal-scale execution;
-- a mature evaluation package demonstrably owns the project-specific metrics with less local code.
+- DBOS requires unacceptable background infrastructure or fails recovery tests;
+- the minimal local runtime provides equivalent guarantees with lower complexity;
+- Pydantic AI does not validate the chosen low-cost provider reliably;
+- a table-driven transition validator is simpler than python-statemachine;
+- later scale requires Temporal;
+- selected dependencies conflict on Python or transitive requirements.
