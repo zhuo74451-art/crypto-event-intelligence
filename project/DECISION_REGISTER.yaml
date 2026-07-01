@@ -1,4 +1,4 @@
-version: "1.1"
+version: "1.2"
 status: active
 
 decisions:
@@ -93,3 +93,30 @@ decisions:
     status: accepted
     decision: Accepted changes to project identity, responsibility, autonomy, boundaries, or active planning must be synchronized to main in the same discussion cycle when GitHub writes are available.
     reason: The canonical branch must not remain behind the accepted project model.
+
+  - id: DEC-017
+    status: accepted
+    decision: Autonomous discovery uses a broad discovery universe and strict active-portfolio admission.
+    reason: Full discovery coverage is useful, but direct deep analysis of every asset would create noise, manipulation exposure, and unbounded resource use.
+    discovery_universe:
+      - all crypto-related assets, themes, projects, mechanisms, policy changes, security patterns, and directly related macro factors may be briefly discovered
+      - discovery permits identity, deduplication, classification, qualification screening, and new-mechanism detection
+      - discovery alone does not authorize an active thesis, strong directional claim, owner notification, or persistent high-cost tracking
+    active_portfolio_gates:
+      - identity and entity integrity
+      - real-world change or new independent evidence
+      - explicit causal mechanism
+      - genuine asset or market exposure
+      - sufficient evidence quality and fact permission
+      - future verification path
+      - expiry or invalidation condition
+      - acceptable liquidity, manipulation, and data-quality risk
+      - positive machine-attention value
+      - non-duplication with an existing thesis
+    conservative_defaults:
+      - uncertain identity means reject or isolate
+      - unclear mechanism means no directional claim
+      - weak exposure means archive or low priority
+      - poor data means risk observation only
+      - low liquidity or high manipulation means restricted authority
+      - no future verification means reject or time-box
