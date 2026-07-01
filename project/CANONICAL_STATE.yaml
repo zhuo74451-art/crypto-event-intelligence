@@ -34,6 +34,8 @@ contracts:
   risk_abstention: project/RISK_ABSTENTION_CONSTITUTION.md
   validation: project/LONGITUDINAL_VALIDATION_PLAN.md
   external_evidence: project/FOUNDATION_EXTERNAL_EVIDENCE.md
+  lifecycle_decisions: project/DECISION_REGISTER_LIFECYCLE.yaml
+  risk_validation_decisions: project/DECISION_REGISTER_RISK_VALIDATION.yaml
   stage1_exit: project/STAGE1_EXIT.md
   stage2_plan: project/STAGE2_EXTERNAL_PRIOR_ART_AND_REPO_AUDIT.md
   plan: project/PROJECT_PLAN.md
@@ -70,6 +72,7 @@ read_order:
   - project/ATTENTION_RESOURCE_POLICY.md
   - project/RISK_ABSTENTION_CONSTITUTION.md
   - project/LONGITUDINAL_VALIDATION_PLAN.md
+  - project/DECISION_REGISTER_RISK_VALIDATION.yaml
   - project/PROJECT_PLAN.md
   - project/DISCUSSION_STATE.yaml
   - project/DECISION_REGISTER.yaml
