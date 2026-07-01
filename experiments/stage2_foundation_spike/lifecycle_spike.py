@@ -114,8 +114,14 @@ try:
         reject_isolated = isolated.to(rejected)
 
         def validate(self, from_state: str, to_state: str) -> bool:
-            """Check if transition is legal using the state machine's allowed transitions."""
-            # Map state display values to their allowed transitions
+            """Check if transition is legal.
+
+            Note: This uses the canonical edges dict rather than the real SM's
+            `allowed_events` because the SM's requirement that every non-final
+            state have an outgoing transition conflicts with terminal states
+            like ARCHIVED having a REOPEN_REVIEW edge. The SM class definition
+            above demonstrates the library API and importability.
+            """
             return to_state in CANONICAL_EDGES.get(from_state, set())
 
         def validate_or_raise(self, from_state: str, to_state: str) -> None:
@@ -127,7 +133,7 @@ try:
 
         @property
         def code_size(self) -> int:
-            return len(CANONICAL_EDGES) * 5 + 80
+            return sum(len(v) for v in CANONICAL_EDGES.values()) + 80
 
 except ImportError:
     # Fallback if python-statemachine not installed

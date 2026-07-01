@@ -109,8 +109,13 @@ class MinimalDurableRuntime:
             return r.id
 
     def claim_due(self, now: datetime) -> Optional[ReviewIntent]:
-        """Atomically claim one due review within a transaction."""
+        """Atomically claim one due review — conditional UPDATE, reads PENDING, sets CLAIMED.
+
+        Returns the claimed ReviewIntent only when rowcount is 1.
+        """
+        from sqlalchemy import text
         with self._session() as s:
+            # Find candidate
             candidate = (
                 s.query(ReviewIntent)
                 .filter(ReviewIntent.status == "PENDING", ReviewIntent.due_at <= now)
@@ -119,10 +124,15 @@ class MinimalDurableRuntime:
             )
             if candidate is None:
                 return None
-            candidate.status = "CLAIMED"
-            s.flush()
-            # Return a fresh copy to avoid detached attribute errors
             review_id = candidate.id
+            # Conditional update — succeeds only if still PENDING
+            result = s.execute(
+                text("UPDATE review_intents SET status = 'CLAIMED' WHERE id = :id AND status = 'PENDING'"),
+                {"id": review_id},
+            )
+            if result.rowcount == 0:
+                return None  # Another claimer won
+            s.flush()
         with self._session() as s:
             return s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
 
@@ -164,13 +174,13 @@ class MinimalDurableRuntime:
             s.flush()
 
     def resume_review(self, review_id: str) -> None:
+        """Resume a cancelled review — preserves checkpoint, retry count, and error history."""
         with self._session() as s:
             r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
             if r is None:
                 raise ReviewNotFoundError(f"Review {review_id} not found")
             r.status = "PENDING"
-            r.checkpoint_step = 0
-            r.retry_count = 0
+            # Preserve checkpoint_step, retry_count, last_error
             s.flush()
 
     def simulate_failure(self, review_id: str) -> None:

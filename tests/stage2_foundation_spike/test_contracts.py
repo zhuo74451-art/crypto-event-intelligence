@@ -31,16 +31,38 @@ class TestThesisSynthesisResult:
         assert r.claim_class == ClaimClass.FACT
         assert r.evidence_status == EvidenceStatus.SUPPORTED
 
-    def test_empty_evidence_rejected(self):
+    def test_empty_evidence_rejected_when_required(self):
+        """Empty evidence_refs is rejected when evidence_status is SUPPORTED or STRONG."""
         with pytest.raises(ValidationError):
             ThesisSynthesisResult(
                 claim_class="fact",
                 summary="No evidence",
                 evidence_refs=[],
                 horizon="medium_term",
-                evidence_status="insufficient",
+                evidence_status="supported",
                 action_type="silence",
             )
+        with pytest.raises(ValidationError):
+            ThesisSynthesisResult(
+                claim_class="fact",
+                summary="No evidence",
+                evidence_refs=[],
+                horizon="medium_term",
+                evidence_status="strong",
+                action_type="silence",
+            )
+
+    def test_empty_evidence_allowed_when_insufficient(self):
+        """INSUFFICIENT or BLOCKED results may have empty evidence_refs (no fabricated evidence)."""
+        r = ThesisSynthesisResult(
+            claim_class="fact",
+            summary="Insufficient",
+            evidence_refs=[],
+            horizon="medium_term",
+            evidence_status="insufficient",
+            action_type="silence",
+        )
+        assert r.evidence_refs == []
 
     def test_invalid_horizon_rejected(self, valid_evidence):
         with pytest.raises(ValidationError):

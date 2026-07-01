@@ -101,7 +101,7 @@ async def synthesize_thesis(data: dict) -> Tuple[Optional[ThesisSynthesisResult]
 
 def _deterministic_synthesis_fallback() -> ThesisSynthesisResult:
     """Deterministic fallback — no fabricated evidence, explicit INSUFFICIENT.
-    Uses a single self-identifying system marker (not fabricated source evidence).
+    evidence_refs is empty — no invented source names, hashes, or timestamps.
     """
     return ThesisSynthesisResult(
         claim_class=ClaimClass.FACT,
@@ -109,13 +109,7 @@ def _deterministic_synthesis_fallback() -> ThesisSynthesisResult:
         horizon=Horizon.MEDIUM_TERM,
         evidence_status=EvidenceStatus.INSUFFICIENT,
         action_type=ActionType.SILENCE,
-        evidence_refs=[
-            EvidenceRef(
-                source="system",
-                content_hash="insufficient_evidence_fallback",
-                retrieved_at=datetime.now(timezone.utc),
-            )
-        ],
+        evidence_refs=[],
         repair_attempts=_repair_stats["synthesis_repairs"],
     )
 

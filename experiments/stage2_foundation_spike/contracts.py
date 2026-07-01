@@ -10,7 +10,7 @@ from datetime import datetime
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class EvidenceStatus(str, Enum):
@@ -66,14 +66,22 @@ class ThesisSynthesisResult(BaseModel):
 
     Uses evidence-status bands (not numeric confidence).
     Cannot contain or choose lifecycle state, notification, or trade action.
+    evidence_refs may be empty when evidence_status is BLOCKED or INSUFFICIENT.
     """
     claim_class: ClaimClass
     summary: str = Field(..., min_length=1)
-    evidence_refs: List[EvidenceRef] = Field(..., min_length=1)
+    evidence_refs: List[EvidenceRef] = Field(default_factory=list)
     horizon: Horizon
     evidence_status: EvidenceStatus  # not numeric confidence
     action_type: ActionType  # only safe audit actions
     repair_attempts: int = 0
+
+    @model_validator(mode="after")
+    def evidence_required_when_supported(self) -> "ThesisSynthesisResult":
+        """evidence_refs may be empty when status is BLOCKED or INSUFFICIENT."""
+        if self.evidence_status in (EvidenceStatus.SUPPORTED, EvidenceStatus.STRONG) and not self.evidence_refs:
+            raise ValueError("Supported/STRONG results require at least one evidence reference")
+        return self
 
     @field_validator("action_type")
     @classmethod

@@ -44,8 +44,8 @@ async def test_bounded_repair_falls_back():
     stats = get_repair_stats()
     assert stats.get("synthesis_repairs", 0) > 0
     assert result.evidence_status == EvidenceStatus.INSUFFICIENT
-    # Verify no fabricated source evidence (system marker only)
-    assert result.evidence_refs[0].source == "system"
+    # Verify no fabricated evidence — empty refs is valid for INSUFFICIENT
+    assert len(result.evidence_refs) == 0
 
 
 @pytest.mark.asyncio
@@ -78,8 +78,8 @@ def test_deterministic_synthesis_fallback_no_fabricated_evidence():
     result = _deterministic_synthesis_fallback()
     assert isinstance(result, ThesisSynthesisResult)
     assert result.evidence_status == EvidenceStatus.INSUFFICIENT
-    assert result.evidence_refs[0].source == "system"
-    assert result.evidence_refs[0].content_hash == "insufficient_evidence_fallback"
+    # No fabricated evidence — empty refs is valid for INSUFFICIENT
+    assert len(result.evidence_refs) == 0
 
 
 def test_deterministic_risk_unavailable_no_fabricated_evidence():

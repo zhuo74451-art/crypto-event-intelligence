@@ -157,9 +157,9 @@ class TestCheckpointPreservedOnResume:
         runtime.resume_review(rid)
         r = runtime.get_review(rid)
         assert r.status == "PENDING"
-        # Checkpoint and retry are reset on resume (design choice)
-        assert r.checkpoint_step == 0
-        assert r.retry_count == 0
+        # Checkpoint and retry are preserved (not reset)
+        assert r.checkpoint_step == 5
+        assert r.retry_count == 2
 
 
 class TestFailedStatePersisted:

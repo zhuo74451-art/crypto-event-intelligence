@@ -75,6 +75,18 @@ class ThesisRevision(Base):
     thesis = relationship("Thesis", back_populates="revisions")
 
 
+# Immutable revision enforcement: once committed, no update or delete
+def _reject_revision_modification(mapper, connection, target):
+    from sqlalchemy import inspect as sa_inspect
+    insp = sa_inspect(target)
+    if insp and not insp.transient:
+        raise RevisionImmutableError(f"ThesisRevision {target.id} is immutable after commit")
+
+
+event.listen(ThesisRevision, "before_update", _reject_revision_modification)
+event.listen(ThesisRevision, "before_delete", _reject_revision_modification)
+
+
 class ReviewIntent(Base):
     __tablename__ = "review_intents"
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
@@ -275,32 +287,18 @@ class StaleVersionError(Exception):
 
 
 def compare_and_swap_thesis(factory, thesis_id: str, expected_version: int, new_data: dict) -> int:
-    """Atomically update thesis only if version matches expected.
+    """Atomically update thesis — single conditional UPDATE with WHERE version check.
 
-    Returns number of rows affected (0 = stale version).
-    Raises StaleVersionError when expected_version does not match.
+    Returns number of rows affected (0 = stale version, raises StaleVersionError).
     """
     from sqlalchemy import text
     with session_scope(factory) as s:
-        # Read current version
-        stmt = text("SELECT version FROM theses WHERE id = :id")
-        row = s.execute(stmt, {"id": thesis_id}).fetchone()
-        if row is None:
-            raise ValueError(f"Thesis {thesis_id} not found")
-        current_version = row[0]
-        if current_version != expected_version:
-            raise StaleVersionError(
-                f"Stale version: expected {expected_version}, current {current_version}"
-            )
-        # Compare-and-swap: update only if version still matches
-        update_parts = []
-        params = {"id": thesis_id, "expected_version": expected_version}
-        for key, value in new_data.items():
-            update_parts.append(f"{key} = :{key}")
-            params[key] = value
-        update_parts.append("version = version + 1")
-        update_sql = f"UPDATE theses SET {', '.join(update_parts)} WHERE id = :id AND version = :expected_version"
-        result = s.execute(text(update_sql), params)
+        set_clauses = ", ".join(f"{k} = :{k}" for k in new_data)
+        sql = f"UPDATE theses SET {set_clauses}, version = version + 1 WHERE id = :id AND version = :expected_version"
+        params = {"id": thesis_id, "expected_version": expected_version, **new_data}
+        result = s.execute(text(sql), params)
+        if result.rowcount == 0:
+            raise StaleVersionError(f"Stale version for thesis {thesis_id}: expected {expected_version}, no matching row")
         return result.rowcount
 
 
