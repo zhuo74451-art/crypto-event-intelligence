@@ -1,12 +1,13 @@
-version: "1.0"
+version: "1.1"
 status: active
 scope: external_foundations_architecture_and_repository_audit
 
 decisions:
   - id: DEC-039
-    status: accepted
-    decision: DBOS Python is the preferred first-slice durable workflow runtime.
-    reopen_if: recovery, durable review, cancellation, status, or resource tests fail
+    status: conditional
+    decision: DBOS Python is the leading durable-workflow candidate, not yet an accepted dependency.
+    reason: current official material describes a Postgres-backed runtime and the project has not authorized or tested that service boundary
+    resolve_by: project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md
 
   - id: DEC-040
     status: accepted
@@ -17,8 +18,8 @@ decisions:
     decision: Prefect may support bulk evaluation or data-flow jobs but does not own the core thesis lifecycle.
 
   - id: DEC-042
-    status: accepted
-    decision: Pydantic AI is a thin structured model gateway, not an autonomous agent runtime.
+    status: conditional
+    decision: Pydantic AI is the preferred thin structured model gateway, pending isolated compatibility evidence.
 
   - id: DEC-043
     status: accepted
@@ -38,9 +39,8 @@ decisions:
     decision: An explicit relational append-only ledger is preferred over a full event-sourcing framework for the first slice.
 
   - id: DEC-047
-    status: accepted
-    decision: python-statemachine is the preferred legal-transition validator behind a local lifecycle service.
-    reopen_if: a table-driven validator is measurably simpler during the compatibility spike
+    status: conditional
+    decision: python-statemachine is compared with a table-driven validator before either is accepted.
 
   - id: DEC-048
     status: accepted
@@ -66,3 +66,15 @@ decisions:
   - id: DEC-053
     status: accepted
     decision: The first complete slice supports one event family through evidence, thesis or abstention, revision persistence, one durable follow-up review, recovery, and material notification or silence.
+
+  - id: DEC-054
+    status: accepted
+    decision: Candidate foundations require an isolated Python 3.11 or 3.12 environment; macOS system Python is not modified.
+
+  - id: DEC-055
+    status: accepted
+    decision: No Postgres installation, service start, daemon, cron, paid model call, or product behavior is allowed in the Stage 2 compatibility spike.
+
+  - id: DEC-056
+    status: accepted
+    decision: DBOS must beat a minimal SQLAlchemy review-ledger runtime on guarantees and total operating complexity before selection.
