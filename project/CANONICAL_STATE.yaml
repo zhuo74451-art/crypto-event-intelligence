@@ -33,6 +33,7 @@ contracts:
   judgment: project/AUTONOMOUS_JUDGMENT_CONTRACT.md
   lifecycle: project/THESIS_LIFECYCLE.md
   attention: project/ATTENTION_RESOURCE_POLICY.md
+  lifecycle_decisions: project/DECISION_REGISTER_LIFECYCLE.yaml
   plan: project/PROJECT_PLAN.md
 
 candidate_state:
@@ -60,6 +61,7 @@ read_order:
   - project/AUTONOMOUS_JUDGMENT_CONTRACT.md
   - project/THESIS_LIFECYCLE.md
   - project/ATTENTION_RESOURCE_POLICY.md
+  - project/DECISION_REGISTER_LIFECYCLE.yaml
   - project/PROJECT_PLAN.md
   - project/DISCUSSION_STATE.yaml
   - project/DECISION_REGISTER.yaml
