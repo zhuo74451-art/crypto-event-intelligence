@@ -24,31 +24,36 @@ Approved Inputs
 
 The two semantic passes are schema-bound responsibilities, not autonomous conversational agents. Deterministic rules own fact permission, lifecycle, resources and external effects.
 
-## Stage 2 result
+## Accepted engineering foundation
 
-Stage 2 is closed. PR #26 was independently accepted and merged into `main`.
+Stage 2 and Stage 3 WP-01 are closed.
 
-Accepted foundation route:
+Accepted production route:
 
 - Python 3.12 isolated runtime;
 - Pydantic domain contracts;
-- Pydantic AI as a thin structured gateway;
-- SQLAlchemy and Alembic;
-- append-only revisions and current projections;
-- table-driven lifecycle validation;
+- separate event and thesis state models;
+- SQLAlchemy and Alembic with bidirectional schema parity;
+- append-only immutable revisions and current projections;
+- optimistic compare-and-swap;
+- transactional table-driven 11-state thesis lifecycle;
+- deterministic idempotency request fingerprints;
 - minimal local SQLAlchemy durable-review ledger;
-- OpenTelemetry traces and metrics;
-- W3C PROV concepts in relational provenance.
+- point-in-time historical evidence contracts;
+- frozen split, persisted identity and correction-chain controls;
+- BLIND tuning exclusion;
+- Pydantic AI as a future thin structured gateway;
+- OpenTelemetry traces and metrics.
 
-DBOS is deferred because the current route requires Postgres and did not justify that service boundary for the first internal version.
+PR #28 is the accepted production foundation. Draft PR #16 remains unmerged and has no planning authority; it is only a component quarry and failure record.
 
-Draft PR #16 remains unmerged and has no planning authority. It is only a component quarry and failure record.
+DBOS remains deferred because the current route requires Postgres and has not justified that service boundary.
 
 ## Delivery strategy
 
 The owner result is a complete internal production system, not a demo MVP.
 
-`project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md` is authoritative. Internal packages are bounded and mergeable, but they form one continuous delivery train. Historical evidence, point-in-time replay, blind evaluation and adversarial testing are built before routine live validation.
+`project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md` is authoritative. Internal packages are bounded and mergeable, but form one continuous delivery train. Historical evidence, point-in-time replay, blind evaluation and adversarial testing precede routine live validation.
 
 Expected effort allocation:
 
@@ -61,14 +66,14 @@ Expected effort allocation:
 
 `project/INTEGRATION_POLICY.md` is authoritative.
 
-Executor work is produced on a bounded branch and Draft PR. After independent inspection of the exact remote Head, diff, tests, artifacts and runtime evidence, GPT directly merges a candidate that is demonstrably better than current `main` and has no accepted regression or governance-boundary change.
+Executor work is produced on a bounded branch and Draft PR. GPT independently inspects the exact remote Head, diff, tests, artifacts and runtime evidence, then directly merges a candidate that is demonstrably better than current `main` and has no accepted regression or governance-boundary change.
 
-Validated improvements do not wait indefinitely in Draft PRs and do not require another owner confirmation. The executor never self-merges. The reviewed Head is protected during merge, and remote `main` is verified afterward.
+The executor never self-merges. The reviewed Head is protected during merge, and remote `main` is verified afterward.
 
 ## Stable rules
 
 1. Accepted decisions are synchronized to `main` in the same cycle.
-2. Validated improvements are directly merged to `main` under the integration policy.
+2. Validated improvements are directly merged under the integration policy.
 3. QuickFlash remains a separate broad-recall provider.
 4. Evidence, events, interpretations and theses remain separate.
 5. Point-in-time integrity and future-data blocking are mandatory.
@@ -79,9 +84,14 @@ Validated improvements do not wait indefinitely in Draft PRs and do not require 
 10. Internal work packages are not separate MVP deliveries.
 11. The first runtime uses the minimal local SQLAlchemy ledger; DBOS is reopened only by evidence.
 12. No trading, wallet, public publication or hidden daemon enters the active path.
+13. Outcome labels remain separate from evidence inputs and input hashes.
+14. Event identities and correction chains may not cross frozen dataset splits.
+15. BLIND cases, identities, chains and outcomes may not enter tuning paths.
 
 ## Current business node
 
-Run **Stage 3 Work Package 01 — Production Engineering Foundation**.
+Run **Stage 3 Work Package 02 — Historical Evidence and Point-in-Time Data Factory**.
 
-The package builds the production `cognition_v2` domain, persistence and replay-ready spine. It may not call a real semantic provider, run a live loop, create public effects, modify PR #16 or present itself as the completed product.
+Build at least 1,500 qualified historical cases across six event families and multiple regimes using public read-only sources, deterministic rebuilds, strict future-leakage blocking, frozen BUILD / DEVELOPMENT / BLIND splits and separate outcome artifacts.
+
+WP-02 may not call a semantic model, tune prompts, score cognition quality, run a daemon, start live Shadow, create public effects or modify PR #16.
