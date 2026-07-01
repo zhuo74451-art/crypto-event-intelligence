@@ -1,4 +1,4 @@
-version: "1.0"
+version: "1.1"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
@@ -8,13 +8,13 @@ mode: Auto
 goal_mode: disabled
 
 current_dispatch:
-  node: stage2_foundation_spike_repair
+  node: stage2_foundation_spike_repair_003
   issue: 25
   pr: 26
   branch: audit/stage2-foundation-spike
   instruction_source: latest_issue_comment
-  instruction_id: STAGE2-FOUNDATION-SPIKE-REPAIR-002
-  reviewed_head: 524f08a08975655b4d3b3eeae57edabcb524ca61
+  instruction_id: STAGE2-FOUNDATION-SPIKE-REPAIR-003
+  reviewed_head: 030417dc78c84fcdf24fd0d58f95a118a5fb6a52
   action: repair_same_branch_and_pr
   terminal_behavior: stop_after_exact_receipt
 
@@ -29,11 +29,20 @@ prohibited:
   - main_merge_by_executor
 
 completion_gate:
+  - receipt_sha_matches_remote_pr_head
+  - committed_report_matches_exact_test_output
+  - real_alembic_failure_is_fatal
+  - real_optimistic_compare_and_swap
+  - revision_immutability_enforced
+  - lifecycle_comparison_is_honest
+  - pydantic_ai_offline_path_actually_executed
+  - no_fabricated_evidence
+  - atomic_two_claimer_proof
+  - checkpoint_preserved_on_resume
+  - failed_state_persisted
   - focused_tests_zero_failures
   - git_diff_check_pass
-  - canonical_files_not_regressed
-  - exact_final_head_reported
-  - final_receipt_on_issue_25
+  - product_files_unchanged
 
 post_execution:
   integration_owner: GPT
