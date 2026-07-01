@@ -174,7 +174,10 @@ class MinimalDurableRuntime:
             s.flush()
 
     def simulate_failure(self, review_id: str) -> None:
-        """Inject a simulated failure — increments retry_count."""
+        """Inject a simulated failure — increments retry_count.
+
+        Commits before raising RetryExhaustedError so FAILED state persists.
+        """
         with self._session() as s:
             r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
             if r is None:
@@ -183,6 +186,8 @@ class MinimalDurableRuntime:
             r.last_error = "simulated failure"
             if r.retry_count >= self._max_retries:
                 r.status = "FAILED"
+                s.flush()
+                s.commit()
                 raise RetryExhaustedError(f"Retry exhausted for {review_id}")
 
     def has_idempotency_key(self, idempotency_key: str) -> bool:

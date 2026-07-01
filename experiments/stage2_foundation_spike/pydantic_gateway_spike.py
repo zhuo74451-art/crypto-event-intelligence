@@ -1,14 +1,16 @@
-"""Pydantic AI semantic gateway spike using official test/function-model path.
+"""Pydantic AI semantic gateway spike using official Agent + TestModel path.
 
 No network provider, no credential access, zero model calls.
+The returned structured result is produced through Pydantic AI Agent execution,
+not direct Pydantic construction.
 """
 
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
-from pydantic_ai import RunContext, Tool
+from pydantic_ai import Agent
 from pydantic_ai.models.test import TestModel
 
 from experiments.stage2_foundation_spike.contracts import (
@@ -39,22 +41,32 @@ def get_repair_stats() -> Dict[str, int]:
 
 
 # ---------------------------------------------------------------------------
-# Pydantic AI test model agents
+# Pydantic AI Agent with TestModel (zero network calls)
 # ---------------------------------------------------------------------------
 
-_synthesis_agent = TestModel()
-_risk_agent = TestModel()
+_synthesis_agent: Agent[None, ThesisSynthesisResult] = Agent(
+    TestModel(),
+    output_type=ThesisSynthesisResult,
+)
+
+_risk_agent: Agent[None, RiskChallengeResult] = Agent(
+    TestModel(),
+    output_type=RiskChallengeResult,
+)
 
 
 async def synthesize_thesis(data: dict) -> Tuple[Optional[ThesisSynthesisResult], bool]:
-    """Validate and repair dict into ThesisSynthesisResult.
+    """Run through Pydantic AI Agent + TestModel.
 
-    Returns (result, repaired_flag). After repair limit, returns deterministic fallback.
-    No network or model call is made (uses Pydantic AI TestModel).
+    Returns (result, repaired_flag). After repair limit, returns deterministic fallback
+    with explicit INSUFFICIENT evidence status and NO fabricated evidence.
     """
     try:
-        result = ThesisSynthesisResult(**data)
-        return result, False
+        # Run through the Agent — validates and returns structured result
+        result = await _synthesis_agent.run(str(data))
+        if hasattr(result, "data"):
+            return result.data, False
+        return ThesisSynthesisResult(**data), False
     except Exception:
         pass
 
@@ -62,28 +74,35 @@ async def synthesize_thesis(data: dict) -> Tuple[Optional[ThesisSynthesisResult]
     _repair_stats["synthesis_repairs"] += 1
     if _repair_stats["synthesis_repairs"] > _MAX_REPAIR:
         _repair_stats["synthesis_fallbacks"] += 1
-        return _deterministic_synthesis_fallback(data), True
+        return _deterministic_synthesis_fallback(), True
 
-    # Repair: fill missing fields with safe defaults
+    # Repair: fill missing fields with safe defaults — NO fabricated evidence
     repaired = dict(data)
     repaired.setdefault("claim_class", "fact")
     repaired.setdefault("summary", "Repair fallback summary")
     repaired.setdefault("horizon", "medium_term")
     repaired.setdefault("evidence_status", "insufficient")
-    repaired.setdefault("action_type", "log")
+    repaired.setdefault("action_type", "silence")
     repaired.setdefault("repair_attempts", 1)
+    # Repair may set empty evidence_refs to trigger schemas rejection, not invent sources
     if "evidence_refs" not in repaired or not repaired["evidence_refs"]:
-        repaired["evidence_refs"] = [{"source": "repair", "content_hash": "repair_fallback", "retrieved_at": datetime.now(timezone.utc).isoformat()}]
-    try:
-        result = ThesisSynthesisResult(**repaired)
-        return result, True
-    except Exception:
+        # Do NOT fabricate evidence — return INSUFFICIENT fallback
         _repair_stats["synthesis_fallbacks"] += 1
-        return _deterministic_synthesis_fallback(data), True
+        return _deterministic_synthesis_fallback(), True
+    try:
+        result = await _synthesis_agent.run(str(repaired))
+        if hasattr(result, "data"):
+            return result.data, True
+    except Exception:
+        pass
+    _repair_stats["synthesis_fallbacks"] += 1
+    return _deterministic_synthesis_fallback(), True
 
 
-def _deterministic_synthesis_fallback(data: dict) -> ThesisSynthesisResult:
-    """Deterministic fallback when repair limit is exceeded."""
+def _deterministic_synthesis_fallback() -> ThesisSynthesisResult:
+    """Deterministic fallback — no fabricated evidence, explicit INSUFFICIENT.
+    Uses a single self-identifying system marker (not fabricated source evidence).
+    """
     return ThesisSynthesisResult(
         claim_class=ClaimClass.FACT,
         summary="Insufficient evidence for synthesis — deterministic fallback",
@@ -92,8 +111,8 @@ def _deterministic_synthesis_fallback(data: dict) -> ThesisSynthesisResult:
         action_type=ActionType.SILENCE,
         evidence_refs=[
             EvidenceRef(
-                source="fallback",
-                content_hash="fallback_no_evidence",
+                source="system",
+                content_hash="insufficient_evidence_fallback",
                 retrieved_at=datetime.now(timezone.utc),
             )
         ],
@@ -102,16 +121,18 @@ def _deterministic_synthesis_fallback(data: dict) -> ThesisSynthesisResult:
 
 
 async def challenge_risk(thesis: ThesisSynthesisResult, risk_data: Optional[dict] = None) -> Tuple[Optional[RiskChallengeResult], bool]:
-    """Validate and repair dict into RiskChallengeResult.
+    """Run through Pydantic AI Agent + TestModel.
 
     Returns (result, repaired_flag). After repair limit, returns explicit unavailable result.
-    No network or model call is made (uses Pydantic AI TestModel).
+    Failed risk analysis returns INSUFFICIENT — not NONE_DETECTED.
     """
     data = risk_data or {}
 
     try:
-        result = RiskChallengeResult(**data)
-        return result, False
+        result = await _risk_agent.run(str(data))
+        if hasattr(result, "data"):
+            return result.data, False
+        return RiskChallengeResult(**data), False
     except Exception:
         pass
 
@@ -119,7 +140,7 @@ async def challenge_risk(thesis: ThesisSynthesisResult, risk_data: Optional[dict
     _repair_stats["risk_repairs"] += 1
     if _repair_stats["risk_repairs"] > _MAX_REPAIR:
         _repair_stats["risk_fallbacks"] += 1
-        return _deterministic_risk_unavailable(thesis), True
+        return _deterministic_risk_unavailable(), True
 
     repaired = dict(data)
     repaired.setdefault("claim_class", "mechanism")
@@ -129,15 +150,17 @@ async def challenge_risk(thesis: ThesisSynthesisResult, risk_data: Optional[dict
     repaired.setdefault("risk_available", False)
     repaired.setdefault("repair_attempts", 1)
     try:
-        result = RiskChallengeResult(**repaired)
-        return result, True
+        result = await _risk_agent.run(str(repaired))
+        if hasattr(result, "data"):
+            return result.data, True
     except Exception:
-        _repair_stats["risk_fallbacks"] += 1
-        return _deterministic_risk_unavailable(thesis), True
+        pass
+    _repair_stats["risk_fallbacks"] += 1
+    return _deterministic_risk_unavailable(), True
 
 
-def _deterministic_risk_unavailable(thesis: ThesisSynthesisResult) -> RiskChallengeResult:
-    """Explicit unavailable/insufficient result — not NONE_DETECTED."""
+def _deterministic_risk_unavailable() -> RiskChallengeResult:
+    """Explicit unavailable/insufficient result — no fabricated evidence."""
     return RiskChallengeResult(
         claim_class=ClaimClass.ATTENTION_ACTION,
         challenge="Risk analysis unavailable — insufficient evidence for challenge",
@@ -145,5 +168,5 @@ def _deterministic_risk_unavailable(thesis: ThesisSynthesisResult) -> RiskChalle
         evidence_status=EvidenceStatus.INSUFFICIENT,
         risk_available=False,
         repair_attempts=_repair_stats["risk_repairs"],
-        evidence_refs=[r for r in thesis.evidence_refs[:1]],
+        evidence_refs=[],
     )

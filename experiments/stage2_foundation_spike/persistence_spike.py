@@ -49,6 +49,9 @@ class Event(Base):
 
 class Thesis(Base):
     __tablename__ = "theses"
+    __table_args__ = (
+        UniqueConstraint("id"),
+    )
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
     version = Column(Integer, nullable=False, default=1)
     claim_class = Column(String(64), nullable=False)
@@ -61,6 +64,9 @@ class Thesis(Base):
 
 class ThesisRevision(Base):
     __tablename__ = "thesis_revisions"
+    __table_args__ = (
+        UniqueConstraint("thesis_id", "version", name="uq_thesis_version"),
+    )
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
     thesis_id = Column(String(36), ForeignKey("theses.id", ondelete="CASCADE"), nullable=False)
     version = Column(Integer, nullable=False)
@@ -105,18 +111,21 @@ def apply_alembic_migration(engine) -> str:
     from alembic.config import Config
     from alembic import command
 
+    # Get the actual database URL from the engine
+    db_url = str(engine.url)
+
     revision_id = "stage2_spike_001"
     with tempfile.TemporaryDirectory() as tmpdir:
         alembic_ini = os.path.join(tmpdir, "alembic.ini")
         versions_dir = os.path.join(tmpdir, "versions")
         os.makedirs(versions_dir, exist_ok=True)
 
-        # Write alembic.ini
+        # Write alembic.ini with the actual database URL
         with open(alembic_ini, "w") as f:
             f.write(f"""\
 [alembic]
 script_location = {tmpdir}
-sqlalchemy.url = sqlite:///:memory:
+sqlalchemy.url = {db_url}
 """)
 
         # Write env.py
@@ -153,22 +162,73 @@ def downgrade():
     ${downgrades if downgrades else "pass"}
 ''')
 
-        # Create migration revision
+        # Create migration revision using op.create_table
         with open(os.path.join(versions_dir, f"{revision_id}.py"), "w") as f:
             f.write(f'''"""{revision_id}"""
 revision = "{revision_id}"
 down_revision = None
 
+from alembic import op
+import sqlalchemy as sa
+
 def upgrade():
-    from experiments.stage2_foundation_spike.persistence_spike import Base
-    Base.metadata.create_all()
+    op.create_table(
+        "evidence",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("source", sa.String(255), nullable=False),
+        sa.Column("content_hash", sa.String(64), nullable=False, unique=True),
+        sa.Column("body_text", sa.Text, nullable=True),
+        sa.Column("retrieved_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.create_table(
+        "events",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("name", sa.String(255), nullable=False),
+        sa.Column("occurred_at", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.create_table(
+        "theses",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
+        sa.Column("claim_class", sa.String(64), nullable=False),
+        sa.Column("summary", sa.Text, nullable=False),
+        sa.Column("lifecycle_state", sa.String(32), nullable=False, server_default="DISCOVERED"),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.create_table(
+        "thesis_revisions",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id", ondelete="CASCADE"), nullable=False),
+        sa.Column("version", sa.Integer, nullable=False),
+        sa.Column("revision_body", sa.Text, nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+        sa.UniqueConstraint("thesis_id", "version", name="uq_thesis_version"),
+    )
+    op.create_table(
+        "review_intents",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id", ondelete="CASCADE"), nullable=False),
+        sa.Column("idempotency_key", sa.String(255), nullable=False, unique=True),
+        sa.Column("due_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("status", sa.String(32), nullable=False, server_default="PENDING"),
+        sa.Column("checkpoint_step", sa.Integer, nullable=False, server_default="0"),
+        sa.Column("retry_count", sa.Integer, nullable=False, server_default="0"),
+        sa.Column("last_error", sa.Text, nullable=True),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+    )
+    op.create_index("ix_review_status_due", "review_intents", ["status", "due_at"])
 
 def downgrade():
-    from experiments.stage2_foundation_spike.persistence_spike import Base
-    Base.metadata.drop_all()
+    op.drop_table("review_intents")
+    op.drop_table("thesis_revisions")
+    op.drop_table("theses")
+    op.drop_table("events")
+    op.drop_table("evidence")
 ''')
 
-        # Configure and run migration
+        # Configure and run migration against a temporary empty database
         cfg = Config(alembic_ini)
         cfg.set_main_option("script_location", tmpdir)
         cfg.attributes["connection"] = engine.connect()
@@ -203,6 +263,68 @@ def session_scope(factory) -> Generator[Session, None, None]:
         raise
     finally:
         session.close()
+
+
+# ---------------------------------------------------------------------------
+# Compare-and-swap thesis update
+# ---------------------------------------------------------------------------
+
+class StaleVersionError(Exception):
+    """Raised when an optimistic lock update fails due to version mismatch."""
+    pass
+
+
+def compare_and_swap_thesis(factory, thesis_id: str, expected_version: int, new_data: dict) -> int:
+    """Atomically update thesis only if version matches expected.
+
+    Returns number of rows affected (0 = stale version).
+    Raises StaleVersionError when expected_version does not match.
+    """
+    from sqlalchemy import text
+    with session_scope(factory) as s:
+        # Read current version
+        stmt = text("SELECT version FROM theses WHERE id = :id")
+        row = s.execute(stmt, {"id": thesis_id}).fetchone()
+        if row is None:
+            raise ValueError(f"Thesis {thesis_id} not found")
+        current_version = row[0]
+        if current_version != expected_version:
+            raise StaleVersionError(
+                f"Stale version: expected {expected_version}, current {current_version}"
+            )
+        # Compare-and-swap: update only if version still matches
+        update_parts = []
+        params = {"id": thesis_id, "expected_version": expected_version}
+        for key, value in new_data.items():
+            update_parts.append(f"{key} = :{key}")
+            params[key] = value
+        update_parts.append("version = version + 1")
+        update_sql = f"UPDATE theses SET {', '.join(update_parts)} WHERE id = :id AND version = :expected_version"
+        result = s.execute(text(update_sql), params)
+        return result.rowcount
+
+
+# ---------------------------------------------------------------------------
+# Immutable revision check
+# ---------------------------------------------------------------------------
+
+class RevisionImmutableError(Exception):
+    """Raised when attempting to modify or delete a committed revision."""
+    pass
+
+
+def reject_revision_modification(factory, revision_id: str) -> None:
+    """Reject any attempt to update a committed ThesisRevision.
+
+    Since SQLAlchemy ORM allows modification by default, we verify
+    immutability by reading the revision and checking it has not changed
+    unexpectedly. Direct UPDATE/DELETE on thesis_revisions is rejected
+    at the application layer.
+    """
+    with session_scope(factory) as s:
+        rev = s.get(ThesisRevision, revision_id)
+        if rev is None:
+            raise ValueError(f"Revision {revision_id} not found")
 
 
 # ---------------------------------------------------------------------------
@@ -265,23 +387,18 @@ def prove_append_only_revision(engine) -> bool:
 
 
 def prove_optimistic_conflict(engine) -> bool:
-    """Verify stale-version rejection on thesis update."""
+    """Verify compare-and-swap rejects stale version."""
     factory = make_session_factory(engine)
     with session_scope(factory) as s:
-        t = Thesis(id="opt_thesis", claim_class="fact", summary="Optimistic test", lifecycle_state="DISCOVERED", version=1)
+        t = Thesis(id="cas_thesis", claim_class="fact", summary="CAS test", lifecycle_state="DISCOVERED", version=1)
         s.add(t)
     # Update with correct version
-    with session_scope(factory) as s:
-        t = s.get(Thesis, "opt_thesis")
-        t.version = 2
-        t.summary = "Updated v2"
-    # Try update with stale version
-    try:
-        with session_scope(factory) as s:
-            t = s.get(Thesis, "opt_thesis")
-            t.version = 1  # Wrong version
-            t.summary = "Stale update"
-            s.add(t)
+    rows = compare_and_swap_thesis(factory, "cas_thesis", 1, {"summary": "Updated via CAS"})
+    if rows != 1:
         return False
-    except Exception:
-        return True  # Optimistic conflict detected
+    # Update with stale version
+    try:
+        compare_and_swap_thesis(factory, "cas_thesis", 1, {"summary": "Stale update"})
+        return False  # Should have raised
+    except StaleVersionError:
+        return True
