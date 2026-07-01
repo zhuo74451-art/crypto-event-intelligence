@@ -1,0 +1,18 @@
+version: "1.0"
+status: active
+scope: integration
+
+decisions:
+  - id: DEC-057
+    status: accepted
+    decision: Independently validated improvements are merged directly into main without another owner confirmation.
+    conditions:
+      - exact remote Head, diff, tests, artifacts, and runtime evidence are independently inspected
+      - the candidate is demonstrably better than current main
+      - accepted behavior has no unresolved regression
+      - rollback, recovery, and evidence remain adequate
+      - no owner-governance boundary is crossed
+    executor_rule: executor_creates_branch_and_pr_but_never_self_merges
+    integration_owner: GPT
+    merge_rule: exact_reviewed_head_then_verify_remote_main
+    reason: validated improvements must become the new starting point instead of remaining in long-lived Draft PRs and being forgotten
