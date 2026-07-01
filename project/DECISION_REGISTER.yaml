@@ -1,4 +1,4 @@
-version: "1.2"
+version: "1.3"
 status: active
 
 decisions:
@@ -50,8 +50,8 @@ decisions:
 
   - id: DEC-009
     status: accepted
-    decision: No paid interface, public publishing, wallet action, order execution, copy trading, or unbounded background loop is enabled by default.
-    reason: These add external side effects, cost, and operational responsibility requiring separate approval.
+    decision: No paid interface, public operation, irreversible external action, copy trading, or unbounded background loop is enabled by default.
+    reason: These add external effects, cost, and operational responsibility requiring separate approval.
 
   - id: DEC-010
     status: accepted
@@ -66,7 +66,7 @@ decisions:
   - id: DEC-012
     status: accepted
     decision: Routine human judgment is removed from the normal operating loop.
-    reason: The system is intended to operate unattended and must resolve ordinary uncertainty through evidence work, abstention, review, downgrade, invalidation, or archive.
+    reason: The system resolves ordinary uncertainty through evidence work, abstention, review, downgrade, invalidation, or archive.
 
   - id: DEC-013
     status: accepted
@@ -77,46 +77,43 @@ decisions:
     status: accepted
     decision: Limited autonomous discovery of new themes, theses, and asset observations is allowed.
     reason: A fully unattended cognition system must find relevant objects outside a static owner-provided list.
-    constraints:
-      - crypto and directly related macro, policy, technology, security, liquidity, and infrastructure scope
-      - approved public or contracted evidence
-      - bounded cost and machine attention
-      - explicit mechanism, future evidence path, and exit condition
-      - no new external side effect or credential authority
 
   - id: DEC-015
     status: accepted
     decision: Deterministic rules and bounded semantic agents share responsibility.
-    reason: Verifiable identity, time, hash, provenance, permission, leakage, budget, and stop logic should not depend on free-form model judgment; semantic importance, mechanism, exposure, risk, arbitration, and lifecycle interpretation may require bounded agents.
+    reason: Verifiable identity, time, provenance, permission, leakage, budget, and stop logic should not depend on free-form interpretation.
 
   - id: DEC-016
     status: accepted
-    decision: Accepted changes to project identity, responsibility, autonomy, boundaries, or active planning must be synchronized to main in the same discussion cycle when GitHub writes are available.
+    decision: Accepted changes to project identity, responsibility, autonomy, boundaries, or active planning must be synchronized to main in the same discussion cycle when repository writes are available.
     reason: The canonical branch must not remain behind the accepted project model.
 
   - id: DEC-017
     status: accepted
     decision: Autonomous discovery uses a broad discovery universe and strict active-portfolio admission.
     reason: Full discovery coverage is useful, but direct deep analysis of every asset would create noise, manipulation exposure, and unbounded resource use.
-    discovery_universe:
-      - all crypto-related assets, themes, projects, mechanisms, policy changes, security patterns, and directly related macro factors may be briefly discovered
-      - discovery permits identity, deduplication, classification, qualification screening, and new-mechanism detection
-      - discovery alone does not authorize an active thesis, strong directional claim, owner notification, or persistent high-cost tracking
-    active_portfolio_gates:
-      - identity and entity integrity
-      - real-world change or new independent evidence
-      - explicit causal mechanism
-      - genuine asset or market exposure
-      - sufficient evidence quality and fact permission
-      - future verification path
-      - expiry or invalidation condition
-      - acceptable liquidity, manipulation, and data-quality risk
-      - positive machine-attention value
-      - non-duplication with an existing thesis
-    conservative_defaults:
-      - uncertain identity means reject or isolate
-      - unclear mechanism means no directional claim
-      - weak exposure means archive or low priority
-      - poor data means risk observation only
-      - low liquidity or high manipulation means restricted authority
-      - no future verification means reject or time-box
+
+  - id: DEC-018
+    status: accepted
+    decision: The unattended system uses four authority levels defined in project/AUTONOMOUS_JUDGMENT_CONTRACT.md.
+    levels:
+      L0_RULE_FINAL: deterministic rules for identity, time, provenance, permission, leakage, budgets, retries, and stop constraints
+      L1_SEMANTIC_BOUNDED: evidence-referenced interpretation inside a fixed schema
+      L2_INTERNAL_ARBITRATION: allowlisted internal cognition and lifecycle actions without external effects
+      L3_OWNER_GOVERNANCE: project scope, access, material cost expansion, public operation, irreversible action, and authority expansion
+    reason: Autonomous judgment needs clear responsibility without allowing semantic models to overrule hard constraints.
+
+  - id: DEC-019
+    status: accepted
+    decision: The complete normal-path judgment inventory consists of evidence, event, meaning, exposure, portfolio, lifecycle, notification, learning, and governance judgments J01 through J22.
+    reason: Every routine decision must have one accountable owner, allowed outputs, evidence requirements, and a conservative fallback.
+
+  - id: DEC-020
+    status: accepted
+    decision: Ordinary uncertainty never becomes an owner question.
+    reason: Missing evidence, agent disagreement, parse failure, repeated no-change reviews, source failure, or low-priority ambiguity have declared unattended fallbacks.
+    exceptions:
+      - material high-value thesis change
+      - project or authority boundary change
+      - serious system, security, or privacy failure
+      - recovery exhausted beyond the configured limit
