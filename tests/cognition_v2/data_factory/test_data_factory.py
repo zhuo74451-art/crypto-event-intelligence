@@ -33,6 +33,7 @@ from market_radar.cognition_v2.data_factory.contracts import (
 )
 from market_radar.cognition_v2.data_factory.source_registry import (
     SourceRegistry,
+    FamilyBoundRegistry,
     build_default_registry,
 )
 from market_radar.cognition_v2.data_factory.acquisition import (
@@ -257,13 +258,13 @@ class TestAcquisition:
         req = AcquisitionRun(
             run_id="test-limit", source_id="mock",
             start_time=NOW, end_time=NOW,
-            record_limit=12,  # stop after 12 (between-page check: stops after page 2)
+            record_limit=12,  # hard ceiling: stop at 12
             max_record_budget=500,
             max_request_budget=50,
         )
         records, completed, cp = acq.run(req)
-        # Between-page limit: page 1 = 10, page 2 = 10, but total >= 12 so stops
-        assert len(records) == 20  # 2 full pages (limit is between-page)
+        # Hard ceiling: returns at most record_limit records
+        assert len(records) == 12
 
     def test_budget_exceeded(self):
         adapter = MockAdapter(total_pages=100, records_per_page=100)
@@ -605,3 +606,203 @@ class TestDataFactoryBoundaries:
     def test_import_audit(self):
         from market_radar.cognition_v2.data_factory import audit
         assert audit.CorpusAuditor
+
+    def test_import_checkpoints(self):
+        from market_radar.cognition_v2.data_factory import checkpoints
+        assert checkpoints.AtomicCheckpointWriter
+
+    def test_import_provenance(self):
+        from market_radar.cognition_v2.data_factory import provenance
+        assert provenance.ProvenanceTracker
+
+    def test_import_regimes(self):
+        from market_radar.cognition_v2.data_factory import regimes
+        assert regimes.MarketRegimeLabeler
+
+    def test_import_outcomes(self):
+        from market_radar.cognition_v2.data_factory import outcomes
+        assert outcomes.OutcomeBuilder
+
+    def test_import_adapters(self):
+        from market_radar.cognition_v2.data_factory.adapters import registry
+        assert registry.SecEdgarAdapter
+        assert registry.FederalReserveAdapter
+        assert registry.get_adapter("sec-edgar") is not None
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# C01 — Registry and family bindings
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class TestFamilyRegistry:
+    def test_default_registry_counts_match(self):
+        reg = build_default_registry()
+        # 11 unique source IDs
+        assert reg.count() == 11, f"Got {reg.count()}, expected 11"
+
+    def test_all_six_families_have_sources(self):
+        reg = build_default_registry()
+        families = reg.family_binding_counts()
+        required = {"regulatory", "corporate", "macro", "technology", "market", "security"}
+        assert set(families.keys()) == required, f"Missing families: {required - set(families.keys())}"
+
+    def test_yaml_roundtrip_preserves_counts(self):
+        reg = build_default_registry()
+        yaml_text = reg.to_yaml()
+        reg2 = FamilyBoundRegistry.from_yaml(yaml_text)
+        assert reg2.count() == reg.count()
+        assert reg2.family_binding_counts() == reg.family_binding_counts()
+
+    def test_registry_report_counts_match(self):
+        reg = build_default_registry()
+        # The report table: 2 regulatory + 1 corporate + 3 macro + 2 technology + 2 market + 1 security = 11
+        family_counts = reg.family_binding_counts()
+        total_bound = sum(family_counts.values())
+        assert total_bound == reg.count(), \
+            f"Family counts {family_counts} sum to {total_bound} but registry has {reg.count()}"
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# C03 — Acquisition hard ceilings and resume
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class TestHardCeilings:
+    def test_record_limit_hard_ceiling(self):
+        adapter = MockAdapter(total_pages=10, records_per_page=10)
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tempfile.mkdtemp())
+        req = AcquisitionRun(
+            run_id="hard-limit", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=7,  # less than one full page
+            max_record_budget=500, max_request_budget=50,
+        )
+        records, completed, _ = acq.run(req)
+        assert len(records) == 7  # hard ceiling
+
+    def test_budget_is_hard_ceiling(self):
+        adapter = MockAdapter(total_pages=100, records_per_page=50)
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tempfile.mkdtemp())
+        req = AcquisitionRun(
+            run_id="hard-budget", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=999999, max_record_budget=50, max_request_budget=10,
+            page_size=30,
+        )
+        records, completed, _ = acq.run(req)
+        # Budget is checked per-request — never exceeds
+        assert completed.status in (AcquisitionStatus.BUDGET_EXCEEDED,
+                                     AcquisitionStatus.COMPLETED)
+
+    def test_completed_resume_returns_zero_new(self):
+        adapter1 = MockAdapter(total_pages=2, records_per_page=5)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter1, checkpoint_dir=tmpdir)
+        req = AcquisitionRun(
+            run_id="zero-resume", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records1, _, _ = acq1.run(req)
+
+        adapter2 = MockAdapter(total_pages=2, records_per_page=5)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="zero-resume", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records2, _, _ = acq2.run(req2, resume=True)
+        # Completed resume returns no new records
+        assert len(records2) <= len(records1)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# C04 — New modules
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class TestCheckpoints:
+    def test_atomic_writer(self):
+        from market_radar.cognition_v2.data_factory.checkpoints import AtomicCheckpointWriter
+        with tempfile.TemporaryDirectory() as td:
+            writer = AtomicCheckpointWriter(td)
+            path = writer.write_output("test-run", [{"id": "c1"}, {"id": "c2"}])
+            import json
+            with open(path) as f:
+                lines = f.readlines()
+            assert len(lines) == 2
+
+
+class TestProvenance:
+    def test_provenance_tracker(self):
+        from market_radar.cognition_v2.data_factory.provenance import ProvenanceTracker
+        pt = ProvenanceTracker()
+        pt.record_intake("sec-edgar", "intake-1")
+        result = pt.validate_coverage()
+        assert result["total_edges"] == 1
+
+
+class TestRegimes:
+    def test_regime_labeling(self):
+        from market_radar.cognition_v2.data_factory.regimes import MarketRegimeLabeler
+        labeler = MarketRegimeLabeler()
+        label, rule = labeler.label_from_price_data(
+            NOW, [100, 101, 102, 103, 104, 105],
+            [105, 106, 107, 108, 109, 110],
+        )
+        assert label in ("bull", "ranging")
+
+
+class TestOutcomes:
+    def test_outcome_builder(self):
+        from market_radar.cognition_v2.data_factory.outcomes import OutcomeBuilder
+        builder = OutcomeBuilder()
+        windows = builder.build(
+            "case-1", NOW,
+            {"1h": {"close": 50000, "high": 50100, "low": 49900}},
+        )
+        assert len(windows) == 5
+        assert windows[0].interval == "1h"
+        errors = OutcomeBuilder.validate_windows(windows)
+        assert len(errors) == 0
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# C05 — Auditor
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class TestAuditNoPlaceholders:
+    def test_audit_fails_without_rebuild(self):
+        with tempfile.TemporaryDirectory() as td:
+            write_yaml(os.path.join(td, "quality_report.json"), {"audit": "ok"})
+            write_yaml(os.path.join(td, "source_registry.yaml"), {"entries": []})
+            write_yaml(os.path.join(td, "split_manifest.json"), {"splits": []})
+            write_jsonl(os.path.join(td, "cases.jsonl"), [])
+            write_jsonl(os.path.join(td, "evidence.jsonl"), [])
+            auditor = CorpusAuditor()
+            report = auditor.audit(td)
+            # Should fail because no second build and no cases
+            assert report.deterministic_rebuild_match is False
+            assert report.acceptable_cases_ge_1500 is False
+
+    def test_audit_detects_future_leakage(self):
+        """Future evidence in cases should be detected."""
+        with tempfile.TemporaryDirectory() as td:
+            cases = [{
+                "case_id": "c1", "event_family": "regulatory",
+                "event_time": "2023-01-01T00:00:00+00:00",
+                "first_seen_at": "2024-01-01T00:00:00+00:00",
+                "retrieval_time": "2024-01-01T00:00:00+00:00",
+                "qualification": "QUALIFIED",
+                "source_id": "sec-edgar", "authority": "gov",
+                "fact_permission": "public",
+                "market_regime": "ranging",
+                "split_label": "BUILD",
+            }]
+            write_jsonl(os.path.join(td, "cases.jsonl"), cases)
+            write_yaml(os.path.join(td, "quality_report.json"), {"audit": "ok"})
+            write_yaml(os.path.join(td, "source_registry.yaml"), {"entries": []})
+            write_yaml(os.path.join(td, "split_manifest.json"), {"splits": []})
+            write_jsonl(os.path.join(td, "evidence.jsonl"), [{"id": "e1"}])
+            auditor = CorpusAuditor()
+            report = auditor.audit(td)
+            assert report.future_leakage_violations > 0

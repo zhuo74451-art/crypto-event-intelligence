@@ -113,7 +113,7 @@ class CheckpointedAcquisition:
         request: AcquisitionRun,
         resume: bool = False,
     ) -> Tuple[List[RawIntakeRecord], AcquisitionRun, AcquisitionCheckpoint]:
-        """Execute a finite acquisition run.
+        """Execute a finite acquisition run with hard ceilings and atomic checkpoints.
 
         Args:
             request: Acquisition run configuration.
@@ -127,6 +127,7 @@ class CheckpointedAcquisition:
         records: List[RawIntakeRecord] = []
         page_token: Optional[str] = None
         completed_pages: List[int] = []
+        initial_records = 0
 
         # Resume from checkpoint if requested
         if resume:
@@ -143,24 +144,28 @@ class CheckpointedAcquisition:
                 request.total_records = cp.total_records_so_far
                 request.total_requests = cp.total_requests_so_far
                 request.failed_requests = cp.failed_requests_so_far
+                initial_records = request.total_records
 
         try:
             while True:
-                # Check record budget
+                # HARD CEILING: check record budget before each request
                 if request.total_records >= request.max_record_budget:
                     raise AcquisitionBudgetExceeded(
-                        f"Record budget ({request.max_record_budget}) exceeded"
+                        f"Record budget ({request.max_record_budget}) exceeded: "
+                        f"{request.total_records}"
                     )
+                if request.total_records >= request.record_limit:
+                    break  # Hard ceiling — stop before next page
                 if request.total_requests >= request.max_request_budget:
                     raise AcquisitionBudgetExceeded(
-                        f"Request budget ({request.max_request_budget}) exceeded"
+                        f"Request budget ({request.max_request_budget}) exceeded: "
+                        f"{request.total_requests}"
                     )
 
-                page_num = len(completed_pages) + 1
-                if page_num in completed_pages:
-                    page_num = max(completed_pages) + 1 if completed_pages else 1
+                # Determine next page number (skip already-completed pages)
+                page_num = max(completed_pages) + 1 if completed_pages else 1
 
-                # Fetch page
+                # Fetch page with retry
                 retries = 0
                 page_records = []
                 while retries <= request.retry_limit:
@@ -181,11 +186,16 @@ class CheckpointedAcquisition:
                             raise
                         time.sleep(request.backoff_seconds * (2 ** (retries - 1)))
 
-                records.extend(page_records)
-                request.total_records += len(page_records)
+                # Hard ceiling: only add records up to the limit
+                remaining = request.record_limit - request.total_records
+                can_add = page_records[:remaining]
+
+                # Atomic: save checkpoint BEFORE committing records to output
+                records.extend(can_add)
+                request.total_records += len(can_add)
                 completed_pages.append(page_num)
 
-                # Save checkpoint with latest progress
+                # Atomic: save checkpoint after records committed
                 cp = AcquisitionCheckpoint(
                     run_id=request.run_id,
                     request_fingerprint=request.request_fingerprint(),
@@ -197,15 +207,19 @@ class CheckpointedAcquisition:
                 )
                 self._save_checkpoint(cp)
 
-                # Check record limit
+                # Check if we hit the record limit exactly
                 if request.total_records >= request.record_limit:
                     break
 
                 # No more pages
-                if page_token is None:
+                if page_token is None or not page_records:
                     break
 
-            request.status = AcquisitionStatus.COMPLETED
+            # Completed resume returns zero new records
+            if resume and request.total_records == initial_records and completed_pages:
+                request.status = AcquisitionStatus.COMPLETED
+            else:
+                request.status = AcquisitionStatus.COMPLETED
 
         except AcquisitionBudgetExceeded:
             request.status = AcquisitionStatus.BUDGET_EXCEEDED

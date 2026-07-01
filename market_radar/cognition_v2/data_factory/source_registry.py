@@ -1,6 +1,7 @@
 """Versioned source registry for the historical data factory.
 
-D01: Source feasibility and permission register.
+D01/C01: Source feasibility and permission register with explicit
+source-to-family bindings. Every source has exact counts.
 """
 
 from __future__ import annotations
@@ -9,7 +10,7 @@ import json
 import os
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 import yaml
 
@@ -62,6 +63,9 @@ class SourceRegistry:
     def by_class(self, source_class: SourceClass) -> List[SourceRegistryEntry]:
         return [e for e in self._entries.values() if e.source_class == source_class]
 
+    def count(self) -> int:
+        return len(self._entries)
+
     def summary(self) -> dict:
         """Summary statistics for the registry."""
         classes = {}
@@ -70,7 +74,7 @@ class SourceRegistry:
             if count > 0:
                 classes[sc.value] = count
         return {
-            "total_entries": len(self._entries),
+            "total_entries": self.count(),
             "by_class": classes,
         }
 
@@ -90,20 +94,16 @@ class SourceRegistry:
         reg = cls()
         for entry_data in data.get("entries", []):
             entry_data["source_class"] = SourceClass(entry_data["source_class"])
-            if "historical_coverage_start" in entry_data and entry_data["historical_coverage_start"]:
-                entry_data["historical_coverage_start"] = datetime.fromisoformat(
-                    entry_data["historical_coverage_start"]
-                )
-            if "historical_coverage_end" in entry_data and entry_data["historical_coverage_end"]:
-                entry_data["historical_coverage_end"] = datetime.fromisoformat(
-                    entry_data["historical_coverage_end"]
-                )
-            if "created_at" in entry_data and entry_data["created_at"]:
-                entry_data["created_at"] = datetime.fromisoformat(
-                    entry_data["created_at"]
-                )
+            for time_field in ("historical_coverage_start", "historical_coverage_end", "created_at"):
+                val = entry_data.get(time_field)
+                if val:
+                    entry_data[time_field] = datetime.fromisoformat(val)
             reg._entries[entry_data["source_id"]] = SourceRegistryEntry(**entry_data)
         return reg
+
+    def source_family_mapping(self) -> Dict[str, str]:
+        """Return source_id -> event_family mapping."""
+        return {}
 
 
 def asdict_clean(obj) -> dict:
@@ -122,12 +122,91 @@ def asdict_clean(obj) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Default registry — public, read-only sources
+# Family-bound source registry
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_default_registry() -> SourceRegistry:
-    """Build the initial source registry with known public sources."""
-    reg = SourceRegistry()
+class FamilyBoundRegistry(SourceRegistry):
+    """Registry with explicit source-to-family bindings.
+
+    One source_id may map to one primary family. Sources that serve
+    multiple families are registered under their primary family with
+    secondary_families listed.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self._family_bindings: Dict[str, str] = {}  # source_id -> family
+        self._secondary_families: Dict[str, List[str]] = {}
+
+    def bind_to_family(
+        self, source_id: str, family: str,
+        secondary_families: Optional[List[str]] = None,
+    ) -> None:
+        """Bind a registered source to an event family."""
+        if source_id not in self._entries:
+            raise ValueError(f"Source '{source_id}' not registered")
+        self._family_bindings[source_id] = family
+        if secondary_families:
+            self._secondary_families[source_id] = secondary_families
+
+    def source_family_mapping(self) -> Dict[str, str]:
+        return dict(self._family_bindings)
+
+    def family_binding_counts(self) -> Dict[str, int]:
+        """Count unique sources per family (primary binding)."""
+        counts: Dict[str, int] = {}
+        for sid, family in self._family_bindings.items():
+            counts[family] = counts.get(family, 0) + 1
+        return counts
+
+    def families_with_sources(self) -> Dict[str, List[str]]:
+        """Family -> [source_id] mapping."""
+        result: Dict[str, List[str]] = {}
+        for sid, family in self._family_bindings.items():
+            if family not in result:
+                result[family] = []
+            result[family].append(sid)
+        return result
+
+    def to_yaml(self) -> str:
+        data = {
+            "schema_version": SCHEMA_VERSION,
+            "entries": [asdict_clean(e) for e in self._entries.values()],
+            "family_bindings": {
+                sid: {"primary": f, "secondary": self._secondary_families.get(sid, [])}
+                for sid, f in self._family_bindings.items()
+            },
+        }
+        return yaml.dump(data, default_flow_style=False, sort_keys=True)
+
+    @classmethod
+    def from_yaml(cls, text: str) -> "FamilyBoundRegistry":
+        data = yaml.safe_load(text)
+        reg = cls()
+        for entry_data in data.get("entries", []):
+            entry_data["source_class"] = SourceClass(entry_data["source_class"])
+            for time_field in ("historical_coverage_start", "historical_coverage_end", "created_at"):
+                val = entry_data.get(time_field)
+                if val:
+                    entry_data[time_field] = datetime.fromisoformat(val)
+            reg._entries[entry_data["source_id"]] = SourceRegistryEntry(**entry_data)
+        for sid, binding in data.get("family_bindings", {}).items():
+            reg._family_bindings[sid] = binding["primary"]
+            if binding.get("secondary"):
+                reg._secondary_families[sid] = binding["secondary"]
+        return reg
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Default registry — public, read-only sources with family bindings
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_default_registry() -> FamilyBoundRegistry:
+    """Build the initial source registry with family bindings.
+
+    11 unique source IDs, each bound to exactly one primary family.
+    """
+    reg = FamilyBoundRegistry()
 
     # ── Regulatory ──
     reg.register(SourceRegistryEntry(
@@ -138,10 +217,7 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET (rate-limited, robots.txt permitted)",
         base_url="https://www.sec.gov/cgi-bin/browse-edgar",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=10.0,
-        retry_limit=3,
+        rate_limit_per_second=10.0, retry_limit=3,
         terms_note="Public data, no API key required. Respect robots.txt.",
         short_excerpts_allowed=True,
     ))
@@ -153,31 +229,28 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET",
         base_url="https://www.cftc.gov/cpenforcement",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=5.0,
-        retry_limit=3,
+        rate_limit_per_second=5.0, retry_limit=3,
         terms_note="Public government website.",
         short_excerpts_allowed=True,
     ))
+    reg.bind_to_family("sec-edgar", "regulatory")
+    reg.bind_to_family("cftc-enforcement", "regulatory")
 
     # ── Corporate ──
     reg.register(SourceRegistryEntry(
         source_id="company-press-releases",
-        name="Public Company Press Releases (PRNewswire, BusinessWire, GlobeNewswire)",
+        name="Public Company Press Releases",
         source_class=SourceClass.DISCOVERY_ONLY,
         authority="corporate_official",
         fact_permission="public_communication",
         access_method="https GET",
         base_url="https://www.prnewswire.com",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=5.0,
-        retry_limit=2,
+        rate_limit_per_second=5.0, retry_limit=2,
         terms_note="Public press release aggregators. Verify with primary source.",
         short_excerpts_allowed=True,
         fallback_source_id="sec-edgar",
     ))
+    reg.bind_to_family("company-press-releases", "corporate")
 
     # ── Macro ──
     reg.register(SourceRegistryEntry(
@@ -188,10 +261,7 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET",
         base_url="https://www.federalreserve.gov/newsevents.htm",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=10.0,
-        retry_limit=3,
+        rate_limit_per_second=10.0, retry_limit=3,
         terms_note="Public US government data.",
         short_excerpts_allowed=True,
     ))
@@ -203,10 +273,7 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET",
         base_url="https://www.bls.gov/news.release/",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=10.0,
-        retry_limit=3,
+        rate_limit_per_second=10.0, retry_limit=3,
         terms_note="Public US government data.",
         short_excerpts_allowed=True,
     ))
@@ -218,13 +285,13 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET (API)",
         base_url="https://ec.europa.eu/eurostat/api/dissemination/",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=30.0,
-        retry_limit=3,
+        rate_limit_per_second=30.0, retry_limit=3,
         terms_note="Public EU statistics. Free API access.",
         short_excerpts_allowed=True,
     ))
+    reg.bind_to_family("federal-reserve", "macro")
+    reg.bind_to_family("bls-economic-releases", "macro")
+    reg.bind_to_family("eurostat", "macro")
 
     # ── Technology ──
     reg.register(SourceRegistryEntry(
@@ -235,10 +302,7 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_disclosure",
         access_method="https GET (API)",
         base_url="https://api.github.com/advisories",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=5.0,
-        retry_limit=3,
+        rate_limit_per_second=5.0, retry_limit=3,
         terms_note="Public API, no key required for public advisories.",
         short_excerpts_allowed=True,
     ))
@@ -250,13 +314,12 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET (API)",
         base_url="https://services.nvd.nist.gov/rest/json/cves/2.0",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=5.0,
-        retry_limit=3,
+        rate_limit_per_second=5.0, retry_limit=3,
         terms_note="Public US government vulnerability data.",
         short_excerpts_allowed=True,
     ))
+    reg.bind_to_family("github-security-advisories", "technology")
+    reg.bind_to_family("nvd-nist", "technology")
 
     # ── Market ──
     reg.register(SourceRegistryEntry(
@@ -265,13 +328,10 @@ def build_default_registry() -> SourceRegistry:
         source_class=SourceClass.MARKET_OUTCOME,
         authority="exchange_official",
         fact_permission="public_market_data",
-        access_method="https GET (REST API, no key for public endpoints)",
+        access_method="https GET (REST API)",
         base_url="https://api.binance.com/api/v3",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=20.0,
-        retry_limit=3,
-        terms_note="Public market data endpoints. No API key needed for klines/ticker.",
+        rate_limit_per_second=20.0, retry_limit=3,
+        terms_note="Public market data endpoints. No API key needed.",
         short_excerpts_allowed=True,
     ))
     reg.register(SourceRegistryEntry(
@@ -282,14 +342,13 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_market_data",
         access_method="https GET (REST API)",
         base_url="https://api.exchange.coinbase.com",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=10.0,
-        retry_limit=3,
+        rate_limit_per_second=10.0, retry_limit=3,
         terms_note="Public market data. No key for public OHLCV.",
         short_excerpts_allowed=True,
         fallback_source_id="binance-public",
     ))
+    reg.bind_to_family("binance-public", "market")
+    reg.bind_to_family("coinbase-public", "market")
 
     # ── Security ──
     reg.register(SourceRegistryEntry(
@@ -300,12 +359,13 @@ def build_default_registry() -> SourceRegistry:
         fact_permission="public_record",
         access_method="https GET",
         base_url="https://www.cisa.gov/news-events/cybersecurity-advisories",
-        historical_coverage_start=datetime(2021, 1, 1, tzinfo=timezone.utc),
-        historical_coverage_end=datetime(2026, 6, 30, tzinfo=timezone.utc),
-        rate_limit_per_second=5.0,
-        retry_limit=3,
+        rate_limit_per_second=5.0, retry_limit=3,
         terms_note="Public US government cybersecurity advisories.",
         short_excerpts_allowed=True,
     ))
+    reg.bind_to_family("cisa-alerts", "security")
+
+    # ── Cross-family sources (NVD also serves security) ──
+    reg.bind_to_family("nvd-nist", "technology", secondary_families=["security"])
 
     return reg
