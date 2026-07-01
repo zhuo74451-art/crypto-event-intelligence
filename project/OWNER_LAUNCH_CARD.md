@@ -1,7 +1,7 @@
 # Owner Launch Card
 
 **Status:** ACTIVE  
-**Current node:** Stage 3 WP-02 Corpus Build 001  
+**Current node:** Stage 3 WP-02 Pilot and Scale 002  
 **Issue:** #29  
 **Draft PR:** #30  
 **Branch:** `feat/stage3-wp02-historical-data-factory`
@@ -13,13 +13,13 @@ Run in Auto mode with Goal mode disabled.
 
 Read PROJECT_MAINLINE.md, project/CANONICAL_STATE.yaml,
 project/WP02_HISTORICAL_DATA_FACTORY_SPEC.md, Issue #29,
-and the latest review on PR #30.
+and the latest exact-Head review on PR #30.
 
 Continue on feat/stage3-wp02-historical-data-factory.
 After safe fast-forward, execute:
-project/work_orders/STAGE3_WP02_CORPUS_BUILD_001.md
+project/work_orders/STAGE3_WP02_PILOT_AND_SCALE_002.md
 
-Use the existing branch and PR #30 only.
+Use the existing branch and Draft PR #30 only.
 Do not merge or begin WP-03.
-Push the final Head, update PR #30 and Issue #29, then stop with the required receipt.
+Push the exact final Head, update PR #30 and Issue #29, then stop with the required receipt.
 ```
