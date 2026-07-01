@@ -1,79 +1,83 @@
-version: "1.5"
+version: "1.6"
 status: active
 canonical_ref: main
-canonical_fingerprint: 6f3732ac14f305403e38504e9127029b82a8ef69bce1f528a36d047b781ecc65
-fingerprint_basis: "autonomous-thesis-portfolio|risk-abstention|longitudinal-validation|stage2-prior-art-audit|2026-07-01"
+canonical_fingerprint: ab6751d5be6c51d0c6c696ec7e2a8ce5ff8d237b52f984fe4ec94ae5e20e199b
+fingerprint_basis: "stage2|conditional-foundations|two-semantic-pass|repository-audit-pass1|compatibility-spike|2026-07-01"
 
 project:
   name: Crypto Market Cognition & Signal OS
   operating_name: Autonomous Market Cognition Operator
   repository: zhuo74451-art/crypto-event-intelligence
-  primary_user: owner_governor
   daily_human_judgment_required: false
   not_a_trading_system: true
 
 session:
   discussion_stage: 2
-  rhythm: exploration
+  rhythm: convergence
   action_qualification: BOUNDED
 
 accepted_state:
-  - unattended product responsibility and owner governance boundary are locked
-  - discovery, judgment authority, thesis lifecycle, and attention policy are locked
-  - claim classes, evidence thresholds, confidence bands, risk dimensions, and mandatory abstention are locked
-  - numerical confidence is prohibited until held-out calibration evidence exists
-  - disagreement is preserved by claim component rather than averaged away
-  - validation includes point-in-time replay, unattended shadow, adversarial tests, recovery tests, and baseline comparison
-  - future-data leakage, L0 override, illegal transition, unauthorized external effect, state loss, and silent resource-cap breach are zero-tolerance integrity failures
-  - Stage 1 is accepted as a design and audit standard, not as proof of implementation or effectiveness
+  - Stage 1 is the accepted responsibility and audit standard
+  - the first semantic topology is deterministic services plus Thesis Synthesis and Risk Challenge
+  - six responsibility roles do not imply six model agents
+  - Draft PR 16 is a component quarry and failure record, not the product base
+  - the eight strategy evaluators and universal world model are excluded from the first slice
+  - read-only acquisition, provenance, exact grouping, operator and run-audit assets are adapted selectively
+  - the current cognition, numeric-confidence, strategy arbitration and one-shot Shadow paths are removed or quarantined
+  - SQLAlchemy and Alembic are accepted for application persistence
+  - Pydantic AI and python-statemachine remain conditional pending isolated evidence
+  - DBOS is a conditional workflow candidate because current official material describes a Postgres-backed runtime
+  - no Postgres service, daemon or product implementation is authorized during the compatibility spike
+  - an isolated Python 3.11 or 3.12 environment is required for candidate foundation tests
 
 contracts:
-  judgment: project/AUTONOMOUS_JUDGMENT_CONTRACT.md
-  lifecycle: project/THESIS_LIFECYCLE.md
-  attention: project/ATTENTION_RESOURCE_POLICY.md
-  risk_abstention: project/RISK_ABSTENTION_CONSTITUTION.md
-  validation: project/LONGITUDINAL_VALIDATION_PLAN.md
-  external_evidence: project/FOUNDATION_EXTERNAL_EVIDENCE.md
-  lifecycle_decisions: project/DECISION_REGISTER_LIFECYCLE.yaml
-  risk_validation_decisions: project/DECISION_REGISTER_RISK_VALIDATION.yaml
   stage1_exit: project/STAGE1_EXIT.md
   stage2_plan: project/STAGE2_EXTERNAL_PRIOR_ART_AND_REPO_AUDIT.md
-  plan: project/PROJECT_PLAN.md
+  external_foundations: project/STAGE2_EXTERNAL_FOUNDATION_COMPARISON.md
+  architecture: project/STAGE2_ARCHITECTURE_DECISION.md
+  repository_audit: project/STAGE2_REPOSITORY_AUDIT_PASS1.md
+  component_classification: project/STAGE2_COMPONENT_CLASSIFICATION_PASS1.yaml
+  active_path: project/STAGE2_ACTIVE_PATH_MAP.md
+  coverage_matrix: project/STAGE2_RESPONSIBILITY_COVERAGE_MATRIX.md
+  spike_spec: project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md
+  stage2_decisions: project/DECISION_REGISTER_STAGE2.yaml
 
 candidate_state:
   ref: workbench/cognition-spine-v1
   pr: 16
-  classification: engineering_candidate_for_reassessment
+  classification: component_quarry_and_failure_record
   accepted_as_current_product: false
 
 current_business_node:
-  id: external_prior_art_and_repository_responsibility_audit
+  id: foundation_compatibility_spike
   work: >-
-    Challenge the accepted design with mature external foundations and simpler
-    architectures, then inspect main and Draft PR 16 and classify every relevant
-    component as retain, adapt, quarantine, remove, or missing.
-  implementation_allowed: false
+    Produce bounded evidence for Python and dependency compatibility, structured
+    semantic outputs, persistence and migration, lifecycle validation,
+    observability, and DBOS versus minimal-runtime operating complexity.
+  implementation_allowed: audit_spike_only
+  product_behavior_allowed: false
   exit_requires:
-    - external foundation comparison
-    - simpler architecture challenge
-    - active path map
-    - responsibility coverage matrix
-    - component classification register
-    - smallest complete engineering route
+    - isolated supported Python environment or explicit runtime blocker
+    - exact dependency and license record
+    - Pydantic AI structured-output result
+    - migration and transaction result
+    - state-machine comparison
+    - minimal-runtime restart result
+    - DBOS infrastructure classification
+    - OpenTelemetry result
+    - foundation recommendation
 
 read_order:
   - PROJECT_MAINLINE.md
   - project/CANONICAL_STATE.yaml
-  - project/STAGE1_EXIT.md
-  - project/STAGE2_EXTERNAL_PRIOR_ART_AND_REPO_AUDIT.md
-  - project/PROJECT_BRAIN.md
-  - project/AUTONOMOUS_JUDGMENT_CONTRACT.md
-  - project/THESIS_LIFECYCLE.md
-  - project/ATTENTION_RESOURCE_POLICY.md
-  - project/RISK_ABSTENTION_CONSTITUTION.md
-  - project/LONGITUDINAL_VALIDATION_PLAN.md
-  - project/DECISION_REGISTER_RISK_VALIDATION.yaml
-  - project/PROJECT_PLAN.md
+  - project/STAGE2_EXTERNAL_FOUNDATION_COMPARISON.md
+  - project/STAGE2_ARCHITECTURE_DECISION.md
+  - project/STAGE2_REPOSITORY_AUDIT_PASS1.md
+  - project/STAGE2_COMPONENT_CLASSIFICATION_PASS1.yaml
+  - project/STAGE2_ACTIVE_PATH_MAP.md
+  - project/STAGE2_RESPONSIBILITY_COVERAGE_MATRIX.md
+  - project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md
+  - project/DECISION_REGISTER_STAGE2.yaml
   - project/DISCUSSION_STATE.yaml
-  - project/DECISION_REGISTER.yaml
+  - project/PROJECT_PLAN.md
   - project/LEARNING_QUEUE.yaml
