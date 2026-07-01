@@ -1,0 +1,218 @@
+version: "1.0"
+status: active
+audit_scope:
+  canonical_ref: main
+  candidate_ref: workbench/cognition-spine-v1
+  candidate_pr: 16
+  classification_values:
+    - RETAIN
+    - ADAPT
+    - QUARANTINE
+    - REMOVE
+    - MISSING
+
+components:
+  - id: curated_feed_adapter
+    paths:
+      - market_radar/integration/curated_feed_provider.py
+      - market_radar/integration/feed_provider_protocol.py
+    classification: ADAPT
+    evidence: thin bounded read-only provider abstraction with cursor and source status
+    action: preserve provider boundary; emit validated EvidenceRecord contracts
+
+  - id: public_market_adapters
+    paths:
+      - market_radar/external_adapters/hyperliquid_public_adapter.py
+      - market_radar/external_adapters/ccxt_public_market_adapter.py
+      - market_radar/external_adapters/adapter_models.py
+    classification: ADAPT
+    evidence: public-only allowlists, normalized results, provenance and health
+    action: preserve read-only boundaries; add point-in-time evidence records, stable provider versions and source contracts
+
+  - id: source_health
+    paths:
+      - market_radar/operations/source_health.py
+    classification: ADAPT
+    evidence: append-only source health history exists
+    action: migrate to application schema and integrate with evidence permission and review scheduling
+
+  - id: operator_shell
+    paths:
+      - scripts/post_mvp/operator/operator_workbench.py
+    classification: ADAPT
+    evidence: doctor, run, shadow, inspect, compare and bundle vocabulary exists
+    action: retain command vocabulary and read-only inspection; replace old execution backend with durable workflow status and controls
+
+  - id: one_shot_integration
+    paths:
+      - market_radar/integration/one_shot.py
+    classification: ADAPT
+    evidence: no-send read-only collection, locks, manifests, health and run records
+    action: retain as bounded acquisition and replay adapter; remove responsibility for cognition lifecycle
+
+  - id: bounded_shadow
+    paths:
+      - market_radar/operations/bounded_shadow.py
+    classification: QUARANTINE
+    evidence: finite synchronous loop with stop marker and run history
+    action: preserve tests and stop-policy lessons; DBOS durable reviews replace the active runtime
+
+  - id: run_history_and_manual_schema
+    paths:
+      - market_radar/operations/run_history.py
+      - market_radar/operations/sqlite_schema.py
+    classification: ADAPT
+    evidence: run persistence, parent-child links, WAL and foreign keys exist
+    action: migrate to SQLAlchemy and Alembic; keep historical data and audit semantics
+
+  - id: intake_contracts
+    paths:
+      - market_radar/cognition/intake_contracts.py
+      - market_radar/cognition/input_loader.py
+      - market_radar/cognition/intake_adapters.py
+    classification: ADAPT
+    evidence: lane, authority, fact-permission, time, origin and hash concepts exist
+    action: replace permissive dataclasses and silent errors with validated Pydantic gate results
+
+  - id: exact_event_identity
+    paths:
+      - market_radar/cognition/event_grouper.py
+    classification: ADAPT
+    evidence: deterministic exact-key grouping, conflict records and stable IDs
+    action: retain exact grouping; require explicit auditable merge decisions for non-exact relationships
+
+  - id: fuzzy_event_grouping
+    paths:
+      - market_radar/cognition/event_grouper.py
+    classification: QUARANTINE
+    evidence: title similarity and time proximity can merge without entity or asset proof
+    action: remove from active merge authority; use only as candidate-link recall
+
+  - id: live_origin_activation
+    paths:
+      - market_radar/cognition/event_grouper.py
+      - market_radar/cognition/orchestrator.py
+    classification: REMOVE
+    evidence: live origin or candidate status can become active without admission evidence
+    action: activation must pass deterministic hard gates and risk review
+
+  - id: event_store
+    paths:
+      - market_radar/cognition/event_store.py
+    classification: ADAPT
+    evidence: transaction, revision and as-of intent exists
+    action: replace implementation with explicit append-only relational ledger, current projections and optimistic versioning
+
+  - id: one_shot_cognition_orchestrator
+    paths:
+      - market_radar/cognition/orchestrator.py
+      - market_radar/cognition/program_runner.py
+    classification: REMOVE
+    evidence: current active path auto-activates candidates, mixes heuristics with state transitions and has no durable thesis reviews
+    action: replace with DBOS workflow and deterministic services
+
+  - id: universal_world_model
+    paths:
+      - market_radar/cognition/world_model.py
+      - market_radar/cognition/world_builder.py
+    classification: QUARANTINE
+    evidence: eleven domain objects exist but many are unavailable placeholders reported as available
+    action: replace with thesis-scoped context assembly; keep explicit availability and staleness concepts
+
+  - id: keyword_transmission
+    paths:
+      - market_radar/cognition/transmission.py
+    classification: REMOVE
+    evidence: title keywords generate generic causal paths without exposure proof
+    action: retain only optional discovery tags; mechanism comes from structured semantic synthesis and evidence gates
+
+  - id: expectation_and_confirmation_helpers
+    paths:
+      - market_radar/cognition/expectation.py
+      - market_radar/cognition/confirmation.py
+    classification: ADAPT
+    evidence: explicit expectation gaps and market response records exist
+    action: preserve deterministic calculations; add source permission, pre-event context, competing drivers, horizon and claim limits
+
+  - id: research_claims
+    paths:
+      - market_radar/cognition/research_pipeline.py
+    classification: ADAPT
+    evidence: falsification, regime, limitations and claim-state ideas exist
+    action: replace parsing and storage; link immutable research revisions to actual judgments and evaluation evidence
+
+  - id: strategy_evaluators
+    paths:
+      - market_radar/cognition/strategy_components.py
+      - market_radar/cognition/strategy_library.py
+      - market_radar/cognition/strategy_evaluators.py
+    classification: QUARANTINE
+    evidence: eight hard-coded heuristics lack accepted research and longitudinal support
+    action: retain as named hypotheses for future evaluation only; exclude from first active path
+
+  - id: arbitration
+    paths:
+      - market_radar/cognition/arbitration_engine.py
+    classification: REMOVE
+    evidence: any eligible strategy can create actionable watch and confidence is arithmetic over eligibility
+    action: replace with claim-level deterministic gates and allowlisted attention actions
+
+  - id: assessment_and_numeric_confidence
+    paths:
+      - market_radar/cognition/assessment.py
+      - market_radar/cognition/contracts.py
+    classification: REMOVE
+    evidence: hand-assigned values are averaged into uncalibrated overall confidence
+    action: use typed claims and evidence-status bands until held-out calibration exists
+
+  - id: market_decision_packet
+    paths:
+      - market_radar/cognition/decision_pipeline.py
+    classification: QUARANTINE
+    evidence: one-shot packet is not the persistent business object
+    action: replace final output with ThesisRevision, AttentionAction and sparse owner summary
+
+  - id: one_shot_shadow_and_evaluation
+    paths:
+      - market_radar/cognition/shadow_runner.py
+    classification: REMOVE
+    evidence: batch execution is labelled shadow; calibration lacks outcome comparison and baselines are incomplete
+    action: retain command shape only; implement persistent multi-review shadow and point-in-time evaluator
+
+  - id: seed_tests
+    paths:
+      - tests/cognition/test_falsification.py
+      - selected tests/cognition cases
+    classification: ADAPT
+    evidence: duplicate rejection, exact grouping, deterministic IDs, hash checks and leakage tests are useful
+    action: port as contract tests; replace existence and artifact-count assertions with responsibility assertions
+
+  - id: durable_workflow
+    paths: []
+    classification: MISSING
+    action: DBOS workflow, durable sleep, cancel, resume, retry and recovery
+
+  - id: thesis_persistence
+    paths: []
+    classification: MISSING
+    action: SQLAlchemy and Alembic evidence, event, claim, thesis, revision, exposure and review-intent schema
+
+  - id: semantic_synthesis_and_risk
+    paths: []
+    classification: MISSING
+    action: two Pydantic AI structured passes with hard limits and version recording
+
+  - id: lifecycle_and_resource_governor
+    paths: []
+    classification: MISSING
+    action: legal state service, priority caps, decay, review scheduling and notification suppression
+
+  - id: observability
+    paths: []
+    classification: MISSING
+    action: OpenTelemetry traces and metrics correlated by run, event, thesis and revision
+
+  - id: longitudinal_validation
+    paths: []
+    classification: MISSING
+    action: walk-forward replay, accepted baselines, persistent shadow, adversarial and recovery harness
