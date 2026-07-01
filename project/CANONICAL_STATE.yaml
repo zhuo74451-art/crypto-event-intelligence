@@ -1,8 +1,8 @@
-version: "1.6"
+version: "1.7"
 status: active
 canonical_ref: main
-canonical_fingerprint: ab6751d5be6c51d0c6c696ec7e2a8ce5ff8d237b52f984fe4ec94ae5e20e199b
-fingerprint_basis: "stage2|conditional-foundations|two-semantic-pass|repository-audit-pass1|compatibility-spike|2026-07-01"
+canonical_fingerprint: 71c2d7c57f5ff5a7053cbc39fce93dbf85d4caf428d2cc655d806e557cf20b86
+fingerprint_basis: "stage2|conditional-foundations|two-semantic-pass|repository-audit-pass1|compatibility-spike|direct-merge-after-validation|2026-07-01"
 
 project:
   name: Crypto Market Cognition & Signal OS
@@ -29,6 +29,9 @@ accepted_state:
   - DBOS is a conditional workflow candidate because current official material describes a Postgres-backed runtime
   - no Postgres service, daemon or product implementation is authorized during the compatibility spike
   - an isolated Python 3.11 or 3.12 environment is required for candidate foundation tests
+  - independently validated improvements that beat current main without regression are merged directly by GPT
+  - executors never self-merge and exact reviewed Head protection is required
+  - long-lived Draft PRs do not retain planning authority after their route is accepted, rejected, or superseded
 
 contracts:
   stage1_exit: project/STAGE1_EXIT.md
@@ -40,6 +43,7 @@ contracts:
   active_path: project/STAGE2_ACTIVE_PATH_MAP.md
   coverage_matrix: project/STAGE2_RESPONSIBILITY_COVERAGE_MATRIX.md
   spike_spec: project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md
+  integration_policy: project/INTEGRATION_POLICY.md
   stage2_decisions: project/DECISION_REGISTER_STAGE2.yaml
 
 candidate_state:
@@ -56,6 +60,7 @@ current_business_node:
     observability, and DBOS versus minimal-runtime operating complexity.
   implementation_allowed: audit_spike_only
   product_behavior_allowed: false
+  integration_after_acceptance: direct_merge_to_main
   exit_requires:
     - isolated supported Python environment or explicit runtime blocker
     - exact dependency and license record
@@ -66,10 +71,12 @@ current_business_node:
     - DBOS infrastructure classification
     - OpenTelemetry result
     - foundation recommendation
+    - independent exact-head acceptance before merge
 
 read_order:
   - PROJECT_MAINLINE.md
   - project/CANONICAL_STATE.yaml
+  - project/INTEGRATION_POLICY.md
   - project/STAGE2_EXTERNAL_FOUNDATION_COMPARISON.md
   - project/STAGE2_ARCHITECTURE_DECISION.md
   - project/STAGE2_REPOSITORY_AUDIT_PASS1.md
