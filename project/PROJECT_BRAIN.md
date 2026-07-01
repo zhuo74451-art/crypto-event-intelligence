@@ -2,86 +2,51 @@
 
 ## Identity
 
-**Crypto Market Cognition & Signal OS** is an autonomous internal market-cognition operator for the owner. It continuously discovers, verifies, interprets, prioritizes, updates, weakens, invalidates, and archives crypto-market theses and their affected assets.
+**Crypto Market Cognition & Signal OS** is an unattended internal market-cognition operator. It discovers, verifies, interprets and maintains crypto-market theses and their affected assets.
 
 It is not a copy-trading product, order-advice service, wallet system, public recommendation service, or external SaaS.
 
 ## Owner role
 
-The owner is not part of the daily judgment loop. The owner retains only governance and exception authority:
+The owner is outside the normal judgment loop. The owner retains governance over project scope, protected access, material cost changes, public operation, irreversible actions, stop and recovery.
 
-- product and coverage boundaries;
-- credentials and permissions;
-- cost ceilings;
-- production and publishing approval;
-- wallet and trading prohibition or approval;
-- stop, recovery, and major scope-change decisions.
-
-Ordinary uncertainty must not be returned to the owner. The system handles it through evidence collection, abstention, delayed review, downgrade, invalidation, or archive.
+Routine uncertainty stays inside the system and resolves through evidence collection, abstention, delayed review, downgrade, invalidation or archive.
 
 ## Primary result
 
-The system autonomously maintains a bounded **thesis portfolio** rather than merely producing isolated reports.
+The system maintains a bounded **Autonomous Thesis Portfolio**. Each active thesis preserves:
 
-For each active thesis it maintains:
-
-- verified event and evidence state;
-- interpretive claim and causal mechanism;
-- affected assets and exposure type;
-- time horizon;
+- qualified evidence and event state;
+- causal mechanism and affected exposure;
+- direction by time horizon;
 - prior expectation and surprise;
 - market confirmation and priced-in state;
 - supporting and opposing evidence;
 - uncertainty and fact-permission limits;
 - attention priority;
 - next evidence or catalyst;
-- expiry and invalidation conditions;
+- review, expiry and invalidation conditions;
 - complete revision history.
 
-## First user outcomes
+The owner is notified only for a material thesis change, a major system failure, or a governance exception.
 
-1. Decide which new information deserves further research and continued machine attention.
-2. Decide which assets, sectors, mechanisms, or themes enter the autonomous watch portfolio.
-3. Notify the owner only when a high-value thesis is created, materially changes, fails, or the system reaches a governance exception.
-
-The first product responsibility is **market judgment**. Trading action support remains outside the current scope.
-
-## Core business objects
+## Core business path
 
 ```text
 Evidence
   -> Event
   -> Interpretive Claim
   -> Thesis
-  -> Asset and theme exposure
+  -> Asset and Theme Exposure
   -> Attention State
-  -> Lifecycle revision
+  -> Lifecycle Revision
 ```
 
-Events are entry facts. Themes and theses persist across events. Assets are exposure objects, not the primary unit of reasoning. Attention state is the main operating result.
+Events are evidence inputs. Theses persist and change. Assets are exposure objects. Attention state is the operating result.
 
-## Autonomous judgment responsibilities
+## Discovery model
 
-The system or its bounded agents decide:
-
-- whether evidence is authentic and sufficient;
-- whether an item is new, duplicate, conflicting, or an update;
-- whether an event deserves research;
-- whether to create, update, link, weaken, invalidate, or archive a thesis;
-- which assets and mechanisms are affected;
-- whether the effect is positive, negative, mixed, or unclear;
-- the relevant time horizon;
-- whether the market is unpriced, partly priced, or largely priced;
-- thesis priority and machine-attention budget;
-- what evidence to gather next;
-- when to review again;
-- whether disagreement requires abstention.
-
-The system must also judge whether it has the right to make a claim. Lack of qualification results in abstention or reduced scope, not fabricated certainty.
-
-## Two-tier autonomous discovery
-
-The accepted discovery model is:
+The accepted model is:
 
 ```text
 Broad Discovery Universe
@@ -89,131 +54,65 @@ Broad Discovery Universe
   -> Strict Active-Portfolio Admission
 ```
 
-### Broad Discovery Universe
+Any crypto-related object may be briefly identified and screened. Discovery alone does not authorize an active thesis, a strong directional conclusion, owner notification or persistent high-cost tracking.
 
-Any crypto-related asset, theme, project, mechanism, policy change, security pattern, market-structure change, or directly related macro factor may be briefly discovered.
+Active admission requires valid identity, real change or new evidence, a defensible mechanism, genuine exposure, evidence permission, a future verification path, expiry or invalidation, acceptable risk, positive attention value and non-duplication.
 
-The discovery layer may:
+Weak-data, low-liquidity, highly manipulable or unclear objects receive restricted authority, a small budget, risk-only observation, time-boxing or rejection.
 
-- identify the entity or mechanism;
-- deduplicate it against known objects;
-- classify the domain;
-- check whether a real-world change or new independent evidence exists;
-- detect a potentially new mechanism;
-- create a bounded candidate record.
+## Judgment authority
 
-Discovery alone does **not** authorize:
+The complete decision inventory is defined in [`AUTONOMOUS_JUDGMENT_CONTRACT.md`](AUTONOMOUS_JUDGMENT_CONTRACT.md).
 
-- an active thesis;
-- a strong directional conclusion;
-- owner notification;
-- persistent high-cost tracking;
-- expansion of credentials, paid providers, publishing, wallet, or trading authority.
+- **L0 Rule Final:** identity, time, provenance, permission, leakage, budgets, retries and stop rules.
+- **L1 Semantic Bounded:** importance, mechanism, exposure, horizon, interpretation and risk.
+- **L2 Internal Arbitration:** allowlisted portfolio and lifecycle actions without external effects.
+- **L3 Owner Governance:** project or authority expansion and exceptional external effects.
 
-### Strict Active-Portfolio Admission
+Normal-path judgments J01 through J22 cover evidence, event identity, novelty, materiality, mechanism, exposure, direction, expectations, priced-in state, counterevidence, portfolio admission, priority, follow-up, lifecycle, notification, learning and governance exceptions.
 
-A candidate enters the active thesis portfolio only when it passes all applicable gates:
+Semantic roles cannot override L0 prohibitions. Every semantic result must be structured, evidence-referenced and paired with a conservative fallback.
 
-1. identity and entity integrity;
-2. real-world change or new independent evidence;
-3. explicit causal mechanism;
-4. genuine asset, sector, or market exposure;
-5. sufficient evidence quality and fact permission;
-6. future verification path;
-7. expiry or invalidation condition;
-8. acceptable liquidity, manipulation, and data-quality risk;
-9. positive machine-attention value;
-10. non-duplication with an existing thesis.
+## Bounded roles
 
-Possible results are:
+1. **Evidence Gate** — identity, time, provenance, permission, duplication, conflict and leakage.
+2. **Thesis Agent** — novelty, materiality, mechanism, exposure, horizon and next evidence.
+3. **Risk Agent** — alternative explanations, hidden assumptions, priced-in risk and falsification.
+4. **Arbitration Agent** — activate, observe, risk-only, mechanism-candidate, abstain, downgrade, invalidate, archive or reject.
+5. **Lifecycle Agent** — follow-up, catalysts, revision, expiry, invalidation, reopening and learning candidates.
+6. **Resource Governor** — portfolio, retrieval, model-call, retry, review-frequency and loop limits.
 
-- activate;
-- observe at low priority;
-- retain as a risk observation;
-- retain as a mechanism candidate;
-- reject.
-
-### Conservative defaults
-
-- uncertain identity -> reject or isolate;
-- unclear mechanism -> no directional claim;
-- weak exposure -> archive or low priority;
-- poor data quality -> risk observation only;
-- low liquidity or high manipulation -> restricted authority and small resource budget;
-- no future verification -> reject or time-box;
-- duplicate thesis -> merge evidence rather than create another active object.
-
-This design allows broad autonomous discovery without allowing the active portfolio to become a garbage-information sink.
-
-## Agent responsibility model
-
-Do not create a large free-form multi-agent society. Prefer deterministic code for verifiable rules and a small number of bounded semantic roles:
-
-1. **Evidence Gate** — identity, timestamps, hashes, provenance, permissions, duplication, conflict, and leakage.
-2. **Thesis Agent** — importance, mechanism, exposure, horizon, thesis creation or update, and next evidence.
-3. **Risk Agent** — narrative absorption, label mismatch, time-scale errors, priced-in risk, counterevidence, and falsification.
-4. **Arbitration Agent** — preserves disagreement and chooses activate, observe, abstain, downgrade, or reject.
-5. **Lifecycle Agent** — updates priority, catalysts, review schedule, expiry, invalidation, archive, and lessons.
-6. **Resource Governor** — caps active theses, evidence retrieval, model calls, retries, and review frequency.
-
-Each role must have structured inputs, structured outputs, authority limits, and deterministic fallback behavior.
+A large free-form agent society is rejected.
 
 ## Risk constitution
 
-Risk is part of the decision, not a final disclaimer. Every active thesis must address:
+Risk is part of the judgment, not a disclaimer. Every active thesis must address fact risk, interpretation risk, market and crowding risk, time-horizon risk, exposure mismatch, priced-in risk, misuse risk and explicit invalidation evidence.
 
-- fact risk;
-- interpretation risk;
-- market and crowding risk;
-- time-horizon risk;
-- asset-exposure mismatch;
-- priced-in risk;
-- behavioral misuse risk;
-- explicit invalidation evidence.
-
-A correct market mechanism does not imply an immediate trade. A price move does not prove the causal explanation. Popularity does not prove materiality.
-
-## Product boundaries
-
-Outside current responsibility:
-
-- buy or sell instructions;
-- entry, exit, leverage, sizing, or return promises;
-- wallet, signing, or order execution;
-- copying a trader or imitating a persona;
-- public recommendations or production publishing;
-- unapproved paid data or model interfaces;
-- unlimited discovery, unlimited model calls, or uncontrolled background loops;
-- duplication of the QuickFlash source registry.
+Price movement cannot substitute for a causal mechanism. Popularity cannot substitute for materiality. A valid long-term mechanism does not imply an immediate opportunity.
 
 ## Current reality
 
-`main` contains the accepted product responsibility. Draft PR #16 contains a candidate cognition implementation with useful evidence, event, world-state, strategy, arbitration, and packet components.
+`main` contains the accepted product responsibility and judgment authority model. Draft PR #16 remains a candidate pool of evidence, event, world-state, strategy, arbitration and packet components. It is not the current product definition and will be audited later for `RETAIN`, `ADAPT`, `QUARANTINE`, `REMOVE` or `MISSING`.
 
-The branch is not the current product definition and is not accepted as strict Internal Engineering V1. It will be audited later against the autonomous thesis-portfolio responsibility. Reuse, adaptation, quarantine, or removal will be decided module by module after the foundation discussion is complete.
-
-The Mac environment is operational enough for project discussion and future execution. Remaining migration hygiene does not block product thinking.
+The Mac environment is sufficient for discussion and future execution. Remaining migration hygiene does not define the product node.
 
 ## Evidence standard
 
-- code presence proves implementation presence only;
-- focused tests prove bounded deterministic behavior;
-- integrated replay proves a controlled path;
-- unattended shadow operation proves runtime behavior;
-- longitudinal thesis revisions show whether the system changes its mind correctly;
-- baseline comparison and owner outcome review show whether autonomy creates value;
-- none of these alone proves profitability or justifies trading automation.
+Code presence proves implementation presence only. Focused tests prove bounded behavior. Integrated replay proves one controlled path. Longitudinal unattended shadow operation is required to show whether the system changes its mind correctly, allocates attention usefully and avoids false confidence.
+
+None of this alone proves profitability or justifies trading automation.
 
 ## Current business node
 
-Define the autonomous judgment foundation before auditing or upgrading existing code:
+The judgment inventory and authority boundary are locked. The next foundation unit is the **Thesis and Attention Lifecycle**:
 
-1. exact judgment inventory;
-2. agent and deterministic-rule responsibility split;
-3. thesis and attention lifecycle;
-4. two-tier discovery and active-portfolio admission;
-5. evidence, uncertainty, and risk rules;
-6. machine-attention and cost budgets;
-7. governance exceptions and stop behavior.
+1. thesis states;
+2. legal transitions;
+3. review triggers and intervals;
+4. priority and resource budgets;
+5. strengthening, weakening, decay, expiry and invalidation;
+6. archive and reopening;
+7. material notification thresholds;
+8. loop termination and recovery limits.
 
-The discovery scope decision is locked. The next discussion work is the complete judgment inventory and authority boundary. Only after the full foundation is locked should the existing repository be reviewed for retain, adapt, quarantine, remove, or missing decisions.
+Existing code is not upgraded until the remaining foundation units are closed.
