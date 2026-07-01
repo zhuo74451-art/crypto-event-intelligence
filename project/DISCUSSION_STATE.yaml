@@ -1,4 +1,4 @@
-version: "1.1"
+version: "1.3"
 status: active
 business_project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
@@ -6,67 +6,41 @@ bootstrap_mode: reopen
 stage: 1
 stage_name: autonomous_problem_and_responsibility
 rhythm: exploration
-stage_progress: exploring
+stage_progress: late_exploration
 canonical_state: SYNCED
 delivery_mode: DISCOVERY_EXPERIMENT
 action_qualification: BOUNDED
 
-current_business_node: autonomous_judgment_foundation
+current_business_node: thesis_attention_lifecycle
 core_question: >-
-  What market judgments must the unattended system own, how should code and
-  bounded agents divide those judgments, and what evidence, risk, attention,
-  cost, and stop rules make that autonomy safe and useful?
+  How should a thesis move through discovery, activation, strengthening,
+  weakening, invalidation, archive, and reopening under bounded attention?
 
-facts:
-  - the owner selected market judgment as the first product responsibility.
-  - the first use cases are research prioritization and autonomous watchlist creation.
-  - the system is not a copy-trading or order-advice product.
-  - routine human judgment is not allowed in the normal operating loop.
-  - limited autonomous discovery of new themes and assets is allowed.
-  - ordinary uncertainty must be handled by the system rather than escalated to the owner.
-  - main now contains the accepted autonomy direction.
-  - Draft PR 16 remains an engineering candidate for later reassessment.
-  - Mac migration hygiene does not block product thinking.
+completed:
+  - unattended product responsibility
+  - owner governance boundary
+  - two-tier discovery
+  - judgment inventory J01 through J22
+  - authority levels L0 through L3
+  - conservative unattended fallbacks
 
 locked_decisions:
-  - maintain an autonomous thesis portfolio rather than isolated one-shot reports.
-  - events are entry facts; themes and theses persist and evolve.
-  - attention state is a first-class operating result.
-  - AI or bounded agents own evidence qualification, importance, mechanism, exposure, horizon, priced-in state, priority, next evidence, and lifecycle judgments.
-  - deterministic rules own verifiable identity, time, hash, provenance, permission, duplication, leakage, budget, and stop constraints.
-  - limited autonomous discovery is permitted inside configured crypto, public-data, cost, and risk boundaries.
-  - the owner retains governance and high-risk external-side-effect authority only.
-  - accepted project responsibility changes must be written to main instead of remaining only in chat.
-
-rejected_routes:
-  - migration work as the main product discussion.
-  - requiring the owner to judge routine importance, direction, or follow-up.
-  - a passive tool that waits for the owner to submit every event or theme.
-  - a free-form multi-agent society without bounded authority.
-  - one-shot packets as the final business object.
-  - direct trade instructions, copy trading, or public recommendations.
-  - auditing and upgrading current code before the responsibility model is complete.
+  - project/AUTONOMOUS_JUDGMENT_CONTRACT.md is the authority contract
+  - deterministic rules cannot be overridden by semantic roles
+  - routine uncertainty remains inside the system
+  - every active thesis needs follow-up, review, expiry, invalidation, and revision history
+  - clear reversible defaults are applied without owner confirmation
 
 critical_unknowns:
-  - the complete judgment inventory and which decisions require semantic models.
-  - the exact authority and fallback contract for each agent role.
-  - thesis attention states and lifecycle transition rules.
-  - how autonomous discovery earns, spends, and loses machine attention.
-  - which owner notifications are material enough to interrupt silence.
-  - what longitudinal evidence proves the unattended system improves judgment.
-
-stage_exit:
-  - one-sentence true problem
-  - concrete unattended operating story
-  - accepted judgment inventory
-  - agent and deterministic-rule responsibility boundary
-  - risk and abstention constitution
-  - discovery and attention-budget boundary
-  - owner governance exceptions
-  - one most important remaining unknown
+  - thesis states and legal transitions
+  - priority and review budgets
+  - decay and reopening rules
+  - material notification thresholds
+  - loop termination and recovery limits
+  - longitudinal value evidence
 
 next_continue_meaning: >-
-  Continue the foundation discussion by defining the complete AI judgment
-  inventory and the authority boundary of each judgment before reviewing code.
+  Define the thesis state machine, attention budgets, notification rules,
+  and loop termination defaults.
 
 owner_action_required: none
