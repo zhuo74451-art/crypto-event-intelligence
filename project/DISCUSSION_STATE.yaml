@@ -1,48 +1,51 @@
-version: "1.6"
+version: "1.7"
 status: active
 business_project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
-stage: 2
-stage_name: external_prior_art_and_repository_audit
-rhythm: convergence
-stage_progress: evidence_spike_ready
+stage: 3
+stage_name: autonomous_cognition_core
+rhythm: execution_compilation
+stage_progress: work_package_01_ready
 canonical_state: SYNCED
 action_qualification: BOUNDED
 
-current_business_node: foundation_compatibility_spike
+current_business_node: stage3_work_package_01_production_engineering_foundation
 core_question: >-
-  Which candidate foundations actually work together on the Mac with the
-  required recovery and audit guarantees, and does DBOS justify Postgres over
-  a minimal local durable-review ledger?
+  Can the accepted foundations be compiled into a production-quality cognition_v2
+  domain and persistence spine that is immediately ready for large historical
+  point-in-time datasets and replay, without carrying forward PR 16 architecture?
 
 completed:
-  - external foundation first-pass comparison
-  - two-pass semantic architecture decision
-  - main and Draft PR 16 repository audit pass 1
-  - machine-readable component classification
-  - responsibility coverage matrix
-  - target active-path map
-  - DBOS infrastructure assumption correction
-  - bounded compatibility spike contract
+  - Stage 1 responsibility foundation
+  - Stage 2 external foundation and repository audit
+  - merged foundation compatibility evidence in PR 26
+  - SQLAlchemy and Alembic acceptance
+  - Pydantic AI offline structured-gateway acceptance
+  - minimal local durable-review runtime acceptance
+  - table-driven lifecycle choice
+  - OpenTelemetry bootstrap evidence
+  - complete engineering delivery train
 
 locked_decisions:
-  - Draft PR 16 is not merged or patched into the product core
-  - the first semantic topology has two structured passes, not six model agents
-  - application persistence uses SQLAlchemy and Alembic
-  - no Postgres, daemon, paid model call, or product behavior is allowed in the spike
-  - DBOS, Pydantic AI, and the transition library remain conditional until measured
-  - clear reversible audit decisions are applied without owner confirmation
+  - no demo MVP is delivered as the owner result
+  - accepted internal packages are merged immediately and become the next base
+  - historical evidence and replay are built before live owner validation
+  - Stage 3 begins with a production domain and replay-ready persistence spine
+  - the first runtime is the minimal local SQLAlchemy ledger
+  - DBOS remains deferred
+  - two semantic passes remain schema-bound and do not control state
+  - PR 16 remains unmerged and has no planning authority
+  - no paid model call, public effect, trading, wallet or hidden daemon in WP-01
 
 remaining_unknowns:
-  - supported Python availability on the Mac
-  - Pydantic AI structured-output behavior with test models and later low-cost providers
-  - DBOS feasibility without an authorized Postgres service
-  - DBOS versus minimal-runtime recovery and operating complexity
-  - python-statemachine versus table-driven validation
-  - final dependency graph and first implementation work packages
+  - exact production schema boundaries after migration from spike evidence
+  - which existing acquisition contracts are ported unchanged versus wrapped
+  - historical source coverage and reconstruction feasibility by event family
+  - final low-cost semantic provider after offline contracts are stable
+  - multi-process SQLite limits under later unattended operation
 
 next_continue_meaning: >-
-  Execute and independently audit the bounded foundation compatibility spike,
-  then close Stage 2 or reopen only the failed foundation decision.
+  Execute Stage 3 Work Package 01 on a fresh main-derived branch, then independently
+  accept and merge it before starting the historical evidence factory package.
 
-owner_action_required: none_unless_python_or_service_authorization_blocker
+owner_action_required: paste_current_launch_card_once
