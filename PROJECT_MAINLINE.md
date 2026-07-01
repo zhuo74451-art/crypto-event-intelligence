@@ -57,20 +57,31 @@ Conditional:
 
 Current DBOS material describes a Postgres-backed runtime. No Postgres service or background process is authorized during the Stage 2 spike.
 
+## Integration rule
+
+`project/INTEGRATION_POLICY.md` is authoritative.
+
+Executor work is produced on a bounded branch and Draft PR. After independent inspection of the exact remote Head, diff, tests, artifacts and runtime evidence, GPT directly merges a candidate that is demonstrably better than current `main` and has no accepted regression or governance-boundary change.
+
+Validated improvements do not wait indefinitely in Draft PRs and do not require another owner confirmation. The executor never self-merges. The reviewed Head is protected during merge, and remote `main` is verified afterward.
+
 ## Stable rules
 
 1. Accepted decisions are synchronized to `main` in the same cycle.
-2. QuickFlash remains a separate broad-recall provider.
-3. Evidence, events, interpretations and theses remain separate.
-4. Point-in-time integrity and future-data blocking are mandatory.
-5. Semantic roles cannot override deterministic prohibitions.
-6. Ordinary uncertainty remains inside the system through narrowing, abstention, delay, downgrade or archive.
-7. Longitudinal Shadow evidence is required before autonomous judgment is trusted.
-8. Clear reversible low-risk audit choices are applied directly and reported.
-9. Product implementation waits until Stage 2 closes.
+2. Validated improvements are directly merged to `main` under the integration policy.
+3. QuickFlash remains a separate broad-recall provider.
+4. Evidence, events, interpretations and theses remain separate.
+5. Point-in-time integrity and future-data blocking are mandatory.
+6. Semantic roles cannot override deterministic prohibitions.
+7. Ordinary uncertainty remains inside the system through narrowing, abstention, delay, downgrade or archive.
+8. Longitudinal Shadow evidence is required before autonomous judgment is trusted.
+9. Clear reversible low-risk audit choices are applied directly and reported.
+10. Product implementation waits until Stage 2 closes.
 
 ## Current business node
 
 Run the bounded **Foundation Compatibility Spike** defined in `project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md`.
 
 The spike may create isolated audit evidence only. It cannot implement product behavior, start Postgres, run a daemon, use a paid model, merge PR #16 or begin the first product slice.
+
+When its Draft PR is independently accepted, GPT merges it directly into `main`, verifies the merge, and advances the canonical node without waiting for another owner decision.
