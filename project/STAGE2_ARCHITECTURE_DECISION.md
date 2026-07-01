@@ -1,15 +1,10 @@
 # Stage 2 Architecture Decision
 
-**Status:** Accepted first-pass architecture  
-**Decision:** deterministic durable pipeline with two bounded semantic passes
+**Status:** Semantic architecture accepted; durable runtime pending spike
 
-## Rejected assumption
+## Accepted architecture
 
-The six responsibility roles defined in Stage 1 do not require six independent model agents.
-
-Roles describe accountability. They are not a process topology.
-
-## Selected architecture
+The six Stage 1 roles are accountability boundaries, not six separate model agents.
 
 ```text
 Approved Inputs
@@ -23,156 +18,102 @@ Approved Inputs
   -> Material Notification or Silence
 ```
 
-### Deterministic services
+## Deterministic ownership
 
-1. **Evidence Gate**
-   - source and fact permission;
-   - time integrity and leakage blocking;
-   - hashes and provenance;
-   - entity identity;
-   - duplicate and conflict detection.
+- Evidence Gate owns identity, permission, time, provenance, hashes, duplicate and conflict rules.
+- Candidate Builder owns exact event linkage, prior-thesis retrieval, point-in-time context and missing-input maps.
+- Arbitration owns hard gates, claim narrowing, disagreement preservation and allowlisted attention actions.
+- Lifecycle and Resource service owns legal transitions, versions, review intent, no-change decay, caps, retries and notifications.
+- The durable runtime owns execution progress, waits, cancellation, resume and recovery; it never owns thesis truth.
 
-2. **Candidate Builder**
-   - event linkage;
-   - prior thesis retrieval;
-   - point-in-time context assembly;
-   - deterministic features and missing-input map.
+## Semantic ownership
 
-3. **Arbitration Service**
-   - hard-gate evaluation;
-   - claim narrowing;
-   - lifecycle and attention action selection from an allowlist;
-   - disagreement preservation;
-   - no model-generated state transition.
+### Thesis Synthesis
 
-4. **Lifecycle and Resource Service**
-   - legal transition validation;
-   - optimistic version checks;
-   - review scheduling;
-   - no-change decay;
-   - portfolio caps;
-   - loop and retry limits;
-   - notification policy.
+One structured pass may propose materiality, mechanism, exposure, horizon, expectation, priced-in interpretation, next evidence and invalidation conditions.
 
-5. **Durable Runtime**
-   - DBOS workflow and step checkpoints;
-   - durable waits;
-   - cancellation, resume and recovery;
-   - status and resource accounting.
+It cannot grant fact permission, override missing evidence, choose a final state or cause an external action.
 
-### Semantic pass A — Thesis Synthesis
+### Risk Challenge
 
-One structured model call may propose:
+One structured pass must produce counterevidence, alternatives, hidden assumptions, exposure and horizon mismatch, priced-in and crowding risk, claim narrowing and falsification.
 
-- novelty and materiality;
-- causal mechanism and missing links;
-- genuine exposure and exposure type;
-- direction by horizon;
-- expectation and priced-in interpretation;
-- next evidence;
-- candidate invalidation conditions.
+It cannot veto through unsupported opinion.
 
-It cannot:
+The same model may perform both passes initially with separate contracts. Model diversity is an experiment, not a dependency.
 
-- grant fact permission;
-- override missing or stale evidence;
-- choose final lifecycle state;
-- choose a trade or external action;
-- exceed the schema.
+## Rejected topology
 
-### Semantic pass B — Risk Challenge
+No free-form agent-to-agent conversation, autonomous tool loop, model-controlled transition, message broker, graph database, vector database, separate agent server or distributed worker pool is allowed in the first slice without new evidence.
 
-A second structured call receives the evidence bundle and Pass A result. It must produce:
+## Durable runtime decision
 
-- strongest counterevidence;
-- alternative explanations;
-- unsupported assumptions;
-- exposure and horizon mismatch;
-- priced-in and crowding risk;
-- claim-narrowing recommendation;
-- falsification conditions.
+DBOS is the leading candidate, not yet an accepted dependency.
 
-It cannot freely veto. Every challenge requires an evidence or logic reference.
+Current official material describes a Postgres-backed runtime. Stage 2 therefore compares:
 
-## Why two passes instead of one
+### Candidate A — DBOS plus Postgres
 
-One pass is cheaper but encourages self-confirmation: the same generation proposes and approves its own story.
+Potential value:
 
-Two distinct contracts allow:
+- durable workflow steps and waits;
+- recovery, retry, cancellation and status;
+- less custom scheduling code.
 
-- independent validation and retries;
-- separate evidence references;
-- future optional model diversity;
-- comparison of synthesis-only versus synthesis-plus-risk value;
-- removal of the risk pass if it fails to add measurable value.
+Unresolved cost:
 
-The two passes may use the same provider initially. Separate providers are an experiment, not a dependency.
+- Postgres installation and lifecycle;
+- background-service and stop behavior;
+- transaction and idempotency boundaries;
+- local operating burden.
 
-## Why not a full multi-agent system
+### Candidate B — minimal local durable runtime
 
-A conversational agent society would add:
+Components:
 
-- uncontrolled token growth;
-- unclear responsibility for final state;
-- repeated context and evidence drift;
-- difficult replay and deterministic recovery;
-- complex debugging and observability;
-- no demonstrated advantage over two typed passes.
+- SQLAlchemy job and review-intent tables;
+- one foreground scheduler process;
+- claim-and-lock execution;
+- explicit step checkpoints, retry records and wake-up times;
+- exact start, status, stop and resume commands.
 
-No agent-to-agent free-form conversation is allowed in the first complete slice.
+Candidate B must not become an improvised daemon. It is acceptable only if its recovery guarantees are explicit, tested and materially simpler than DBOS.
 
-## Why not deterministic only
+The compatibility spike chooses between them or keeps both unresolved. It may not install or start Postgres without separate authorization.
 
-A deterministic-only pipeline is retained as a baseline but is unlikely to own:
+## Accepted first-slice components
 
-- unseen causal mechanisms;
-- nuanced exposure mapping;
-- competing explanations;
-- cross-domain interpretation;
-- novel theme discovery.
-
-It remains useful for evidence, resource, transition and baseline responsibilities.
-
-## Why not event-only or one-shot analysis
-
-Event-only ranking lacks persistent hypotheses, follow-up evidence, invalidation and attention decay.
-
-One-shot analysis cannot prove that the system updates or abandons a thesis correctly over time.
-
-Both remain formal evaluation baselines.
-
-## First-slice runtime components
-
-- DBOS Python for workflow durability;
-- Pydantic and Pydantic AI for contracts and two semantic passes;
+- isolated Python 3.11 or 3.12 environment;
+- Pydantic and Pydantic AI after structured-output compatibility evidence;
 - SQLAlchemy and Alembic for application state;
-- python-statemachine for transition validation;
+- python-statemachine or a simpler table validator after comparison;
 - OpenTelemetry traces and metrics;
-- SQLite for local application and DBOS state during the first slice;
-- existing acquisition providers behind thin input adapters.
-
-## Complexity budget
-
-The first slice may contain:
-
-- one runtime process;
-- one DBOS application;
-- one application database;
+- existing read-only acquisition providers behind adapters;
 - two semantic pass definitions;
-- no message broker;
-- no graph database;
-- no vector database unless Stage 2 proves retrieval cannot work without it;
-- no separate agent server;
-- no distributed worker pool;
-- no public UI requirement.
+- one application database.
+
+## First complete slice
+
+One event family must pass through:
+
+- approved evidence;
+- event resolution;
+- thesis creation or claim-level abstention;
+- persisted revision;
+- one scheduled follow-up;
+- restart recovery;
+- material notification or silence;
+- point-in-time replay.
+
+It excludes strategy evaluators, universal world-model construction, trading, public publication and public UI.
 
 ## Reopen conditions
 
-Reopen the architecture only if evidence shows:
+Reopen the architecture if:
 
-- two semantic passes cannot produce adequate mechanism and risk outputs;
-- deterministic arbitration cannot represent necessary unresolved ambiguity;
-- DBOS recovery or scheduling fails the injected tests;
-- one semantic pass performs equally well with materially lower cost;
-- a deterministic-only route meets the same outcome;
-- distributed workload or scale requires Temporal or another orchestrator.
+- one semantic pass performs equally well at lower cost;
+- deterministic-only processing meets the same outcome;
+- two passes cannot produce adequate structured results;
+- the local runtime beats DBOS on guarantees and complexity;
+- DBOS justifies its Postgres boundary through measured recovery value;
+- later scale requires Temporal or another distributed orchestrator.
