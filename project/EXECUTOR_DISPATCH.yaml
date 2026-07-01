@@ -1,49 +1,20 @@
-version: "1.3"
+version: "2.0"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
-local_path: /Users/zhuo/Desktop/市场信号/crypto-event-intelligence
 executor: Reasonix
 mode: Auto
 goal_mode: disabled
 
 current_dispatch:
-  node: stage2_foundation_spike_repair_005
-  issue: 25
-  pr: 26
-  branch: audit/stage2-foundation-spike
-  instruction_source: latest_issue_comment
-  instruction_id: STAGE2-FOUNDATION-SPIKE-REPAIR-005
-  reviewed_head: a27fcbad8ef38bc9ab549723a3a425fe490a25dd
-  action: repair_same_branch_and_pr
-  terminal_behavior: stop_after_exact_receipt
-
-prohibited:
-  - new_branch
-  - new_pr
-  - product_behavior_change
-  - postgres_install_or_start
-  - daemon_or_scheduler
-  - real_or_paid_model_call
-  - pr_16_change_or_merge
-  - main_merge_by_executor
-
-completion_gate:
-  - receipt_sha_matches_remote_pr_head
-  - stale_report_removed
-  - committed_report_matches_exact_test_output
-  - synchronized_barrier_two_claimer_proof
-  - exactly_one_claim_owner_each_run
-  - pydantic_ai_offline_agent_executed
-  - pydantic_ai_usage_observed
-  - no_fabricated_evidence
-  - focused_tests_zero_failures
-  - git_diff_check_pass
-  - product_files_unchanged
+  node: stage3_wp01
+  issue: 27
+  branch: feat/stage3-wp01-production-foundation
+  instruction_file: project/work_orders/STAGE3_WP01_EXECUTION.md
+  canonical_fingerprint: 894c4d577a6b190217ae7661aebe0fd4f504df6c4cdcb7228b582bf92bdc27a7
+  terminal_behavior: stop_after_receipt
 
 post_execution:
-  integration_owner: GPT
-  action: independently_review_exact_head
-  accepted_result: direct_merge_to_main
-  rejected_result: repair_same_pr
-  owner_confirmation_required: false
+  reviewer: GPT
+  accepted: integrate
+  rejected: repair_same_branch
