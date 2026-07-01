@@ -1,0 +1,68 @@
+version: "1.0"
+status: active
+scope: external_foundations_architecture_and_repository_audit
+
+decisions:
+  - id: DEC-039
+    status: accepted
+    decision: DBOS Python is the preferred first-slice durable workflow runtime.
+    reopen_if: recovery, durable review, cancellation, status, or resource tests fail
+
+  - id: DEC-040
+    status: accepted
+    decision: Temporal is reserved for later distributed-scale evidence and is not an initial dependency.
+
+  - id: DEC-041
+    status: accepted
+    decision: Prefect may support bulk evaluation or data-flow jobs but does not own the core thesis lifecycle.
+
+  - id: DEC-042
+    status: accepted
+    decision: Pydantic AI is a thin structured model gateway, not an autonomous agent runtime.
+
+  - id: DEC-043
+    status: accepted
+    decision: The first semantic architecture contains Thesis Synthesis and Risk Challenge passes only.
+    reason: Stage 1 roles define accountability, not six independent model processes.
+
+  - id: DEC-044
+    status: accepted
+    decision: Deterministic services own evidence gates, arbitration, lifecycle, resources, notifications, and external effects.
+
+  - id: DEC-045
+    status: accepted
+    decision: SQLAlchemy and Alembic replace new raw SQLite schema management for cognition state.
+
+  - id: DEC-046
+    status: accepted
+    decision: An explicit relational append-only ledger is preferred over a full event-sourcing framework for the first slice.
+
+  - id: DEC-047
+    status: accepted
+    decision: python-statemachine is the preferred legal-transition validator behind a local lifecycle service.
+    reopen_if: a table-driven validator is measurably simpler during the compatibility spike
+
+  - id: DEC-048
+    status: accepted
+    decision: W3C PROV concepts are adapted into relational provenance records without an RDF or graph-database stack.
+
+  - id: DEC-049
+    status: accepted
+    decision: OpenTelemetry traces and metrics are adopted; structured JSON logs remain the initial logging route.
+
+  - id: DEC-050
+    status: accepted
+    decision: Draft PR 16 will not be merged and patched into the product core.
+    reason: its active path is one-shot, heuristic and packet-centered rather than persistent, durable and thesis-centered
+
+  - id: DEC-051
+    status: accepted
+    decision: Draft PR 16 remains a component quarry and failure record; only individually classified assets may be ported.
+
+  - id: DEC-052
+    status: accepted
+    decision: The eight strategy evaluators and universal world-model architecture are excluded from the first complete slice.
+
+  - id: DEC-053
+    status: accepted
+    decision: The first complete slice supports one event family through evidence, thesis or abstention, revision persistence, one durable follow-up review, recovery, and material notification or silence.
