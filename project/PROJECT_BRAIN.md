@@ -79,17 +79,71 @@ The system or its bounded agents decide:
 
 The system must also judge whether it has the right to make a claim. Lack of qualification results in abstention or reduced scope, not fabricated certainty.
 
-## Limited autonomous discovery
+## Two-tier autonomous discovery
 
-The system may discover and create new themes, theses, and asset observations without prior owner listing when all conditions hold:
+The accepted discovery model is:
 
-- the subject remains inside crypto markets and directly related macro, policy, technology, security, liquidity, and infrastructure mechanisms;
-- evidence comes from legal public sources or already approved providers;
-- the cost and attention budgets remain inside configured limits;
-- the thesis has an explicit mechanism, future evidence path, and exit condition;
-- the discovery does not enable trading, publishing, paid interfaces, or new credentials.
+```text
+Broad Discovery Universe
+  -> Qualification Screen
+  -> Strict Active-Portfolio Admission
+```
 
-Out-of-bound discoveries are retained only as candidates for later governance review.
+### Broad Discovery Universe
+
+Any crypto-related asset, theme, project, mechanism, policy change, security pattern, market-structure change, or directly related macro factor may be briefly discovered.
+
+The discovery layer may:
+
+- identify the entity or mechanism;
+- deduplicate it against known objects;
+- classify the domain;
+- check whether a real-world change or new independent evidence exists;
+- detect a potentially new mechanism;
+- create a bounded candidate record.
+
+Discovery alone does **not** authorize:
+
+- an active thesis;
+- a strong directional conclusion;
+- owner notification;
+- persistent high-cost tracking;
+- expansion of credentials, paid providers, publishing, wallet, or trading authority.
+
+### Strict Active-Portfolio Admission
+
+A candidate enters the active thesis portfolio only when it passes all applicable gates:
+
+1. identity and entity integrity;
+2. real-world change or new independent evidence;
+3. explicit causal mechanism;
+4. genuine asset, sector, or market exposure;
+5. sufficient evidence quality and fact permission;
+6. future verification path;
+7. expiry or invalidation condition;
+8. acceptable liquidity, manipulation, and data-quality risk;
+9. positive machine-attention value;
+10. non-duplication with an existing thesis.
+
+Possible results are:
+
+- activate;
+- observe at low priority;
+- retain as a risk observation;
+- retain as a mechanism candidate;
+- reject.
+
+### Conservative defaults
+
+- uncertain identity -> reject or isolate;
+- unclear mechanism -> no directional claim;
+- weak exposure -> archive or low priority;
+- poor data quality -> risk observation only;
+- low liquidity or high manipulation -> restricted authority and small resource budget;
+- no future verification -> reject or time-box;
+- duplicate thesis -> merge evidence rather than create another active object.
+
+This design allows broad autonomous discovery without allowing the active portfolio to become a garbage-information sink.
 
 ## Agent responsibility model
 
@@ -157,9 +211,9 @@ Define the autonomous judgment foundation before auditing or upgrading existing 
 1. exact judgment inventory;
 2. agent and deterministic-rule responsibility split;
 3. thesis and attention lifecycle;
-4. autonomous discovery boundaries;
+4. two-tier discovery and active-portfolio admission;
 5. evidence, uncertainty, and risk rules;
 6. machine-attention and cost budgets;
 7. governance exceptions and stop behavior.
 
-Only after these are locked should the existing repository be reviewed for retain, adapt, quarantine, or remove decisions.
+The discovery scope decision is locked. The next discussion work is the complete judgment inventory and authority boundary. Only after the full foundation is locked should the existing repository be reviewed for retain, adapt, quarantine, remove, or missing decisions.
