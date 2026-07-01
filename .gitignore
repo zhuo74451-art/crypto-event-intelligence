@@ -23,3 +23,4 @@ __pycache__/
 results/
 data/signal_registry.json*
 data/signal_registry*.json
+.output/

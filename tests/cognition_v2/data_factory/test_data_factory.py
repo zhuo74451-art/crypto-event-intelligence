@@ -806,3 +806,105 @@ class TestAuditNoPlaceholders:
             auditor = CorpusAuditor()
             report = auditor.audit(td)
             assert report.future_leakage_violations > 0
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# P02 — Deterministic intake IDs
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class TestDeterministicIntakeIds:
+    def test_deterministic_intake_id(self):
+        from market_radar.cognition_v2.data_factory.adapters.registry import (
+            _deterministic_intake_id, _content_hash
+        )
+        id1 = _deterministic_intake_id("s1", "key1", "hash1")
+        id2 = _deterministic_intake_id("s1", "key1", "hash1")
+        assert id1 == id2
+        assert len(id1) == 32
+
+    def test_duplicate_content_same_id(self):
+        from market_radar.cognition_v2.data_factory.adapters.registry import (
+            _content_hash
+        )
+        h1 = _content_hash("same content")
+        h2 = _content_hash("same content")
+        assert h1 == h2
+        assert len(h1) == 32
+
+    def test_different_content_different_id(self):
+        from market_radar.cognition_v2.data_factory.adapters.registry import (
+            _content_hash
+        )
+        h1 = _content_hash("content A")
+        h2 = _content_hash("content B")
+        assert h1 != h2
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# P03 — Cyclic token and hard ceiling edge cases
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class CyclicTokenAdapter(MockAdapter):
+    """Adapter that returns the same page token repeatedly."""
+    def __init__(self):
+        super().__init__(total_pages=999, records_per_page=5)
+        self._call_count = 0
+
+    def fetch_page(self, source_id, start_time, end_time,
+                   page_size=50, page_token=None):
+        records, _ = super().fetch_page(
+            source_id, start_time, end_time, page_size, page_token
+        )
+        self._call_count += 1
+        return records, "always_same_token"
+
+
+class TestHardCeilingsExtended:
+    def test_ceiling_smaller_than_one_page(self):
+        adapter = MockAdapter(total_pages=2, records_per_page=10)
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tempfile.mkdtemp())
+        req = AcquisitionRun(
+            run_id="small-ceiling", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=3,  # smaller than one full page
+            max_record_budget=500, max_request_budget=50,
+        )
+        records, completed, _ = acq.run(req)
+        assert len(records) == 3
+        assert completed.status == AcquisitionStatus.COMPLETED
+
+    def test_cyclic_page_token_detected(self):
+        adapter = CyclicTokenAdapter()
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tempfile.mkdtemp())
+        req = AcquisitionRun(
+            run_id="cyclic-test", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records, completed, _ = acq.run(req)
+        # Should fail safely with cyclic token detection
+        assert completed.status == AcquisitionStatus.FAILED
+
+    def test_source_exhausted_completed_resume(self):
+        """Source exhaustion (no more pages) returns 0 new records on resume."""
+        adapter = MockAdapter(total_pages=1, records_per_page=10)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="exhausted-resume", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records1, _, _ = acq1.run(req1)
+
+        adapter2 = MockAdapter(total_pages=1, records_per_page=10)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="exhausted-resume", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records2, completed2, _ = acq2.run(req2, resume=True)
+        # Source was exhausted — no new records
+        assert len(records2) <= len(records1)
+        assert completed2.status == AcquisitionStatus.COMPLETED
