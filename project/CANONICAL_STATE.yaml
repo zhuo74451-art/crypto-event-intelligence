@@ -1,0 +1,77 @@
+version: "1.0"
+status: candidate_pending_merge
+canonical_ref: main
+state_branch: project/canonical-mainline-v1
+canonical_fingerprint: 1abdfb3c3897547dc2c82e3eda77e1b122865b4a69e9016bbf377a5a637a1f5f
+fingerprint_basis: "crypto-market-cognition-signal-os|internal-research|no-trading|canonical-mainline-v1|2026-07-01"
+
+project:
+  name: Crypto Market Cognition & Signal OS
+  repository: zhuo74451-art/crypto-event-intelligence
+  responsibility: >-
+    Convert point-in-time evidence, market state, expectations, research claims,
+    and strategy components into calibrated internal market assessments with an
+    explicit insufficient-evidence state.
+  primary_user: owner_researcher
+  not_a_trading_system: true
+
+session:
+  bootstrap_mode: resume
+  discussion_stage: 4
+  rhythm: convergence
+  current_delivery_mode: MIGRATION_OR_RECOVERY
+  next_delivery_mode: HARDENING
+  action_qualification: BOUNDED
+
+accepted_state:
+  - The product is an internal crypto market research and intelligence system.
+  - Facts, interpretations, hypotheses, and validated strategy components stay separate.
+  - QuickFlash remains a separate broad-recall acquisition provider.
+  - Market-signal consumes contracted QuickFlash outputs and may gather direct evidence independently.
+  - Assessments must allow abstention and insufficient evidence.
+  - Historical and real-time shadow evidence are required before strategy trust.
+  - Trading, wallet actions, paid APIs, recurring services, and production publishing are disabled by default.
+
+candidate_state:
+  - ref: workbench/cognition-spine-v1
+    pr: 16
+    classification: internal_prototype_plus_executable_strategies
+    accepted_as_engineering_v1: false
+    reason: >-
+      The branch contains useful cognition, world-model, strategy, arbitration,
+      and packet components, but strict intake, research, baselines, shadow
+      artifacts, and integrated-case proof remain incomplete.
+
+migration_state:
+  old_pc_checkpoint_issue: 21
+  mac_path: /Users/zhuo/Desktop/市场信号/crypto-event-intelligence
+  cutover_complete: false
+  sole_active_executor: pending
+
+next_business_node:
+  id: canonical_and_environment_cutover
+  completion_requires:
+    - canonical state-only change merged to main
+    - old-PC checkpoint accepted
+    - Mac checkout synced and validated
+    - one active execution environment
+    - future work base contains this fingerprint
+
+read_order:
+  - README.md
+  - PROJECT_MAINLINE.md
+  - project/CANONICAL_STATE.yaml
+  - project/PROJECT_BRAIN.md
+  - project/PROJECT_PLAN.md
+  - project/DISCUSSION_STATE.yaml
+  - project/DECISION_REGISTER.yaml
+  - project/LEARNING_QUEUE.yaml
+  - open PRs and execution issues
+
+historical_routes:
+  status: superseded_or_historical
+  includes:
+    - Crypto Event Intelligence bot framing
+    - Week 1 release framing
+    - Personal-Use RC1 framing
+    - isolated acquisition-pilot planning authority

@@ -1,0 +1,58 @@
+version: "1.0"
+status: active
+
+decisions:
+  - id: DEC-001
+    status: accepted
+    decision: The product is Crypto Market Cognition & Signal OS.
+    reason: This identity covers evidence, market state, research, strategy evaluation, arbitration, and calibrated abstention.
+    supersedes:
+      - event-bot-only framing
+      - Week 1 release framing
+      - Personal-Use RC1 framing
+
+  - id: DEC-002
+    status: accepted
+    decision: The system is an internal research and intelligence tool, not a trading system.
+    reason: Current evidence supports assessment and research workflows, not execution safety or profitable automation.
+
+  - id: DEC-003
+    status: accepted
+    decision: QuickFlash remains a separate broad-recall acquisition provider.
+    reason: Duplicating its registry would create two source truths and unnecessary maintenance.
+
+  - id: DEC-004
+    status: accepted
+    decision: Default branch main is the canonical project state.
+    reason: New sessions and new machines must recover the project without old chat or long-lived Draft branches.
+
+  - id: DEC-005
+    status: accepted
+    decision: Draft PR #16 is a candidate implementation, not accepted Internal Engineering V1.
+    reason: Remote audits found incomplete integrated intake, research, baselines, shadow artifacts, and semantic proof.
+    reopen_if: A new remote Head closes the documented gaps and passes independent acceptance.
+
+  - id: DEC-006
+    status: accepted
+    decision: The current delivery mode is MIGRATION_OR_RECOVERY.
+    reason: The project is moving from the old Windows checkout to a new Mac and must transfer responsibility safely.
+
+  - id: DEC-007
+    status: accepted
+    decision: The next engineering delivery mode is HARDENING.
+    reason: Product identity and architecture are stable; remaining work is integration, evidence, reliability, and acceptance.
+
+  - id: DEC-008
+    status: accepted
+    decision: Real-data shadow validation follows Engineering V1 closure.
+    reason: Fixture and replay success cannot establish live operational trust or strategy value.
+
+  - id: DEC-009
+    status: accepted
+    decision: No daemon, recurring service, paid API, production publishing, wallet action, or trade execution is enabled by default.
+    reason: These add external side effects, cost, and operational responsibility requiring separate approval.
+
+  - id: DEC-010
+    status: accepted
+    decision: Only one computer actively writes the project branch after cutover.
+    reason: Parallel local states increase divergence, missed files, and accidental overwrites.
