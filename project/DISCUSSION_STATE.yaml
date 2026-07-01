@@ -1,44 +1,51 @@
-version: "1.4"
+version: "1.5"
 status: active
 business_project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
-stage: 1
-stage_name: autonomous_problem_and_responsibility
-rhythm: convergence
-stage_progress: near_exit
+stage: 2
+stage_name: external_prior_art_and_repository_audit
+rhythm: exploration
+stage_progress: starting
 canonical_state: SYNCED
 action_qualification: BOUNDED
 
-current_business_node: risk_abstention_and_validation
+current_business_node: external_prior_art_and_repository_responsibility_audit
 core_question: >-
-  What claim limits, abstention rules, validation evidence, baselines, and
-  success thresholds are required before the autonomous design can audit code?
+  Which mature foundations and which existing repository components form the
+  smallest reliable implementation route for the accepted autonomous cognition responsibility?
 
-completed:
-  - unattended product responsibility
-  - owner governance boundary
+stage1_completed:
+  - product responsibility and owner governance
   - two-tier discovery
   - judgment inventory and authority levels
-  - thesis lifecycle state machine
-  - attention, review, notification, loop, and recovery policy
+  - thesis lifecycle
+  - attention, resource, notification, loop, and recovery policy
+  - risk, claim, confidence, and abstention constitution
+  - longitudinal validation, baselines, thresholds, and stop rules
+
+stage2_work:
+  - compare mature foundations for durable workflow, state, evidence, research, calibration, evaluation, and observability
+  - challenge the bounded-role design with simpler alternatives
+  - inspect main, Draft PR 16, tests, artifacts, and runtime entrypoints
+  - classify components as RETAIN, ADAPT, QUARANTINE, REMOVE, or MISSING
+  - identify the smallest complete engineering path
 
 locked_decisions:
-  - lifecycle and attention are separate
-  - legal transitions are defined in project/THESIS_LIFECYCLE.md
-  - portfolio and execution limits are defined in project/ATTENTION_RESOURCE_POLICY.md
-  - no-change reduces attention automatically
-  - reopening requires renewed admission and risk review
-  - clear reversible defaults are applied without owner confirmation
+  - no implementation begins during the audit
+  - current code claims must be checked against remote evidence
+  - mature components are adopted when they own generic responsibility better than local code
+  - simpler architecture wins when it preserves the accepted user result and safety boundaries
+  - clear reversible audit decisions are applied without owner confirmation
 
-remaining_unknowns:
-  - exact claim and confidence limits
-  - mandatory abstention conditions
-  - longitudinal shadow design and baselines
-  - success, change, scope-reduction, and stop thresholds
-  - Stage 1 exit evidence package
+critical_unknowns:
+  - whether a multi-role architecture is necessary or a smaller semantic core is sufficient
+  - which existing PR 16 components genuinely implement accepted responsibilities
+  - which mature workflow, state, provenance, and observability foundations fit the project
+  - what should be deleted or quarantined to reduce complexity
+  - the first complete implementation slice
 
 next_continue_meaning: >-
-  Lock the risk, abstention, and validation constitution, then decide whether
-  Stage 1 can close and the existing repository audit can begin.
+  Run the external foundation challenge and begin evidence-backed classification
+  of the existing repository without implementing product changes.
 
 owner_action_required: none
