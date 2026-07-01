@@ -24,38 +24,38 @@ Approved Inputs
 
 The two semantic passes are schema-bound responsibilities, not autonomous conversational agents. Deterministic rules own fact permission, lifecycle, resources and external effects.
 
-## Stage 2 repository judgment
+## Stage 2 result
 
-Draft PR #16 is not the product base. It contains useful acquisition, contract, exact-grouping, fixture and operator material, but its active cognition path remains one-shot, heuristic, numeric-confidence and packet-centered.
+Stage 2 is closed. PR #26 was independently accepted and merged into `main`.
 
-The first slice excludes:
+Accepted foundation route:
 
-- eight strategy evaluators;
-- universal eleven-domain world model;
-- keyword mechanisms;
-- arithmetic confidence;
-- current strategy arbitration;
-- current one-shot Shadow claims.
-
-Only individually classified assets may be ported.
-
-## Foundation state
-
-Accepted:
-
-- SQLAlchemy and Alembic for application persistence;
-- explicit append-only domain revisions;
-- two semantic passes;
+- Python 3.12 isolated runtime;
+- Pydantic domain contracts;
+- Pydantic AI as a thin structured gateway;
+- SQLAlchemy and Alembic;
+- append-only revisions and current projections;
+- table-driven lifecycle validation;
+- minimal local SQLAlchemy durable-review ledger;
 - OpenTelemetry traces and metrics;
 - W3C PROV concepts in relational provenance.
 
-Conditional:
+DBOS is deferred because the current route requires Postgres and did not justify that service boundary for the first internal version.
 
-- Pydantic AI as the structured model gateway;
-- python-statemachine versus a table validator;
-- DBOS versus a minimal local durable-review runtime.
+Draft PR #16 remains unmerged and has no planning authority. It is only a component quarry and failure record.
 
-Current DBOS material describes a Postgres-backed runtime. No Postgres service or background process is authorized during the Stage 2 spike.
+## Delivery strategy
+
+The owner result is a complete internal production system, not a demo MVP.
+
+`project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md` is authoritative. Internal packages are bounded and mergeable, but they form one continuous delivery train. Historical evidence, point-in-time replay, blind evaluation and adversarial testing are built before routine live validation.
+
+Expected effort allocation:
+
+- historical evidence, replay, blind evaluation and adversarial testing: 55–65%;
+- cognition and lifecycle implementation: 25–35%;
+- unattended live Shadow: 10–15%;
+- routine owner real-time testing: approximately zero.
 
 ## Integration rule
 
@@ -75,13 +75,13 @@ Validated improvements do not wait indefinitely in Draft PRs and do not require 
 6. Semantic roles cannot override deterministic prohibitions.
 7. Ordinary uncertainty remains inside the system through narrowing, abstention, delay, downgrade or archive.
 8. Longitudinal Shadow evidence is required before autonomous judgment is trusted.
-9. Clear reversible low-risk audit choices are applied directly and reported.
-10. Product implementation waits until Stage 2 closes.
+9. Historical replay and blind evaluation precede routine live validation.
+10. Internal work packages are not separate MVP deliveries.
+11. The first runtime uses the minimal local SQLAlchemy ledger; DBOS is reopened only by evidence.
+12. No trading, wallet, public publication or hidden daemon enters the active path.
 
 ## Current business node
 
-Run the bounded **Foundation Compatibility Spike** defined in `project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md`.
+Run **Stage 3 Work Package 01 — Production Engineering Foundation**.
 
-The spike may create isolated audit evidence only. It cannot implement product behavior, start Postgres, run a daemon, use a paid model, merge PR #16 or begin the first product slice.
-
-When its Draft PR is independently accepted, GPT merges it directly into `main`, verifies the merge, and advances the canonical node without waiting for another owner decision.
+The package builds the production `cognition_v2` domain, persistence and replay-ready spine. It may not call a real semantic provider, run a live loop, create public effects, modify PR #16 or present itself as the completed product.
