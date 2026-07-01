@@ -1,16 +1,21 @@
 """Replay-ready historical contracts and validators.
 
 Dependency: domain contracts only.
+R04: explicit point-in-time authority — no silent defaults for historical data.
+R05: real future-leakage validation using first_seen_at and retrieval_time.
+R06: real split-order integrity with frozen boundaries.
+R07: correct outcome window times from event time.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Set, Tuple
 
 from market_radar.cognition_v2.domain.contracts import (
+    CANONICAL_EDGES,
     CorrectionType,
     EventFamily,
     EvidenceRef,
@@ -18,8 +23,83 @@ from market_radar.cognition_v2.domain.contracts import (
     HistoricalCaseManifest,
     MarketRegime,
     OutcomeWindow,
+    SourceAuthority,
+    FactPermission,
     SplitLabel,
 )
+
+
+CANONICAL_WINDOW_LABELS = {"1h", "6h", "24h", "3d", "7d"}
+
+WINDOW_DURATIONS = {
+    "1h": timedelta(hours=1),
+    "6h": timedelta(hours=6),
+    "24h": timedelta(hours=24),
+    "3d": timedelta(days=3),
+    "7d": timedelta(days=7),
+}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# R04 — Explicit point-in-time authority (no silent defaults)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class HistoricalSourceRecord:
+    """Source record for historical evidence — authority and times are always explicit."""
+    def __init__(
+        self,
+        source_id: str,
+        name: str,
+        source_type: str,
+        authority: SourceAuthority,
+        fact_permission: FactPermission,
+        first_seen_at: datetime,
+    ):
+        if not authority or authority == SourceAuthority.UNKNOWN:
+            raise ValueError("Historical source authority must be explicitly supplied")
+        if not fact_permission or fact_permission == FactPermission.NONE:
+            raise ValueError("Historical source fact_permission must be explicitly supplied")
+        if first_seen_at.tzinfo is None:
+            raise ValueError("first_seen_at must be timezone-aware")
+        self.source_id = source_id
+        self.name = name
+        self.source_type = source_type
+        self.authority = authority
+        self.fact_permission = fact_permission
+        self.first_seen_at = first_seen_at
+
+
+class HistoricalEvidenceRecord:
+    """Evidence record for historical data — times are always explicit."""
+    def __init__(
+        self,
+        evidence_id: str,
+        source_id: str,
+        content_hash: str,
+        first_seen_at: datetime,
+        retrieval_time: datetime,
+        publication_time: Optional[datetime] = None,
+        effective_time: Optional[datetime] = None,
+        assessment_time: Optional[datetime] = None,
+    ):
+        if first_seen_at.tzinfo is None:
+            raise ValueError("first_seen_at must be timezone-aware")
+        if retrieval_time.tzinfo is None:
+            raise ValueError("retrieval_time must be timezone-aware")
+        if assessment_time is not None and assessment_time.tzinfo is None:
+            raise ValueError("assessment_time must be timezone-aware")
+        self.evidence_id = evidence_id
+        self.source_id = source_id
+        self.content_hash = content_hash
+        self.first_seen_at = first_seen_at
+        self.retrieval_time = retrieval_time
+        self.publication_time = publication_time
+        self.effective_time = effective_time
+        self.assessment_time = assessment_time
+
+    def available_at(self, cutoff: datetime) -> bool:
+        """Evidence is available when both first_seen and retrieval are <= cutoff."""
+        return self.first_seen_at <= cutoff and self.retrieval_time <= cutoff
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -47,7 +127,7 @@ class ManifestBuilder:
     def compute_evidence_manifest_hash(
         evidence_refs: List[EvidenceRef],
     ) -> str:
-        """Deterministic hash of evidence manifest."""
+        """Deterministic hash of evidence manifest — excludes outcome data."""
         ordered = sorted(evidence_refs, key=lambda r: (r.source, r.content_hash))
         content = json.dumps(
             [r.model_dump() for r in ordered],
@@ -62,15 +142,26 @@ class ManifestBuilder:
         event_time: datetime,
         price_data: Dict[str, Dict[str, Optional[float]]],
     ) -> List[OutcomeWindow]:
-        """Build outcome windows from price data at standard intervals."""
+        """Build outcome windows from price data at standard intervals.
+
+        R07: close times are computed from event_time, not set equal to it.
+        """
+        if event_time.tzinfo is None:
+            raise ValueError("event_time must be timezone-aware")
+
         windows = []
         for label in ["1h", "6h", "24h", "3d", "7d"]:
+            if label not in CANONICAL_WINDOW_LABELS:
+                continue
+            duration = WINDOW_DURATIONS[label]
+            close_time = event_time + duration
+
             data = price_data.get(label, {})
             window = OutcomeWindow(
                 window_label=label,
                 event_id=event_id,
                 open_time=event_time,
-                close_time=event_time,  # Would use actual window close in real implementation
+                close_time=close_time,
                 open_price=data.get("open"),
                 close_price=data.get("close"),
                 high_price=data.get("high"),
@@ -84,65 +175,221 @@ class ManifestBuilder:
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Future-evidence leakage validator
+# R05 — Real future-leakage validation using evidence availability
 # ═══════════════════════════════════════════════════════════════════════════════
+
+class EvidenceLeakageResult:
+    """Result of leakage validation with exact blocked IDs and reasons."""
+    def __init__(self, blocked_ids: List[str], reasons: List[str], is_clean: bool):
+        self.blocked_ids = blocked_ids
+        self.reasons = reasons
+        self.is_clean = is_clean
+
 
 class LeakageValidator:
-    """Validates that no evidence from the future leaks into a time window."""
+    """Validates evidence availability against an assessment cutoff.
 
-    def __init__(self, max_allowed_time: datetime):
-        self._max_allowed_time = max_allowed_time
+    R05: Uses first_seen_at and retrieval_time — publication/effective time
+    alone must never make later-retrieved evidence available earlier.
+    """
 
-    def is_leaked(self, evidence_time: datetime) -> bool:
-        """Check if evidence time exceeds the max allowed time."""
-        return evidence_time > self._max_allowed_time
+    def __init__(self, assessment_cutoff: datetime):
+        if assessment_cutoff.tzinfo is None:
+            raise ValueError("assessment_cutoff must be timezone-aware")
+        self._cutoff = assessment_cutoff
 
-    def validate_evidence_set(
+    @property
+    def cutoff(self) -> datetime:
+        return self._cutoff
+
+    def is_available(self, evidence: HistoricalEvidenceRecord) -> bool:
+        """Evidence is available when both first_seen and retrieval are <= cutoff."""
+        return evidence.available_at(self._cutoff)
+
+    def validate_evidence_list(
         self,
-        evidence_times: List[datetime],
-    ) -> Tuple[bool, List[datetime]]:
-        """Validate all evidence times.
+        evidence_list: List[HistoricalEvidenceRecord],
+    ) -> EvidenceLeakageResult:
+        """Validate a list of evidence records.
 
-        Returns (is_clean, leaked_times).
+        Returns result with blocked IDs and reasons.
         """
-        leaked = [t for t in evidence_times if self.is_leaked(t)]
-        return len(leaked) == 0, leaked
+        blocked_ids = []
+        reasons = []
 
-    def filter_evidence(
-        self,
-        evidence_times: List[datetime],
-    ) -> List[datetime]:
-        """Filter out leaked evidence times."""
-        return [t for t in evidence_times if t <= self._max_allowed_time]
+        for ev in evidence_list:
+            if ev.first_seen_at.tzinfo is None or ev.retrieval_time.tzinfo is None:
+                blocked_ids.append(ev.evidence_id)
+                reasons.append(f"Evidence {ev.evidence_id}: timezone-naive timestamps")
+                continue
+
+            if not self.is_available(ev):
+                blocked_ids.append(ev.evidence_id)
+                details = []
+                if ev.first_seen_at > self._cutoff:
+                    details.append(f"first_seen_at {ev.first_seen_at.isoformat()} > cutoff")
+                if ev.retrieval_time > self._cutoff:
+                    details.append(f"retrieval_time {ev.retrieval_time.isoformat()} > cutoff")
+                reasons.append(f"Evidence {ev.evidence_id}: not available — {'; '.join(details)}")
+
+        return EvidenceLeakageResult(
+            blocked_ids=blocked_ids,
+            reasons=reasons,
+            is_clean=len(blocked_ids) == 0,
+        )
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Split-order integrity
+# R06 — Real split-order integrity with frozen boundaries
 # ═══════════════════════════════════════════════════════════════════════════════
+
+class SplitBoundary:
+    """A frozen boundary that separates splits.
+
+    BUILD < DEVELOPMENT < BLIND chronologically.
+    One case cannot appear in multiple splits.
+    Adding a newer case cannot retroactively move an existing frozen BLIND case.
+    """
+
+    def __init__(self, build_max_time: datetime, development_max_time: datetime):
+        if build_max_time.tzinfo is None or development_max_time.tzinfo is None:
+            raise ValueError("Split boundaries must be timezone-aware")
+        if build_max_time >= development_max_time:
+            raise ValueError("BUILD max time must be before DEVELOPMENT max time")
+        self.build_max_time = build_max_time
+        self.development_max_time = development_max_time
+
+    def classify(self, event_time: datetime) -> SplitLabel:
+        """Classify an event time into a split label."""
+        if event_time.tzinfo is None:
+            raise ValueError("event_time must be timezone-aware")
+        if event_time <= self.build_max_time:
+            return SplitLabel.BUILD
+        elif event_time <= self.development_max_time:
+            return SplitLabel.DEVELOPMENT
+        else:
+            return SplitLabel.BLIND
+
+
+class SplitOrderResult:
+    """Result of split-order validation with exact violations."""
+    def __init__(self):
+        self.errors: List[str] = []
+        self.case_splits: Dict[str, SplitLabel] = {}
+
+    @property
+    def is_valid(self) -> bool:
+        return len(self.errors) == 0
+
 
 class SplitOrderIntegrity:
-    """Validates BUILD -> DEVELOPMENT -> BLIND time ordering."""
+    """Validates BUILD -> DEVELOPMENT -> BLIND ordering with frozen boundaries.
 
-    VALID_ORDER = [SplitLabel.BUILD, SplitLabel.DEVELOPMENT, SplitLabel.BLIND]
+    R06: replaces the no-op validator with explicit boundary checks.
+    """
 
     @staticmethod
-    def validate_split_order(
+    def validate(
         manifests: List[HistoricalCaseManifest],
-    ) -> List[str]:
-        """Validate split label ordering and return errors."""
-        errors = []
+        boundary: SplitBoundary,
+    ) -> SplitOrderResult:
+        """Validate all manifest splits against a frozen boundary."""
+        result = SplitOrderResult()
+
         for m in manifests:
-            try:
-                idx = SplitOrderIntegrity.VALID_ORDER.index(m.split_label)
-            except ValueError:
-                errors.append(f"Case {m.case_id}: unknown split_label {m.split_label}")
+            # Check event time is available
+            if m.event_time is None:
+                result.errors.append(f"Case {m.case_id}: missing event_time, cannot classify")
                 continue
-            if idx == 0:
-                continue  # BUILD — fine
-            if idx > 0:
-                # All evidence times must be <= the split boundary
-                pass  # boundary check enforced separately
-        return errors
+            if m.event_time.tzinfo is None:
+                result.errors.append(f"Case {m.case_id}: event_time must be timezone-aware")
+                continue
+
+            # Classify by boundary
+            expected_label = boundary.classify(m.event_time)
+
+            # Check if case is in multiple splits (by case_id collision)
+            if m.case_id in result.case_splits:
+                prev_label = result.case_splits[m.case_id]
+                result.errors.append(
+                    f"Case {m.case_id}: appears in both {prev_label.value} "
+                    f"and {m.split_label.value}"
+                )
+                continue
+
+            result.case_splits[m.case_id] = m.split_label
+
+            # Check split label matches boundary classification
+            if m.split_label != expected_label:
+                result.errors.append(
+                    f"Case {m.case_id}: split_label {m.split_label.value} "
+                    f"does not match boundary classification {expected_label.value} "
+                    f"for event_time {m.event_time.isoformat()}"
+                )
+
+        return result
+
+    @staticmethod
+    def check_blind_isolation(blind_case_ids: Set[str], training_ids: Set[str]) -> List[str]:
+        """Verify BLIND IDs are not accepted as tuning/training input."""
+        overlap = blind_case_ids & training_ids
+        if overlap:
+            return [f"BLIND case {cid} found in training set" for cid in overlap]
+        return []
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# R07 — Outcome window validation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def validate_outcome_window(window: OutcomeWindow) -> List[str]:
+    """Validate an outcome window's integrity.
+
+    Returns a list of error messages (empty = valid).
+    """
+    errors = []
+
+    # Label from canonical set
+    if window.window_label not in CANONICAL_WINDOW_LABELS:
+        errors.append(f"Label '{window.window_label}' not in canonical set")
+
+    # Close time after open time
+    if window.close_time <= window.open_time:
+        errors.append(
+            f"close_time {window.close_time.isoformat()} must be after "
+            f"open_time {window.open_time.isoformat()}"
+        )
+
+    # Price values are finite when present
+    for field, name in [
+        (window.open_price, "open_price"),
+        (window.close_price, "close_price"),
+        (window.high_price, "high_price"),
+        (window.low_price, "low_price"),
+        (window.volume, "volume"),
+        (window.return_pct, "return_pct"),
+    ]:
+        if field is not None:
+            import math
+            if not math.isfinite(field):
+                errors.append(f"{name} must be finite, got {field}")
+
+    # High is not below low
+    if window.high_price is not None and window.low_price is not None:
+        if window.high_price < window.low_price:
+            errors.append(
+                f"high_price {window.high_price} is below low_price {window.low_price}"
+            )
+
+    return errors
+
+
+def validate_outcome_windows(windows: List[OutcomeWindow]) -> List[str]:
+    """Validate a list of outcome windows."""
+    all_errors = []
+    for w in windows:
+        all_errors.extend(validate_outcome_window(w))
+    return all_errors
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

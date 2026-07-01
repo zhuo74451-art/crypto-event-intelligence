@@ -14,8 +14,8 @@ from market_radar.cognition_v2.persistence.models import (
     make_cognition_session_factory,
     cognition_session_scope,
     compare_and_swap_thesis,
-    block_revision_modification,
     StaleVersionError,
+    RevisionImmutableError,
     SourceModel,
     EvidenceModel,
     EventModel,
@@ -183,6 +183,94 @@ class TestRevisionImmutability:
                                          revision_outcome="unchanged",
                                          lifecycle_state="DISCOVERED",
                                          reason="dup"))
+        engine.dispose()
+
+    def test_thesis_revision_update_rejected(self):
+        engine = create_cognition_engine(":memory:")
+        factory = make_cognition_session_factory(engine)
+        with cognition_session_scope(factory) as s:
+            s.add(ThesisModel(id="t_upd", claim_class="fact", summary="t",
+                             lifecycle_state="DISCOVERED"))
+        with cognition_session_scope(factory) as s:
+            rev = ThesisRevisionModel(id="upd1", thesis_id="t_upd", version=1,
+                                      revision_body="orig", revision_outcome="unchanged",
+                                      lifecycle_state="DISCOVERED", reason="initial")
+            s.add(rev)
+        with cognition_session_scope(factory):
+            pass  # close cleanly
+        # Attempt update — must raise RevisionImmutableError
+        with pytest.raises(RevisionImmutableError):
+            with cognition_session_scope(factory) as s:
+                r = s.query(ThesisRevisionModel).filter(ThesisRevisionModel.id == "upd1").first()
+                r.revision_body = "modified"
+        # Reopen and prove row is unchanged
+        with cognition_session_scope(factory) as s:
+            r = s.get(ThesisRevisionModel, "upd1")
+            assert r.revision_body == "orig"
+        engine.dispose()
+
+    def test_thesis_revision_delete_rejected(self):
+        engine = create_cognition_engine(":memory:")
+        factory = make_cognition_session_factory(engine)
+        with cognition_session_scope(factory) as s:
+            s.add(ThesisModel(id="t_del", claim_class="fact", summary="t",
+                             lifecycle_state="DISCOVERED"))
+        with cognition_session_scope(factory) as s:
+            rev = ThesisRevisionModel(id="del1", thesis_id="t_del", version=1,
+                                      revision_body="orig", revision_outcome="unchanged",
+                                      lifecycle_state="DISCOVERED", reason="initial")
+            s.add(rev)
+        # Attempt delete — must raise RevisionImmutableError
+        with pytest.raises(RevisionImmutableError):
+            with cognition_session_scope(factory) as s:
+                r = s.query(ThesisRevisionModel).filter(ThesisRevisionModel.id == "del1").first()
+                s.delete(r)
+        # Reopen and prove row remains
+        with cognition_session_scope(factory) as s:
+            r = s.get(ThesisRevisionModel, "del1")
+            assert r is not None
+            assert r.revision_body == "orig"
+        engine.dispose()
+
+    def test_event_revision_update_rejected(self):
+        engine = create_cognition_engine(":memory:")
+        factory = make_cognition_session_factory(engine)
+        with cognition_session_scope(factory) as s:
+            s.add(EventModel(id="e_upd", event_family="regulatory", title="Test"))
+        with cognition_session_scope(factory) as s:
+            rev = EventRevisionModel(id="evupd1", event_id="e_upd", version=1,
+                                     revision_body="orig", revision_outcome="unchanged",
+                                     reason="initial")
+            s.add(rev)
+        with pytest.raises(RevisionImmutableError):
+            with cognition_session_scope(factory) as s:
+                r = s.query(EventRevisionModel).filter(EventRevisionModel.id == "evupd1").first()
+                r.revision_body = "modified"
+        # Reopen and prove row is unchanged
+        with cognition_session_scope(factory) as s:
+            r = s.get(EventRevisionModel, "evupd1")
+            assert r.revision_body == "orig"
+        engine.dispose()
+
+    def test_event_revision_delete_rejected(self):
+        engine = create_cognition_engine(":memory:")
+        factory = make_cognition_session_factory(engine)
+        with cognition_session_scope(factory) as s:
+            s.add(EventModel(id="e_del", event_family="regulatory", title="Test"))
+        with cognition_session_scope(factory) as s:
+            rev = EventRevisionModel(id="evdel1", event_id="e_del", version=1,
+                                     revision_body="orig", revision_outcome="unchanged",
+                                     reason="initial")
+            s.add(rev)
+        with pytest.raises(RevisionImmutableError):
+            with cognition_session_scope(factory) as s:
+                r = s.query(EventRevisionModel).filter(EventRevisionModel.id == "evdel1").first()
+                s.delete(r)
+        # Reopen and prove row remains
+        with cognition_session_scope(factory) as s:
+            r = s.get(EventRevisionModel, "evdel1")
+            assert r is not None
+            assert r.revision_body == "orig"
         engine.dispose()
 
 

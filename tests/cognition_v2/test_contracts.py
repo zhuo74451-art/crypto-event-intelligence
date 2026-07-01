@@ -91,7 +91,7 @@ class TestEventRecord:
 
     def test_no_lifecycle_action(self):
         fields = EventRecord.model_fields
-        for bad in ("trade_action", "publish", "wallet", "transition_cmd"):
+        for bad in ("trade_action", "publish", "wallet", "transition_cmd", "lifecycle_state"):
             assert bad not in fields
 
 
@@ -238,6 +238,48 @@ class TestHistoricalCaseManifest:
             title="Case B", evidence_manifest_hash="def",
         )
         assert m1.deterministic_hash() != m2.deterministic_hash()
+
+
+class TestEventState:
+    def test_event_states_separate_from_thesis(self):
+        from market_radar.cognition_v2.domain.contracts import EventState
+        # Event state values
+        event_values = {s.value for s in EventState}
+        thesis_values = {s.value for s in ThesisState}
+        # Event states should exist but not be the same set
+        assert "CONFIRMED" in event_values
+        assert "CORRECTED" in event_values
+        assert "RETRACTED" in event_values
+        assert "SUPERSEDED" in event_values
+        # Thesis-specific states should not be event states
+        assert "QUALIFYING" not in event_values
+        assert "DORMANT" not in event_values
+
+    def test_event_record_uses_event_state(self):
+        e = EventRecord(event_family="regulatory", title="Test event")
+        assert e.event_state.value == "DISCOVERED"
+        assert not hasattr(e, "lifecycle_state")
+
+
+class TestAbstentionReason:
+    def test_valid(self):
+        from market_radar.cognition_v2.domain.contracts import AbstentionReason
+        r = AbstentionReason(
+            claim_class="fact",
+            reason_type="missing_evidence",
+            description="No evidence available",
+        )
+        assert r.claim_class == ClaimClass.FACT
+        assert r.reason_type == "missing_evidence"
+
+    def test_empty_description_rejected(self):
+        from market_radar.cognition_v2.domain.contracts import AbstentionReason
+        with pytest.raises(ValidationError):
+            AbstentionReason(
+                claim_class="fact",
+                reason_type="missing_evidence",
+                description="",
+            )
 
 
 class TestOutcomeWindow:

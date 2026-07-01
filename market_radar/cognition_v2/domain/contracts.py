@@ -60,6 +60,18 @@ class ThesisState(str, Enum):
     ISOLATED = "ISOLATED"
 
 
+class EventState(str, Enum):
+    """Event identity/resolution states — separate from thesis lifecycle."""
+    DISCOVERED = "DISCOVERED"
+    RESOLVING = "RESOLVING"
+    CONFIRMED = "CONFIRMED"
+    CONTESTED = "CONTESTED"
+    CORRECTED = "CORRECTED"
+    RETRACTED = "RETRACTED"
+    SUPERSEDED = "SUPERSEDED"
+    REJECTED = "REJECTED"
+
+
 class ActionType(str, Enum):
     LOG = "log"
     FLAG = "flag"
@@ -240,7 +252,7 @@ class EventRecord(BaseModel):
     source_ids: List[str] = Field(default_factory=list)
     evidence_ids: List[str] = Field(default_factory=list)
     version: int = Field(default=1, ge=1)
-    lifecycle_state: ThesisState = Field(default=ThesisState.DISCOVERED)
+    event_state: EventState = Field(default=EventState.DISCOVERED)
     is_resolved: bool = Field(default=False)
     tags: List[str] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=_utc_now)

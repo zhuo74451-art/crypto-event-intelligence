@@ -109,7 +109,7 @@ class EventModel(Base):
     event_time = Column(DateTime(timezone=True), nullable=True)
     first_seen_at = Column(DateTime(timezone=True), nullable=False, default=_utc_now)
     version = Column(Integer, nullable=False, default=1)
-    lifecycle_state = Column(String(32), nullable=False, default="DISCOVERED")
+    event_state = Column(String(32), nullable=False, default="DISCOVERED")
     is_resolved = Column(Integer, nullable=False, default=0)
     created_at = Column(DateTime(timezone=True), default=_utc_now)
 
@@ -123,6 +123,8 @@ class EventRevisionModel(Base):
     revision_body = Column(Text, nullable=False)
     revision_outcome = Column(String(32), nullable=False)
     reason = Column(Text, nullable=False)
+    idempotency_key = Column(String(255), nullable=True, unique=True)
+    rule_refs_json = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), default=_utc_now)
     __table_args__ = (UniqueConstraint("event_id", "version", name="uq_event_revision_version"),)
 
@@ -155,7 +157,11 @@ class ThesisRevisionModel(Base):
     revision_body = Column(Text, nullable=False)
     revision_outcome = Column(String(32), nullable=False)
     lifecycle_state = Column(String(32), nullable=False)
+    previous_state = Column(String(32), nullable=True)
     reason = Column(Text, nullable=False)
+    idempotency_key = Column(String(255), nullable=True, unique=True)
+    evidence_refs_json = Column(Text, nullable=True)
+    rule_refs_json = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), default=_utc_now)
     __table_args__ = (UniqueConstraint("thesis_id", "version", name="uq_thesis_revision_version"),)
 
@@ -364,7 +370,32 @@ class StaleVersionError(Exception):
     pass
 
 
-_REVISION_IMMUTABLE_TABLES = {"thesis_revisions", "event_revisions"}
+class RevisionImmutableError(Exception):
+    """Raised when attempting to modify or delete an immutable revision row."""
+    pass
+
+
+def _reject_revision_update(mapper, connection, target):
+    """SQLAlchemy before_update listener — rejects any revision row update."""
+    raise RevisionImmutableError(
+        f"Cannot update {target.__tablename__} row id={getattr(target, 'id', '?')}: "
+        "revision rows are immutable"
+    )
+
+
+def _reject_revision_delete(mapper, connection, target):
+    """SQLAlchemy before_delete listener — rejects any revision row deletion."""
+    raise RevisionImmutableError(
+        f"Cannot delete {target.__tablename__} row id={getattr(target, 'id', '?')}: "
+        "revision rows are immutable"
+    )
+
+
+# Register immutable revision listeners on both revision models
+event.listen(EventRevisionModel, "before_update", _reject_revision_update)
+event.listen(EventRevisionModel, "before_delete", _reject_revision_delete)
+event.listen(ThesisRevisionModel, "before_update", _reject_revision_update)
+event.listen(ThesisRevisionModel, "before_delete", _reject_revision_delete)
 
 
 def compare_and_swap_thesis(
@@ -412,7 +443,3 @@ def compare_and_swap_thesis(
     finally:
         session.close()
 
-
-def block_revision_modification(target, value, oldvalue, initiator):
-    """SQLAlchemy event listener to reject update/delete on immutable revision tables."""
-    raise Exception("Revision rows are immutable: update/delete blocked")
