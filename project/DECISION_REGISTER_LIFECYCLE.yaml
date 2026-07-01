@@ -1,0 +1,41 @@
+version: "1.0"
+status: active
+scope: thesis_lifecycle_and_attention
+
+decisions:
+  - id: DEC-021
+    status: accepted
+    decision: Lifecycle state and attention priority are separate dimensions.
+
+  - id: DEC-022
+    status: accepted
+    decision: Legal lifecycle states are defined in project/THESIS_LIFECYCLE.md.
+
+  - id: DEC-023
+    status: accepted
+    decision: Initial caps are 40 active theses and 100 qualifying candidates.
+    details:
+      P0: 3
+      P1: 10
+      P2: 17
+      P3: 10
+
+  - id: DEC-024
+    status: accepted
+    decision: Default review intervals are 4 hours for P0, 12 hours for P1, 48 hours for P2, 7 days for P3, and 30 days for Dormant, with evidence triggers taking precedence.
+
+  - id: DEC-025
+    status: accepted
+    decision: Repeated no-change lengthens intervals, lowers priority, and eventually moves a thesis to Dormant or Archived.
+
+  - id: DEC-026
+    status: accepted
+    decision: One review cycle is limited to 3 retrieval rounds, 2 semantic passes, 1 arbitration retry, and 5 internal transitions.
+
+  - id: DEC-027
+    status: accepted
+    decision: Immediate notifications are limited to new P0 activation, P0 or P1 invalidation, two-level priority movement, broad systemic risk, or governance and health exceptions.
+
+  - id: DEC-028
+    status: accepted
+    decision: Resource pressure reduces new qualification and lower-priority work before P0, P1, state integrity, audit, and stop controls.
