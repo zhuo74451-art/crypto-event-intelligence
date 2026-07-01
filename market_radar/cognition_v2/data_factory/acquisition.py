@@ -1,12 +1,11 @@
 """Finite checkpointed acquisition for the historical data factory.
 
-D04/P03: Finite acquisition with explicit source, range, limit, checkpoint
-and stop behavior. No daemon, cron or hidden loop.
+D04/Q02: Finite acquisition with persistent output, deduplication,
+atomic checkpoints and safe resume. Never truncates committed output.
 """
 
 from __future__ import annotations
 
-import dataclasses
 import json
 import os
 import time
@@ -22,15 +21,6 @@ from market_radar.cognition_v2.data_factory.contracts import (
 from market_radar.cognition_v2.data_factory.checkpoints import AtomicCheckpointWriter
 
 
-def _serialize_record(r: RawIntakeRecord) -> dict:
-    """Convert a RawIntakeRecord to a JSON-serializable dict."""
-    d = dataclasses.asdict(r)
-    for k, v in d.items():
-        if isinstance(v, datetime):
-            d[k] = v.isoformat()
-    return d
-
-
 class AcquisitionBudgetExceeded(Exception):
     """Raised when the acquisition budget (records or requests) is exceeded."""
     pass
@@ -41,129 +31,148 @@ class IncompatibleResumeError(Exception):
     pass
 
 
+class OutputCheckpointMismatchError(Exception):
+    """Raised when output and checkpoint disagree on committed state."""
+    pass
+
+
 class AcquisitionAdapter:
-    """Base class for finite acquisition adapters.
-
-    Subclasses must implement fetch_page() which returns a list of raw
-    intake records and an optional next page token.
-    """
-
-    def fetch_page(
-        self,
-        source_id: str,
-        start_time: datetime,
-        end_time: datetime,
-        page_size: int,
-        page_token: Optional[str] = None,
-    ) -> Tuple[List[RawIntakeRecord], Optional[str]]:
-        """Fetch one page of records.
-
-        Returns (records, next_page_token).
-        Next page token is None when there are no more pages.
-        """
+    """Base class for finite acquisition adapters."""
+    def fetch_page(self, source_id, start_time, end_time,
+                   page_size, page_token=None):
         raise NotImplementedError
 
 
-class CheckpointedAcquisition:
-    """Finite, checkpointed, resumable acquisition from a single source.
+def _serialize_record(r: RawIntakeRecord) -> dict:
+    d = {}
+    for f in ("intake_id", "source_id", "source_url", "raw_body",
+              "intake_status", "parser_version", "error_message",
+              "schema_version"):
+        d[f] = getattr(r, f)
+    d["retrieved_at"] = r.retrieved_at.isoformat()
+    d["created_at"] = r.created_at.isoformat()
+    return d
 
-    Output is committed durably BEFORE checkpoint advancement.
-    Deduplicates by deterministic intake_id.
-    Detects cyclic page tokens.
+
+def _load_committed_records(output_path: str) -> Tuple[List[RawIntakeRecord], set]:
+    """Load committed records from output file and return (records, intake_ids)."""
+    records = []
+    intake_ids = set()
+    if os.path.exists(output_path):
+        with open(output_path) as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                data = json.loads(line)
+                r = RawIntakeRecord(
+                    intake_id=data["intake_id"],
+                    source_id=data["source_id"],
+                    source_url=data.get("source_url", ""),
+                    raw_body=data.get("raw_body", ""),
+                    retrieved_at=datetime.fromisoformat(data["retrieved_at"]),
+                    intake_status=data.get("intake_status", "raw"),
+                    parser_version=data.get("parser_version", "1.0"),
+                    error_message=data.get("error_message"),
+                    schema_version=data.get("schema_version", "1.0"),
+                    created_at=datetime.fromisoformat(
+                        data.get("created_at", data["retrieved_at"])
+                    ),
+                )
+                records.append(r)
+                intake_ids.add(r.intake_id)
+    return records, intake_ids
+
+
+class CheckpointedAcquisition:
+    """Finite, checkpointed, resumable acquisition.
+
+    - Loads existing output before writing; never truncates committed data.
+    - Output committed BEFORE checkpoint advancement.
+    - Deduplicates by deterministic intake_id.
+    - Detects output/checkpoint mismatches.
     """
 
     def __init__(
         self,
         adapter: AcquisitionAdapter,
         checkpoint_dir: str = ".checkpoints",
-        output_dir: str = ".output",
+        output_dir: Optional[str] = None,
     ):
         self._adapter = adapter
         self._checkpoint_dir = checkpoint_dir
-        self._writer = AtomicCheckpointWriter(output_dir)
-        self._seen_intake_ids: set = set()
+        self._writer = AtomicCheckpointWriter(output_dir or checkpoint_dir)
 
     def _checkpoint_path(self, run_id: str) -> str:
         os.makedirs(self._checkpoint_dir, exist_ok=True)
         return os.path.join(self._checkpoint_dir, f"{run_id}.json")
 
-    def _save_checkpoint(self, cp: AcquisitionCheckpoint, output_path: str) -> None:
-        """Save checkpoint atomically (output must already be committed)."""
-        cp_data = {
-            "run_id": cp.run_id,
-            "request_fingerprint": cp.request_fingerprint,
-            "completed_pages": cp.completed_pages,
-            "last_page_token": cp.last_page_token,
-            "total_records_so_far": cp.total_records_so_far,
-            "total_requests_so_far": cp.total_requests_so_far,
-            "failed_requests_so_far": cp.failed_requests_so_far,
-            "checkpointed_at": cp.checkpointed_at.isoformat(),
-            "output_path": output_path,
-            "schema_version": cp.schema_version,
-        }
-        self._writer.write_checkpoint(cp_data, self._checkpoint_path(cp.run_id))
-
-    def _load_checkpoint(self, run_id: str) -> Optional[AcquisitionCheckpoint]:
+    def _load_checkpoint(self, run_id: str) -> Optional[dict]:
         path = self._checkpoint_path(run_id)
         if not os.path.exists(path):
             return None
         with open(path) as f:
-            data = json.load(f)
-        return AcquisitionCheckpoint(
-            run_id=data["run_id"],
-            request_fingerprint=data["request_fingerprint"],
-            completed_pages=data["completed_pages"],
-            last_page_token=data.get("last_page_token"),
-            total_records_so_far=data["total_records_so_far"],
-            total_requests_so_far=data["total_requests_so_far"],
-            failed_requests_so_far=data["failed_requests_so_far"],
-            checkpointed_at=datetime.fromisoformat(data["checkpointed_at"]),
-            schema_version=data.get("schema_version", "1.0"),
-        )
+            return json.load(f)
 
     def run(
         self,
         request: AcquisitionRun,
         resume: bool = False,
     ) -> Tuple[List[RawIntakeRecord], AcquisitionRun, AcquisitionCheckpoint]:
-        """Execute a finite acquisition run with hard ceilings and atomic checkpoints.
-
-        Args:
-            request: Acquisition run configuration.
-            resume: If True, attempt to resume from an existing checkpoint.
-
-        Returns:
-            (records, completed_run, checkpoint)
-        """
+        """Execute a finite acquisition run with atomic, non-truncating resume."""
         request.status = AcquisitionStatus.RUNNING
         request.started_at = datetime.now(timezone.utc)
-        records: List[RawIntakeRecord] = []
         page_token: Optional[str] = None
         completed_pages: List[int] = []
-        initial_records = 0
         seen_tokens: set = set()
+        output_path = self._writer._output_path(request.run_id)
+
+        # Load existing state if resuming
+        records: List[RawIntakeRecord] = []
+        seen_ids: set = set()
+        initial_count = 0
 
         if resume:
-            cp = self._load_checkpoint(request.run_id)
-            if cp is not None:
-                if not cp.is_compatible(request):
+            cp_data = self._load_checkpoint(request.run_id)
+            if cp_data is not None:
+                if not self._check_fingerprint(cp_data, request):
                     raise IncompatibleResumeError(
-                        f"Checkpoint for {request.run_id} has incompatible "
-                        f"fingerprint. Expected {request.request_fingerprint()}, "
-                        f"got {cp.request_fingerprint}."
+                        f"Incompatible fingerprint for {request.run_id}"
                     )
-                completed_pages = list(cp.completed_pages)
-                page_token = cp.last_page_token
-                request.total_records = cp.total_records_so_far
-                request.total_requests = cp.total_requests_so_far
-                request.failed_requests = cp.failed_requests_so_far
-                initial_records = request.total_records
+                # Load committed output first
+                records, seen_ids = _load_committed_records(output_path)
+                initial_count = len(records)
+                request.total_records = cp_data["total_records_so_far"]
+                request.total_requests = cp_data["total_requests_so_far"]
+                request.failed_requests = cp_data["failed_requests_so_far"]
+                completed_pages = list(cp_data.get("completed_pages", []))
+                page_token = cp_data.get("last_page_token")
 
-        output_path = self._writer.write_output(request.run_id, [])
+                # Verify output count matches checkpoint
+                if len(records) != request.total_records:
+                    raise OutputCheckpointMismatchError(
+                        f"Output has {len(records)} records but checkpoint "
+                        f"claims {request.total_records}"
+                    )
+
+                # Source-exhausted or record-limit completion is terminal
+                if cp_data.get("status") == AcquisitionStatus.COMPLETED.value:
+                    # Load existing output and return it
+                    request.status = AcquisitionStatus.COMPLETED
+                    request.completed_at = datetime.now(timezone.utc)
+                    cp = AcquisitionCheckpoint(
+                        run_id=request.run_id,
+                        request_fingerprint=request.request_fingerprint(),
+                        completed_pages=list(completed_pages),
+                        last_page_token=page_token,
+                        total_records_so_far=request.total_records,
+                        total_requests_so_far=request.total_requests,
+                        failed_requests_so_far=request.failed_requests,
+                    )
+                    return records, request, cp
 
         try:
             while True:
-                # HARD CEILING: slice to min of record_limit and max_record_budget
                 ceiling = min(
                     request.record_limit - request.total_records,
                     request.max_record_budget - request.total_records,
@@ -182,9 +191,7 @@ class CheckpointedAcquisition:
                 page_num = max(completed_pages) + 1 if completed_pages else 1
 
                 if page_token in seen_tokens and page_token is not None:
-                    raise RuntimeError(
-                        f"Cyclic page token detected: {page_token}"
-                    )
+                    raise RuntimeError(f"Cyclic page token: {page_token}")
                 if page_token is not None:
                     seen_tokens.add(page_token)
 
@@ -212,27 +219,35 @@ class CheckpointedAcquisition:
 
                 new_records = []
                 for r in page_records:
-                    if r.intake_id not in self._seen_intake_ids:
-                        self._seen_intake_ids.add(r.intake_id)
+                    if r.intake_id not in seen_ids:
+                        seen_ids.add(r.intake_id)
                         new_records.append(r)
 
                 records.extend(new_records)
                 request.total_records += len(new_records)
                 completed_pages.append(page_num)
 
+                # Write output atomically BEFORE checkpoint
                 record_dicts = [_serialize_record(r) for r in records]
-                output_path = self._writer.write_output(request.run_id, record_dicts)
-
-                cp = AcquisitionCheckpoint(
-                    run_id=request.run_id,
-                    request_fingerprint=request.request_fingerprint(),
-                    completed_pages=list(completed_pages),
-                    last_page_token=page_token,
-                    total_records_so_far=request.total_records,
-                    total_requests_so_far=request.total_requests,
-                    failed_requests_so_far=request.failed_requests,
+                output_path = self._writer.write_output(
+                    request.run_id, record_dicts
                 )
-                self._save_checkpoint(cp, output_path)
+
+                # Now checkpoint (output already durable)
+                cp_data_out = {
+                    "run_id": request.run_id,
+                    "request_fingerprint": request.request_fingerprint(),
+                    "completed_pages": list(completed_pages),
+                    "last_page_token": page_token,
+                    "total_records_so_far": request.total_records,
+                    "total_requests_so_far": request.total_requests,
+                    "failed_requests_so_far": request.failed_requests,
+                    "status": AcquisitionStatus.RUNNING.value,
+                    "output_path": output_path,
+                }
+                self._writer.write_checkpoint(
+                    cp_data_out, self._checkpoint_path(request.run_id)
+                )
 
                 if request.total_records >= request.record_limit:
                     break
@@ -249,6 +264,22 @@ class CheckpointedAcquisition:
         finally:
             request.completed_at = datetime.now(timezone.utc)
 
+        # Final checkpoint
+        cp_data_final = {
+            "run_id": request.run_id,
+            "request_fingerprint": request.request_fingerprint(),
+            "completed_pages": list(completed_pages),
+            "last_page_token": page_token,
+            "total_records_so_far": request.total_records,
+            "total_requests_so_far": request.total_requests,
+            "failed_requests_so_far": request.failed_requests,
+            "status": request.status.value,
+            "output_path": output_path,
+        }
+        self._writer.write_checkpoint(
+            cp_data_final, self._checkpoint_path(request.run_id)
+        )
+
         cp = AcquisitionCheckpoint(
             run_id=request.run_id,
             request_fingerprint=request.request_fingerprint(),
@@ -258,6 +289,10 @@ class CheckpointedAcquisition:
             total_requests_so_far=request.total_requests,
             failed_requests_so_far=request.failed_requests,
         )
-        self._save_checkpoint(cp, output_path)
-
         return records, request, cp
+
+    @staticmethod
+    def _check_fingerprint(cp_data: dict, request: AcquisitionRun) -> bool:
+        expected = request.request_fingerprint()
+        actual = cp_data.get("request_fingerprint", "")
+        return expected == actual

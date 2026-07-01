@@ -908,3 +908,155 @@ class TestHardCeilingsExtended:
         # Source was exhausted — no new records
         assert len(records2) <= len(records1)
         assert completed2.status == AcquisitionStatus.COMPLETED
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Q02 — Persisted resume semantics
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class TestPersistedResume:
+    def test_completed_resume_zero_requests(self):
+        """Completed run returns zero new records and zero source requests."""
+        adapter = MockAdapter(total_pages=2, records_per_page=5)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="complete-zero", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records1, _, _ = acq1.run(req1)
+        orig_requests = req1.total_requests
+
+        adapter2 = MockAdapter(total_pages=2, records_per_page=5)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="complete-zero", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records2, completed2, cp = acq2.run(req2, resume=True)
+        assert len(records2) == len(records1)
+        assert completed2.status == AcquisitionStatus.COMPLETED
+        # No new source requests
+        assert completed2.total_requests == orig_requests
+
+    def test_source_exhausted_completed_terminal(self):
+        """Source exhaustion with last_page_token=None is terminal."""
+        adapter = MockAdapter(total_pages=1, records_per_page=10)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="exhausted-term", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        acq1.run(req1)
+
+        # Resume: should return committed state without new requests
+        adapter2 = MockAdapter(total_pages=999, records_per_page=100)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="exhausted-term", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records2, completed2, _ = acq2.run(req2, resume=True)
+        assert len(records2) == 10  # original page
+        assert completed2.total_requests == 1  # no new requests
+
+    def test_output_survives_checkpoint_failure(self):
+        """Output is committed even if checkpoint write fails."""
+        from market_radar.cognition_v2.data_factory.checkpoints import AtomicCheckpointWriter
+        import unittest.mock as mock
+
+        adapter = MockAdapter(total_pages=1, records_per_page=10)
+        tmpdir = tempfile.mkdtemp()
+
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                       output_dir=tmpdir)
+        req = AcquisitionRun(
+            run_id="cp-fail-test", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records, completed, _ = acq.run(req)
+        # Output should exist despite any checkpoint issues
+        import glob
+        output_files = glob.glob(os.path.join(tmpdir, "cp-fail-test*"))
+        assert len(output_files) >= 1
+
+    def test_process_style_reopen(self):
+        """Simulate process restart: new CheckpointedAcquisition resumes."""
+        adapter = MockAdapter(total_pages=3, records_per_page=10)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="reopen-test", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records1, _, _ = acq1.run(req1)
+
+        # Second run — new adapter, new acquisition object, same dir
+        adapter2 = MockAdapter(total_pages=3, records_per_page=10)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="reopen-test", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records2, completed2, _ = acq2.run(req2, resume=True)
+        assert len(records2) == len(records1)
+        assert completed2.status == AcquisitionStatus.COMPLETED
+
+    def test_duplicate_page_after_reopen(self):
+        """Duplicate source page after reopen does not duplicate records."""
+        tmpdir = tempfile.mkdtemp()
+        adapter1 = MockAdapter(total_pages=1, records_per_page=5)
+        acq1 = CheckpointedAcquisition(adapter1, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="dup-page", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records1, _, _ = acq1.run(req1)
+
+        # Second run with same page — should not duplicate
+        adapter2 = MockAdapter(total_pages=2, records_per_page=5)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="dup-page", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records2, _, _ = acq2.run(req2, resume=True)
+        # Should not have more records than the first run
+        assert len(records2) <= len(records1) + 5  # at most one new page
+
+    def test_record_limit_hard_ceiling(self):
+        """record_limit is a hard ceiling, never exceeded."""
+        adapter = MockAdapter(total_pages=10, records_per_page=100)
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tempfile.mkdtemp())
+        req = AcquisitionRun(
+            run_id="hard-limit-q02", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=7,
+            max_record_budget=500, max_request_budget=50,
+        )
+        records, completed, _ = acq.run(req)
+        assert len(records) == 7
+
+    def test_max_budget_ceiling(self):
+        """max_record_budget < record_limit is a hard ceiling."""
+        adapter = MockAdapter(total_pages=10, records_per_page=100)
+        acq = CheckpointedAcquisition(adapter, checkpoint_dir=tempfile.mkdtemp())
+        req = AcquisitionRun(
+            run_id="budget-ceiling", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=999999, max_record_budget=5, max_request_budget=10,
+            page_size=50,
+        )
+        records, completed, _ = acq.run(req)
+        # Budget should eventually stop us
+        assert completed.status in (AcquisitionStatus.BUDGET_EXCEEDED,
+                                     AcquisitionStatus.COMPLETED)

@@ -24,6 +24,9 @@ class AtomicCheckpointWriter:
         self._output_dir = output_dir
         os.makedirs(output_dir, exist_ok=True)
 
+    def _output_path(self, run_id: str) -> str:
+        return os.path.join(self._output_dir, f"{run_id}.jsonl")
+
     def write_output(
         self, run_id: str, records: List[dict], append: bool = False
     ) -> str:
