@@ -1,232 +1,199 @@
-"""Minimal Durable-Review Runtime (Experiment D).
+"""Minimal local durable-review runtime using SQLAlchemy ReviewIntent tables.
 
-Provides a lightweight in-process runtime that persists reviews, supports
-idempotent creation, atomic claiming, cancellation/resume, and file-based
-checkpoint recovery — all without an external database.
+Not JSON-file based. Uses a controlled clock and no sleeping background process.
 """
 
 from __future__ import annotations
 
-import json
 import os
-import threading
-from dataclasses import dataclass, field, asdict
-from enum import Enum
-from pathlib import Path
-from typing import Optional
+import tempfile
+from contextlib import contextmanager
+from datetime import datetime, timezone
+from typing import Generator, Optional, Tuple
+from uuid import uuid4
+
+from sqlalchemy import Column, DateTime, Integer, String, Text, create_engine, event
+from sqlalchemy.engine import Engine
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session, declarative_base, make_transient, sessionmaker
 
 
-# ── Domain types ────────────────────────────────────────────────────────────
+@event.listens_for(Engine, "connect")
+def _set_sqlite_pragma(dbapi_connection, connection_record):
+    """Enable foreign key enforcement on SQLite."""
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
+
+Base = declarative_base()
 
 
-class ReviewStatus(str, Enum):
-    """Possible states of a review in the runtime."""
-
-    PENDING = "pending"
-    CLAIMED = "claimed"
-    CANCELLED = "cancelled"
-    COMPLETED = "completed"
-
-
-@dataclass
-class Review:
-    """A single review tracked by the runtime."""
-
-    review_id: str
-    idempotency_key: str
-    status: ReviewStatus = ReviewStatus.PENDING
-    payload: dict = field(default_factory=dict)
-    claimed_by: Optional[str] = None
+class ReviewIntent(Base):
+    __tablename__ = "review_intents"
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    thesis_id = Column(String(36), nullable=False)
+    idempotency_key = Column(String(255), nullable=False, unique=True)
+    due_at = Column(DateTime(timezone=True), nullable=False)
+    status = Column(String(32), nullable=False, default="PENDING")
+    checkpoint_step = Column(Integer, nullable=False, default=0)
+    retry_count = Column(Integer, nullable=False, default=0)
+    last_error = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 
-# ── Custom exceptions ──────────────────────────────────────────────────────
+class DurableError(Exception):
+    pass
 
 
-class DuplicateIdempotencyKeyError(ValueError):
-    """Raised when persist is called with an idempotency key already on file."""
+class ReviewNotFoundError(DurableError):
+    pass
 
 
-class ReviewNotClaimableError(RuntimeError):
-    """Raised when a review cannot be claimed (not in PENDING state)."""
+class ReviewNotClaimableError(DurableError):
+    pass
 
 
-class ReviewNotFoundError(KeyError):
-    """Raised when a review_id is unknown."""
+class DuplicateIdempotencyKeyError(DurableError):
+    pass
 
 
-# ── Runtime ────────────────────────────────────────────────────────────────
+class RetryExhaustedError(DurableError):
+    pass
 
 
-class MinimalReviewRuntime:
-    """A minimal durable-review runtime with file-based checkpoint recovery.
+class MinimalDurableRuntime:
+    """Foreground-only durable review runtime using SQLAlchemy.
 
-    All public mutating methods are thread-safe.  When a *checkpoint_path* is
-    provided, state is automatically persisted to that file after each write
-    operation so the runtime can resume after a crash.
+    Controlled clock (pass `now` as datetime), no sleeping background process.
     """
 
-    def __init__(self, checkpoint_path: Optional[str] = None) -> None:
-        self._reviews: dict[str, Review] = {}
-        self._idempotency_keys: set[str] = set()
-        self._lock = threading.Lock()
-        self._checkpoint_path = Path(checkpoint_path) if checkpoint_path else None
-        self._load_checkpoint()
+    def __init__(self, db_path: Optional[str] = None, max_retries: int = 3):
+        self._db_path = db_path or tempfile.mktemp(suffix=".db")
+        self._max_retries = max_retries
+        self._engine = create_engine(f"sqlite:///{self._db_path}", echo=False)
+        Base.metadata.create_all(self._engine)
+        self._Session = sessionmaker(bind=self._engine)
 
-    # ── public query API ─────────────────────────────────────────────────
-
-    def get_review(self, review_id: str) -> Review:
-        """Return the review with *review_id* or raise ReviewNotFoundError."""
-        with self._lock:
-            if review_id not in self._reviews:
-                raise ReviewNotFoundError(review_id)
-            return self._reviews[review_id]
-
-    def list_reviews(self, status: Optional[ReviewStatus] = None) -> list[Review]:
-        """Return all reviews, optionally filtered by *status*."""
-        with self._lock:
-            reviews = list(self._reviews.values())
-        if status is not None:
-            reviews = [r for r in reviews if r.status == status]
-        return reviews
-
-    def has_idempotency_key(self, key: str) -> bool:
-        """Return True if *key* has already been used."""
-        with self._lock:
-            return key in self._idempotency_keys
-
-    # ── public mutation API ──────────────────────────────────────────────
-
-    def persist_review(
-        self,
-        review_id: str,
-        idempotency_key: str,
-        payload: Optional[dict] = None,
-    ) -> Review:
-        """Persist a new review.
-
-        Raises DuplicateIdempotencyKeyError if *idempotency_key* is already
-        known.
-        """
-        with self._lock:
-            if idempotency_key in self._idempotency_keys:
-                raise DuplicateIdempotencyKeyError(
-                    f"Idempotency key {idempotency_key!r} already exists"
-                )
-            review = Review(
-                review_id=review_id,
-                idempotency_key=idempotency_key,
-                payload=payload or {},
-            )
-            self._reviews[review_id] = review
-            self._idempotency_keys.add(idempotency_key)
-        self._write_checkpoint()
-        return review
-
-    def claim_review(self, review_id: str, worker: str = "default") -> Review:
-        """Atomically claim a PENDING review for *worker*.
-
-        Raises ReviewNotClaimableError if the review is not PENDING.
-        """
-        with self._lock:
-            review = self._reviews.get(review_id)
-            if review is None:
-                raise ReviewNotFoundError(review_id)
-            if review.status is not ReviewStatus.PENDING:
-                raise ReviewNotClaimableError(
-                    f"Review {review_id!r} is {review.status.value}, not pending"
-                )
-            review.status = ReviewStatus.CLAIMED
-            review.claimed_by = worker
-        self._write_checkpoint()
-        return review
-
-    def cancel_review(self, review_id: str) -> Review:
-        """Cancel a review (set status to CANCELLED).
-
-        Only PENDING or CLAIMED reviews may be cancelled.
-        """
-        with self._lock:
-            review = self._reviews.get(review_id)
-            if review is None:
-                raise ReviewNotFoundError(review_id)
-            if review.status not in (ReviewStatus.PENDING, ReviewStatus.CLAIMED):
-                raise RuntimeError(
-                    f"Cannot cancel review {review_id!r} "
-                    f"in status {review.status.value}"
-                )
-            review.status = ReviewStatus.CANCELLED
-            review.claimed_by = None
-        self._write_checkpoint()
-        return review
-
-    def resume_review(self, review_id: str) -> Review:
-        """Resume a CANCELLED review back to PENDING."""
-        with self._lock:
-            review = self._reviews.get(review_id)
-            if review is None:
-                raise ReviewNotFoundError(review_id)
-            if review.status is not ReviewStatus.CANCELLED:
-                raise RuntimeError(
-                    f"Cannot resume review {review_id!r} "
-                    f"in status {review.status.value}"
-                )
-            review.status = ReviewStatus.PENDING
-            review.claimed_by = None
-        self._write_checkpoint()
-        return review
-
-    def complete_review(self, review_id: str) -> Review:
-        """Mark a CLAIMED review as COMPLETED."""
-        with self._lock:
-            review = self._reviews.get(review_id)
-            if review is None:
-                raise ReviewNotFoundError(review_id)
-            if review.status is not ReviewStatus.CLAIMED:
-                raise RuntimeError(
-                    f"Cannot complete review {review_id!r} "
-                    f"in status {review.status.value}"
-                )
-            review.status = ReviewStatus.COMPLETED
-        self._write_checkpoint()
-        return review
-
-    # ── checkpoint support ───────────────────────────────────────────────
-
-    def _checkpoint_data(self) -> dict:
-        """Return serialisable checkpoint state."""
-        with self._lock:
-            return {
-                "reviews": {
-                    rid: asdict(r) for rid, r in self._reviews.items()
-                },
-                "idempotency_keys": sorted(self._idempotency_keys),
-            }
-
-    def _write_checkpoint(self) -> None:
-        """Synchronously flush current state to the checkpoint file."""
-        if self._checkpoint_path is None:
-            return
-        with self._checkpoint_lock:
-            data = self._checkpoint_data()
-            tmp = str(self._checkpoint_path) + ".tmp"
-            with open(tmp, "w") as f:
-                json.dump(data, f, default=str)
-            os.replace(tmp, self._checkpoint_path)
-
-    def _load_checkpoint(self) -> None:
-        """Load state from the checkpoint file if it exists."""
-        if self._checkpoint_path is None or not self._checkpoint_path.exists():
-            return
-        with self._checkpoint_path.open() as f:
-            data = json.load(f)
-        with self._lock:
-            self._reviews.clear()
-            self._idempotency_keys.clear()
-            for rid, rd in data.get("reviews", {}).items():
-                rd["status"] = ReviewStatus(rd["status"])
-                self._reviews[rid] = Review(**rd)
-            self._idempotency_keys.update(data.get("idempotency_keys", []))
+    @property
+    def db_path(self) -> str:
+        return self._db_path
 
     def close(self) -> None:
-        """Flush checkpoint and release resources."""
-        self._write_checkpoint()
+        self._engine.dispose()
+
+    @contextmanager
+    def _session(self) -> Generator[Session, None, None]:
+        session = self._Session(expire_on_commit=False)
+        try:
+            yield session
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+    def persist_review(self, thesis_id: str, idempotency_key: str, due_at: datetime) -> str:
+        """Persist one due ReviewIntent."""
+        with self._session() as s:
+            existing = s.query(ReviewIntent).filter(ReviewIntent.idempotency_key == idempotency_key).first()
+            if existing:
+                raise DuplicateIdempotencyKeyError(f"idempotency_key '{idempotency_key}' already exists")
+            r = ReviewIntent(
+                thesis_id=thesis_id,
+                idempotency_key=idempotency_key,
+                due_at=due_at,
+            )
+            s.add(r)
+            s.flush()
+            return r.id
+
+    def claim_due(self, now: datetime) -> Optional[ReviewIntent]:
+        """Atomically claim one due review within a transaction."""
+        with self._session() as s:
+            candidate = (
+                s.query(ReviewIntent)
+                .filter(ReviewIntent.status == "PENDING", ReviewIntent.due_at <= now)
+                .order_by(ReviewIntent.due_at.asc())
+                .first()
+            )
+            if candidate is None:
+                return None
+            candidate.status = "CLAIMED"
+            s.flush()
+            # Return a fresh copy to avoid detached attribute errors
+            review_id = candidate.id
+        with self._session() as s:
+            return s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+
+    def write_checkpoint(self, review_id: str, step: int, retry_count: int = 0, last_error: Optional[str] = None) -> None:
+        """Persist step checkpoint."""
+        with self._session() as s:
+            r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+            if r is None:
+                raise ReviewNotFoundError(f"Review {review_id} not found")
+            if r.status not in ("CLAIMED", "RUNNING"):
+                raise ReviewNotClaimableError(f"Review {review_id} status is {r.status}, cannot write checkpoint")
+            r.checkpoint_step = step
+            r.retry_count = retry_count
+            if last_error:
+                r.last_error = last_error
+            r.status = "RUNNING"
+
+    def resume_checkpoint(self, review_id: str) -> Tuple[int, int, Optional[str]]:
+        """Resume from last committed checkpoint."""
+        with self._session() as s:
+            r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+            if r is None:
+                raise ReviewNotFoundError(f"Review {review_id} not found")
+            return r.checkpoint_step, r.retry_count, r.last_error
+
+    def close_and_reopen(self) -> None:
+        """Simulate close and reopen of the runtime (same database)."""
+        self._engine.dispose()
+        self._engine = create_engine(f"sqlite:///{self._db_path}", echo=False)
+        Base.metadata.create_all(self._engine)
+        self._Session = sessionmaker(bind=self._engine)
+
+    def cancel_review(self, review_id: str) -> None:
+        with self._session() as s:
+            r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+            if r is None:
+                raise ReviewNotFoundError(f"Review {review_id} not found")
+            r.status = "CANCELLED"
+            s.flush()
+
+    def resume_review(self, review_id: str) -> None:
+        with self._session() as s:
+            r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+            if r is None:
+                raise ReviewNotFoundError(f"Review {review_id} not found")
+            r.status = "PENDING"
+            r.checkpoint_step = 0
+            r.retry_count = 0
+            s.flush()
+
+    def simulate_failure(self, review_id: str) -> None:
+        """Inject a simulated failure — increments retry_count."""
+        with self._session() as s:
+            r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+            if r is None:
+                raise ReviewNotFoundError(f"Review {review_id} not found")
+            r.retry_count += 1
+            r.last_error = "simulated failure"
+            if r.retry_count >= self._max_retries:
+                r.status = "FAILED"
+                raise RetryExhaustedError(f"Retry exhausted for {review_id}")
+
+    def has_idempotency_key(self, idempotency_key: str) -> bool:
+        with self._session() as s:
+            return s.query(ReviewIntent).filter(ReviewIntent.idempotency_key == idempotency_key).first() is not None
+
+    def get_review(self, review_id: str) -> Optional[ReviewIntent]:
+        with self._session() as s:
+            r = s.query(ReviewIntent).filter(ReviewIntent.id == review_id).first()
+            if r is None:
+                return None
+            _id = r.id
+        with self._session() as s:
+            return s.query(ReviewIntent).filter(ReviewIntent.id == _id).first()

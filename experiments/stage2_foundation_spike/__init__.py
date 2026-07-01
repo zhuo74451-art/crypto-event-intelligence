@@ -1,1 +1,1 @@
-# Stage 2 Foundation Spike package
+"""Stage 2 foundation spike package."""

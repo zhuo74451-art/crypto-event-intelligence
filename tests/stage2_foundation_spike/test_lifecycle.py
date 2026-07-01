@@ -1,80 +1,84 @@
-"""Test lifecycle validators: ThesisStateMachine and TableValidator."""
+"""Test canonical lifecycle with both validators — exact state graph from THESIS_LIFECYCLE.md."""
 
 import pytest
 from experiments.stage2_foundation_spike.lifecycle_spike import (
     ThesisStateMachine,
     TableValidator,
+    CANONICAL_EDGES,
+    CANONICAL_STATES,
 )
+
+
+ALL_STATES = CANONICAL_STATES
+LEGAL_EDGES = CANONICAL_EDGES
+
+# Collect all legal edges for parametrized testing
+LEGAL_TRANSITIONS = [(f, t) for f, targets in LEGAL_EDGES.items() for t in targets]
+
+# Collect all pair combinations — illegal unless in LEGAL_EDGES
+ALL_PAIRS = [(f, t) for f in ALL_STATES for t in ALL_STATES]
 
 
 @pytest.fixture(params=[ThesisStateMachine, TableValidator])
 def validator(request):
-    """Parametrize over both validator implementations."""
     return request.param()
 
 
-class TestLegalTransitions:
-    def test_draft_to_under_review(self, validator):
-        assert validator.validate("DRAFT", "UNDER_REVIEW") is True
-
-    def test_under_review_to_accepted(self, validator):
-        assert validator.validate("UNDER_REVIEW", "ACCEPTED") is True
-
-    def test_under_review_to_rejected(self, validator):
-        assert validator.validate("UNDER_REVIEW", "REJECTED") is True
-
-    def test_accepted_to_stale(self, validator):
-        assert validator.validate("ACCEPTED", "STALE") is True
-
-    def test_rejected_to_under_review(self, validator):
-        assert validator.validate("REJECTED", "UNDER_REVIEW") is True
-
-    def test_stale_to_archived(self, validator):
-        assert validator.validate("STALE", "ARCHIVED") is True
+class TestLegalEdges:
+    @pytest.mark.parametrize("from_state,to_state", LEGAL_TRANSITIONS)
+    def test_legal_transition_accepted(self, validator, from_state, to_state):
+        assert validator.validate(from_state, to_state), f"{from_state} -> {to_state} should be legal"
 
 
-class TestIllegalTransitions:
-    def test_draft_to_accepted_raises(self, validator):
-        with pytest.raises(ValueError):
-            validator.validate_or_raise("DRAFT", "ACCEPTED")
+class TestIllegalEdges:
+    # Representative illegal jumps
+    ILLEGAL = [
+        ("DISCOVERED", "ACTIVE"),
+        ("DISCOVERED", "ARCHIVED"),
+        ("ARCHIVED", "DISCOVERED"),
+        ("REJECTED", "ACTIVE"),
+        ("ISOLATED", "ACTIVE"),
+        ("DORMANT", "QUALIFYING"),
+        ("INVALIDATED", "ACTIVE"),
+        ("EXPIRED", "CANDIDATE"),
+    ]
 
-    def test_archived_to_draft_raises(self, validator):
-        with pytest.raises(ValueError):
-            validator.validate_or_raise("ARCHIVED", "DRAFT")
-
-    def test_draft_to_archived_raises(self, validator):
-        with pytest.raises(ValueError):
-            validator.validate_or_raise("DRAFT", "ARCHIVED")
+    @pytest.mark.parametrize("from_state,to_state", ILLEGAL)
+    def test_illegal_transition_raises(self, validator, from_state, to_state):
+        assert not validator.validate(from_state, to_state), f"{from_state} -> {to_state} should be illegal"
+        with pytest.raises(ValueError, match="Illegal transition"):
+            validator.validate_or_raise(from_state, to_state)
 
 
 class TestGetLegalTransitions:
-    def test_draft_transitions(self, validator):
-        t = validator.get_legal_transitions("DRAFT")
-        assert "UNDER_REVIEW" in t
-        assert len(t) >= 1
+    def test_all_states_have_definition(self, validator):
+        for state in ALL_STATES:
+            trans = validator.get_legal_transitions(state)
+            assert isinstance(trans, list)
 
-    def test_archived_no_transitions(self, validator):
-        t = validator.get_legal_transitions("ARCHIVED")
-        assert len(t) == 0
+    def test_archived_only_reopen(self, validator):
+        trans = validator.get_legal_transitions("ARCHIVED")
+        assert trans == ["REOPEN_REVIEW"]
+
+    def test_reopen_review_has_multiple_targets(self, validator):
+        trans = validator.get_legal_transitions("REOPEN_REVIEW")
+        assert len(trans) >= 4
+
+
+class TestValidation:
+    def test_unknown_state_returns_false(self, validator):
+        assert validator.validate("UNKNOWN", "ACTIVE") is False
+
+    def test_self_transition_allowed_only_for_active(self, validator):
+        assert validator.validate("ACTIVE", "ACTIVE") is True
+        for s in ALL_STATES:
+            if s != "ACTIVE":
+                assert not validator.validate(s, s), f"{s} -> {s} should be illegal"
 
 
 class TestCodeSize:
     def test_both_validators_exist(self):
         tsm = ThesisStateMachine()
         tv = TableValidator()
-        assert tsm is not None
-        assert tv is not None
-        assert hasattr(tsm, "validate")
-        assert hasattr(tv, "validate")
-        assert hasattr(tsm, "validate_or_raise")
-        assert hasattr(tv, "validate_or_raise")
-
-
-class TestInitialisation:
-    def test_state_machine_init(self):
-        tsm = ThesisStateMachine()
-        assert tsm is not None
-
-    def test_table_validator_init(self):
-        tv = TableValidator()
-        assert tv is not None
+        assert tsm.code_size > 0
+        assert tv.code_size > 0

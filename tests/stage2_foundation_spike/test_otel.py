@@ -1,57 +1,46 @@
-"""Test OpenTelemetry observability."""
+"""Test OpenTelemetry observability — in-memory exporter, data minimization."""
 
-import pytest
-from experiments.stage2_foundation_spike.otel_spike import (
-    run_all,
-    RunResult,
-    emit_retrieval_span,
-    emit_semantic_pass_a,
-    emit_semantic_pass_b,
-    emit_arbitration_span,
-    emit_transition_span,
-    emit_recovery_span,
-    TracerProvider,
-    SimpleSpanProcessor,
-    InMemorySpanExporter,
-)
+from experiments.stage2_foundation_spike.otel_spike import run_all
 
 
-class TestRunAll:
-    def test_run_all_completes(self):
-        spans = run_all()
-        assert len(spans) > 0
-
-    def test_run_all_contains_semantic_passes(self):
-        spans = run_all()
-        names = {s.name for s in spans}
-        assert any("semantic" in n.lower() or "pass" in n.lower() for n in names)
+def test_run_all_completes():
+    spans = run_all()
+    assert len(spans) > 0
 
 
-class TestSpansHaveRunId:
-    def test_all_spans_have_run_id(self):
-        spans = run_all()
-        for s in spans:
-            run_id = s.attributes.get("run_id")
-            assert run_id is not None, f"span {s.name} missing run_id"
-            assert isinstance(run_id, str)
+def test_contains_semantic_passes():
+    spans = run_all()
+    names = {s.name for s in spans}
+    assert "semantic.synthesis" in names
+    assert "semantic.risk_challenge" in names
 
 
-class TestDataMinimisation:
-    def test_no_evidence_body_in_spans(self):
-        spans = run_all()
-        for s in spans:
-            for attr_name in s.attributes:
-                assert "evidence" not in attr_name.lower() or "body" not in attr_name.lower()
+def test_all_spans_have_run_id():
+    spans = run_all()
+    for s in spans:
+        rid = s.attributes.get("run_id")
+        assert rid is not None, f"span {s.name} missing run_id"
+        assert isinstance(rid, str)
 
 
-class TestSpansHaveThesisId:
-    def test_cognition_spans_have_thesis_id(self):
-        spans = run_all()
-        # Skip root span and infrastructure spans (retrieval, recovery)
-        cognition_spans = [s for s in spans
-                          if s.name not in ('run_all.root',) 
-                          and 'retrieval' not in s.name.lower()
-                          and 'recovery' not in s.name.lower()]
-        for s in cognition_spans:
+def test_cognition_spans_have_thesis_id():
+    spans = run_all()
+    for s in spans:
+        if "retrieval" not in s.name.lower() and "root" not in s.name.lower() and "recovery" not in s.name.lower():
             tid = s.attributes.get("thesis_id")
             assert tid is not None, f"span {s.name} missing thesis_id"
+
+
+def test_no_evidence_body_in_attributes():
+    spans = run_all()
+    for s in spans:
+        for key in s.attributes:
+            assert "evidence" not in key.lower() or "body" not in key.lower(), f"evidence body leaked in {s.name}:{key}"
+
+
+def test_recovery_span_has_retry_count():
+    spans = run_all()
+    recovery = [s for s in spans if "recovery" in s.name.lower()]
+    assert len(recovery) >= 1
+    for s in recovery:
+        assert s.attributes.get("retry_count") is not None

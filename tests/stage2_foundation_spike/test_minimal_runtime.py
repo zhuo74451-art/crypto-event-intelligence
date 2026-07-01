@@ -1,29 +1,118 @@
-"""Test minimal runtime — basic smoke tests."""
+"""Test minimal durable runtime — SQLAlchemy-based with controlled clock."""
+
 import os
 import tempfile
+from datetime import datetime, timezone, timedelta
+import pytest
+from sqlalchemy.exc import IntegrityError
 from experiments.stage2_foundation_spike.minimal_runtime_spike import (
-    MinimalReviewRuntime, MinimalReviewRuntime, DuplicateIdempotencyKeyError
+    MinimalDurableRuntime,
+    ReviewNotFoundError,
+    ReviewNotClaimableError,
+    DuplicateIdempotencyKeyError,
+    RetryExhaustedError,
 )
 
 
-def test_module_importable():
-    assert MinimalReviewRuntime is not None
+NOW = datetime(2025, 6, 1, 12, 0, 0, tzinfo=timezone.utc)
+PAST = NOW - timedelta(hours=2)
+FUTURE = NOW + timedelta(hours=2)
 
 
-def test_runtime_creates_and_restores():
-    """Test basic persist and checkpoint recovery."""
-    import tempfile
+@pytest.fixture
+def runtime():
     td = tempfile.mkdtemp()
+    db_path = os.path.join(td, "test.db")
+    rt = MinimalDurableRuntime(db_path=db_path, max_retries=3)
+    yield rt
+    rt.close()
     try:
-        cp = os.path.join(td, "cp.json")
-        rt = MinimalReviewRuntime(checkpoint_path=cp)
-        r = rt.persist_review(review_id="r1", idempotency_key="ik1")
-        assert r.idempotency_key == "ik1"
-        rt.close()
-        rt2 = MinimalReviewRuntime(checkpoint_path=cp)
-        r2 = rt2.get_review("r1")
-        assert r2 is not None
-        assert r2.idempotency_key == "ik1"
-    finally:
-        import shutil
-        shutil.rmtree(td, ignore_errors=True)
+        os.unlink(db_path)
+        os.rmdir(td)
+    except Exception:
+        pass
+
+
+
+class TestPersistAndClaim:
+    def test_persist_creates_review(self, runtime):
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik1", due_at=PAST)
+        assert rid is not None
+
+    def test_claim_due_atomically(self, runtime):
+        runtime.persist_review(thesis_id="t1", idempotency_key="ik1", due_at=PAST)
+        claimed = runtime.claim_due(NOW)
+        assert claimed is not None
+        assert claimed.status == "CLAIMED"
+
+    def test_duplicate_idempotency_key_rejected(self, runtime):
+        runtime.persist_review(thesis_id="t1", idempotency_key="unique", due_at=PAST)
+        with pytest.raises(DuplicateIdempotencyKeyError):
+            runtime.persist_review(thesis_id="t2", idempotency_key="unique", due_at=PAST)
+
+    def test_future_due_not_claimed(self, runtime):
+        runtime.persist_review(thesis_id="t1", idempotency_key="future", due_at=FUTURE)
+        claimed = runtime.claim_due(NOW)
+        assert claimed is None
+
+
+class TestCheckpointAndRecovery:
+    def test_checkpoint_persisted(self, runtime):
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik_cp", due_at=PAST)
+        runtime.claim_due(NOW)
+        runtime.write_checkpoint(rid, step=3, retry_count=1)
+        step, retry, err = runtime.resume_checkpoint(rid)
+        assert step == 3
+        assert retry == 1
+
+    def test_close_and_reopen_resumes(self, runtime):
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik_reopen", due_at=PAST)
+        runtime.claim_due(NOW)
+        runtime.write_checkpoint(rid, step=2, retry_count=0)
+        runtime.close_and_reopen()
+        step, retry, err = runtime.resume_checkpoint(rid)
+        assert step == 2
+
+
+class TestFailure:
+    def test_inject_failure_increments_retry(self, runtime):
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik_fail", due_at=PAST)
+        runtime.claim_due(NOW)
+        runtime.simulate_failure(rid)
+        _, retry, err = runtime.resume_checkpoint(rid)
+        assert retry == 1
+
+    def test_retry_exhaustion(self, runtime):
+        """3 retries max — 3rd call raises RetryExhaustedError."""
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik_ex", due_at=PAST)
+        runtime.claim_due(NOW)
+        runtime.simulate_failure(rid)  # retry 1
+        runtime.simulate_failure(rid)  # retry 2
+        with pytest.raises(RetryExhaustedError):  # retry 3 = max
+            runtime.simulate_failure(rid)
+
+
+class TestCancelAndResume:
+    def test_cancel_review(self, runtime):
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik_cancel", due_at=PAST)
+        runtime.cancel_review(rid)
+        r = runtime.get_review(rid)
+        assert r.status == "CANCELLED"
+
+    def test_resume_cancelled(self, runtime):
+        rid = runtime.persist_review(thesis_id="t1", idempotency_key="ik_resume", due_at=PAST)
+        runtime.cancel_review(rid)
+        runtime.resume_review(rid)
+        r = runtime.get_review(rid)
+        assert r.status == "PENDING"
+
+    def test_cancel_nonexistent_raises(self, runtime):
+        with pytest.raises(ReviewNotFoundError):
+            runtime.cancel_review("nonexistent")
+
+
+class TestDuplicatePrevention:
+    def test_has_idempotency_key(self, runtime):
+        assert runtime.has_idempotency_key("missing") is False
+        runtime.persist_review(thesis_id="t1", idempotency_key="exists", due_at=NOW)
+        assert runtime.has_idempotency_key("exists") is True

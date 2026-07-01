@@ -1,56 +1,34 @@
-"""Pydantic v2 models for the stage-2 foundation spike.
+"""Canonical contracts for Stage 2 foundation spike.
 
-Enums, value objects, and aggregate result types that define the
-boundary between evidence ingestion and thesis/risk decision-making.
+Evidence status bands from RISK_ABSTENTION_CONSTITUTION.md:
+BLOCKED, INSUFFICIENT, TENTATIVE, SUPPORTED, STRONG
 """
+
+from __future__ import annotations
 
 from datetime import datetime
 from enum import Enum
-from typing import FrozenSet, List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field, field_validator
 
 
-# ──────────────────────────────────────────────
-#  Enums
-# ──────────────────────────────────────────────
-
-
-class OriginAuthority(str, Enum):
-    """Trustworthiness of the evidence origin."""
-
-    TRUSTED = "trusted"
-    UNTRUSTED = "untrusted"
+class EvidenceStatus(str, Enum):
+    BLOCKED = "blocked"
+    INSUFFICIENT = "insufficient"
+    TENTATIVE = "tentative"
+    SUPPORTED = "supported"
+    STRONG = "strong"
 
 
 class EvidenceBand(str, Enum):
-    """Temporal band in which evidence is expected or arrives."""
-
     PRE_TRADE = "pre_trade"
     DURING_TRADE = "during_trade"
     POST_TRADE = "post_trade"
     LONG_TERM = "long_term"
 
 
-class ClaimClass(str, Enum):
-    """All recognised claim classes that can appear in a thesis or risk."""
-
-    MATERIALITY = "materiality"
-    MECHANISM = "mechanism"
-    EXPOSURE = "exposure"
-    HORIZON = "horizon"
-    EXPECTATION = "expectation"
-    PRICED_IN = "priced_in"
-    NEXT_EVIDENCE = "next_evidence"
-    INVALIDATION = "invalidation"
-    COUNTER_EVIDENCE = "counter_evidence"
-    HIDDEN_ASSUMPTION = "hidden_assumption"
-    ALTERNATIVE = "alternative"
-
-
 class Horizon(str, Enum):
-    """Temporal horizon of a thesis or risk."""
-
     IMMEDIATE = "immediate"
     SHORT_TERM = "short_term"
     MEDIUM_TERM = "medium_term"
@@ -58,11 +36,7 @@ class Horizon(str, Enum):
 
 
 class ActionType(str, Enum):
-    """Analyst-action types that DO NOT directly perform a transition,
-    notification, publication, wallet, or trade action — they are pure
-    advisory/enum signals for downstream consumers.
-    """
-
+    """Safe audit actions only — no transition, notification, publication, wallet, or trade."""
     LOG = "log"
     FLAG = "flag"
     REVIEW = "review"
@@ -70,96 +44,78 @@ class ActionType(str, Enum):
     SILENCE = "silence"
 
 
-# ──────────────────────────────────────────────
-#  Value objects
-# ──────────────────────────────────────────────
-
-
-class EvidenceSource(BaseModel):
-    """Origin metadata for a piece of evidence."""
-
-    authority: OriginAuthority
+class ClaimClass(str, Enum):
+    """Canonical claim classes from RISK_ABSTENTION_CONSTITUTION.md"""
+    FACT = "fact"
+    EVENT_STATE = "event_state"
+    MECHANISM = "mechanism"
+    EXPOSURE = "exposure"
+    DIRECTION = "direction"
+    PRICED_IN = "priced_in"
+    ATTENTION_ACTION = "attention_action"
 
 
 class EvidenceRef(BaseModel):
-    """A reference to a specific piece of evidence."""
-
-    source: EvidenceSource
-    content_hash: str
+    source: str = Field(..., min_length=1)
+    content_hash: str = Field(..., min_length=1)
     retrieved_at: datetime
 
 
-# ──────────────────────────────────────────────
-#  Aggregate results
-# ──────────────────────────────────────────────
-
-
 class ThesisSynthesisResult(BaseModel):
-    """Output of a thesis-synthesis step for a single claim class."""
+    """Result of semantic pass A: thesis synthesis.
 
-    claim_class: ClaimClass
-    summary: str
-    evidence_refs: List[EvidenceRef]
-    horizon: Horizon
-    confidence_band: float = Field(..., ge=0.0, le=1.0)
-
-    @field_validator("evidence_refs")
-    @classmethod
-    def evidence_refs_must_not_be_empty(
-        cls, v: List[EvidenceRef]
-    ) -> List[EvidenceRef]:
-        if not v:
-            raise ValueError("evidence_refs must not be empty")
-        return v
-
-
-# Frozen set of ClaimClass values that are valid for a risk challenge.
-# Using a module-level frozenset so the constraint is immutable and
-# trivially inspectable.
-RISK_CHALLENGE_CLAIM_CLASSES: FrozenSet[ClaimClass] = frozenset(
-    {
-        ClaimClass.MATERIALITY,
-        ClaimClass.MECHANISM,
-        ClaimClass.EXPOSURE,
-        ClaimClass.INVALIDATION,
-        ClaimClass.COUNTER_EVIDENCE,
-        ClaimClass.HIDDEN_ASSUMPTION,
-        ClaimClass.ALTERNATIVE,
-    }
-)
-
-
-class RiskChallengeResult(BaseModel):
-    """Output of a risk-challenge step that questions a thesis claim.
-
-    The ``claim_class`` is restricted to the subset of ``ClaimClass``
-    values that represent challenges rather than affirmative assertions.
+    Uses evidence-status bands (not numeric confidence).
+    Cannot contain or choose lifecycle state, notification, or trade action.
     """
-
     claim_class: ClaimClass
-    challenge: str
-    severity: str
-    evidence_refs: List[EvidenceRef]
+    summary: str = Field(..., min_length=1)
+    evidence_refs: List[EvidenceRef] = Field(..., min_length=1)
+    horizon: Horizon
+    evidence_status: EvidenceStatus  # not numeric confidence
+    action_type: ActionType  # only safe audit actions
+    repair_attempts: int = 0
+
+    @field_validator("action_type")
+    @classmethod
+    def no_dangerous_action(cls, v: ActionType) -> ActionType:
+        dangerous = {"transition", "notify", "publish", "trade", "wallet", "execute", "send"}
+        if v.value in dangerous:
+            raise ValueError(f"ActionType {v.value} is not allowed — may only contain safe audit actions")
+        return v
 
     @field_validator("claim_class")
     @classmethod
-    def claim_class_must_be_valid_risk_challenge(
-        cls, v: ClaimClass
-    ) -> ClaimClass:
-        if v not in RISK_CHALLENGE_CLAIM_CLASSES:
-            raise ValueError(
-                f"claim_class must be one of "
-                f"{sorted(c.value for c in RISK_CHALLENGE_CLAIM_CLASSES)}, "
-                f"got {v.value!r}"
-            )
+    def synthesis_claim_classes(cls, v: ClaimClass) -> ClaimClass:
+        allowed = {"fact", "event_state", "mechanism", "exposure", "direction", "priced_in"}
+        if v.value not in allowed:
+            raise ValueError(f"ClaimClass {v.value} not allowed in synthesis")
         return v
 
 
-class ReviewIntent(BaseModel):
-    """A scheduled or requested review for a thesis."""
+class RiskChallengeResult(BaseModel):
+    """Result of semantic pass B: risk challenge.
 
-    review_id: str
-    thesis_id: str
-    due_at: datetime
-    idempotency_key: str
-    status: str
+    Failed risk analysis must return an explicit unavailable/insufficient result,
+    not NONE_DETECTED.
+    """
+    claim_class: ClaimClass
+    challenge: str = Field(..., min_length=1)
+    severity: str = Field(default="unknown")  # low, medium, high, unknown
+    evidence_refs: List[EvidenceRef] = Field(default_factory=list)
+    risk_available: bool = True  # False if risk analysis did not complete
+    evidence_status: EvidenceStatus
+    repair_attempts: int = 0
+
+    @field_validator("claim_class")
+    @classmethod
+    def risk_claim_classes(cls, v: ClaimClass) -> ClaimClass:
+        allowed = {"mechanism", "exposure", "direction", "priced_in", "attention_action"}
+        if v.value not in allowed:
+            raise ValueError(f"ClaimClass {v.value} not allowed in risk challenge")
+        return v
+
+    @field_validator("risk_available", mode="before")
+    @classmethod
+    def no_false_none_detected(cls, v: bool, info) -> bool:
+        """Risk unavailability must not fall back to NONE_DETECTED."""
+        return v

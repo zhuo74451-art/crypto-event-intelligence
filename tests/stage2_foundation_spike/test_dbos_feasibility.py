@@ -1,28 +1,32 @@
-"""Test the dbos_feasibility module."""
+"""Test DBOS feasibility classification."""
 
 from experiments.stage2_foundation_spike.dbos_feasibility import (
-    DBOS_REQUIRES_POSTGRES_AUTHORIZATION,
+    DBOS_CLASSIFICATION,
+    DBOS_REQUIRES_POSTGRES,
+    DBOS_VERSION,
     get_classification,
     comparison,
 )
 
 
-def test_get_classification_returns_dict_with_version():
+def test_classification_requires_postgres():
+    assert DBOS_REQUIRES_POSTGRES is True
+
+
+def test_classification_constant():
+    assert DBOS_CLASSIFICATION == "DBOS_REQUIRES_POSTGRES_AUTHORIZATION"
+
+
+def test_get_classification_returns_version():
     c = get_classification()
-    assert isinstance(c, dict)
-    assert "version" in c
+    assert c["version"] == DBOS_VERSION
+    assert c["classification"] == DBOS_CLASSIFICATION
 
 
-def test_requires_postgres_is_true():
-    c = get_classification()
-    assert c.get("requires_postgres") is True
-
-
-def test_classification_is_dbos_requires_postgres_authorization():
-    assert "Postgres" in DBOS_REQUIRES_POSTGRES_AUTHORIZATION
-
-
-def test_comparison_returns_dict():
+def test_comparison_includes_all_dimensions():
     comp = comparison()
-    assert isinstance(comp, dict)
-    assert len(comp) > 0
+    expected_dims = {"guarantees", "custom_code_requirements", "services_required", "status_stop_recovery", "testability", "owner_burden"}
+    assert expected_dims.issubset(comp.keys())
+    for dim, sides in comp.items():
+        assert "DBOS" in sides
+        assert "minimal_runtime" in sides
