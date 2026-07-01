@@ -2,6 +2,7 @@
 
 import os
 import tempfile
+import threading
 from datetime import datetime, timezone, timedelta
 import pytest
 from sqlalchemy.exc import IntegrityError
@@ -11,6 +12,7 @@ from experiments.stage2_foundation_spike.minimal_runtime_spike import (
     ReviewNotClaimableError,
     DuplicateIdempotencyKeyError,
     RetryExhaustedError,
+    ReviewIntent,
 )
 
 
@@ -122,29 +124,72 @@ class TestDuplicatePrevention:
 # R12 — Additional correctness tests
 # ════════════════════════════════════════════════════════
 
-class TestTwoClaimer:
-    def test_two_claimers_one_wins(self):
-        """Two sessions both try to claim; only one succeeds."""
-        td = tempfile.mkdtemp()
-        db_path = os.path.join(td, "test2c.db")
-        rt1 = MinimalDurableRuntime(db_path=db_path)
-        rt2 = MinimalDurableRuntime(db_path=db_path)
-        rt1.persist_review(thesis_id="t1", idempotency_key="ik_2c", due_at=PAST)
-        claimed1 = rt1.claim_due(NOW)
-        claimed2 = rt2.claim_due(NOW)
-        # Only one should succeed
-        assert (claimed1 is not None) != (claimed2 is not None), "Exactly one claimer must succeed"
-        if claimed1:
-            assert claimed1.status == "CLAIMED"
-        if claimed2:
-            assert claimed2.status == "CLAIMED"
-        rt1.close()
-        rt2.close()
-        try:
-            os.unlink(db_path)
-            os.rmdir(td)
-        except Exception:
-            pass
+
+class TestTwoClaimerRace:
+    """Synchronized claim race via threading.Barrier — exactly one wins."""
+
+    N_REPEATS = 10
+
+    def test_two_claimers_synchronized_race(self):
+        """Two threads, separate runtimes, same database, Barrier-synchronized, exactly one claims.
+
+        Repeats N_REPEATS times to prove the result is not a scheduling accident.
+        """
+        for iteration in range(self.N_REPEATS):
+            td = tempfile.mkdtemp()
+            db_path = os.path.join(td, f"test_race_{iteration}.db")
+
+            # Persist one PENDING review before starting threads
+            rt0 = MinimalDurableRuntime(db_path=db_path)
+            rt0.persist_review(
+                thesis_id=f"t_race_{iteration}",
+                idempotency_key=f"ik_race_{iteration}",
+                due_at=PAST,
+            )
+            rt0.close()
+
+            results = {}
+            barrier = threading.Barrier(2)
+
+            def _claim(claimer_id: int):
+                rt = MinimalDurableRuntime(db_path=db_path)
+                barrier.wait()  # both threads start here simultaneously
+                claimed = rt.claim_due(NOW)
+                rt.close()
+                results[claimer_id] = claimed
+
+            t1 = threading.Thread(target=_claim, args=(1,))
+            t2 = threading.Thread(target=_claim, args=(2,))
+            t1.start()
+            t2.start()
+            t1.join()
+            t2.join()
+
+            # Exactly one claimer must succeed
+            claimed_count = sum(1 for v in results.values() if v is not None)
+            assert claimed_count == 1, (
+                f"Iteration {iteration}: expected exactly 1 claimer, got {claimed_count}"
+            )
+            for cid, review in results.items():
+                if review is not None:
+                    assert review.status == "CLAIMED", (
+                        f"Iteration {iteration}: claimer {cid} got status {review.status}"
+                    )
+
+            # Exactly one DB row with CLAIMED status
+            claimed_review = next(v for v in results.values() if v is not None)
+            rt_check = MinimalDurableRuntime(db_path=db_path)
+            review = rt_check.get_review(claimed_review.id)
+            rt_check.close()
+            assert review is not None
+            assert review.status == "CLAIMED"
+
+            # Cleanup
+            try:
+                os.unlink(db_path)
+                os.rmdir(td)
+            except Exception:
+                pass
 
 
 class TestCheckpointPreservedOnResume:

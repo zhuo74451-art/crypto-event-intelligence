@@ -1,4 +1,4 @@
-# Foundation Spike Report
+# Foundation Compatibility Spike — Final Report
 
 ## Environment
 
@@ -26,46 +26,71 @@
 
 Dependency check: **pass** — no broken requirements.
 
-## Experiment Results
+## Executed Evidence
 
 ### F04 — Pydantic Semantic Gateway: **pass**
 
 - `ThesisSynthesisResult` and `RiskChallengeResult` parse correctly
-- Missing evidence references are rejected (ValidationError)
-- Invalid claim classes, enum values are rejected
+- Missing evidence references rejected (ValidationError) when status requires them
+- Empty evidence_refs allowed for INSUFFICIENT/BLOCKED (no fabricated evidence)
+- Invalid claim classes, enum values rejected
+- ActionType enum contains only safe audit actions (LOG, FLAG, REVIEW, ESCALATE, SILENCE) — no trade, publish, wallet, or execute
 - Bounded repair (1 attempt) with deterministic fallback works
-- ActionType enum contains only safe audit actions (LOG, FLAG, REVIEW, ESCALATE, SILENCE) — no action that can perform transitions, notifications, publications, wallet, or trade
-
-**Pydantic AI Decision:** ADOPT — gateway works with test models. No real model or paid API call was made.
+- Zero network calls: Agent uses `TestModel` (offline-only)
+- **Agent execution produces observable usage metadata**: `RunUsage` with `requests >= 1` and token counts > 0 (verified by test)
 
 ### F05 — Persistence and Lifecycle: **pass**
 
 **Persistence:**
-- SQLAlchemy ORM models created for Evidence, Event, Thesis, ThesisRevision, ReviewIntent
+- SQLAlchemy ORM models: Evidence, Event, Thesis, ThesisRevision, ReviewIntent
 - Tables created via `Base.metadata.create_all`
 - Foreign keys enforced (verified by `IntegrityError`)
 - Unique idempotency keys enforced
 - Transaction rollback confirmed
 - Database close/reopen recovers state
+- Append-only revisions: `thesis_revisions` rows are never updated or deleted (SQLAlchemy `before_update`/`before_delete` event blocks modification)
+- Compare-and-swap thesis update via `UPDATE ... WHERE version = :expected` — `StaleVersionError` on conflict
 
-**Lifecycle:**
-- python-statemachine ThesisStateMachine: ~50 LOC
-- TableValidator (compact dict-of-sets): ~30 LOC
-- Both validate all 6 legal transitions correctly
-- Both raise ValueError for illegal transitions (DRAFT→ACCEPTED, ARCHIVED→DRAFT)
-- Startup validation works in both
+**Alembic Migration (real):**
+- Alembic `op.create_table` / `op.drop_table` demonstrated
+- `alembic_version` table created on upgrade
+- `alembic.command.upgrade("head")` and `alembic.command.downgrade("base")` both verified
+- Invalid migration propagates exception (no silent swallow)
 
-**Lifecycle Choice:** TABLE — the table-driven validator is simpler, has zero library dependency, and the transition rules are visible in one glance.
+**Lifecycle (11 states):**
+
+| State | Legal Transitions |
+|-------|-------------------|
+| DISCOVERED | QUALIFYING, REJECTED, ISOLATED |
+| QUALIFYING | CANDIDATE, REJECTED, ISOLATED, EXPIRED |
+| CANDIDATE | ACTIVE, DORMANT, REJECTED, EXPIRED, ISOLATED |
+| ACTIVE | ACTIVE, DORMANT, INVALIDATED, EXPIRED, ARCHIVED |
+| DORMANT | ACTIVE, INVALIDATED, EXPIRED, ARCHIVED |
+| INVALIDATED | ARCHIVED, REOPEN_REVIEW |
+| EXPIRED | ARCHIVED, REOPEN_REVIEW |
+| ARCHIVED | REOPEN_REVIEW |
+| REOPEN_REVIEW | ACTIVE, CANDIDATE, ARCHIVED, REJECTED, ISOLATED |
+| REJECTED | REOPEN_REVIEW |
+| ISOLATED | QUALIFYING, REJECTED |
+
+Two implementations demonstrated:
+1. **python-statemachine** `ThesisStateMachine` — ~90 lines, demonstrates real library API (import, State definition, `.to()` transitions)
+2. **TableValidator** — ~30 lines, compact dict-of-sets, zero dependencies
+
+**Lifecycle Choice:** TABLE — the table-driven validator is simpler, has zero library dependency, and the transition rules are visible in one glance. The python-statemachine library is importable and its API is demonstrated; the library is listed as **CONDITIONAL** if a future slice needs runtime lifecycle enforcement beyond validation.
 
 ### F06 — Minimal Runtime and DBOS: **pass**
 
-**Minimal Runtime:**
-- Persist reviews with idempotency keys
-- Claim reviews atomically
-- Checkpoint with step tracking
-- Cancel and resume via explicit commands
-- Duplicate prevention via unique idempotency keys
+**Minimal Runtime (SQLAlchemy-based):**
+- Persist reviews with unique idempotency keys
+- Claim due reviews atomically via conditional `UPDATE review_intents SET status='CLAIMED' WHERE id=:id AND status='PENDING'`
+- Checkpoint with step tracking, retry count, and error history
+- Cancel and resume preserves checkpoint_step, retry_count, last_error
+- Duplicate prevention via unique idempotency key constraint
 - Close and reopen recovers state
+- Retry exhaustion commits FAILED status before raising `RetryExhaustedError`
+- **Synchronized claim race**: two threads, separate runtime instances, same database, `threading.Barrier` synchronization; exactly one claims the review every iteration (verified over 10 repetitions)
+- Conditional `PENDING -> CLAIMED` guard retained
 
 **DBOS Feasibility:**
 - Installed version: DBOS 2.26.0
@@ -96,24 +121,27 @@ Dependency check: **pass** — no broken requirements.
 ## Test Results
 
 ```text
-45 passed, 2 failed, 47 total
+153 passed in 0.93s
 ```
-
-The 2 failures are minor bugs in auto-generated spike module code:
-1. `MinimalReviewRuntime._checkpoint_lock` not initialized (checkpoint recovery still works functionally)
-2. Persistence `Event` model column type mismatch with datetime values — integer `version` affecting datetime insert
 
 ## Accepted Dependencies
 
-- **Pydantic AI** — ADOPT as structured semantic gateway
 - **SQLAlchemy + Alembic** — ADOPT for application persistence
-- **python-statemachine** — REJECT in favor of table-driven validator (TABLE)
-- **OpenTelemetry** — ADOPT for observability
-- **DBOS** — CONDITIONAL (requires Postgres authorization); **MINIMAL_RUNTIME_PREFERRED** for first slice
+- **Pydantic AI** — ADOPT as structured semantic gateway (Agent + TestModel path, zero network calls, observable usage metadata)
+- **OpenTelemetry** — ADOPT for observability (in-memory exporter, no backend)
+- **python-statemachine** — CONDITIONAL: library API demonstrated; TableValidator chosen for first slice
+- **DBOS** — CONDITIONAL: requires Postgres authorization; minimal runtime preferred for first slice
 
-## Rejected Dependencies
+## Deferred or Not-Run Comparisons
 
-None explicitly rejected at this stage.
+These statements are not proven by the spike and require future work:
+
+- python-statemachine runtime state persistence (library was demonstrated at import/validation level only; the spike does not run a long-lived SM instance)
+- DBOS exactly-once guarantee vs minimal runtime checkpoint recovery in a production-like workload
+- OpenTelemetry collector/export pipeline (only in-memory exporter tested)
+- Real concurrent load beyond two-thread claim race
+- Multi-process database contention with WAL mode
+- Performance or latency comparison between validators
 
 ## Recommendation for First Complete Slice
 
@@ -122,9 +150,9 @@ Use SQLAlchemy + minimal local runtime + table-driven lifecycle validator + Pyda
 ## Changed Files
 
 - `experiments/stage2_foundation_spike/` — all spike experiment files
-- `tests/stage2_foundation_spike/` — focused tests
+- `tests/stage2_foundation_spike/` — focused tests (153 total)
 - `.python312/` — local Python 3.12.9 installation (ignored from Git via `.venv-stage2-spike`)
 
 ## Product Behavior Statement
 
-No product behavior was implemented. No changes were made to any existing product code, tests, or PR #16. No Postgres was installed or started. No real model or paid API calls were made. No background processes were created.
+No product behavior was implemented. No changes were made to any existing product code, tests, or PR #16. No Postgres was installed or started. No real model or paid API calls were made. No background processes were created. No daemon, cron job, login item, or persistent background process was started.

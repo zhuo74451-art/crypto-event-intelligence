@@ -95,3 +95,39 @@ def test_zero_network_calls():
     """Verify no network calls — TestModel is offline-only."""
     import pydantic_ai.models.test
     assert hasattr(pydantic_ai.models.test.TestModel, '__call__') or hasattr(pydantic_ai.models.test.TestModel, 'model_post_init')
+
+
+@pytest.mark.asyncio
+async def test_agent_run_produces_observable_usage_metadata():
+    """Execute Agent with TestModel and assert observable Pydantic AI run/usage/request metadata.
+
+    This test proves the Agent was actually executed, not merely configured.
+    """
+    from experiments.stage2_foundation_spike.contracts import ThesisSynthesisResult
+
+    # Use a fresh Agent to get the full RunResult with usage metadata
+    from pydantic_ai import Agent
+    from pydantic_ai.models.test import TestModel
+
+    agent = Agent(TestModel(), output_type=ThesisSynthesisResult)
+    run_result = await agent.run(
+        '{"claim_class": "fact", "summary": "usage test", '
+        '"evidence_refs": [], "horizon": "short_term", '
+        '"evidence_status": "insufficient", "action_type": "silence"}'
+    )
+
+    # RunResult has observable metadata
+    assert run_result.run_id is not None
+    assert run_result.timestamp is not None
+
+    # Usage metadata is produced by the Agent run
+    usage = run_result.usage
+    assert usage is not None
+    assert usage.requests >= 1, f"Expected requests >= 1, got {usage.requests}"
+    assert usage.total_tokens > 0, f"Expected total_tokens > 0, got {usage.total_tokens}"
+    assert usage.input_tokens > 0, f"Expected input_tokens > 0, got {usage.input_tokens}"
+    assert usage.output_tokens > 0, f"Expected output_tokens > 0, got {usage.output_tokens}"
+
+    # Output is a valid structured result
+    assert isinstance(run_result.output, ThesisSynthesisResult)
+    assert run_result.output.claim_class is not None
