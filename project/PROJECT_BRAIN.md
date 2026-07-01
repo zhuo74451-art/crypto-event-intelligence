@@ -2,35 +2,23 @@
 
 ## Identity
 
-**Crypto Market Cognition & Signal OS** is an unattended internal market-cognition operator. It discovers, verifies, interprets and maintains crypto-market theses and their affected assets.
+**Crypto Market Cognition & Signal OS** is an unattended internal market-cognition operator. It discovers, verifies, interprets and maintains a bounded portfolio of crypto-market theses.
 
-It is not a copy-trading product, order-advice service, wallet system, public recommendation service, or external SaaS.
+It is not a copy-trading, order-advice, wallet, public-recommendation or external SaaS product.
 
 ## Owner role
 
 The owner is outside the normal judgment loop. The owner retains governance over project scope, protected access, material cost changes, public operation, irreversible actions, stop and recovery.
 
-Routine uncertainty stays inside the system and resolves through evidence collection, abstention, delayed review, downgrade, invalidation or archive.
+Routine uncertainty resolves through evidence collection, claim narrowing, abstention, delayed review, downgrade, invalidation or archive.
 
 ## Primary result
 
-The system maintains a bounded **Autonomous Thesis Portfolio**. Each active thesis preserves:
+Each active thesis preserves qualified evidence, event state, mechanism, exposure, horizon, expectations, market confirmation, priced-in state, counterevidence, uncertainty, attention priority, next evidence, review, expiry, invalidation and revision history.
 
-- qualified evidence and event state;
-- causal mechanism and affected exposure;
-- direction by time horizon;
-- prior expectation and surprise;
-- market confirmation and priced-in state;
-- supporting and opposing evidence;
-- uncertainty and fact-permission limits;
-- attention priority;
-- next evidence or catalyst;
-- review, expiry and invalidation conditions;
-- complete revision history.
+The owner receives only material thesis changes, serious health failures or governance exceptions.
 
-The owner is notified only for a material thesis change, a major system failure, or a governance exception.
-
-## Core business path
+## Accepted cognition path
 
 ```text
 Evidence
@@ -42,77 +30,62 @@ Evidence
   -> Lifecycle Revision
 ```
 
-Events are evidence inputs. Theses persist and change. Assets are exposure objects. Attention state is the operating result.
+## Accepted responsibility contracts
 
-## Discovery model
-
-The accepted model is:
-
-```text
-Broad Discovery Universe
-  -> Qualification Screen
-  -> Strict Active-Portfolio Admission
-```
-
-Any crypto-related object may be briefly identified and screened. Discovery alone does not authorize an active thesis, a strong directional conclusion, owner notification or persistent high-cost tracking.
-
-Active admission requires valid identity, real change or new evidence, a defensible mechanism, genuine exposure, evidence permission, a future verification path, expiry or invalidation, acceptable risk, positive attention value and non-duplication.
-
-Weak-data, low-liquidity, highly manipulable or unclear objects receive restricted authority, a small budget, risk-only observation, time-boxing or rejection.
-
-## Judgment authority
-
-The complete decision inventory is defined in [`AUTONOMOUS_JUDGMENT_CONTRACT.md`](AUTONOMOUS_JUDGMENT_CONTRACT.md).
-
-- **L0 Rule Final:** identity, time, provenance, permission, leakage, budgets, retries and stop rules.
-- **L1 Semantic Bounded:** importance, mechanism, exposure, horizon, interpretation and risk.
-- **L2 Internal Arbitration:** allowlisted portfolio and lifecycle actions without external effects.
-- **L3 Owner Governance:** project or authority expansion and exceptional external effects.
-
-Normal-path judgments J01 through J22 cover evidence, event identity, novelty, materiality, mechanism, exposure, direction, expectations, priced-in state, counterevidence, portfolio admission, priority, follow-up, lifecycle, notification, learning and governance exceptions.
-
-Semantic roles cannot override L0 prohibitions. Every semantic result must be structured, evidence-referenced and paired with a conservative fallback.
+- `AUTONOMOUS_JUDGMENT_CONTRACT.md` — J01-J22 and L0-L3 authority;
+- `THESIS_LIFECYCLE.md` — legal lifecycle transitions;
+- `ATTENTION_RESOURCE_POLICY.md` — priorities, caps, cadence, notification, loop and recovery;
+- `RISK_ABSTENTION_CONSTITUTION.md` — claim limits, risk and mandatory abstention;
+- `LONGITUDINAL_VALIDATION_PLAN.md` — replay, shadow, baselines, thresholds and stop rules.
 
 ## Bounded roles
 
-1. **Evidence Gate** — identity, time, provenance, permission, duplication, conflict and leakage.
-2. **Thesis Agent** — novelty, materiality, mechanism, exposure, horizon and next evidence.
-3. **Risk Agent** — alternative explanations, hidden assumptions, priced-in risk and falsification.
-4. **Arbitration Agent** — activate, observe, risk-only, mechanism-candidate, abstain, downgrade, invalidate, archive or reject.
-5. **Lifecycle Agent** — follow-up, catalysts, revision, expiry, invalidation, reopening and learning candidates.
-6. **Resource Governor** — portfolio, retrieval, model-call, retry, review-frequency and loop limits.
+1. Evidence Gate;
+2. Thesis Agent;
+3. Risk Agent;
+4. Arbitration Agent;
+5. Lifecycle Agent;
+6. Resource Governor.
 
-A large free-form agent society is rejected.
+These are responsibility boundaries, not proof that six separate model processes are required. Stage 2 must challenge them with simpler architectures.
 
 ## Risk constitution
 
-Risk is part of the judgment, not a disclaimer. Every active thesis must address fact risk, interpretation risk, market and crowding risk, time-horizon risk, exposure mismatch, priced-in risk, misuse risk and explicit invalidation evidence.
+Claims remain typed as fact, event state, mechanism, exposure, direction, priced-in state and attention action. Evidence for a lower claim class cannot silently authorize a higher one.
 
-Price movement cannot substitute for a causal mechanism. Popularity cannot substitute for materiality. A valid long-term mechanism does not imply an immediate opportunity.
+The system uses `BLOCKED`, `INSUFFICIENT`, `TENTATIVE`, `SUPPORTED` and `STRONG` evidence-status bands. They are not numerical probabilities and must later be calibrated against held-out outcomes.
+
+Direction is forbidden when mechanism, exposure, horizon, risk review or relevant market context is missing. Disagreement remains visible by component.
+
+## Validation standard
+
+Stage 1 defines:
+
+- at least 120 point-in-time replay cases;
+- at least 21 days and 100 qualified live-shadow cases;
+- event-only, price-only, one-shot, always-neutral and forced-judgment baselines;
+- zero-tolerance integrity gates for leakage, rule override, illegal transitions, external effects, state loss and silent cap breaches;
+- minimum judgment, notification and recovery thresholds;
+- explicit continue, change, reduce-scope and stop decisions.
+
+This validates cognition and attention quality, not trading profitability.
 
 ## Current reality
 
-`main` contains the accepted product responsibility and judgment authority model. Draft PR #16 remains a candidate pool of evidence, event, world-state, strategy, arbitration and packet components. It is not the current product definition and will be audited later for `RETAIN`, `ADAPT`, `QUARANTINE`, `REMOVE` or `MISSING`.
+Stage 1 is accepted as a design and audit standard. It does not prove implementation coverage or user value.
 
-The Mac environment is sufficient for discussion and future execution. Remaining migration hygiene does not define the product node.
-
-## Evidence standard
-
-Code presence proves implementation presence only. Focused tests prove bounded behavior. Integrated replay proves one controlled path. Longitudinal unattended shadow operation is required to show whether the system changes its mind correctly, allocates attention usefully and avoids false confidence.
-
-None of this alone proves profitability or justifies trading automation.
+Draft PR #16 remains a candidate pool of evidence, event, world-state, strategy, arbitration and packet components. It is not the current product definition.
 
 ## Current business node
 
-The judgment inventory and authority boundary are locked. The next foundation unit is the **Thesis and Attention Lifecycle**:
+Stage 2 is active: **External Prior Art Challenge and Repository Responsibility Audit**.
 
-1. thesis states;
-2. legal transitions;
-3. review triggers and intervals;
-4. priority and resource budgets;
-5. strengthening, weakening, decay, expiry and invalidation;
-6. archive and reopening;
-7. material notification thresholds;
-8. loop termination and recovery limits.
+The project now must:
 
-Existing code is not upgraded until the remaining foundation units are closed.
+1. compare mature workflow, state, evidence, research, calibration, evaluation and observability foundations;
+2. test whether a smaller semantic architecture can satisfy the responsibility;
+3. inspect `main`, Draft PR #16, tests, artifacts and runtime paths;
+4. classify components as `RETAIN`, `ADAPT`, `QUARANTINE`, `REMOVE` or `MISSING`;
+5. compile the smallest complete engineering route.
+
+No implementation starts until this audit is accepted.
