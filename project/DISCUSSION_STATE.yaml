@@ -1,51 +1,48 @@
-version: "1.5"
+version: "1.6"
 status: active
 business_project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
 stage: 2
 stage_name: external_prior_art_and_repository_audit
-rhythm: exploration
-stage_progress: starting
+rhythm: convergence
+stage_progress: evidence_spike_ready
 canonical_state: SYNCED
 action_qualification: BOUNDED
 
-current_business_node: external_prior_art_and_repository_responsibility_audit
+current_business_node: foundation_compatibility_spike
 core_question: >-
-  Which mature foundations and which existing repository components form the
-  smallest reliable implementation route for the accepted autonomous cognition responsibility?
+  Which candidate foundations actually work together on the Mac with the
+  required recovery and audit guarantees, and does DBOS justify Postgres over
+  a minimal local durable-review ledger?
 
-stage1_completed:
-  - product responsibility and owner governance
-  - two-tier discovery
-  - judgment inventory and authority levels
-  - thesis lifecycle
-  - attention, resource, notification, loop, and recovery policy
-  - risk, claim, confidence, and abstention constitution
-  - longitudinal validation, baselines, thresholds, and stop rules
-
-stage2_work:
-  - compare mature foundations for durable workflow, state, evidence, research, calibration, evaluation, and observability
-  - challenge the bounded-role design with simpler alternatives
-  - inspect main, Draft PR 16, tests, artifacts, and runtime entrypoints
-  - classify components as RETAIN, ADAPT, QUARANTINE, REMOVE, or MISSING
-  - identify the smallest complete engineering path
+completed:
+  - external foundation first-pass comparison
+  - two-pass semantic architecture decision
+  - main and Draft PR 16 repository audit pass 1
+  - machine-readable component classification
+  - responsibility coverage matrix
+  - target active-path map
+  - DBOS infrastructure assumption correction
+  - bounded compatibility spike contract
 
 locked_decisions:
-  - no implementation begins during the audit
-  - current code claims must be checked against remote evidence
-  - mature components are adopted when they own generic responsibility better than local code
-  - simpler architecture wins when it preserves the accepted user result and safety boundaries
+  - Draft PR 16 is not merged or patched into the product core
+  - the first semantic topology has two structured passes, not six model agents
+  - application persistence uses SQLAlchemy and Alembic
+  - no Postgres, daemon, paid model call, or product behavior is allowed in the spike
+  - DBOS, Pydantic AI, and the transition library remain conditional until measured
   - clear reversible audit decisions are applied without owner confirmation
 
-critical_unknowns:
-  - whether a multi-role architecture is necessary or a smaller semantic core is sufficient
-  - which existing PR 16 components genuinely implement accepted responsibilities
-  - which mature workflow, state, provenance, and observability foundations fit the project
-  - what should be deleted or quarantined to reduce complexity
-  - the first complete implementation slice
+remaining_unknowns:
+  - supported Python availability on the Mac
+  - Pydantic AI structured-output behavior with test models and later low-cost providers
+  - DBOS feasibility without an authorized Postgres service
+  - DBOS versus minimal-runtime recovery and operating complexity
+  - python-statemachine versus table-driven validation
+  - final dependency graph and first implementation work packages
 
 next_continue_meaning: >-
-  Run the external foundation challenge and begin evidence-backed classification
-  of the existing repository without implementing product changes.
+  Execute and independently audit the bounded foundation compatibility spike,
+  then close Stage 2 or reopen only the failed foundation decision.
 
-owner_action_required: none
+owner_action_required: none_unless_python_or_service_authorization_blocker
