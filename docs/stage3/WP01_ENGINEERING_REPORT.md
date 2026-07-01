@@ -124,7 +124,7 @@ Run on exact Head after Repair 005.
 | Replay (manifest determinism, leakage, split-order, correction chain) | 10 | pass |
 | Observability (spans, correlation, data minimization) | 7 | pass |
 | Package boundaries (dependency direction) | 4 | pass |
-| **WP-01 focused tests** | **~165** | **pass** |
+| **WP-01 focused tests** | **174** | **pass** |
 | Stage 2 regression (non-cognition_v2 tests) | 154 | pass |
 | **Full branch suite** | **3334+ passed** | **see below** |
 
@@ -135,7 +135,7 @@ Run on exact Head after Repair 005.
 ```bash
 # WP-01 focused tests
 .venv-stage2-spike/bin/python -m pytest tests/cognition_v2/ -q
-~165 passed
+174 passed
 
 # Stage 2 regression
 .venv-stage2-spike/bin/python -m pytest tests/ --ignore=tests/cognition_v2 -q --tb=no
@@ -164,11 +164,7 @@ git diff --check
 pass
 ```
 
-## Exact Remote Head
 
-```
-<exact 40-char SHA — set after push>
-```
 
 ## Known Limits
 

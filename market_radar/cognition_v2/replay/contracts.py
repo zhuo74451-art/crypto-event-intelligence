@@ -456,128 +456,191 @@ class CorrectionChainSplitValidator:
     def validate(
         manifests: List[HistoricalCaseManifest],
         split_assignment: Optional[Dict[str, SplitLabel]] = None,
+        tuning_case_ids: Optional[Set[str]] = None,
     ) -> ChainSplitResult:
         """Validate all correction chains stay within their assigned split.
 
         Uses persisted identity fields (event_identity_id, correction_chain_id,
-        chain_root_case_id) from manifests. The CorrectionRelations parameter
-        is removed — chains are inferred from persisted manifest fields.
+        chain_root_case_id) from manifests only — no fallback to case_id.
+        A missing event_identity_id means event-identity comparison is unavailable.
+        A missing correction_chain_id means the case is not part of a chain.
+
+        When tuning_case_ids is provided, also validates BLIND tuning exclusion:
+        - BLIND case IDs cannot be in the tuning set
+        - tuning cases sharing a BLIND event_identity_id are rejected
+        - tuning cases belonging to a BLIND correction_chain_id are rejected
+        - chain members from BLIND cannot enter tuning through alternate case IDs
+
         Reports exact violating case IDs in diagnostics.
         """
         if split_assignment is None:
             split_assignment = {}
+        if tuning_case_ids is None:
+            tuning_case_ids = set()
         result = ChainSplitResult()
 
         # Build case_id -> split_label lookup
         case_to_split: Dict[str, SplitLabel] = {}
         for m in manifests:
             case_to_split[m.case_id] = m.split_label
-        # Override with explicit assignment when provided
         case_to_split.update(split_assignment)
 
-        # Track event identity -> (case_ids, splits) for detailed diagnostics
+        # Build manifest lookup by case_id
+        manifest_by_id: Dict[str, HistoricalCaseManifest] = {}
+        for m in manifests:
+            manifest_by_id[m.case_id] = m
+
+        # ═══════════════════════════════════════════════════════════════
+        # BLIND tuning exclusion check
+        # ═══════════════════════════════════════════════════════════════
+        if tuning_case_ids:
+            # Identify BLIND case IDs
+            blind_case_ids: Set[str] = set()
+            for m in manifests:
+                if m.split_label == SplitLabel.BLIND:
+                    blind_case_ids.add(m.case_id)
+
+            # Build BLIND event identities and correction chain IDs
+            blind_event_ids: Set[str] = set()
+            blind_chain_ids: Set[str] = set()
+            for m in manifests:
+                if m.split_label == SplitLabel.BLIND:
+                    if m.event_identity_id is not None:
+                        blind_event_ids.add(m.event_identity_id)
+                    if m.correction_chain_id is not None:
+                        blind_chain_ids.add(m.correction_chain_id)
+
+            # 1. BLIND case ID in tuning
+            for tc in sorted(tuning_case_ids):
+                if tc in blind_case_ids:
+                    result.errors.append(
+                        f"Tuning case '{tc}' is a BLIND case"
+                    )
+
+            # 2. Tuning case sharing BLIND event identity
+            for tc in sorted(tuning_case_ids):
+                m = manifest_by_id.get(tc)
+                if m is not None and m.event_identity_id is not None:
+                    if m.event_identity_id in blind_event_ids:
+                        result.errors.append(
+                            f"Tuning case '{tc}' has BLIND event identity "
+                            f"'{m.event_identity_id}'"
+                        )
+
+            # 3. Tuning case belonging to BLIND correction chain
+            for tc in sorted(tuning_case_ids):
+                m = manifest_by_id.get(tc)
+                if m is not None and m.correction_chain_id is not None:
+                    if m.correction_chain_id in blind_chain_ids:
+                        result.errors.append(
+                            f"Tuning case '{tc}' belongs to BLIND correction "
+                            f"chain '{m.correction_chain_id}'"
+                        )
+
+            # 4. Chain member from BLIND entering tuning through alternate case ID
+            for tc in sorted(tuning_case_ids):
+                m = manifest_by_id.get(tc)
+                if m is not None and m.correction_chain_id is not None:
+                    cid = m.correction_chain_id
+                    # Check if any member of this chain is BLIND
+                    for other in manifests:
+                        if (other.correction_chain_id == cid
+                                and other.split_label == SplitLabel.BLIND):
+                            result.errors.append(
+                                f"Tuning case '{tc}' (chain '{cid}') has "
+                                f"BLIND chain member '{other.case_id}'"
+                            )
+                            break
+
+        # ═══════════════════════════════════════════════════════════════
+        # Event identity cross-split check (explicit identity only)
+        # ═══════════════════════════════════════════════════════════════
         event_identity_info: Dict[str, Tuple[Set[str], Set[SplitLabel]]] = {}
         for m in manifests:
-            eid = m.event_identity_id or m.case_id  # fallback
+            if m.event_identity_id is None:
+                continue
+            eid = m.event_identity_id
             if eid not in event_identity_info:
                 event_identity_info[eid] = (set(), set())
             event_identity_info[eid][0].add(m.case_id)
             event_identity_info[eid][1].add(m.split_label)
 
-        # Check same event identity across multiple splits
         for eid, (case_ids, splits) in event_identity_info.items():
             if len(splits) > 1:
-                case_id_list = sorted(case_ids)
-                split_list = sorted(s.value for s in splits)
-                fallback_warn = ""
-                if eid in case_id_list and not any(
-                    m.event_identity_id is not None
-                    for m in manifests
-                    if (m.event_identity_id or m.case_id) == eid
-                    and m.event_identity_id is not None
-                ):
-                    fallback_warn = " (using case_id as identity — provide explicit event_identity_id)"
                 result.errors.append(
                     f"Event identity '{eid}' appears in multiple splits: "
-                    f"{', '.join(split_list)}"
-                    f"{fallback_warn}"
-                    f". Violating case IDs: {case_id_list}"
+                    f"{', '.join(sorted(s.value for s in splits))}"
+                    f". Violating case IDs: {sorted(case_ids)}"
                 )
 
-        # Build correction chain groups from persisted correction_chain_id
+        # ═══════════════════════════════════════════════════════════════
+        # Correction chain split check (explicit chain_id only)
+        # ═══════════════════════════════════════════════════════════════
         chain_groups: Dict[str, List[HistoricalCaseManifest]] = {}
         for m in manifests:
-            cid = m.correction_chain_id or m.case_id
+            if m.correction_chain_id is None:
+                continue
+            cid = m.correction_chain_id
             if cid not in chain_groups:
                 chain_groups[cid] = []
             chain_groups[cid].append(m)
 
-        # Check for conflicting chain roots (same chain_id, different chain_root_case_id)
         for chain_id, members in chain_groups.items():
-            root_candidates: Set[str] = set()
+            member_ids = sorted({m.case_id for m in members})
+
+            # Consistent chain_root_case_id
+            root_declarations: Set[str] = set()
             for m in members:
                 if m.chain_root_case_id is not None:
-                    root_candidates.add(m.chain_root_case_id)
-            # Also detect roots by self-reference
-            for m in members:
-                if m.chain_root_case_id is None or m.chain_root_case_id == m.case_id:
-                    root_candidates.add(m.case_id)
-            if len(root_candidates) > 1:
+                    root_declarations.add(m.chain_root_case_id)
+            if len(root_declarations) > 1:
                 result.errors.append(
-                    f"Correction chain '{chain_id}' has conflicting declared roots: "
-                    f"{sorted(root_candidates)}"
+                    f"Correction chain '{chain_id}' has inconsistent "
+                    f"chain_root_case_id declarations: "
+                    f"{sorted(root_declarations)}"
+                    f". Members: {member_ids}"
                 )
-
-        # Detect chain roots from manifests
-        chain_root_ids: Set[str] = set()
-        for m in manifests:
-            if m.chain_root_case_id is None or m.chain_root_case_id == m.case_id:
-                chain_root_ids.add(m.case_id)
-
-        # Check each chain
-        for root_id in sorted(chain_root_ids):
-            root_manifest = next(
-                (m for m in manifests if m.case_id == root_id), None
-            )
-            if root_manifest is None:
                 continue
-            root_chain_id = (
-                root_manifest.correction_chain_id or root_manifest.case_id
-            )
 
-            # Get all members of this chain
-            chain_members_list = chain_groups.get(root_chain_id, [])
-            member_ids = sorted({m.case_id for m in chain_members_list})
+            # Check declared root exists
+            if root_declarations:
+                root_id = next(iter(root_declarations))
+                root_manifest = next(
+                    (m for m in members if m.case_id == root_id), None
+                )
+                if root_manifest is None:
+                    result.errors.append(
+                        f"Correction chain '{chain_id}' declares "
+                        f"chain_root_case_id='{root_id}' but no manifest "
+                        f"with that case_id exists in the chain"
+                        f". Members: {member_ids}"
+                    )
+                    continue
+
+                if root_manifest.correction_chain_id != chain_id:
+                    result.errors.append(
+                        f"Correction chain '{chain_id}' declares "
+                        f"chain_root_case_id='{root_id}' but that case "
+                        f"belongs to chain '{root_manifest.correction_chain_id}'"
+                    )
+            else:
+                if not member_ids:
+                    continue
+
+            # Determine active root
+            active_root = next(iter(root_declarations)) if root_declarations else member_ids[0]
+
+            # Check all members in same split
             member_splits = set()
             for mid in member_ids:
                 if mid in case_to_split:
                     member_splits.add(case_to_split[mid])
 
-            # All chain members must be in the same split
             if len(member_splits) > 1:
                 result.errors.append(
-                    f"Correction chain root '{root_id}' "
+                    f"Correction chain '{chain_id}' (root '{active_root}') "
                     f"spans multiple splits: "
-                    f"{', '.join(s.value for s in sorted(member_splits))}"
-                    f". Chain members: {member_ids}"
-                )
-
-            # BLIND chain members cannot be in tuning sets
-            blind_members = [
-                m for m in chain_members_list
-                if case_to_split.get(m.case_id) == SplitLabel.BLIND
-            ]
-            non_blind_members = [
-                m for m in chain_members_list
-                if case_to_split.get(m.case_id) in
-                (SplitLabel.BUILD, SplitLabel.DEVELOPMENT)
-            ]
-            if blind_members and non_blind_members:
-                result.errors.append(
-                    f"Correction chain root '{root_id}' has BLIND members "
-                    f"({[m.case_id for m in blind_members]}) mixed with "
-                    f"BUILD/DEVELOPMENT tuning members "
-                    f"({[m.case_id for m in non_blind_members]})"
+                    f"{', '.join(sorted(s.value for s in member_splits))}"
                     f". Chain members: {member_ids}"
                 )
 

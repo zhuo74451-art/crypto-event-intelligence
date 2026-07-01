@@ -216,6 +216,116 @@ class TestSchemaParity:
             f"Expected extra UQ detected, got diffs: {result.differences}"
         )
 
+    def test_wrong_fk_target_detected(self):
+        """Actual foreign key pointing to wrong table or column is detected."""
+        engine = _alembic_engine()
+        from sqlalchemy import Table, MetaData, Column, String, ForeignKey
+
+        # Create full fresh metadata with all tables, but change one FK target
+        fresh_meta = MetaData()
+        altered_tables = {}
+        for name, table in Base.metadata.tables.items():
+            fresh_cols = []
+            for c in table.columns:
+                if name == "counter_evidence" and c.name == "source_id":
+                    # Point FK to events instead of sources
+                    fresh_cols.append(Column(
+                        c.name, c.type,
+                        ForeignKey("events.id"),
+                        primary_key=c.primary_key, nullable=c.nullable,
+                    ))
+                else:
+                    fresh_cols.append(Column(
+                        c.name, c.type, primary_key=c.primary_key,
+                        nullable=c.nullable,
+                    ))
+            # Also add any unique constraints from original
+            other_args = []
+            for cons in table.constraints:
+                if "UniqueConstraint" in type(cons).__name__:
+                    from sqlalchemy import UniqueConstraint
+                    cols = [c.name for c in cons.columns]
+                    other_args.append(UniqueConstraint(*cols, name=cons.name))
+            altered_tables[name] = Table(name, fresh_meta, *fresh_cols, *other_args)
+
+        result = schema_parity.schema_parity_check(engine, altered_tables)
+        self._cleanup(engine)
+        # Should detect FK target mismatch
+        fk_diffs = [d for d in result.differences if ".fk" in d.field and "missing" in d.actual.lower()]
+        assert len(fk_diffs) > 0, (
+            f"Expected FK target mismatch detected, got diffs: {result.differences}"
+        )
+
+    def test_missing_fk_detected(self):
+        """Required FK present in ORM but missing in migration is detected."""
+        engine = _alembic_engine()
+        from sqlalchemy import Table, MetaData, Column, String, ForeignKey
+
+        # Create full fresh metadata, add an extra FK to a column that has none
+        fresh_meta = MetaData()
+        altered_tables = {}
+        for name, table in Base.metadata.tables.items():
+            fresh_cols = []
+            for c in table.columns:
+                if name == "source_health" and c.name == "source_id":
+                    # Add a second FK to events (migration has source_id->sources)
+                    fresh_cols.append(Column(
+                        c.name, c.type,
+                        ForeignKey("sources.id"),
+                        ForeignKey("events.id"),
+                        primary_key=c.primary_key, nullable=c.nullable,
+                    ))
+                else:
+                    fresh_cols.append(Column(
+                        c.name, c.type, primary_key=c.primary_key,
+                        nullable=c.nullable,
+                    ))
+            other_args = []
+            for cons in table.constraints:
+                if "UniqueConstraint" in type(cons).__name__:
+                    from sqlalchemy import UniqueConstraint
+                    cols = [c.name for c in cons.columns]
+                    other_args.append(UniqueConstraint(*cols, name=cons.name))
+            altered_tables[name] = Table(name, fresh_meta, *fresh_cols, *other_args)
+
+        result = schema_parity.schema_parity_check(engine, altered_tables)
+        self._cleanup(engine)
+        # The ORM expects an extra FK on source_health that migration doesn't have
+        missing_fk_diffs = [d for d in result.differences if ".fk" in d.field and "missing" in d.actual.lower()]
+        assert len(missing_fk_diffs) > 0, (
+            f"Expected missing FK detected, got diffs: {result.differences}"
+        )
+
+    def test_missing_unique_constraint_detected(self):
+        """Required unique constraint present in ORM but missing in migration is detected."""
+        engine = _alembic_engine()
+        from sqlalchemy import Table, MetaData, Column, String, UniqueConstraint
+
+        # Build altered metadata with an extra UQ on sources.name
+        altered_tables = {}
+        for name, table in Base.metadata.tables.items():
+            if name == "sources":
+                fresh_meta = MetaData()
+                fresh_cols = [
+                    Column(c.name, c.type, primary_key=c.primary_key,
+                           nullable=c.nullable)
+                    for c in table.columns
+                ]
+                # Add an extra UQ that the migration doesn't have
+                uq_extra = UniqueConstraint("name", "source_type", name="uq_sources_name_type")
+                altered = Table(name, fresh_meta, *fresh_cols, uq_extra)
+                altered_tables[name] = altered
+            else:
+                altered_tables[name] = table
+
+        result = schema_parity.schema_parity_check(engine, altered_tables)
+        self._cleanup(engine)
+        # The ORM expects an extra UQ(name, source_type) that migration doesn't have
+        missing_uq_diffs = [d for d in result.differences if "UQ(" in d.field and "missing" in d.actual.lower()]
+        assert len(missing_uq_diffs) > 0, (
+            f"Expected missing UQ detected, got diffs: {result.differences}"
+        )
+
     def test_migration_failure_fatal(self):
         """Migration failure remains fatal."""
         import alembic.command
@@ -753,3 +863,129 @@ class TestHistoricalIdentity:
             result = CorrectionChainSplitValidator.validate(manifests)
             assert not result.is_valid, "Should detect BLIND chain in BUILD"
             assert any("BLIND" in e for e in result.errors)
+
+    def test_missing_declared_root_rejected_persisted(self):
+        """Chain declaring missing root is rejected on Alembic-only DB after reopen."""
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "missing_root_persisted.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="mr1", case_id="case_mr", event_family="regulatory",
+                    split_label="BUILD", title="Missing root",
+                    evidence_manifest_hash="a",
+                    correction_chain_id="chain_mr",
+                    chain_root_case_id="nonexistent_root",
+                ))
+            engine1.dispose()
+
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(manifests)
+            assert not result.is_valid, "Should detect missing declared root"
+            assert any("no manifest" in e for e in result.errors)
+
+    def test_blind_case_tuning_exclusion_persisted(self):
+        """BLIND case in tuning set rejected on persisted Alembic-only DB."""
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "blind_tuning_persisted.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="bt1", case_id="tuning_case", event_family="regulatory",
+                    split_label="BUILD", title="Tuning",
+                    evidence_manifest_hash="a",
+                ))
+                s.add(HistoricalCaseModel(
+                    id="bt2", case_id="blind_in_tuning", event_family="regulatory",
+                    split_label="BLIND", title="Blind",
+                    evidence_manifest_hash="b",
+                ))
+            engine1.dispose()
+
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(
+                manifests, tuning_case_ids={"tuning_case", "blind_in_tuning"}
+            )
+            assert not result.is_valid, "Should detect BLIND case in tuning"
+            assert any("BLIND case" in e for e in result.errors)
+
+    def test_blind_identity_tuning_exclusion_persisted(self):
+        """Tuning case sharing BLIND event identity rejected on persisted DB."""
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "blind_identity_tuning.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="bie1", case_id="tune_eid", event_family="regulatory",
+                    split_label="BUILD", title="Tuning",
+                    evidence_manifest_hash="a",
+                    event_identity_id="shared_eid",
+                ))
+                s.add(HistoricalCaseModel(
+                    id="bie2", case_id="blind_eid", event_family="regulatory",
+                    split_label="BLIND", title="Blind",
+                    evidence_manifest_hash="b",
+                    event_identity_id="shared_eid",
+                ))
+            engine1.dispose()
+
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(
+                manifests, tuning_case_ids={"tune_eid"}
+            )
+            assert not result.is_valid, "Should detect BLIND identity in tuning"
+            assert any("BLIND event identity" in e for e in result.errors)

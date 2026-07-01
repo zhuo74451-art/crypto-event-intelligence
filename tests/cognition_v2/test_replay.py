@@ -589,4 +589,69 @@ class TestCorrectionChainSplit:
         ]
         result = CorrectionChainSplitValidator.validate(manifests)
         assert not result.is_valid
-        assert any("conflicting declared roots" in e for e in result.errors)
+        assert any("inconsistent" in e or "conflicting" in e for e in result.errors)
+
+    def test_missing_declared_root_rejected(self):
+        """Chain declares root case_id that doesn't exist in manifests."""
+        manifests = [
+            self.make_manifest("case_x", SplitLabel.BUILD,
+                               correction_chain_id="chain_missing",
+                               chain_root_case_id="nonexistent_root"),
+        ]
+        result = CorrectionChainSplitValidator.validate(manifests)
+        assert not result.is_valid
+        assert any("no manifest" in e for e in result.errors)
+
+    def test_blind_tuning_exclusion_via_api(self):
+        """BLIND case in tuning set rejected via tuning_case_ids parameter."""
+        manifests = [
+            self.make_manifest("build_case", SplitLabel.BUILD,
+                               correction_chain_id="chain_tune",
+                               chain_root_case_id="build_case"),
+            self.make_manifest("blind_case", SplitLabel.BLIND,
+                               correction_chain_id="chain_tune",
+                               chain_root_case_id="build_case"),
+        ]
+        result = CorrectionChainSplitValidator.validate(
+            manifests, tuning_case_ids={"blind_case"}
+        )
+        assert not result.is_valid
+        assert any("is a BLIND case" in e for e in result.errors)
+
+    def test_blind_event_identity_tuning_exclusion(self):
+        """Tuning case sharing BLIND event identity is rejected."""
+        manifests = [
+            self.make_manifest("build_case", SplitLabel.BUILD,
+                               event_identity_id="eid_blind",
+                               correction_chain_id="chain_eid",
+                               chain_root_case_id="build_case"),
+            self.make_manifest("blind_case", SplitLabel.BLIND,
+                               event_identity_id="eid_blind",
+                               correction_chain_id="chain_eid",
+                               chain_root_case_id="build_case"),
+        ]
+        result = CorrectionChainSplitValidator.validate(
+            manifests, tuning_case_ids={"build_case"}
+        )
+        assert not result.is_valid
+        assert any("BLIND event identity" in e for e in result.errors)
+
+    def test_exact_persisted_diagnostics(self):
+        """Error messages contain exact case IDs, chain IDs, root IDs, splits."""
+        manifests = [
+            self.make_manifest("case_a", SplitLabel.BUILD,
+                               correction_chain_id="chain_diag",
+                               chain_root_case_id="case_a"),
+            self.make_manifest("case_b", SplitLabel.BLIND,
+                               correction_chain_id="chain_diag",
+                               chain_root_case_id="case_a"),
+        ]
+        result = CorrectionChainSplitValidator.validate(manifests)
+        assert not result.is_valid
+        error_text = " ".join(result.errors)
+        # Must contain exact IDs
+        assert "chain_diag" in error_text
+        assert "case_a" in error_text
+        assert "case_b" in error_text
+        assert "BUILD" in error_text
+        assert "BLIND" in error_text
