@@ -1,4 +1,4 @@
-version: "1.1"
+version: "1.2"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
@@ -8,13 +8,13 @@ mode: Auto
 goal_mode: disabled
 
 current_dispatch:
-  node: stage2_foundation_spike_repair_003
+  node: stage2_foundation_spike_repair_004
   issue: 25
   pr: 26
   branch: audit/stage2-foundation-spike
   instruction_source: latest_issue_comment
-  instruction_id: STAGE2-FOUNDATION-SPIKE-REPAIR-003
-  reviewed_head: 030417dc78c84fcdf24fd0d58f95a118a5fb6a52
+  instruction_id: STAGE2-FOUNDATION-SPIKE-REPAIR-004
+  reviewed_head: dbdf18f80147fa1de059b37b867dfb6d6b4bec01
   action: repair_same_branch_and_pr
   terminal_behavior: stop_after_exact_receipt
 
@@ -31,15 +31,17 @@ prohibited:
 completion_gate:
   - receipt_sha_matches_remote_pr_head
   - committed_report_matches_exact_test_output
-  - real_alembic_failure_is_fatal
-  - real_optimistic_compare_and_swap
-  - revision_immutability_enforced
-  - lifecycle_comparison_is_honest
-  - pydantic_ai_offline_path_actually_executed
-  - no_fabricated_evidence
-  - atomic_two_claimer_proof
+  - revision_unique_version_enforced
+  - revision_update_and_delete_rejected
+  - optimistic_single_update_compare_and_swap
+  - conditional_atomic_claim
+  - barrier_two_claimer_proof
   - checkpoint_preserved_on_resume
-  - failed_state_persisted
+  - failed_state_persisted_after_reopen
+  - lifecycle_comparison_is_honest
+  - pydantic_ai_offline_agent_executed
+  - pydantic_ai_usage_observed
+  - no_fabricated_evidence
   - focused_tests_zero_failures
   - git_diff_check_pass
   - product_files_unchanged
