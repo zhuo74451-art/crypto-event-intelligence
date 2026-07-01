@@ -1,51 +1,57 @@
-version: "1.7"
+version: "1.8"
 status: active
 business_project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
 stage: 3
 stage_name: autonomous_cognition_core
 rhythm: execution_compilation
-stage_progress: work_package_01_ready
+stage_progress: work_package_02_ready
 canonical_state: SYNCED
 action_qualification: BOUNDED
 
-current_business_node: stage3_work_package_01_production_engineering_foundation
+current_business_node: stage3_work_package_02_historical_evidence_factory
 core_question: >-
-  Can the accepted foundations be compiled into a production-quality cognition_v2
-  domain and persistence spine that is immediately ready for large historical
-  point-in-time datasets and replay, without carrying forward PR 16 architecture?
+  Can the accepted production foundation build a reproducible corpus of at least
+  1500 qualified historical cases whose evidence, identities, corrections, splits
+  and outcomes are point-in-time correct and auditable without paid APIs or models?
 
 completed:
   - Stage 1 responsibility foundation
   - Stage 2 external foundation and repository audit
-  - merged foundation compatibility evidence in PR 26
-  - SQLAlchemy and Alembic acceptance
-  - Pydantic AI offline structured-gateway acceptance
-  - minimal local durable-review runtime acceptance
-  - table-driven lifecycle choice
-  - OpenTelemetry bootstrap evidence
-  - complete engineering delivery train
+  - Stage 3 WP-01 production domain and persistence foundation
+  - merged PR 28 exact-Head acceptance
+  - cognition_v2 canonical contracts
+  - SQLAlchemy and Alembic bidirectional schema parity
+  - immutable revisions and transactional thesis lifecycle
+  - replay-ready manifests and future-leakage validation
+  - strict persisted identity, correction-chain and BLIND tuning controls
+  - structured logging, telemetry and bounded operator commands
 
 locked_decisions:
   - no demo MVP is delivered as the owner result
-  - accepted internal packages are merged immediately and become the next base
-  - historical evidence and replay are built before live owner validation
-  - Stage 3 begins with a production domain and replay-ready persistence spine
-  - the first runtime is the minimal local SQLAlchemy ledger
-  - DBOS remains deferred
-  - two semantic passes remain schema-bound and do not control state
+  - accepted internal packages merge immediately and become the next base
+  - historical evidence and replay precede live owner validation
+  - WP-02 uses public read-only sources only
+  - WP-02 makes zero real or paid model calls
+  - outcome labels remain separate from input evidence and hashes
+  - BUILD DEVELOPMENT and BLIND splits are frozen and chronological by chain root
+  - event identities and correction chains cannot cross splits
+  - BLIND cases identities chains and outcomes cannot enter tuning
+  - only QUALIFIED records count toward the 1500-case target
   - PR 16 remains unmerged and has no planning authority
-  - no paid model call, public effect, trading, wallet or hidden daemon in WP-01
+  - no trading wallet public publication UI or hidden daemon enters WP-02
 
 remaining_unknowns:
-  - exact production schema boundaries after migration from spike evidence
-  - which existing acquisition contracts are ported unchanged versus wrapped
-  - historical source coverage and reconstruction feasibility by event family
-  - final low-cost semantic provider after offline contracts are stable
-  - multi-process SQLite limits under later unattended operation
+  - source feasibility and historical availability by event family
+  - achievable balance across event families and market regimes
+  - outcome coverage for affected altcoins versus benchmark assets
+  - correction and retraction discoverability in public archives
+  - reproducible source snapshots when pages later disappear
+  - finite acquisition runtime and checkpoint requirements on the Mac
+  - which existing read-only providers can be safely adapted
 
 next_continue_meaning: >-
-  Execute Stage 3 Work Package 01 on a fresh main-derived branch, then independently
-  accept and merge it before starting the historical evidence factory package.
+  Execute Stage 3 WP-02 on a fresh main-derived branch, produce the data factory
+  and accepted corpus, then independently review and merge before WP-03.
 
 owner_action_required: paste_current_launch_card_once
