@@ -16,66 +16,72 @@ Product responsibility, discovery, judgment authority, thesis lifecycle, risk, a
 
 **Status:** Accepted and closed
 
-Evidence:
-
-- PR #26 merged at `73eca74b8ee2be472645eda997179b54c0b9099d`;
-- isolated Python 3.12 compatibility;
-- Pydantic AI offline structured output and usage evidence;
-- SQLAlchemy and real Alembic migrations;
-- append-only revisions and stale-writer rejection;
-- canonical 11-state lifecycle;
-- minimal local durable-review runtime with synchronized ownership and restart recovery;
-- OpenTelemetry correlation and data minimization;
-- 154 focused tests;
-- no product behavior, paid model calls, Postgres service or hidden daemon.
-
-Accepted route:
-
-- SQLAlchemy and Alembic;
-- table-driven lifecycle validation;
-- minimal local durable-review ledger;
-- Pydantic AI as a thin gateway;
-- OpenTelemetry traces and metrics;
-- two structured semantic passes surrounded by deterministic services.
-
-DBOS is deferred pending a future Postgres and workflow-guarantee decision.
+PR #26 established the accepted foundation route: Python 3.12, Pydantic contracts, SQLAlchemy and Alembic, table-driven lifecycle validation, minimal local durable-review runtime, Pydantic AI as a thin gateway and OpenTelemetry. DBOS remains deferred.
 
 ## Stage 3 — Complete autonomous cognition engineering train
 
 **Status:** Active
 
-The authoritative package sequence is `project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md`.
+The authoritative sequence is `project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md`.
 
 ### WP-01 — Production engineering foundation
+
+**Status:** Accepted and merged
+
+Evidence:
+
+- PR #28;
+- reviewed Head `c730216beb5c8f13fabee6138ae91e04037c7060`;
+- merge commit `b67724614b8d1e3275623442fadda5d69995f186`;
+- 174 focused tests and 154 Stage 2 regressions;
+- no real model calls, Postgres, daemon, public effect or PR #16 modification.
+
+Accepted result:
+
+- production `cognition_v2` package boundaries;
+- canonical domain contracts;
+- SQLAlchemy and Alembic production schema;
+- bidirectional migration/ORM parity;
+- immutable revisions and compare-and-swap;
+- transactional 11-state lifecycle transitions;
+- deterministic idempotency fingerprints;
+- point-in-time historical contracts;
+- frozen split and strict persisted identity controls;
+- BLIND tuning exclusion;
+- structured logging, telemetry and bounded operator commands.
+
+### WP-02 — Historical evidence and point-in-time data factory
 
 **Status:** Current
 
 Build:
 
-- supported and locked Python dependencies;
-- `market_radar/cognition_v2/` package boundaries;
-- canonical Pydantic contracts;
-- SQLAlchemy models and real Alembic migrations;
-- append-only revisions and current projections;
-- table-driven lifecycle validation;
-- historical case-manifest and future-leakage contracts;
-- structured logging and OpenTelemetry bootstrap;
-- focused and regression tests.
+- public source and permission registry;
+- finite checkpointed acquisition adapters;
+- deterministic normalization, source hashing and provenance;
+- event identity and correction-chain assembly;
+- explicit publication, effective, first-seen, retrieval and assessment times;
+- asset and benchmark mapping;
+- market-regime labels with rule versions;
+- separate 1h, 6h, 24h, 3d and 7d outcome artifacts;
+- frozen BUILD / DEVELOPMENT / BLIND allocation;
+- canonical JSONL artifacts and SQLite materialization;
+- deterministic rebuild verification;
+- quality, rejection and corpus reports.
 
-No semantic provider call, live loop, public effect or demo-only output.
+Acceptance target:
 
-### WP-02 — Historical evidence and point-in-time data factory
-
-Target:
-
-- at least 1,500 historical cases;
-- six event families;
+- at least 1,500 QUALIFIED cases;
+- all six event families;
 - multiple market regimes;
-- deterministic rebuild;
-- correction, contradiction and provenance records;
-- 1h, 6h, 24h, 3d and 7d outcome windows;
-- time-ordered build, development and blind sets;
-- future-data leakage validator.
+- zero accepted-case future leakage;
+- zero cross-split event identities or correction chains;
+- zero BLIND tuning contamination;
+- zero duplicate accepted case IDs;
+- deterministic identical rebuild hashes twice;
+- exact source-to-outcome audit trail.
+
+No semantic model call, prompt tuning, cognition scoring, daemon, trading, public output or live Shadow.
 
 ### WP-03 — Evidence Gate and event identity
 
@@ -126,4 +132,4 @@ At least 21 days and 100 qualified cases, fully read-only and without routine ow
 
 ## Current active node
 
-Only WP-01 is active. It is the production domain and replay-ready persistence foundation for the complete delivery train, not a user-facing MVP.
+Only WP-02 is active. It builds the reproducible historical evidence substrate required before Evidence Gate product work and cognition-quality evaluation.
