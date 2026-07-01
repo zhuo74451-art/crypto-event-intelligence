@@ -122,22 +122,32 @@ def schema_parity_check(
             if orm_pk != mig_pk:
                 result.add(table, f"{col_name}.pk", str(orm_pk), str(mig_pk))
 
+        # Extra columns in migration not in ORM
+        for col_name in sorted(mig_cols.keys()):
+            if col_name not in orm_cols:
+                result.add(table, col_name, "absent", "extra")
+
         # Foreign keys
-        orm_fks = set()
+        orm_fks: Set[Tuple[str, str, str]] = set()
         for c in orm_metadata_tables[table].columns:
             for fk in c.foreign_keys:
                 orm_fks.add((c.name, fk.column.table.name, fk.column.name))
 
-        mig_fks = set()
+        mig_fks: Set[Tuple[str, str, str]] = set()
         for fk in inspector.get_foreign_keys(table):
             for col_name in fk.get("constrained_columns", []):
-                mig_fks.add((col_name, fk.get("referred_table", ""), ""))
+                referred_cols = fk.get("referred_columns", [])
+                referred_col = referred_cols[0] if referred_cols else ""
+                mig_fks.add((col_name, fk.get("referred_table", ""), referred_col))
 
         for fk in sorted(orm_fks):
             col_name, ref_table, ref_col = fk
-            found = any(c == col_name for c, _, _ in mig_fks)
+            found = any(
+                c == col_name and rt == ref_table and rc == ref_col
+                for c, rt, rc in mig_fks
+            )
             if not found:
-                result.add(table, f"{col_name}.fk", f"FK->{ref_table}", "missing")
+                result.add(table, f"{col_name}.fk", f"FK->{ref_table}({ref_col})", "missing")
 
         # Unique constraints
         orm_uqs = set()

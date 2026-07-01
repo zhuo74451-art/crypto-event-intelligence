@@ -474,92 +474,103 @@ class TestCorrectionRelations:
 
 
 class TestCorrectionChainSplit:
-    """R14 — Correction-chain split isolation tests."""
+    """R14 — Correction-chain split isolation tests.
 
-    def make_manifest(self, case_id, split_label, event_time=None):
+    Uses persisted identity fields (event_identity_id, correction_chain_id,
+    chain_root_case_id) instead of external CorrectionRelations objects.
+    """
+
+    def make_manifest(self, case_id, split_label, event_time=None,
+                      event_identity_id=None, correction_chain_id=None,
+                      chain_root_case_id=None, correction_type=None):
         if event_time is None:
             event_time = datetime(2020, 6, 1, tzinfo=timezone.utc)
-        return HistoricalCaseManifest(
+        kwargs = dict(
             case_id=case_id, event_family="regulatory",
             market_regime="unknown", split_label=split_label,
             title=f"Case {case_id}", evidence_manifest_hash="abc",
             event_time=event_time,
         )
+        if event_identity_id is not None:
+            kwargs["event_identity_id"] = event_identity_id
+        if correction_chain_id is not None:
+            kwargs["correction_chain_id"] = correction_chain_id
+        if chain_root_case_id is not None:
+            kwargs["chain_root_case_id"] = chain_root_case_id
+        if correction_type is not None:
+            kwargs["correction_type"] = correction_type
+        return HistoricalCaseManifest(**kwargs)
 
     def test_valid_chain_inside_one_split(self):
         """Valid chain remains inside one split."""
         manifests = [
-            self.make_manifest("root1", SplitLabel.BUILD),
-            self.make_manifest("child1", SplitLabel.BUILD),
+            self.make_manifest("root1", SplitLabel.BUILD,
+                               correction_chain_id="chain_a",
+                               chain_root_case_id="root1"),
+            self.make_manifest("child1", SplitLabel.BUILD,
+                               correction_chain_id="chain_a",
+                               chain_root_case_id="root1"),
         ]
-        chains = CorrectionRelations()
-        chains.add_relation("root1", "child1", CorrectionType.CORRECTION)
-        result = CorrectionChainSplitValidator.validate(
-            manifests, {}, chains, {"root1"},
-        )
+        result = CorrectionChainSplitValidator.validate(manifests)
         assert result.is_valid, f"Errors: {result.errors}"
 
     def test_same_event_across_splits_rejected(self):
         """Same event identity across BUILD and BLIND is rejected."""
         manifests = [
-            self.make_manifest("e1", SplitLabel.BUILD),
-            self.make_manifest("e1", SplitLabel.BLIND),
+            self.make_manifest("e1", SplitLabel.BUILD,
+                               event_identity_id="eid_001"),
+            self.make_manifest("e1", SplitLabel.BLIND,
+                               event_identity_id="eid_001"),
         ]
-        chains = CorrectionRelations()
-        result = CorrectionChainSplitValidator.validate(
-            manifests, {}, chains, set(),
-        )
+        result = CorrectionChainSplitValidator.validate(manifests)
         assert not result.is_valid
         assert any("multiple splits" in e for e in result.errors)
 
     def test_correction_chain_crossing_splits_rejected(self):
         """Correction chain crossing DEVELOPMENT and BLIND is rejected."""
         manifests = [
-            self.make_manifest("root1", SplitLabel.DEVELOPMENT),
-            self.make_manifest("child1", SplitLabel.BLIND),
+            self.make_manifest("root1", SplitLabel.DEVELOPMENT,
+                               correction_chain_id="chain_b",
+                               chain_root_case_id="root1"),
+            self.make_manifest("child1", SplitLabel.BLIND,
+                               correction_chain_id="chain_b",
+                               chain_root_case_id="root1"),
         ]
-        chains = CorrectionRelations()
-        chains.add_relation("root1", "child1", CorrectionType.CORRECTION)
-        result = CorrectionChainSplitValidator.validate(
-            manifests, {}, chains, {"root1"},
-        )
+        result = CorrectionChainSplitValidator.validate(manifests)
         assert not result.is_valid
         assert any("spans multiple splits" in e for e in result.errors)
 
     def test_blind_chain_tuning_exclusion(self):
         """BLIND chain IDs are rejected from training/tuning input."""
         manifests = [
-            self.make_manifest("root1", SplitLabel.BUILD),
-            self.make_manifest("blind1", SplitLabel.BLIND),
+            self.make_manifest("root1", SplitLabel.BUILD,
+                               correction_chain_id="chain_c",
+                               chain_root_case_id="root1"),
+            self.make_manifest("blind1", SplitLabel.BLIND,
+                               correction_chain_id="chain_c",
+                               chain_root_case_id="root1"),
         ]
-        chains = CorrectionRelations()
-        chains.add_relation("root1", "blind1", CorrectionType.CORRECTION)
-        result = CorrectionChainSplitValidator.validate(
-            manifests, {}, chains, {"root1"},
-        )
+        result = CorrectionChainSplitValidator.validate(manifests)
         assert not result.is_valid
         assert any("BLIND" in e for e in result.errors)
 
     def test_exact_violation_ids_reported(self):
         """Exact violating case IDs, chain IDs and split labels reported."""
         manifests = [
-            self.make_manifest("dev_case", SplitLabel.DEVELOPMENT),
-            self.make_manifest("blind_case", SplitLabel.BLIND),
+            self.make_manifest("dev_case", SplitLabel.DEVELOPMENT,
+                               correction_chain_id="chain_d",
+                               chain_root_case_id="dev_case"),
+            self.make_manifest("blind_case", SplitLabel.BLIND,
+                               correction_chain_id="chain_d",
+                               chain_root_case_id="dev_case"),
+            self.make_manifest("e_dup", SplitLabel.BUILD,
+                               event_identity_id="eid_dup"),
+            self.make_manifest("e_dup", SplitLabel.BLIND,
+                               event_identity_id="eid_dup"),
         ]
-        chains = CorrectionRelations()
-        chains.add_relation("dev_case", "blind_case", CorrectionType.CONTRADICTION)
-        # Also test event identity across splits
-        manifests2 = [
-            self.make_manifest("e_dup", SplitLabel.BUILD),
-            self.make_manifest("e_dup", SplitLabel.BLIND),
-        ]
-        chains2 = CorrectionRelations()
-        result = CorrectionChainSplitValidator.validate(
-            manifests + manifests2, {}, chains2, {"dev_case"},
-        )
+        result = CorrectionChainSplitValidator.validate(manifests)
         assert not result.is_valid
-        # Should report specific IDs
         error_text = " ".join(result.errors)
-        assert "e_dup" in error_text
+        assert "eid_dup" in error_text or "e_dup" in error_text
         assert "BUILD" in error_text
         assert "BLIND" in error_text

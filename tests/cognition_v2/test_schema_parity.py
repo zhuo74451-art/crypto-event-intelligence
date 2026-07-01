@@ -121,10 +121,37 @@ class TestSchemaParity:
     def test_deliberate_mismatch_detected(self):
         """Removing a required column in an altered schema produces exact mismatch."""
         engine = _alembic_engine()
-        result = schema_parity.schema_parity_check(engine, Base.metadata.tables)
+        # Create a deliberately altered expected schema missing a required column
+        # by building fresh Table objects with one column removed
+        from sqlalchemy import Table, MetaData, Column, String, inspect as sa_inspect
+        from sqlalchemy.sql import sqltypes
+
+        altered_tables = {}
+        for name, table in Base.metadata.tables.items():
+            if name == "sources":
+                # Build a fresh sources table without the "name" column
+                fresh_meta = MetaData()
+                fresh_cols = []
+                for c in table.columns:
+                    if c.name != "name":
+                        fresh_cols.append(Column(
+                            c.name,
+                            c.type,
+                            primary_key=c.primary_key,
+                            nullable=c.nullable,
+                            key=c.key,
+                        ))
+                altered = Table(name, fresh_meta, *fresh_cols)
+                altered_tables[name] = altered
+            else:
+                altered_tables[name] = table
+
+        result = schema_parity.schema_parity_check(engine, altered_tables)
         self._cleanup(engine)
-        # The real schema should match
-        assert result.is_parity  # real schema matches
+        assert not result.is_parity, "Should detect missing 'name' column in sources"
+        assert any("name" in d.field for d in result.differences), (
+            f"Expected difference about 'name' column, got: {result.differences}"
+        )
 
     def test_migration_failure_fatal(self):
         """Migration failure remains fatal."""
@@ -206,50 +233,54 @@ class TestSchemaParity:
 # R20 — Alembic-only production path
 # ═══════════════════════════════════════════════════════════════════════════════
 
+def _alembic_factory(db_path):
+    """Create an engine and factory from Alembic-only DB.
+
+    Module-level helper for R20 and R21 tests.
+    """
+    import alembic.command
+    import alembic.config
+    import configparser
+
+    alembic_dir = ALEMBIC_DIR
+    ini_path = os.path.join(os.path.dirname(db_path), "alembic.ini")
+    cfg_p = configparser.ConfigParser()
+    cfg_p["alembic"] = {
+        "script_location": alembic_dir,
+        "sqlalchemy.url": f"sqlite:///{db_path}",
+    }
+    with open(ini_path, "w") as f:
+        cfg_p.write(f)
+
+    cfg = alembic.config.Config(ini_path)
+    cfg.set_main_option("script_location", alembic_dir)
+    alembic.command.upgrade(cfg, "head")
+
+    from sqlalchemy import create_engine as ce, event
+    from sqlalchemy.engine import Engine
+    from sqlalchemy.orm import sessionmaker
+
+    # Enable FK and WAL — same as models.py listener
+    @event.listens_for(Engine, "connect")
+    def _set_pragmas(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.close()
+
+    engine = ce(f"sqlite:///{db_path}")
+    factory = sessionmaker(bind=engine)
+    return engine, factory
+
+
 class TestAlembicOnlyProductionPath:
     """Run production services on a database initialized only by Alembic."""
-
-    def _alembic_factory(self, db_path):
-        """Create an engine and factory from Alembic-only DB."""
-        import alembic.command
-        import alembic.config
-        import configparser
-
-        alembic_dir = ALEMBIC_DIR
-        ini_path = os.path.join(os.path.dirname(db_path), "alembic.ini")
-        cfg_p = configparser.ConfigParser()
-        cfg_p["alembic"] = {
-            "script_location": alembic_dir,
-            "sqlalchemy.url": f"sqlite:///{db_path}",
-        }
-        with open(ini_path, "w") as f:
-            cfg_p.write(f)
-
-        cfg = alembic.config.Config(ini_path)
-        cfg.set_main_option("script_location", alembic_dir)
-        alembic.command.upgrade(cfg, "head")
-
-        from sqlalchemy import create_engine as ce, event
-        from sqlalchemy.engine import Engine
-        from sqlalchemy.orm import sessionmaker
-
-        # Enable FK and WAL — same as models.py listener
-        @event.listens_for(Engine, "connect")
-        def _set_pragmas(dbapi_connection, connection_record):
-            cursor = dbapi_connection.cursor()
-            cursor.execute("PRAGMA foreign_keys=ON")
-            cursor.execute("PRAGMA journal_mode=WAL")
-            cursor.close()
-
-        engine = ce(f"sqlite:///{db_path}")
-        factory = sessionmaker(bind=engine)
-        return engine, factory
 
     def test_event_state_roundtrip(self):
         """Insert and reload EventModel using event_state."""
         with tempfile.TemporaryDirectory() as td:
             db_path = os.path.join(td, "test_event_state.db")
-            engine, factory = self._alembic_factory(db_path)
+            engine, factory = _alembic_factory(db_path)
             with cognition_session_scope(factory) as s:
                 s.add(EventModel(id="es1", event_family="regulatory", title="Test",
                                  event_state="CONFIRMED"))
@@ -262,7 +293,7 @@ class TestAlembicOnlyProductionPath:
         """Execute TransactionalLifecycleService.transition() on Alembic-only DB."""
         with tempfile.TemporaryDirectory() as td:
             db_path = os.path.join(td, "test_lifecycle_alembic.db")
-            engine, factory = self._alembic_factory(db_path)
+            engine, factory = _alembic_factory(db_path)
             with cognition_session_scope(factory) as s:
                 s.add(ThesisModel(id="al_t1", claim_class="fact", summary="T",
                                  lifecycle_state="DISCOVERED", version=1))
@@ -287,7 +318,7 @@ class TestAlembicOnlyProductionPath:
         """Replay same key after engine dispose/reopen on Alembic-only DB."""
         with tempfile.TemporaryDirectory() as td:
             db_path = os.path.join(td, "test_idem_alembic.db")
-            engine1, factory1 = self._alembic_factory(db_path)
+            engine1, factory1 = _alembic_factory(db_path)
             with cognition_session_scope(factory1) as s:
                 s.add(ThesisModel(id="al_i2", claim_class="fact", summary="T",
                                  lifecycle_state="DISCOVERED", version=1))
@@ -302,7 +333,7 @@ class TestAlembicOnlyProductionPath:
             svc1.transition(req)
             engine1.dispose()
 
-            engine2, factory2 = self._alembic_factory(db_path)
+            engine2, factory2 = _alembic_factory(db_path)
             svc2 = TransactionalLifecycleService(factory2)
             rev2, v2 = svc2.transition(req)
             assert v2 == 2  # not advanced
@@ -313,7 +344,7 @@ class TestAlembicOnlyProductionPath:
         """Reject conflicting same-key request on Alembic-only DB."""
         with tempfile.TemporaryDirectory() as td:
             db_path = os.path.join(td, "test_conflict_alembic.db")
-            engine1, factory1 = self._alembic_factory(db_path)
+            engine1, factory1 = _alembic_factory(db_path)
             with cognition_session_scope(factory1) as s:
                 s.add(ThesisModel(id="al_c1", claim_class="fact", summary="T",
                                  lifecycle_state="DISCOVERED", version=1))
@@ -328,7 +359,7 @@ class TestAlembicOnlyProductionPath:
             svc1.transition(req1)
             engine1.dispose()
 
-            engine2, factory2 = self._alembic_factory(db_path)
+            engine2, factory2 = _alembic_factory(db_path)
             svc2 = TransactionalLifecycleService(factory2)
             req2 = LifecycleTransitionRequest(
                 thesis_id="al_c1",
@@ -345,7 +376,7 @@ class TestAlembicOnlyProductionPath:
         """Revision immutable listeners protect ORM updates/deletes on Alembic DB."""
         with tempfile.TemporaryDirectory() as td:
             db_path = os.path.join(td, "test_immut_alembic.db")
-            engine, factory = self._alembic_factory(db_path)
+            engine, factory = _alembic_factory(db_path)
             with cognition_session_scope(factory) as s:
                 s.add(ThesisModel(id="al_im", claim_class="fact", summary="T",
                                  lifecycle_state="DISCOVERED", version=1))
@@ -368,7 +399,7 @@ class TestAlembicOnlyProductionPath:
 
         with tempfile.TemporaryDirectory() as td:
             db_path = os.path.join(td, "test_fk_alembic.db")
-            engine, factory = self._alembic_factory(db_path)
+            engine, factory = _alembic_factory(db_path)
 
             # ReviewIntent has FK to theses — inserting with nonexistent thesis_id should fail
             from market_radar.cognition_v2.persistence.models import ReviewIntentModel
@@ -409,12 +440,14 @@ class TestHistoricalIdentity:
         engine.dispose()
 
     def test_reconstruct_chain_after_reopen(self):
-        """Reconstruct a correction chain after reopen."""
+        """Reconstruct a correction chain after reopen using Alembic-only database."""
+        # Use Alembic-only DB instead of Base.metadata.create_all()
+        alembic_dir = ALEMBIC_DIR
         with tempfile.TemporaryDirectory() as td:
-            db_path = os.path.join(td, "chain_reopen.db")
-            engine1 = ce(db_path)
-            Base.metadata.create_all(engine1)
-            factory1 = make_cognition_session_factory(engine1)
+            db_path = os.path.join(td, "chain_reopen_alembic.db")
+
+            # Create Alembic-only DB and seed data
+            engine1, factory1 = _alembic_factory(db_path)
             with cognition_session_scope(factory1) as s:
                 s.add(HistoricalCaseModel(
                     id="chain_root", case_id="root_001", event_family="regulatory",
@@ -431,9 +464,8 @@ class TestHistoricalIdentity:
                 ))
             engine1.dispose()
 
-            engine2 = ce(db_path)
-            Base.metadata.create_all(engine2)
-            factory2 = make_cognition_session_factory(engine2)
+            # Reopen with Alembic-only (not create_all)
+            engine2, factory2 = _alembic_factory(db_path)
             with cognition_session_scope(factory2) as s:
                 members = s.query(HistoricalCaseModel).filter(
                     HistoricalCaseModel.correction_chain_id == "chain_001"
@@ -475,3 +507,54 @@ class TestHistoricalIdentity:
         )
         # Both should have same hash since identity fields are same (both None)
         assert m1.deterministic_hash() == m2.deterministic_hash()
+
+    def test_persisted_chain_split_isolation(self):
+        """Correction chain split isolation survives DB close/reopen on Alembic-only DB.
+
+        Proves that persisted identity fields (correction_chain_id, chain_root_case_id)
+        allow split isolation to be re-validated after database close/reopen.
+        """
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "chain_split_isolation.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="r1", case_id="root1", event_family="regulatory",
+                    split_label="BUILD", title="Root",
+                    evidence_manifest_hash="a",
+                    correction_chain_id="chain_s1", chain_root_case_id="root1",
+                ))
+                s.add(HistoricalCaseModel(
+                    id="c1", case_id="child1", event_family="regulatory",
+                    split_label="BLIND", title="Child",
+                    evidence_manifest_hash="b",
+                    correction_chain_id="chain_s1", chain_root_case_id="root1",
+                    correction_type="correction",
+                ))
+            engine1.dispose()
+
+            # Reopen with Alembic-only and verify chain split isolation
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                        correction_type=CorrectionType(r.correction_type) if r.correction_type else None,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            # Validate split isolation from persisted data
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(manifests)
+            assert not result.is_valid, "Should detect cross-split chain"
+            assert any("spans multiple splits" in e for e in result.errors)
