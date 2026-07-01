@@ -1,8 +1,8 @@
-version: "1.4"
+version: "1.5"
 status: active
 canonical_ref: main
-canonical_fingerprint: a1f9f27d6f66b9aeed93ba9ce19abb82ea5dfa1ad289de972a7b61ac229ecf75
-fingerprint_basis: "autonomous-thesis-portfolio|judgment-authority|lifecycle|attention-policy|2026-07-01"
+canonical_fingerprint: 6f3732ac14f305403e38504e9127029b82a8ef69bce1f528a36d047b781ecc65
+fingerprint_basis: "autonomous-thesis-portfolio|risk-abstention|longitudinal-validation|stage2-prior-art-audit|2026-07-01"
 
 project:
   name: Crypto Market Cognition & Signal OS
@@ -13,27 +13,29 @@ project:
   not_a_trading_system: true
 
 session:
-  discussion_stage: 1
-  rhythm: convergence
+  discussion_stage: 2
+  rhythm: exploration
   action_qualification: BOUNDED
 
 accepted_state:
-  - unattended judgment responsibility is locked
-  - two-tier discovery is locked
-  - judgment inventory and authority levels are locked
-  - lifecycle state and attention priority are separate
-  - legal transitions are defined in project/THESIS_LIFECYCLE.md
-  - portfolio caps, review cadence, decay, notifications, loop limits, and recovery are defined in project/ATTENTION_RESOURCE_POLICY.md
-  - repeated no-change reduces attention automatically
-  - invalidated, expired, and archived remain distinct
-  - reopening requires fresh evidence and renewed admission review
-  - owner authority is reserved for governance exceptions
+  - unattended product responsibility and owner governance boundary are locked
+  - discovery, judgment authority, thesis lifecycle, and attention policy are locked
+  - claim classes, evidence thresholds, confidence bands, risk dimensions, and mandatory abstention are locked
+  - numerical confidence is prohibited until held-out calibration evidence exists
+  - disagreement is preserved by claim component rather than averaged away
+  - validation includes point-in-time replay, unattended shadow, adversarial tests, recovery tests, and baseline comparison
+  - future-data leakage, L0 override, illegal transition, unauthorized external effect, state loss, and silent resource-cap breach are zero-tolerance integrity failures
+  - Stage 1 is accepted as a design and audit standard, not as proof of implementation or effectiveness
 
 contracts:
   judgment: project/AUTONOMOUS_JUDGMENT_CONTRACT.md
   lifecycle: project/THESIS_LIFECYCLE.md
   attention: project/ATTENTION_RESOURCE_POLICY.md
-  lifecycle_decisions: project/DECISION_REGISTER_LIFECYCLE.yaml
+  risk_abstention: project/RISK_ABSTENTION_CONSTITUTION.md
+  validation: project/LONGITUDINAL_VALIDATION_PLAN.md
+  external_evidence: project/FOUNDATION_EXTERNAL_EVIDENCE.md
+  stage1_exit: project/STAGE1_EXIT.md
+  stage2_plan: project/STAGE2_EXTERNAL_PRIOR_ART_AND_REPO_AUDIT.md
   plan: project/PROJECT_PLAN.md
 
 candidate_state:
@@ -43,25 +45,31 @@ candidate_state:
   accepted_as_current_product: false
 
 current_business_node:
-  id: risk_abstention_and_validation
+  id: external_prior_art_and_repository_responsibility_audit
   work: >-
-    Lock risk and abstention rules, claim limits, validation design,
-    baselines, success metrics, and Stage 1 exit evidence.
-  completed_foundation:
-    - product_responsibility
-    - autonomous_discovery
-    - judgment_authority
-    - thesis_lifecycle
-    - attention_and_resource_policy
+    Challenge the accepted design with mature external foundations and simpler
+    architectures, then inspect main and Draft PR 16 and classify every relevant
+    component as retain, adapt, quarantine, remove, or missing.
+  implementation_allowed: false
+  exit_requires:
+    - external foundation comparison
+    - simpler architecture challenge
+    - active path map
+    - responsibility coverage matrix
+    - component classification register
+    - smallest complete engineering route
 
 read_order:
   - PROJECT_MAINLINE.md
   - project/CANONICAL_STATE.yaml
+  - project/STAGE1_EXIT.md
+  - project/STAGE2_EXTERNAL_PRIOR_ART_AND_REPO_AUDIT.md
   - project/PROJECT_BRAIN.md
   - project/AUTONOMOUS_JUDGMENT_CONTRACT.md
   - project/THESIS_LIFECYCLE.md
   - project/ATTENTION_RESOURCE_POLICY.md
-  - project/DECISION_REGISTER_LIFECYCLE.yaml
+  - project/RISK_ABSTENTION_CONSTITUTION.md
+  - project/LONGITUDINAL_VALIDATION_PLAN.md
   - project/PROJECT_PLAN.md
   - project/DISCUSSION_STATE.yaml
   - project/DECISION_REGISTER.yaml
