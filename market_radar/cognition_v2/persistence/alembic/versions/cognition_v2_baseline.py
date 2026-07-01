@@ -1,4 +1,4 @@
-"""cognition_v2 baseline schema
+"""cognition_v2 baseline schema — matches current ORM.
 
 Revision ID: cognition_v2_baseline
 Revises: 
@@ -17,7 +17,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    # sources
+    # sources (no FK dependencies)
     op.create_table(
         "sources",
         sa.Column("id", sa.String(36), primary_key=True),
@@ -32,10 +32,59 @@ def upgrade() -> None:
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("updated_at", sa.DateTime(timezone=True), nullable=True),
     )
+    # theses (no FK dependencies)
+    op.create_table(
+        "theses",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("claim_class", sa.String(32), nullable=False),
+        sa.Column("summary", sa.Text, nullable=False),
+        sa.Column("lifecycle_state", sa.String(32), nullable=False, server_default="DISCOVERED"),
+        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
+        sa.Column("horizon", sa.String(32), nullable=True),
+        sa.Column("portfolio_class", sa.String(64), nullable=True),
+        sa.Column("review_by", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("expires_at", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=True),
+    )
+    # events (no FK dependencies)
+    op.create_table(
+        "events",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("event_family", sa.String(64), nullable=False),
+        sa.Column("title", sa.String(512), nullable=False),
+        sa.Column("description", sa.Text, nullable=True),
+        sa.Column("event_time", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("first_seen_at", sa.DateTime(timezone=True), nullable=False),
+        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
+        sa.Column("event_state", sa.String(32), nullable=False, server_default="DISCOVERED"),
+        sa.Column("is_resolved", sa.Integer, nullable=False, server_default="0"),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
+    )
+    # historical_cases (no FK dependencies)
+    op.create_table(
+        "historical_cases",
+        sa.Column("id", sa.String(36), primary_key=True),
+        sa.Column("case_id", sa.String(128), nullable=False, unique=True),
+        sa.Column("event_family", sa.String(64), nullable=False),
+        sa.Column("market_regime", sa.String(32), nullable=False, server_default="unknown"),
+        sa.Column("split_label", sa.String(32), nullable=False),
+        sa.Column("title", sa.String(512), nullable=False),
+        sa.Column("description", sa.Text, nullable=True),
+        sa.Column("event_time", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("evidence_manifest_hash", sa.String(64), nullable=False),
+        sa.Column("event_identity_id", sa.String(128), nullable=True),
+        sa.Column("correction_chain_id", sa.String(128), nullable=True),
+        sa.Column("chain_root_case_id", sa.String(128), nullable=True),
+        sa.Column("correction_type", sa.String(32), nullable=True),
+        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
+    )
+    # Tables with FK dependencies follow below
     op.create_table(
         "source_health",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("source_id", sa.String(36), nullable=False),
+        sa.Column("source_id", sa.String(36), sa.ForeignKey("sources.id"), nullable=False),
         sa.Column("health_status", sa.String(32), nullable=False, server_default="unknown"),
         sa.Column("last_ok_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("last_error_at", sa.DateTime(timezone=True), nullable=True),
@@ -43,11 +92,10 @@ def upgrade() -> None:
         sa.Column("error_message", sa.Text, nullable=True),
         sa.Column("checked_at", sa.DateTime(timezone=True), nullable=True),
     )
-    # evidence
     op.create_table(
         "evidence",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("source_id", sa.String(36), nullable=False),
+        sa.Column("source_id", sa.String(36), sa.ForeignKey("sources.id"), nullable=False),
         sa.Column("source_name", sa.String(255), nullable=False),
         sa.Column("content_hash", sa.String(64), nullable=False, unique=True),
         sa.Column("body_text", sa.Text, nullable=True),
@@ -63,65 +111,42 @@ def upgrade() -> None:
         sa.Column("corrects_evidence_id", sa.String(36), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
     )
-    # events
-    op.create_table(
-        "events",
-        sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("event_family", sa.String(64), nullable=False),
-        sa.Column("title", sa.String(512), nullable=False),
-        sa.Column("description", sa.Text, nullable=True),
-        sa.Column("event_time", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("first_seen_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
-        sa.Column("lifecycle_state", sa.String(32), nullable=False, server_default="DISCOVERED"),
-        sa.Column("is_resolved", sa.Integer, nullable=False, server_default="0"),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
-    )
     op.create_table(
         "event_revisions",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("event_id", sa.String(36), nullable=False),
+        sa.Column("event_id", sa.String(36), sa.ForeignKey("events.id"), nullable=False),
         sa.Column("version", sa.Integer, nullable=False),
         sa.Column("previous_version", sa.Integer, nullable=True),
         sa.Column("revision_body", sa.Text, nullable=False),
         sa.Column("revision_outcome", sa.String(32), nullable=False),
         sa.Column("reason", sa.Text, nullable=False),
+        sa.Column("idempotency_key", sa.String(255), nullable=True, unique=True),
+        sa.Column("rule_refs_json", sa.Text, nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
         sa.UniqueConstraint("event_id", "version", name="uq_event_revision_version"),
-    )
-    # theses
-    op.create_table(
-        "theses",
-        sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("claim_class", sa.String(32), nullable=False),
-        sa.Column("summary", sa.Text, nullable=False),
-        sa.Column("lifecycle_state", sa.String(32), nullable=False, server_default="DISCOVERED"),
-        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
-        sa.Column("horizon", sa.String(32), nullable=True),
-        sa.Column("portfolio_class", sa.String(64), nullable=True),
-        sa.Column("review_by", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("expires_at", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=True),
     )
     op.create_table(
         "thesis_revisions",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=False),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=False),
         sa.Column("version", sa.Integer, nullable=False),
         sa.Column("previous_version", sa.Integer, nullable=True),
         sa.Column("revision_body", sa.Text, nullable=False),
         sa.Column("revision_outcome", sa.String(32), nullable=False),
         sa.Column("lifecycle_state", sa.String(32), nullable=False),
+        sa.Column("previous_state", sa.String(32), nullable=True),
         sa.Column("reason", sa.Text, nullable=False),
+        sa.Column("idempotency_key", sa.String(255), nullable=True, unique=True),
+        sa.Column("request_fingerprint", sa.String(64), nullable=True),
+        sa.Column("evidence_refs_json", sa.Text, nullable=True),
+        sa.Column("rule_refs_json", sa.Text, nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
         sa.UniqueConstraint("thesis_id", "version", name="uq_thesis_revision_version"),
     )
-    # claims
     op.create_table(
         "claims",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=True),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=True),
         sa.Column("claim_class", sa.String(32), nullable=False),
         sa.Column("summary", sa.Text, nullable=False),
         sa.Column("evidence_status", sa.String(32), nullable=False),
@@ -132,7 +157,7 @@ def upgrade() -> None:
     op.create_table(
         "exposure_links",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=False),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=False),
         sa.Column("asset_identifier", sa.String(255), nullable=False),
         sa.Column("asset_type", sa.String(64), nullable=False, server_default="crypto_asset"),
         sa.Column("direction", sa.String(32), nullable=True),
@@ -143,19 +168,18 @@ def upgrade() -> None:
     op.create_table(
         "counter_evidence",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=False),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=False),
         sa.Column("claim_class", sa.String(32), nullable=False),
         sa.Column("description", sa.Text, nullable=False),
         sa.Column("alternative_explanation", sa.Text, nullable=True),
-        sa.Column("source_id", sa.String(36), nullable=False),
+        sa.Column("source_id", sa.String(36), sa.ForeignKey("sources.id"), nullable=False),
         sa.Column("version", sa.Integer, nullable=False, server_default="1"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
     )
-    # reviews
     op.create_table(
         "review_intents",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=False),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=False),
         sa.Column("idempotency_key", sa.String(255), nullable=False, unique=True),
         sa.Column("due_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("status", sa.String(32), nullable=False, server_default="PENDING"),
@@ -165,11 +189,10 @@ def upgrade() -> None:
         sa.Column("trigger_reason", sa.Text, nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
     )
-    # attention
     op.create_table(
         "attention_allocations",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=False),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=False),
         sa.Column("allocated_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("priority", sa.Integer, nullable=False, server_default="0"),
         sa.Column("reason", sa.Text, nullable=False),
@@ -179,7 +202,7 @@ def upgrade() -> None:
     op.create_table(
         "notification_decisions",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("thesis_id", sa.String(36), nullable=False),
+        sa.Column("thesis_id", sa.String(36), sa.ForeignKey("theses.id"), nullable=False),
         sa.Column("action_type", sa.String(32), nullable=False),
         sa.Column("reason", sa.Text, nullable=False),
         sa.Column("notification_body", sa.Text, nullable=True),
@@ -187,7 +210,6 @@ def upgrade() -> None:
         sa.Column("decided_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("version", sa.Integer, nullable=False, server_default="1"),
     )
-    # provenance
     op.create_table(
         "provenance_edges",
         sa.Column("id", sa.String(36), primary_key=True),
@@ -198,25 +220,10 @@ def upgrade() -> None:
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("version", sa.Integer, nullable=False, server_default="1"),
     )
-    # historical cases
-    op.create_table(
-        "historical_cases",
-        sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("case_id", sa.String(128), nullable=False, unique=True),
-        sa.Column("event_family", sa.String(64), nullable=False),
-        sa.Column("market_regime", sa.String(32), nullable=False, server_default="unknown"),
-        sa.Column("split_label", sa.String(32), nullable=False),
-        sa.Column("title", sa.String(512), nullable=False),
-        sa.Column("description", sa.Text, nullable=True),
-        sa.Column("event_time", sa.DateTime(timezone=True), nullable=True),
-        sa.Column("evidence_manifest_hash", sa.String(64), nullable=False),
-        sa.Column("version", sa.Integer, nullable=False, server_default="1"),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
-    )
     op.create_table(
         "outcome_windows",
         sa.Column("id", sa.String(36), primary_key=True),
-        sa.Column("case_id", sa.String(36), nullable=False),
+        sa.Column("case_id", sa.String(36), sa.ForeignKey("historical_cases.id"), nullable=False),
         sa.Column("window_label", sa.String(16), nullable=False),
         sa.Column("event_id", sa.String(36), nullable=False),
         sa.Column("open_time", sa.DateTime(timezone=True), nullable=False),
@@ -231,7 +238,6 @@ def upgrade() -> None:
         sa.Column("version", sa.Integer, nullable=False, server_default="1"),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
     )
-    # version records
     op.create_table(
         "run_records",
         sa.Column("id", sa.String(36), primary_key=True),

@@ -491,6 +491,11 @@ class HistoricalCaseManifest(BaseModel):
     tags: List[str] = Field(default_factory=list)
     version: int = Field(default=1, ge=1)
     created_at: datetime = Field(default_factory=_utc_now)
+    # R21 — Durable event and correction-chain identity
+    event_identity_id: Optional[str] = Field(default=None)
+    correction_chain_id: Optional[str] = Field(default=None)
+    chain_root_case_id: Optional[str] = Field(default=None)
+    correction_type: Optional[CorrectionType] = Field(default=None)
 
     @field_validator("case_id")
     @classmethod
@@ -500,7 +505,7 @@ class HistoricalCaseManifest(BaseModel):
         return v
 
     def deterministic_hash(self) -> str:
-        """Produce deterministic hash from stable fields."""
+        """Produce deterministic hash from stable fields — includes identity inputs, excludes outcomes."""
         content = json.dumps({
             "case_id": self.case_id,
             "event_family": self.event_family.value,
@@ -508,6 +513,11 @@ class HistoricalCaseManifest(BaseModel):
             "split_label": self.split_label.value,
             "title": self.title,
             "event_time": self.event_time.isoformat() if self.event_time else None,
+            "event_identity_id": self.event_identity_id,
+            "correction_chain_id": self.correction_chain_id,
+            "chain_root_case_id": self.chain_root_case_id,
+            "correction_type": self.correction_type.value if self.correction_type else None,
+            "evidence_manifest_hash": self.evidence_manifest_hash,
         }, sort_keys=True, default=str)
         return hashlib.sha256(content.encode()).hexdigest()
 

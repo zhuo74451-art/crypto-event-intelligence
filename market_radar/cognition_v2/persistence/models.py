@@ -282,6 +282,11 @@ class HistoricalCaseModel(Base):
     description = Column(Text, nullable=True)
     event_time = Column(DateTime(timezone=True), nullable=True)
     evidence_manifest_hash = Column(String(64), nullable=False)
+    # R21 — Durable event and correction-chain identity
+    event_identity_id = Column(String(128), nullable=True)
+    correction_chain_id = Column(String(128), nullable=True)
+    chain_root_case_id = Column(String(128), nullable=True)
+    correction_type = Column(String(32), nullable=True)
     version = Column(Integer, nullable=False, default=1)
     created_at = Column(DateTime(timezone=True), default=_utc_now)
 
