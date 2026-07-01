@@ -2,91 +2,128 @@
 
 ## Planning rule
 
-One active responsibility advances at a time. Product engineering begins only after Stage 2 identifies a verified smallest complete route.
+The owner result is a complete internal production system, not a sequence of demo MVPs. Internal work packages remain bounded and independently testable, but accepted packages merge directly into `main` and form one continuous Complete Engineering Delivery Train.
+
+Historical evidence, point-in-time replay and blind evaluation are built early so owner time is not consumed by routine real-time validation.
 
 ## Stage 1 — Autonomous responsibility foundation
 
-**Status:** Accepted  
-**Qualification:** `BOUNDED`
+**Status:** Accepted
 
-The product responsibility, discovery policy, judgment authority, thesis lifecycle, risk, abstention, attention, resource and validation contracts are complete enough to audit architecture and code. They do not prove implementation or effectiveness.
+Product responsibility, discovery, judgment authority, thesis lifecycle, risk, abstention, attention, resource and validation contracts are locked.
 
 ## Stage 2 — External foundations and repository audit
 
+**Status:** Accepted and closed
+
+Evidence:
+
+- PR #26 merged at `73eca74b8ee2be472645eda997179b54c0b9099d`;
+- isolated Python 3.12 compatibility;
+- Pydantic AI offline structured output and usage evidence;
+- SQLAlchemy and real Alembic migrations;
+- append-only revisions and stale-writer rejection;
+- canonical 11-state lifecycle;
+- minimal local durable-review runtime with synchronized ownership and restart recovery;
+- OpenTelemetry correlation and data minimization;
+- 154 focused tests;
+- no product behavior, paid model calls, Postgres service or hidden daemon.
+
+Accepted route:
+
+- SQLAlchemy and Alembic;
+- table-driven lifecycle validation;
+- minimal local durable-review ledger;
+- Pydantic AI as a thin gateway;
+- OpenTelemetry traces and metrics;
+- two structured semantic passes surrounded by deterministic services.
+
+DBOS is deferred pending a future Postgres and workflow-guarantee decision.
+
+## Stage 3 — Complete autonomous cognition engineering train
+
 **Status:** Active
 
-### Completed
+The authoritative package sequence is `project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md`.
 
-- mature-foundation first-pass comparison;
-- simpler architecture challenge;
-- selection of deterministic services plus two semantic passes;
-- `main` and Draft PR #16 audit pass 1;
-- component classification;
-- responsibility coverage matrix;
-- target active-path map;
-- correction of the DBOS SQLite assumption;
-- bounded foundation-spike contract.
+### WP-01 — Production engineering foundation
 
-### Current package — Foundation Compatibility Spike
+**Status:** Current
 
-Purpose:
+Build:
 
-- verify an isolated Python 3.11 or 3.12 environment;
-- record exact dependencies, conflicts and licenses;
-- test Pydantic AI structured results without a real provider;
-- test SQLAlchemy transactions and Alembic migration;
-- compare python-statemachine with a table validator;
-- prove a minimal local review ledger can restart without duplicate execution;
-- classify DBOS infrastructure without installing Postgres;
-- prove OpenTelemetry correlation and data minimization.
+- supported and locked Python dependencies;
+- `market_radar/cognition_v2/` package boundaries;
+- canonical Pydantic contracts;
+- SQLAlchemy models and real Alembic migrations;
+- append-only revisions and current projections;
+- table-driven lifecycle validation;
+- historical case-manifest and future-leakage contracts;
+- structured logging and OpenTelemetry bootstrap;
+- focused and regression tests.
 
-Boundaries:
+No semantic provider call, live loop, public effect or demo-only output.
 
-- audit evidence only;
-- no product behavior;
-- no Postgres installation or service;
-- no daemon or scheduled background task;
-- no paid model call;
-- no PR #16 merge or modification;
-- no first-slice implementation.
+### WP-02 — Historical evidence and point-in-time data factory
 
-### Stage 2 exit package
+Target:
 
-After the spike:
+- at least 1,500 historical cases;
+- six event families;
+- multiple market regimes;
+- deterministic rebuild;
+- correction, contradiction and provenance records;
+- 1h, 6h, 24h, 3d and 7d outcome windows;
+- time-ordered build, development and blind sets;
+- future-data leakage validator.
 
-1. foundation decision with accepted and rejected dependencies;
-2. final active-path and dependency graph;
-3. final repository classification and exact port list;
-4. first complete engineering slice;
-5. work-package graph and acceptance evidence;
-6. explicit non-goals and stop conditions.
+### WP-03 — Evidence Gate and event identity
 
-## Stage 3 — Autonomous cognition core
+Source permission, time integrity, entity identity, exact grouping, conflict preservation, immutable event revisions and thesis-scoped context.
 
-**Status:** Pending Stage 2
+### WP-04 — Persistent thesis portfolio
 
-The first complete slice supports one event family through approved evidence, event resolution, thesis creation or abstention, persisted revision, one durable follow-up review, restart recovery and material notification or silence.
+Thesis, revisions, claims, exposures, counterevidence, reviews, attention and notification decisions.
 
-Excluded from the first slice:
+### WP-05 — Two-pass cognition engine
 
-- eight strategy evaluators;
-- universal world model;
-- public UI;
-- vector or graph database;
-- trading, wallet or public publication.
+Thesis Synthesis and Risk Challenge with bounded structured output, versioned prompts and no model-controlled state.
 
-## Stage 4 — Longitudinal validation
+### WP-06 — Deterministic arbitration and abstention
 
-**Status:** Pending Stage 3
+Hard gates, typed claims, evidence-status bands, claim narrowing, mandatory abstention and bounded attention.
 
-Run point-in-time replay, adversarial recovery tests and at least 21 days plus 100 qualified live-Shadow cases against accepted baselines.
+### WP-07 — Durable unattended runtime and operator controls
 
-## Stage 5 — Owner-facing autonomous operation
+Review scheduling, atomic claiming, retry and checkpoints, restart recovery, status, doctor, inspect, stop, resume and replay.
 
-**Status:** Pending Stage 4
+### WP-08 — Historical replay and baseline laboratory
 
-The owner receives sparse material changes and governance exceptions while routine cognition remains unattended.
+Walk-forward replay against EVENT_ONLY, PRICE_ONLY, ONE_SHOT, ALWAYS_NEUTRAL, FORCED_JUDGMENT and SYNTHESIS_ONLY baselines.
+
+### WP-09 — Adversarial, recovery and data-quality evaluation
+
+Conflicts, corrections, stale context, source outage, malformed output, budget exhaustion, restart and decisive invalidation.
+
+### WP-10 — Complete internal production integration
+
+Six event families, multi-asset, multi-thesis, complete audit path, summaries, sparse alerts and bounded operator launch.
+
+### WP-11 — Offline blind evaluation
+
+Frozen final set, threshold report and continue/change/reduce/stop decision.
+
+### WP-12 — Unattended live Shadow
+
+At least 21 days and 100 qualified cases, fully read-only and without routine owner supervision.
+
+## Effort allocation
+
+- historical evidence, replay, blind evaluation and adversarial tests: 55–65%;
+- cognition and lifecycle implementation: 25–35%;
+- unattended live Shadow: 10–15%;
+- routine owner real-time testing: approximately zero.
 
 ## Current active node
 
-Only the Stage 2 foundation compatibility spike is executable. It is an evidence package, not product implementation.
+Only WP-01 is active. It is the production domain and replay-ready persistence foundation for the complete delivery train, not a user-facing MVP.
