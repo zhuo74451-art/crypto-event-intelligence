@@ -1,8 +1,8 @@
-version: "1.8"
+version: "1.9"
 status: active
 canonical_ref: main
-canonical_fingerprint: 894c4d577a6b190217ae7661aebe0fd4f504df6c4cdcb7228b582bf92bdc27a7
-fingerprint_basis: "stage3|complete-engineering-delivery-train|backtest-first|minimal-local-runtime|two-pass-cognition|2026-07-01"
+canonical_fingerprint: 86f23066366b5c38657cc4b8447827f8cb273ab8d0a99845b562ce904c9aa989
+fingerprint_basis: "stage3|wp02-historical-data-factory|1500-cases|point-in-time|blind-isolation|2026-07-02"
 
 project:
   name: Crypto Market Cognition & Signal OS
@@ -19,12 +19,17 @@ session:
 accepted_state:
   - Stage 1 is the accepted responsibility and audit standard
   - Stage 2 is closed and PR 26 foundation evidence is merged into main
-  - the product is delivered through a complete engineering train, not separate demo MVPs
-  - historical evidence construction and point-in-time replay are first-class early packages
-  - the first semantic topology is deterministic services plus Thesis Synthesis and Risk Challenge
+  - Stage 3 WP-01 is accepted and PR 28 is merged into main
+  - cognition_v2 is the production domain, persistence, lifecycle and replay-ready foundation
   - SQLAlchemy and Alembic own application persistence and migrations
-  - the first runtime is a minimal local SQLAlchemy durable-review ledger
+  - migration and ORM schema parity is checked bidirectionally
+  - immutable event and thesis revisions plus optimistic compare-and-swap are required
   - table-driven validation owns the canonical thesis lifecycle
+  - persistent lifecycle transitions use deterministic idempotency request fingerprints
+  - historical point-in-time authority, strict split isolation and BLIND tuning exclusion are mandatory
+  - historical evidence construction and point-in-time replay are first-class early packages
+  - the product is delivered through a complete engineering train, not separate demo MVPs
+  - the first semantic topology is deterministic services plus Thesis Synthesis and Risk Challenge
   - Pydantic AI is a thin structured semantic gateway
   - OpenTelemetry owns initial traces and metrics
   - DBOS is deferred unless Postgres and stronger workflow guarantees become justified
@@ -34,16 +39,26 @@ accepted_state:
   - routine owner testing is replaced by historical replay, blind evaluation and unattended Shadow
 
 foundation_evidence:
-  pr: 26
-  reviewed_head: e5355d7abc65671c154e65a937577bbac627b1ab
-  merge_commit: 73eca74b8ee2be472645eda997179b54c0b9099d
-  final_report_correction_commit: 71e10bd03d4689943d6d091f09af3ce89449a42e
-  focused_tests: 154
-  product_behavior_changed: false
+  stage2:
+    pr: 26
+    reviewed_head: e5355d7abc65671c154e65a937577bbac627b1ab
+    merge_commit: 73eca74b8ee2be472645eda997179b54c0b9099d
+    focused_tests: 154
+  stage3_wp01:
+    pr: 28
+    issue: 27
+    reviewed_head: c730216beb5c8f13fabee6138ae91e04037c7060
+    merge_commit: b67724614b8d1e3275623442fadda5d69995f186
+    focused_tests: 174
+    stage2_regression_tests: 154
+    product_foundation_changed: true
+    real_model_calls: 0
 
 contracts:
   stage1_exit: project/STAGE1_EXIT.md
   stage2_exit: project/STAGE2_EXIT.md
+  stage3_wp01_exit: project/STAGE3_WP01_EXIT.md
+  wp02_spec: project/WP02_HISTORICAL_DATA_FACTORY_SPEC.md
   complete_delivery_train: project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md
   integration_policy: project/INTEGRATION_POLICY.md
   architecture: project/STAGE2_ARCHITECTURE_DECISION.md
@@ -59,37 +74,42 @@ candidate_state:
   accepted_as_current_product: false
 
 current_business_node:
-  id: stage3_work_package_01_production_engineering_foundation
+  id: stage3_work_package_02_historical_evidence_factory
   work: >-
-    Build the production cognition_v2 engineering foundation and the point-in-time
-    replay-ready domain spine on main-derived code, without semantic provider calls,
-    live loops, public effects or demo-only delivery.
-  implementation_allowed: bounded_product_engineering
-  external_effects_allowed: false
+    Build a deterministic historical evidence and point-in-time data factory and
+    produce at least 1500 qualified cases across six event families and multiple
+    market regimes, with frozen BUILD, DEVELOPMENT and BLIND splits, strict future
+    leakage blocking, correction-chain integrity and separate outcome labels.
+  implementation_allowed: bounded_data_engineering
+  external_effects_allowed: read_only_public_sources
   paid_model_calls_allowed: false
   background_daemon_allowed: false
   delivery_target: complete_internal_production_train
   exit_requires:
-    - locked supported dependencies
-    - cognition_v2 package boundaries
-    - canonical Pydantic domain contracts
-    - SQLAlchemy models and Alembic migrations
-    - append-only revisions and current projections
-    - table-driven lifecycle validation
-    - historical case manifest and future-leakage contracts
-    - structured logging and OpenTelemetry bootstrap
+    - public source registry and permission audit
+    - finite checkpointed acquisition commands
+    - at least 1500 qualified historical cases
+    - six event families and multiple regimes
+    - complete point-in-time authority fields
+    - deterministic event and correction-chain identity
+    - frozen chronological split allocation
+    - zero future-evidence leakage
+    - zero BLIND tuning contamination
+    - separate canonical outcome-window artifacts
+    - deterministic rebuild with identical hashes twice
+    - exact source, corpus, quality and rejection reports
     - focused and regression tests
     - exact-head independent acceptance and direct merge
 
 read_order:
   - PROJECT_MAINLINE.md
   - project/CANONICAL_STATE.yaml
-  - project/STAGE2_EXIT.md
+  - project/STAGE3_WP01_EXIT.md
+  - project/WP02_HISTORICAL_DATA_FACTORY_SPEC.md
   - project/COMPLETE_ENGINEERING_DELIVERY_TRAIN.md
   - project/INTEGRATION_POLICY.md
   - project/PROJECT_PLAN.md
   - project/DISCUSSION_STATE.yaml
-  - project/STAGE2_ACTIVE_PATH_MAP.md
   - project/RISK_ABSTENTION_CONSTITUTION.md
   - project/LONGITUDINAL_VALIDATION_PLAN.md
   - project/LEARNING_QUEUE.yaml
