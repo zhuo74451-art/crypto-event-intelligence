@@ -1,0 +1,58 @@
+version: "1.0"
+status: active
+
+signals:
+  - id: LEARN-001
+    status: active
+    type: executor_claim_vs_remote_evidence
+    observation: >-
+      Executor receipts repeatedly labeled contracts, fixture smoke tests, or
+      partial integration as complete Engineering V1.
+    implication: >-
+      Remote Head, diff, runtime calls, outputs, and semantic tests must be
+      inspected before accepting stage completion.
+    behavior_change: none_without_validation
+
+  - id: LEARN-002
+    status: active
+    type: canonical_state_drift
+    observation: >-
+      Accepted project direction and later implementation history accumulated
+      in a long-lived Draft branch while main retained an earlier implementation boundary.
+    implication: >-
+      Canonical state must be integrated before new work bases are created.
+    behavior_change: require_canonical_fingerprint
+
+  - id: LEARN-003
+    status: active
+    type: migration_gap
+    observation: >-
+      The Mac clone passed core suites but exposed unsupported system Python,
+      missing Git identity and CLI setup, local virtual-environment noise, and
+      three full-suite compatibility failures.
+    implication: >-
+      Environment cutover acceptance must include the real active path,
+      supported Python, Git tooling, and classified compatibility failures.
+    behavior_change: pending_validation
+
+  - id: LEARN-004
+    status: active
+    type: github_write_incident
+    observation: >-
+      A placeholder file was accidentally created and immediately removed during
+      remote inspection, leaving two no-diff commits on the execution branch.
+    implication: >-
+      Inspection and mutation paths must remain separated; all GitHub writes need
+      an explicit intended artifact and target branch.
+    behavior_change: strict_write_preflight
+
+  - id: LEARN-005
+    status: candidate
+    type: delivery_cost
+    observation: >-
+      Repeated micro-closure rounds on the same integration chain increased
+      context recovery, owner operations, and semantic drift.
+    implication: >-
+      After canonical and migration gates pass, compile one bounded Hardening
+      delivery train rather than more fixture-only micro-rounds.
+    behavior_change: shadow_until_next_delivery
