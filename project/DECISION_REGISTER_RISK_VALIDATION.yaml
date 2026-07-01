@@ -1,0 +1,44 @@
+version: "1.0"
+status: active
+scope: risk_abstention_validation_and_stage_exit
+
+decisions:
+  - id: DEC-029
+    status: accepted
+    decision: Claims are typed as fact, event state, mechanism, exposure, direction, priced-in state, and attention action.
+
+  - id: DEC-030
+    status: accepted
+    decision: The maximum claim is limited by the weakest required evidence or reasoning gate.
+
+  - id: DEC-031
+    status: accepted
+    decision: Confidence uses BLOCKED, INSUFFICIENT, TENTATIVE, SUPPORTED, and STRONG evidence-status bands until held-out calibration supports numerical probabilities.
+
+  - id: DEC-032
+    status: accepted
+    decision: Identity, permission, provenance, time, leakage, mechanism, exposure, risk-review, contradiction, staleness, manipulation, and budget failures trigger mandatory abstention for the affected claim.
+
+  - id: DEC-033
+    status: accepted
+    decision: Abstention may block a directional claim while retaining valid facts, event state, risk observation, or mechanism candidate.
+
+  - id: DEC-034
+    status: accepted
+    decision: Disagreement is preserved by claim component and is never hidden through averaging.
+
+  - id: DEC-035
+    status: accepted
+    decision: Validation uses point-in-time replay, bounded unattended shadow, adversarial tests, recovery tests, and baseline comparison.
+
+  - id: DEC-036
+    status: accepted
+    decision: Future-data leakage, semantic override of L0, illegal transition, unauthorized external effect, irrecoverable state loss, and silent resource-cap breach are zero-tolerance integrity failures.
+
+  - id: DEC-037
+    status: accepted
+    decision: Stage 1 is accepted as a design and repository-audit standard with action qualification BOUNDED.
+
+  - id: DEC-038
+    status: accepted
+    decision: Stage 2 combines external prior-art challenge, simpler-architecture challenge, and existing repository responsibility audit before implementation.
