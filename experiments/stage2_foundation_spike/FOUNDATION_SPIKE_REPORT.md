@@ -121,7 +121,7 @@ Two implementations demonstrated:
 ## Test Results
 
 ```text
-153 passed in 0.93s
+154 passed
 ```
 
 ## Accepted Dependencies
@@ -150,7 +150,7 @@ Use SQLAlchemy + minimal local runtime + table-driven lifecycle validator + Pyda
 ## Changed Files
 
 - `experiments/stage2_foundation_spike/` — all spike experiment files
-- `tests/stage2_foundation_spike/` — focused tests (153 total)
+- `tests/stage2_foundation_spike/` — focused tests (154 total)
 - `.python312/` — local Python 3.12.9 installation (ignored from Git via `.venv-stage2-spike`)
 
 ## Product Behavior Statement
