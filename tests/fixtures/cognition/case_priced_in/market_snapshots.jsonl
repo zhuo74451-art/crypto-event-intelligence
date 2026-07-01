@@ -1,0 +1,1 @@
+{"snapshot_id": "snap_price1", "event_id": "sec_btc_etf_approval_202608", "as_of": "2026-08-01T15:00:00+00:00", "provider": "fixture", "asset": "BTC", "price": 72000.0, "pre_event_ref": 71500.0, "volume_24h": 28000000000.0}

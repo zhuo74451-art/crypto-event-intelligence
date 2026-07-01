@@ -1,0 +1,1 @@
+{"sec_btc_etf_approval_202608": {"expected": 100.0, "actual": 102.0, "range_low": 95.0, "range_high": 105.0, "baseline_source": "prediction_market", "baseline_timestamp": "2026-07-30T00:00:00+00:00"}}

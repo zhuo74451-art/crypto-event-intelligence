@@ -1,0 +1,10 @@
+{
+  "cve_2026_5678": {
+    "expected": 50.0,
+    "actual": 55.0,
+    "range_low": 45.0,
+    "range_high": 55.0,
+    "baseline_source": "prior",
+    "baseline_timestamp": "2026-03-01T00:00:00+00:00"
+  }
+}

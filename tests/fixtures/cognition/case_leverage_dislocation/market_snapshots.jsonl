@@ -1,0 +1,1 @@
+{"snapshot_id": "snap_lev1", "event_id": "btc_funding_spike_20260701", "as_of": "2026-07-01T09:00:00+00:00", "provider": "fixture", "asset": "BTC", "price": 62000.0, "pre_event_ref": 65000.0, "volume_24h": 35000000000.0}

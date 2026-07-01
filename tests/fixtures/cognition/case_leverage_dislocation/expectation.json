@@ -1,0 +1,1 @@
+{"btc_funding_spike_20260701": {"expected": 0.01, "actual": 0.15, "range_low": 0.005, "range_high": 0.02, "baseline_source": "historical_avg", "baseline_timestamp": "2026-06-30T00:00:00+00:00"}}
