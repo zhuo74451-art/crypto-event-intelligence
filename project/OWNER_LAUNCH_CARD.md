@@ -1,7 +1,7 @@
 # Owner Launch Card
 
 **Status:** ACTIVE  
-**Current node:** Stage 3 WP-01 — Repair 001  
+**Current node:** Stage 3 WP-01 — Repair 002  
 **Issue:** #27  
 **Draft PR:** #28  
 **Branch:** `feat/stage3-wp01-production-foundation`
@@ -24,7 +24,7 @@ Continue on branch:
 feat/stage3-wp01-production-foundation
 
 After safe checkout and fast-forward, execute:
-project/work_orders/STAGE3_WP01_REPAIR_001.md
+project/work_orders/STAGE3_WP01_REPAIR_002.md
 
 Use the existing branch and Draft PR #28 only.
 Do not begin WP-02.
