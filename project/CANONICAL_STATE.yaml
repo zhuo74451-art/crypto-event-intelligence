@@ -1,8 +1,8 @@
-version: "1.1"
+version: "1.2"
 status: active
 canonical_ref: main
-canonical_fingerprint: fee25c45f25753c758b4842c36a36e9406ec0fafb6269af50a5bc5b7b0b84eb1
-fingerprint_basis: "crypto-market-cognition-signal-os|autonomous-thesis-portfolio|limited-autonomous-discovery|no-trading|2026-07-01"
+canonical_fingerprint: b8e6582376d257bf0b1188507378a85c46c128cfd74acb1a4b982fff65068973
+fingerprint_basis: "crypto-market-cognition-signal-os|autonomous-thesis-portfolio|two-tier-discovery|strict-activation|no-trading|2026-07-01"
 
 project:
   name: Crypto Market Cognition & Signal OS
@@ -31,10 +31,56 @@ accepted_state:
   - AI or bounded agents decide evidence sufficiency, event identity, importance, thesis creation, affected assets, time horizon, priced-in state, priority, next evidence, and lifecycle transitions.
   - Ordinary uncertainty is handled through abstention, evidence gathering, scheduled review, downgrade, invalidation, or archive instead of asking the owner.
   - Limited autonomous discovery of new themes and assets is allowed inside the crypto-market, public-data, cost, and risk boundaries.
+  - Autonomous discovery uses a two-tier policy: broad discovery universe and strict active-thesis admission.
+  - Any crypto-related asset, theme, or mechanism may be briefly discovered, identified, deduplicated, and screened.
+  - Only candidates that pass identity, real-world change, causal mechanism, genuine exposure, evidence quality, future verification, risk, and resource-value gates may enter the active thesis portfolio.
+  - Low-liquidity, anonymous, manipulation-prone, or data-poor assets may remain risk observations or mechanism candidates but do not receive strong directional conclusions or large resource budgets by default.
   - The owner retains governance, budget, credential, production, publishing, wallet, trading, and stop authority.
   - The central business object is an autonomous thesis portfolio with explicit attention states.
   - Events are entry evidence; themes and theses are persistent interpretation objects.
   - Historical and real-time shadow evidence are required before trusting autonomous judgment quality.
+
+active_discovery_policy:
+  mode: two_tier
+  discovery_universe:
+    recall_posture: broad
+    allowed_actions:
+      - identify
+      - deduplicate
+      - classify
+      - run_qualification_screen
+      - detect_new_mechanism
+    does_not_imply:
+      - active_thesis
+      - directional_claim
+      - owner_notification
+      - persistent_high_cost_tracking
+  active_portfolio_admission:
+    posture: strict
+    required_gates:
+      - identity_and_entity_integrity
+      - real_world_change_or_new_independent_evidence
+      - explicit_causal_mechanism
+      - genuine_asset_or_market_exposure
+      - sufficient_evidence_quality_and_fact_permission
+      - future_verification_path
+      - explicit_expiry_or_invalidation
+      - acceptable_manipulation_and_liquidity_risk
+      - positive_machine_attention_value
+      - non_duplication_with_existing_thesis
+    possible_results:
+      - activate
+      - observe_low_priority
+      - retain_as_risk_observation
+      - retain_as_mechanism_candidate
+      - reject
+  conservative_defaults:
+    uncertain_identity: reject_or_isolate
+    unclear_mechanism: no_directional_claim
+    weak_exposure: archive_or_low_priority
+    poor_data_quality: risk_observation_only
+    low_liquidity_or_high_manipulation: restricted_authority
+    no_future_verification: reject_or_time_box
 
 candidate_state:
   - ref: workbench/cognition-spine-v1
@@ -57,9 +103,9 @@ migration_state:
 current_business_node:
   id: autonomous_judgment_foundation
   work: >-
-    Define exactly what the autonomous system must judge, how it knows whether
-    it may judge, how agents divide responsibility, how theses evolve, and how
-    risk and attention budgets constrain discovery.
+    Define the complete judgment inventory, agent authority, thesis lifecycle,
+    risk constitution, resource budget, and stop behavior for the accepted
+    two-tier autonomous discovery system.
   explicitly_not_current:
     - migration perfection
     - immediate PR 16 closure
