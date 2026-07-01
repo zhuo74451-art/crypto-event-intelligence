@@ -1,13 +1,16 @@
 """Canonical 11-state thesis lifecycle service.
 
 Dependency: domain contracts only.
+R11: deterministic transition request fingerprint for idempotency.
+R12: test-only failure injection hook (production default = no-op).
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 from uuid import uuid4
 
 from sqlalchemy.orm import Session, sessionmaker
@@ -42,7 +45,6 @@ class LifecycleValidator:
         return sum(len(v) for v in self._edges.values())
 
     def validate(self, from_state: ThesisState, to_state: ThesisState) -> bool:
-        """Check if a transition is legal according to the canonical graph."""
         return to_state in self._edges.get(from_state, set())
 
     def validate_or_raise(self, from_state: ThesisState, to_state: ThesisState) -> None:
@@ -59,72 +61,71 @@ class LifecycleValidator:
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Transaction-backed lifecycle service
+# Exceptions
 # ═══════════════════════════════════════════════════════════════════════════════
 
-class LifecycleService:
-    """Application service for thesis lifecycle transitions.
-
-    Validates, records revision, and applies compare-and-swap update.
-    This is the domain service; persistence is injected.
-    """
-
-    def __init__(self, validator: Optional[LifecycleValidator] = None):
-        self._validator = validator or LifecycleValidator()
-
-    @property
-    def validator(self) -> LifecycleValidator:
-        return self._validator
-
-    def validate_transition(
-        self,
-        request: LifecycleTransitionRequest,
-        current_state: ThesisState,
-        current_version: int,
-    ) -> None:
-        """Validate a lifecycle transition request against current state."""
-        if current_state != request.from_state:
-            raise ValueError(
-                f"Current state {current_state.value} does not match "
-                f"expected from_state {request.from_state.value}"
-            )
-        if current_version != request.expected_version:
-            raise ValueError(
-                f"Current version {current_version} does not match "
-                f"expected version {request.expected_version}"
-            )
-        self._validator.validate_or_raise(request.from_state, request.to_state)
-        if not request.reason.strip():
-            raise ValueError("Transition reason must not be empty")
-
-    def build_revision_body(
-        self,
-        request: LifecycleTransitionRequest,
-    ) -> str:
-        return (
-            f"Transition: {request.from_state.value} -> {request.to_state.value}. "
-            f"Reason: {request.reason}."
-        )
-
-
 class IdempotentTransitionError(Exception):
-    """Raised when the same idempotency key produces a different request."""
     pass
 
 
 class TransitionConflictError(Exception):
-    """Raised when a transition fails due to state/version mismatch."""
     pass
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# R11 — Deterministic transition request fingerprint
+# ═══════════════════════════════════════════════════════════════════════════════
 
 _EPISTEMIC_CLASSES = {ThesisState.ACTIVE, ThesisState.DORMANT,
                        ThesisState.INVALIDATED, ThesisState.REOPEN_REVIEW}
 
 
 def _is_epistemic_transition(to_state: ThesisState) -> bool:
-    """Transitions into a state that requires epistemic support require evidence refs."""
     return to_state in _EPISTEMIC_CLASSES
 
+
+def compute_request_fingerprint(request: LifecycleTransitionRequest) -> str:
+    """Deterministic SHA256 fingerprint covering all significant request fields."""
+    # Normalize evidence refs by sorted serialization
+    normalized_evidence = sorted(
+        [r.model_dump() for r in request.evidence_refs],
+        key=lambda r: (r.get("source", ""), r.get("content_hash", "")),
+    ) if request.evidence_refs else []
+
+    # Normalize rule refs
+    normalized_rules = sorted(request.rule_refs) if request.rule_refs else []
+
+    content = json.dumps({
+        "thesis_id": request.thesis_id,
+        "from_state": request.from_state.value,
+        "to_state": request.to_state.value,
+        "expected_version": request.expected_version,
+        "reason": request.reason.strip(),
+        "evidence_refs": normalized_evidence,
+        "rule_refs": normalized_rules,
+    }, sort_keys=True, default=str)
+    return hashlib.sha256(content.encode()).hexdigest()
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# R12 — Failure injection hook
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Failure hook type: called with (request, thesis, revision) after revision
+# is staged and flushed, before CAS commit. Default is no-op.
+FailureHook = Callable[[LifecycleTransitionRequest, ThesisModel, ThesisRevisionModel], None]
+
+
+def _noop_failure_hook(request: LifecycleTransitionRequest,
+                        thesis: ThesisModel,
+                        revision: ThesisRevisionModel) -> None:
+    """Production default — no failure injection."""
+    pass
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Transactional lifecycle service
+# ═══════════════════════════════════════════════════════════════════════════════
 
 class TransactionalLifecycleService:
     """Production lifecycle service backed by SQLAlchemy.
@@ -137,9 +138,12 @@ class TransactionalLifecycleService:
         self,
         session_factory: sessionmaker,
         validator: Optional[LifecycleValidator] = None,
+        failure_hook: Optional[FailureHook] = None,
     ):
         self._factory = session_factory
         self._validator = validator or LifecycleValidator()
+        # R12: production default is no-op; test can inject a failure hook
+        self._failure_hook = failure_hook or _noop_failure_hook
 
     @property
     def validator(self) -> LifecycleValidator:
@@ -155,23 +159,26 @@ class TransactionalLifecycleService:
         so it is bound to a valid session.
         Raises IdempotentTransitionError, TransitionConflictError, ValueError.
         """
+        fingerprint = compute_request_fingerprint(request)
         session: Session = self._factory()
         try:
-            # 1. Resolve idempotency
+            # 1. Resolve idempotency by fingerprint
             if request.idempotency_key:
                 existing = session.query(ThesisRevisionModel).filter(
                     ThesisRevisionModel.idempotency_key == request.idempotency_key
                 ).first()
                 if existing is not None:
-                    if existing.thesis_id != request.thesis_id:
-                        session.close()
-                        raise IdempotentTransitionError(
-                            f"Idempotency key '{request.idempotency_key}' used for "
-                            f"different thesis {existing.thesis_id}"
-                        )
-                    # Reload via fresh session to get a non-detached instance
-                    rev_id = existing.id
                     session.close()
+                    # R11: Compare stored fingerprint with computed fingerprint
+                    if existing.request_fingerprint != fingerprint:
+                        raise IdempotentTransitionError(
+                            f"Idempotency key '{request.idempotency_key}' "
+                            f"already used with a different request. "
+                            f"Stored fingerprint={existing.request_fingerprint}, "
+                            f"new fingerprint={fingerprint}"
+                        )
+                    # Fingerprint matches — return existing result
+                    rev_id = existing.id
                     fresh_session = self._factory()
                     loaded = fresh_session.query(ThesisRevisionModel).filter(
                         ThesisRevisionModel.id == rev_id
@@ -223,23 +230,32 @@ class TransactionalLifecycleService:
 
             # 8. Append immutable revision
             new_version = current_version + 1
+            evidence_json = json.dumps(
+                [r.model_dump() for r in request.evidence_refs],
+                default=str,
+            ) if request.evidence_refs else None
+            rules_json = json.dumps(request.rule_refs) if request.rule_refs else None
+
             rev = ThesisRevisionModel(
                 id=str(uuid4()),
                 thesis_id=request.thesis_id,
                 version=new_version,
                 previous_version=current_version,
-                revision_body=self._build_revision_body(request),
+                revision_body=_build_revision_body(request),
                 revision_outcome="transition",
                 lifecycle_state=request.to_state.value,
                 previous_state=request.from_state.value,
                 reason=request.reason,
                 idempotency_key=request.idempotency_key,
-                evidence_refs_json=json.dumps(
-                    [r.model_dump() for r in request.evidence_refs]
-                ) if request.evidence_refs else None,
-                rule_refs_json=json.dumps(request.rule_refs) if request.rule_refs else None,
+                request_fingerprint=fingerprint,
+                evidence_refs_json=evidence_json,
+                rule_refs_json=rules_json,
             )
             session.add(rev)
+            session.flush()
+
+            # R12: Failure injection hook (test-only, no-op in production)
+            self._failure_hook(request, thesis, rev)
 
             # 9. CAS update current projection
             from sqlalchemy import text
@@ -269,7 +285,6 @@ class TransactionalLifecycleService:
             rev_id = rev.id
             session.close()
 
-            # Reload via fresh session to return a non-detached instance
             fresh_session = self._factory()
             loaded_rev = fresh_session.query(ThesisRevisionModel).filter(
                 ThesisRevisionModel.id == rev_id
@@ -286,10 +301,11 @@ class TransactionalLifecycleService:
             session.close()
             raise
 
-    def _build_revision_body(self, request: LifecycleTransitionRequest) -> str:
-        refs = f" evidence_refs={len(request.evidence_refs)}" if request.evidence_refs else ""
-        rules = f" rule_refs={len(request.rule_refs)}" if request.rule_refs else ""
-        return (
-            f"Transition: {request.from_state.value} -> {request.to_state.value}. "
-            f"Reason: {request.reason}.{refs}{rules}"
-        )
+
+def _build_revision_body(request: LifecycleTransitionRequest) -> str:
+    refs = f" evidence_refs={len(request.evidence_refs)}" if request.evidence_refs else ""
+    rules = f" rule_refs={len(request.rule_refs)}" if request.rule_refs else ""
+    return (
+        f"Transition: {request.from_state.value} -> {request.to_state.value}. "
+        f"Reason: {request.reason}.{refs}{rules}"
+    )

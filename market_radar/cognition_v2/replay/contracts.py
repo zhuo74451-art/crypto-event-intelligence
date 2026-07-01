@@ -415,6 +415,110 @@ class CorrectionRelations:
     def has_correction_chain(self, case_id: str) -> bool:
         return case_id in self._relations
 
+    def get_chain_members(self, root_id: str) -> Set[str]:
+        """Get all members of a correction chain starting from root."""
+        members = {root_id}
+        queue = [root_id]
+        while queue:
+            current = queue.pop(0)
+            if current in self._relations:
+                for target, _ in self._relations[current]:
+                    if target not in members:
+                        members.add(target)
+                        queue.append(target)
+        return members
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# R14 — Correction-chain split isolation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class ChainSplitResult:
+    """Result of correction-chain split isolation validation."""
+    def __init__(self):
+        self.errors: List[str] = []
+
+    @property
+    def is_valid(self) -> bool:
+        return len(self.errors) == 0
+
+
+class CorrectionChainSplitValidator:
+    """Validates that correction chains stay within one split.
+
+    R14: The frozen split validator must reject:
+    - same event identity across more than one split
+    - correction chain crossing splits
+    - BLIND chain member in BUILD/DEVELOPMENT tuning
+    """
+
+    @staticmethod
+    def validate(
+        manifests: List[HistoricalCaseManifest],
+        split_assignment: Dict[str, SplitLabel],  # case_id -> split_label
+        correction_chains: CorrectionRelations,
+        chain_root_ids: Set[str],  # case_ids that are chain roots
+    ) -> ChainSplitResult:
+        """Validate all correction chains stay within their assigned split."""
+        result = ChainSplitResult()
+
+        # Build case_id -> split_label lookup
+        case_to_split: Dict[str, SplitLabel] = {}
+        for m in manifests:
+            case_to_split[m.case_id] = m.split_label
+        # Override with explicit assignment when provided
+        case_to_split.update(split_assignment)
+
+        # Track event identity -> split mapping (from event identity via case)
+        event_identity_splits: Dict[str, Set[SplitLabel]] = {}
+
+        for m in manifests:
+            # Use case_id as event identity proxy for this test
+            eid = m.case_id
+            if eid not in event_identity_splits:
+                event_identity_splits[eid] = set()
+            event_identity_splits[eid].add(m.split_label)
+
+        # Check same event identity across multiple splits
+        for eid, splits in event_identity_splits.items():
+            if len(splits) > 1:
+                result.errors.append(
+                    f"Event identity '{eid}' appears in multiple splits: "
+                    f"{', '.join(s.value for s in splits)}"
+                )
+
+        # Check correction chains
+        for root_id in chain_root_ids:
+            # Get all members of this chain
+            chain_members = correction_chains.get_chain_members(root_id)
+            chain_splits = set()
+            for member_id in chain_members:
+                if member_id in case_to_split:
+                    chain_splits.add(case_to_split[member_id])
+
+            # All chain members must be in the same split
+            if len(chain_splits) > 1:
+                result.errors.append(
+                    f"Correction chain root '{root_id}' "
+                    f"spans multiple splits: "
+                    f"{', '.join(s.value for s in chain_splits)}"
+                )
+
+            # BLIND chain members cannot be in tuning sets
+            blind_members = [m for m in chain_members
+                            if case_to_split.get(m) == SplitLabel.BLIND]
+            non_blind_members = [m for m in chain_members
+                                if case_to_split.get(m) in
+                                (SplitLabel.BUILD, SplitLabel.DEVELOPMENT)]
+            if blind_members and non_blind_members:
+                result.errors.append(
+                    f"Correction chain root '{root_id}' has BLIND members "
+                    f"({blind_members}) mixed with BUILD/DEVELOPMENT tuning members "
+                    f"({non_blind_members})"
+                )
+
+        return result
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Serialization

@@ -160,6 +160,7 @@ class ThesisRevisionModel(Base):
     previous_state = Column(String(32), nullable=True)
     reason = Column(Text, nullable=False)
     idempotency_key = Column(String(255), nullable=True, unique=True)
+    request_fingerprint = Column(String(64), nullable=True)
     evidence_refs_json = Column(Text, nullable=True)
     rule_refs_json = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), default=_utc_now)
