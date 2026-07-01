@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.1"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
@@ -7,14 +7,15 @@ mode: Auto
 goal_mode: disabled
 
 current_dispatch:
-  node: stage3_wp02_historical_data_factory
+  node: stage3_wp02_corpus_build_001
   issue: 29
+  pr: 30
   branch: feat/stage3-wp02-historical-data-factory
-  canonical_fingerprint: 86f23066366b5c38657cc4b8447827f8cb273ab8d0a99845b562ce904c9aa989
-  instruction_file: project/work_orders/STAGE3_WP02_EXECUTION.md
+  reviewed_head: 9fbd501a5d7f31404bea7312ae009447f684f47f
+  instruction_file: project/work_orders/STAGE3_WP02_CORPUS_BUILD_001.md
   terminal_behavior: stop_after_receipt
 
 post_execution:
   reviewer: GPT
   accepted: integrate
-  rejected: repair_same_branch
+  rejected: continue_same_branch
