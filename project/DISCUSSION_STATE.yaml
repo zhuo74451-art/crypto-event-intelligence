@@ -1,46 +1,44 @@
-version: "1.3"
+version: "1.4"
 status: active
 business_project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
-bootstrap_mode: reopen
 stage: 1
 stage_name: autonomous_problem_and_responsibility
-rhythm: exploration
-stage_progress: late_exploration
+rhythm: convergence
+stage_progress: near_exit
 canonical_state: SYNCED
-delivery_mode: DISCOVERY_EXPERIMENT
 action_qualification: BOUNDED
 
-current_business_node: thesis_attention_lifecycle
+current_business_node: risk_abstention_and_validation
 core_question: >-
-  How should a thesis move through discovery, activation, strengthening,
-  weakening, invalidation, archive, and reopening under bounded attention?
+  What claim limits, abstention rules, validation evidence, baselines, and
+  success thresholds are required before the autonomous design can audit code?
 
 completed:
   - unattended product responsibility
   - owner governance boundary
   - two-tier discovery
-  - judgment inventory J01 through J22
-  - authority levels L0 through L3
-  - conservative unattended fallbacks
+  - judgment inventory and authority levels
+  - thesis lifecycle state machine
+  - attention, review, notification, loop, and recovery policy
 
 locked_decisions:
-  - project/AUTONOMOUS_JUDGMENT_CONTRACT.md is the authority contract
-  - deterministic rules cannot be overridden by semantic roles
-  - routine uncertainty remains inside the system
-  - every active thesis needs follow-up, review, expiry, invalidation, and revision history
+  - lifecycle and attention are separate
+  - legal transitions are defined in project/THESIS_LIFECYCLE.md
+  - portfolio and execution limits are defined in project/ATTENTION_RESOURCE_POLICY.md
+  - no-change reduces attention automatically
+  - reopening requires renewed admission and risk review
   - clear reversible defaults are applied without owner confirmation
 
-critical_unknowns:
-  - thesis states and legal transitions
-  - priority and review budgets
-  - decay and reopening rules
-  - material notification thresholds
-  - loop termination and recovery limits
-  - longitudinal value evidence
+remaining_unknowns:
+  - exact claim and confidence limits
+  - mandatory abstention conditions
+  - longitudinal shadow design and baselines
+  - success, change, scope-reduction, and stop thresholds
+  - Stage 1 exit evidence package
 
 next_continue_meaning: >-
-  Define the thesis state machine, attention budgets, notification rules,
-  and loop termination defaults.
+  Lock the risk, abstention, and validation constitution, then decide whether
+  Stage 1 can close and the existing repository audit can begin.
 
 owner_action_required: none
