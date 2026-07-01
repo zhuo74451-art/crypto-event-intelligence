@@ -1,11 +1,11 @@
-version: "1.0"
+version: "1.1"
 status: active
 
 decisions:
   - id: DEC-001
     status: accepted
     decision: The product is Crypto Market Cognition & Signal OS.
-    reason: This identity covers evidence, market state, research, strategy evaluation, arbitration, and calibrated abstention.
+    reason: This identity covers evidence, market state, research, autonomous thesis maintenance, strategy evaluation, arbitration, and calibrated abstention.
     supersedes:
       - event-bot-only framing
       - Week 1 release framing
@@ -13,8 +13,8 @@ decisions:
 
   - id: DEC-002
     status: accepted
-    decision: The system is an internal research and intelligence tool, not a trading system.
-    reason: Current evidence supports assessment and research workflows, not execution safety or profitable automation.
+    decision: The system is an internal market-judgment and research operator, not a trading system.
+    reason: The owner needs autonomous cognition and attention allocation, not copy trading, order advice, or return promises.
 
   - id: DEC-003
     status: accepted
@@ -24,35 +24,72 @@ decisions:
   - id: DEC-004
     status: accepted
     decision: Default branch main is the canonical project state.
-    reason: New sessions and new machines must recover the project without old chat or long-lived Draft branches.
+    reason: New sessions, computers, and executors must recover the project without old chat or long-lived Draft branches.
 
   - id: DEC-005
     status: accepted
-    decision: Draft PR #16 is a candidate implementation, not accepted Internal Engineering V1.
-    reason: Remote audits found incomplete integrated intake, research, baselines, shadow artifacts, and semantic proof.
-    reopen_if: A new remote Head closes the documented gaps and passes independent acceptance.
+    decision: Draft PR 16 is an engineering candidate, not accepted Internal Engineering V1 or the current product definition.
+    reason: It contains reusable components but predates the unattended thesis-portfolio responsibility and still has documented integration gaps.
+    reopen_if: A later audit classifies each component against the accepted autonomous responsibility.
 
   - id: DEC-006
-    status: accepted
-    decision: The current delivery mode is MIGRATION_OR_RECOVERY.
-    reason: The project is moving from the old Windows checkout to a new Mac and must transfer responsibility safely.
+    status: superseded
+    decision: Migration or recovery is the active product delivery mode.
+    reason: The Mac environment is operational enough for product thinking; migration hygiene no longer defines the business node.
+    superseded_by: DEC-011
 
   - id: DEC-007
     status: accepted
-    decision: The next engineering delivery mode is HARDENING.
-    reason: Product identity and architecture are stable; remaining work is integration, evidence, reliability, and acceptance.
+    decision: Existing code is reviewed only after the autonomous judgment foundation is locked.
+    reason: Upgrading code before defining machine responsibility would optimize an outdated product model.
 
   - id: DEC-008
     status: accepted
-    decision: Real-data shadow validation follows Engineering V1 closure.
-    reason: Fixture and replay success cannot establish live operational trust or strategy value.
+    decision: Longitudinal real-data shadow validation is required before autonomous judgment is trusted.
+    reason: Fixture and one-shot replay success cannot establish unattended lifecycle quality, useful discovery, or safe attention allocation.
 
   - id: DEC-009
     status: accepted
-    decision: No daemon, recurring service, paid API, production publishing, wallet action, or trade execution is enabled by default.
+    decision: No paid interface, public publishing, wallet action, order execution, copy trading, or unbounded background loop is enabled by default.
     reason: These add external side effects, cost, and operational responsibility requiring separate approval.
 
   - id: DEC-010
     status: accepted
-    decision: Only one computer actively writes the project branch after cutover.
-    reason: Parallel local states increase divergence, missed files, and accidental overwrites.
+    decision: The Mac is the preferred active executor; unresolved old-PC hygiene does not block product discussion.
+    reason: The repository is already usable on the Mac and migration is supporting work rather than the product purpose.
+
+  - id: DEC-011
+    status: accepted
+    decision: The active node is autonomous judgment foundation design.
+    reason: The owner explicitly prioritized bottom-layer cognition design before reviewing and upgrading the current implementation.
+
+  - id: DEC-012
+    status: accepted
+    decision: Routine human judgment is removed from the normal operating loop.
+    reason: The system is intended to operate unattended and must resolve ordinary uncertainty through evidence work, abstention, review, downgrade, invalidation, or archive.
+
+  - id: DEC-013
+    status: accepted
+    decision: The central business object is an autonomous thesis portfolio with explicit attention states.
+    reason: Persistent theses, revisions, catalysts, risks, and exits create more value than isolated market packets.
+
+  - id: DEC-014
+    status: accepted
+    decision: Limited autonomous discovery of new themes, theses, and asset observations is allowed.
+    reason: A fully unattended cognition system must find relevant objects outside a static owner-provided list.
+    constraints:
+      - crypto and directly related macro, policy, technology, security, liquidity, and infrastructure scope
+      - approved public or contracted evidence
+      - bounded cost and machine attention
+      - explicit mechanism, future evidence path, and exit condition
+      - no new external side effect or credential authority
+
+  - id: DEC-015
+    status: accepted
+    decision: Deterministic rules and bounded semantic agents share responsibility.
+    reason: Verifiable identity, time, hash, provenance, permission, leakage, budget, and stop logic should not depend on free-form model judgment; semantic importance, mechanism, exposure, risk, arbitration, and lifecycle interpretation may require bounded agents.
+
+  - id: DEC-016
+    status: accepted
+    decision: Accepted changes to project identity, responsibility, autonomy, boundaries, or active planning must be synchronized to main in the same discussion cycle when GitHub writes are available.
+    reason: The canonical branch must not remain behind the accepted project model.
