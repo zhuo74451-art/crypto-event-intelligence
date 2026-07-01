@@ -1,8 +1,8 @@
-version: "1.3"
+version: "1.4"
 status: active
 canonical_ref: main
-canonical_fingerprint: 7cda5cc09fa9478ca4b4060bd710b36f47eec2799b0fc10eb10ea0d14517ead0
-fingerprint_basis: "autonomous-thesis-portfolio|two-tier-discovery|judgment-authority-contract|2026-07-01"
+canonical_fingerprint: a1f9f27d6f66b9aeed93ba9ce19abb82ea5dfa1ad289de972a7b61ac229ecf75
+fingerprint_basis: "autonomous-thesis-portfolio|judgment-authority|lifecycle|attention-policy|2026-07-01"
 
 project:
   name: Crypto Market Cognition & Signal OS
@@ -13,29 +13,27 @@ project:
   not_a_trading_system: true
 
 session:
-  bootstrap_mode: reopen
   discussion_stage: 1
-  rhythm: exploration
-  current_delivery_mode: DISCOVERY_EXPERIMENT
+  rhythm: convergence
   action_qualification: BOUNDED
 
 accepted_state:
-  - autonomous research prioritization and watch-portfolio maintenance are the first user outcomes
-  - routine uncertainty is resolved inside the system
-  - discovery uses broad recall and strict active-thesis admission
-  - weak-data or high-risk candidates receive restricted authority
-  - the normal-path judgment inventory is defined in project/AUTONOMOUS_JUDGMENT_CONTRACT.md
-  - deterministic prohibitions cannot be overridden by semantic roles
-  - internal arbitration cannot create external side effects
-  - every active thesis requires follow-up evidence, review, expiry, invalidation, and revision history
-  - owner authority is reserved for governance exceptions and material external effects
-  - longitudinal shadow evidence is required before autonomous judgment is trusted
+  - unattended judgment responsibility is locked
+  - two-tier discovery is locked
+  - judgment inventory and authority levels are locked
+  - lifecycle state and attention priority are separate
+  - legal transitions are defined in project/THESIS_LIFECYCLE.md
+  - portfolio caps, review cadence, decay, notifications, loop limits, and recovery are defined in project/ATTENTION_RESOURCE_POLICY.md
+  - repeated no-change reduces attention automatically
+  - invalidated, expired, and archived remain distinct
+  - reopening requires fresh evidence and renewed admission review
+  - owner authority is reserved for governance exceptions
 
 contracts:
-  product_mainline: PROJECT_MAINLINE.md
-  project_brain: project/PROJECT_BRAIN.md
-  autonomous_judgment: project/AUTONOMOUS_JUDGMENT_CONTRACT.md
-  project_plan: project/PROJECT_PLAN.md
+  judgment: project/AUTONOMOUS_JUDGMENT_CONTRACT.md
+  lifecycle: project/THESIS_LIFECYCLE.md
+  attention: project/ATTENTION_RESOURCE_POLICY.md
+  plan: project/PROJECT_PLAN.md
 
 candidate_state:
   ref: workbench/cognition-spine-v1
@@ -43,36 +41,26 @@ candidate_state:
   classification: engineering_candidate_for_reassessment
   accepted_as_current_product: false
 
-migration_state:
-  mac_path: /Users/zhuo/Desktop/市场信号/crypto-event-intelligence
-  operational_enough_for_product_discussion: true
-  blocks_product_thinking: false
-  preferred_executor: mac
-
 current_business_node:
-  id: thesis_attention_lifecycle
+  id: risk_abstention_and_validation
   work: >-
-    Define thesis states, legal transitions, review triggers, attention budgets,
-    decay, invalidation, archive, reopening, notification materiality, and loop termination.
+    Lock risk and abstention rules, claim limits, validation design,
+    baselines, success metrics, and Stage 1 exit evidence.
   completed_foundation:
-    - unattended_product_responsibility
-    - two_tier_autonomous_discovery
-    - complete_judgment_inventory
-    - authority_levels_and_fallbacks
-  explicitly_not_current:
-    - migration_perfection
-    - immediate_pr_16_closure
-    - direct_feature_implementation
-    - trading_action_design
+    - product_responsibility
+    - autonomous_discovery
+    - judgment_authority
+    - thesis_lifecycle
+    - attention_and_resource_policy
 
 read_order:
-  - README.md
   - PROJECT_MAINLINE.md
   - project/CANONICAL_STATE.yaml
   - project/PROJECT_BRAIN.md
   - project/AUTONOMOUS_JUDGMENT_CONTRACT.md
+  - project/THESIS_LIFECYCLE.md
+  - project/ATTENTION_RESOURCE_POLICY.md
   - project/PROJECT_PLAN.md
   - project/DISCUSSION_STATE.yaml
   - project/DECISION_REGISTER.yaml
   - project/LEARNING_QUEUE.yaml
-  - open PRs and execution evidence
