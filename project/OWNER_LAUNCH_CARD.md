@@ -1,7 +1,7 @@
 # Owner Launch Card
 
 **Status:** ACTIVE  
-**Current node:** Stage 2 foundation spike repair 003  
+**Current node:** Stage 2 foundation spike repair 004  
 **Issue:** #25  
 **Draft PR:** #26  
 **Branch:** `audit/stage2-foundation-spike`
@@ -18,14 +18,16 @@ Fetch GitHub and read:
 1. PROJECT_MAINLINE.md
 2. project/CANONICAL_STATE.yaml
 3. project/INTEGRATION_POLICY.md
-4. the latest comment on Issue #25 titled STAGE2-FOUNDATION-SPIKE-REPAIR-003
-5. the latest exact-Head acceptance comment on Draft PR #26
+4. project/OWNER_LAUNCH_CARD.md
+5. project/EXECUTOR_DISPATCH.yaml
+6. the latest comment on Issue #25 titled STAGE2-FOUNDATION-SPIKE-REPAIR-004
+7. the latest exact-Head acceptance comment on Draft PR #26
 
 Continue on the existing branch:
 audit/stage2-foundation-spike
 
 The reviewed remote Head is:
-030417dc78c84fcdf24fd0d58f95a118a5fb6a52
+dbdf18f80147fa1de059b37b867dfb6d6b4bec01
 
 Repair the same Draft PR #26 exactly as specified.
 Do not create another branch or PR.
@@ -35,10 +37,10 @@ Do not create a daemon, cron job, login item, or persistent background process.
 Do not make real or paid model calls.
 Do not modify or merge Draft PR #16.
 
-Complete R07 through R13.
-Make the committed report, test output, PR body, Issue receipt, and exact remote Head agree.
+Complete R14 through R20.
+Make revision immutability, conditional claiming, checkpoint-preserving resume, offline Pydantic AI execution, and evidence consistency real rather than name-only tests.
 Run focused tests until zero failures and git diff --check passes.
-Push the repaired exact Head, update PR #26 and Issue #25 with the required final receipt, then stop.
+Push the repaired exact remote Head, update PR #26 and Issue #25 with the required receipt, then stop.
 Do not start the product slice.
 ```
 
