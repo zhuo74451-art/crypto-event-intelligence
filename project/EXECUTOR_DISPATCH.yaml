@@ -1,4 +1,4 @@
-version: "2.1"
+version: "2.2"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
@@ -7,12 +7,12 @@ mode: Auto
 goal_mode: disabled
 
 current_dispatch:
-  node: stage3_wp01_repair_001
+  node: stage3_wp01_repair_002
   issue: 27
   pr: 28
   branch: feat/stage3-wp01-production-foundation
-  reviewed_head: 3d33006f82a448f6fed500776a701ab784c7ae69
-  instruction_file: project/work_orders/STAGE3_WP01_REPAIR_001.md
+  reviewed_head: dfc10ee86969012f2ac1b331b14d3947d5b62560
+  instruction_file: project/work_orders/STAGE3_WP01_REPAIR_002.md
   terminal_behavior: stop_after_receipt
 
 post_execution:
