@@ -574,3 +574,19 @@ class TestCorrectionChainSplit:
         assert "eid_dup" in error_text or "e_dup" in error_text
         assert "BUILD" in error_text
         assert "BLIND" in error_text
+        # Should include exact case IDs in diagnostics
+        assert "Violating case IDs" in error_text or "Chain members" in error_text
+
+    def test_conflicting_chain_roots_rejected(self):
+        """Two manifests with same chain_id but different chain_root_case_id."""
+        manifests = [
+            self.make_manifest("case_a", SplitLabel.BUILD,
+                               correction_chain_id="chain_conflict",
+                               chain_root_case_id="root_a"),
+            self.make_manifest("case_b", SplitLabel.BUILD,
+                               correction_chain_id="chain_conflict",
+                               chain_root_case_id="root_b"),
+        ]
+        result = CorrectionChainSplitValidator.validate(manifests)
+        assert not result.is_valid
+        assert any("conflicting declared roots" in e for e in result.errors)

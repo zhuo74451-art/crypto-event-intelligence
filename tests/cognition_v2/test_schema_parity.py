@@ -153,6 +153,69 @@ class TestSchemaParity:
             f"Expected difference about 'name' column, got: {result.differences}"
         )
 
+    def test_extra_fk_detected(self):
+        """Extra FK in migration not in ORM is detected."""
+        engine = _alembic_engine()
+        from sqlalchemy import Table, MetaData, Column, String, ForeignKey
+
+        # Create an altered schema that has one fewer FK
+        altered_tables = {}
+        for name, table in Base.metadata.tables.items():
+            if name == "review_intents":
+                # Build review_intents without FK constraint on thesis_id
+                fresh_meta = MetaData()
+                fresh_cols = []
+                for c in table.columns:
+                    if c.name == "thesis_id":
+                        fresh_cols.append(Column(
+                            c.name, c.type, primary_key=c.primary_key,
+                            nullable=c.nullable,
+                        ))
+                    else:
+                        fresh_cols.append(Column(
+                            c.name, c.type, primary_key=c.primary_key,
+                            nullable=c.nullable,
+                        ))
+                altered = Table(name, fresh_meta, *fresh_cols)
+                altered_tables[name] = altered
+            else:
+                altered_tables[name] = table
+
+        result = schema_parity.schema_parity_check(engine, altered_tables)
+        self._cleanup(engine)
+        # The migration has an FK on thesis_id that ORM doesn't have — should report extra FK
+        extra_fk_diffs = [d for d in result.differences if "fk_extra" in d.field]
+        assert len(extra_fk_diffs) > 0, (
+            f"Expected extra FK detected, got diffs: {result.differences}"
+        )
+
+    def test_extra_unique_constraint_detected(self):
+        """Extra unique constraint in migration not in ORM is detected."""
+        engine = _alembic_engine()
+        from sqlalchemy import Table, MetaData, Column, String
+
+        # Create an altered schema with no unique constraints on event_revisions
+        altered_tables = {}
+        for name, table in Base.metadata.tables.items():
+            if name == "event_revisions":
+                fresh_meta = MetaData()
+                fresh_cols = [Column(
+                    c.name, c.type, primary_key=c.primary_key,
+                    nullable=c.nullable,
+                ) for c in table.columns]
+                altered = Table(name, fresh_meta, *fresh_cols)
+                altered_tables[name] = altered
+            else:
+                altered_tables[name] = table
+
+        result = schema_parity.schema_parity_check(engine, altered_tables)
+        self._cleanup(engine)
+        # The migration has UQ constraints that ORM doesn't — should report extra UQ
+        extra_uq_diffs = [d for d in result.differences if "UQ_extra" in d.field]
+        assert len(extra_uq_diffs) > 0, (
+            f"Expected extra UQ detected, got diffs: {result.differences}"
+        )
+
     def test_migration_failure_fatal(self):
         """Migration failure remains fatal."""
         import alembic.command
@@ -558,3 +621,135 @@ class TestHistoricalIdentity:
             result = CorrectionChainSplitValidator.validate(manifests)
             assert not result.is_valid, "Should detect cross-split chain"
             assert any("spans multiple splits" in e for e in result.errors)
+
+    def test_valid_persisted_chain_passes(self):
+        """Same-split chain survives reopen on Alembic-only DB."""
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "valid_chain_persisted.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="r_valid", case_id="root_v", event_family="regulatory",
+                    split_label="BUILD", title="Root",
+                    evidence_manifest_hash="a",
+                    correction_chain_id="chain_valid", chain_root_case_id="root_v",
+                ))
+                s.add(HistoricalCaseModel(
+                    id="c_valid", case_id="child_v", event_family="regulatory",
+                    split_label="BUILD", title="Child",
+                    evidence_manifest_hash="b",
+                    correction_chain_id="chain_valid", chain_root_case_id="root_v",
+                    correction_type="correction",
+                ))
+            engine1.dispose()
+
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                        correction_type=CorrectionType(r.correction_type) if r.correction_type else None,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(manifests)
+            assert result.is_valid, f"Valid same-split chain should pass: {result.errors}"
+
+    def test_persisted_event_identity_across_splits(self):
+        """Cross-split event identity fails on Alembic-only DB after reopen."""
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "event_id_cross_split.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="eid_build", case_id="case_e1", event_family="regulatory",
+                    split_label="BUILD", title="Build case",
+                    evidence_manifest_hash="a",
+                    event_identity_id="eid_x",
+                ))
+                s.add(HistoricalCaseModel(
+                    id="eid_blind", case_id="case_e2", event_family="regulatory",
+                    split_label="BLIND", title="Blind case",
+                    evidence_manifest_hash="b",
+                    event_identity_id="eid_x",
+                ))
+            engine1.dispose()
+
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(manifests)
+            assert not result.is_valid, "Should detect cross-split event identity"
+            assert any("multiple splits" in e for e in result.errors)
+
+    def test_persisted_blind_chain_tuning_exclusion(self):
+        """BLIND chain in BUILD/DEVELOPMENT detected on Alembic-only DB after reopen."""
+        with tempfile.TemporaryDirectory() as td:
+            db_path = os.path.join(td, "blind_chain_exclusion.db")
+            engine1, factory1 = _alembic_factory(db_path)
+            with cognition_session_scope(factory1) as s:
+                s.add(HistoricalCaseModel(
+                    id="r_blind", case_id="root_b", event_family="regulatory",
+                    split_label="BUILD", title="Root",
+                    evidence_manifest_hash="a",
+                    correction_chain_id="chain_blind", chain_root_case_id="root_b",
+                ))
+                s.add(HistoricalCaseModel(
+                    id="c_blind", case_id="blind_c", event_family="regulatory",
+                    split_label="BLIND", title="Blind child",
+                    evidence_manifest_hash="b",
+                    correction_chain_id="chain_blind", chain_root_case_id="root_b",
+                    correction_type="correction",
+                ))
+            engine1.dispose()
+
+            engine2, factory2 = _alembic_factory(db_path)
+            with cognition_session_scope(factory2) as s:
+                rows = s.query(HistoricalCaseModel).all()
+                manifests = [
+                    HistoricalCaseManifest(
+                        case_id=r.case_id, event_family=r.event_family,
+                        market_regime=r.market_regime or "unknown",
+                        split_label=SplitLabel(r.split_label) if r.split_label else SplitLabel.BUILD,
+                        title=r.title,
+                        evidence_manifest_hash=r.evidence_manifest_hash or "",
+                        event_identity_id=r.event_identity_id,
+                        correction_chain_id=r.correction_chain_id,
+                        chain_root_case_id=r.chain_root_case_id,
+                        correction_type=CorrectionType(r.correction_type) if r.correction_type else None,
+                    )
+                    for r in rows
+                ]
+            engine2.dispose()
+
+            from market_radar.cognition_v2.replay.contracts import CorrectionChainSplitValidator
+            result = CorrectionChainSplitValidator.validate(manifests)
+            assert not result.is_valid, "Should detect BLIND chain in BUILD"
+            assert any("BLIND" in e for e in result.errors)

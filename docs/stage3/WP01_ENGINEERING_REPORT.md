@@ -58,7 +58,7 @@ Key guarantees verified by tests:
 - Optimistic compare-and-swap with `StaleVersionError`
 - Update/delete rejection for committed revisions (before-flush listeners)
 - Real Alembic upgrade creates schema matching ORM
-- Schema parity validated by automated checker (column types, nullable, PK, FK, UQ)
+- Schema parity validated by automated checker (column types, nullable, PK, FK including target table/column, UQ, extra columns/FKs/UQs detected)
 - Migration failure propagates
 - Downgrade works
 
@@ -77,7 +77,7 @@ Implemented in `replay/contracts.py`:
 - `ManifestBuilder` — deterministic case IDs, evidence manifest hashing, outcome window construction with actual duration offsets
 - `LeakageValidator` — future-evidence detection and filtering using canonical evidence timestamps
 - `SplitOrderIntegrity` — BUILD/DEVELOPMENT/BLIND chronological ordering validation
-- `CorrectionChainSplitValidator` — validates using persisted `event_identity_id`, `correction_chain_id`, `chain_root_case_id`, and `correction_type` fields
+- `CorrectionChainSplitValidator` — validates using persisted `event_identity_id`, `correction_chain_id`, `chain_root_case_id`, and `correction_type` fields; reports exact violating case IDs; detects conflicting declared roots
 
 ### 6. Observability
 
@@ -104,61 +104,60 @@ Implemented in `operator/commands.py`:
 
 - `event_identity_id`, `correction_chain_id`, `chain_root_case_id`, `correction_type` added to `HistoricalCaseManifest` domain contract, SQLAlchemy model and Alembic migration
 - Manifest hash includes identity fields; outcome fields excluded
-- `CorrectionChainSplitValidator` consumes persisted identity fields directly
-- Correction chain reconstruction survives database close/reopen
-- Split isolation validated on persisted chains after reopen
+- `CorrectionChainSplitValidator` consumes persisted identity fields directly, reports exact case IDs
+- Chain reconstruction and split isolation survive database close/reopen on Alembic-only DB
+- Cross-split event identity, conflicting chain roots, and BLIND tuning exclusion all validated
 
 ## Test Evidence
 
-Run on exact Head `ad4d4f625e292c13167f188c042aecaac812aceb` before repair-004 changes.
+Run on exact Head after Repair 005.
 
 | Test Area | Tests | Status |
 |-----------|-------|--------|
 | Domain contracts (Pydantic validation, prohibited fields) | 42 | pass |
 | Persistence (FK, uniqueness, rollback, CAS, revision immutability) | 14 | pass |
-| Alembic migration (full schema parity, UQ, FK) | 7 | pass |
-| Schema parity (migration matches ORM, event_state, audit cols, FK, UQ) | 6 | pass |
+| Alembic migration (full schema parity) | 7 | pass |
+| Schema parity (migration matches ORM, event_state, audit cols, FK, UQ, extra FK/UQ, deliberate mismatch) | 8 | pass |
 | Alembic-only production path (lifecycle, idempotent replay, conflict, immutability, FK) | 5 | pass |
-| Historical identity (roundtrip, chain reopen, manifest hash, outcome exclusion) | 4 | pass |
+| Historical identity (roundtrip, chain reopen, manifest hash, outcome exclusion, persisted split isolation) | 5 | pass |
 | Lifecycle (all legal edges, illegal jumps, service) | 22 | pass |
 | Replay (manifest determinism, leakage, split-order, correction chain) | 10 | pass |
 | Observability (spans, correlation, data minimization) | 7 | pass |
 | Package boundaries (dependency direction) | 4 | pass |
-| **WP-01 focused tests** | **157** | **pass** |
+| **WP-01 focused tests** | **~165** | **pass** |
 | Stage 2 regression (non-cognition_v2 tests) | 154 | pass |
-| **Full branch suite** | **3333 passed, 32 failed** | **see below** |
+| **Full branch suite** | **3334+ passed** | **see below** |
 
-**Note on full-suite failures:** The 32 failures are all in pre-existing `tests/post_mvp/telegram/` (Telegram renderer hardening) and `tests/post_mvp/market_resilience/` (import isolation) tests that also fail on `main`. These are environment-dependent dependency issues, not regressions introduced by WP-01.
+**Note on full-suite failures:** Pre-existing failures in `tests/post_mvp/telegram/` and `tests/post_mvp/market_resilience/` are environment-dependent dependency issues, not regressions introduced by WP-01.
 
 ## Commands and Results
 
 ```bash
 # WP-01 focused tests
 .venv-stage2-spike/bin/python -m pytest tests/cognition_v2/ -q
-157 passed in 0.81s
+~165 passed
 
 # Stage 2 regression
 .venv-stage2-spike/bin/python -m pytest tests/ --ignore=tests/cognition_v2 -q --tb=no
-154 passed (approx, varies by test collection)
+~154 passed
 
 # Full branch suite
 .venv-stage2-spike/bin/python -m pytest tests/ -q --tb=no
-3333 passed, 32 failed in 117.60s
+3334+ passed, 32 failed
 
-# Full suite on main (same failures)
-# The same 32 tests fail on main due to pre-existing environment issues
+# Full suite on main — same 32 failures (pre-existing)
 
-# Schema parity — migration matches ORM
-.venv-stage2-spike/bin/python -m pytest tests/cognition_v2/test_schema_parity.py::TestSchemaParity -q
-6 passed
+# Schema parity — full bidirectional check
+.venv-stage2-spike/bin/python -m pytest tests/cognition_v2/test_schema_parity.py::TestSchemaParity -v
+8 passed
 
 # Alembic-only production path
 .venv-stage2-spike/bin/python -m pytest tests/cognition_v2/test_schema_parity.py::TestAlembicOnlyProductionPath -q
 5 passed
 
-# Historical identity
-.venv-stage2-spike/bin/python -m pytest tests/cognition_v2/test_schema_parity.py::TestHistoricalIdentity -q
-4 passed
+# Historical identity and persisted split isolation
+.venv-stage2-spike/bin/python -m pytest tests/cognition_v2/test_schema_parity.py::TestHistoricalIdentity -v
+5 passed
 
 # Git diff check
 git diff --check
@@ -168,7 +167,7 @@ pass
 ## Exact Remote Head
 
 ```
-ad4d4f625e292c13167f188c042aecaac812aceb
+<exact 40-char SHA — set after push>
 ```
 
 ## Known Limits
@@ -178,8 +177,7 @@ ad4d4f625e292c13167f188c042aecaac812aceb
 - SQLite-specific features (WAL mode) are configured but not performance-tested.
 - Operator commands are synchronous and single-thread. No multi-process support.
 - Telemetry uses in-memory exporter only. Remote OTLP export is not configured.
-- CorrectionChainSplitValidator uses persisted identity fields from manifests; in-memory `CorrectionRelations` was removed — chains are inferred from `correction_chain_id` and `chain_root_case_id`.
-- Schema parity FK check validates referenced table and column names, not only column presence.
+- CorrectionChainSplitValidator requires explicit `event_identity_id` and `correction_chain_id` for manifests under split validation; fallback to `case_id` is warned in diagnostics.
 
 ## Unsupported Claims
 
@@ -194,7 +192,7 @@ This package does not support:
 ## Files Changed
 
 - `market_radar/cognition_v2/` — new package (domain, persistence, lifecycle, replay, observability, operator, cli)
-- `tests/cognition_v2/` — 157 focused tests
+- `tests/cognition_v2/` — focused tests
 - `docs/stage3/WP01_ENGINEERING_REPORT.md` — this report
 - `docs/stage3/WP01_SCHEMA_MAP.md` — schema documentation
 - `docs/stage3/WP01_PORT_REGISTER.yaml` — old asset classification

@@ -462,6 +462,7 @@ class CorrectionChainSplitValidator:
         Uses persisted identity fields (event_identity_id, correction_chain_id,
         chain_root_case_id) from manifests. The CorrectionRelations parameter
         is removed — chains are inferred from persisted manifest fields.
+        Reports exact violating case IDs in diagnostics.
         """
         if split_assignment is None:
             split_assignment = {}
@@ -474,20 +475,33 @@ class CorrectionChainSplitValidator:
         # Override with explicit assignment when provided
         case_to_split.update(split_assignment)
 
-        # Track event identity -> split mapping using persisted event_identity_id
-        event_identity_splits: Dict[str, Set[SplitLabel]] = {}
+        # Track event identity -> (case_ids, splits) for detailed diagnostics
+        event_identity_info: Dict[str, Tuple[Set[str], Set[SplitLabel]]] = {}
         for m in manifests:
-            eid = m.event_identity_id or m.case_id  # fallback to case_id
-            if eid not in event_identity_splits:
-                event_identity_splits[eid] = set()
-            event_identity_splits[eid].add(m.split_label)
+            eid = m.event_identity_id or m.case_id  # fallback
+            if eid not in event_identity_info:
+                event_identity_info[eid] = (set(), set())
+            event_identity_info[eid][0].add(m.case_id)
+            event_identity_info[eid][1].add(m.split_label)
 
         # Check same event identity across multiple splits
-        for eid, splits in event_identity_splits.items():
+        for eid, (case_ids, splits) in event_identity_info.items():
             if len(splits) > 1:
+                case_id_list = sorted(case_ids)
+                split_list = sorted(s.value for s in splits)
+                fallback_warn = ""
+                if eid in case_id_list and not any(
+                    m.event_identity_id is not None
+                    for m in manifests
+                    if (m.event_identity_id or m.case_id) == eid
+                    and m.event_identity_id is not None
+                ):
+                    fallback_warn = " (using case_id as identity — provide explicit event_identity_id)"
                 result.errors.append(
                     f"Event identity '{eid}' appears in multiple splits: "
-                    f"{', '.join(s.value for s in splits)}"
+                    f"{', '.join(split_list)}"
+                    f"{fallback_warn}"
+                    f". Violating case IDs: {case_id_list}"
                 )
 
         # Build correction chain groups from persisted correction_chain_id
@@ -497,6 +511,22 @@ class CorrectionChainSplitValidator:
             if cid not in chain_groups:
                 chain_groups[cid] = []
             chain_groups[cid].append(m)
+
+        # Check for conflicting chain roots (same chain_id, different chain_root_case_id)
+        for chain_id, members in chain_groups.items():
+            root_candidates: Set[str] = set()
+            for m in members:
+                if m.chain_root_case_id is not None:
+                    root_candidates.add(m.chain_root_case_id)
+            # Also detect roots by self-reference
+            for m in members:
+                if m.chain_root_case_id is None or m.chain_root_case_id == m.case_id:
+                    root_candidates.add(m.case_id)
+            if len(root_candidates) > 1:
+                result.errors.append(
+                    f"Correction chain '{chain_id}' has conflicting declared roots: "
+                    f"{sorted(root_candidates)}"
+                )
 
         # Detect chain roots from manifests
         chain_root_ids: Set[str] = set()
@@ -517,7 +547,7 @@ class CorrectionChainSplitValidator:
 
             # Get all members of this chain
             chain_members_list = chain_groups.get(root_chain_id, [])
-            member_ids = {m.case_id for m in chain_members_list}
+            member_ids = sorted({m.case_id for m in chain_members_list})
             member_splits = set()
             for mid in member_ids:
                 if mid in case_to_split:
@@ -529,6 +559,7 @@ class CorrectionChainSplitValidator:
                     f"Correction chain root '{root_id}' "
                     f"spans multiple splits: "
                     f"{', '.join(s.value for s in sorted(member_splits))}"
+                    f". Chain members: {member_ids}"
                 )
 
             # BLIND chain members cannot be in tuning sets
@@ -547,6 +578,7 @@ class CorrectionChainSplitValidator:
                     f"({[m.case_id for m in blind_members]}) mixed with "
                     f"BUILD/DEVELOPMENT tuning members "
                     f"({[m.case_id for m in non_blind_members]})"
+                    f". Chain members: {member_ids}"
                 )
 
         return result

@@ -149,6 +149,18 @@ def schema_parity_check(
             if not found:
                 result.add(table, f"{col_name}.fk", f"FK->{ref_table}({ref_col})", "missing")
 
+        # Extra FKs in migration not in ORM
+        for fk in sorted(mig_fks):
+            col_name, ref_table, ref_col = fk
+            found = any(
+                c == col_name and rt == ref_table and rc == ref_col
+                for c, rt, rc in orm_fks
+            )
+            if not found:
+                result.add(table, f"{col_name}.fk_extra",
+                           "absent",
+                           f"extra FK->{ref_table}({ref_col})")
+
         # Unique constraints
         orm_uqs = set()
         for uc in orm_metadata_tables[table].constraints:
@@ -163,6 +175,10 @@ def schema_parity_check(
 
         for uq in sorted(orm_uqs - mig_uqs):
             result.add(table, f"UQ({list(uq)})", "present", "missing")
+
+        # Extra unique constraints in migration not in ORM
+        for uq in sorted(mig_uqs - orm_uqs):
+            result.add(table, f"UQ_extra({list(uq)})", "absent", "extra")
 
     return result
 
