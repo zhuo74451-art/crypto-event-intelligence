@@ -6,61 +6,71 @@ The canonical state is `project/CANONICAL_STATE.yaml`.
 
 Build an unattended internal market-cognition operator that discovers, verifies, interprets and maintains a bounded portfolio of crypto-market theses.
 
-Its first outcomes are autonomous research prioritization and autonomous watch-portfolio maintenance. It is not a trade-instruction or public-advice product.
+Its first outcomes are autonomous research prioritization and autonomous watch-portfolio maintenance. It is not a trade-instruction, wallet, execution or public-advice product.
 
-## Core path
+## Accepted cognition shape
 
 ```text
-Evidence
-  -> Event
-  -> Interpretive Claim
-  -> Thesis
-  -> Exposure
-  -> Attention State
-  -> Lifecycle Revision
+Approved Inputs
+  -> Deterministic Evidence Gate
+  -> Event and Candidate Builder
+  -> Thesis Synthesis
+  -> Risk Challenge
+  -> Deterministic Arbitration
+  -> Thesis Revision and Attention Action
+  -> Durable Follow-up Review
+  -> Material Notification or Silence
 ```
 
-## Accepted foundation
+The two semantic passes are schema-bound responsibilities, not autonomous conversational agents. Deterministic rules own fact permission, lifecycle, resources and external effects.
 
-- broad discovery with strict active admission;
-- judgment ownership and L0-L3 authority;
-- legal thesis lifecycle and revision history;
-- portfolio caps, review cadence, no-change decay and recovery;
-- typed claims, risk dimensions and mandatory abstention;
-- point-in-time replay, unattended shadow, adversarial and recovery validation;
-- sparse material notifications and explicit owner-governance exceptions.
+## Stage 2 repository judgment
 
-The formal contracts are under `project/` and indexed by `CANONICAL_STATE.yaml`.
+Draft PR #16 is not the product base. It contains useful acquisition, contract, exact-grouping, fixture and operator material, but its active cognition path remains one-shot, heuristic, numeric-confidence and packet-centered.
+
+The first slice excludes:
+
+- eight strategy evaluators;
+- universal eleven-domain world model;
+- keyword mechanisms;
+- arithmetic confidence;
+- current strategy arbitration;
+- current one-shot Shadow claims.
+
+Only individually classified assets may be ported.
+
+## Foundation state
+
+Accepted:
+
+- SQLAlchemy and Alembic for application persistence;
+- explicit append-only domain revisions;
+- two semantic passes;
+- OpenTelemetry traces and metrics;
+- W3C PROV concepts in relational provenance.
+
+Conditional:
+
+- Pydantic AI as the structured model gateway;
+- python-statemachine versus a table validator;
+- DBOS versus a minimal local durable-review runtime.
+
+Current DBOS material describes a Postgres-backed runtime. No Postgres service or background process is authorized during the Stage 2 spike.
 
 ## Stable rules
 
-1. Accepted responsibility and planning changes are synchronized to `main` in the same discussion cycle.
-2. QuickFlash remains a separate broad-recall acquisition provider.
+1. Accepted decisions are synchronized to `main` in the same cycle.
+2. QuickFlash remains a separate broad-recall provider.
 3. Evidence, events, interpretations and theses remain separate.
 4. Point-in-time integrity and future-data blocking are mandatory.
 5. Semantic roles cannot override deterministic prohibitions.
-6. Clear reversible low-risk defaults are applied directly and reported.
-7. Ordinary uncertainty remains inside the system through narrowing, abstention, delay, downgrade or archive.
-8. Longitudinal shadow evidence is required before autonomous judgment is trusted.
-9. Existing modules are classified as `RETAIN`, `ADAPT`, `QUARANTINE`, `REMOVE` or `MISSING` before implementation work.
-10. Future work bases must contain the canonical fingerprint.
-
-## Current reality
-
-Stage 1 is accepted as a responsibility and audit standard. It does not prove that the current code implements the design or that the system improves market judgment.
-
-Draft PR #16 remains a candidate component pool. The Mac environment is sufficient for discussion and future execution.
+6. Ordinary uncertainty remains inside the system through narrowing, abstention, delay, downgrade or archive.
+7. Longitudinal Shadow evidence is required before autonomous judgment is trusted.
+8. Clear reversible low-risk audit choices are applied directly and reported.
+9. Product implementation waits until Stage 2 closes.
 
 ## Current business node
 
-The active node is **External Prior Art Challenge and Repository Responsibility Audit**.
+Run the bounded **Foundation Compatibility Spike** defined in `project/STAGE2_FOUNDATION_COMPATIBILITY_SPIKE.md`.
 
-The next work is to:
-
-- compare mature foundations for durable workflow, state, evidence, research, calibration, evaluation and observability;
-- challenge the proposed role architecture with simpler alternatives;
-- inspect `main`, Draft PR #16, tests, artifacts and runtime paths;
-- classify every relevant component;
-- identify the smallest complete engineering route.
-
-No product implementation begins until this audit is accepted.
+The spike may create isolated audit evidence only. It cannot implement product behavior, start Postgres, run a daemon, use a paid model, merge PR #16 or begin the first product slice.
