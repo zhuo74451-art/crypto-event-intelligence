@@ -1,0 +1,28 @@
+# Stage 2 Foundation Spike — Python Dependencies
+# Generated 2026-07-01 with Python 3.12.9
+
+## Core dependencies
+dbos==2.26.0
+pydantic==2.13.4
+pydantic-ai==2.2.0
+sqlalchemy==2.0.51
+alembic==1.18.5
+python-statemachine==3.2.0
+opentelemetry-api==1.42.1
+opentelemetry-sdk==1.42.1
+
+## Test dependency
+pytest==9.1.1
+
+## Transitive dependencies (key)
+httpx==0.28.1
+pyyaml==6.0.3
+greenlet==3.5.3
+typing_extensions==4.15.0
+pydantic-core==2.46.4
+Mako==1.3.12
+MarkupSafe==3.0.3
+tenacity==9.1.4
+psycopg==3.3.4 (DBOS requirement)
+psycopg-binary==3.3.4 (DBOS requirement)
+websockets==16.0 (DBOS requirement)

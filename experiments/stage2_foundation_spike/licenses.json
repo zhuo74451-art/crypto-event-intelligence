@@ -1,0 +1,18 @@
+[
+  {"package": "dbos", "version": "2.26.0", "license": "MIT"},
+  {"package": "pydantic", "version": "2.13.4", "license": "MIT"},
+  {"package": "pydantic-ai", "version": "2.2.0", "license": "MIT"},
+  {"package": "sqlalchemy", "version": "2.0.51", "license": "MIT"},
+  {"package": "alembic", "version": "1.18.5", "license": "MIT"},
+  {"package": "python-statemachine", "version": "3.2.0", "license": "MIT"},
+  {"package": "opentelemetry-api", "version": "1.42.1", "license": "Apache-2.0"},
+  {"package": "opentelemetry-sdk", "version": "1.42.1", "license": "Apache-2.0"},
+  {"package": "pytest", "version": "9.1.1", "license": "MIT"},
+  {"package": "httpx", "version": "0.28.1", "license": "BSD"},
+  {"package": "pyyaml", "version": "6.0.3", "license": "MIT"},
+  {"package": "pydantic-core", "version": "2.46.4", "license": "MIT"},
+  {"package": "typing-extensions", "version": "4.15.0", "license": "MIT"},
+  {"package": "psycopg", "version": "3.3.4", "license": "LGPL-3.0"},
+  {"package": "cryptography", "version": "49.0.0", "license": "Apache-2.0 / BSD"},
+  {"package": "Mako", "version": "1.3.12", "license": "MIT"}
+]
