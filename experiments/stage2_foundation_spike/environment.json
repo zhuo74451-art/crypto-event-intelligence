@@ -1,0 +1,11 @@
+{
+  "python_version": "3.12.9",
+  "architecture": "arm64",
+  "platform": "macOS 14.1 (Sonoma)",
+  "kernel": "Darwin 23.1.0 arm64",
+  "host": "zhuodeMacBook-Pro.local",
+  "venv_path": ".venv-stage2-spike",
+  "python_executable": "/Users/zhuo/Desktop/市场信号/crypto-event-intelligence/.python312/bin/python3.12",
+  "pip_version": "26.1.2",
+  "timestamp": "2026-07-01T06:30:00Z"
+}
