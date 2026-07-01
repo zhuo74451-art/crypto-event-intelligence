@@ -1,4 +1,4 @@
-version: "1.0"
+version: "1.1"
 status: active
 
 signals:
@@ -18,41 +18,77 @@ signals:
     type: canonical_state_drift
     observation: >-
       Accepted project direction and later implementation history accumulated
-      in a long-lived Draft branch while main retained an earlier implementation boundary.
+      outside main while the canonical entry retained an earlier product model.
     implication: >-
-      Canonical state must be integrated before new work bases are created.
-    behavior_change: require_canonical_fingerprint
+      Accepted identity, responsibility, autonomy, boundary, and planning changes
+      must be synchronized to main during the same discussion cycle when writes
+      are available.
+    behavior_change: immediate_canonical_sync
 
   - id: LEARN-003
     status: active
-    type: migration_gap
+    type: migration_overweight
     observation: >-
-      The Mac clone passed core suites but exposed unsupported system Python,
-      missing Git identity and CLI setup, local virtual-environment noise, and
-      three full-suite compatibility failures.
+      Migration hygiene temporarily displaced the real work of thinking through
+      the project, defining autonomy, and planning the next product generation.
     implication: >-
-      Environment cutover acceptance must include the real active path,
-      supported Python, Git tooling, and classified compatibility failures.
-    behavior_change: pending_validation
+      Supporting environment work must not become the business node when the
+      environment is already operational enough for product reasoning.
+    behavior_change: migration_nonblocking_for_discussion
 
   - id: LEARN-004
     status: active
     type: github_write_incident
     observation: >-
       A placeholder file was accidentally created and immediately removed during
-      remote inspection, leaving two no-diff commits on the execution branch.
+      remote inspection, leaving two no-diff commits on an execution branch.
     implication: >-
-      Inspection and mutation paths must remain separated; all GitHub writes need
-      an explicit intended artifact and target branch.
+      Inspection and mutation paths remain separate; every repository write needs
+      an explicit artifact, intended state change, and ref.
     behavior_change: strict_write_preflight
 
   - id: LEARN-005
+    status: active
+    type: product_responsibility_reopen
+    observation: >-
+      The owner rejected a passive market-assessment tool and required a fully
+      unattended system that performs routine judgments itself.
+    implication: >-
+      The central object changes from one-shot packets to an autonomous thesis
+      portfolio with discovery, lifecycle, attention, risk, and resource control.
+    behavior_change: reopen_stage_1_before_code_audit
+
+  - id: LEARN-006
+    status: active
+    type: owner_loop_removal
+    observation: >-
+      The owner does not want to decide routine importance, direction, follow-up,
+      or watchlist inclusion.
+    implication: >-
+      Ordinary uncertainty must produce machine actions such as evidence work,
+      abstention, review, downgrade, invalidation, or archive. Owner escalation is
+      reserved for governance and high-risk external effects.
+    behavior_change: unattended_default
+
+  - id: LEARN-007
+    status: active
+    type: autonomous_discovery_permission
+    observation: >-
+      The owner allows the system to discover new themes and asset observations
+      outside a static initial list.
+    implication: >-
+      Discovery needs explicit crypto-domain scope, approved evidence, cost and
+      attention ceilings, mechanism requirements, exit conditions, and no silent
+      authority expansion.
+    behavior_change: limited_autonomous_discovery
+
+  - id: LEARN-008
     status: candidate
     type: delivery_cost
     observation: >-
-      Repeated micro-closure rounds on the same integration chain increased
-      context recovery, owner operations, and semantic drift.
+      Repeated micro-closure rounds on an outdated product model increased context
+      recovery, owner operations, and semantic drift.
     implication: >-
-      After canonical and migration gates pass, compile one bounded Hardening
-      delivery train rather than more fixture-only micro-rounds.
-    behavior_change: shadow_until_next_delivery
+      Lock the autonomous responsibility model, audit existing code once, then
+      compile one bounded complete delivery route rather than continuing local patches.
+    behavior_change: shadow_until_responsibility_audit
