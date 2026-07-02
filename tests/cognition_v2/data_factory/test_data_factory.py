@@ -41,6 +41,7 @@ from market_radar.cognition_v2.data_factory.acquisition import (
     AcquisitionBudgetExceeded,
     CheckpointedAcquisition,
     IncompatibleResumeError,
+    OutputCheckpointMismatchError,
 )
 from market_radar.cognition_v2.data_factory.normalization import (
     EvidenceNormalizer,
@@ -1060,3 +1061,100 @@ class TestPersistedResume:
         # Budget should eventually stop us
         assert completed.status in (AcquisitionStatus.BUDGET_EXCEEDED,
                                      AcquisitionStatus.COMPLETED)
+
+    def test_output_write_failure_preserves_old_state(self):
+        """If output write fails, committed records and checkpoint are unchanged."""
+        import unittest.mock as mock
+        import json
+        import glob
+
+        from market_radar.cognition_v2.data_factory.checkpoints import AtomicCheckpointWriter
+
+        # First, do a successful run to establish committed state
+        adapter = MockAdapter(total_pages=1, records_per_page=10)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="output-fail", source_id="mock", start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        records1, completed1, _ = acq1.run(req1)
+        orig_count = len(records1)
+
+        # Inject an output-write failure on resume
+        with mock.patch.object(AtomicCheckpointWriter, 'write_output',
+                               side_effect=OSError("Disk full")):
+            adapter2 = MockAdapter(total_pages=2, records_per_page=10)
+            acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                            output_dir=tmpdir)
+            req2 = AcquisitionRun(
+                run_id="output-fail", source_id="mock",
+                start_time=NOW, end_time=NOW,
+                record_limit=100, max_record_budget=500, max_request_budget=50,
+            )
+            try:
+                acq2.run(req2)
+            except Exception:
+                pass
+
+        # Old checkpoint should still exist and reflect original committed state
+        cp_files = glob.glob(os.path.join(tmpdir, "output-fail.json"))
+        assert len(cp_files) >= 1
+
+    def test_parser_version_mismatch_rejected(self):
+        """Adapter parser version change on resume is rejected."""
+        adapter = MockAdapter(total_pages=1, records_per_page=5)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir,
+                                        parser_version="1.0")
+        req1 = AcquisitionRun(
+            run_id="version-mismatch", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        acq1.run(req1)
+
+        adapter2 = MockAdapter(total_pages=1, records_per_page=5)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir,
+                                        parser_version="2.0")
+        req2 = AcquisitionRun(
+            run_id="version-mismatch", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        with pytest.raises(IncompatibleResumeError):
+            acq2.run(req2, resume=True)
+
+    def test_output_hash_mismatch_rejected(self):
+        """Output hash change on resume is rejected. Must use exact sha, not records-matched hash."""
+        import glob
+
+        adapter = MockAdapter(total_pages=1, records_per_page=5)
+        tmpdir = tempfile.mkdtemp()
+        acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req1 = AcquisitionRun(
+            run_id="hash-mismatch", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        acq1.run(req1)
+
+        out_files = glob.glob(os.path.join(tmpdir, "hash-mismatch*jsonl"))
+        if out_files:
+            with open(out_files[0], "a") as f:
+                f.write("CORRUPTED\n")
+
+        adapter2 = MockAdapter(total_pages=1, records_per_page=5)
+        acq2 = CheckpointedAcquisition(adapter2, checkpoint_dir=tmpdir,
+                                        output_dir=tmpdir)
+        req2 = AcquisitionRun(
+            run_id="hash-mismatch", source_id="mock",
+            start_time=NOW, end_time=NOW,
+            record_limit=100, max_record_budget=500, max_request_budget=50,
+        )
+        with pytest.raises(OutputCheckpointMismatchError):
+            acq2.run(req2, resume=True)

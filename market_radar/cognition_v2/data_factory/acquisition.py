@@ -222,16 +222,7 @@ class CheckpointedAcquisition:
                         f"current has adapter={self._adapter_version} "
                         f"parser={self._parser_version}"
                     )
-                # Load committed output first
-                records, seen_ids = _load_committed_records(output_path)
-                initial_count = len(records)
-                request.total_records = cp_data["total_records_so_far"]
-                request.total_requests = cp_data["total_requests_so_far"]
-                request.failed_requests = cp_data["failed_requests_so_far"]
-                completed_pages = list(cp_data.get("completed_pages", []))
-                page_token = cp_data.get("last_page_token")
-
-                # Verify output SHA-256 and byte size
+                # Verify output SHA-256 and byte size BEFORE loading records
                 cp_sha = cp_data.get("output_sha256", "")
                 cp_size = cp_data.get("output_byte_size", 0)
                 actual_sha = _output_sha256(output_path)
@@ -246,6 +237,15 @@ class CheckpointedAcquisition:
                         f"Output size mismatch: checkpoint={cp_size}, "
                         f"actual={actual_size}"
                     )
+
+                # Load committed output after verification
+                records, seen_ids = _load_committed_records(output_path)
+                initial_count = len(records)
+                request.total_records = cp_data["total_records_so_far"]
+                request.total_requests = cp_data["total_requests_so_far"]
+                request.failed_requests = cp_data["failed_requests_so_far"]
+                completed_pages = list(cp_data.get("completed_pages", []))
+                page_token = cp_data.get("last_page_token")
                 if len(records) != request.total_records:
                     raise OutputCheckpointMismatchError(
                         f"Output has {len(records)} records but checkpoint "
@@ -317,21 +317,27 @@ class CheckpointedAcquisition:
 
                 page_records = page_records[:ceiling]
 
-                new_records = []
+                # Stage new records (don't mutate committed state yet)
+                staged_records = []
+                staged_ids = set()
                 for r in page_records:
                     if r.intake_id not in seen_ids:
-                        seen_ids.add(r.intake_id)
-                        new_records.append(r)
+                        staged_ids.add(r.intake_id)
+                        staged_records.append(r)
 
-                records.extend(new_records)
-                request.total_records += len(new_records)
-                completed_pages.append(page_num)
+                staged_total = len(records) + len(staged_records)
 
-                # Write output atomically BEFORE checkpoint
-                record_dicts = [_serialize_record(r) for r in records]
+                # Write output atomically with staged records
+                staged_dicts = [_serialize_record(r) for r in records + staged_records]
                 output_path = self._writer.write_output(
-                    request.run_id, record_dicts
+                    request.run_id, staged_dicts
                 )
+
+                # Output succeeded — now commit the staged state
+                seen_ids.update(staged_ids)
+                records.extend(staged_records)
+                request.total_records = staged_total
+                completed_pages.append(page_num)
 
                 # Now checkpoint (output already durable)
                 cp_data_out = self._build_checkpoint_data(
