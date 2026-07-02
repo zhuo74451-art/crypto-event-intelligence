@@ -1,7 +1,7 @@
 # Owner Launch Card
 
 **Status:** ACTIVE  
-**Current node:** Stage 3 WP-02 Pilot and Scale 003  
+**Current node:** Stage 3 WP-02 Audit Pilot Scale 004  
 **Issue:** #29  
 **Draft PR:** #30  
 **Branch:** `feat/stage3-wp02-historical-data-factory`
@@ -17,7 +17,7 @@ and the latest exact-Head review on PR #30.
 
 Continue on feat/stage3-wp02-historical-data-factory.
 After safe fast-forward, execute:
-project/work_orders/STAGE3_WP02_PILOT_AND_SCALE_003.md
+project/work_orders/STAGE3_WP02_AUDIT_PILOT_SCALE_004.md
 
 Use the existing branch and Draft PR #30 only.
 Do not merge or begin WP-03.
