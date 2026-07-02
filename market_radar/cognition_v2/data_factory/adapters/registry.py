@@ -150,27 +150,28 @@ class SecEdgarAdapter(HttpAdapter):
 
 
 class FederalReserveAdapter(HttpAdapter):
-    """Federal Reserve — parse press release items from RSS feed."""
+    """Federal Reserve — official press-release RSS feed."""
 
     def __init__(self):
         super().__init__(
             base_url="https://www.federalreserve.gov/feeds",
             rate_limit_per_second=10.0,
-            parser_version="fed-rss-1.0",
+            parser_version="fed-rss-2.0",
         )
 
     def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
         records = []
         text = body.decode("utf-8", errors="replace")
-        entries = re.findall(r'<item>(.*?)</item>', text, re.DOTALL)
-        for entry in entries:
-            title_m = re.search(r'<title[^>]*>(.*?)</title>', entry, re.DOTALL)
-            link_m = re.search(r'<link[^>]*>(.*?)</link>', entry)
-            date_m = re.search(r'<pubDate>(.*?)</pubDate>', entry)
+        for item_text in re.findall(r'<item>(.*?)</item>', text, re.DOTALL):
+            title_m = re.search(r'<title[^>]*>(.*?)</title>', item_text, re.DOTALL)
+            link_m = re.search(r'<link[^>]*>(.*?)</link>', item_text)
+            date_m = re.search(r'<pubDate>(.*?)</pubDate>', item_text)
             title = title_m.group(1).strip() if title_m else "untitled"
-            link = link_m.group(1) if link_m else self.base_url
+            link = link_m.group(1).strip() if link_m else self.base_url
+            pub_date = date_m.group(1).strip() if date_m else ""
+            body_text = f"Title: {title}\nDate: {pub_date}\nID: fed-rss-{_content_hash(title)[:12]}"
             records.append(self._make_intake(
-                source_id, link, f"Title: {title}", f"fed-{_content_hash(title)[:16]}"
+                source_id, link, body_text, f"fed-{_content_hash(title)[:16]}"
             ))
         return records
 
@@ -218,13 +219,14 @@ class BLSAdapter(HttpAdapter):
 
 
 class GitHubAdvisoryAdapter(HttpAdapter):
-    """GitHub Security Advisories — parse individual advisories."""
+    """GitHub Security Advisories — rate-limit-aware public API."""
 
     def __init__(self):
         super().__init__(
             base_url="https://api.github.com/advisories",
-            rate_limit_per_second=5.0,
-            parser_version="gh-advisory-1.0",
+            rate_limit_per_second=2.0,
+            request_timeout=60,
+            parser_version="gh-advisory-2.0",
         )
 
     def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
@@ -241,15 +243,15 @@ class GitHubAdvisoryAdapter(HttpAdapter):
             summary = adv.get("summary", adv.get("description", ""))
             html_url = adv.get("html_url", adv.get("url", ""))
             published = adv.get("published_at", "")
-            body_text = f"GHSA: {gh_id}\nSummary: {summary}\nPublished: {published}"
-            records.append(self._make_intake(
-                source_id, html_url, body_text, gh_id
-            ))
+            body_text = f"GHSA: {gh_id}\nPublished: {published}\nSummary: {summary[:200]}"
+            records.append(self._make_intake(source_id, html_url, body_text, gh_id))
         return records
 
     def fetch_page(self, source_id, start_time, end_time,
                    page_size=50, page_token=None):
-        url = f"{self.base_url}?per_page={page_size}&type=reviewed&direction=desc"
+        import time as _t
+        _t.sleep(6)  # Respect unauthenticated GitHub rate limit (~10 req/min)
+        url = f"{self.base_url}?per_page={min(page_size, 100)}&type=reviewed&direction=desc"
         if page_token:
             url += f"&after={page_token}"
         status, body = self._fetch_url(url)
@@ -257,23 +259,24 @@ class GitHubAdvisoryAdapter(HttpAdapter):
 
 
 class NVDAdapter(HttpAdapter):
-    """NVD — parse individual CVE items."""
+    """NVD — parse individual CVE items with proper date-window pagination."""
 
     def __init__(self):
         super().__init__(
             base_url="https://services.nvd.nist.gov/rest/json/cves/2.0",
             rate_limit_per_second=5.0,
-            parser_version="nvd-cve-1.0",
+            parser_version="nvd-cve-2.0",
         )
 
-    def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
+    def _extract_items(self, body: bytes, source_id: str) -> Tuple[List[RawIntakeRecord], Optional[int]]:
         records = []
         text = body.decode("utf-8", errors="replace")
         try:
             data = json.loads(text)
         except json.JSONDecodeError:
-            return records
+            return records, None
         vulns = data.get("vulnerabilities", [])
+        total_results = data.get("totalResults", len(vulns))
         for vuln in vulns:
             cve = vuln.get("cve", {})
             cve_id = cve.get("id", "unknown")
@@ -282,25 +285,29 @@ class NVDAdapter(HttpAdapter):
                 if d.get("lang") == "en":
                     desc = d.get("value", "")
                     break
-            body_text = f"CVE: {cve_id}\nDescription: {desc[:500]}"
+            pub_date = cve.get("published", "")
+            body_text = f"CVE: {cve_id}\nPublished: {pub_date}\nDescription: {desc[:500]}"
             records.append(self._make_intake(
                 source_id, f"https://nvd.nist.gov/vuln/detail/{cve_id}",
                 body_text, cve_id
             ))
-        return records
+        return records, total_results
 
     def fetch_page(self, source_id, start_time, end_time,
                    page_size=50, page_token=None):
+        start_idx = int(page_token) if page_token else 0
         params = {
             "pubStartDate": start_time.strftime("%Y-%m-%dT%H:%M:%S.000"),
             "pubEndDate": end_time.strftime("%Y-%m-%dT%H:%M:%S.000"),
-            "resultsPerPage": str(page_size),
+            "resultsPerPage": str(min(page_size, 200)),
+            "startIndex": str(start_idx),
         }
-        if page_token:
-            params["startIndex"] = page_token
         url = f"{self.base_url}?{urlencode(params)}"
         status, body = self._fetch_url(url)
-        return self._extract_items(body, source_id), None
+        records, total = self._extract_items(body, source_id)
+        next_idx = start_idx + len(records)
+        next_token = str(next_idx) if next_idx < (total or 0) else None
+        return records, next_token
 
 
 class CISAAdapter(HttpAdapter):
@@ -421,6 +428,74 @@ class CoinbaseMarketAdapter(HttpAdapter):
         return self._extract_items(body, source_id), None
 
 
+class EurostatAdapter(HttpAdapter):
+    """Eurostat Statistics API — official macro-economic data."""
+
+    def __init__(self):
+        super().__init__(
+            base_url="https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data",
+            rate_limit_per_second=30.0,
+            parser_version="eurostat-1.0",
+        )
+
+    def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
+        records = []
+        text = body.decode("utf-8", errors="replace")
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            return records
+        return records
+
+    def fetch_page(self, source_id, start_time, end_time,
+                   page_size=50, page_token=None):
+        url = f"{self.base_url}/?format=json"
+        try:
+            status, body = self._fetch_url(url)
+            return self._extract_items(body, source_id), None
+        except Exception:
+            return [], None
+
+
+class KrakenStatusAdapter(HttpAdapter):
+    """Kraken official exchange status/incident API."""
+
+    def __init__(self):
+        super().__init__(
+            base_url="https://status.kraken.com/api/v2",
+            rate_limit_per_second=5.0,
+            parser_version="kraken-status-1.0",
+        )
+
+    def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
+        records = []
+        text = body.decode("utf-8", errors="replace")
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            return records
+        incidents = data.get("incidents", [])
+        for inc in incidents:
+            inc_id = inc.get("id", "unknown")
+            name = inc.get("name", "untitled")
+            created = inc.get("created_at", "")
+            body_text = f"Kraken: {name}\nCreated: {created}"
+            records.append(self._make_intake(
+                source_id, f"https://status.kraken.com/incidents/{inc_id}",
+                body_text[:500], f"kraken-{inc_id}"
+            ))
+        return records
+
+    def fetch_page(self, source_id, start_time, end_time,
+                   page_size=50, page_token=None):
+        url = f"{self.base_url}/incidents.json"
+        try:
+            status, body = self._fetch_url(url)
+            return self._extract_items(body, source_id), None
+        except Exception:
+            return [], None
+
+
 ADAPTER_REGISTRY: Dict[str, HttpAdapter] = {
     "sec-edgar": SecEdgarAdapter(),
     "federal-reserve": FederalReserveAdapter(),
@@ -430,6 +505,8 @@ ADAPTER_REGISTRY: Dict[str, HttpAdapter] = {
     "cisa-alerts": CISAAdapter(),
     "binance-public": BinanceMarketAdapter(),
     "coinbase-public": CoinbaseMarketAdapter(),
+    "eurostat": EurostatAdapter(),
+    "kraken-status": KrakenStatusAdapter(),
 }
 
 
