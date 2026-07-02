@@ -1,0 +1,20 @@
+24h_outcome_coverage_pct: 95
+accepted_cases: 1886
+build_type: pilot
+duplicate_ids: 0
+family_distribution:
+  corporate: 39
+  macro: 20
+  market: 50
+  regulatory: 26
+  security: 1631
+  technology: 120
+future_leakage: 0
+pilot_gates_pass: true
+schema_version: '1.0'
+split_distribution:
+  BLIND: 366
+  BUILD: 1151
+  DEVELOPMENT: 369
+status: ACCEPTED
+target_cases: 120

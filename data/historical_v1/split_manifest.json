@@ -1,0 +1,8 @@
+build_id: pilot-001
+split_boundary_version: '1.0'
+split_distribution:
+  BLIND: 362
+  BUILD: 1139
+  DEVELOPMENT: 360
+total_cases: 1861
+total_qualified: 1861

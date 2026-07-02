@@ -168,6 +168,8 @@ class FederalReserveAdapter(HttpAdapter):
             date_m = re.search(r'<pubDate>(.*?)</pubDate>', item_text)
             title = title_m.group(1).strip() if title_m else "untitled"
             link = link_m.group(1).strip() if link_m else self.base_url
+            if link.startswith("<![CDATA["):
+                link = link.replace("<![CDATA[", "").replace("]]>", "").strip()
             pub_date = date_m.group(1).strip() if date_m else ""
             body_text = f"Title: {title}\nDate: {pub_date}\nID: fed-rss-{_content_hash(title)[:12]}"
             records.append(self._make_intake(
@@ -177,7 +179,7 @@ class FederalReserveAdapter(HttpAdapter):
 
     def fetch_page(self, source_id, start_time, end_time,
                    page_size=50, page_token=None):
-        url = f"{self.base_url}/pressreleases.xml"
+        url = f"{self.base_url}/press_all.xml"
         status, body = self._fetch_url(url)
         return self._extract_items(body, source_id), None
 
@@ -330,10 +332,16 @@ class CISAAdapter(HttpAdapter):
             vulns = []
         for vuln in vulns:
             cve_id = vuln.get("cveID", "unknown")
+            vuln_name = vuln.get("vulnerabilityName", "")
             desc = vuln.get("shortDescription", vuln.get("vendorProject", ""))
+            date_added = vuln.get("dateAdded", "")
+            vendor = vuln.get("vendorProject", "")
+            product = vuln.get("product", "")
             url = f"https://www.cisa.gov/known-exploited-vulnerabilities/{cve_id}"
+            # Include dateAdded as source-native timestamp in raw_body
+            body_text = f"CISA KEV: {vuln_name}\nCVE: {cve_id}\nVendor: {vendor}\nProduct: {product}\nDateAdded: {date_added}\nDescription: {desc[:300]}"
             records.append(self._make_intake(
-                source_id, url, f"CISA KEV: {desc}", cve_id
+                source_id, url, body_text, cve_id
             ))
         return records
 
