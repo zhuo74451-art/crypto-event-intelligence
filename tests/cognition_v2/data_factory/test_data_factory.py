@@ -1063,14 +1063,14 @@ class TestPersistedResume:
                                      AcquisitionStatus.COMPLETED)
 
     def test_output_write_failure_preserves_old_state(self):
-        """If output write fails, committed records and checkpoint are unchanged."""
+        """Output-write failure leaves output bytes and checkpoint bytes unchanged."""
         import unittest.mock as mock
         import json
         import glob
+        import os
 
         from market_radar.cognition_v2.data_factory.checkpoints import AtomicCheckpointWriter
 
-        # First, do a successful run to establish committed state
         adapter = MockAdapter(total_pages=1, records_per_page=10)
         tmpdir = tempfile.mkdtemp()
         acq1 = CheckpointedAcquisition(adapter, checkpoint_dir=tmpdir,
@@ -1080,9 +1080,14 @@ class TestPersistedResume:
             record_limit=100, max_record_budget=500, max_request_budget=50,
         )
         records1, completed1, _ = acq1.run(req1)
-        orig_count = len(records1)
 
-        # Inject an output-write failure on resume
+        # Capture BEFORE state
+        cp_path = os.path.join(tmpdir, "output-fail.json")
+        out_files = sorted(glob.glob(os.path.join(tmpdir, "output-fail*jsonl")))
+        before_cp = json.load(open(cp_path)) if os.path.exists(cp_path) else {}
+        before_out_size = os.path.getsize(out_files[0]) if out_files else 0
+
+        # Inject output-write failure on resume
         with mock.patch.object(AtomicCheckpointWriter, 'write_output',
                                side_effect=OSError("Disk full")):
             adapter2 = MockAdapter(total_pages=2, records_per_page=10)
@@ -1091,16 +1096,27 @@ class TestPersistedResume:
             req2 = AcquisitionRun(
                 run_id="output-fail", source_id="mock",
                 start_time=NOW, end_time=NOW,
-                record_limit=100, max_record_budget=500, max_request_budget=50,
+                record_limit=200, max_record_budget=500, max_request_budget=50,
             )
             try:
-                acq2.run(req2)
+                acq2.run(req2, resume=True)
             except Exception:
                 pass
 
-        # Old checkpoint should still exist and reflect original committed state
-        cp_files = glob.glob(os.path.join(tmpdir, "output-fail.json"))
-        assert len(cp_files) >= 1
+        # After state must match before state exactly
+        after_cp = json.load(open(cp_path)) if os.path.exists(cp_path) else {}
+        after_out_files = sorted(glob.glob(os.path.join(tmpdir, "output-fail*jsonl")))
+        after_out_size = os.path.getsize(after_out_files[0]) if after_out_files else 0
+
+        # Record count unchanged
+        assert after_cp.get("total_records_so_far", 0) == before_cp.get("total_records_so_far", 0), \
+            f"Record count changed: {before_cp.get('total_records_so_far')} -> {after_cp.get('total_records_so_far')}"
+        # Output file size unchanged
+        assert after_out_size == before_out_size, \
+            f"Output size changed: {before_out_size} -> {after_out_size}"
+        # Output SHA-256 unchanged
+        assert after_cp.get("output_sha256", "") == before_cp.get("output_sha256", ""), \
+            "SHA-256 changed after output-write failure"
 
     def test_parser_version_mismatch_rejected(self):
         """Adapter parser version change on resume is rejected."""

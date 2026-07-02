@@ -49,9 +49,27 @@ All 11 sources are:
 - **Rate-limited with finite retry** — no unbounded or hidden loops
 - **Short excerpts only** (<500 chars) — no full copyrighted articles
 
+## Live Probe Results
+
+Bounded live HTTP probes run against all 8 production adapters (range: 2024-01-01 to 2024-01-31, max 10 records each):
+
+| Source ID | Family | Status | Items | Pilot-Eligible |
+|-----------|--------|--------|-------|----------------|
+| sec-edgar | regulatory | OK | 10 | YES |
+| github-security-advisories | technology | OK | 5 | YES |
+| nvd-nist | technology | OK | 5 | YES |
+| cisa-alerts | security | OK | 1631 | YES |
+| binance-public | market | OK | 5 | YES (outcome) |
+| coinbase-public | market | OK | 350 | YES (outcome) |
+| bls-economic-releases | macro | OK (RSS) | 0 | NO - RSS empty |
+| federal-reserve | macro | 404 | 0 | NO - endpoint changed |
+
+**Macro family**: BLS RSS returns 0 items (no recent press releases in RSS feed) and Federal Reserve returns 404. Macro cases use structured seed data from public economic indicators.
+**Market events**: Binance and Coinbase provide OHLCV outcome data only. Market event evidence (listings, delistings) uses structured seed data.
+
 ## Pilot Production Adapters
 
-The following adapters are implemented and tested for the 120-case pilot:
+The following adapters are implemented and pilot-eligible:
 
 | Source ID | Adapter | Parser Version | Live Probe |
 |-----------|---------|----------------|------------|

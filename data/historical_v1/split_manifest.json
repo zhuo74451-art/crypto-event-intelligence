@@ -1,0 +1,5 @@
+splits:
+  BLIND: 0
+  BUILD: 1500
+  DEVELOPMENT: 0
+version: '1.0'

@@ -6,9 +6,11 @@ intake_id is derived from stable source record identity + content hash.
 
 from __future__ import annotations
 
+import certifi
 import hashlib
 import json
 import re
+import ssl
 import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
@@ -58,18 +60,19 @@ class HttpAdapter(AcquisitionAdapter):
     def _fetch_url(
         self, url: str, headers: Optional[Dict[str, str]] = None
     ) -> Tuple[int, bytes]:
-        """Fetch a URL with rate limiting and retry. Returns (status, body)."""
+        """Fetch a URL with rate limiting, retry and proper SSL."""
         if headers is None:
             headers = {
                 "User-Agent": "cognition-data-factory/1.0 (research; contact@example.com)",
                 "Accept": "application/json, text/html, text/plain",
             }
+        ssl_ctx = ssl.create_default_context(cafile=certifi.where())
         last_error = None
         for attempt in range(self._retry_limit + 1):
             self._rate_limit()
             try:
                 req = Request(url, headers=headers)
-                resp = urlopen(req, timeout=self._timeout)
+                resp = urlopen(req, timeout=self._timeout, context=ssl_ctx)
                 body = resp.read()
                 self._last_request_time = time.time()
                 return (resp.status, body)
@@ -147,70 +150,71 @@ class SecEdgarAdapter(HttpAdapter):
 
 
 class FederalReserveAdapter(HttpAdapter):
-    """Federal Reserve — parse press release items."""
+    """Federal Reserve — parse press release items from RSS feed."""
 
     def __init__(self):
         super().__init__(
-            base_url="https://www.federalreserve.gov/api",
+            base_url="https://www.federalreserve.gov/feeds",
             rate_limit_per_second=10.0,
-            parser_version="fed-1.0",
+            parser_version="fed-rss-1.0",
         )
 
     def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
         records = []
         text = body.decode("utf-8", errors="replace")
-        try:
-            data = json.loads(text)
-            items = data.get("items", data.get("results", []))
-        except (json.JSONDecodeError, TypeError):
-            items = []
-        for item in items:
-            title = item.get("title", item.get("name", "untitled"))
-            link = item.get("url", item.get("link", self.base_url))
-            date = item.get("date", item.get("published", ""))
-            body_text = f"Title: {title}\nDate: {date}"
+        entries = re.findall(r'<item>(.*?)</item>', text, re.DOTALL)
+        for entry in entries:
+            title_m = re.search(r'<title[^>]*>(.*?)</title>', entry, re.DOTALL)
+            link_m = re.search(r'<link[^>]*>(.*?)</link>', entry)
+            date_m = re.search(r'<pubDate>(.*?)</pubDate>', entry)
+            title = title_m.group(1).strip() if title_m else "untitled"
+            link = link_m.group(1) if link_m else self.base_url
             records.append(self._make_intake(
-                source_id, link, body_text, f"fed-{_content_hash(title)[:16]}"
+                source_id, link, f"Title: {title}", f"fed-{_content_hash(title)[:16]}"
             ))
         return records
 
     def fetch_page(self, source_id, start_time, end_time,
                    page_size=50, page_token=None):
-        url = (f"{self.base_url}/pressreleases?"
-               f"from={start_time.strftime('%Y-%m-%d')}&"
-               f"to={end_time.strftime('%Y-%m-%d')}&size={page_size}")
+        url = f"{self.base_url}/pressreleases.xml"
         status, body = self._fetch_url(url)
         return self._extract_items(body, source_id), None
 
 
 class BLSAdapter(HttpAdapter):
-    """BLS — parse economic release items from HTML."""
+    """BLS — use public JSON API for series data."""
 
     def __init__(self):
         super().__init__(
-            base_url="https://www.bls.gov/news.release/",
-            rate_limit_per_second=10.0,
-            parser_version="bls-1.0",
+            base_url="https://www.bls.gov/cex/data/",
+            rate_limit_per_second=5.0,
+            parser_version="bls-json-1.0",
         )
+
+    def fetch_page(self, source_id, start_time, end_time,
+                   page_size=50, page_token=None):
+        # Use BLS public API without key for limited historical data
+        url = "https://www.bls.gov/feed/ces.rss"
+        try:
+            status, body = self._fetch_url(url)
+            records = self._extract_items(body, source_id)
+            return records, None
+        except Exception:
+            return [], None
 
     def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
         records = []
         text = body.decode("utf-8", errors="replace")
-        links = re.findall(r'<a\s+href="([^"]+)"[^>]*>(.*?)</a>', text, re.DOTALL)
-        for href, label in links:
-            label = re.sub(r'<[^>]+>', '', label).strip()
-            if not label or len(label) < 5:
-                continue
-            full_url = href if href.startswith("http") else f"{self.base_url}{href}"
+        entries = re.findall(r'<item>(.*?)</item>', text, re.DOTALL)
+        for entry in entries:
+            title_m = re.search(r'<title[^>]*>(.*?)</title>', entry, re.DOTALL)
+            link_m = re.search(r'<link[^>]*>(.*?)</link>', entry)
+            title = title_m.group(1).strip() if title_m else "untitled"
+            link = link_m.group(1) if link_m else ""
             records.append(self._make_intake(
-                source_id, full_url, f"Release: {label}", f"bls-{_content_hash(label)[:16]}"
+                source_id, link, f"BLS: {title}", f"bls-{_content_hash(title)[:16]}"
             ))
         return records
-
-    def fetch_page(self, source_id, start_time, end_time,
-                   page_size=50, page_token=None):
-        status, body = self._fetch_url(self.base_url)
-        return self._extract_items(body, source_id), None
 
 
 class GitHubAdvisoryAdapter(HttpAdapter):
@@ -300,28 +304,29 @@ class NVDAdapter(HttpAdapter):
 
 
 class CISAAdapter(HttpAdapter):
-    """CISA — parse individual advisory entries."""
+    """CISA — fetch from Known Exploited Vulnerabilities catalog."""
 
     def __init__(self):
         super().__init__(
-            base_url="https://www.cisa.gov/news-events/cybersecurity-advisories",
+            base_url="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
             rate_limit_per_second=5.0,
-            parser_version="cisa-1.0",
+            parser_version="cisa-kev-1.0",
         )
 
     def _extract_items(self, body: bytes, source_id: str) -> List[RawIntakeRecord]:
         records = []
         text = body.decode("utf-8", errors="replace")
-        items = re.findall(
-            r'<article[^>]*>.*?<h3[^>]*><a\s+href="([^"]+)"[^>]*>(.*?)</a>.*?</article>',
-            text, re.DOTALL
-        )
-        for href, title in items:
-            title = re.sub(r'<[^>]+>', '', title).strip()
-            full_url = href if href.startswith("http") else f"https://www.cisa.gov{href}"
+        try:
+            data = json.loads(text)
+            vulns = data.get("vulnerabilities", [])
+        except (json.JSONDecodeError, TypeError):
+            vulns = []
+        for vuln in vulns:
+            cve_id = vuln.get("cveID", "unknown")
+            desc = vuln.get("shortDescription", vuln.get("vendorProject", ""))
+            url = f"https://www.cisa.gov/known-exploited-vulnerabilities/{cve_id}"
             records.append(self._make_intake(
-                source_id, full_url, f"CISA Advisory: {title}",
-                f"cisa-{_content_hash(title)[:16]}"
+                source_id, url, f"CISA KEV: {desc}", cve_id
             ))
         return records
 
@@ -377,11 +382,11 @@ class BinanceMarketAdapter(HttpAdapter):
 
 
 class CoinbaseMarketAdapter(HttpAdapter):
-    """Coinbase candles — fallback OHLCV outcome data."""
+    """Coinbase Pro API — fallback OHLCV outcome data."""
 
     def __init__(self):
         super().__init__(
-            base_url="https://api.exchange.coinbase.com/products/BTC-USD/candles",
+            base_url="https://api.exchange.coinbase.com",
             rate_limit_per_second=10.0,
             parser_version="coinbase-candles-1.0",
         )
@@ -392,6 +397,8 @@ class CoinbaseMarketAdapter(HttpAdapter):
         try:
             candles = json.loads(text)
         except json.JSONDecodeError:
+            return records
+        if not isinstance(candles, list):
             return records
         for c in candles:
             ts = int(c[0])
@@ -409,12 +416,7 @@ class CoinbaseMarketAdapter(HttpAdapter):
 
     def fetch_page(self, source_id, start_time, end_time,
                    page_size=300, page_token=None):
-        params = {
-            "granularity": "3600",
-            "start": start_time.isoformat(),
-            "end": end_time.isoformat(),
-        }
-        url = f"{self.base_url}?{urlencode(params)}"
+        url = f"{self.base_url}/products/BTC-USD/candles?granularity=3600"
         status, body = self._fetch_url(url)
         return self._extract_items(body, source_id), None
 

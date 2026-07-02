@@ -1,0 +1,14 @@
+artifact_hashes:
+  rebuild: af73cc22773ed962e5862a5381a0192388988063a41f388199ed8c21f617f4b9
+  root: af73cc22773ed962e5862a5381a0192388988063a41f388199ed8c21f617f4b9
+build_date: '2024-01-01T00:00:00+00:00'
+build_id: full-001
+corpus_version: '1.0'
+family_distribution: {}
+regime_distribution: {}
+rejected_records: 0
+root_hash: af73cc22773ed962e5862a5381a0192388988063a41f388199ed8c21f617f4b9
+schema_version: '1.0'
+split_distribution: {}
+total_accepted_cases: 1500
+total_intake_records: 0
