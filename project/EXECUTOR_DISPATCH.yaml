@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.5"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
@@ -7,12 +7,12 @@ mode: Auto
 goal_mode: disabled
 
 current_dispatch:
-  node: stage3_wp02_audit_pilot_scale_004
+  node: stage3_wp02_live_pilot_scale_005
   issue: 29
   pr: 30
   branch: feat/stage3-wp02-historical-data-factory
-  reviewed_head: 8a9a5253962a1f15b19ade49440724018a4d8942
-  instruction_file: project/work_orders/STAGE3_WP02_AUDIT_PILOT_SCALE_004.md
+  reviewed_head: bc59f6c5601b20e7c6bce680cf527c48f2fc70fa
+  instruction_file: project/work_orders/STAGE3_WP02_LIVE_PILOT_SCALE_005.md
   terminal_behavior: stop_after_receipt
 
 post_execution:
