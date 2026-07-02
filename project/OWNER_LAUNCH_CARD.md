@@ -1,7 +1,7 @@
 # Owner Launch Card
 
 **Status:** ACTIVE  
-**Current node:** Stage 3 WP-02 Source Route Recovery 007  
+**Current node:** Stage 3 WP-02 Historical Qualification 008  
 **Issue:** #29  
 **Draft PR:** #30  
 **Branch:** `feat/stage3-wp02-historical-data-factory`
@@ -17,13 +17,13 @@ and the latest exact-Head review on PR #30.
 
 Continue on feat/stage3-wp02-historical-data-factory.
 After safe fast-forward, execute:
-project/work_orders/STAGE3_WP02_SOURCE_ROUTE_RECOVERY_007.md
+project/work_orders/STAGE3_WP02_HISTORICAL_QUALIFICATION_008.md
 
-First invalidate the current 300 rows as QUALIFIED historical cases.
-Repair official Macro, Technology and Market-event source routes,
-add auditable historical-availability authority, real outcome labels,
-and non-empty BUILD/DEVELOPMENT/BLIND splits.
-Do not backdate acquisition times, synthesize cases or pad counts.
+Treat the current 490 rows as intake unless they pass historical authority,
+crypto relevance, real outcome and chronological split gates.
+Build a real six-family 120-case historical pilot first.
+Scale to 1500 only after that pilot passes.
+Do not backdate, synthesize, clone or pad cases.
 Use the existing branch and Draft PR #30 only.
 Do not merge or begin WP-03.
 Push the exact final Head, update PR #30 and Issue #29, then stop with the required receipt.
