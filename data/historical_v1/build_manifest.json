@@ -1,0 +1,26 @@
+artifact_hashes:
+  cases.jsonl: 45e64b583d0a76c23e00863bb0bbb67b1c9c279358b548f23268abfa3bfa7745
+  correction_chains.jsonl: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  evidence.jsonl: 0cdb3cd4d76220e32ecc8e6e89ae040b3d3f69d860c3814e2668b1322686a7d3
+  outcome_windows.jsonl: 660af5231fdbdfb0fc379217cd8f21339315002bbea000fcd3922ca70b1a44a2
+  quality_report.json: b9e3996578fa4f7e42e28088e583a39ec5cc69bb2b10fd106c2a62af839c94e4
+  split_manifest.json: fba5cbeaae0fdf5bb5febbf1949ef2311e8d7c2b7b1bede626722fa8e1ee1785
+build_id: pilot-001
+corpus_version: '1.0'
+family_distribution:
+  corporate: 39
+  macro: 20
+  market: 50
+  regulatory: 26
+  security: 1631
+  technology: 120
+regime_distribution:
+  unknown: 1886
+rejected_records: 1230
+root_hash: 9e91fe6742f0c433db67be80d142520441a8fed80633393ed6afaff81815a01b
+split_distribution:
+  BLIND: 366
+  BUILD: 1151
+  DEVELOPMENT: 369
+total_accepted_cases: 1886
+total_intake_records: 1886
