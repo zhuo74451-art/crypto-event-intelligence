@@ -6,6 +6,7 @@ atomic checkpoints and safe resume. Never truncates committed output.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import time
@@ -84,24 +85,96 @@ def _load_committed_records(output_path: str) -> Tuple[List[RawIntakeRecord], se
     return records, intake_ids
 
 
+def _output_sha256(output_path: str) -> str:
+    """Compute SHA-256 of an output file."""
+    if not os.path.exists(output_path):
+        return ""
+    h = hashlib.sha256()
+    with open(output_path, "rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _output_byte_size(output_path: str) -> int:
+    """Get byte size of an output file."""
+    if not os.path.exists(output_path):
+        return 0
+    return os.path.getsize(output_path)
+
+
 class CheckpointedAcquisition:
     """Finite, checkpointed, resumable acquisition.
 
     - Loads existing output before writing; never truncates committed data.
     - Output committed BEFORE checkpoint advancement.
     - Deduplicates by deterministic intake_id.
-    - Detects output/checkpoint mismatches.
+    - Verifies output SHA-256 and byte size on resume.
+    - Rejects adapter/parser version mismatch on resume.
     """
+
+    CHECKPOINT_SCHEMA_VERSION = "2.0"
 
     def __init__(
         self,
         adapter: AcquisitionAdapter,
         checkpoint_dir: str = ".checkpoints",
         output_dir: Optional[str] = None,
+        adapter_version: str = "1.0",
+        parser_version: str = "1.0",
     ):
         self._adapter = adapter
         self._checkpoint_dir = checkpoint_dir
         self._writer = AtomicCheckpointWriter(output_dir or checkpoint_dir)
+        self._adapter_version = adapter_version
+        self._parser_version = parser_version
+
+    def _completion_reason(self, request: AcquisitionRun) -> str:
+        if request.status == AcquisitionStatus.FAILED:
+            return "FAILED"
+        if request.error_message:
+            return "FAILED"
+        if request.status == AcquisitionStatus.BUDGET_EXCEEDED:
+            check = request.max_record_budget - request.total_records
+            if check <= 0:
+                return "RECORD_BUDGET"
+            return "REQUEST_BUDGET"
+        if request.total_records >= request.record_limit:
+            return "RECORD_LIMIT"
+        return "SOURCE_EXHAUSTED"
+
+    def _checkpoint_path(self, run_id: str) -> str:
+        os.makedirs(self._checkpoint_dir, exist_ok=True)
+        return os.path.join(self._checkpoint_dir, f"{run_id}.json")
+
+    def _load_checkpoint(self, run_id: str) -> Optional[dict]:
+        path = self._checkpoint_path(run_id)
+        if not os.path.exists(path):
+            return None
+        with open(path) as f:
+            return json.load(f)
+
+    def _build_checkpoint_data(
+        self, request: AcquisitionRun, completed_pages: list,
+        page_token, output_path: str,
+    ) -> dict:
+        return {
+            "run_id": request.run_id,
+            "request_fingerprint": request.request_fingerprint(),
+            "completed_pages": list(completed_pages),
+            "last_page_token": page_token,
+            "total_records_so_far": request.total_records,
+            "total_requests_so_far": request.total_requests,
+            "failed_requests_so_far": request.failed_requests,
+            "status": request.status.value,
+            "completion_reason": self._completion_reason(request),
+            "output_sha256": _output_sha256(output_path),
+            "output_byte_size": _output_byte_size(output_path),
+            "adapter_version": self._adapter_version,
+            "parser_version": self._parser_version,
+            "checkpoint_schema_version": self.CHECKPOINT_SCHEMA_VERSION,
+            "output_path": output_path,
+        }
 
     def _checkpoint_path(self, run_id: str) -> str:
         os.makedirs(self._checkpoint_dir, exist_ok=True)
@@ -139,6 +212,16 @@ class CheckpointedAcquisition:
                     raise IncompatibleResumeError(
                         f"Incompatible fingerprint for {request.run_id}"
                     )
+                # Verify adapter and parser version
+                cp_av = cp_data.get("adapter_version", "1.0")
+                cp_pv = cp_data.get("parser_version", "1.0")
+                if cp_av != self._adapter_version or cp_pv != self._parser_version:
+                    raise IncompatibleResumeError(
+                        f"Adapter/parser version mismatch: "
+                        f"checkpoint has adapter={cp_av} parser={cp_pv}, "
+                        f"current has adapter={self._adapter_version} "
+                        f"parser={self._parser_version}"
+                    )
                 # Load committed output first
                 records, seen_ids = _load_committed_records(output_path)
                 initial_count = len(records)
@@ -148,18 +231,35 @@ class CheckpointedAcquisition:
                 completed_pages = list(cp_data.get("completed_pages", []))
                 page_token = cp_data.get("last_page_token")
 
-                # Verify output count matches checkpoint
+                # Verify output SHA-256 and byte size
+                cp_sha = cp_data.get("output_sha256", "")
+                cp_size = cp_data.get("output_byte_size", 0)
+                actual_sha = _output_sha256(output_path)
+                actual_size = _output_byte_size(output_path)
+                if cp_sha and cp_sha != actual_sha:
+                    raise OutputCheckpointMismatchError(
+                        f"Output SHA-256 mismatch: checkpoint={cp_sha}, "
+                        f"actual={actual_sha}"
+                    )
+                if cp_size and cp_size != actual_size:
+                    raise OutputCheckpointMismatchError(
+                        f"Output size mismatch: checkpoint={cp_size}, "
+                        f"actual={actual_size}"
+                    )
                 if len(records) != request.total_records:
                     raise OutputCheckpointMismatchError(
                         f"Output has {len(records)} records but checkpoint "
                         f"claims {request.total_records}"
                     )
 
-                # Source-exhausted or record-limit completion is terminal
-                if cp_data.get("status") == AcquisitionStatus.COMPLETED.value:
-                    # Load existing output and return it
+                # Terminal completion — return committed state
+                if cp_data.get("status") in (
+                    AcquisitionStatus.COMPLETED.value, "COMPLETED"
+                ):
                     request.status = AcquisitionStatus.COMPLETED
                     request.completed_at = datetime.now(timezone.utc)
+                    # Copy completion reason
+                    request.error_message = cp_data.get("completion_reason", "")
                     cp = AcquisitionCheckpoint(
                         run_id=request.run_id,
                         request_fingerprint=request.request_fingerprint(),
@@ -234,17 +334,9 @@ class CheckpointedAcquisition:
                 )
 
                 # Now checkpoint (output already durable)
-                cp_data_out = {
-                    "run_id": request.run_id,
-                    "request_fingerprint": request.request_fingerprint(),
-                    "completed_pages": list(completed_pages),
-                    "last_page_token": page_token,
-                    "total_records_so_far": request.total_records,
-                    "total_requests_so_far": request.total_requests,
-                    "failed_requests_so_far": request.failed_requests,
-                    "status": AcquisitionStatus.RUNNING.value,
-                    "output_path": output_path,
-                }
+                cp_data_out = self._build_checkpoint_data(
+                    request, completed_pages, page_token, output_path
+                )
                 self._writer.write_checkpoint(
                     cp_data_out, self._checkpoint_path(request.run_id)
                 )
@@ -265,17 +357,9 @@ class CheckpointedAcquisition:
             request.completed_at = datetime.now(timezone.utc)
 
         # Final checkpoint
-        cp_data_final = {
-            "run_id": request.run_id,
-            "request_fingerprint": request.request_fingerprint(),
-            "completed_pages": list(completed_pages),
-            "last_page_token": page_token,
-            "total_records_so_far": request.total_records,
-            "total_requests_so_far": request.total_requests,
-            "failed_requests_so_far": request.failed_requests,
-            "status": request.status.value,
-            "output_path": output_path,
-        }
+        cp_data_final = self._build_checkpoint_data(
+            request, completed_pages, page_token, output_path
+        )
         self._writer.write_checkpoint(
             cp_data_final, self._checkpoint_path(request.run_id)
         )
