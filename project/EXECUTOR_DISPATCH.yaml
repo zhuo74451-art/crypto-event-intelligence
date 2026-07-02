@@ -1,20 +1,18 @@
-version: "3.6"
+version: "3.7"
 status: active
 project: Crypto Market Cognition & Signal OS
 repository: zhuo74451-art/crypto-event-intelligence
 executor: Reasonix
 mode: Auto
 goal_mode: disabled
-
 current_dispatch:
-  node: stage3_wp02_real_corpus_rebuild_006
+  node: stage3_wp02_source_route_recovery_007
   issue: 29
   pr: 30
   branch: feat/stage3-wp02-historical-data-factory
-  reviewed_head: fa263120c86488c8fd23c3b4cb4241aa3d298a5b
-  instruction_file: project/work_orders/STAGE3_WP02_REAL_CORPUS_REBUILD_006.md
+  reviewed_head: 17a947f6f219480d1489bc929615cfb03539d71b
+  instruction_file: project/work_orders/STAGE3_WP02_SOURCE_ROUTE_RECOVERY_007.md
   terminal_behavior: stop_after_receipt
-
 post_execution:
   reviewer: GPT
   accepted: integrate
